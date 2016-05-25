@@ -45,11 +45,11 @@ sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 import scipy.ndimage
 import matplotlib as m
-import mcmc_emceen as mcmc
+#import mcmc_emceen as mcmc
 import mcmcfast as mcmc3
 #import mcmctest as mcmc3
-import mcmcfloat as mcmcfloat
-import mcmc3galsim
+#import mcmcfloat as mcmcfloat
+#import mcmc3galsim
 import mcmc3galsimpixshift
 #import mcmcgtest as mcmc3galsimpixshift
 m.use('Agg')
@@ -67,11 +67,12 @@ from scipy.interpolate import UnivariateSpline
 import sigma_clip
 import meanclip
 from scipy.optimize import curve_fit
-import testsim
-import rdcol
-import getgalmodel
+#import testsim
+#import rdcol
+#import getgalmodel
 import scipy.interpolate as interpol
-from PythonPhot import cntrd,aper,getpsf,rdpsf
+import cntrd,aper,getpsf,rdpsf
+#from PythonPhot import cntrd,aper,getpsf,rdpsf
 import pkfit_norecent_noise_smp
 import addcoltolightcurve as lc
 
