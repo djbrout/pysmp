@@ -1442,7 +1442,7 @@ class smp:
                     print xlow,xhi,xsn
                     print np.median(im)
                     #raw_input()sigma_clip.meanclip( skyvals, clipsig = 3, maxiter = 8 ) 
-                    mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 2, maxiter = 8)
+                    mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
                     skysig=1.48*np.median(abs(vals-np.median(vals)))
                     mysky = np.median(vals)
                     mygain = (np.sqrt(mysky)/(skysig))**2
