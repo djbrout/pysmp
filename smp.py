@@ -6,6 +6,7 @@ galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
 pixstart = None
 
 """
+test
 Scene modeling pipeline for DES and PanSTARRS.
 
 Usage:
