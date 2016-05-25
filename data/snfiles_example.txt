@@ -1,0 +1,6 @@
+/path/to/file/des_fake_00229567.dat
+/path/to/file/des_fake_00236284.dat
+/path/to/file/des_fake_00233074.dat
+...
+/path/to/file/des_fake_00236039.dat
+/path/to/file/des_fake_00241977.dat
