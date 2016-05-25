@@ -74,7 +74,7 @@ import scipy.interpolate as interpol
 import cntrd,aper,getpsf,rdpsf
 #from PythonPhot import cntrd,aper,getpsf,rdpsf
 import pkfit_norecent_noise_smp
-import addcoltolightcurve as lc
+import addcoltoDESlightcurve as lc
 
 #from matplotlib.backends.backend_pdf import PdfPages
 
