@@ -675,9 +675,9 @@ class metropolis_hastings():
         #save_fits_image(self.data[ 0, :,:],'./data.fits')
         #if self.didtimeout:
 
-        filelist = [ f for f in os.listdir("./out")]
-        for f in filelist:
-            os.remove('./out/'+f)
+        #filelist = [ f for f in os.listdir("./out")]
+        #for f in filelist:
+        #    os.remove('./out/'+f)
         #print len(self.imagestamps)
         #print len(self.sims)
         #print self.Nimage
