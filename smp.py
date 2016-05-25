@@ -4467,7 +4467,7 @@ if __name__ == "__main__":
         if index == 'all':
             for iii in np.arange(16,50):
 
-                a = open('snfiles_mjd.txt','r')
+                a = open('./data/snfiles.txt','r')
                 files = a.readlines()
                 print 'files',files
                 print 'index',index
