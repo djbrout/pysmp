@@ -8,7 +8,7 @@ pixstart = None
 """
 Scene modeling pipeline for DES and PanSTARRS.
 
-Usage:ttttttestttt
+Usage:ttttttestttta
 
 smp.py -s supernova_file -p parameter_file -s snfile -o outfile\ 
     --nomask --nodiff --nozpt -r root_dir -f filter --psf_model=psf_model
