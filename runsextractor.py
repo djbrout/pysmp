@@ -17,7 +17,7 @@ import subprocess
 
 def getsky_and_skyerr(imagefilename):
 
-    proc = subprocess.Popen("sex imagefilename -c defaults/default.sex", stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen("sex "+imagefilename+" -c defaults/default.sex", stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     print "program output:", out
 
