@@ -46,7 +46,7 @@ sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 import scipy.ndimage
 import matplotlib as m
 #import mcmc_emceen as mcmc
-import mcmcfast as mcmc3
+import mcmc as mcmc3
 #import mcmctest as mcmc3
 #import mcmcfloat as mcmcfloat
 #import mcmc3galsim
