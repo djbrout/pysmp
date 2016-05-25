@@ -50,7 +50,7 @@ import mcmc as mcmc3
 #import mcmctest as mcmc3
 #import mcmcfloat as mcmcfloat
 #import mcmc3galsim
-import mcmc3galsimpixshift
+import mcmcgalsim as mcmc3galsimpixshift
 #import mcmcgtest as mcmc3galsimpixshift
 m.use('Agg')
 import matplotlib.pyplot as plt
