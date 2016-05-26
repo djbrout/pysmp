@@ -1,6 +1,7 @@
 import numpy as np
 import pyfits as pf
 import os
+import scipy.signal
 
 
 def bindata(x, y, bins, returnn=False):
@@ -29,7 +30,6 @@ def bindata(x, y, bins, returnn=False):
         return xvals, medians, mads, nums
     return xvals, medians, mads
 
-
 # Takes in Filename, reads file columnwise, and returns dictionary such that:
 # import rdcol
 # a = rdcol.read('filename',headline,datastartline)
@@ -39,7 +39,6 @@ def bindata(x, y, bins, returnn=False):
 #
 # By Dillon Brout
 # dbrout@physics.upenn.edu
-
 def read(filename, headline, startline, delim=' '):
     linenum = 0
     go = 0
@@ -76,3 +75,47 @@ def save_fits_image(image,filename):
     hdu.writeto(filename)
 
     return
+
+
+def psfphotometry(im, psf, sky, weight, gal, guess_scale):
+    chisqvec = []
+    fluxvec = []
+
+    galconv = scipy.signal.fftconvolve(gal, psf, mode='same')
+
+    radius = 12
+    substamp = galconv.shape[0]
+    # Make a mask with radius
+    fitrad = np.zeros([substamp, substamp])
+    for x in np.arange(substamp):
+        for y in np.arange(substamp):
+            if np.sqrt((substamp / 2. - x) ** 2 + (substamp / 2. - y) ** 2) < radius:
+                fitrad[int(x), int(y)] = 1.
+
+    if guess_scale is None:
+        for i in np.arange(-10000, 200000, 5):
+            sim = galconv + sky + i * psf
+            chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+            fluxvec.append(i)
+    else:
+        for i in np.arange(guess_scale - 2000, guess_scale + 2000, 1):
+            sim = galconv + sky + i * psf
+            chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+            fluxvec.append(i)
+
+    ii = fitrad.ravel()
+    i = ii[ii != 0]
+
+    ndof = len(i) + 1
+
+    fluxvec = np.array(fluxvec)
+    chisqvec = np.array(chisqvec)
+    hh = chisqvec * 0 + min(chisqvec)
+    mchisq = min(chisqvec)
+    idx = np.isclose(chisqvec, hh, atol=1.)
+
+    sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)] * psf
+    sum_data_minus_sim = np.sum(im - sim)
+    return fluxvec[chisqvec == min(chisqvec)], fluxvec[chisqvec == min(chisqvec)] - fluxvec[idx][
+        0], mchisq / ndof, sum_data_minus_sim
+

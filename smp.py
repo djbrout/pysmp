@@ -3407,14 +3407,10 @@ class smp:
     '''    
 
     def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,guess_scale):
-        #plt.imshow(weight)
-        #igal = pf.getdata('/global/u1/d/dbrout/smppro/zemp0g.fits')
 
-        #igalconv = scipy.signal.fftconvolve(igal,psf,mode='same')
         chisqvec = []
         fluxvec = []
         
-        #gal = igal
         galconv = scipy.signal.fftconvolve(gal,psf,mode='same')
 
         radius = 12
@@ -3426,30 +3422,14 @@ class smp:
                 if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
                     fitrad[int(x),int(y)] = 1.
 
-        #print fitrad.shape
-        #raw_input()
-        #save_fits_image(galconv*fitrad,'testpgal.fits')
-        #save_fits_image(igalconv*fitrad,'testigal.fits')
-        #save_fits_image(igalconv*fitrad-galconv*fitrad,'testgaldiff.fits')
 
-        print 'hhhh'
-        #raw_input()
-        print np.sum(psf)
-        print sky
-        #raw_input()
-
-        #im *= 0
-        #sky *= 0
-        #galconv *= 0
         if guess_scale is None:
             for i in np.arange(-10000,200000,5):
-                #print i
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
         else: 
             for i in np.arange(guess_scale-2000,guess_scale+2000,1):
-                #print i
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
