@@ -721,7 +721,7 @@ class smp:
             if snparams.mjd[j] == 0:
                 continue
             cccc += 1
-            if cccc > 3:
+            if cccc > 8:
                 continue
             #print imfile
             #raw_input()
