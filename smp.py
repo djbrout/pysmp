@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 stardeltasfolder = 'smp_y1y2_shallow_v3_40globalstars'
-foldername = 'smp_y1y2_shallow_v3_58newsky_exactpos_notgalsim'
+foldername = 'smp_y1y2_shallow_v3_58newsky_newzpt_exactpos_notgalsim'
 galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
 pixstart = None
 
@@ -75,6 +75,7 @@ import cntrd,aper,getpsf,rdpsf
 #from PythonPhot import cntrd,aper,getpsf,rdpsf
 import pkfit_norecent_noise_smp
 import addcoltoDESlightcurve as lc
+import runsextractor
 
 #from matplotlib.backends.backend_pdf import PdfPages
 
@@ -1449,7 +1450,7 @@ class smp:
                     mygain = (np.sqrt(mysky)/(skysig))**2
                     mygainsn =  (np.sqrt(skysn)/(skyerrsn))**2
                     print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
-                    import runsextractor
+                    #import runsextractor
                     #print im
                     sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
                     print mysky,skysig,skysn,skyerrsn
@@ -3721,14 +3722,14 @@ class smp:
         flux_star_std = np.array([-999.]*len(xstar))
         isnotcheckstars = np.ones(len(xstar))
         flux_star_mcmc = np.array([-999.]*len(xstar))
-        flux_star_std_mcmc = np.array([-999.]*len(xstar))
+        #flux_star_std_mcmc = np.array([-999.]*len(xstar))
         flux_star_mcmc_modelerrors = np.array([-999.]*len(xstar))
-        flux_star_std_mcmc_modelerrors = np.array([-999.]*len(xstar))
+        #flux_star_std_mcmc_modelerrors = np.array([-999.]*len(xstar))
         flux_star_mcmc_me_simple = np.array([-999.]*len(xstar))
-        flux_star_std_mcmc_me_simple = np.array([-999.]*len(xstar))
+        #flux_star_std_mcmc_me_simple = np.array([-999.]*len(xstar))
         flux_star_mcmc_me_weighted = np.array([-999.]*len(xstar))
-        flux_star_std_mcmc_me_weighted = np.array([-999.]*len(xstar))
-        mcmc_mag_std = np.array([-999.]*len(xstar))
+        #flux_star_std_mcmc_me_weighted = np.array([-999.]*len(xstar))
+        #mcmc_mag_std = np.array([-999.]*len(xstar))
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
         radius = 10.
@@ -3764,16 +3765,22 @@ class smp:
                 #Run for MPFIT
 
                 try:
-                    errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = pk.pkfit_norecent_noise_smp(1,x,y,s,se,params.fitrad,returnStamps=True,stampsize=params.substamp)
+                    errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                        pk.pkfit_norecent_noise_smp(1,x,y,s,se,params.fitrad,returnStamps=True,stampsize=params.substamp)
                     noise_stamp[noise_stamp > 0.] = 1
                     noise_stamp[noise_stamp <= 0.] = 0
-                    noise_stamp = noise_stamp*1/(se**2)
+                    sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,ixlo,ixhi,iylo,iyhi)
+                    #noise_stamp = noise_stamp*1/(se**2)
+                    noise_stamp = noise_stamp * 1 / (sexrms ** 2)
                     gal = np.zeros(image_stamp.shape)
                     mjd = 000.
-                    cscale,cscale_std,chisq,dms = self.getfluxsmp(image_stamp,psf_stamp,s,noise_stamp,fitrad,gal,mjd,scale)
-                    print 'DIFFFFFF',scale,cscale
+                    oldcscale,cscale_std,chisq,dms = self.getfluxsmp(image_stamp,psf_stamp,s,noise_stamp,fitrad,gal,mjd,scale)
+
+                    cscale,cscale_std,chisq,dms = self.getfluxsmp(image_stamp,psf_stamp,sexsky,noise_stamp,fitrad,gal,mjd,scale)
+                    print 'checking!!!',cscale,oldcscale
+                    #print 'DIFFFFFF',scale,cscale
                     scale = cscale
-                    #raw_input()
+                    raw_input()
                 except:
                     continue
                 #print self.params.fitrad
