@@ -51,7 +51,7 @@ def getsky_and_skyerr(imagefilename):
         if 'Background:' in line.split(' '):
             print line.split()
             background = line.split(' ')[2]
-            rms = line.split(' ')[5]
+            rms = line.split(' ')[4]
     return background, rms
 
 im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
