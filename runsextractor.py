@@ -44,16 +44,16 @@ def getsky_and_skyerr(imagefilename):
     print out['logfilepath']
     path = out['logfilepath']
     log = open(path, 'r')
-    print 'hahahahahahahahah'
+    #print 'hahahahahahahahah'
     background = -9
     rms = -9
     for line in log.readlines():
         if 'Background:' in line.split(' '):
-            print line
+            print line.split()
             background = line.split(' ')[2]
-            rms = line.split(' ')[4]
+            rms = line.split(' ')[5]
     return background, rms
 
 im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
 b, r = getsky_and_skyerr(im)
-print b, r
+print 'bbb', b, 'rms', r
