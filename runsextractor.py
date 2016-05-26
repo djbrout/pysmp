@@ -10,7 +10,7 @@ values from any image
 
 USAGE:
 im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
-background, rms = getsky_and_skyerr(im)
+background, rms = runsextractor.getsky_and_skyerr(im)
 
 '''
 
