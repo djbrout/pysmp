@@ -7,7 +7,7 @@ np.set_printoptions(threshold=np.nan)
 import sys
 import pyfits as pf
 
-filt = 'g'
+filt = 'r'
 zpt = 27.5
 nominal_zpt = 31.
 isdeep = False
@@ -20,7 +20,7 @@ dostardeltas = False
 dogalsim = False
 usechisq = False
 #outfolder = '/global/cscratch1/sd/dbrout/smp_y1y2_shallow79_galsim11'
-outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_54simerrfloatpos'
+outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_57testfixedgalsimfloatpos'
 pixoutfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_40globalstars'
 nothingfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_35'
 nodailyofffolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_40globalstars'
