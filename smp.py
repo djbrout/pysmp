@@ -2534,6 +2534,9 @@ class smp:
             else:
                 fixgal = False
 
+            extraflag = smp_dict['fitflag'] * 0.
+            extraflag[-10:] = 1
+
             aaa = mcmc3galsimpixshift.metropolis_hastings( 
                     galmodel = galmodel
                     , modelvec = modelvec
@@ -2552,8 +2555,8 @@ class smp:
                     , skyerr=smp_dict['skyerr']
                     , useskyerr = True
                     , flags = smp_dict['flag']
-                    , fitflags = smp_dict['fitflag']*0.
-                    , psf_shift_std = .00008
+                    , fitflags = extraflag
+                    , psf_shift_std = None#.00008
                     , shiftpsf = False
                     , fileappend = ''
                     , stop = False

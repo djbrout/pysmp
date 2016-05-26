@@ -1,4 +1,5 @@
 import numpy as np
+import pyfits as pf
 
 
 def bindata(x, y, bins, returnn=False):
@@ -65,3 +66,11 @@ def read(filename, headline, startline, delim=' '):
         linenum += 1
     inf.close()
     return return_cols
+
+
+def save_fits_image(image,filename):
+    hdu = pf.PrimaryHDU(image)
+    if os.path.exists(filename):
+        os.remove(filename)
+    hdu.writeto(filename)
+    return
