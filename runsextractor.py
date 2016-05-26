@@ -49,7 +49,7 @@ def getsky_and_skyerr(imagefilename):
     rms = -9
     for line in log.readlines():
         if 'Background:' in line.split(' '):
-            print line.split()
+            print line.split(' ')
             background = line.split(' ')[2]
             rms = line.split(' ')[4]
     return background, rms
