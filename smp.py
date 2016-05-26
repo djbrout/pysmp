@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 stardeltasfolder = 'smp_y1y2_shallow_v3_40globalstars'
-foldername = 'smp_y1y2_shallow_v3_57testfixedgalsimfloatpos'
+foldername = 'smp_y1y2_shallow_v3_58newsky_exactpos_notgalsim'
 galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
 pixstart = None
 
@@ -1451,11 +1451,11 @@ class smp:
                     print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
                     import runsextractor
                     #print im
-                    b,r = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
+                    sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
                     print mysky,skysig,skysn,skyerrsn
-                    print b,r,snparams.skysig[j]
-                    print 'hahahahahahahaha'
-                    raw_input()
+                    print sexsky,sexrms,snparams.skysig[j]
+                    #print 'hahahahahahahaha'
+                    #raw_input()
                     # for sss in im[ylow:yhi,xlow:xhi].ravel():
                     #     print sss
                     # print snparams.mjd[j]
@@ -1640,8 +1640,10 @@ class smp:
                                     smp_dict['scale_err'][i] = errmag
                                     #smp_dict['mcmc_scale_err'][i] = mcmc_scale_err
                                     #smp_dict['sky'][i] = skysn
-                                    smp_dict['sky'][i] = mysky
-                                    smp_dict['skyerr'][i] = skyerrsn
+                                    #smp_dict['sky'][i] = mysky
+                                    #smp_dict['skyerr'][i] = skyerrsn
+                                    smp_dict['sky'][i] = sexsky
+                                    smp_dict['skyerr'][i] = sexrms
                                     smp_dict['flag'][i] = 0
                                     #CHECK FOR DIFFIM FLAGS
                                     if (int(snparams.photflag[j]) & 1016) > 0:
@@ -2191,7 +2193,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 150000
+                    , maxiter = 200000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
@@ -2206,7 +2208,7 @@ class smp:
                     , stop = False
                     , skyerr_radius = 16.
                     , outpath = outimages
-                    , compressionfactor = 25
+                    , compressionfactor = 100
                     , fix_gal_model = None
                     , pixelate_model = 1.
                     , burnin = .75
