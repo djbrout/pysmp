@@ -37,15 +37,23 @@ def getsky_and_skyerr(imagefilename):
 
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
-            sexpath="sex"
+            workdir='sewpy_logs/'
+            , sexpath="sex"
         )
     out = sew(imagefilename)
     print out['logfilepath']
     path = out['logfilepath']
     log = open(path, 'r')
     print 'hahahahahahahahah'
+    background = -9
+    rms = -9
     for line in log.readlines():
-        print line
+        if 'Background:' in line.split(' '):
+            print line
+            background = line.split(' ')[2]
+            rms = line.split(' ')[4]
+    return background, rms
 
 im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
-getsky_and_skyerr(im)
+b, r = getsky_and_skyerr(im)
+print b, r
