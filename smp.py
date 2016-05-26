@@ -3765,25 +3765,27 @@ class smp:
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf,psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
 
-                try:
-                    errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
-                        pk.pkfit_norecent_noise_smp(1,x,y,s,se,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                    noise_stamp[noise_stamp > 0.] = 1
-                    noise_stamp[noise_stamp <= 0.] = 0
-                    sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,ixlo,ixhi,iylo,iyhi)
-                    #noise_stamp = noise_stamp*1/(se**2)
-                    noise_stamp = noise_stamp * 1 / (sexrms ** 2)
-                    gal = np.zeros(image_stamp.shape)
-                    mjd = 000.
-                    oldcscale,cscale_std,chisq,dms = self.getfluxsmp(image_stamp,psf_stamp,s,noise_stamp,fitrad,gal,mjd,scale)
-
-                    cscale,cscale_std,chisq,dms = self.getfluxsmp(image_stamp,psf_stamp,sexsky,noise_stamp,fitrad,gal,mjd,scale)
-                    print 'checking!!!',cscale,oldcscale
-                    #print 'DIFFFFFF',scale,cscale
-                    scale = cscale
-                    raw_input()
-                except:
-                    continue
+                #try:
+                errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
+                    pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                                                stampsize=params.substamp)
+                noise_stamp[noise_stamp > 0.] = 1
+                noise_stamp[noise_stamp <= 0.] = 0
+                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
+                # noise_stamp = noise_stamp*1/(se**2)
+                noise_stamp = noise_stamp * 1 / (sexrms ** 2)
+                gal = np.zeros(image_stamp.shape)
+                mjd = 000.
+                oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
+                                                                    mjd, scale)
+                cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, fitrad,
+                                                                 gal, mjd, scale)
+                print 'checking!!!', cscale, oldcscale
+                # print 'DIFFFFFF',scale,cscale
+                scale = cscale
+                raw_input()
+                #except:
+                #    continue
                 #print self.params.fitrad
                 #resid = imstamp - psf*scale - s
                 #print 
