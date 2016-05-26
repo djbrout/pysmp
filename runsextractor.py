@@ -40,7 +40,12 @@ def getsky_and_skyerr(imagefilename):
             sexpath="sex"
         )
     out = sew(imagefilename)
-    print out.keys()
+    print out['logfilepath']
+    path = out['logfilepath']
+    log = open(path, 'r')
+    print 'hahahahahahahahah'
+    for line in log.readlines():
+        print line
 
 im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
 getsky_and_skyerr(im)
