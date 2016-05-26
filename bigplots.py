@@ -15,9 +15,9 @@ isdeep = False
 dopix = False
 loadstardeltas = False
 doglobalsn = False
-dooff = True
+dooff = False
 dostardeltas = False
-dogalsim = False
+dogalsim = True
 usechisq = False
 #outfolder = '/global/cscratch1/sd/dbrout/smp_y1y2_shallow79_galsim11'
 outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_57testfixedgalsimfloatpos'
@@ -280,6 +280,9 @@ for sn in np.arange(len(snnames)):
 		if dogalsim:
 			print 'galsimmm'
 			withsn = np.load(os.path.join(outfolder,'np_data/'+filt+'/'+withsngalsimspix[sn]))
+			print withsn.keys()
+			#print withsn['modelvec_nphistory'].shape
+			#raw_input()
 		else:
 			withsn = np.load(os.path.join(outfolder,'np_data/'+filt+'/'+withsns[sn]))
 	except:
@@ -320,8 +323,10 @@ for sn in np.arange(len(snnames)):
 	if dopix:
 		if withsngalsimpix['accepted_history'] > .7:
 			print snnames[sn]+' skipped too many steps accepted:', withsngalsimpix['accepted_history']
+			raw_input()
 			continue
 		if withsngalsimpix['accepted_history'] < .15:
+			raw_input()
 			print snnames[sn]+' skipped too many steps skipped:',withsngalsimpix['accepted_history']
 			continue
 	#print withsn.keys()
@@ -332,10 +337,13 @@ for sn in np.arange(len(snnames)):
 	mm = np.argmax(withsn['modelvec'])
 	wsn_val = []
 	wsnh = withsn['modelvec_nphistory'][:,mm]
-	if len(wsnh) < 400:
+	if len(wsnh) < 300:
 		print snnames[sn]+' Not enough steps for convergence '+str(len(wsnh))+'... Skipping...'
+		raw_input()
 		continue
 	
+	#print 'heyyyyyy'
+	#raw_input()
 	nval = []
 	doval = []
 	'''
@@ -440,9 +448,9 @@ for sn in np.arange(len(snnames)):
 			continue
 	#print withsngalsim.keys()
 	#raw_input()
-	try:
-	    for i in np.arange(len(mcmc_input['mjd'])):
-                mp = withsn['modelvec_nphistory'][:,i]
+	#try:
+	for i in np.arange(len(mcmc_input['mjd'])):
+		mp = withsn['modelvec_nphistory'][:,i]
 		#print (np.mean(mp[-1*int(len(mp)/2):])-np.mean(mp[-1*int(len(mp)/4):]))/np.mean(mp[-1*int(len(mp)/2):]),np.mean(mp),len(mp)
 		#raw_input()
 		if not float(madstd(withsn['modelvec_nphistory'][:,i])) != 0.:
@@ -480,8 +488,9 @@ for sn in np.arange(len(snnames)):
 			nflux.append(0)
 			nfluxerr.append(0)
 		zpt.append(float(mcmc_input['zpt'][i]))
-		snraoff.append(float(withsn['raoff']))
-		sndecoff.append(float(withsn['decoff']))
+		if doglobalsn:
+			snraoff.append(float(withsn['raoff']))
+			sndecoff.append(float(withsn['decoff']))
 		fakezpt.append(float(mcmc_input['fakezpt'][i]))
 		# chisq.append(float(finalresults['chisq'][i]))
 		# chi.append(float(finalresults['dms'][i]))
@@ -500,9 +509,9 @@ for sn in np.arange(len(snnames)):
 		#print mcmc_input['hostgal_sbmag']
 		#raw_input()
 		sns.append(snnames[sn])
-	except:
-		print 'gogogogogogogog'
-		continue
+	#except:
+	#	print 'gogogogogogogog'
+	#	continue
 
 	#print mcmc_gpixfloatflux
 	#print mcmc_floatflux

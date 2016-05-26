@@ -6,7 +6,7 @@ import numpy as np
 np.set_printoptions(threshold=np.nan)
 import sys
 from copy import copy
-import addcoltolightcurve as lc
+import addcoltoDESlightcurve as lc
 from scipy import stats
 #import plotlightcurve as lcurve
 
@@ -44,7 +44,7 @@ save = '/global/u1/d/dbrout/PySMP/paperplots/'
 
 #filtsu = ['g','r','i']
 filtsu = ['r']
-outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_54comboerr'
+outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_57testfixedgalsimfloatpos'
 
 radec = False
 snradec = False
