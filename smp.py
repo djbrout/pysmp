@@ -3742,7 +3742,7 @@ class smp:
 
                 
                 counter += 1
-                pk = pkfit_norecent_noise_smp.pkfit_class(im,psf,psfcenter,self.rdnoise,self.gain,noise,mask)
+                pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
 
                 try:
