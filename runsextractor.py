@@ -49,9 +49,9 @@ def getsky_and_skyerr(imagefilename):
     rms = -9
     for line in log.readlines():
         if 'Background:' in line.split(' '):
-            print line.split('Background:')[1]
-            background = line.split('Background:')[1].split(' ')[0]
-            rms = line.split('RMS:')[1].split(' ')[0]
+            #print line.split('Background:')[1]
+            background = line.split('Background: ')[1].split(' ')[0]
+            rms = line.split('RMS: ')[1].split(' ')[0]
     return background, rms
 
 im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
