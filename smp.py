@@ -280,8 +280,8 @@ class smp:
             #self.checkstarfile = self.params.checkstarfile
             if not os.path.exists('/'.join(self.checkstarfile.split('/')[:-1])):
                 os.makedirs('/'.join(self.checkstarfile.split('/')[:-1]))
-            if not os.path.exists(self.zpt_fits):
-                os.makedirs(self.zpt_fits)
+            if not os.path.exists('./zpts'):
+                os.makedirs('./zpts/')
             a = open(self.zpt_fits,'w')
             a.write('ZPT FILE LOCATIONS\n')
             a.close()
