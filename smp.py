@@ -87,7 +87,7 @@ snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
 snvarnameslist = {'ID_OBS':'string','MJD':'float','BAND':'string',
                   'IMAGE_NAME_SEARCH':'string','IMAGE_NAME_WEIGHT':'string',
                   'FILE_NAME_PSF':'string','FAKE_TRUEMAG':'float','ZP':'float',
-                  'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string'}
+                  'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
 paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'RADIUS2':'float','SUBSTAMP':'float',
                     'MAX_MASKNUM':'float','RDNOISE_NAME':'string',
@@ -1452,7 +1452,7 @@ class smp:
                     import runsextractor
                     #print im
                     b,r = runsextractor.getsky_and_skyerr(imfile)
-                    print b,r
+                    print b,r,snparams.skysig[j]
                     print 'hahahahahahahaha'
                     raw_input()
                     # for sss in im[ylow:yhi,xlow:xhi].ravel():
