@@ -720,9 +720,9 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             if snparams.mjd[j] == 0:
                 continue
-            cccc += 1
-            if cccc > 8:
-                continue
+            #cccc += 1
+            #if cccc > 8:
+            #    continue
             #print imfile
             #raw_input()
             skysig=np.nan
