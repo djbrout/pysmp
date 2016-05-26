@@ -3408,9 +3408,9 @@ class smp:
 
     def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,guess_scale):
         #plt.imshow(weight)
-        igal = pf.getdata('/global/u1/d/dbrout/smppro/zemp0g.fits')
+        #igal = pf.getdata('/global/u1/d/dbrout/smppro/zemp0g.fits')
 
-        igalconv = scipy.signal.fftconvolve(igal,psf,mode='same')
+        #igalconv = scipy.signal.fftconvolve(igal,psf,mode='same')
         chisqvec = []
         fluxvec = []
         
@@ -3464,19 +3464,19 @@ class smp:
         hh = chisqvec*0 + min(chisqvec)
         mchisq = min(chisqvec)
         idx = np.isclose(chisqvec, hh, atol=1.)
-        print len(fluxvec[idx])
-
-        plt.clf()
-        plt.plot(fluxvec,np.array(chisqvec),color='black')
-        plt.axhline(min(chisqvec)+1.0,color='red')
-        plt.axvline(fluxvec[idx][0])
-        plt.axvline(fluxvec[idx][-1])
-        plt.xlabel('Flux')
-        plt.ylabel('Chisq')
-        plt.ylim(min(chisqvec),min(chisqvec)+10.)
-        plt.xlim(-1000,10000)
-        plt.savefig('./chisqmin/testflux_'+str(mjd)+'.png')
-        print './chisqmin/testflux_'+str(mjd)+'.png'
+        # print len(fluxvec[idx])
+        #
+        # plt.clf()
+        # plt.plot(fluxvec,np.array(chisqvec),color='black')
+        # plt.axhline(min(chisqvec)+1.0,color='red')
+        # plt.axvline(fluxvec[idx][0])
+        # plt.axvline(fluxvec[idx][-1])
+        # plt.xlabel('Flux')
+        # plt.ylabel('Chisq')
+        # plt.ylim(min(chisqvec),min(chisqvec)+10.)
+        # plt.xlim(-1000,10000)
+        # plt.savefig('./chisqmin/testflux_'+str(mjd)+'.png')
+        # print './chisqmin/testflux_'+str(mjd)+'.png'
         #raw_input()
 
 
