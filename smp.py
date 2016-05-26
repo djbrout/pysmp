@@ -1448,10 +1448,10 @@ class smp:
                     mygain = (np.sqrt(mysky)/(skysig))**2
                     mygainsn =  (np.sqrt(skysn)/(skyerrsn))**2
                     print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
-                    print mysky,skysig,skysn,skyerrsn
                     import runsextractor
                     #print im
-                    b,r = runsextractor.getsky_and_skyerr(imfile)
+                    b,r = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
+                    print mysky,skysig,skysn,skyerrsn
                     print b,r,snparams.skysig[j]
                     print 'hahahahahahahaha'
                     raw_input()

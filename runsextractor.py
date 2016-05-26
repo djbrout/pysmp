@@ -17,16 +17,24 @@ background, rms = runsextractor.getsky_and_skyerr(im)
 
 import sewpy
 import logging
+import pyfits as pf
+import dilltools as dt
+import os
 
+def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi):
 
-def getsky_and_skyerr(imagefilename):
+    im = pf.getdata(imagefilename)
+    #hdr = pf.getheader(imagefilename)
+    im = im[ylow:yhi,xlow:xhi]
+    newfilename = 'sewpy_logs/trimmed_'+imagefilename
+    dt.save_fits_image(im, newfilename)
 
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
             workdir='sewpy_logs/'
             , sexpath="sex"
         )
-    out = sew(imagefilename)
+    out = sew(newfilename)
     path = out['logfilepath']
     log = open(path, 'r')
     background = -9
@@ -35,6 +43,8 @@ def getsky_and_skyerr(imagefilename):
         if 'Background:' in line.split(' '):
             background = line.split('Background: ')[1].split(' ')[0]
             rms = line.split('RMS: ')[1].split(' ')[0]
+
+    os.remove(newfilename)
     return float(background), float(rms)
 
 #im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'

@@ -1,5 +1,6 @@
 import numpy as np
 import pyfits as pf
+import os
 
 
 def bindata(x, y, bins, returnn=False):
@@ -73,4 +74,5 @@ def save_fits_image(image,filename):
     if os.path.exists(filename):
         os.remove(filename)
     hdu.writeto(filename)
+
     return
