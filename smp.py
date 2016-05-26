@@ -1418,24 +1418,25 @@ class smp:
                     #save_fits_image(im[xsn-200:xsn+200,ysn-200:ysn+200],'./testskysig/'+str(snparams.mjd[i])+'.fits')
                     print xsn,ysn
                     print im.shape
+                    stampsize = 256
                     print 'hahhahah'
                     #raw_input()
-                    if ysn-100 < 0:
+                    if ysn-stampsize < 0:
                         ylow = 0
                     else:
-                        ylow = ysn-100
-                    if ysn+100>im.shape[0]:
+                        ylow = ysn-stampsize
+                    if ysn+stampsize>im.shape[0]:
                         yhi = im.shape[0]-1
                     else:
-                        yhi = ysn+100
-                    if xsn-100 < 0:
+                        yhi = ysn+stampsize
+                    if xsn-stampsize < 0:
                         xlow = 0
                     else:
-                        xlow = xsn-100
-                    if xsn+100>im.shape[1]:
+                        xlow = xsn-stampsize
+                    if xsn+stampsize>im.shape[1]:
                         xhi = im.shape[1]-1
                     else:
-                        xhi = xsn+100
+                        xhi = xsn+stampsize
                     print 'yoyoyo'
                     #raw_input()
                     print ylow,yhi
