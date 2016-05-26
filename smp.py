@@ -1450,8 +1450,8 @@ class smp:
                     print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
                     print mysky,skysig,skysn,skyerrsn
                     import runsextractor
-                    print im
-                    b,r = runsextractor.getsky_and_skyerr(im)
+                    #print im
+                    b,r = runsextractor.getsky_and_skyerr(imfile)
                     print b,r
                     print 'hahahahahahahaha'
                     raw_input()
