@@ -803,9 +803,9 @@ class metropolis_hastings():
         #save_fits_image(self.data[ 0, :,:],'./data.fits')
         #if self.didtimeout:
         if self.dosave:
-            filelist = [ f for f in os.listdir("./out")]
-            for f in filelist:
-                os.remove('./out/'+f)
+            #filelist = [ f for f in os.listdir("./out")]
+            #for f in filelist:
+            #    os.remove('./out/'+f)
             
             for i in np.arange(self.Nimage):   
                 #print self.sims[i,:,:]
