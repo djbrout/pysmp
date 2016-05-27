@@ -349,7 +349,8 @@ class smp:
 #        smp_bigim = np.zeros([snparams.nvalid,params.stampsize,params.stampsize])
 #        smp_bignoise = np.zeros([snparams.nvalid,params.stampsize,params.stampsize])
 #        smp_bigpsf = np.zeros([snparams.nvalid,params.stampsize,params.stampsize])
-        
+        print 'substmp',params.substamp
+        raw_input()
 
         smp_dict = {'scale':np.zeros(snparams.nvalid),
                     'scale_err':np.zeros(snparams.nvalid),
