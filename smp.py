@@ -1621,21 +1621,21 @@ class smp:
                                     c = 20
                                     psa = self.snparams.platescale
 
-                                    rmat = np.zeros(smp_psf[i,:,:].shape)
-                                    for a in range(0,40):
-                                        for b in range(0,40):
-                                            r = np.sqrt((a-20)**2+(b-20)**2)
-                                            rmat[a,b] = r
+                                    #rmat = np.zeros(smp_psf[i,:,:].shape)
+                                    #for a in range(0,40):
+                                    #    for b in range(0,40):
+                                    #        r = np.sqrt((a-20)**2+(b-20)**2)
+                                    #        rmat[a,b] = r
                                     #print rmat[20,:]
 
                                     #Following formalism of 
                                     #http://das.sdss2.org/ge/sample/sdsssn/SNANA-PUBLIC/doc/snana_manual.pdf
                                     #page 8
-                                    integral = 2*np.pi*np.trapz((smp_psf[i,:,:]**2*rmat).ravel())
-                                    total_skyerr = np.sqrt(integral**(-1)*skysn)
+                                    #integral = 2*np.pi*np.trapz((smp_psf[i,:,:]**2*rmat).ravel())
+                                    #total_skyerr = np.sqrt(integral**(-1)*skysn)
 
 
-                                    smp_dict['total_skyerr'][i] = total_skyerr
+                                    #smp_dict['total_skyerr'][i] = total_skyerr
 
                                     smp_dict['scale'][i] = scale
                                     #smp_dict['mcmc_scale'][i] = mcmc_scale
