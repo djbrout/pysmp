@@ -274,7 +274,7 @@ for sn in np.arange(len(snnames)):
 		mcmc_input = np.load(os.path.join(outfolder,'np_data/'+filt+'/'+mcmc_inputs[sn]))
 	except:
 		continue
-	print 'mjdoff',np.max(abs(mcmc_input['mjdoff'])),mcmc_inputs[sn]
+	#print 'mjdoff',np.max(abs(mcmc_input['mjdoff'])),mcmc_inputs[sn]
 	#raw_input()
 	try:	
 		if dogalsim:
