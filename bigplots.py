@@ -339,7 +339,7 @@ for sn in np.arange(len(snnames)):
 	wsnh = withsn['modelvec_nphistory'][:,mm]
 	if len(wsnh) < 300:
 		print snnames[sn]+' Not enough steps for convergence '+str(len(wsnh))+'... Skipping...'
-		raw_input()
+		#raw_input()
 		continue
 	
 	#print 'heyyyyyy'
