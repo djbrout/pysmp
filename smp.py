@@ -4279,11 +4279,6 @@ if __name__ == "__main__":
     # read in arguments and options
     try:
         if os.path.exists("defaults/default.config"):
-            b = open("defaults/default.config", 'r')
-            for line in b:
-                print line
-            b.close()
-            raw_input()
             args = open("defaults/default.config", 'r').read().split()
         else:
             args = sys.argv[1:]
@@ -4504,6 +4499,8 @@ if __name__ == "__main__":
                 #print snfile
                 #raw_input()
                 snparams = get_snfile(snfile, root_dir)
+                print param_file
+                raw_input()
                 params = get_params(param_file)
 
                 if nomask == 'none':
