@@ -4278,8 +4278,8 @@ if __name__ == "__main__":
     import sys,getopt
     # read in arguments and options
     try:
-        if os.path.exists("./defaults/default.config"):
-            args = open("./defaults/default.config", 'r').read().split()
+        if os.path.exists("defaults/default.config"):
+            args = open("defaults/default.config", 'r').read().split()
         else:
             args = sys.argv[1:]
         
