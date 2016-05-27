@@ -4279,6 +4279,11 @@ if __name__ == "__main__":
     # read in arguments and options
     try:
         if os.path.exists("defaults/default.config"):
+            b = open("defaults/default.config", 'r')
+            for line in b:
+                print line
+            b.close()
+            raw_input()
             args = open("defaults/default.config", 'r').read().split()
         else:
             args = sys.argv[1:]
