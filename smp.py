@@ -346,11 +346,7 @@ class smp:
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_psf = np.zeros([snparams.nvalid,params.substamp,params.substamp])
-#        smp_bigim = np.zeros([snparams.nvalid,params.stampsize,params.stampsize])
-#        smp_bignoise = np.zeros([snparams.nvalid,params.stampsize,params.stampsize])
-#        smp_bigpsf = np.zeros([snparams.nvalid,params.stampsize,params.stampsize])
-        print 'substmp',params.substamp
-        raw_input()
+
 
         smp_dict = {'scale':np.zeros(snparams.nvalid),
                     'scale_err':np.zeros(snparams.nvalid),
@@ -4561,9 +4557,6 @@ if __name__ == "__main__":
         print("Error : snfile and params  must be provided")
         print(__doc__)
         sys.exit(1)
-
-    print param_file
-    raw_input()
 
     if not mergeno:
         mergeno = int(0)
