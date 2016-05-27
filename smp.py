@@ -4499,8 +4499,7 @@ if __name__ == "__main__":
                 #print snfile
                 #raw_input()
                 snparams = get_snfile(snfile, root_dir)
-                print param_file
-                raw_input()
+
                 params = get_params(param_file)
 
                 if nomask == 'none':
@@ -4562,6 +4561,9 @@ if __name__ == "__main__":
         print("Error : snfile and params  must be provided")
         print(__doc__)
         sys.exit(1)
+
+    print param_file
+    raw_input()
 
     if not mergeno:
         mergeno = int(0)
