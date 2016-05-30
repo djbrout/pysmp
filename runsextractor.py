@@ -26,6 +26,8 @@ def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi):
     im = pf.getdata(imagefilename)
     #hdr = pf.getheader(imagefilename)
     im = im[ylow:yhi,xlow:xhi]
+    if not os.path.exists('sewpy_logs/'):
+        os.makedirs('sewpy_logs/')
     newfilename = 'sewpy_logs/trimmed_'+imagefilename.split('/')[-1]
     dt.save_fits_image(im, newfilename)
 
