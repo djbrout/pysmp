@@ -270,7 +270,7 @@ class smp:
         from astropy import wcs
         import astropy.io.fits as pyfits
         self.outfile = outfile
-        cspath = os.path.join(outfile,stardeltasfolder+'/SNe/starfits/')
+        cspath = os.path.join(outfile,foldername+'/SNe/starfits/')
         if not os.path.exists(cspath):
             os.makedirs(cspath)
         self.checkstarfile = os.path.join(outfile,stardeltasfolder+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
