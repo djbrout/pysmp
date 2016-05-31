@@ -75,6 +75,7 @@ import cntrd,aper,getpsf,rdpsf
 #from PythonPhot import cntrd,aper,getpsf,rdpsf
 import addcoltoDESlightcurve as lc
 import runsextractor
+import pkfit_norecent_noise_smp
 
 #from matplotlib.backends.backend_pdf import PdfPages
 
@@ -1165,6 +1166,8 @@ class smp:
                     else:
                         x_star = x_starold
                         y_star = y_starold
+                        tra = starcat.ra[cols]
+                        tdec = starcat.dec[cols]
                     #print np.array(x_starold) - np.array(x_star)
                     #print 'checking new star positions'
                     #raw_input()
@@ -1300,7 +1303,7 @@ class smp:
                 #raw_input()
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
-                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,starcat.ra[cols], starcat.dec[cols],starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tra,tdec,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflag,mag_star,im,noise,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)    
                 else:
@@ -1317,10 +1320,10 @@ class smp:
                 dotestoff = False
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,noise,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
-                fakestarflux,fakestarfluxerr,fakestarzpt = self.fake20magstars(self.rickfakestarfile,w,zpt,sky,skyerr,im,noise,mask,psffile,imfile,snparams,params.substamp,psf=self.psf)
-                self.fakestarfluxes.extend(fakestarflux)
-                self.fakestarfluxerrs.extend(fakestarfluxerr)
-                self.fakestarzpts.extend(fakestarzpt)
+                #fakestarflux,fakestarfluxerr,fakestarzpt = self.fake20magstars(self.rickfakestarfile,w,zpt,sky,skyerr,im,noise,mask,psffile,imfile,snparams,params.substamp,psf=self.psf)
+                #self.fakestarfluxes.extend(fakestarflux)
+                #self.fakestarfluxerrs.extend(fakestarfluxerr)
+                #self.fakestarzpts.extend(fakestarzpt)
             #idlmjdnearest = min(idlmjd, key=lambda x:abs(x-float(snparams.mjd[j])))
             #zpt = idlzpt[idlmjd == idlmjdnearest]
 
@@ -2094,11 +2097,11 @@ class smp:
             self.ras = dsf['ras']
             self.decs = dsf['decs']
             self.airmasses = dsf['airmasses']
-        fname = self.checkstarfile.split('.')[0]+'_20magfakes.npz'
-        self.moneyfile = fname
-        if nozpt:
-            np.savez(self.moneyfile,flux=self.fakestarfluxes,fluxerr=self.fakestarfluxerrs,zpt=self.fakestarzpts)
-            print fname,'SAVED'
+        #fname = self.checkstarfile.split('.')[0]+'_20magfakes.npz'
+        #self.moneyfile = fname
+        #if nozpt:
+        #    np.savez(self.moneyfile,flux=self.fakestarfluxes,fluxerr=self.fakestarfluxerrs,zpt=self.fakestarzpts)
+        #    print fname,'SAVED'
 
         #self.plotcheckstars()
         #self.plotallfake20staroffsets()
