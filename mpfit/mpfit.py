@@ -1417,7 +1417,8 @@ class mpfit:
 
 		# Determine which parameters to print
 		nprint = len(x)
-		print ("Iter ", ('%6i' % iter),"   CHI-SQUARE = ",('%.10g' % fnorm)," DOF = ", ('%i' % dof))
+		#if quiet == 0:
+		#print ("Iter ", ('%6i' % iter),"   CHI-SQUARE = ",('%.10g' % fnorm)," DOF = ", ('%i' % dof))
 		for i in range(nprint):
 			if (parinfo is not None) and (parinfo[i].has_key('parname')):
 				p = '   ' + parinfo[i]['parname'] + ' = '
@@ -1427,8 +1428,8 @@ class mpfit:
 				iprint = parinfo[i]['mpprint']
 			else:
 				iprint = 1
-			if iprint:
-				print (p + (pformat % x[i]) + '  ')
+			#if iprint:
+			#	#print (p + (pformat % x[i]) + '  ')
 		return 0
 
 	#  DO_ITERSTOP:
