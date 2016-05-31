@@ -3775,15 +3775,16 @@ class smp:
                         gpsf = simstamp.array
                         gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
                                                                      fitrad, gal, mjd, scale)
-                        print 'gchisq',gchisq
-                        raw_input()
+                        #print 'gchisq',gchisq
+                        #raw_input()
                     cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, fitrad,
                                                                      gal, mjd, scale)
                     #print 'checking!!!', cscale, oldcscale
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
                     #print 'scaled'
-                    #raw_input()
+                    print 'chisq',gchisq,chisq
+                    raw_input()
                 except NameError:
                     print 'skipped star...'
                     continue
