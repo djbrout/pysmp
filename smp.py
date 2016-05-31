@@ -3716,7 +3716,7 @@ class smp:
             for y in np.arange(substamp):
                 if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
                     fitrad[int(x),int(y)] = 1.
-        print 'xstarrrrrrr',len(xstar)
+        print 'xstarrrrrrr222222',len(xstar)
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
