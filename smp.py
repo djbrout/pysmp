@@ -3763,12 +3763,12 @@ class smp:
                         cy = int(round(stamp_center.y))
                         des_psfex = galsim.des.DES_PSFEx(psffile)
                         thispsf = des_psfex.getPSF(stamp_center)
-                        im = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
+                        tim = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
                                                             cy - params.fitrad, cy + params.fitrad)]
-                        galsimpsfworld = im.wcs.toWorld(thispsf, image_pos=stamp_center)
+                        galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
                         simstamp = full_data_image[ galsim.BoundsI(cx - radius, cx + radius,
                                                                    cy - radius, cy + radius)] * 0.0
-                        offset = im.wcs.toWorld(im.trueCenter()).project(fiducial_coord)
+                        offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
                         sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
                         sn = sn.shift(offset)
                         conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
@@ -3783,8 +3783,8 @@ class smp:
                     #print 'checking!!!', cscale, oldcscale
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
-                    print 'scaled'
-                    raw_input()
+                    #print 'scaled'
+                    #raw_input()
                 except NameError:
                     print 'skipped star...'
                     continue
