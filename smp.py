@@ -273,7 +273,7 @@ class smp:
         cspath = os.path.join(outfile,foldername+'/SNe/starfits/')
         if not os.path.exists(cspath):
             os.makedirs(cspath)
-        self.checkstarfile = os.path.join(outfile,stardeltasfolder+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
+        self.checkstarfile = os.path.join(outfile,foldername+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
                                           +'_'+filt+'_standardstarfits.txt')
         #print self.checkstarfile
         #print 'checkstarfile'
@@ -3556,7 +3556,8 @@ class smp:
                 mjdoff,mjdslopeinteroff,psf='',
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
-        print 'Computing zeropoint for',imfile,'\n'
+        print 'Computing zeropoint for',imfile
+        print '\n'
         import pkfit_norecent_noise_smp
         counter = 0
 
