@@ -3708,8 +3708,6 @@ class smp:
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
         radius = 10.
-        print 'ss',substamp
-        raw_input()
         fitrad = np.zeros([substamp,substamp])
         for x in np.arange(substamp):   
             for y in np.arange(substamp):
@@ -3787,7 +3785,8 @@ class smp:
                     scale = cscale
                     #print 'scaled'
                     print 'chisq',gchisq,chisq
-                    raw_input()
+                    print 'flux',gscale,cscale
+                    #raw_input()
                 except NameError:
                     print 'skipped star...'
                     continue
