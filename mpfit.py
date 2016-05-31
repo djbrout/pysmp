@@ -604,7 +604,7 @@ class mpfit:
 				 ftol=1.e-10, xtol=1.e-10, gtol=1.e-10,
 				 damp=0., maxiter=200, factor=100., nprint=1,
 				 iterfunct='default', iterkw={}, nocovar=0,
-				 rescale=0, autoderivative=1, quiet=0,
+				 rescale=0, autoderivative=1, quiet=1,
 				 diag=None, epsfcn=None, debug=0):
 		"""
   Inputs:
