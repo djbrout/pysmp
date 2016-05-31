@@ -792,23 +792,14 @@ class smp:
                 hdr = pyfits.getheader(imfile)
             else:
                 im = pyfits.getdata(imfile)
-                #hdulist = pyfits.open(imfile)
                 hdr = pyfits.getheader(imfile)
             fakeim_hdr = pyfits.getheader(fakeim)
             snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
             snparams.platescale = hdr['PIXSCAL1']
             snparams.airmass = hdr['AIRMASS']
-            #snparams.snr = hdr['SNR']
-            #print hdulist[1].data.shape
-            #raw_input()
+
             noise = pyfits.getdata(noisefile)
-            #noise[noise < 1e-5] = 0.
-            print noise.shape
-            print np.max(noise)
-            print np.min(noise)
-            print np.mean(noise)
-            #raw_input()
-            #raw_input()
+
             psf = pyfits.getdata(psffile)
 
             if params.weight_type.lower() == 'ivar':
@@ -824,11 +815,7 @@ class smp:
                 mask[maskcols] = 100.0
             else:
                 mask = pyfits.getdata(maskfile)
-            #print mask[mask!=0]
-            #print 'maskkkk'
-            #raw_input()
 
-            #wcs = astWCS.WCS(imfile)
             wcsworked = True
             try:
                 w =wcs.WCS(imfile)
@@ -842,9 +829,6 @@ class smp:
                 wcsinfo = fitschan.read()
                 w = wcs.WCS(imfile+'old')
 
-            #ra1,dec1 = wcs.pix2wcs(0,0)
-            #ra2,dec2 = wcs.pix2wcs(snparams.nxpix-1,
-            #                       snparams.nypix-1)
             
             if wcsworked:
                 results =  w.wcs_pix2world(np.array([[0,0]]), 0)
@@ -857,12 +841,7 @@ class smp:
                 ypix = [0]
                 radtodeg = 360/(2*3.14159)
                 results =  wcsinfo.tran([xpix,ypix])
-                print wcsinfo
-                #print 'wcsinfo'
-                #raw_input()
-                #print results
-                #print results[0]
-                #print results[1]
+
                 ra1, dec1 = results[0]*radtodeg, results[1]*radtodeg
                 results2 =  wcsinfo.tran([[snparams.nxpix-1], [snparams.nypix-1]])
                 ra2, dec2 =results2[0]*radtodeg, results2[1]*radtodeg
@@ -872,9 +851,6 @@ class smp:
             dec_high = np.max([dec1,dec2])
             dec_low = np.min([dec1,dec2])
 
-            #print ra_high*radtodeg,ra_low*radtodeg
-            #print snparams.ra
-            #print 'lowhitest'
             try:
                 if self.exactpos:
                     snparams.RA = float(snparams.fake_ra)
@@ -895,13 +871,7 @@ class smp:
                     raise exceptions.RuntimeError('Error : RA/Dec format unrecognized!!')
 
 
-            #xsn,ysn = wcs.wcs2pix(snparams.RA,snparams.DECL)
-            #if wcsworked:
-
             if params.forceradec.lower() == 'true':
-                print float(params.fra),float(params.fdec)
-                print 'fake ra dec'
-                #raw_input()
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[float(params.fra),float(params.fdec)]]), 0))
             else:
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA,snparams.DECL]]), 0))
@@ -915,30 +885,6 @@ class smp:
                 xsn += offsetx
                 ysn += offsety
 
-            #else:
-            #    print snparams.RA
-            #    print snparams.DECL
-            #    print 'GOGOGOGOG'
-            #    rr = wcsinfo.tran([[snparams.RA],[snparams.DECL]],False)
-            #    print rr
-            #    xsn = rr[0]
-            #    ysn = rr[1]
-            #    print xsn
-            #    print ysn
-            #    print 'xsnysn'
-            #    raw_input()
-
-
-
-            #xsn-=200
-            #ysn-=200
-            #print snparams.starcat[j]
-            #raw_input()
-
-            print xsn
-            print ysn
-            #print snparams.npix
-            #raw_input()
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 #raise exceptions.RuntimeError("Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl))
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
@@ -990,8 +936,7 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
                     
-            #print snparams.psf_model.lower()
-            #raw_input()
+
             if snparams.psf_model.lower() == 'daophot':
                 if params.build_psf == 'yes':
                     cols = np.where((starcat.ra > ra_low) & 
@@ -1002,19 +947,16 @@ class smp:
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
-                    #x_star,y_star = wcs.wcs2pix(starcat.ra[cols],starcat.dec[cols])
                     x_star,y_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
                     if not dontcentroid:
                         x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
                         newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
-                    #print starcat.ra[cols] - newra
-                    #raw_input()
+
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
 
                     if badflag == 1:
                         print 'aper1 badflag'
-                        #raw_input()
 
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name]
@@ -1024,13 +966,11 @@ class smp:
                                                          range(len(x_star)),params.fitrad,
                                                          psffile)
                         hpsf = pyfits.getheader(psffile)
-                        #self.gauss = gauss
                     else:
                         print('PSF file exists.  Not clobbering...')
                         hpsf = pyfits.getheader(psffile)
                         magzpt = hpsf['PSFMAG']
 
-                        #self.gauss = [hpsf['GAUSS1'],hpsf['GAUSS2'],hpsf['GAUSS3'],hpsf['GAUSS4'],hpsf['GAUSS5']]
                 elif nozpt:
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name] #1
@@ -1044,7 +984,6 @@ class smp:
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
-                    #coords = wcs.wcs2pix(starcat.ra[cols],starcat.dec[cols])
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
                     x_star,y_star = [],[]
                     for c in coords:
@@ -1054,49 +993,34 @@ class smp:
                     if not doncentroid:
                         x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
                         newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
-                        
-                    #print starcat.ra[cols] - newra
-                    #print 'hehehehehehe'
-                    #raw_input()
+
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
                     if badflag == 1:
                         print 'aper2 badflag'
-                        #raw_input()
                     hpsf = pyfits.getheader(psffile)
                     magzpt = hpsf['PSFMAG']
 
-                    #self.gauss = [hpsf['GAUSS1'],hpsf['GAUSS2'],hpsf['GAUSS3'],hpsf['GAUSS4'],hpsf['GAUSS5']]
                 else:
 
                     hpsf = pyfits.getheader(psffile)
                     magzpt = hpsf['PSFMAG']
-                    #print hpsf
-                    #print magzpt
-                    #raw_input()
-                    ##self.gauss = [hpsf['GAUSS1'],hpsf['GAUSS2'],hpsf['GAUSS3'],hpsf['GAUSS4'],hpsf['GAUSS5']]
+
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name]
 
 
-                #fwhm = 2.355*self.gauss[3]
 
             # begin taking PSF stamps
 
             if snparams.psf_model.lower() == 'psfex':
-                #hpsf = pyfits.getheader(psffile)
-                #print hpsf
-                #print hpsf['PSF_FWHM']
-                #raw_input()
+
                 hdulist = fits.open(psffile)
                 hdulist.info()
-                print hdulist[1].header['PSF_FWHM']
                 psf_fwhm = hdulist[1].header['PSF_FWHM']
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
-                print 'snpsfcenter',self.psfcenter
-                #fitpsf = self.get_fwhm_of_2d_psf(self.psf)
-                #self.psf *= self.sector_mask(self.psf.shape,(self.psf.shape[0]/2.,self.psf.shape[1]/2.),2.*fitpsf/self.snparams.platescale)
+
             elif snparams.psf_model.lower() == 'daophot':
                 self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
             else:
@@ -1211,7 +1135,7 @@ class smp:
 
                 jjj = abs(deltara) < 1
                 deltaram = deltara[jjj]
-                print np.array(newra), deltara, jjj
+                #print np.array(newra), deltara, jjj
                 ram = np.array(newra)[jjj]
                 mm, s, iii = meanclip.meanclip( deltaram, clipsig = 3., maxiter = 8, returnSubs=True)
                 bra = np.polyfit(ram[iii], deltaram[iii], 0)
@@ -1227,30 +1151,7 @@ class smp:
             
                 mjdoff = [bra[0],bdec[0]]
                 mjdslopeinteroff = [[mra,cra],[mdec,cdec]]
-                
-                '''badflagd = 0
-                if dailyoff:
-                    if bra[0] > .5:
-                        badflagd = 1
-                    if bdec[0] > .5:
-                        badflagd = 1
-                    print bra[0],bdec[0]
-                    print xsn,ysn
-                    xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA-bra[0],snparams.DECL-bdec[0]]]), 0))
-                    print xsn[0],ysn[0]
-                    opsf = copy(self.psf)
-                    opsfcenter = copy(self.psfcenter)
-                    self.psf, self.psfcenter= self.build_psfex(psffile,xsn[0],ysn[0],imfile)
-                    self.psf = self.psf/np.sum(self.psf)
-                    print opsf - self.psf
-                    print opsfcenter-self.psfcenter
-                    raw_input()
-                '''
-                #print starcat.ra[cols]
-                #print newra
-                #print deltadec
-                #print ' deltaaaaaaa'
-                #raw_input()
+
                 self.deltaras.extend(deltara)
                 self.deltadecs.extend(deltadec)
                 self.deltamjds.extend(deltamjd)
@@ -1258,31 +1159,11 @@ class smp:
                 self.decs.extend(catdec)
                 self.x_stars.extend(x_star)
                 self.y_stars.extend(y_star)
-                #print snparams.airmass
-                #print 'airmasssss'
-                #raw_input()
+
                 self.airmasses.extend(starcat.ra[cols]*0. + round(snparams.airmass,2))
-                #print self.airmasses
-                #raw_input()
-                #print len(self.deltaras)
-                #raw_input()
-                
-                #mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
-                #    aper.aper(im,x_star,y_star,apr = params.fitrad)
-                
-                #if badflagd == 1:
-                #    badflag = 1
-                #if badflag == 1:
-                #    print 'aper3 badflag'
-                    #raw_input()
-                #print 'ra,dec'
-                #print starcat.ra[cols][22],starcat.dec[cols][22]
-                #print x_star1[22],y_star1[22]
-                #print x_star[22],y_star1[22]
-                #raw_input()
+
                 self.psf = self.psf/np.sum(self.psf)
-                #print snparams.mjd[j]
-                #raw_input()
+
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
