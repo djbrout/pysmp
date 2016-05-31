@@ -73,7 +73,6 @@ from scipy.optimize import curve_fit
 import scipy.interpolate as interpol
 import cntrd,aper,getpsf,rdpsf
 #from PythonPhot import cntrd,aper,getpsf,rdpsf
-import pkfit_norecent_noise_smp
 import addcoltoDESlightcurve as lc
 import runsextractor
 
@@ -1505,7 +1504,8 @@ class smp:
                     pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,noise,mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     try:
-                        errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
+                        errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                            pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
                     except ValueError:
                         raise ValueError('SN too close to edge of CCD!')
 
@@ -3691,9 +3691,6 @@ class smp:
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
         import pkfit_norecent_noise_smp
-        #from PythonPhot import iterstat
-        import astropy.io.fits as pyfits
-        #from PythonPhot import pkfit_norecent_noise
         counter = 0
 
         flux_star = np.array([-999.]*len(xstar))        
@@ -3717,7 +3714,11 @@ class smp:
                 if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
                     fitrad[int(x),int(y)] = 1.
         print 'xstarrrrrrr',len(xstar)
-        for x,y,m,s,se,mc,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,range(len(xstar))):
+        if self.dogalsimpixfit:
+            big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
+            full_data_image = galsim.fits.read(imfile)
+
+        for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #print 'xstar',xstar
             #raw_input()
             #y -= 2.
@@ -3755,6 +3756,28 @@ class smp:
                     mjd = 000.
                     #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
                     #                                                    mjd, scale)
+                    if self.dogalsimpixfit:
+                        fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
+                        stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
+                        cx = int(round(stamp_center.x))
+                        cy = int(round(stamp_center.y))
+                        des_psfex = galsim.des.DES_PSFEx(psffile)
+                        thispsf = des_psfex.getPSF(stamp_center)
+                        im = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
+                                                            cy - params.fitrad, cy + params.fitrad)]
+                        galsimpsfworld = im.wcs.toWorld(thispsf, image_pos=stamp_center)
+                        simstamp = full_data_image[ galsim.BoundsI(cx - radius, cx + radius,
+                                                                   cy - radius, cy + radius)] * 0.0
+                        offset = im.wcs.toWorld(im.trueCenter()).project(fiducial_coord)
+                        sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
+                        sn = sn.shift(offset)
+                        conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
+                        conv.drawImage(image=simstamp)
+                        gpsf = simstamp.array
+                        gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp,
+                                                                     fitrad, gal, mjd, scale)
+                        print 'gchisq',gchisq
+                        raw_input()
                     cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, fitrad,
                                                                      gal, mjd, scale)
                     #print 'checking!!!', cscale, oldcscale
@@ -3764,103 +3787,10 @@ class smp:
                 except:
                     print 'skipped star...'
                     continue
-                #print self.params.fitrad
-                #resid = imstamp - psf*scale - s
-                #print 
-                print mc
-                print 2.5*np.log10(scale)  
-                print errmag 
-                print 'aaa'
-                '''
-                if abs(mc +2.5*np.log10(scale) - 30.61) > 0.1:
 
-                    #if i == 22:
-                    #    save_fits_image(imstamp,imfile.split('.')[-2] + '_'+str(filt)+'band_starfit'+str(i)+'_im.fits')
-                    #    print 'hhh'
-                    #    raw_input()
-                    #if i == 23:
-                    #    save_fits_image(imstamp,imfile.split('.')[-2] + '_'+str(filt)+'band_starfit'+str(i)+'_im.fits')
-                    #    print 'hhh'
-                    #    raw_input()
-                    plt.clf()
-                    plt.imshow(resid)
-                    plt.colorbar()
-                    plt.title('Residual')
-                    plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_'+str(i)+'_resid_br.png')
-                    print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_'+str(i)+'_resid_br.png'
-                    plt.clf()
-                    plt.imshow(imstamp)
-                    plt.colorbar()
-                    plt.title('Image')
-                    plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_'+str(i)+'_im_br.png')
-                    print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_'+str(i)+'_im_b.png'
-                    plt.clf()
-
-                    plt.imshow(psf*scale+s)
-                    plt.colorbar()
-                    plt.title('Scale*PSF + sky')
-                    plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_'+str(i)+'_psf_br.png')
-                    print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_'+str(i)+'_psf_b.png'
-                    print 'stopped'
-                    #raw_input()
-                '''
-                #print psf.shape
-                #print psfcenter
-                #print x,y
-                #print scale
-                #raw_input()
-                #raw_input()
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = cscale_std
-                #if abs(m + 2.5*np.log10(scale) - 30.61) > .05:
-                #    raw_input()
 
-                #print x
-                #print y
-                print scale
-                #raw_input()
-
-                #THIS IS THE MCMC... UNCOMMENT TO RUN
-                #show = False
-                #gain = 1.0
-                '''if scale < 60000.:
-                    # MCMC without Model Errors
-                    #val, std = pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,mpfit_or_mcmc='mcmc',counts_guess=scale,show=show,gain=gain)
-                    #flux_star_mcmc[i] = val
-                    #flux_star_std_mcmc[i] = std
-                    #mcmc_mag_std[i] = abs(2.5*np.log10(val)-2.5*np.log10(val+std))
-                    
-                    #MCMC With Model Errors
-                    valb, std = pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,mpfit_or_mcmc='mcmc',counts_guess=scale,show=show,gain=gain,model_errors=True)
-                    flux_star_mcmc_modelerrors[i] = valb
-                    flux_star_std_mcmc_modelerrors[i] = std
-                    mcmc_me_mag_std[i] = abs(2.5*np.log10(valb)-2.5*np.log10(valb+std))
-                    
-                    # Analytical simple scale=sum(pix)/sum(psf)
-                    #valsimple = pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,mpfit_or_mcmc='mcmc',analytical='simple',counts_guess=scale,show=show,gain=gain,model_errors=True)
-                    #flux_star_mcmc_me_simple[i] = valsimple
-
-                    #valweighted = pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,mpfit_or_mcmc='mcmc',analytical='weighted',counts_guess=scale,show=show,gain=gain,model_errors=True)
-                    #flux_star_mcmc_me_weighted[i] = valweighted
-                else:
-                    #flux_star_mcmc[i] = 0.0
-                    flux_star_mcmc_modelerrors[i] = 0.0
-                    #flux_star_std_mcmc[i] = 0.0
-                    flux_star_std_mcmc_modelerrors[i] = 0.0
-                    #flux_star_mcmc_me_simple[i] = 0.0
-                    #flux_star_mcmc_me_simple[i] = 0.0
-                    #flux_star_std_mcmc_me_simple[i] = 0.0
-                    #flux_star_std_mcmc_me_simple[i] = 0.0
-                    #flux_star_mcmc_me_weighted[i] = 0.0
-                    #flux_star_mcmc_me_weighted[i] = 0.0
-                    #flux_star_std_mcmc_me_weighted[i] = 0.0
-                    #flux_star_std_mcmc_me_weighted[i] = 0.0
-                
-                
-                '''
-                ##Run for MCMC
-                #errmag_mcmc,chi_mcmc,niter_mcmc,scale_mcmc = pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,mpfit_or_mcmc='mcmc')
-                #flux_star_mcmc[i] = scale_mcmc
 
         badflag = badflag.reshape(np.shape(badflag)[0])
         
@@ -3904,22 +3834,14 @@ class smp:
             std = float(std)/float(num**.5)
             print 'reduced std', std
             print 'dan std',dstd
-            #raw_input()
-            #mcmc_md, mcmc_std = self.weighted_avg_and_std(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc[goodstarcols]),1.0/(mcmc_mag_std[goodstarcols])**2)
             mcmc_md = -999.
             mcmc_std = -999.
-            #mcmc_md,mcmc_std = iterstat.iterstat(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc[goodstarcols]),
-            #                           startMedian=True,sigmaclip=3.0,iter=10)
-            
+
             mcmc_me_md,mcmc_me_std = self.weighted_avg_and_std(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols]),1.0/(mcmc_me_mag_std[goodstarcols])**2)
 
-            #mcmc_me_md,mcmc_me_std = iterstat.iterstat(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols]),
-            #                           startMedian=True,sigmaclip=3.0,iter=10)
             zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
             exposure_num = imfile.split('/')[-1].split('_')[1]
-            #print cat_zpt
-            #raw_input()
-            #self.make_zpt_plots(zpt_plots_out,goodstarcols,mag_cat,flux_star,flux_star_mcmc_modelerrors,mcmc_me_mag_std,md,mcmc_me_md,starcat,cat_zpt=float(cat_zpt))
+
             if nozpt:
                 if os.path.isfile(self.big_zpt+'.txt'):
                     b = open(self.big_zpt+'.txt','a')
@@ -3943,20 +3865,9 @@ class smp:
                     b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
 
                 for i in checkstarcols:
-                    b.write(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])+'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'+str(flux_star[i])+'\t'+str(flux_star_std[i])+'\t'+str(mag_cat[i])+'\n')
-
-            '''i = rdcol.read('/global/homes/d/dbrout/smppro/idlzpttest.txt',1,2,' ')
-            istarmags = np.array(i['starmags'])
-            istarcats = np.array(i['catmags'])
-
-            istarmags = istarmags[istarcats < 21.5]
-            istarcats = istarcats[istarcats < 21.5]
-
-            print istarmags
-            print istarcats
-            '''
-
-            #r = open('resids.txt','a')
+                    b.write(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
+                            +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'+str(flux_star[i])
+                            +'\t'+str(flux_star_std[i])+'\t'+str(mag_cat[i])+'\n')
 
 
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
@@ -3998,13 +3909,16 @@ class smp:
             #Writing mags out to file .zpt in same location as image
             print 'saving npz'
             if doglobalstar:
-                mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                if self.dogalsimpixfit:
+                    mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
+                else:
+                    mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
             else:
-                mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
-            np.savez( mag_compare_out
-                ,ra = 1
-                )
-            print 'ttttt'
+                if self.dogalsimpixfit:
+                    mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz'
+                else:
+                    mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
+
             np.savez( mag_compare_out
                 ,ra = ras[goodstarcols]
                 ,dec = decs[goodstarcols]
@@ -4021,25 +3935,7 @@ class smp:
                 ,mjdoff=mjdoff
                 ,mjdslopeinteroff=mjdslopeinteroff
                 )
-            
-            print 'done saving npz'
-            print mag_compare_out
-            #raw_input()
-            #print 'cat,fit'
-            #print mag_cat,mpfit_mag
 
-            '''print 'mag cat'
-            print mag_cat[goodstarcols]
-            print 'mpfit mag'
-            print -2.5*np.log10(flux_star[goodstarcols])
-            print mcmc_me_md
-            print cat_zpt
-            print mag_compare_out
-            print 'zeropoint', md
-            '''
-            print md
-            print 'hereeeeeeeeeee'
-            #raw_input()
         else:
             print len(goodstarcols)
             print len(checkstarcols)
