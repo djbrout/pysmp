@@ -1465,6 +1465,9 @@ class smp:
                                     noise_stamp[noise_stamp <= 0.] = 0
 
                                     smp_im[i,:,:] = image_stamp
+                                    print 'image shape',image_stamp.shape
+
+                                    raw_input()
                                     # ccr = -1
                                     # for sss in image_stamp.ravel():
                                     #     ccr += 1
