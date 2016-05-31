@@ -275,11 +275,6 @@ class smp:
             os.makedirs(cspath)
         self.checkstarfile = os.path.join(outfile,stardeltasfolder+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
                                           +'_'+filt+'_standardstarfits.txt')
-        b = open(self.checkstarfile, 'w')
-        b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
-                'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
-                'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
-        b.close()
         #print self.checkstarfile
         #print 'checkstarfile'
         #raw_input()
@@ -301,6 +296,12 @@ class smp:
                 big = open(self.big_zpt+'.txt','w')
                 big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
                 big.close()
+
+            b = open(self.checkstarfile, 'w')
+            b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
+                    'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
+                    'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
+            b.close()
             #if clear_checkstars:
             #    big = open(self.checkstarfile,'w')
             #    big.write('Exposure Num\tMJD\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
