@@ -1154,15 +1154,19 @@ class smp:
                         x_starold += [xval]
                         y_starold += [yval]
                     if doglobalstar:
+                        tras = []
+                        tdecs = []
                         for ide in starcat.objid[cols]:
                             #print starglobalras
                             tra = starglobalras[starglobalids == ide]
                             tdec = starglobaldecs[starglobalids == ide]
-                            
+                            tras.extend(tra)
+                            tdecs.extend(tdec)
                             coords = zip(*w.wcs_world2pix(np.array(zip(tra,tdec)),0))
                             for xval,yval in zip(*coords):
                                 x_star += [xval]
                                 y_star += [yval]
+
                     else:
                         x_star = x_starold
                         y_star = y_starold
@@ -1303,7 +1307,7 @@ class smp:
                 #raw_input()
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
-                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tra,tdec,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflag,mag_star,im,noise,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)    
                 else:
