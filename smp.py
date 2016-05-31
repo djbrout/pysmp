@@ -3875,9 +3875,9 @@ class smp:
                             +'\t'+str(mag_cat[i])+'\n')
 
                 b.close()
-                print 'checkstarfilea appended'
-                print self.checkstarfile
-                raw_input()
+                #print 'checkstarfilea appended'
+                #print self.checkstarfile
+                #raw_input()
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
             hh = hh[abs(hh < .25)]
 
@@ -3931,7 +3931,7 @@ class smp:
                 ,ra = ras[goodstarcols]
                 ,dec = decs[goodstarcols]
                 ,cat_mag = mag_cat[goodstarcols]
-                ,mpfit_mag = -2.5*np.log10(flux_star[goodstarcols])
+                ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                 ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                 ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                 ,mpfit_zpt = md
