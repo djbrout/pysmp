@@ -3739,7 +3739,7 @@ class smp:
                 print psfcenter
                 print self.rdnoise
                 print self.gain
-                print noise[noise>0]
+                print noise[y,x]
                 print mask[mask==0]
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
