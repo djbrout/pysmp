@@ -1449,7 +1449,7 @@ class smp:
                     nm = self.checkstarfile.split('.')[0].split('/')[-1]+'_deltaradec.npz'
                     fname = os.path.join(outfile,stardeltasfolder,'np_data',filt,nm)
                     print 'fname',fname
-                    raw_input()
+                    #raw_input()
                     self.deltastarsfile = fname
                     df = np.load(self.deltastarsfile)
                 except:
@@ -1580,7 +1580,8 @@ class smp:
                                         self.usedecs = np.array(copy(self.decs))
                                         self.usexstar = np.array(copy(self.x_stars))
                                         self.useystar = np.array(copy(self.y_stars))
-            
+
+                                    print 'nearbystarcalc'
                                     srad = params.nearby_stars_pixel_rad
                                     rad = ((self.usexstar-xsn)**2+(self.useystar-ysn)**2)**.5
 
