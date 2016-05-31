@@ -824,9 +824,9 @@ class smp:
                 mask[maskcols] = 100.0
             else:
                 mask = pyfits.getdata(maskfile)
-            print mask[mask!=0]
-            print 'maskkkk'
-            raw_input()
+            #print mask[mask!=0]
+            #print 'maskkkk'
+            #raw_input()
 
             #wcs = astWCS.WCS(imfile)
             wcsworked = True
@@ -3781,9 +3781,9 @@ class smp:
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
                     #print 'scaled'
-                    print 'chisq',gchisq,chisq
-                    print 'flux',gscale,cscale
-                    raw_input()
+                    #print 'chisq',gchisq,chisq
+                    #print 'flux',gscale,cscale
+                    #raw_input()
                 except NameError:
                     print 'skipped star...'
                     continue
@@ -3835,13 +3835,13 @@ class smp:
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
                                        startMedian=True,sigmaclip=1.5,iter=10)
             
-            print 'zpt',md
-            print 'std',std
+            #print 'zpt',md
+            #print 'std',std
 
             dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
             std = float(std)/float(num**.5)
-            print 'reduced std', std
-            print 'dan std',dstd
+            #print 'reduced std', std
+            #print 'dan std',dstd
             mcmc_md = -999.
             mcmc_std = -999.
 
@@ -3889,23 +3889,23 @@ class smp:
             plt.xlim(-.25,.25)
             #plt.legend()
             plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
-            print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
+            #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
             #r.write(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png\n')
             #r.close()
 
             plt.clf()
             #plt.hist([mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,istarmags-istarcats+30.6198],bins=np.arange(-.25,.25,.04),label=['python','idl'])
-            print 'scatter'
+            #print 'scatter'
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
-            print 'plot'
+            #print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.xlabel('cat mag')
             plt.ylabel('-2.5log10(flux)')
             #plt.legend()
-            print 'saving'
-            print mag_cat[goodstarcols].shape
+            #print 'saving'
+            #print mag_cat[goodstarcols].shape
             plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
-            print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
+            #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
             #raw_input()
 
             '''print 'mean python', np.mean(hh)
@@ -3915,7 +3915,7 @@ class smp:
             '''
             #raw_input()
             #Writing mags out to file .zpt in same location as image
-            print 'saving npz'
+            #print 'saving npz'
             if doglobalstar:
                 if self.dogalsimpixfit:
                     mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
@@ -3926,7 +3926,7 @@ class smp:
                     mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz'
                 else:
                     mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
-            print goodstarcols
+            #print goodstarcols
             np.savez( mag_compare_out
                 #,ra = ras[goodstarcols]
                 #,dec = decs[goodstarcols]
