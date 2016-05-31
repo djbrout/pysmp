@@ -12,7 +12,7 @@ find_zpt: yes
 # SUBSTAMP: default substamp.  Big warning about changing this value.  
 # This is the size that galaxy model is defined.  All hell may 
 # break loose if changed.
-substamp: 40
+substamp: 39
 
 mjd_key: MJD-OBS # FITS keyword with MJD value
 max_masknum: 200 # number of masked pixels in substamp threshold for still doing fit
