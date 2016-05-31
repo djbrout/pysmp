@@ -3926,12 +3926,12 @@ class smp:
                     mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz'
                 else:
                     mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
-
+            print goodstarcols
             np.savez( mag_compare_out
-                ,ra = ras[goodstarcols]
-                ,dec = decs[goodstarcols]
+                #,ra = ras[goodstarcols]
+                #,dec = decs[goodstarcols]
                 ,cat_mag = mag_cat[goodstarcols]
-                ,mpfit_mag = -2.5*np.log10(flux_star[goodstarcols])
+                ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                 ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                 ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                 ,mpfit_zpt = md
