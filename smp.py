@@ -1445,16 +1445,16 @@ class smp:
                         badflag = 1
                 print badflag
 
-                try:
-                    nm = self.checkstarfile.split('.')[0].split('/')[-1]+'_deltaradec.npz'
-                    fname = os.path.join(outfile,stardeltasfolder,'np_data',filt,nm)
-                    print 'fname',fname
-                    #raw_input()
-                    self.deltastarsfile = fname
-                    df = np.load(self.deltastarsfile)
-                except:
-                    print 'MJD Skipped, could not load deltastarfile'
-                    badflag = 1
+                # try:
+                #     nm = self.checkstarfile.split('.')[0].split('/')[-1]+'_deltaradec.npz'
+                #     fname = os.path.join(outfile,stardeltasfolder,'np_data',filt,nm)
+                #     print 'fname',fname
+                #     #raw_input()
+                #     self.deltastarsfile = fname
+                #     df = np.load(self.deltastarsfile)
+                # except:
+                #     print 'MJD Skipped, could not load deltastarfile'
+                #     badflag = 1
 
                 badflags.append(badflag)
                 if not badflag:
@@ -1561,38 +1561,39 @@ class smp:
 
 
                                     #START HERE TOMORROW
-                                    if not nozpt:
-                                        fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
-                                        self.deltastarsfile = fname
-                                        df = np.load(self.deltastarsfile)
-                                        self.usedeltaras = np.array(df['deltaras'])
-                                        self.usedeltadecs = np.array(df['deltadecs'])
-                                        self.usemjds = np.array(df['mjds'])
-                                        self.useras = np.array(df['ras'])
-                                        self.usedecs = np.array(df['decs'])
-                                        self.usexstar = np.array(df['x_star'])
-                                        self.useystar = np.array(df['y_star'])
-                                    else:    
-                                        self.usedeltaras = np.array(copy(self.deltaras))
-                                        self.usedeltadecs = np.array(copy(self.deltadecs))
-                                        self.usemjds = np.array(copy(self.deltamjds))
-                                        self.useras = np.array(copy(self.ras))
-                                        self.usedecs = np.array(copy(self.decs))
-                                        self.usexstar = np.array(copy(self.x_stars))
-                                        self.useystar = np.array(copy(self.y_stars))
 
-                                    print 'nearbystarcalc'
-                                    srad = params.nearby_stars_pixel_rad
-                                    rad = ((self.usexstar-xsn)**2+(self.useystar-ysn)**2)**.5
-
-                                    nearbystars_onthisCCDepoch_indices = [(rad < srad) & (self.usemjds == float(snparams.mjd[j]))]
-                                    nearby_xstar = self.usexstar[nearbystars_onthisCCDepoch_indices]
-                                    nearby_ystar = self.useystar[nearbystars_onthisCCDepoch_indices]
-                                    print xsn
-                                    print nearby_xstar
-                                    print self.usedeltaras[nearbystars_onthisCCDepoch_indices]
-                                    print np.mean(self.usedeltaras[nearbystars_onthisCCDepoch_indices])
-                                    print 'hshshshshshshshs'
+                                    # if not nozpt:
+                                    #     fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
+                                    #     self.deltastarsfile = fname
+                                    #     df = np.load(self.deltastarsfile)
+                                    #     self.usedeltaras = np.array(df['deltaras'])
+                                    #     self.usedeltadecs = np.array(df['deltadecs'])
+                                    #     self.usemjds = np.array(df['mjds'])
+                                    #     self.useras = np.array(df['ras'])
+                                    #     self.usedecs = np.array(df['decs'])
+                                    #     self.usexstar = np.array(df['x_star'])
+                                    #     self.useystar = np.array(df['y_star'])
+                                    # else:
+                                    #     self.usedeltaras = np.array(copy(self.deltaras))
+                                    #     self.usedeltadecs = np.array(copy(self.deltadecs))
+                                    #     self.usemjds = np.array(copy(self.deltamjds))
+                                    #     self.useras = np.array(copy(self.ras))
+                                    #     self.usedecs = np.array(copy(self.decs))
+                                    #     self.usexstar = np.array(copy(self.x_stars))
+                                    #     self.useystar = np.array(copy(self.y_stars))
+                                    #
+                                    # print 'nearbystarcalc'
+                                    # srad = params.nearby_stars_pixel_rad
+                                    # rad = ((self.usexstar-xsn)**2+(self.useystar-ysn)**2)**.5
+                                    #
+                                    # nearbystars_onthisCCDepoch_indices = [(rad < srad) & (self.usemjds == float(snparams.mjd[j]))]
+                                    # nearby_xstar = self.usexstar[nearbystars_onthisCCDepoch_indices]
+                                    # nearby_ystar = self.useystar[nearbystars_onthisCCDepoch_indices]
+                                    # print xsn
+                                    # print nearby_xstar
+                                    # print self.usedeltaras[nearbystars_onthisCCDepoch_indices]
+                                    # print np.mean(self.usedeltaras[nearbystars_onthisCCDepoch_indices])
+                                    # print 'hshshshshshshshs'
                                     #raw_input()
 
                                     #NOW FIND NEARbY STARS AND GRAB OFFSETS AND APPLY TO SN (MAJE A NEW SMP_DICT ELEMENT)
