@@ -3765,8 +3765,8 @@ class smp:
                         tim = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
                                                             cy - params.fitrad, cy + params.fitrad)]
                         galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
-                        simstamp = full_data_image[ galsim.BoundsI(cx - radius, cx + radius,
-                                                                   cy - radius, cy + radius)] * 0.0
+                        simstamp = full_data_image[ galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
+                                                                   cy - params.fitrad, cy + params.fitrad)] * 0.0
                         offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
                         sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
                         sn = sn.shift(offset)
