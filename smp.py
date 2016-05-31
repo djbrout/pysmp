@@ -3733,9 +3733,12 @@ class smp:
 
                 
                 counter += 1
+                print imfile
+                print im.shape
+                print psf.shape
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
-
+                print 'initialized'
                 try:
                     errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                         pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
@@ -3784,7 +3787,7 @@ class smp:
                     #print 'scaled'
                     print 'chisq',gchisq,chisq
                     print 'flux',gscale,cscale
-                    #raw_input()
+                    raw_input()
                 except NameError:
                     print 'skipped star...'
                     continue
