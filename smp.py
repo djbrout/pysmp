@@ -271,6 +271,9 @@ class smp:
         import astropy.io.fits as pyfits
         self.outfile = outfile
         self.checkstarfile = os.path.join(outfile,stardeltasfolder+'/SNe/'+snfile.split('/')[-1].split('.')[0] + '/'+filt+'/standardstarfits.txt')
+        print self.checkstarfile
+        print 'checkstarfile'
+        raw_input()
         self.snfn = snfile.split('/')[-1].split('.')[0]
         if nozpt:
             self.zpt_fits = './zpts/zpt_plots.txt'
@@ -1172,43 +1175,11 @@ class smp:
                         y_star = y_starold
                         tra = starcat.ra[cols]
                         tdec = starcat.dec[cols]
-                    #print np.array(x_starold) - np.array(x_star)
-                    #print 'checking new star positions'
-                    #raw_input()
+
                 else:
                     coords = wcsinfo.tran([starcat.ra[cols]/radtodeg,starcat.dec[cols]/radtodeg],False)
-                    #print coords
-                    #print coords[0]
-                    #print len(coords)
-                    #print len(starcat.ra[cols])
-                    #print len(coords[0])
-                    #print coords.shape
-                    #print 'cooooords'
-                    #raw_input()
-                #print starcat.ra[cols][starcat.ra[cols] , starcat.dec[cols]
-                #print coords
-                #print 'stop'
-                #raw_input()
 
-                #x_star,y_star = [],[]
-                #for xval,yval in zip(*coords):
-                #    x_star += [xval]
-                #    y_star += [yval]
-                
-                #print x_star
-                #raw_input()
-                #print y_star
-                #raw_input()
 
-                #print len(coords)
-                #print coords[0][16],coords[1][16]
-                #print x_star[16],y_star[16]
-                #print 'stop'
-                #raw_input()
-
-                print starcat.ra[cols]
-                print tras
-                raw_input('stttttt')
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
@@ -1222,15 +1193,10 @@ class smp:
                     ccc = wcsinfo.tran([x_star,y_star])
                     newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
 
-                
-                #print x_star,y_star
-                #print 'yoyoyo'
-                #raw_input()
+
                 
                 catra,catdec = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
-                #print starcat.ra[cols]-catra
-                #print 'stopped'
-                #raw_input()
+
                 deltara = catra - newra
                 deltadec = catdec - newdec
                 deltamjd = copy(deltara)*0. + snparams.mjd[j]
@@ -3706,6 +3672,12 @@ class smp:
 
         flux_star = np.array([-999.]*len(xstar))        
         flux_star_std = np.array([-999.]*len(xstar))
+        flux_chisq = np.array([-999.]*len(xstar))
+        flux_dms = np.array([-999.]*len(xstar))
+        gsflux = np.array([-999.]*len(xstar))
+        gsflux_std = np.array([-999.]*len(xstar))
+        gsflux_chisq = np.array([-999.]*len(xstar))
+        gsflux_dms = np.array([-999.]*len(xstar))
         isnotcheckstars = np.ones(len(xstar))
         flux_star_mcmc = np.array([-999.]*len(xstar))
         #flux_star_std_mcmc = np.array([-999.]*len(xstar))
@@ -3724,7 +3696,7 @@ class smp:
             for y in np.arange(substamp):
                 if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
                     fitrad[int(x),int(y)] = 1.
-        print 'xstarrrrrrr222222',len(xstar)
+        #print 'xstarrrrrrr222222',len(xstar)
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
@@ -3741,12 +3713,12 @@ class smp:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
                         psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
-                        print psf.shape
+                        #print psf.shape
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
                 else:
                     psf, psfcenter = self.psf, self.psfcenter
-                    print 'psfcenter',psfcenter
+                    #print 'psfcenter',psfcenter
 
                 
                 counter += 1
@@ -3787,6 +3759,10 @@ class smp:
                     gpsf = simstamp.array
                     gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
                                                                        fitrad, gal, mjd, scale)
+                    gsflux[i] =gscale
+                    gsflux_std[i] = gscale_std
+                    gsflux_chisq[i]  = gchisq
+                    gsflux_dms[i] = gdms
                     #print 'gchisq',gchisq
                     #raw_input()
                 cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, fitrad,
@@ -3804,6 +3780,8 @@ class smp:
 
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = cscale_std
+                flux_chisq[i] = chisq
+                flux_dms[i] = dms
 
 
         badflag = badflag.reshape(np.shape(badflag)[0])
@@ -3836,9 +3814,15 @@ class smp:
                                 (badflag == 0) &
                                 (isnotcheckstars == 0))[0]
 
+
         #NEED TO MAKE A PLOT HERE!
         if len(goodstarcols) > 10:
-            md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]),
+
+            if self.dogalsimpixfit:
+                fluxcol = flux_star
+            else:
+                fluxcol = gsflux
+            md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
                                        startMedian=True,sigmaclip=1.5,iter=10)
             
             print 'zpt',md
@@ -3876,12 +3860,16 @@ class smp:
                     b = open(self.checkstarfile,'a')
                 else:
                     b = open(self.checkstarfile,'w')
-                    b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
+                    b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
+                            'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
+                            'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
 
                 for i in checkstarcols:
                     b.write(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
-                            +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'+str(flux_star[i])
-                            +'\t'+str(flux_star_std[i])+'\t'+str(mag_cat[i])+'\n')
+                            +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'
+                            +str(flux_star[i])+'\t'+str(flux_star_std[i])+'\t'+str(flux_chisq[i])+'\t'+str(flux_dms[i])
+                            + str(gsflux[i]) + '\t' + str(gsflux_std[i]) + '\t' + str(gsflux_chisq[i]) + '\t' + str(gsflux_dms[i])
+                            +'\t'+str(mag_cat[i])+'\n')
 
 
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
