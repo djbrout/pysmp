@@ -3,7 +3,7 @@ import pyfits as pf
 import os
 import scipy.signal
 
-
+# Returns xvals, medians, mads
 def bindata(x, y, bins, returnn=False):
     medians = np.zeros(len(bins) - 1)
     mads = np.zeros(len(bins) - 1)
@@ -14,7 +14,7 @@ def bindata(x, y, bins, returnn=False):
         bf = bins[i + 1]
         ww = [(x > bs) & (x < bf)]
         yhere = y[ww]
-        yhere = yhere[np.isfinite(yhere)]
+        yhere = yhere[np.isfinite(yhere) & ~np.isnan(yhere)]
         ss = [abs(yhere) < 3. * np.std(yhere)]
         try:
             nums[i] = len(yhere[ss])
@@ -156,4 +156,6 @@ def readcol(filename,headline=1,startline=2,delim=' '):
                 index += 1
         linenum += 1
     inf.close()
+    for k in return_cols.keys():
+        return_cols[k] = np.array(return_cols[k])
     return return_cols
