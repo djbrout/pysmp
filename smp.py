@@ -1206,6 +1206,10 @@ class smp:
                 #print 'stop'
                 #raw_input()
 
+                print starcat.ra[cols]
+                print tras
+                raw_input('stttttt')
+
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad)
