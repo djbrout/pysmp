@@ -450,7 +450,7 @@ class metropolis_hastings():
         #t1 = time.time()
         orig_gal_model = galsim.InterpolatedImage(self.imagestampsformodel[0]*0. + self.kicked_galaxy_model)
         gs_model = galsim.Image(ncol=self.imagestampsformodel[0].array.shape[1], nrow=self.imagestampsformodel[0].array.shape[0], wcs=self.model_wcs)
-        orig_gal_model.drawImage(image=gs_model)
+        orig_gal_model.drawImage(image=gs_model,method='no_pixel')
 
         gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3', 
                                                                calculate_stepk=False, calculate_maxk=False)
@@ -488,7 +488,7 @@ class metropolis_hastings():
 
                     #print 'drawing'
                     #t5 = time.time()
-                    conv.drawImage(image=self.simstamps[epoch])#,offset=offset)#Draw my model to the stamp at new wcs 
+                    conv.drawImage(image=self.simstamps[epoch],method='no_pixel')#,offset=offset)#Draw my model to the stamp at new wcs
                     #t6 = time.time()
                     self.sims[epoch,:,:] = self.simstamps[epoch].array + self.sky[epoch]
                     #t7 = time.time()

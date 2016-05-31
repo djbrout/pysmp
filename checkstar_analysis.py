@@ -29,15 +29,15 @@ def checkstars(checkstarfile=default_checkstar_file):
 
 
     plt.clf()
-    plt.hist(cols['Fit Flux Chisq'], label='my PSF Model', bins=np.arange(.5,2,.05),alpha=.75)
-    plt.hist(cols['Galsim Fit Flux Chisq'], label='Galsim PSF Model', bins=np.arange(.5,2,.05),alpha=.75)
+    plt.hist(cols['Fit Flux Chisq'], label='my PSF Model', bins=np.arange(.525,2,.05),alpha=.75,normed=True)
+    plt.hist(cols['Galsim Fit Flux Chisq'], label='Galsim PSF Model', bins=np.arange(.525,2,.05),alpha=.75,normed=True)
     plt.xlabel('Reduced Chisq')
     plt.legend()
     plt.savefig('/Volumes/ExtraSpace/pysmp_downloads/starfit_chisqhist.png')
 
     plt.clf()
-    plt.hist(cols['Fit Flux DMS'], label='my PSF Model', bins=np.arange(-10000,5000,1000),alpha=.75)
-    plt.hist(cols['Galsim Fit Flux DMS'], label='Galsim PSF Model', bins=np.arange(-10000,5000,1000),alpha=.75)
+    plt.hist(cols['Fit Flux DMS'], label='my PSF Model', bins=np.arange(-10500,5000,1000),alpha=.75,normed=True)
+    plt.hist(cols['Galsim Fit Flux DMS'], label='Galsim PSF Model', bins=np.arange(-10500,5000,1000),alpha=.75,normed=True)
     plt.xlabel('Data - Sim')
     plt.legend()
     plt.savefig('/Volumes/ExtraSpace/pysmp_downloads/starfit_dmshist.png')

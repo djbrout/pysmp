@@ -3766,7 +3766,7 @@ class smp:
                         sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
                         sn = sn.shift(offset)
                         conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
-                        conv.drawImage(image=simstamp)
+                        conv.drawImage(image=simstamp,method='no_pixel')
                         gpsf = simstamp.array
                         gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
                                                                            fitrad, gal, mjd, scale)
