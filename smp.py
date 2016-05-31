@@ -3708,6 +3708,8 @@ class smp:
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
         radius = 10.
+        print 'ss',substamp
+        raw_input()
         fitrad = np.zeros([substamp,substamp])
         for x in np.arange(substamp):   
             for y in np.arange(substamp):
@@ -3746,6 +3748,7 @@ class smp:
                     errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                         pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                     stampsize=params.substamp)
+
                     noise_stamp[noise_stamp > 0.] = 1
                     noise_stamp[noise_stamp <= 0.] = 0
                     sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
