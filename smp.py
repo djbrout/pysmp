@@ -270,10 +270,19 @@ class smp:
         from astropy import wcs
         import astropy.io.fits as pyfits
         self.outfile = outfile
-        self.checkstarfile = os.path.join(outfile,stardeltasfolder+'/SNe/'+snfile.split('/')[-1].split('.')[0] + '/'+filt+'/standardstarfits.txt')
-        print self.checkstarfile
-        print 'checkstarfile'
-        raw_input()
+        cspath = os.path.join(outfile,stardeltasfolder+'/SNe/starfits/')
+        if not os.path.exists(cspath):
+            os.makedirs(cspath)
+        self.checkstarfile = os.path.join(outfile,stardeltasfolder+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
+                                          +'_'+filt+'_standardstarfits.txt')
+        b = open(self.checkstarfile, 'w')
+        b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
+                'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
+                'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
+        b.close()
+        #print self.checkstarfile
+        #print 'checkstarfile'
+        #raw_input()
         self.snfn = snfile.split('/')[-1].split('.')[0]
         if nozpt:
             self.zpt_fits = './zpts/zpt_plots.txt'
@@ -292,10 +301,10 @@ class smp:
                 big = open(self.big_zpt+'.txt','w')
                 big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
                 big.close()
-            if clear_checkstars:
-                big = open(self.checkstarfile,'w')
-                big.write('Exposure Num\tMJD\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
-                big.close()
+            #if clear_checkstars:
+            #    big = open(self.checkstarfile,'w')
+            #    big.write('Exposure Num\tMJD\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
+            #    big.close()
         self.verbose = verbose
         params,snparams = self.params,self.snparams
         print "FAKE TRUE MAGS"
@@ -1101,9 +1110,10 @@ class smp:
             if not nozpt:
                 try:
                     if doglobalstar:
-                        zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
-                        #print zpt_file
-                        #raw_input()
+                        if dogalsimpixfit:
+                            zpt_file = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
+                        else:
+                            zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
                     else:
                         zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
                     zptdata = np.load(zpt_file) #load previous zpt information
@@ -3856,14 +3866,7 @@ class smp:
                         +'\n')
                 b.close()
 
-                if os.path.isfile(self.big_zpt+'.txt'):
-                    b = open(self.checkstarfile,'a')
-                else:
-                    b = open(self.checkstarfile,'w')
-                    b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
-                            'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
-                            'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
-
+                b = open(self.checkstarfile,'a')
                 for i in checkstarcols:
                     b.write(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
                             +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'
@@ -3871,7 +3874,10 @@ class smp:
                             + str(gsflux[i]) + '\t' + str(gsflux_std[i]) + '\t' + str(gsflux_chisq[i]) + '\t' + str(gsflux_dms[i])
                             +'\t'+str(mag_cat[i])+'\n')
 
-
+                b.close()
+                print 'checkstarfilea appended'
+                print self.checkstarfile
+                raw_input()
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
             hh = hh[abs(hh < .25)]
 
