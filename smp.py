@@ -3784,7 +3784,7 @@ class smp:
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
                     #raw_input()
-                except:
+                except NameError:
                     print 'skipped star...'
                     continue
 
