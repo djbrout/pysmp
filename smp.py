@@ -3614,7 +3614,7 @@ class smp:
                 mask = mask*0.
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
-                print 'initialized'
+                #print 'initialized'
                 try:
                     errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                         pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
