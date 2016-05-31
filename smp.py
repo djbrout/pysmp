@@ -3556,7 +3556,7 @@ class smp:
                 mjdoff,mjdslopeinteroff,psf='',
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
-        print 'Computing zeropoint for',imfile,
+        print 'Computing zeropoint for',imfile,'\n'
         import pkfit_norecent_noise_smp
         counter = 0
 
@@ -3668,7 +3668,7 @@ class smp:
                     #print 'flux',gscale,cscale
                     #raw_input()
                 except ValueError:
-                    print 'skipped star...'
+                    print 'skipped star...\n'
                     continue
 
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
