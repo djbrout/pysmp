@@ -824,12 +824,9 @@ class smp:
                 mask[maskcols] = 100.0
             else:
                 mask = pyfits.getdata(maskfile)
-
-            print noise.shape
-            print np.max(noise)
-            print np.min(noise)
-            print np.mean(noise)
-            #raw_input()
+            print mask[mask!=0]
+            print 'maskkkk'
+            raw_input()
 
             #wcs = astWCS.WCS(imfile)
             wcsworked = True
@@ -3740,7 +3737,7 @@ class smp:
                 print self.rdnoise
                 print self.gain
                 print noise[y,x]
-                print mask[mask==0]
+                print mask[y,x]
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
                 print 'initialized'
