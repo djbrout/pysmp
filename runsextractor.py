@@ -35,6 +35,7 @@ def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi):
     sew = sewpy.SEW(
             workdir='sewpy_logs/'
             , sexpath="sex"
+            , loglevel="CRITICAL"
         )
     out = sew(newfilename)
     path = out['logfilepath']
