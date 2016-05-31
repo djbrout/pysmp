@@ -1404,7 +1404,7 @@ class mpfit:
 	# Default procedure to be called every iteration.  It simply prints
 	# the parameter values.
 	def defiter(self, fcn, x, iter, fnorm=None, functkw=None,
-					   quiet=0, iterstop=None, parinfo=None,
+					   quiet=True, iterstop=None, parinfo=None,
 					   format=None, pformat='%.10g', dof=1):
 
 		if self.debug:
