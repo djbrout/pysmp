@@ -3388,14 +3388,13 @@ class smp:
         print('SMP was successful!!!')
     '''    
 
-    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,guess_scale):
+    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale):
 
         chisqvec = []
         fluxvec = []
         
         galconv = scipy.signal.fftconvolve(gal,psf,mode='same')
 
-        radius = 12
         substamp = galconv.shape[0]
         #Make a mask with radius
         fitrad = np.zeros([substamp,substamp])
@@ -3419,7 +3418,7 @@ class smp:
         ii = fitrad.ravel()
         i = ii[ii != 0]
         
-        ndof = len(i) + 1
+        ndof = len(i)
 
         fluxvec = np.array(fluxvec)
         chisqvec = np.array(chisqvec)
@@ -3730,14 +3729,7 @@ class smp:
 
                 
                 counter += 1
-                print imfile
-                print im.shape
-                print psf.shape
-                print psfcenter
-                print self.rdnoise
-                print self.gain
-                print noise[y,x]
-                print mask[y,x]
+                mask = mask*0.
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
                 print 'initialized'
@@ -3774,15 +3766,17 @@ class smp:
                         conv.drawImage(image=simstamp,method='no_pixel')
                         gpsf = simstamp.array
                         gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
-                                                                           fitrad, gal, mjd, scale)
+                                                                           radius, gal, mjd, scale)
                         gsflux[i] =gscale
                         gsflux_std[i] = gscale_std
                         gsflux_chisq[i]  = gchisq
                         gsflux_dms[i] = gdms
                         #print 'gchisq',gchisq
                         #raw_input()
-                    cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, fitrad,
+                    cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, radius,
                                                                      gal, mjd, scale)
+
+
                     #print 'checking!!!', cscale, oldcscale
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
