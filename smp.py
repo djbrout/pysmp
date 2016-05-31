@@ -3717,7 +3717,7 @@ class smp:
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
-
+        self.dogalsimpixfit = False
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #print 'xstar',xstar
             #raw_input()
@@ -3774,7 +3774,7 @@ class smp:
                         conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
                         conv.drawImage(image=simstamp)
                         gpsf = simstamp.array
-                        gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp,
+                        gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
                                                                      fitrad, gal, mjd, scale)
                         print 'gchisq',gchisq
                         raw_input()
@@ -3783,7 +3783,8 @@ class smp:
                     #print 'checking!!!', cscale, oldcscale
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
-                    #raw_input()
+                    print 'scaled'
+                    raw_input()
                 except NameError:
                     print 'skipped star...'
                     continue
