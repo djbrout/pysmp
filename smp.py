@@ -3556,6 +3556,7 @@ class smp:
                 mjdoff,mjdslopeinteroff,psf='',
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
+        print 'Computing zeropoint for',imfile,
         import pkfit_norecent_noise_smp
         counter = 0
 
