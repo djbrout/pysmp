@@ -1446,7 +1446,10 @@ class smp:
                 print badflag
 
                 try:
-                    fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
+                    nm = self.checkstarfile.split('.')[0].split('/')[-1]+'_deltaradec.npz'
+                    fname = os.path.join(outfile,stardeltasfolder,'np_data',filt,nm)
+                    print 'fname',fname
+                    raw_input()
                     self.deltastarsfile = fname
                     df = np.load(self.deltastarsfile)
                 except:
@@ -1946,13 +1949,15 @@ class smp:
 
         tstart = time.time()
         #save_fits_image(galmodel,'./test/initalgalmodel.fits')
-        
-        fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
+
+        nm = self.checkstarfile.split('.')[0].split('/')[-1] + '_deltaradec.npz'
+        fname = os.path.join(outfile, foldername, 'np_data', filt, nm)
+        #fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
         self.deltastarsfile = fname
         
         if nozpt:
             np.savez(self.deltastarsfile,deltaras=self.deltaras,deltadecs=self.deltadecs,mjds=self.deltamjds,ras=self.ras,decs=self.decs,airmasses=self.airmasses,x_star=self.x_stars,y_star=self.y_stars)
-            print fname,'SAVED'
+            print self.deltastarsfile,'SAVED'
         else:
             dsf  = np.load(self.deltastarsfile)
             self.deltaras = dsf['deltaras']
