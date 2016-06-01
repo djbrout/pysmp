@@ -160,6 +160,9 @@ class metropolis_hastings():
 
         self.pixelation_factor = model_pixel_scale/platescale
         self.galaxy_model = self.pixelate(galmodel,self.pixelation_factor)
+        #print 'gmshape',self.galaxy_model.shape
+        #raw_input()
+        #self.galaxy_model = np.ones()
         self.model_radius = int(np.floor(self.galaxy_model.shape[0]/2.))
 
 

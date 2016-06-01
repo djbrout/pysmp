@@ -159,3 +159,8 @@ def readcol(filename,headline=1,startline=2,delim=' '):
     for k in return_cols.keys():
         return_cols[k] = np.array(return_cols[k])
     return return_cols
+
+
+def pixelate(self, matrix, pixelation_factor):
+    zmatrix = nd.interpolation.zoom(matrix, 1. / float(pixelation_factor))
+    return zmatrix
