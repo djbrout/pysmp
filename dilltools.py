@@ -161,6 +161,6 @@ def readcol(filename,headline=1,startline=2,delim=' '):
     return return_cols
 
 
-def pixelate(self, matrix, pixelation_factor):
+def pixelate(matrix, pixelation_factor):
     zmatrix = nd.interpolation.zoom(matrix, 1. / float(pixelation_factor))
     return zmatrix
