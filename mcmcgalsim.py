@@ -158,12 +158,15 @@ class metropolis_hastings():
         self.didtimeout = False
 
 
-        self.pixelation_factor = model_pixel_scale/platescale
-        self.galaxy_model = self.pixelate(galmodel,self.pixelation_factor)
+        #self.pixelation_factor = model_pixel_scale/platescale
+        #self.galaxy_model = self.pixelate(galmodel,self.pixelation_factor)
+        self.galaxy_model = np.zeros(galmodel.shape) + np.mean(galmodel)
+        self.kicked_galaxy_model = copy(self.galaxy_model)
+        self.kicked_galmodel = copy(self.galaxy_model)
         #print 'gmshape',self.galaxy_model.shape
         #raw_input()
         #self.galaxy_model = np.ones()
-        self.model_radius = int(np.floor(self.galaxy_model.shape[0]/2.))
+        #self.model_radius = int(np.floor(self.galaxy_model.shape[0]/2.))
 
 
         self.data = data
@@ -174,14 +177,14 @@ class metropolis_hastings():
         self.psfs = []
         #self.weights = []
         self.imagestamps = []
-        self.imagestampsformodel = []
+        #self.imagestampsformodel = []
         self.simstamps = []
         self.snobjs = []
         self.snoffsets = []
         self.snraoff = snraoff
         self.sndecoff = sndecoff
         self.fitradius = fitradius
-        radius = self.galmodel.shape[0]/2.
+        #radius = self.galmodel.shape[0]/2.
 
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
@@ -209,13 +212,13 @@ class metropolis_hastings():
                 self.psfs.append(im.wcs.toWorld(thispsf,image_pos=stamp_center))
                 #self.imagestamps.append(im)
                 #print np.median(im.array),self.sky[i], np.median(self.data[i])
-                if self.galaxy_model.shape[0] % 2 == 0:
-                    modelim = full_data_image[galsim.BoundsI( cx-self.model_radius,cx+self.model_radius-1,
-                                                              cy-self.model_radius,cy+self.model_radius-1 )]
-                else:
-                    modelim = full_data_image[galsim.BoundsI( cx-self.model_radius,cx+self.model_radius,
-                                                              cy-self.model_radius,cy+self.model_radius )]
-                self.imagestampsformodel.append(modelim)
+                # if self.galaxy_model.shape[0] % 2 == 0:
+                #     modelim = full_data_image[galsim.BoundsI( cx-self.model_radius,cx+self.model_radius-1,
+                #                                               cy-self.model_radius,cy+self.model_radius-1 )]
+                # else:
+                self.modelim = full_data_image[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius,
+                                                                cy-self.fitradius,cy+self.fitradius ) ]*0.
+                #self.imagestampsformodel.append(modelim)
 
                 #print self.modelvec
                 #print i
@@ -459,8 +462,8 @@ class metropolis_hastings():
 
     def kernel( self ):
         #t1 = time.time()
-        new_gal_model = galsim.InterpolatedImage(self.imagestampsformodel[0]*0. + self.kicked_galaxy_model)
-        gs_model = galsim.Image(ncol=self.imagestampsformodel[0].array.shape[1], nrow=self.imagestampsformodel[0].array.shape[0], wcs=self.model_wcs)
+        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
+        gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
         new_gal_model.drawImage(image=gs_model,method='no_pixel')
 
         gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3', 
