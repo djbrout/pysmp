@@ -158,8 +158,9 @@ class metropolis_hastings():
         self.didtimeout = False
 
 
-        #self.pixelation_factor = model_pixel_scale/platescale
+        self.pixelation_factor = model_pixel_scale/platescale
         #self.galaxy_model = self.pixelate(galmodel,self.pixelation_factor)
+        #newfitrad = self.pixelate(fitradius,self.pixelation_factor)
         self.galaxy_model = np.zeros((fitradius*2+1,fitradius*2+1)) + np.mean(galmodel)
         self.kicked_galaxy_model = copy(self.galaxy_model)
         self.kicked_galmodel = copy(self.galaxy_model)
@@ -299,7 +300,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            if (self.counter % 100) ==0:
+            if (self.counter % 1000) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
                 print 'Num Iterations: ' + str( self.counter )
