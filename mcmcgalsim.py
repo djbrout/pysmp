@@ -264,7 +264,7 @@ class metropolis_hastings():
 
         self.platescale = platescale
         self.model_substamp = self.galaxy_model.shape[0]
-        self.galstd = self.pixelate(self.galstd,model_pixel_scale/platescale)
+        #self.galstd = self.pixelate(self.galstd,model_pixel_scale/platescale)
         self.galdeltas = copy(self.galstd)
         self.run_d_mc()
 
