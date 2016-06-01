@@ -299,7 +299,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            if (self.counter % 2) ==0:
+            if (self.counter % 100) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
                 print 'Num Iterations: ' + str( self.counter )
@@ -310,7 +310,7 @@ class metropolis_hastings():
                 print 'Chisqvec',self.chisqvec
                 self.plotchains()
                 self.savechains()
-                raw_input()
+                #raw_input()
             if self.counter > self.maxiter:
                 self.z_scores_say_keep_going = False#GETOUT
                 self.didtimeout = True
