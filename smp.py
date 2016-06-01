@@ -1957,17 +1957,17 @@ class smp:
         #fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
         self.deltastarsfile = fname
         
-        if nozpt:
-            np.savez(self.deltastarsfile,deltaras=self.deltaras,deltadecs=self.deltadecs,mjds=self.deltamjds,ras=self.ras,decs=self.decs,airmasses=self.airmasses,x_star=self.x_stars,y_star=self.y_stars)
-            print self.deltastarsfile,'SAVED'
-        else:
-            dsf  = np.load(self.deltastarsfile)
-            self.deltaras = dsf['deltaras']
-            self.deltadecs = dsf['deltadecs']
-            self.deltamjds = dsf['mjds']
-            self.ras = dsf['ras']
-            self.decs = dsf['decs']
-            self.airmasses = dsf['airmasses']
+        # if nozpt:
+        #     np.savez(self.deltastarsfile,deltaras=self.deltaras,deltadecs=self.deltadecs,mjds=self.deltamjds,ras=self.ras,decs=self.decs,airmasses=self.airmasses,x_star=self.x_stars,y_star=self.y_stars)
+        #     print self.deltastarsfile,'SAVED'
+        # else:
+        #     dsf  = np.load(self.deltastarsfile)
+        #     self.deltaras = dsf['deltaras']
+        #     self.deltadecs = dsf['deltadecs']
+        #     self.deltamjds = dsf['mjds']
+        #     self.ras = dsf['ras']
+        #     self.decs = dsf['decs']
+        #     self.airmasses = dsf['airmasses']
         #fname = self.checkstarfile.split('.')[0]+'_20magfakes.npz'
         #self.moneyfile = fname
         #if nozpt:
