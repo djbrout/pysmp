@@ -2451,7 +2451,7 @@ class smp:
                     , weightfiles = smp_dict['weight_filename']
                     , snra = snparams.RA
                     , sndec = snparams.DECL
-                    , model_pixel_scale = .6
+                    , model_pixel_scale = .27
                     , lcout = lightcurves+filename
                     , chainsnpz = os.path.join(outdir,filename+'_withSnAndGalsimPix.npz')
                     , platescale = .27
