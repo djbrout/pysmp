@@ -160,7 +160,7 @@ class metropolis_hastings():
 
         #self.pixelation_factor = model_pixel_scale/platescale
         #self.galaxy_model = self.pixelate(galmodel,self.pixelation_factor)
-        self.galaxy_model = np.zeros(galmodel.shape) + np.mean(galmodel)
+        self.galaxy_model = np.zeros((fitradius*2+1,fitradius*2+1)) + np.mean(galmodel)
         self.kicked_galaxy_model = copy(self.galaxy_model)
         self.kicked_galmodel = copy(self.galaxy_model)
         #print 'gmshape',self.galaxy_model.shape
