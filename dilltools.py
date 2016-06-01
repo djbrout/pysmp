@@ -2,6 +2,8 @@ import numpy as np
 import pyfits as pf
 import os
 import scipy.signal
+import scipy.ndimage as nd
+
 
 # Returns xvals, medians, mads
 def bindata(x, y, bins, returnn=False):
