@@ -653,7 +653,6 @@ class metropolis_hastings():
                         if self.useskyerr:
                             a = np.sum( ( (self.sims[ epoch ] - self.data[ epoch, :,:])**2 / self.skyerr[epoch]**2 * self.mask).ravel() )
                             self.chisqvec[epoch] = a
-                            #print a/len(self.sims[epoch,:,:].ravel())
                             if np.isnan(a):
                                 chisq += 0.
                             else:

@@ -2415,7 +2415,7 @@ class smp:
                 fixgal = False
 
             extraflag = smp_dict['fitflag'] * 0.
-            extraflag[-10:] = 1
+            #extraflag[-10:] = 1
 
             aaa = mcmc3galsimpixshift.metropolis_hastings( 
                     galmodel = galmodel
