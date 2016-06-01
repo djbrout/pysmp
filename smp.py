@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 stardeltasfolder = 'smp_y1y2_shallow_v3_40globalstars'
-foldername = 'smp_y1y2_shallow_v3_61newsky_exactpos_galsim_galsimzpt_debug'
+foldername = 'smp_y1y2_shallow_v3_62newsky_exactpos_galsim_galsimzpt'
 galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
 pixstart = None
 
