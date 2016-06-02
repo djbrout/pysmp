@@ -1318,10 +1318,10 @@ class smp:
                     sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
                     sexsky *= scalefactor
                     sexrms *= scalefactor
-                    print mysky,skysig,skysn,skyerrsn
-                    print sexsky,sexrms,snparams.skysig[j]
-                    print 'hahahahahahahaha'
-                    raw_input()
+                    #print mysky,skysig,skysn,skyerrsn
+                    #print sexsky,sexrms,snparams.skysig[j]
+                    #print 'hahahahahahahaha'
+                    #raw_input()
                     # for sss in im[ylow:yhi,xlow:xhi].ravel():
                     #     print sss
                     # print snparams.mjd[j]
