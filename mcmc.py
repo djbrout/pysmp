@@ -662,7 +662,9 @@ class metropolis_hastings():
                             tchisq = np.sum( ( (self.sims[ epoch ] - self.data[ epoch, :,:])**2 * (self.weights[ epoch,:,:] ) * self.mask).ravel() )
                             self.chisqvec[epoch] = tchisq/float(len(self.mask[self.mask==1].ravel()))
                             if np.isnan(a):
-                            chisq += tchisq
+                                chisq += 0
+                            else:
+                                chisq += tchisq
                             dms +=  np.sum( self.data[ epoch, :,:] - self.sims[ epoch ])
         ############################print 'chisq', chisq/len(self.mask[self.mask>0.].ravel())
         #print 'dms',dms
