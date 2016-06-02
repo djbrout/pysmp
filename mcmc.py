@@ -652,7 +652,7 @@ class metropolis_hastings():
                     else:
                         if self.useskyerr:
                             a = np.sum( ( (self.sims[ epoch ] - self.data[ epoch, :,:])**2 / self.skyerr[epoch]**2 * self.mask).ravel() )
-                            self.chisqvec[epoch] = a
+                            self.chisqvec[epoch] = a/float(len(self.mask[self.mask==1].ravel()))
                             if np.isnan(a):
                                 chisq += 0.
                             else:
@@ -660,7 +660,8 @@ class metropolis_hastings():
                             #chisq += np.float64(np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, :,:])**2 / self.skyerr[epoch]**2).ravel() ))
                         else:
                             tchisq = np.sum( ( (self.sims[ epoch ] - self.data[ epoch, :,:])**2 * (self.weights[ epoch,:,:] ) * self.mask).ravel() )
-                            self.chisqvec[epoch] = tchisq
+                            self.chisqvec[epoch] = tchisq/float(len(self.mask[self.mask==1].ravel()))
+                            if np.isnan(a):
                             chisq += tchisq
                             dms +=  np.sum( self.data[ epoch, :,:] - self.sims[ epoch ])
         ############################print 'chisq', chisq/len(self.mask[self.mask>0.].ravel())
@@ -795,7 +796,12 @@ class metropolis_hastings():
         else:
             raoff = np.nan
             decoff = np.nan
-        np.savez(self.chainsnpz,modelvec=self.modelvec, modelvec_uncertainty=self.modelvec_uncertainty, galmodel_params=self.galmodel_params, galmodel_uncertainty=self.galmodel_uncertainty, modelvec_nphistory=self.modelvec_nphistory, galmodel_nphistory=self.galmodel_nphistory, sims=self.sims,data=self.data,accepted_history=self.accepted_history,chisqhist=self.chisq,redchisqhist=self.redchisq,xhistory=np.array(self.xhistory),yhistory=np.array(self.yhistory),chisqvec=self.chisqvec,raoff=raoff,decoff=decoff)
+        np.savez(self.chainsnpz,modelvec=self.modelvec, modelvec_uncertainty=self.modelvec_uncertainty,
+                 galmodel_params=self.galmodel_params, galmodel_uncertainty=self.galmodel_uncertainty,
+                 modelvec_nphistory=self.modelvec_nphistory, galmodel_nphistory=self.galmodel_nphistory,
+                 sims=self.sims,data=self.data,accepted_history=self.accepted_history,chisqhist=self.chisq,
+                 redchisqhist=self.redchisq,xhistory=np.array(self.xhistory),yhistory=np.array(self.yhistory),
+                 chisqvec=self.chisqvec,raoff=raoff,decoff=decoff)
 
 
     def get_params( self ):
