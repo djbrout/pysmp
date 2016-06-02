@@ -3628,60 +3628,60 @@ class smp:
                 pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
                 #print 'initialized'
-                try:
-                    errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                        pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
-                                                    stampsize=params.substamp)
+                #try:
+                errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
+                    pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                                                stampsize=params.substamp)
 
-                    noise_stamp[noise_stamp > 0.] = 1
-                    noise_stamp[noise_stamp <= 0.] = 0
-                    sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
-                    # noise_stamp = noise_stamp*1/(se**2)
-                    noise_stamp = noise_stamp * 1 / (sexrms ** 2)
-                    gal = np.zeros(image_stamp.shape)
-                    mjd = 000.
-                    #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
-                    #                                                    mjd, scale)
-                    if self.dogalsimpixfit:
-                        fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
-                        stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
-                        cx = int(round(stamp_center.x))
-                        cy = int(round(stamp_center.y))
-                        des_psfex = galsim.des.DES_PSFEx(psffile)
-                        thispsf = des_psfex.getPSF(stamp_center)
-                        tim = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
-                                                             cy - params.fitrad, cy + params.fitrad)]
-                        galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
-                        simstamp = full_data_image[ galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
-                                                                   cy - params.fitrad, cy + params.fitrad)] * 0.0
-                        offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
-                        sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
-                        sn = sn.shift(offset)
-                        conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
-                        conv.drawImage(image=simstamp,method='no_pixel')
-                        gpsf = simstamp.array
-                        gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
-                                                                           radius, gal, mjd, scale)
-                        gsflux[i] =gscale
-                        gsflux_std[i] = gscale_std
-                        gsflux_chisq[i]  = gchisq
-                        gsflux_dms[i] = gdms
-                        #print 'gchisq',gchisq
-                        #raw_input()
-                    cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, radius,
-                                                                     gal, mjd, scale)
-
-
-                    #print 'checking!!!', cscale, oldcscale
-                    # print 'DIFFFFFF',scale,cscale
-                    scale = cscale
-                    #print 'scaled'
-                    #print 'chisq',gchisq,chisq
-                    #print 'flux',gscale,cscale
+                noise_stamp[noise_stamp > 0.] = 1
+                noise_stamp[noise_stamp <= 0.] = 0
+                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
+                # noise_stamp = noise_stamp*1/(se**2)
+                noise_stamp = noise_stamp * 1 / (sexrms ** 2)
+                gal = np.zeros(image_stamp.shape)
+                mjd = 000.
+                #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
+                #                                                    mjd, scale)
+                if self.dogalsimpixfit:
+                    fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
+                    stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
+                    cx = int(round(stamp_center.x))
+                    cy = int(round(stamp_center.y))
+                    des_psfex = galsim.des.DES_PSFEx(psffile)
+                    thispsf = des_psfex.getPSF(stamp_center)
+                    tim = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
+                                                         cy - params.fitrad, cy + params.fitrad)]
+                    galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
+                    simstamp = full_data_image[ galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
+                                                               cy - params.fitrad, cy + params.fitrad)] * 0.0
+                    offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
+                    sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
+                    sn = sn.shift(offset)
+                    conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
+                    conv.drawImage(image=simstamp,method='no_pixel')
+                    gpsf = simstamp.array
+                    gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
+                                                                       radius, gal, mjd, scale)
+                    gsflux[i] =gscale
+                    gsflux_std[i] = gscale_std
+                    gsflux_chisq[i]  = gchisq
+                    gsflux_dms[i] = gdms
+                    #print 'gchisq',gchisq
                     #raw_input()
-                except ValueError:
-                    print 'skipped star...\n'
-                    continue
+                cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, radius,
+                                                                 gal, mjd, scale)
+
+
+                #print 'checking!!!', cscale, oldcscale
+                # print 'DIFFFFFF',scale,cscale
+                scale = cscale
+                #print 'scaled'
+                #print 'chisq',gchisq,chisq
+                #print 'flux',gscale,cscale
+                #raw_input()
+                #except ValueError:
+                #    print 'skipped star...\n'
+                #    continue
 
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = cscale_std
