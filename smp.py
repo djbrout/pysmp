@@ -1318,8 +1318,8 @@ class smp:
                     sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
                     print mysky,skysig,skysn,skyerrsn
                     print sexsky,sexrms,snparams.skysig[j]
-                    #print 'hahahahahahahaha'
-                    #raw_input()
+                    print 'hahahahahahahaha'
+                    raw_input()
                     # for sss in im[ylow:yhi,xlow:xhi].ravel():
                     #     print sss
                     # print snparams.mjd[j]
@@ -2418,7 +2418,7 @@ class smp:
             #extraflag[-10:] = 1
 
             print 'image shapes',smp_im.shape
-            raw_input()
+            #raw_input()
             aaa = mcmc3galsimpixshift.metropolis_hastings( 
                     galmodel = galmodel
                     , modelvec = modelvec
