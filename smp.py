@@ -2440,7 +2440,7 @@ class smp:
                     , useskyerr = True
                     , flags = smp_dict['flag']
                     , fitflags = extraflag
-                    , psf_shift_std = None#.00008
+                    , psf_shift_std = .00008
                     , shiftpsf = False
                     , fileappend = ''
                     , stop = False
