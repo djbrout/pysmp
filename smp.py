@@ -2417,6 +2417,8 @@ class smp:
             extraflag = smp_dict['fitflag'] * 0.
             #extraflag[-10:] = 1
 
+            print 'image shapes',smp_im.shape
+
             aaa = mcmc3galsimpixshift.metropolis_hastings( 
                     galmodel = galmodel
                     , modelvec = modelvec
