@@ -2441,7 +2441,7 @@ class smp:
                     , flags = smp_dict['flag']
                     , fitflags = extraflag
                     , psf_shift_std = .00008
-                    , shiftpsf = False
+                    , shiftpsf = True
                     , fileappend = ''
                     , stop = False
                     , skysig = smp_dict['skysig']
