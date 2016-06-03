@@ -778,17 +778,18 @@ class metropolis_hastings():
         #print self.modelvec_nphistory.shape
         #raw_input()
         plt.clf()
-        fig = plt.figure(figsize=(10,7))
+        fig = plt.figure(1, figsize=(10,7))
         for e in np.arange(numepochs):
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
             plt.ylabel('SN Flux')
         plt.savefig(str(self.lcout)+'_SNchainsg.png')
         print str(self.lcout)+'_SNchainsg.png'
+
         plt.clf()
+        plt.close(1)
 
-
-        fig = plt.figure(figsize=(10,7))
+        fig = plt.figure(1,figsize=(10,7))
         #for e in np.arange(numepochs):
         plt.plot(np.arange(0,len(self.ra_nphistory)*self.compressionfactor,self.compressionfactor),self.ra_nphistory,label='RA Offset')
         plt.plot(np.arange(0,len(self.dec_nphistory)*self.compressionfactor,self.compressionfactor),self.dec_nphistory,label='DEC Offset')
@@ -799,6 +800,7 @@ class metropolis_hastings():
         print str(self.lcout)+'_SNradechistory.png'
 
         plt.clf()
+        plt.close(1)
         '''
         fig = plt.figure(figsize=(10,7))
         for e in np.arange(numepochs):
