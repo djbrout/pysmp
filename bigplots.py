@@ -451,7 +451,7 @@ for sn in np.arange(len(snnames)):
 		mp = withsn['modelvec_nphistory'][:,i]
 		#print (np.mean(mp[-1*int(len(mp)/2):])-np.mean(mp[-1*int(len(mp)/4):]))/np.mean(mp[-1*int(len(mp)/2):]),np.mean(mp),len(mp)
 		#raw_input()
-		if withsn['chisqvec'][i] > 1.4:
+		if withsn['chisqvec'][i] > 1.1:
 			print mcmc_input['mjd'][i], 'has poor reduced chi squared'
 			mcmc_floatflux.append(np.nan)
 			mcmc_floatfluxerr.append(np.nan)
