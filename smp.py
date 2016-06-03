@@ -3649,11 +3649,11 @@ class smp:
                         cy = int(round(stamp_center.y))
                         des_psfex = galsim.des.DES_PSFEx(psffile)
                         thispsf = des_psfex.getPSF(stamp_center)
-                        tim = full_data_image[galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
-                                                             cy - params.fitrad, cy + params.fitrad)]
+                        tim = full_data_image[galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
+                                                             cy - params.substamp/2, cy + params.substamp/2-1)]
                         galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
-                        simstamp = full_data_image[ galsim.BoundsI(cx - params.fitrad, cx + params.fitrad,
-                                                                   cy - params.fitrad, cy + params.fitrad)] * 0.0
+                        simstamp = full_data_image[ galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
+                                                                   cy - params.substamp/2, cy + params.substamp/2-1)] * 0.0
                         offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
                         sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
                         sn = sn.shift(offset)
