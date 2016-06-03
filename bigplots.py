@@ -20,7 +20,7 @@ dostardeltas = False
 dogalsim = False
 usechisq = False
 #outfolder = '/global/cscratch1/sd/dbrout/smp_y1y2_shallow79_galsim11'
-outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_58newsky_newzpt_exactpos_notgalsim'
+outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_62newsky_exactpos_galsim_skyerr'
 pixoutfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_40globalstars'
 nothingfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_35'
 nodailyofffolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_40globalstars'
@@ -337,7 +337,7 @@ for sn in np.arange(len(snnames)):
 	mm = np.argmax(withsn['modelvec'])
 	wsn_val = []
 	wsnh = withsn['modelvec_nphistory'][:,mm]
-	if len(wsnh) < 300:
+	if len(wsnh) < 250:
 		print snnames[sn]+' Not enough steps for convergence '+str(len(wsnh))+'... Skipping...'
 		#raw_input()
 		continue
@@ -446,14 +446,16 @@ for sn in np.arange(len(snnames)):
 		if withsn['redchisqhist'][-1] > 1.05:
 			print 'REDUCED CHI SQARED IS POOR'
 			continue
-	#print withsngalsim.keys()
-	#raw_input()
-	#try:
+
 	for i in np.arange(len(mcmc_input['mjd'])):
 		mp = withsn['modelvec_nphistory'][:,i]
 		#print (np.mean(mp[-1*int(len(mp)/2):])-np.mean(mp[-1*int(len(mp)/4):]))/np.mean(mp[-1*int(len(mp)/2):]),np.mean(mp),len(mp)
 		#raw_input()
-		if not float(madstd(withsn['modelvec_nphistory'][:,i])) != 0.:
+		if withsn['chisqvec'][i] > 1.4:
+			print mcmc_input['mjd'][i], 'has poor reduced chi squared'
+			mcmc_floatflux.append(np.nan)
+			mcmc_floatfluxerr.append(np.nan)
+		elif not float(madstd(withsn['modelvec_nphistory'][:,i])) != 0.:
 			mcmc_floatflux.append(np.nan)
 			mcmc_floatfluxerr.append(np.nan)
 		        #elif (np.mean(mp[-1*int(len(mp)/2):])-np.mean(mp[-1*int(len(mp)/4):]))/np.mean(mp[-1*int(len(mp)/2):]) :
