@@ -337,7 +337,7 @@ for sn in np.arange(len(snnames)):
 	mm = np.argmax(withsn['modelvec'])
 	wsn_val = []
 	wsnh = withsn['modelvec_nphistory'][:,mm]
-	if len(wsnh) < 500:
+	if len(wsnh) < 700:
 		print snnames[sn]+' Not enough steps for convergence '+str(len(wsnh))+'... Skipping...'
 		#raw_input()
 		continue
