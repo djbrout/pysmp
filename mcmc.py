@@ -369,7 +369,7 @@ class metropolis_hastings():
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 print 'Reduced Chisq: ', self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
-                #print 'Chisq For Each Epoch: ',self.chisqvec/len(self.mask[self.mask>0.].ravel())
+                print 'Chisq For Each Epoch: ',self.chisqvec/len(self.mask[self.mask>0.].ravel())
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
                 self.savechains()
@@ -795,7 +795,7 @@ class metropolis_hastings():
         if len(self.xhistory) > 0:
             raoff = np.median(self.xhistory[int(3*len(self.xhistory)/4.):])
             decoff = np.median(self.yhistory[int(3*len(self.yhistory)/4.):])
-            print 'raofffffff',raoff
+            #print 'raofffffff',raoff
         else:
             raoff = np.nan
             decoff = np.nan
