@@ -368,8 +368,8 @@ class metropolis_hastings():
             if (self.counter % 25000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
-                print 'Reduced Chisq: ', self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
-                print 'Chisq For Each Epoch: ',self.chisqvec/len(self.mask[self.mask>0.].ravel())
+                print 'Reduced Chisq: ', np.sum(self.csv)/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
+                print 'Chisq For Each Epoch: ',self.csv/len(self.mask[self.mask>0.].ravel())
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
                 self.savechains()
@@ -395,7 +395,7 @@ class metropolis_hastings():
         print 'Accepted Percentage: ' + str( self.accepted_history )
         print 'Seconds per iteration: '+str(float(( self.t2 - self.t1 )/self.counter))
         print 'Final Reduced ChiSq: ' + str(self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0]))
-        print 'Chisq For Each Epoch: ',self.chisqvec/len(self.mask[self.mask>0.].ravel())
+        print 'Chisq For Each Epoch: ',self.csv/len(self.mask[self.mask>0.].ravel())
         #np.savez(self.results_npz, pixel_history = self.pixel_history
         #                        , simulated_stamps = self.simulated_images
         #                        , data_stamps = self.real_data_stamps_trimmed
@@ -431,10 +431,11 @@ class metropolis_hastings():
         #print np.median(1./(self.simsnosn[aa][self.simsnosn[aa] > 0.]/self.gain))
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
-        csv = map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky)
+        self.csv = map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky)
         #print csv
         #raw_input()
-        self.thischisq = np.sum(csv)
+        self.thischisq = np.sum(self.csv)
+
         #print self.thischisq
         #self.thischisq = self.chisq_sim_and_real()
         #print self.thischisq
@@ -606,6 +607,7 @@ class metropolis_hastings():
 
     def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky):
         chisq  = 0
+
         if flags == 0:
             if fitflags == 0:
                 if self.model_errors:
@@ -804,7 +806,7 @@ class metropolis_hastings():
                  modelvec_nphistory=self.modelvec_nphistory, galmodel_nphistory=self.galmodel_nphistory,
                  sims=self.sims,data=self.data,accepted_history=self.accepted_history,chisqhist=self.chisq,
                  redchisqhist=self.redchisq,xhistory=np.array(self.xhistory),yhistory=np.array(self.yhistory),
-                 chisqvec=self.chisqvec,raoff=raoff,decoff=decoff)
+                 chisqvec=self.csv,raoff=raoff,decoff=decoff)
 
 
     def get_params( self ):
