@@ -156,7 +156,7 @@ class metropolis_hastings():
         self.useskyerr = useskyerr
 
         self.didtimeout = False
-
+        #self.comboerr = True
 
         self.pixelation_factor = model_pixel_scale/platescale
         #self.galaxy_model = self.pixelate(galmodel,self.pixelation_factor)
