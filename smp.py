@@ -3723,15 +3723,16 @@ class smp:
         #NEED TO MAKE A PLOT HERE!
         if len(goodstarcols) > 10:
 
-            if self.dogalsimpixfit:
+            if not self.dogalsimpixfit:
                 fluxcol = flux_star
+                #print 'fluxcol  =flux_star'
             else:
                 fluxcol = gsflux
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
                                        startMedian=True,sigmaclip=1.5,iter=10)
             
-            #print 'zpt',md
-            #print 'std',std
+            print 'zpt',md
+            print 'std',std
 
             dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
             std = float(std)/float(num**.5)
