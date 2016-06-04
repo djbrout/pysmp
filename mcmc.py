@@ -365,7 +365,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 5000) == 0:
+            if (self.counter % 25000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 print 'Reduced Chisq: ', self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
@@ -762,7 +762,7 @@ class metropolis_hastings():
         #print self.modelvec_nphistory.shape
         #raw_input()
         plt.clf()
-        fig = plt.figure(figsize=(10,7))
+        fig = plt.figure(1,figsize=(10,7))
         for e in np.arange(numepochs):
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
@@ -770,9 +770,10 @@ class metropolis_hastings():
         plt.savefig(str(self.lcout)+'_SNchains.png')
         print str(self.lcout)+'_SNchains.png'
         plt.clf()
+        plt.close(1)
 
                                    
-        fig = plt.figure(figsize=(10,7))
+        fig = plt.figure(1,figsize=(10,7))
         #for e in np.arange(numepochs):
         plt.plot(np.arange(0,len(self.xhistory)*self.compressionfactor,self.compressionfactor),np.array(self.xhistory)[::1])
         plt.plot(np.arange(0,len(self.yhistory)*self.compressionfactor,self.compressionfactor),np.array(self.yhistory)[::1])
@@ -785,7 +786,7 @@ class metropolis_hastings():
             plt.savefig(str(self.lcout)+'_SNoffset2.png')
             print str(self.lcout)+'_SNoffset2.png'
 
-
+        plt.close(1)
     def savechains( self ):
         self.get_params()
         #modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist  = self.get_params()

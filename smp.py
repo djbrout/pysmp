@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 stardeltasfolder = 'smp_y1y2_shallow_v3_40globalstars'
-foldername = 'smp_y1y2_shallow_v3_63newsky_floatpos_notgalsim_skyerr'
+foldername = 'smp_y1y2_shallow_v3_63newsky_floatpos_notgalsim_comboerr'
 galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
 pixstart = None
 
@@ -2143,8 +2143,8 @@ class smp:
                 , mjd=smp_dict['mjd']
                 , gewekenum=9999999
                 , skyerr=smp_dict['skyerr']
-                , useskyerr = False
-                , usesimerr = True
+                , useskyerr = True
+                , usesimerr = False
                 , flags = smp_dict['flag']+smp_dict['mjd_flag']
                 , fitflags = smp_dict['fitflag']*0.
                 , psf_shift_std = .001
@@ -2232,17 +2232,17 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 300000
+                    , maxiter = 500000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
                     , gewekenum=9999999
                     , skyerr=smp_dict['skyerr']
-                    , useskyerr = False
-                    , usesimerr = True
+                    , useskyerr = True
+                    , usesimerr = False
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
-                    , psf_shift_std = None#.0001
+                    , psf_shift_std = .0001
                     , xoff = xoff
                     , yoff = yoff
                     , shiftpsf = False
