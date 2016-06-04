@@ -431,7 +431,7 @@ class metropolis_hastings():
         #print np.median(1./(self.simsnosn[aa][self.simsnosn[aa] > 0.]/self.gain))
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
-        self.csv = map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky)
+        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky))
         #print csv
         #raw_input()
         self.thischisq = np.sum(self.csv)
