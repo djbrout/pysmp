@@ -630,6 +630,8 @@ class metropolis_hastings():
                             for r in (sims-data).ravel():
                                 obs.append([r])
                             cov = np.cov(obs, rowvar=1)#rowvar transposes the data so each column is a variable
+                            print 'det(cov)', np.linalg.det(cov)
+                            print 'log(det(cov))',np.log10(np.linalg.det(cov))
                             chisq += 2*np.log10(2*np.pi) + np.log10(np.linalg.det(cov))
                     elif self.useskyerr:
                         v = ( (sims - data)**2 / skyerr**2 * self.mask).ravel()
