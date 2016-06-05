@@ -628,7 +628,7 @@ class metropolis_hastings():
                             # distribution is 2log(2pi) + log(det(Sigma)) + chi^2.
                             #print sims.ravel().shape
                             cov = np.cov((sims-data).ravel(),rowvar=0)#rowvar transposes the data so each column is a variable
-                            #print cov.shape
+                            print 'covshape',cov.shape
                             chisq += 2*np.log10(2*np.pi) + np.log10(np.linalg.det(cov))
                     elif self.useskyerr:
                         v = ( (sims - data)**2 / skyerr**2 * self.mask).ravel()
