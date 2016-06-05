@@ -44,7 +44,7 @@ save = '/global/u1/d/dbrout/PySMP/paperplots/'
 
 #filtsu = ['g','r','i']
 filtsu = ['r']
-outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_62newsky_exactpos_galsim_skyerr'
+outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_64newsky_floatpos_galsim_skyerr'
 
 radec = False
 snradec = False

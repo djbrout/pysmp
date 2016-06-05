@@ -20,7 +20,7 @@ dostardeltas = False
 dogalsim = True
 usechisq = False
 #outfolder = '/global/cscratch1/sd/dbrout/smp_y1y2_shallow79_galsim11'
-outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_62newsky_exactpos_galsim_skyerr'
+outfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_64newsky_floatpos_galsim_skyerr'
 pixoutfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_40globalstars'
 nothingfolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_35'
 nodailyofffolder = '/global/cscratch1/sd/dbrout/v3/smp_y1y2_shallow_v3_40globalstars'
@@ -337,7 +337,7 @@ for sn in np.arange(len(snnames)):
 	mm = np.argmax(withsn['modelvec'])
 	wsn_val = []
 	wsnh = withsn['modelvec_nphistory'][:,mm]
-	if len(wsnh) < 1200:
+	if len(wsnh) < 800:
 		print snnames[sn]+' Not enough steps for convergence '+str(len(wsnh))+'... Skipping...'
 		#raw_input()
 		continue
