@@ -624,6 +624,8 @@ class metropolis_hastings():
                             # A Gaussian distribution is 1/sqrt(2pi det(Sigma))exp(-0.5 chi^2)
                             # so -2log of the gaussian
                             # distribution is 2log(2pi) + log(det(Sigma)) + chi^2.
+                            print sims.ravel().shape
+                            print cov.shape
                             cov = np.cov((sims-data).ravel(),rowvar=0)#rowvar transposes the data so each column is a variable
                             chisq += 2*np.log10(2*np.pi) + np.log10(np.linalg.det(cov))
                     elif self.useskyerr:
