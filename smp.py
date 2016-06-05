@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 stardeltasfolder = 'smp_y1y2_shallow_v3_40globalstars'
-foldername = 'smp_y1y2_shallow_v3_64newsky_floatpos_galsim_skyerr'
+foldername = 'smp_y1y2_shallow_v3_65_floatpos_NOTgalsim_covarerr'
 galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
 pixstart = None
 
@@ -2068,7 +2068,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 200000
+                    , maxiter = 6000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']

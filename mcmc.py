@@ -113,6 +113,7 @@ class metropolis_hastings():
                 , usecustomweight = False
                 , customweights = None
                 , comboerr = False
+                , covarerr = False
                 ):
         '''
         if model is None:
@@ -188,7 +189,8 @@ class metropolis_hastings():
         self.usecustomweight = usecustomweight
         self.customweights = customweights
         self.comboerr = comboerr
-        self.comboerr = False
+        self.comboerr = True
+        self.covarerr = True
         self.didtimeout = False
         if Nimage == 1:
             self.psfs = np.zeros((1,substamp,substamp))
@@ -432,9 +434,11 @@ class metropolis_hastings():
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
         self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky))
+        print csv
         #print csv
         #raw_input()
         self.thischisq = np.sum(self.csv)
+        print self.thischisq
 
         #print self.thischisq
         #self.thischisq = self.chisq_sim_and_real()
@@ -458,7 +462,7 @@ class metropolis_hastings():
         raw_input()
         '''
         if accept_bool:
-            #print 'accepted'
+            print 'accepted'
             self.lastchisq = self.thischisq
             self.accepted_history = ( self.accepted_history * self.accepted_int + 1.0 ) / ( self.accepted_int + 1 )
             self.copy_adjusted_image_to_model()
@@ -482,7 +486,7 @@ class metropolis_hastings():
         #print 'chisq '+str(t4-t3)
         #print 'accept bool '+str(t5-t4)
         #print 'history update '+str(t6-t5)
-        #raw_input()
+        raw_input()
 
     def adjust_model( self ):
         
@@ -614,9 +618,18 @@ class metropolis_hastings():
                     chisq = np.sum( ( (sims - data)**2 / (sims/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
                 else:
                     if self.comboerr:
-                        v = ( (sims - data)**2 / (skyerr**2 + simnosnnosky/self.gain) * self.mask).ravel()
-                        a = np.sum( v[(v>0.)&(v<9999999.)] )
+                        v = ((sims - data) ** 2 / (skyerr ** 2 + simnosnnosky / self.gain) * self.mask).ravel()
+                        a = np.sum(v[(v > 0.) & (v < 9999999.)])
                         chisq = a
+                        if self.covarerr:
+                            # following http://cs229.stanford.edu/section/gaussians.pdf
+                            # A Gaussian distribution is 1/sqrt(2pi det(Sigma))exp(-0.5 chi^2)
+                            # so -2log of the gaussian
+                            # distribution is 2log(2pi) + log(det(Sigma)) + chi^2.
+                            #print sims.ravel().shape
+                            cov = np.cov((sims-data).ravel(),rowvar=0)#rowvar transposes the data so each column is a variable
+                            #print cov.shape
+                            chisq += 2*np.log10(2*np.pi) + np.log10(np.linalg.det(cov))
                     elif self.useskyerr:
                         v = ( (sims - data)**2 / skyerr**2 * self.mask).ravel()
                         a = np.sum( v[(v>0.)&(v<9999999.)] )
@@ -627,6 +640,7 @@ class metropolis_hastings():
                         chisq = a
 
         return chisq
+
 
     def chisq_sim_and_real( self, model_errors = False ):
         chisq = np.float64(0.0)
