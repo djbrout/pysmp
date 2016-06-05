@@ -434,7 +434,7 @@ class metropolis_hastings():
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
         self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky))
-        print csv
+        print self.csv
         #print csv
         #raw_input()
         self.thischisq = np.sum(self.csv)
@@ -626,14 +626,10 @@ class metropolis_hastings():
                             # A Gaussian distribution is 1/sqrt(2pi det(Sigma))exp(-0.5 chi^2)
                             # so -2log of the gaussian
                             # distribution is 2log(2pi) + log(det(Sigma)) + chi^2.
-                            print 'simshape',sims.ravel().T.shape
                             obs = []
                             for r in (sims-data).ravel():
                                 obs.append([r])
-                            print 'obsshape',np.array(obs).shape
                             cov = np.cov(obs, rowvar=1)#rowvar transposes the data so each column is a variable
-                            #cov = np.dot((sims-data).ravel(), (sims-data).ravel().T)
-                            print 'covshape',cov.shape
                             chisq += 2*np.log10(2*np.pi) + np.log10(np.linalg.det(cov))
                     elif self.useskyerr:
                         v = ( (sims - data)**2 / skyerr**2 * self.mask).ravel()
