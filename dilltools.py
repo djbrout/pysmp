@@ -4,7 +4,7 @@ import os
 import scipy.signal
 import scipy.ndimage as nd
 
-
+#hello from fermilab
 # Returns xvals, medians, mads
 def bindata(x, y, bins, returnn=False):
     medians = np.zeros(len(bins) - 1)
