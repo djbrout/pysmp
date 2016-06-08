@@ -85,7 +85,7 @@ snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'DECL':'string','PEAKMJD':'float','WEIGHT_BADPIXEL':'string',
                  'HOSTGAL_SB_FLUXCAL':[],
                  'STARCAT':'string', 'PSF_UNIT':'string', 'NOBS':'float'}
-snvarnameslist = {'ID_OBS':'string','MJD':'float','BAND':'string',
+snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'string',
                   'IMAGE_NAME_SEARCH':'string','IMAGE_NAME_WEIGHT':'string',
                   'FILE_NAME_PSF':'string','FAKE_TRUEMAG':'float','ZP':'float',
                   'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
@@ -398,6 +398,7 @@ class smp:
                     'diffim_flux':np.zeros(snparams.nvalid),
                     'diffim_fluxerr':np.zeros(snparams.nvalid),
                     'id_obs':np.zeros(snparams.nvalid),
+                    'id_coadd':np.zeros(snparams.nvalid),
                     'snra':np.zeros(snparams.nvalid),
                     'sndec':np.zeros(snparams.nvalid),
                     'notbrightflag':np.ones(snparams.nvalid)
@@ -1546,6 +1547,7 @@ class smp:
                                     smp_dict['diffim_flux'][i] = snparams.flux[j]
                                     smp_dict['diffim_fluxerr'][i] = snparams.fluxerr[j]
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
+                                    smp_dict['id_coadd'][i] = snparams.id_coadd[j]
                                     fs = snparams.flux
                                     brightlimit = fs[np.argsort(fs)][::-1][:15]
                                     print brightlimit
@@ -1993,6 +1995,8 @@ class smp:
         print 'mjdslopeinteroff',smp_dict['mjdslopeinteroff']
 
         print os.path.join(outdir,filename+'_mcmc_input.npz')
+        print 'idobs',smp_dict['id_obs']
+        print 'idcoadd',smp_dict['id_coadd']
 
         np.savez( os.path.join(outdir,filename+'_mcmc_input.npz'), 
                 galmodel = galmodel
@@ -2051,7 +2055,9 @@ class smp:
                 zpt_files = smp_dict['zpt_file'],
                 starglobalids = starglobalids,
                 globalraoffsets = offsetra,
-                globaldecoffsets = offsetdec
+                globaldecoffsets = offsetdec,
+                id_obs = smp_dict['id_obs'],
+                id_coadd = smp_dict['id_coadd']
                 )
         
         np.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
@@ -2068,7 +2074,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 6000
+                    , maxiter = 50000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
