@@ -109,7 +109,7 @@ REVISON HISTORY:
 
 import numpy as np
 from scipy import linalg
-from PythonPhot import dao_value
+import dao_value
 #import mpfit
 import sys
 sys.path.append("./mpfit/")
