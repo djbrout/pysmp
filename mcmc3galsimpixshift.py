@@ -52,7 +52,10 @@ import time
 import pyfits as pf
 import os
 import math
-import galsim
+try:
+    import galsim
+except:
+    print 'Galsim not installed, galsim not functional...'
 import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
