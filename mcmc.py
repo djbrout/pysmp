@@ -645,8 +645,6 @@ class metropolis_hastings():
 
         return chisq
 
-    def getcov(self,arr):
-
 
     def chisq_sim_and_real( self, model_errors = False ):
         chisq = np.float64(0.0)
