@@ -59,8 +59,11 @@ import pyfits as pf
 import scipy.signal
 import scipy.ndimage as nd
 from copy import copy
-import galsim
-import galsim.des
+try:
+    import galsim
+    import galsim.des
+except:
+    print 'Could not import galsim, galsim features not functional...'
 import time
 from astropy.io import fits
 from scipy.interpolate import UnivariateSpline
