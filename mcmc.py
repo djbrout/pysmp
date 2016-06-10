@@ -190,7 +190,7 @@ class metropolis_hastings():
         self.customweights = customweights
         self.comboerr = comboerr
         self.comboerr = True
-        self.covarerr = True
+        self.covarerr = False
         self.didtimeout = False
         if Nimage == 1:
             self.psfs = np.zeros((1,substamp,substamp))
