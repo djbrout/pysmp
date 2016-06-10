@@ -2241,7 +2241,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 500000
+                    , maxiter = 1000000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']

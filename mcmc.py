@@ -367,7 +367,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 25000) == 0:
+            if (self.counter % 50000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 print 'Reduced Chisq: ', np.sum(self.csv)/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
@@ -486,7 +486,7 @@ class metropolis_hastings():
         #print 'chisq '+str(t4-t3)
         #print 'accept bool '+str(t5-t4)
         #print 'history update '+str(t6-t5)
-        raw_input()
+        #raw_input()
 
     def adjust_model( self ):
         
