@@ -170,25 +170,39 @@ def pixelate(matrix, pixelation_factor):
 class tmpwriter():
     # tempdir = location to write files
     # tmp_index = index for parallel computation to avoid over-writing files
-    def __init__(self, tempdir='./tmp/',tmp_subscript=0):
+    def __init__(self, tempdir='./tmp/',tmp_subscript=0,usedccp=False):
         self.tmpdir = tempdir
         self.tmp_index = str(tmp_subscript)
+        self.usedccp = usedccp
     def writefile(self,text,filename):
         tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         a = open(tempfile,'w')
         a.write(text)
         a.close()
-        os.system('cp ' + tempfile + ' ' + filename)
+        if self.usedccp:
+            os.system('dccp ' + tempfile + ' ' + filename)
+        else:
+            os.system('cp ' + tempfile + ' ' + filename)
 
     def appendfile(self,text,filename):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
-        os.system('cp ' + filename + ' ' + tempfile)
+        if self.usedccp:
+            os.system('dccp ' + filename + ' ' + tempfile)
+        else:
+            os.system('cp ' + filename + ' ' + tempfile)
+
         a = open(tempfile,'a')
         a.write(text)
         a.close()
-        os.system('cp ' + tempfile + ' ' + filename)
+        if self.usedccp:
+            os.system('dccp ' + tempfile + ' ' + filename)
+        else:
+            os.system('cp ' + tempfile + ' ' + filename)
 
     def savez(self,filename,**kwargs):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
         np.savez(tempfile,**kwargs)
-        os.system('cp ' + tempfile + ' ' + filename)
+        if self.usedccp:
+            os.system('dccp ' + tempfile + ' ' + filename)
+        else:
+            os.system('cp ' + tempfile + ' ' + filename)
