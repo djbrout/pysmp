@@ -176,6 +176,11 @@ class tmpwriter():
         self.usedccp = usedccp
     def writefile(self,text,filename):
         tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
+        if os.path.isfile(tempfile):
+            os.remove(tempfile)
+        if os.path.isfile(filename):
+            os.remove(filename)
+
         a = open(tempfile,'w')
         a.write(text)
         a.close()
@@ -186,6 +191,10 @@ class tmpwriter():
 
     def appendfile(self,text,filename):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
+        if os.path.isfile(tempfile):
+            os.remove(tempfile)
+        if os.path.isfile(filename):
+            os.remove(filename)
         if self.usedccp:
             os.system('dccp ' + filename + ' ' + tempfile)
         else:
@@ -201,6 +210,10 @@ class tmpwriter():
 
     def savez(self,filename,**kwargs):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
+        if os.path.isfile(tempfile):
+            os.remove(tempfile)
+        if os.path.isfile(filename):
+            os.remove(filename)
         np.savez(tempfile,**kwargs)
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
