@@ -2,7 +2,7 @@
 
 stardeltasfolder = 'smp_y1y2_shallow_v3_40globalstars'
 foldername = 'smp_y1y2_shallow_v3_65nongalsim'
-galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars'
+galaxyfoldername = 'smp_y1y2_shallow_v3_40globalstars
 pixstart = None
 
 """
@@ -2241,7 +2241,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 500000
+                    , maxiter = 1000000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
@@ -4100,8 +4100,8 @@ if __name__ == "__main__":
     import sys,getopt
     # read in arguments and options
     try:
-        if os.path.exists("defaults/default.config"):
-            args = open("defaults/default.config", 'r').read().split()
+        if os.path.exists("default.config"):
+            args = open("default.config", 'r').read().split()
         else:
             args = sys.argv[1:]
         
@@ -4138,7 +4138,8 @@ if __name__ == "__main__":
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
-                      "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar"])
+                      "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
+                      "snfilepath"])
 
 
         print opt
@@ -4158,7 +4159,8 @@ if __name__ == "__main__":
     gal_model = None
     snfile,param_file,outfile,filt = '','','',''
     nomask,nozpt = 'none',False
-    mergeno = 0 
+    mergeno = 0
+    snfilepath = None
 
 
     for o,a in opt:
@@ -4219,6 +4221,8 @@ if __name__ == "__main__":
             snradecfit = True
         elif o in ["--dontglobalstar"]:
             doglobalstar = False
+        elif o in ["--snfilepath"]:
+            snfilepath = o
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4282,6 +4286,8 @@ if __name__ == "__main__":
             snradecfit = True
         elif o in ["--dontglobalstar"]:
             doglobalstar = False
+        elif o in ["--snfilepath"]:
+            snfilepath = o
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
         #elif o == "--clearzpt":
@@ -4297,6 +4303,8 @@ if __name__ == "__main__":
                 print 'index',index
                 snfile = files[int(iii)].rstrip()
                 a.close()
+                if not snfilepath is None:
+                    snfile = os.path.join(snfilepath, snfile.split['/'][-1])
                 print 'Index '+str(iii)
                 print 'SN File '+snfile
 
@@ -4366,6 +4374,8 @@ if __name__ == "__main__":
             print len(files)
             snfile = files[int(index)].rstrip()
             a.close()
+            if not snfilepath is None:
+                snfile = os.path.join(snfilepath, snfile.split['/'][-1])
             print 'Index '+str(index)
             print 'SN File '+snfile
 
