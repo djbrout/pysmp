@@ -269,7 +269,7 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat'):
 
-        tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
+        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
 
         tstart = time.time()
         from txtobj import txtobj
@@ -298,19 +298,23 @@ class smp:
             #a = open(self.zpt_fits,'w')
             #a.write('ZPT FILE LOCATIONS\n')
             #a.close()
-            tmpwriter.writefile('ZPT FILE LOCATIONS\n',self.zpt_fits)
+            self.tmpwriter.writefile('ZPT FILE LOCATIONS\n',self.zpt_fits)
             print self.zpt_fits
             raw_input('first instance of tmpwriter')
             if clear_zpt:
-                big = open(self.big_zpt+'.txt','w')
-                big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
-                big.close()
+                #big = open(self.big_zpt+'.txt','w')
+                #big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
+                #big.close()
+                self.tmpwriter.writefile('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n',self.big_zpt)
 
-            b = open(self.checkstarfile, 'w')
-            b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
+            #b = open(self.checkstarfile, 'w')
+            #b.write('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
+            #        'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
+            #        'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
+            #b.close()
+            self.tmpwriter.writefile('Exposure Num\tMJD\tRA\tDEC\txstar\tystar\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit '
                     'Flux Err\tFit Flux Chisq\tFit Flux DMS\tGalsim Fit Flux\tGalsim Fit Flux Err\t'
-                    'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n')
-            b.close()
+                    'Galsim Fit Flux Chisq\tGalsim Fit Flux DMS\tCat Mag\n',self.checkstarfile)
             #if clear_checkstars:
             #    big = open(self.checkstarfile,'w')
             #    big.write('Exposure Num\tMJD\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
@@ -3467,12 +3471,15 @@ class smp:
             for k in np.arange(4):
                 plt.scatter(flux_star[k,j]*0.+po,-2.5*np.log10(flux_star[k,j])+diffimzp,alpha=.5)
         from scipy.optimize import curve_fit
-        for k in np.arange(4):
+        for k in np.arange(4):.
             popt, pcov = curve_fit(parabola, pixel_offsets, -2.5*np.log10(flux_star[k,:])+diffimzp)
             perr = np.sqrt(np.diag(pcov))
             if perr[0] < .5:
                 plt.plot(pixel_offsets,popt[0]*(pixel_offsets)**2+popt[1]*(pixel_offsets)+popt[2],color='black')
-                b.write(str(popt[0])+'\t'+str(popt[1])+'\t'+str(popt[2])+'\n')
+                if soappend:
+                    b.write(str(popt[0])+'\t'+str(popt[1])+'\t'+str(popt[2])+'\n')
+                else:
+
         plt.xlabel('pixel offset')
         plt.ylabel('fit star Mag')
         ax = plt.gca()
@@ -3780,30 +3787,30 @@ class smp:
             exposure_num = imfile.split('/')[-1].split('_')[1]
 
             if nozpt:
+                fn = self.big_zpt+'.txt'
                 if os.path.isfile(self.big_zpt+'.txt'):
-                    b = open(self.big_zpt+'.txt','a')
+                    pass
                 else:
-                    b = open(self.big_zpt+'.txt','w')
-                    b.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
+                   self.tmpwriter.writefile('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n',fn)
                 for i in goodstarcols:
-                    b.write(str(exposure_num)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)\
+                    self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)\
                         +'\t'+str(mcmc_md)+'\t'+str(mcmc_std)+'\t'+str(mcmc_me_md)+'\t'+str(mcmc_me_std)+'\t'+str(mag_cat[i])\
                         +'\t'+str(-2.5*np.log10(flux_star[i]))+'\t'+str(-2.5*np.log10(flux_star_mcmc[i]))\
                         +'\t'+str(-2.5*np.log10(flux_star_mcmc_modelerrors[i]))\
                         +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_simple[i]))
-                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]))
+                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]),fn)
                         +'\n')
-                b.close()
+                #b.close()
 
-                b = open(self.checkstarfile,'a')
+                #b = open(self.checkstarfile,'a')
                 for i in goodstarcols:
-                    b.write(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
+                    self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
                             +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'
                             +str(flux_star[i])+'\t'+str(flux_star_std[i])+'\t'+str(flux_chisq[i])+'\t'+str(flux_dms[i])+'\t'
                             + str(gsflux[i]) + '\t' + str(gsflux_std[i]) + '\t' + str(gsflux_chisq[i]) + '\t' + str(gsflux_dms[i])
-                            +'\t'+str(mag_cat[i])+'\n')
+                            +'\t'+str(mag_cat[i])+'\n',self.checkstarfile)
 
-                b.close()
+                #b.close()
                 #print 'checkstarfilea appended'
                 #print self.checkstarfile
                 #raw_input()
