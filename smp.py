@@ -79,6 +79,7 @@ import cntrd,aper,getpsf,rdpsf
 import addcoltoDESlightcurve as lc
 import runsextractor
 import pkfit_norecent_noise_smp
+import dilltools as dt
 
 #from matplotlib.backends.backend_pdf import PdfPages
 
@@ -268,6 +269,8 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat'):
 
+        tmpwriter = dt.tmpwriter(tmp_index=snfile.split('/')[-1].split('.')[0]+'_'+filt)
+
         tstart = time.time()
         from txtobj import txtobj
         from astropy import wcs
@@ -292,9 +295,12 @@ class smp:
                 os.makedirs('/'.join(self.checkstarfile.split('/')[:-1]))
             if not os.path.exists('./zpts'):
                 os.makedirs('./zpts/')
-            a = open(self.zpt_fits,'w')
-            a.write('ZPT FILE LOCATIONS\n')
-            a.close()
+            #a = open(self.zpt_fits,'w')
+            #a.write('ZPT FILE LOCATIONS\n')
+            #a.close()
+            tmpwriter.writefile('ZPT FILE LOCATIONS\n',self.zpt_fits)
+            print self.zpt_fits
+            raw_input('first instance of tmpwriter')
             if clear_zpt:
                 big = open(self.big_zpt+'.txt','w')
                 big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
