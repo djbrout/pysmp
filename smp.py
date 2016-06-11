@@ -299,8 +299,8 @@ class smp:
             #a.write('ZPT FILE LOCATIONS\n')
             #a.close()
             self.tmpwriter.writefile('ZPT FILE LOCATIONS\n',self.zpt_fits)
-            print self.zpt_fits
-            raw_input('first instance of tmpwriter')
+            #print self.zpt_fits
+            #raw_input('first instance of tmpwriter')
             if clear_zpt:
                 #big = open(self.big_zpt+'.txt','w')
                 #big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
