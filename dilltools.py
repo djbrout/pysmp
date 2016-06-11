@@ -187,3 +187,8 @@ class tmpwriter():
         a.write(text)
         a.close()
         os.system('cp ' + tempfile + ' ' + filename)
+
+    def savez(self,filename,**kwargs):
+        tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
+        np.savez(tempfile,**kwargs)
+        os.system('cp ' + tempfile + ' ' + filename)

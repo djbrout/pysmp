@@ -701,7 +701,7 @@ class smp:
             starids = np.array(starids)
             starras = np.array(starras)
             stardecs = np.array(stardecs)
-            np.savez(star_offset_file,starras=starras,stardecs=stardecs,starids=starids)
+            self.tmpwriter.savez(star_offset_file,starras=starras,stardecs=stardecs,starids=starids)
 
         staroffsets = np.load(star_offset_file)
         starras = staroffsets['starras']
@@ -1895,7 +1895,7 @@ class smp:
 
         maxiter = 1200
         print os.path.join(outdir,filename+'_mcmc_input.npz')
-        #np.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
+        #self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
         print outimages
         print filename
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
@@ -1951,7 +1951,7 @@ class smp:
 
         zptnpz = os.path.join(outdir,filename+'_imagezpts.npz')
 
-        np.savez(zptnpz
+        self.tmpwriter.savez(zptnpz
                 , mjd = smp_dict['mjd']
                 , band = filt
                 , fitzpt = smp_dict['zpt']
@@ -1976,7 +1976,7 @@ class smp:
         self.deltastarsfile = fname
         
         # if nozpt:
-        #     np.savez(self.deltastarsfile,deltaras=self.deltaras,deltadecs=self.deltadecs,mjds=self.deltamjds,ras=self.ras,decs=self.decs,airmasses=self.airmasses,x_star=self.x_stars,y_star=self.y_stars)
+        #     self.tmpwriter.savez(self.deltastarsfile,deltaras=self.deltaras,deltadecs=self.deltadecs,mjds=self.deltamjds,ras=self.ras,decs=self.decs,airmasses=self.airmasses,x_star=self.x_stars,y_star=self.y_stars)
         #     print self.deltastarsfile,'SAVED'
         # else:
         #     dsf  = np.load(self.deltastarsfile)
@@ -1989,7 +1989,7 @@ class smp:
         #fname = self.checkstarfile.split('.')[0]+'_20magfakes.npz'
         #self.moneyfile = fname
         #if nozpt:
-        #    np.savez(self.moneyfile,flux=self.fakestarfluxes,fluxerr=self.fakestarfluxerrs,zpt=self.fakestarzpts)
+        #    self.tmpwriter.savez(self.moneyfile,flux=self.fakestarfluxes,fluxerr=self.fakestarfluxerrs,zpt=self.fakestarzpts)
         #    print fname,'SAVED'
 
         #self.plotcheckstars()
@@ -2012,7 +2012,7 @@ class smp:
         print 'idobs',smp_dict['id_obs']
         print 'idcoadd',smp_dict['id_coadd']
 
-        np.savez( os.path.join(outdir,filename+'_mcmc_input.npz'), 
+        self.tmpwriter.savez( os.path.join(outdir,filename+'_mcmc_input.npz'), 
                 galmodel = galmodel
                 , modelvec = modelvec*0.
                 , galstd = np.sqrt(galmodel)*2.
@@ -2074,7 +2074,7 @@ class smp:
                 id_coadd = smp_dict['id_coadd']
                 )
         
-        np.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
+        self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
         #raw_input()
 
         if self.dogalfit:
@@ -2290,7 +2290,7 @@ class smp:
             #raw_input()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
 
-            #np.savez(os.path.join(outdir,filename+'_withSn.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist,redchisqhist=redchisqhist)
+            #self.tmpwriter.savez(os.path.join(outdir,filename+'_withSn.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist,redchisqhist=redchisqhist)
             print os.path.join(outdir,filename+'_withSn.npz')
             print smp_dict['image_filename']
             print smp_dict['image_filename'].shape
@@ -2384,7 +2384,7 @@ class smp:
             #raw_input()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
 
-            np.savez(os.path.join(outdir,filename+'_withSnAndGalsim.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist)
+            self.tmpwriter.savez(os.path.join(outdir,filename+'_withSnAndGalsim.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist)
             print os.path.join(outdir,filename+'_withSnAndGalsim.npz')
         
         if self.dogalsimpixfit:    
@@ -2495,7 +2495,7 @@ class smp:
             #raw_input()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
 
-            #np.savez(os.path.join(outdir,filename+'_withSnAndGalsimPix.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist,snrahistory=rahistory,sndechistory=dechistory)
+            #self.tmpwriter.savez(os.path.join(outdir,filename+'_withSnAndGalsimPix.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist,snrahistory=rahistory,sndechistory=dechistory)
             print os.path.join(outdir,filename+'_withSnAndGalsimPix.npz')
 
         self.outdir = outdir
@@ -2840,7 +2840,7 @@ class smp:
         print 'Final Float Gal fluxes'
         print final_mcmc_floatfluxes
 
-        np.savez(os.path.join(self.outdir,snparams.snfile.split('/')[-1].split('.')[0]+'_'+self.filt+'_finalresults.npz'),
+        self.tmpwriter.savez(os.path.join(self.outdir,snparams.snfile.split('/')[-1].split('.')[0]+'_'+self.filt+'_finalresults.npz'),
             fixedgal_scale = np.array(final_mcmc_fixfluxes),
             fixedgal_std = np.array(final_mcmc_fixstd),
             floatgal_scale = np.array(final_mcmc_floatfluxes),
@@ -2860,7 +2860,7 @@ class smp:
             )
 
         if not donesn:
-            np.savez(os.path.join(self.outdir,snparams.snfile.split('/')[-1].split('.')[0]+'_'+self.filt+'_nosnresults.npz'),
+            self.tmpwriter.savez(os.path.join(self.outdir,snparams.snfile.split('/')[-1].split('.')[0]+'_'+self.filt+'_nosnresults.npz'),
                 fixedgal_scale = np.array(final_mcmc_fixfluxes),
                 fixedgal_std = np.array(final_mcmc_fixstd)
             )
@@ -3198,7 +3198,7 @@ class smp:
 
 
         fileout = os.path.join(outdir,filename+'_smp.npz')
-        np.savez( fileout
+        self.tmpwriter.savez( fileout
                   ,diffim_mag = diffim_mag
                   ,diffim_mag_err = diffim_mag_err
                   ,diffim_flux = diffim_flux
@@ -3227,12 +3227,12 @@ class smp:
                   )
 
         fileout = os.path.join(outdir,filename+'_fluxhistory.npz')
-        np.savez( fileout
+        self.tmpwriter.savez( fileout
                 ,history = modelhistory
                 ,substamp = substamp)
 
         #fileout = os.path.join(outdir,filename+'_galfluxhistory.npz')
-        #np.savez( fileout
+        #self.tmpwriter.savez( fileout
         #        ,history = galmodelhistory)
         
         sindices = []
@@ -3861,7 +3861,7 @@ class smp:
                 else:
                     mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
             #print goodstarcols
-            np.savez( mag_compare_out
+            self.tmpwriter.savez( mag_compare_out
                 #,ra = ras[goodstarcols]
                 #,dec = decs[goodstarcols]
                 ,cat_mag = mag_cat[goodstarcols]
