@@ -193,8 +193,6 @@ class tmpwriter():
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         if os.path.isfile(tempfile):
             os.remove(tempfile)
-        if os.path.isfile(filename):
-            os.remove(filename)
         if self.usedccp:
             os.system('dccp ' + filename + ' ' + tempfile)
         else:
@@ -203,6 +201,8 @@ class tmpwriter():
         a = open(tempfile,'a')
         a.write(text)
         a.close()
+        if os.path.isfile(filename):
+            os.remove(filename)
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         else:
