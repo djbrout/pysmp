@@ -361,8 +361,8 @@ class pkfit_class:
         
         #=========================MPFIT=MPFIT=MPFIT====================================================================================
         if mpfit_or_mcmc == 'mpfit':
-            outfile = '/global/u1/d/dbrout/PySMP/readonlytest.npz'
-            np.savez(outfile,func="p[0]*x",model2=model2[good_local],fsub=fsub_full[good_local]-sky,sig=sig)
+            #outfile = '/global/u1/d/dbrout/PySMP/readonlytest.npz'
+            #np.savez(outfile,func="p[0]*x",model2=model2[good_local],fsub=fsub_full[good_local]-sky,sig=sig)
             vals = mpfitexpr.mpfitexpr("p[0]*x",model2[good_local],fsub_full[good_local]-sky,sig, [1], full_output=True)[0]
             errv=np.zeros(51)
             for h in range(51):
