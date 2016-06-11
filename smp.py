@@ -3476,9 +3476,7 @@ class smp:
             perr = np.sqrt(np.diag(pcov))
             if perr[0] < .5:
                 plt.plot(pixel_offsets,popt[0]*(pixel_offsets)**2+popt[1]*(pixel_offsets)+popt[2],color='black')
-                if soappend:
-                    b.write(str(popt[0])+'\t'+str(popt[1])+'\t'+str(popt[2])+'\n')
-                else:
+                b.write(str(popt[0])+'\t'+str(popt[1])+'\t'+str(popt[2])+'\n')
 
         plt.xlabel('pixel offset')
         plt.ylabel('fit star Mag')
