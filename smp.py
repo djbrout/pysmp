@@ -4370,12 +4370,13 @@ if __name__ == "__main__":
         else:
             a = open('./data/snfiles.txt','r')
             files = a.readlines()
-            print 'files',files
-            print 'index',index
-            print len(files)
+            #print 'files',files
+            #print 'index',index
+            #print len(files)
             snfile = files[int(index)].rstrip()
             a.close()
             if not snfilepath is None:
+                print str(snfile).split['/'][-1]
                 snfile = os.path.join(snfilepath, snfile.split['/'][-1])
             print 'Index '+str(index)
             print 'SN File '+snfile
