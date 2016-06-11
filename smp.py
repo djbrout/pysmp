@@ -3796,8 +3796,8 @@ class smp:
                         +'\t'+str(-2.5*np.log10(flux_star[i]))+'\t'+str(-2.5*np.log10(flux_star_mcmc[i]))\
                         +'\t'+str(-2.5*np.log10(flux_star_mcmc_modelerrors[i]))\
                         +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_simple[i]))
-                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]),fn)
-                        +'\n')
+                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]))
+                        +'\n',fn)
                 #b.close()
 
                 #b = open(self.checkstarfile,'a')
