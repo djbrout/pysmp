@@ -4223,7 +4223,7 @@ if __name__ == "__main__":
         elif o in ["--dontglobalstar"]:
             doglobalstar = False
         elif o in ["--snfilepath"]:
-            snfilepath = o
+            snfilepath = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4288,7 +4288,7 @@ if __name__ == "__main__":
         elif o in ["--dontglobalstar"]:
             doglobalstar = False
         elif o in ["--snfilepath"]:
-            snfilepath = o
+            snfilepath = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
         #elif o == "--clearzpt":
