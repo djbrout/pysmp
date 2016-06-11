@@ -4116,7 +4116,7 @@ if __name__ == "__main__":
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
-                      "snfilepath"])
+                      "snfilepath="])
 
 
         print opt
@@ -4140,7 +4140,7 @@ if __name__ == "__main__":
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
-                      "snfilepath"])
+                      "snfilepath="])
 
 
         print opt
