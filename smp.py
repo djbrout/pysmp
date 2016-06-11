@@ -3471,7 +3471,7 @@ class smp:
             for k in np.arange(4):
                 plt.scatter(flux_star[k,j]*0.+po,-2.5*np.log10(flux_star[k,j])+diffimzp,alpha=.5)
         from scipy.optimize import curve_fit
-        for k in np.arange(4):.
+        for k in np.arange(4):
             popt, pcov = curve_fit(parabola, pixel_offsets, -2.5*np.log10(flux_star[k,:])+diffimzp)
             perr = np.sqrt(np.diag(pcov))
             if perr[0] < .5:
