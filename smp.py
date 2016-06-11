@@ -4305,7 +4305,7 @@ if __name__ == "__main__":
                 snfile = files[int(iii)].rstrip()
                 a.close()
                 if not snfilepath is None:
-                    snfile = os.path.join(snfilepath, snfile.split['/'][-1])
+                    snfile = os.path.join(snfilepath, snfile.split('/')[-1])
                 print 'Index '+str(iii)
                 print 'SN File '+snfile
 
@@ -4376,8 +4376,7 @@ if __name__ == "__main__":
             snfile = files[int(index)].rstrip()
             a.close()
             if not snfilepath is None:
-                print str(snfile).split['/'][-1]
-                snfile = os.path.join(snfilepath, snfile.split['/'][-1])
+                snfile = os.path.join(snfilepath, snfile.split('/')[-1])
             print 'Index '+str(index)
             print 'SN File '+snfile
 
