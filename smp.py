@@ -266,7 +266,7 @@ class smp:
              snfile='/test.dat',gal_model=None,stardumppsf=True,
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
-             doglobalstar=True,exactpos=True):
+             doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat'):
 
         tstart = time.time()
         from txtobj import txtobj
@@ -328,7 +328,8 @@ class smp:
         self.dosnradecfit = dosnradecfit
         self.rickfakestarfile = ''
 
-        self.bigcatalog = pf.open('/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat')[2].data
+
+        self.bigcatalog = pf.open(bigstarcatalog)[2].data
         self.bigcatalogmags = self.bigcatalog['mag']
         self.bigcatalogras = self.bigcatalog['x_world']
         self.bigcatalogdecs = self.bigcatalog['y_world']
@@ -4116,7 +4117,7 @@ if __name__ == "__main__":
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
-                      "snfilepath="])
+                      "snfilepath=","bigstarcatalog="])
 
 
         print opt
@@ -4140,7 +4141,7 @@ if __name__ == "__main__":
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
-                      "snfilepath="])
+                      "snfilepath=","bigstarcatalog="])
 
 
         print opt
@@ -4162,6 +4163,7 @@ if __name__ == "__main__":
     nomask,nozpt = 'none',False
     mergeno = 0
     snfilepath = None
+    bigstarcatalog=None
 
 
     for o,a in opt:
@@ -4224,6 +4226,8 @@ if __name__ == "__main__":
             doglobalstar = False
         elif o in ["--snfilepath"]:
             snfilepath = a
+        elif o in["--bigstarcatalog"]:
+            bigstarcatalog = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4289,10 +4293,17 @@ if __name__ == "__main__":
             doglobalstar = False
         elif o in ["--snfilepath"]:
             snfilepath = a
+        elif o in["--bigstarcatalog"]:
+            bigstarcatalog = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
         #elif o == "--clearzpt":
         #    clear_zpt = True
+
+
+    if bigstarcatalog is None:
+        raise NameError("Must provide an all encompassing star catalog in default.config "+
+                        "--bigstarcatalog=/location/to/bigstarcatalog.cat Exiting now...")
 
     if not index is None:
         if index == 'all':
@@ -4360,7 +4371,7 @@ if __name__ == "__main__":
                                  gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
-                                 dailyoff=dailyoff,doglobalstar=doglobalstar)
+                                 dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4440,7 +4451,7 @@ if __name__ == "__main__":
                      gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
-                     dailyoff=dailyoff,doglobalstar=doglobalstar)
+                     dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
