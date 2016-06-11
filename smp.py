@@ -4115,7 +4115,8 @@ if __name__ == "__main__":
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
-                      "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar"])
+                      "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
+                      "snfilepath"])
 
 
         print opt
