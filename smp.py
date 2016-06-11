@@ -269,7 +269,7 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat'):
 
-        tmpwriter = dt.tmpwriter(tmp_index=snfile.split('/')[-1].split('.')[0]+'_'+filt)
+        tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
 
         tstart = time.time()
         from txtobj import txtobj

@@ -170,9 +170,9 @@ def pixelate(matrix, pixelation_factor):
 class tmpwriter():
     # tempdir = location to write files
     # tmp_index = index for parallel computation to avoid over-writing files
-    def __init__(self, tempdir='./tmp/',tmp_index=0):
+    def __init__(self, tempdir='./tmp/',tmp_subscript=0):
         self.tmpdir = tempdir
-        self.tmp_index = str(round(tmp_index))
+        self.tmp_index = str(tmp_subscript)
     def writefile(self,text,filename):
         tempfile = os.path.join(self.tmpir, 'tmp_' + self.tmp_index + '.txt')
         a = open(tempfile,'w')
