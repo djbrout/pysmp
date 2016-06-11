@@ -174,14 +174,14 @@ class tmpwriter():
         self.tmpdir = tempdir
         self.tmp_index = str(tmp_subscript)
     def writefile(self,text,filename):
-        tempfile = os.path.join(self.tmpir, 'tmp_' + self.tmp_index + '.txt')
+        tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         a = open(tempfile,'w')
         a.write(text)
         a.close()
         os.system('cp ' + tempfile + ' ' + filename)
 
     def appendfile(self,text,filename):
-        tempfile  = os.path.join(self.tmpir, 'tmp_' + self.tmp_index + '.txt')
+        tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         os.system('cp ' + filename + ' ' + tempfile)
         a = open(tempfile,'a')
         a.write(text)
