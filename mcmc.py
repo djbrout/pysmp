@@ -465,7 +465,7 @@ class metropolis_hastings():
         raw_input()
         '''
         if accept_bool:
-            print 'accepted'
+            #print 'accepted'
             self.lastchisq = self.thischisq
             self.accepted_history = ( self.accepted_history * self.accepted_int + 1.0 ) / ( self.accepted_int + 1 )
             self.copy_adjusted_image_to_model()
