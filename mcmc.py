@@ -834,6 +834,8 @@ class metropolis_hastings():
     def savefig(self, fname):
         tempfile = os.path.join(self.tmpwriter.tmpdir,'tmp_'+self.tmpwriter.tmp_index+'.png')
         plt.savefig(tempfile)
+        if os.path.isfile(fname):
+            os.remove(fname)
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
