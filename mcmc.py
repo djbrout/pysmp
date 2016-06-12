@@ -375,6 +375,7 @@ class metropolis_hastings():
                 print 'Counter:',self.counter
                 chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
+                print 'redchi',self.redchisq[-1]
                 print 'Chisq For Each Epoch: ',chsqs
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
