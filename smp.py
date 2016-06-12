@@ -2578,8 +2578,8 @@ class smp:
         #fff.write(fname+'\n')
         #fff.close()
             plt.tight_layout()
-            plt.savefig(fname)
-            print fname
+            self.savefig(fname)
+            #print fname
         
         dta = 3600.
 
@@ -2616,8 +2616,8 @@ class smp:
 
         fname = outpath+self.snfn+'_deltaradec.png'
         plt.tight_layout()
-        plt.savefig(fname)
-        print fname
+        self.savefig(fname)
+        #print fname
 
         print min(deltaras),max(deltaras)
 
@@ -2665,8 +2665,8 @@ class smp:
 
         fname = outpath+self.snfn+'_deltaradecvsRADEC.png'
         plt.tight_layout()
-        plt.savefig(fname)
-        print fname
+        self.savefig(fname)
+        #print fname
         #raw_input()
         plt.clf()
         fig, axs = plt.subplots(2,1,figsize=(13,13))
@@ -2681,8 +2681,8 @@ class smp:
 
         fname = outpath+self.snfn+'_deltaHist.png'
         plt.tight_layout()
-        plt.savefig(fname)
-        print fname
+        self.savefig(fname)
+        #print fname
         
         plt.clf()
         fig, axs = plt.subplots(5,5,figsize=(35,28))
@@ -2700,8 +2700,8 @@ class smp:
             axes[i].legend()
         fname = outpath+self.snfn+'_deltara_singlemjd.png'
         plt.tight_layout()
-        plt.savefig(fname)
-        print fname
+        self.savefig(fname)
+        #print fname
 
         plt.clf()
         fig, axs = plt.subplots(5,5,figsize=(35,28))
@@ -2719,8 +2719,8 @@ class smp:
             axes[i].legend()
         fname = outpath+self.snfn+'_deltadec_singlemjd.png'
         plt.tight_layout()
-        plt.savefig(fname)
-        print fname
+        self.savefig(fname)
+        #print fname
 
         plt.clf()
         fig, axs = plt.subplots(1,2,figsize=(12,12))
@@ -2744,8 +2744,8 @@ class smp:
 
         fname = outpath+self.snfn+'_airmass_vs_deltaradec.png'
         plt.tight_layout()
-        plt.savefig(fname)
-        print fname
+        self.savefig(fname)
+        #print fname
 
         #print mjd,ra,dec
         #print 'heyyyy'
@@ -2975,9 +2975,9 @@ class smp:
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
         lightcurves = os.path.join(outfile,foldername+'/lightcurves/'+filt+'/') 
-        plt.savefig(lightcurves+filename+'_chisqlike.pdf')
+        self.savefig(lightcurves+filename+'_chisqlike.pdf')
         
-        print lightcurves+filename+'_chisqlike.pdf'
+        #print lightcurves+filename+'_chisqlike.pdf'
         '''
         #raw_input()
         
@@ -3049,8 +3049,8 @@ class smp:
         f.subplots_adjust(hspace=0)
         plt.setp([a.get_xticklabels() for a in f.axes[:-1]], visible=False)
     
-        plt.savefig(lightcurves+filename+'_lightcurve.pdf')
-        print lightcurves+filename+'_lightcurve.pdf'
+        self.savefig(lightcurves+filename+'_lightcurve.pdf')
+        #print lightcurves+filename+'_lightcurve.pdf'
         '''
         # Plot the three kernel density estimates
         #numepochs = len(history[0,params.substamp**2:])
@@ -3300,6 +3300,12 @@ class smp:
         #self.big_zpt_plot()
         print('SMP was successful!!!')
     '''    
+
+    def savefig(self,fname):
+        tempfile = os.path.join(self.tmpwriter.tmpdir,'tmp_'+self.tmpwriter.tmp_index+'.png')
+        plt.savefig(tempfile)
+        os.system('mv '+tempfile+' '+fname)
+        print 'saved',fname
 
     def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale):
 

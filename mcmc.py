@@ -58,6 +58,7 @@ import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
 import scipy.interpolate as interpol
+import dilltools as dt
 
 #import pyfftw
 
@@ -191,6 +192,9 @@ class metropolis_hastings():
         self.comboerr = True
         self.covarerr = False
         self.didtimeout = False
+
+        self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0] + '_' + filt)
+
         if Nimage == 1:
             self.psfs = np.zeros((1,substamp,substamp))
             self.psfs[0,:,:] = psfs
@@ -786,8 +790,8 @@ class metropolis_hastings():
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
             plt.ylabel('SN Flux')
-        plt.savefig(str(self.lcout)+'_SNchains.png')
-        print str(self.lcout)+'_SNchains.png'
+        self.savefig(str(self.lcout)+'_SNchains.png')
+        #print str(self.lcout)+'_SNchains.png'
         plt.clf()
         plt.close(1)
 
@@ -799,11 +803,11 @@ class metropolis_hastings():
         plt.xlabel('Step')
         plt.ylabel('Offset (arcsec)')
         if self.fitradec:
-            plt.savefig(str(self.lcout)+'_SNoffset1.png')
-            print str(self.lcout)+'_SNoffset1.png'
+            self.savefig(str(self.lcout)+'_SNoffset1.png')
+            #print str(self.lcout)+'_SNoffset1.png'
         else:
-            plt.savefig(str(self.lcout)+'_SNoffset2.png')
-            print str(self.lcout)+'_SNoffset2.png'
+            self.savefig(str(self.lcout)+'_SNoffset2.png')
+            #print str(self.lcout)+'_SNoffset2.png'
 
         plt.close(1)
     def savechains( self ):
@@ -818,13 +822,18 @@ class metropolis_hastings():
         else:
             raoff = np.nan
             decoff = np.nan
-        np.savez(self.chainsnpz,modelvec=self.modelvec, modelvec_uncertainty=self.modelvec_uncertainty,
+        dt.savez(self.chainsnpz,modelvec=self.modelvec, modelvec_uncertainty=self.modelvec_uncertainty,
                  galmodel_params=self.galmodel_params, galmodel_uncertainty=self.galmodel_uncertainty,
                  modelvec_nphistory=self.modelvec_nphistory, galmodel_nphistory=self.galmodel_nphistory,
                  sims=self.sims,data=self.data,accepted_history=self.accepted_history,chisqhist=self.chisq,
                  redchisqhist=self.redchisq,xhistory=np.array(self.xhistory),yhistory=np.array(self.yhistory),
                  chisqvec=self.csv,raoff=raoff,decoff=decoff)
 
+    def savefig(self, fname):
+        tempfile = os.path.join(self.tmpwriter.tmpdir,'tmp_'+self.tmpwriter.tmp_index+'.png')
+        plt.savefig(tempfile)
+        os.system('mv '+tempfile+' '+fname)
+        print 'saved',fname
 
     def get_params( self ):
         #save_fits_image(self.data[ 0, :,:],'./data.fits')
@@ -847,9 +856,9 @@ class metropolis_hastings():
                 save_fits_image(self.centered_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
                 save_fits_image(self.centered_psfs[i,:,:]-self.kicked_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psfresidual.fits'))
                 save_fits_image(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyerr.fits'))
-                a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyval.txt'),'w')
-                a.write(str(self.sky[i]))
-                a.close()
+                #a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyval.txt'),'w')
+                #a.write(str(self.sky[i]))
+                #a.close()
                 ##print self.sims.shape
                 #return self.model_params,self.model_uncertainty,self.nphistory, self.sims, np.asarray(self.xhistory),np.asarray(self.yhistory)
                 #return np.zeros(len(self.model_params))+1e8,np.zeros(len(self.model_params))+1e9,self.nphistory
