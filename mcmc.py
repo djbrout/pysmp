@@ -373,8 +373,9 @@ class metropolis_hastings():
             if (self.counter % 1000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
-                print 'Reduced Chisq: ', np.sum(self.csv)/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
-                print 'Chisq For Each Epoch: ',self.csv/len(self.mask[self.mask>0.].ravel())
+                chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
+                print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
+                print 'Chisq For Each Epoch: ',chsqs
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
                 self.savechains()
