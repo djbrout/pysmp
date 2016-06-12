@@ -189,6 +189,8 @@ class tmpwriter():
         else:
             os.system('mv ' + tempfile + ' ' + filename)
 
+        print 'saved', filename
+
     def appendfile(self,text,filename):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         if os.path.isfile(tempfile):
@@ -208,6 +210,7 @@ class tmpwriter():
         else:
             os.system('mv ' + tempfile + ' ' + filename)
 
+
     def savez(self,filename,**kwargs):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
         if os.path.isfile(tempfile):
@@ -219,3 +222,4 @@ class tmpwriter():
             os.system('dccp ' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
+        print 'saved',filename
