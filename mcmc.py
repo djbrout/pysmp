@@ -193,7 +193,7 @@ class metropolis_hastings():
         self.covarerr = False
         self.didtimeout = False
 
-        self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0] + '_' + filt)
+        self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
 
         if Nimage == 1:
             self.psfs = np.zeros((1,substamp,substamp))
