@@ -475,7 +475,7 @@ class metropolis_hastings():
             self.copy_shifted_psf()
             self.update_history()
             self.chisq.append( self.thischisq )
-            self.redchisq.append( float(self.thischisq)/float(self.fitparamscounter + self.numfitepochs) )
+            self.redchisq.append( np.nanmean(self.csv[self.csv != 0]/len(self.mask[self.mask>0.].ravel())) )
             #raw_input()
             self.acceptance_vec[self.counter-1]= int(1)
         else:
