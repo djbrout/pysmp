@@ -370,7 +370,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 50000) == 0:
+            if (self.counter % 1000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 print 'Reduced Chisq: ', np.sum(self.csv)/len(self.mask[self.mask>0.].ravel())/len(self.modelvec[self.flags==0])
@@ -437,11 +437,11 @@ class metropolis_hastings():
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
         self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky))
-        print self.csv
+        #print self.csv
         #print csv
         #raw_input()
         self.thischisq = np.sum(self.csv)
-        print self.thischisq
+        #print self.thischisq
 
         #print self.thischisq
         #self.thischisq = self.chisq_sim_and_real()
