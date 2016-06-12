@@ -139,7 +139,7 @@ class metropolis_hastings():
                     raise AttributeError('Model length is zero')
         '''
         #useskyerr = True
-        self.galmodel = self.galmodel
+        self.galmodel = galmodel
         self.modelvec = modelvec
         self.galstd = galstd
         self.modelstd = modelstd
