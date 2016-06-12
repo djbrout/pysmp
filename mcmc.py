@@ -482,7 +482,7 @@ class metropolis_hastings():
             self.accepted_history = ( self.accepted_history * self.accepted_int ) / ( self.accepted_int + 1 )
             self.update_unaccepted_history()
             self.chisq.append(self.lastchisq)
-            self.redchisq.append( float(self.lastchisq)/(self.fitparamscounter + self.numfitepochs) )
+            self.redchisq.append( np.nanmean(self.csv[self.csv != 0]/len(self.mask[self.mask>0.].ravel())))
 
         #print 'galval',self.galhistory[-1][10,10]
         #raw_input()
