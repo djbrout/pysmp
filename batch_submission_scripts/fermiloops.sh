@@ -1,6 +1,6 @@
 source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
 
-. /grid/fermiapp/products/common/etc/setups.sh
+source /grid/fermiapp/products/common/etc/setups.sh
 
 setup jobsub_client
 
