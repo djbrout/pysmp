@@ -678,7 +678,7 @@ class smp:
                 try:
                     starcat.objid += 0.
                 except:
-                    starcat.objid,mmmm = enumerate(starcat.mag)
+                    starcat.objid = enumerate(starcat.mag)
 
                 for rrr in starcat.objid:
                     starids.append(rrr)
@@ -688,7 +688,9 @@ class smp:
                 #for rrr in starcat.ra:
                 #    starcatras.append(rrr)
                 cntrs += 1
-
+                print starids.shape
+                print starras.shape
+                raw_input()
         
         if nozpt:
             starids = np.array(starids)
