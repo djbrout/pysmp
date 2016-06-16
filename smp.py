@@ -239,7 +239,9 @@ class smp:
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
-             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True):
+             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
+             dosextractor=True
+             ):
 
 
         #print filt
@@ -1322,9 +1324,10 @@ class smp:
                     mygainsn =  (np.sqrt(skysn)/(skyerrsn))**2
                     #print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
 
-                    sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
-                    sexsky *= scalefactor
-                    sexrms *= scalefactor
+                    if dosextractor:
+                        sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
+                        sexsky *= scalefactor
+                        sexrms *= scalefactor
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
 
@@ -1391,8 +1394,13 @@ class smp:
                                     smp_dict['scale'][i] = scale
                                     smp_dict['scale_err'][i] = errmag
 
-                                    smp_dict['sky'][i] = sexsky
-                                    smp_dict['skyerr'][i] = sexrms
+                                    if dosextractor:
+                                        smp_dict['sky'][i] = sexsky
+                                        smp_dict['skyerr'][i] = sexrms
+                                    else:
+                                        smp_dict['sky'][i] = skysn
+                                        smp_dict['skyerr'][i] = skyerrsn
+
                                     smp_dict['flag'][i] = 0
                                     #CHECK FOR DIFFIM FLAGS
                                     if self.snparams.photflag[j] == True:
@@ -3844,7 +3852,8 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
-                      "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf"])
+                      "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
+                      "dosextractor"])
 
 
         #print opt
@@ -3870,7 +3879,8 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
-                      "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf"])
+                      "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
+                      "dosextractor"])
 
 
         #print opt
@@ -3900,6 +3910,7 @@ if __name__ == "__main__":
     files_split_by_filter = False
     useweights = True
     stardumppsf = False
+    dosextractor=False
 
 
     dobigstarcat = True
@@ -3986,6 +3997,8 @@ if __name__ == "__main__":
             useweights = False
         elif o == "--stardumppsf":
             stardumppsf = True
+        elif o == "--dosextractor":
+            dosextractor = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4069,6 +4082,8 @@ if __name__ == "__main__":
             useweights = False
         elif o == "--stardumppsf":
             stardumppsf = True
+        elif o == "--dosextractor":
+            dosextractor = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4157,7 +4172,7 @@ if __name__ == "__main__":
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
-                                 useweights=useweights)
+                                 useweights=useweights,dosextractor=dosextractor)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4243,7 +4258,7 @@ if __name__ == "__main__":
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
-                     useweights=useweights)
+                     useweights=useweights,dosextractor=dosextractor)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
