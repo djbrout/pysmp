@@ -688,27 +688,31 @@ class smp:
                 #for rrr in starcat.ra:
                 #    starcatras.append(rrr)
                 cntrs += 1
-                print len(starids)
-                print len(starras)
-                print starras
-                raw_input()
+                #print len(starids)
+                #print len(starras)
+                #print starras
+
+                #raw_input()
         
         if nozpt:
             starids = np.array(starids)
             starras = np.array(starras)
             stardecs = np.array(stardecs)
             self.tmpwriter.savez(star_offset_file,starras=starras,stardecs=stardecs,starids=starids)
-
-        staroffsets = np.load(star_offset_file)
-        starras = staroffsets['starras']
-        stardecs = staroffsets['stardecs']
-        starids = staroffsets['starids']
+        else:
+            staroffsets = np.load(star_offset_file)
+            starras = staroffsets['starras']
+            stardecs = staroffsets['stardecs']
+            starids = staroffsets['starids']
 
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
         for ide in np.unique(np.array(starids)):
             ww = (starids == ide)
+            print ide
+            print starras[ww]
+            raw_input()
             starglobalids.append(ide)
             try:
                 starglobalras.append(np.median(starras[ww]))
