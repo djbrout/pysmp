@@ -432,7 +432,7 @@ class smp:
 
         starids = []
         starras = []
-        starcatras = []
+        #starcatras = []
         stardecs = []
         cntrs = 0
         cols = None
@@ -685,8 +685,8 @@ class smp:
                 for rrr,zzz in zip(newra,newdec):
                     starras.append(rrr)
                     stardecs.append(zzz)
-                for rrr in starcat.ra:
-                    starcatras.append(rrr)
+                #for rrr in starcat.ra:
+                #    starcatras.append(rrr)
                 cntrs += 1
 
         
@@ -707,13 +707,19 @@ class smp:
         for ide in np.unique(np.array(starids)):
             ww = (starids == ide)
             starglobalids.append(ide)
-            starglobalras.append(np.median(starras[ww]))
-            starglobaldecs.append(np.median(stardecs[ww]))
+            try:
+                starglobalras.append(np.median(starras[ww]))
+                starglobaldecs.append(np.median(stardecs[ww]))
+            except:
+                starglobalras.append(np.nan)
+                starglobaldecs.append(np.nan)
 
         starglobalids = np.array(starglobalids)
         starglobalras = np.array(starglobalras)
         starglobaldecs = np.array(starglobaldecs)
-        starcatras = np.array(starcatras)
+        #starcatras = np.array(starcatras)
+
+        print starglobalras
 
         if self.dobigstarcat:
             scampra,scampdec = self.getProperCatRaDec(starglobalras,starglobaldecs)
