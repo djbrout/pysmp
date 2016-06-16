@@ -314,9 +314,7 @@ class pkfit_class:
 
 
         model2=f[iylo:iyhi+1,ixlo:ixhi+1]*0.0
-        print 'radius',radius
-        print 'np.shape(psf)[0]/2-radius',np.shape(psf)[0]/2-radius
-        print 'np.shape(psf)[0]/2+radius+1',np.shape(psf)[0]/2+radius+1
+
         model2[good_psf]=psf[np.shape(psf)[0]/2-radius:np.shape(psf)[0]/2+radius+1,
                              np.shape(psf)[1]/2-radius:np.shape(psf)[1]/2+radius+1][good_psf]
         
