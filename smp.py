@@ -54,7 +54,7 @@ snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'
                   'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
 
 snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
-                  'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_MASK': 'string', 'IMAGE_NAME_WEIGHT': 'string',
+                  'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_MASK': 'string', 'IMAGE_NAME_NOISE': 'string',
                   'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
                   'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string', 'SKYSIG': 'float'}
 
