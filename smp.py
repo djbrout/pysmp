@@ -643,7 +643,8 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
 
-
+            print starcat.mag
+            raw_input()
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain = hdr[params.gain_name]
