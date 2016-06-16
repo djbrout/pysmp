@@ -1031,7 +1031,7 @@ class smp:
                     cols = np.where((starglobalras > ra_low) &
                                     (starglobalras < ra_high) &
                                     (starglobaldecs > dec_low) &
-                                    (starglobaldecs < dec_high))[0]
+                                    (starglobaldecs < dec_high))
 
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
@@ -1054,10 +1054,10 @@ class smp:
                     print badflag.shape
                     print x_star
                     print x_star.shape
-                    print starglobalras
-                    print starglobaldecs
-                    print ra_low,ra_high
-                    print dec_low,dec_high
+                    #print starglobalras
+                    #print starglobaldecs
+                    #print ra_low,ra_high
+                    #print dec_low,dec_high
                     if badflag == 1:
                         print 'aper2 badflag'
                     hpsf = pyfits.getheader(psffile)
