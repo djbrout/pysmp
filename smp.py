@@ -1051,6 +1051,8 @@ class smp:
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
+                    print len(badflag)
+                    print badflag.shape
                     if badflag == 1:
                         print 'aper2 badflag'
                     hpsf = pyfits.getheader(psffile)
