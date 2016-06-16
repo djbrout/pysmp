@@ -896,21 +896,21 @@ class smp:
             dec_high = np.max([dec1,dec2])
             dec_low = np.min([dec1,dec2])
 
-            try:
-                if self.exactpos:
-                    snparams.RA = float(snparams.fake_ra)
-                    snparams.DECL = float(snparams.fake_dec)
-                else:
-                    snparams.RA = float(snparams.ra)
-                    snparams.DECL = float(snparams.decl)
-            except:
-                #try:
-                if self.exactpos:
-                    snparams.RA = astCoords.hms2decimal(snparams.fake_ra,':')
-                    snparams.DECL = astCoords.dms2decimal(snparams.fake_dec,':')
-                else:
-                    snparams.RA = astCoords.hms2decimal(snparams.ra,':')
-                    snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
+            #try:
+            if self.exactpos:
+                snparams.RA = float(snparams.fake_ra)
+                snparams.DECL = float(snparams.fake_dec)
+            else:
+                snparams.RA = float(snparams.ra)
+                snparams.DECL = float(snparams.decl)
+            #except:
+            #try:
+            if self.exactpos:
+                snparams.RA = astCoords.hms2decimal(snparams.fake_ra,':')
+                snparams.DECL = astCoords.dms2decimal(snparams.fake_dec,':')
+            else:
+                snparams.RA = astCoords.hms2decimal(snparams.ra,':')
+                snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
 
                 #except:
                 #    raise exceptions.RuntimeError('Error : RA/Dec format unrecognized!!')
