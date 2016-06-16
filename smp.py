@@ -1147,6 +1147,10 @@ class smp:
                     if doglobalstar:
                         tras = []
                         tdecs = []
+                        try:
+                            starcat.objid += 0.
+                        except:
+                            starcat.objid = np.arange(len(starcat.mag))
                         for ide in starcat.objid[cols]:
                             tra = starglobalras[starglobalids == ide]
                             tdec = starglobaldecs[starglobalids == ide]
