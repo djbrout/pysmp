@@ -1052,16 +1052,7 @@ class smp:
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
-                    print len(badflag)
-                    print badflag.shape
-                    print x_star
-                    print x_star.shape
-                    #print starglobalras
-                    #print starglobaldecs
-                    #print ra_low,ra_high
-                    #print dec_low,dec_high
-                    if badflag == 1:
-                        print 'aper2 badflag'
+
                     hpsf = pyfits.getheader(psffile)
                     magzpt = hpsf['PSFMAG']
 
