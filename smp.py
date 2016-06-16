@@ -321,6 +321,7 @@ class smp:
         self.floatallepochs = floatallepochs
         self.dosnradecfit = dosnradecfit
         self.rickfakestarfile = ''
+        self.dosextractor = dosextractor
 
 
         self.useweights = useweights
@@ -3378,7 +3379,10 @@ class smp:
 
                     noise_stamp[noise_stamp > 0.] = 1
                     noise_stamp[noise_stamp <= 0.] = 0
-                    sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
+                    if self.dosextractor:
+                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
+                    else:
+                        sexsky, sexrms = s,se
                     # noise_stamp = noise_stamp*1/(se**2)
                     noise_stamp = noise_stamp * 1 / (sexrms ** 2)
                     gal = np.zeros(image_stamp.shape)
