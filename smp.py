@@ -68,7 +68,8 @@ paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'FORCERADEC':'string','FRA':'float','FDEC':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
                     'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
-                    'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string'
+                    'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string',
+                    'HDR_PSF_FWHM':'string'
                     }
 
 def save_fits_image(image,filename):
@@ -1065,7 +1066,11 @@ class smp:
 
                 hdulist = fits.open(psffile)
                 hdulist.info()
-                psf_fwhm = hdulist[1].header['PSF_FWHM']
+                try:
+                    psf_fwhm = hdulist[1].header[self.params.psf_fwhm]
+                except:
+                    print 'Could not find pwf_fwhm in fits header'
+                    psf_fwhm = np.nan
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
