@@ -688,8 +688,8 @@ class smp:
                 #for rrr in starcat.ra:
                 #    starcatras.append(rrr)
                 cntrs += 1
-                print starids.shape
-                print starras.shape
+                print len(starids)
+                print len(starras)
                 raw_input()
         
         if nozpt:
