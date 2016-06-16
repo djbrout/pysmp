@@ -448,7 +448,6 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             
-            print 'noisefile',noisefile
 
             if not doglobalstar:
                 continue
@@ -467,7 +466,7 @@ class smp:
                 self.field = np.nan
 
             if filt != 'all' and band not in filt:
-                if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
+                print('filter %s not in filter list for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
 
