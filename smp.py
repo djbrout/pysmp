@@ -3842,7 +3842,7 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
-                      "snfilelist=","files_split_by_filter","maskandnoise"])
+                      "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf"])
 
 
         #print opt
@@ -3868,7 +3868,7 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
-                      "snfilelist=","files_split_by_filter","maskandnoise"])
+                      "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf"])
 
 
         #print opt
@@ -3897,6 +3897,7 @@ if __name__ == "__main__":
     snfilelist = None
     files_split_by_filter = False
     useweights = True
+    stardumppsf = False
 
 
     dobigstarcat = True
@@ -3981,6 +3982,8 @@ if __name__ == "__main__":
             files_split_by_filter = True
         elif o == "--maskandnoise":
             useweights = False
+        elif o == "--stardumppsf":
+            stardumppsf = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4062,6 +4065,8 @@ if __name__ == "__main__":
             files_split_by_filter = True
         elif o == "--maskandnoise":
             useweights = False
+        elif o == "--stardumppsf":
+            stardumppsf = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4145,7 +4150,7 @@ if __name__ == "__main__":
                     scenemodel = smp(snparams,params,root_dir,psf_model)
                     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
                                  ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
-                                 gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
+                                 gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
@@ -4231,7 +4236,7 @@ if __name__ == "__main__":
     scenemodel = smp(snparams,params,root_dir,psf_model)
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
                      ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
-                     gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
+                     gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
