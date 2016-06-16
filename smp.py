@@ -201,8 +201,6 @@ class get_snfile:
 
 class get_params:
     def __init__(self,paramfile):
-        print paramfile
-        raw_input()
         fin = open(paramfile,'r')
         for line in fin:
             line = line.replace('\n','')
@@ -305,6 +303,8 @@ class smp:
         params,snparams = self.params,self.snparams
         #print "FAKE TRUE MAGS"
         #print snparams.fake_truemag
+        print self.psf_model
+        raw_input()
         snparams.psf_model = self.psf_model
         snparams.snfile = snfile
         self.usefake = usefake
