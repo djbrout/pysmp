@@ -1427,7 +1427,11 @@ class smp:
                                     smp_dict['psf_filename'][i] = psffile
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
-                                    smp_dict['weight_filename'][i] = weightsfile
+                                    if self.useweights:
+                                        smp_dict['weight_filename'][i] = weightsfile
+                                    else:
+                                        smp_dict['weight_filename'][i] = noisefile+','+maskfile
+
                                     smp_dict['fakemag'][i] = snparams.fake_truemag[j]
                                     smp_dict['fakezpt'][i] = snparams.zp[j]
                                     smp_dict['diffim_flux'][i] = snparams.flux[j]
