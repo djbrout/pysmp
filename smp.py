@@ -4084,7 +4084,7 @@ if __name__ == "__main__":
         psf_model = 'psfex'
 
 
-    snparams = get_snfile(snfile, root_dir)
+    snparams = get_snfile(snfile, root_dir, useweights)
     params = get_params(param_file)
     if nomask == 'none':
         if params.mask_type.lower() == 'none':
