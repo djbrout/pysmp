@@ -210,7 +210,7 @@ class smp:
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
-             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None):
+             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False):
 
         print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
@@ -283,12 +283,13 @@ class smp:
         self.dosnradecfit = dosnradecfit
         self.rickfakestarfile = ''
 
+        self.dobigstarcat = dobigstarcat
+        if self.dobigstarcat:
+            self.bigcatalog = pf.open(bigstarcatalog)[2].data
+            self.bigcatalogmags = self.bigcatalog['mag']
+            self.bigcatalogras = self.bigcatalog['x_world']
+            self.bigcatalogdecs = self.bigcatalog['y_world']
 
-        self.bigcatalog = pf.open(bigstarcatalog)[2].data
-        self.bigcatalogmags = self.bigcatalog['mag']
-        self.bigcatalogras = self.bigcatalog['x_world']
-        self.bigcatalogdecs = self.bigcatalog['y_world']
-        #print self.bigcatalog.data
         self.exactpos = exactpos
 
         self.ras = []
@@ -520,7 +521,6 @@ class smp:
                 ypix = [0]
                 radtodeg = 360/(2*3.14159)
                 results =  wcsinfo.tran([xpix,ypix])
-                #print wcsinfo
                 ra1, dec1 = results[0]*radtodeg, results[1]*radtodeg
                 results2 =  wcsinfo.tran([[snparams.nxpix-1], [snparams.nypix-1]])
                 ra2, dec2 =results2[0]*radtodeg, results2[1]*radtodeg
@@ -586,11 +586,8 @@ class smp:
                                 (starcat.dec > dec_low) & 
                                 (starcat.dec < dec_high))[0]
 
-
                 if not len(cols):
                     raise exceptions.RuntimeError("Error : No stars in image!!")
-
-
 
                 if wcsworked:
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra,starcat.dec)),0))
@@ -601,34 +598,12 @@ class smp:
 
                 else:
                     coords = wcsinfo.tran([starcat.ra/radtodeg,starcat.dec/radtodeg],False)
-                    #print coords
-                   #print coords[0]
-                    #print len(coords)
-                    #print len(starcat.ra[cols])
-                    #print len(coords[0])
-                    #print coords.shape
-                    #print 'cooooords'
-                    #raw_input()
-                #print starcat.ra[cols][starcat.ra[cols] , starcat.dec[cols]
-                #print coords
-                #print 'stop'
-                #raw_input()
 
                 x_star,y_star = [],[]
                 for xval,yval in zip(*coords):
                     x_star += [xval]
                     y_star += [yval]
-                
-                #print x_star
-                #raw_input()
-                #print y_star
-                #raw_input()
 
-                #print len(coords)
-                #print coords[0][16],coords[1][16]
-                #print x_star[16],y_star[16]
-                #print 'stop'
-                #raw_input()
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
@@ -670,11 +645,14 @@ class smp:
         starglobalras = np.array(starglobalras)
         starglobaldecs = np.array(starglobaldecs)
         starcatras = np.array(starcatras)
-        
-        scampra,scampdec = self.getProperCatRaDec(starglobalras,starglobaldecs)
-        offsetra = np.array(starglobalras) - np.array(scampra)
-        offsetdec = np.array(starglobaldecs) - np.array(scampdec)
-        
+
+        if self.dobigstarcat:
+            scampra,scampdec = self.getProperCatRaDec(starglobalras,starglobaldecs)
+            offsetra = np.array(starglobalras) - np.array(scampra)
+            offsetdec = np.array(starglobaldecs) - np.array(scampdec)
+        else:
+            offsetra = np.array(starglobalras)*0.
+            offsetdec = np.array(starglobalras)*0.
 
         #print starglobalras
         #print starras
@@ -3729,7 +3707,7 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
-                      "snfilelist="])
+                      "snfilelist=","files_split_by_filter"])
 
 
         #print opt
@@ -3755,7 +3733,7 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
-                      "snfilelist="])
+                      "snfilelist=","files_split_by_filter"])
 
 
         #print opt
@@ -3782,6 +3760,9 @@ if __name__ == "__main__":
     SNfoldername=None
     galaxyfoldername=None
     snfilelist = None
+    files_split_by_filter = False
+
+    dobigstarcat = True
 
     usefake = False
 
@@ -3859,6 +3840,8 @@ if __name__ == "__main__":
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
             snfilelist = a
+        elif o == "--files_split_by_filter":
+            files_split_by_filter = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -3936,13 +3919,14 @@ if __name__ == "__main__":
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
             snfilelist = a
+        elif o == "--files_split_by_filter":
+            files_split_by_filter = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
 
     if bigstarcatalog is None:
-        raise NameError("Must provide an all encompassing star catalog in default.config "+
-                        "--bigstarcatalog=/location/to/bigstarcatalog.cat Exiting now...")
+        dobigstarcat = False
 
     if stardeltasfolder is None:
         raise NameError("Must provide "+
@@ -3970,6 +3954,7 @@ if __name__ == "__main__":
                 if not snfilepath is None:
                     snfile = os.path.join(snfilepath, snfile.split('/')[-1])
                 print 'Index '+str(iii)
+
                 print 'SN File '+snfile
 
                 if not snfile or not param_file:
@@ -4022,7 +4007,7 @@ if __name__ == "__main__":
                                  gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
-                                 dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,
+                                 dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
@@ -4033,13 +4018,16 @@ if __name__ == "__main__":
         else:
             a = open(snfilelist,'r')
             files = a.readlines()
-            #print 'files',files
-            #print 'index',index
-            #print len(files)
+
             snfile = files[int(index)].rstrip()
+
+            if files_split_by_filter:
+                snfile = snfile.split('.')[0]+'_'+filt+'.'+snfile.split('.')[1]
+
             a.close()
             if not snfilepath is None:
                 snfile = os.path.join(snfilepath, snfile.split('/')[-1])
+
             print 'Index '+str(index)
             print 'SN File '+snfile
 
@@ -4101,7 +4089,7 @@ if __name__ == "__main__":
                      gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
-                     dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,
+                     dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
