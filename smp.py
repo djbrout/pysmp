@@ -678,7 +678,7 @@ class smp:
                 try:
                     starcat.objid += 0.
                 except:
-                    starcat.objid = enumerate(starcat.mag)
+                    starcat.objid = np.arange(len(starcat.mag))
 
                 for rrr in starcat.objid:
                     starids.append(rrr)
@@ -709,12 +709,7 @@ class smp:
         starglobalras = []
         starglobaldecs = []
         for ide in np.unique(starids):
-            ww = (starids == int(ide))
-            print ide
-            print len(ww)
-            print ww.shape
-            print starras[ww]
-            raw_input()
+            ww = (starids == ide)
             starglobalids.append(ide)
             try:
                 starglobalras.append(np.median(starras[ww]))
