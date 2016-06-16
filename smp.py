@@ -701,15 +701,15 @@ class smp:
             self.tmpwriter.savez(star_offset_file,starras=starras,stardecs=stardecs,starids=starids)
         else:
             staroffsets = np.load(star_offset_file)
-            starras = staroffsets['starras']
-            stardecs = staroffsets['stardecs']
-            starids = staroffsets['starids']
+            starras = np.array(staroffsets['starras'])
+            stardecs = np.array(staroffsets['stardecs'])
+            starids = np.array(staroffsets['starids'])
 
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
         for ide in np.unique(np.array(starids)):
-            ww = (starids == ide)
+            ww = (np.array(starids) == int(ide))
             print ide
             print starras[ww]
             raw_input()
