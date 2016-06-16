@@ -3728,7 +3728,7 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "--stardeltasfolder","--SNfoldername","--galaxyfoldername"])
+                      "--stardeltasfolder=","--SNfoldername=","--galaxyfoldername="])
 
 
         print opt
@@ -3753,7 +3753,7 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "--stardeltasfolder", "--SNfoldername", "--galaxyfoldername"])
+                      "--stardeltasfolder=", "--SNfoldername=", "--galaxyfoldername="])
 
 
         print opt
