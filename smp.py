@@ -1488,22 +1488,22 @@ class smp:
                                         
 
                                     if filt == 'u':
-                                        smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_u
+                                        #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_u
                                         smp_dict['hostgal_sbmag'][i] = -99
                                     if filt == 'g':
-                                        smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_g
+                                        #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_g
                                         smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[0]))
                                     if filt == 'r':
-                                        smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_r
+                                        #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_r
                                         smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[1]))
                                     if filt == 'i':
-                                        smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_i
+                                        #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_i
                                         smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[2]))
                                     if filt == 'z':
-                                        smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_z
+                                        #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_z
                                         smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[3]))
                                     if filt== 'y':
-                                        smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_y
+                                        #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_y
                                         smp_dict['hostgal_sbmag'][i] = -99
 
                                     if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
