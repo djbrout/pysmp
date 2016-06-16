@@ -54,7 +54,7 @@ snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'
                   'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
 
 snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
-                  'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_WEIGHT': 'string',
+                  'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_MASK': 'string', 'IMAGE_NAME_WEIGHT': 'string',
                   'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
                   'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string', 'SKYSIG': 'float'}
 
@@ -103,7 +103,7 @@ def parabola(x,a,b,c):
     return y
 
 class get_snfile:
-    def __init__(self,snfile, rootdir):
+    def __init__(self,snfile, rootdir, useweights):
         varnames = ''
         fin = open(snfile,'r')
         for line in fin:
@@ -163,18 +163,30 @@ class get_snfile:
                 except:
                     raise exceptions.RuntimeError('Error : keyword %s should be set to a number!'%p)
 
-        for p in snvarnameslist.keys():
-            if not self.__dict__.has_key(p.lower()):
-                if p.lower() != 'starcat':
-                    raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
-                elif catalog_exists == False:
-                    raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
-            if snvarnameslist[p] == 'float':
-                try:
-                    self.__dict__[p.lower()] = self.__dict__[p.lower()].astype('float')
-                except:
-                    raise exceptions.RuntimeError('Error : keyword %s should be set to a number!'%p)
-
+        if useweights:
+            for p in snvarnameslist.keys():
+                if not self.__dict__.has_key(p.lower()):
+                    if p.lower() != 'starcat':
+                        raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
+                    elif catalog_exists == False:
+                        raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
+                if snvarnameslist[p] == 'float':
+                    try:
+                        self.__dict__[p.lower()] = self.__dict__[p.lower()].astype('float')
+                    except:
+                        raise exceptions.RuntimeError('Error : keyword %s should be set to a number!'%p)
+        else:
+            for p in snvarnameslist_ps.keys():
+                if not self.__dict__.has_key(p.lower()):
+                    if p.lower() != 'starcat':
+                        raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!" % p)
+                    elif catalog_exists == False:
+                        raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!" % p)
+                if snvarnameslist_ps[p] == 'float':
+                    try:
+                        self.__dict__[p.lower()] = self.__dict__[p.lower()].astype('float')
+                    except:
+                        raise exceptions.RuntimeError('Error : keyword %s should be set to a number!' % p)
 
 class get_params:
     def __init__(self,paramfile):
@@ -3713,7 +3725,7 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
-                      "snfilelist=","files_split_by_filter"])
+                      "snfilelist=","files_split_by_filter","maskandnoise"])
 
 
         #print opt
@@ -3739,7 +3751,7 @@ if __name__ == "__main__":
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
-                      "snfilelist=","files_split_by_filter"])
+                      "snfilelist=","files_split_by_filter","maskandnoise"])
 
 
         #print opt
@@ -3767,6 +3779,8 @@ if __name__ == "__main__":
     galaxyfoldername=None
     snfilelist = None
     files_split_by_filter = False
+    useweights = True
+
 
     dobigstarcat = True
 
@@ -3848,6 +3862,8 @@ if __name__ == "__main__":
             snfilelist = a
         elif o == "--files_split_by_filter":
             files_split_by_filter = True
+        elif o == "--maskandnoise":
+            useweights = False
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -3927,6 +3943,8 @@ if __name__ == "__main__":
             snfilelist = a
         elif o == "--files_split_by_filter":
             files_split_by_filter = True
+        elif o == "--maskandnoise":
+            useweights = False
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -3982,7 +4000,7 @@ if __name__ == "__main__":
                     psf_model = 'psfex'
 
 
-                snparams = get_snfile(snfile, root_dir)
+                snparams = get_snfile(snfile, root_dir, useweights)
 
                 params = get_params(param_file)
 
