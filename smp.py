@@ -242,7 +242,7 @@ class smp:
              stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True):
 
 
-        print filt
+        #print filt
         self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         #print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
@@ -303,8 +303,8 @@ class smp:
         params,snparams = self.params,self.snparams
         #print "FAKE TRUE MAGS"
         #print snparams.fake_truemag
-        print self.psf_model
-        raw_input()
+        #print self.psf_model
+        #raw_input()
         snparams.psf_model = self.psf_model
         snparams.snfile = snfile
         self.usefake = usefake
