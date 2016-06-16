@@ -230,12 +230,15 @@ class smp:
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
-             stardeltasfolder=None, foldername=None, galaxyfoldername=None,dobigstarcat=False):
+             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False):
+
 
         self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
+
+        foldername = SNfoldername
 
         tstart = time.time()
         from txtobj import txtobj
