@@ -448,7 +448,7 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             
-
+            print imfile,band,faketruemag
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
