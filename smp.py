@@ -116,7 +116,7 @@ class get_snfile:
                     if key.upper() == 'HOSTGAL_SB_FLUXCAL':
                         val = val.split()
                         self.__dict__[key.lower()] = val
-                    elif key.upper() != 'WEIGHT_BADPIXEL' and (key.upper() != 'STARCAT' or not 'des' in snfile):             
+                    elif key.upper() != 'WEIGHT_BADPIXEL' and (key.upper() != 'STARCAT'):
                         val = val.split()[0]
                         val = val.replace(' ','')
                         self.__dict__[key.lower()] = val
