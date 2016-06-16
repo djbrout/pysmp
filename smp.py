@@ -230,7 +230,7 @@ class smp:
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
-             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False):
+             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True):
 
 
         self.snparams.photflag = ~(self.snparams.photflag == '0x00')
@@ -291,8 +291,8 @@ class smp:
 
         self.verbose = verbose
         params,snparams = self.params,self.snparams
-        print "FAKE TRUE MAGS"
-        print snparams.fake_truemag
+        #print "FAKE TRUE MAGS"
+        #print snparams.fake_truemag
         snparams.psf_model = self.psf_model
         snparams.snfile = snfile
         self.usefake = usefake
@@ -307,6 +307,11 @@ class smp:
         self.floatallepochs = floatallepochs
         self.dosnradecfit = dosnradecfit
         self.rickfakestarfile = ''
+
+
+        self.useweights = useweights
+        if not self.useweights:
+            self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snaparams.image_name_mask)
 
         self.dobigstarcat = dobigstarcat
         if self.dobigstarcat:
@@ -443,6 +448,8 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             
+            print 'noisefile',noisefile
+
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
@@ -4039,7 +4046,8 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername)
+                                 stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
+                                 useweights=useweights)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4121,7 +4129,8 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername)
+                     stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
+                     useweights=useweights)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
