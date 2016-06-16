@@ -1040,9 +1040,11 @@ class smp:
                     coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
                     #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
                     x_star,y_star = [],[]
-                    for c in coords:
-                        x_star.append(c[0])
-                        y_star.append(c[1])
+
+                    for xval,yval in zip(*coords):
+                        x_star += [xval]
+                        y_star += [yval]
+
                     x_star,y_star = np.array(x_star),np.array(y_star)
                     #if not doncentroid:
                     #    x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
