@@ -1045,9 +1045,9 @@ class smp:
                         x_star += [c[0]]
                         y_star += [c[1]]
                     x_star,y_star = np.array(x_star),np.array(y_star)
-                    if not doncentroid:
-                        x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
-                        newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
+                    #if not doncentroid:
+                    #    x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
+                    #    newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
