@@ -139,7 +139,7 @@ class get_snfile:
                             # print val
                             self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir, val.split()[1])}
                     else:
-                        print 'here2'
+                        print 'here2',key.lower()
                         try:
                             self.__dict__[key.lower()] = np.array(val.split()).astype('float')
                         except:
