@@ -10,10 +10,6 @@ dbrout@physics.upenn.edu
 
 '''
 
-stardeltasfolder = 'smp_y1y2_shallow_v3_65'
-foldername = 'smp_y1y2_shallow_v3_65nongalsim'
-galaxyfoldername = 'smp_y1y2_shallow_v3_65'
-
 
 import numpy as np
 import exceptions
@@ -121,7 +117,7 @@ class get_snfile:
                     elif key.lower() == 'starcat' and 'des' in snfile:
                         catfilter = val.split()[0]                        
                         if filt.lower() == catfilter.lower():
-                            print val
+                            #print val
                             self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir,val.split()[1])}
                         elif filt.lower() == 'all':
                             if "starcat" in self.__dict__:
@@ -237,7 +233,7 @@ class smp:
             self.zpt_fits = './zpts/zpt_plots.txt'
             self.big_zpt = './zpts/big_zpt'
             #self.checkstarfile = os.path.join(outfile,foldername+'/SNe/'+snfile.split('/')[-1].split('.')[0] + '/'+filt+'/standardstarfits.txt')
-            print 'checkstarfile',self.checkstarfile
+            #print 'checkstarfile',self.checkstarfile
             #self.checkstarfile = self.params.checkstarfile
             if not os.path.exists('/'.join(self.checkstarfile.split('/')[:-1])):
                 os.makedirs('/'.join(self.checkstarfile.split('/')[:-1]))
