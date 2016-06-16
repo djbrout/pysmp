@@ -232,6 +232,8 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False):
 
+        print self.snparams.photflag
+
         print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
 
