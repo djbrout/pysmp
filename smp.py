@@ -724,9 +724,7 @@ class smp:
         starglobalids = np.array(starglobalids)
         starglobalras = np.array(starglobalras)
         starglobaldecs = np.array(starglobaldecs)
-        #starcatras = np.array(starcatras)
 
-        print starglobalras
 
         if self.dobigstarcat:
             scampra,scampdec = self.getProperCatRaDec(starglobalras,starglobaldecs)
@@ -990,18 +988,23 @@ class smp:
 
             if snparams.psf_model.lower() == 'daophot':
                 if params.build_psf == 'yes':
-                    cols = np.where((starcat.ra > ra_low) & 
-                                    (starcat.ra < ra_high) & 
-                                    (starcat.dec > dec_low) & 
-                                    (starcat.dec < dec_high))[0]
+                    cols = np.where((starglobalras > ra_low) &
+                                    (starglobalras < ra_high) &
+                                    (starglobaldecs > dec_low) &
+                                    (starglobaldecs < dec_high))[0]
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
-                    x_star,y_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
-                    if not dontcentroid:
-                        x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
-                        newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
+
+                    x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+
+                    #x_star,y_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
+
+
+                    #if not dontcentroid:
+                    #    x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
+                    #    newra,newdec = zip(*w.wcs_pix2world(np.array(zip(x_star,y_star)),0))
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
@@ -1026,16 +1029,17 @@ class smp:
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name] #1
 
-                    cols = np.where((starcat.ra > ra_low) & 
-                                    (starcat.ra < ra_high) & 
-                                    (starcat.dec > dec_low) & 
-                                    (starcat.dec < dec_high))[0]
+                    cols = np.where((starglobalras > ra_low) &
+                                    (starglobalras < ra_high) &
+                                    (starglobaldecs > dec_low) &
+                                    (starglobaldecs < dec_high))[0]
 
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
                     x_star,y_star = [],[]
                     for c in coords:
                         x_star += [c[0]]
