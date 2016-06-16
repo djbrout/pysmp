@@ -133,6 +133,7 @@ class get_snfile:
                                 self.__dict__["starcat"] = {}
                                 self.__dict__["starcat"][val.split()[0]] = os.path.join(rootdir,val.split()[1])
                     elif key.lower() == 'starcat':
+                        print 'here3'
                         catfilter = val.split()[0]
                         if filt.lower() == catfilter.lower():
                             # print val
