@@ -1055,6 +1055,7 @@ class smp:
                     print x_star
                     print x_star.shape
                     print starglobalras
+                    print starglobaldecs
                     print ra_low,ra_high
                     print dec_low,dec_high
                     if badflag == 1:
