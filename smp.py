@@ -690,6 +690,7 @@ class smp:
                 cntrs += 1
                 print len(starids)
                 print len(starras)
+                print starras
                 raw_input()
         
         if nozpt:
