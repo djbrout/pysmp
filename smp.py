@@ -630,7 +630,7 @@ class smp:
                 else:
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
             else:
-                print snparams.starcat[1]
+                print snparams.starcat
                 if os.path.exists(snparams.starcat[1]):
                     starcat = txtobj(snparams.starcat[1],useloadtxt=True)
                     if not starcat.__dict__.has_key('mag'):
