@@ -233,7 +233,7 @@ class smp:
              stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False):
 
 
-        self.snparams.photflag = ~(self.snparams.photflag == '0x00')
+        self.snparams.photflag = ~(self.snparams.photflag & 1016)
         print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
@@ -1286,7 +1286,7 @@ class smp:
                                     smp_dict['flag'][i] = 0
                                     #CHECK FOR DIFFIM FLAGS
                                     if (int(snparams.photflag[j]) & 1016) > 0:
-                                        smp_dict['flag'][i] = 2
+                                        smp_dict['flag'][i] = 1
                                         smp_dict['scale'][i] = np.nan
                                         smp_dict['scale_err'][i] = np.nan
                                     smp_dict['zpt'][i] = zpt
