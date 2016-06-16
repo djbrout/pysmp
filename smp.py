@@ -3154,7 +3154,7 @@ class smp:
                     if self.stardumppsf:
                         if self.snparams.psf_model.lower() == 'psfex':
                             psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
-                            print psf.shape
+                            #print psf.shape
                         elif psf == '':
                             raise exceptions.RuntimeError("Error : PSF array is required!")
                     else:
@@ -3362,8 +3362,8 @@ class smp:
                         raise exceptions.RuntimeError("Error : PSF array is required!")
                 else:
                     psf, psfcenter = self.psf, self.psfcenter
-                    print 'psf.shape',psf.shape
-                    raw_input()
+                    #print 'psf.shape',psf.shape
+                    #raw_input()
                     #print 'psfcenter',psfcenter
 
                 
