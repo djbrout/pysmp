@@ -1028,10 +1028,7 @@ class smp:
                 elif nozpt:
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name] #1
-                    cols = (starglobalras > ra_low) &
-                                    (starglobalras < ra_high) &
-                                    (starglobaldecs > dec_low) &
-                                    (starglobaldecs < dec_high)
+                    cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
 
                     print starglobalras
 
