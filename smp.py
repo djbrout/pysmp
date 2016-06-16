@@ -1187,7 +1187,7 @@ class smp:
                 if self.dobigstarcat:
                     catra,catdec = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
                 else:
-                    catra,catdec = self.starcat.ra[cols],self.starcat.dec[cols]
+                    catra,catdec = starcat.ra[cols],starcat.dec[cols]
                 deltara = catra - newra
                 deltadec = catdec - newdec
                 deltamjd = copy(deltara)*0. + snparams.mjd[j]
