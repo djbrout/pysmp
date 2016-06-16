@@ -1863,8 +1863,12 @@ class smp:
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
 
-
-            fixgal = False
+            if self.fixgalzero:
+                galmodel = galmodel*0.
+                galstd = galstd*0.
+                fixgal = True
+            else:
+                fixgal = False
 
             
             aaa = mcmc3.metropolis_hastings( 
