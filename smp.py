@@ -52,6 +52,12 @@ snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'
                   'IMAGE_NAME_SEARCH':'string','IMAGE_NAME_WEIGHT':'string',
                   'FILE_NAME_PSF':'string','FAKE_TRUEMAG':'float','ZP':'float',
                   'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
+
+snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
+                  'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_WEIGHT': 'string',
+                  'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
+                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string', 'SKYSIG': 'float'}
+
 paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'RADIUS2':'float','SUBSTAMP':'float',
                     'MAX_MASKNUM':'float','RDNOISE_NAME':'string',
@@ -4022,7 +4028,7 @@ if __name__ == "__main__":
             snfile = files[int(index)].rstrip()
 
             if files_split_by_filter:
-                snfile = snfile.split('.')[0]+'_'+filt+'.'+snfile.split('.')[1]
+                filt = snfile.split('_')[1].split('.')[0]
 
             a.close()
             if not snfilepath is None:
