@@ -736,8 +736,11 @@ class smp:
                 self.ccdnum = np.nan
                 self.field = np.nan
 
+            try:
+                self.rickfakestarfile = 'data/fixmagCoords_SN-'+self.field+'.dat'
+            except:
+                self.rickfakestarfile = ''
 
-            self.rickfakestarfile = 'data/fixmagCoords_SN-'+self.field+'.dat'
             if filt != 'all' and band not in filt:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
