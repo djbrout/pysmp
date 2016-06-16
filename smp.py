@@ -1028,8 +1028,6 @@ class smp:
                 elif nozpt:
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name] #1
-                    print starcat.ra - starglobalras
-                    raw_input()
                     cols = np.where((starglobalras > ra_low) &
                                     (starglobalras < ra_high) &
                                     (starglobaldecs > dec_low) &
@@ -1056,6 +1054,7 @@ class smp:
                     print badflag.shape
                     print x_star
                     print x_star.shape
+                    print starglobalras
                     print ra_low,ra_high
                     print dec_low,dec_high
                     if badflag == 1:
