@@ -233,6 +233,7 @@ class smp:
              stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True):
 
 
+        print filt
         self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         #print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
@@ -448,7 +449,7 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             
-            print imfile,band,faketruemag
+            print imfile,band,faketruemag,filt
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
