@@ -1033,6 +1033,9 @@ class smp:
                                     (starglobaldecs > dec_low) &
                                     (starglobaldecs < dec_high))
 
+                    print starglobalras
+                    print starglobalras > ra_low
+
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
