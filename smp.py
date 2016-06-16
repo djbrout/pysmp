@@ -3728,7 +3728,8 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "stardeltasfolder=","SNfoldername=","galaxyfoldername="])
+                      "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
+                      "snfilelist="])
 
 
         #print opt
@@ -3753,7 +3754,8 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "stardeltasfolder=", "SNfoldername=", "galaxyfoldername="])
+                      "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
+                      "snfilelist="])
 
 
         #print opt
@@ -3779,6 +3781,7 @@ if __name__ == "__main__":
     stardeltasfolder=None
     SNfoldername=None
     galaxyfoldername=None
+    snfilelist = None
 
     usefake = False
 
@@ -3854,6 +3857,8 @@ if __name__ == "__main__":
             SNfoldername = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
+        elif o in ["--snfilelist"]:
+            snfilelist = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -3929,6 +3934,8 @@ if __name__ == "__main__":
             SNfoldername = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
+        elif o in ["--snfilelist"]:
+            snfilelist = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -3946,12 +3953,15 @@ if __name__ == "__main__":
     if galaxyfoldername is None:
         raise NameError("Must provide " +
                         "--galaxyfoldername=/location/to/previous/run in default.config \n Exiting now...")
+    if snfilelist is None:
+        raise NameError("Must provide " +
+                        "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
 
     if not index is None:
         if index == 'all':
             for iii in np.arange(0,5000):
 
-                a = open('./data/snfiles.txt','r')
+                a = open(snfilelist,'r')
                 files = a.readlines()
                 print 'files',files
                 print 'index',index
@@ -4021,7 +4031,7 @@ if __name__ == "__main__":
             sys.exit()
 
         else:
-            a = open('./data/snfiles.txt','r')
+            a = open(snfilelist,'r')
             files = a.readlines()
             #print 'files',files
             #print 'index',index
