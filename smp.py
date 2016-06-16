@@ -1425,7 +1425,7 @@ class smp:
                                     smp_dict['image_filename'][i] = imfile
                                     smp_dict['zpt_file'][i] = zpt_file
                                     smp_dict['psf_filename'][i] = psffile
-                                    smp_dict['psf_fwhm'][i] = psf_fwhm
+                                    #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
                                     smp_dict['weight_filename'][i] = weightsfile
                                     smp_dict['fakemag'][i] = snparams.fake_truemag[j]
