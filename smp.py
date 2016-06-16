@@ -3353,6 +3353,8 @@ class smp:
                         raise exceptions.RuntimeError("Error : PSF array is required!")
                 else:
                     psf, psfcenter = self.psf, self.psfcenter
+                    print 'psf.shape',psf.shape
+                    raw_input()
                     #print 'psfcenter',psfcenter
 
                 
