@@ -1,63 +1,34 @@
 #!/usr/bin/env python
 
+'''
+
+Scene Modeling Photometric Pipeline
+
+Dillon Brout
+6/16/2016
+dbrout@physics.upenn.edu
+
+'''
+
 stardeltasfolder = 'smp_y1y2_shallow_v3_65'
 foldername = 'smp_y1y2_shallow_v3_65nongalsim'
 galaxyfoldername = 'smp_y1y2_shallow_v3_65'
-pixstart = None
 
-"""
-Scene modeling pipeline for DES and PanSTARRS.
 
-Usage:
-
-smp.py -s supernova_file -p parameter_file -s snfile -o outfile\ 
-    --nomask --nodiff --nozpt -r root_dir -f filter --psf_model=psf_model
-
-Default parameters are in parentheses.
-
--s/--supernova_file      : Filename with all the information about
-                           the supernova. (Required)
--p/--params              : Parameter file (Required)
--r/--root_dir            : images root directory (/path/to/snfile)
--f/--filter              : observation filter, use 'all' for all filters 
-                           ('all')
--o/--outfile             : output file (/path/to/snfile/test.out) 
--m/--mergeno             : create 2x2 merged pixels 'mergeno' times
--v                       : Verbose mode. Prints more information to terminal.
---nomask                 : set if no mask image exists (one will be 
-                           created).
---nodiff                 : set if no difference image exists
---nozpt                  : set if zeropoints have not been measured
---debug                  : debug flag saves intermediate products
-                           and prints additional information
---psf_model              : Name of psf model. Currently works for 
-                           psfex and daophot. ('psfex')
-
-"""
-# TO DO: figure out how p gets passed into scene/mpfit...
 import numpy as np
 import exceptions
 import os
-#os.environ['SHELL'] = 'csh'
 import sys
-#os.system("alias funpack '/global/u1/d/dbrout/cfitsio/funpack'")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 import scipy.ndimage
 import matplotlib as m
-#import mcmc_emceen as mcmc
 import mcmc as mcmc3
-#import mcmctest as mcmc3
-#import mcmcfloat as mcmcfloat
-#import mcmc3galsim
-#import mcmcgalsim as mcmc3galsimpixshift
 import mcmc3galsimpixshift as mcmc3galsimpixshift
 m.use('Agg')
 import matplotlib.pyplot as plt
-import time
 import pyfits as pf
 import scipy.signal
-import scipy.ndimage as nd
 from copy import copy
 try:
     import galsim
@@ -69,19 +40,11 @@ from astropy.io import fits
 from scipy.interpolate import UnivariateSpline
 import sigma_clip
 import meanclip
-from scipy.optimize import curve_fit
-#import testsim
-#import rdcol
-#import getgalmodel
-import scipy.interpolate as interpol
 import cntrd,aper,getpsf,rdpsf
-#from PythonPhot import cntrd,aper,getpsf,rdpsf
-import addcoltoDESlightcurve as lc
 import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
 
-#from matplotlib.backends.backend_pdf import PdfPages
 
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
@@ -102,7 +65,8 @@ paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'BUILD_PSF':'string','CNTRD_FWHM':'float','FITRAD':'float',
                     'FORCERADEC':'string','FRA':'float','FDEC':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
-                    'NEARBY_STARS_PIXEL_RAD':'float'
+                    'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
+                    'SN_SHIFT_STD':'float'
                     }
 
 def save_fits_image(image,filename):
@@ -124,16 +88,13 @@ def bindata(x,y,bins):
         for i in np.arange(len(bins)-1):
                 bs = bins[i]
                 bf = bins[i+1]
-                #xvals = (bf+bs)/2.
                 ww = [(x>bs)&(x<bf)]
                 try:
                         medians[i] = np.median(y[ww])
                         mads[i] = 1.48*np.median(abs(y[ww]-medians[i]))*1/np.sqrt(len(y[ww]))
-                        #xvals[i] = xv
                 except IndexError:
                         medians[i] = np.nan
                         mads[i] = np.nan
-                        #xvals[i] = np.nan
         return xvals,medians,mads
 def parabola(x,a,b,c):
     y = a*x**2+b*x+c
@@ -174,7 +135,6 @@ class get_snfile:
                         except:
                             raise exceptions.RuntimeError("Error : WEIGHT_BADPIXEL cannot be parsed!")
                 
-                #elif line.replace(' ','').startswith('VARLIST:'):
                 elif line.split(' ')[0] == 'VARNAMES:':
                     varnames = filter(None,line.split('VARNAMES:')[-1].split(' '))
                     for v in varnames:
@@ -186,17 +146,10 @@ class get_snfile:
                     elif len(varnames) != len(vals):
                         raise exceptions.RuntimeError("Error : Number of variables provided is different than the number defined!!!")
                     for var,val in zip(varnames,vals):
-                        #print var
-                        #print val
-                        #print snfile
-                        #raw_input()
                         self.__dict__[var.lower()] = np.append(self.__dict__[var.lower()],val)
 
         catalog_exists = True
         for p in snkeywordlist.keys():
-            #print p
-            #raw_input()
-            #print self.__dict__.keys()
             if not self.__dict__.has_key(p.lower()):
                 if p.lower() != 'starcat':
                     raise exceptions.RuntimeError("Error : keyword %s doesn't exist in supernova file!!!"%p)
@@ -209,8 +162,6 @@ class get_snfile:
                     raise exceptions.RuntimeError('Error : keyword %s should be set to a number!'%p)
 
         for p in snvarnameslist.keys():
-            #print p
-            #raw_input()
             if not self.__dict__.has_key(p.lower()):
                 if p.lower() != 'starcat':
                     raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
@@ -221,8 +172,7 @@ class get_snfile:
                     self.__dict__[p.lower()] = self.__dict__[p.lower()].astype('float')
                 except:
                     raise exceptions.RuntimeError('Error : keyword %s should be set to a number!'%p)
-        #print self.__dict__.keys()
-        #raw_input()
+
 
 class get_params:
     def __init__(self,paramfile):
@@ -238,17 +188,14 @@ class get_params:
                 val = val.replace(' ','')
                 self.__dict__[key.lower()] = val
         for p in paramkeywordlist.keys():
-            #print paramfile
-            #print p
+
             if not self.__dict__.has_key(p.lower()):
                 raise exceptions.RuntimeError("Error : keyword %s doesn't exist in parameter file!!!"%p)
             if paramkeywordlist[p] == 'float':
                 try:
                     self.__dict__[p.lower()] = float(self.__dict__[p.lower()])
-                    #print float(self.__dict__[p.lower()])
                 except:
                     raise exceptions.RuntimeError('Error : keyword %s should be set to a number!'%p)
-            #raw_input()
 
 class smp:
     def __init__(self,snparams,params,rootdir,psf_model):
@@ -256,8 +203,7 @@ class smp:
         self.params = params
         self.rootdir = rootdir
         self.psf_model = psf_model
-        #print 'pdb'
-        #pdb.set_trace()
+
         
 
     def main(self,nodiff=False,nozpt=False,
@@ -267,7 +213,9 @@ class smp:
              snfile='/test.dat',gal_model=None,stardumppsf=True,
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
-             doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat'):
+             doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
+             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None):
+
 
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
 
@@ -319,6 +267,7 @@ class smp:
             #    big = open(self.checkstarfile,'w')
             #    big.write('Exposure Num\tMJD\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tFit Flux\tFit Flux Err\tCat Mag\n')
             #    big.close()
+
         self.verbose = verbose
         params,snparams = self.params,self.snparams
         print "FAKE TRUE MAGS"
@@ -358,6 +307,7 @@ class smp:
         self.x_stars = []
         self.y_stars = []
         badflags = []
+        pixstart = None
 
         if snparams.psf_model == 'psfex' and not snparams.__dict__.has_key('psf'):
             raise exceptions.RuntimeError('Error : PSF must be provided in supernova file!!!')
@@ -574,7 +524,7 @@ class smp:
                 ypix = [0]
                 radtodeg = 360/(2*3.14159)
                 results =  wcsinfo.tran([xpix,ypix])
-                print wcsinfo
+                #print wcsinfo
                 ra1, dec1 = results[0]*radtodeg, results[1]*radtodeg
                 results2 =  wcsinfo.tran([[snparams.nxpix-1], [snparams.nypix-1]])
                 ra2, dec2 =results2[0]*radtodeg, results2[1]*radtodeg
@@ -601,10 +551,10 @@ class smp:
                 #print 'starcatfile',starcatfile
                 #print 'file should be here',os.listdir(starcatloc)
                 for fl in os.listdir(starcatloc):
-                    print fl
+                    #print fl
                     if 'STARCAT' in fl:
                         starcatfile = fl
-                print starcatloc+starcatfile
+                #print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
@@ -730,7 +680,7 @@ class smp:
         offsetdec = np.array(starglobaldecs) - np.array(scampdec)
         
 
-        print starglobalras
+        #print starglobalras
         #print starras
         #print starcatras - starglobalras
         #print 'checking global offsets'
@@ -785,11 +735,7 @@ class smp:
 
             if not nomask:
                 maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
-                #if not os.path.exists(maskfile):
-                #    os.system('gunzip %s.gz'%maskfile)
-                #    if not os.path.exists(maskfile):
-                #        raise exceptions.RuntimeError('Error : file %s does not exist'%maskfile)
- 
+
             # read in the files
             fakeim = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
             if not os.path.exists(fakeim):
@@ -798,11 +744,8 @@ class smp:
             if self.usefake:
                 try:
                     im = pyfits.getdata(fakeim)
-                    #hdulist = pyfits.open(fakeim)
                 except:
                     print fakeim+' is EMPTY, skipping star...'
-                    #print 'stopped'
-                    #raw_input()
                     continue
                 hdr = pyfits.getheader(imfile)
             else:
@@ -901,7 +844,6 @@ class smp:
                 ysn += offsety
 
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
-                #raise exceptions.RuntimeError("Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl))
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
                 badflag = 1
 
@@ -919,13 +861,12 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
-                #print 'starcatfile',starcatfile
-                #print 'file should be here',os.listdir(starcatloc)
+
                 for fl in os.listdir(starcatloc):
-                    print fl
+                    #print fl
                     if 'STARCAT' in fl:
                         starcatfile = fl
-                print starcatloc+starcatfile
+                #print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
@@ -1054,9 +995,7 @@ class smp:
                     else:
                         zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
                     zptdata = np.load(zpt_file) #load previous zpt information
-                    #zpt = zptdata['mcmc_me_zpt'] #set zpt to mcmc zpt and continue
-                    #print zpt
-                    #zpt_err = zptdata['mcmc_me_zpt_std']
+
                     zpt = zptdata['mpfit_zpt']
                     zpterr = zptdata['mpfit_zpt_std']
                     mjdoff = zptdata['mjdoff']
@@ -1073,8 +1012,7 @@ class smp:
                                 (starcat.dec > dec_low) & 
                                 (starcat.dec < dec_high))[0]
 
-                #checkstars = cols[:params.numcheckstars]
-                #usecols = cols[params.numheckstars:]
+
 
                 if not len(cols):
                     raise exceptions.RuntimeError("Error : No stars in image!!")
@@ -1091,7 +1029,6 @@ class smp:
                         raise Exception("Throwing all instances where mag_%band fails to mag. Should not appear to user.")
                 except:
                     mag_star = starcat.mag[cols]
-                #coords = wcs.wcs2pix(starcat.ra[cols],starcat.dec[cols])
 
 
 
@@ -1107,7 +1044,6 @@ class smp:
                         tras = []
                         tdecs = []
                         for ide in starcat.objid[cols]:
-                            #print starglobalras
                             tra = starglobalras[starglobalids == ide]
                             tdec = starglobaldecs[starglobalids == ide]
                             tras.extend(tra)
@@ -1150,7 +1086,6 @@ class smp:
 
                 jjj = abs(deltara) < 1
                 deltaram = deltara[jjj]
-                #print np.array(newra), deltara, jjj
                 ram = np.array(newra)[jjj]
                 mm, s, iii = meanclip.meanclip( deltaram, clipsig = 3., maxiter = 8, returnSubs=True)
                 bra = np.polyfit(ram[iii], deltaram[iii], 0)
@@ -1198,12 +1133,7 @@ class smp:
                 dotestoff = False
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,noise,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
-                #fakestarflux,fakestarfluxerr,fakestarzpt = self.fake20magstars(self.rickfakestarfile,w,zpt,sky,skyerr,im,noise,mask,psffile,imfile,snparams,params.substamp,psf=self.psf)
-                #self.fakestarfluxes.extend(fakestarflux)
-                #self.fakestarfluxerrs.extend(fakestarfluxerr)
-                #self.fakestarzpts.extend(fakestarzpt)
-            #idlmjdnearest = min(idlmjd, key=lambda x:abs(x-float(snparams.mjd[j])))
-            #zpt = idlzpt[idlmjd == idlmjdnearest]
+
 
             if not ('firstzpt' in locals()): firstzpt = 31. ####firstzpt = zpt
             if self.usediffimzpt:
@@ -1214,48 +1144,25 @@ class smp:
                 if zpt == 0.:
                     badflag = 1
                     scalefactor = 0.
-            print scalefactor
+            print 'scalefactor',scalefactor
             im *= scalefactor
             im[np.where(mask != 0)] =-999999.0
-            #im[np.where(mask != 0)] =np.median(im.ravel())
-            '''if snparams.fake_truemag[j] < 90.:
-                print "FAKEMAG"
-                print snparams.fake_truemag[j]
-                print badflag
-                print fwhm_arcsec < params.fwhm_max 
-                print np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3])
-                print len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum
-                print np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:])
-                raw_input()
-            '''
-            print 'heeeeee'
-            print xsn
-            print ysn
-            print snparams.nxpix-25
-            print snparams.nypix-25
-            print scalefactor
 
-            #mjdoff = [mjdoff[0],bdec[0]]
-            #mjdslopeinteroff = [[mra,cra],[mdec,cdec]]
             badflagd = 0
             if dailyoff:
                 if mjdoff[0] > .5:
                     badflagd = 1
                 if mjdoff[1] > .5:
                     badflagd = 1
-                print mjdoff[0],mjdoff[1]
-                print xsn,ysn
+
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA+mjdoff[0],snparams.DECL+mjdoff[1]]]), 0))
-                print xsn[0],ysn[0]
                 xsn = xsn[0]
                 ysn = ysn[0]
                 opsf = copy(self.psf)
                 opsfcenter = copy(self.psfcenter)
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
-                #print np.sum(opsf - self.psf)
-                #print opsfcenter,self.psfcenter
-                #raw_input()
+
 
 
 
@@ -1267,39 +1174,21 @@ class smp:
                 skyrad=[radius1*fff,radius2*fff]
 
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad)#,skyrad=skyrad)
-                print skyerrsn,np.sqrt(skysn/self.gain)
                 mygain = ((1/skyerrsn**2)*skysn)
-                #print mygain,hdr['GAINA'],hdr['GAINB']
-                #raw_input()
+
                 if badflagd == 1:
                     badflag = 1
-                if badflag == 1:
-                    print 'aper4 badflag'
-                    #raw_input()
-                #skysn = idlsky[idlmjd == idlmjdnearest]
 
                 if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
                     badflag = 1
                     print 'mask badflag'
-                    #raw_input()
                 if skysn < -1e5:
                     badflag = 1
                     print 'skysn badflag'
-                    #raw_input()
                 if not badflag:
-                    print noise.shape
-                    print np.max(noise)
-                    print np.min(noise)
-                    print np.mean(noise)
-                    #raw_input()
 
-                    #SKY SIMGA
-                    #save_fits_image(im[xsn-200:xsn+200,ysn-200:ysn+200],'./testskysig/'+str(snparams.mjd[i])+'.fits')
-                    print xsn,ysn
-                    print im.shape
                     stampsize = 256
-                    print 'hahhahah'
-                    #raw_input()
+
                     if ysn-stampsize < 0:
                         ylow = 0
                     else:
@@ -1316,74 +1205,22 @@ class smp:
                         xhi = im.shape[1]-1
                     else:
                         xhi = xsn+stampsize
-                    print 'yoyoyo'
-                    #raw_input()
-                    print ylow,yhi
-                    print xlow,xhi,xsn
-                    print np.median(im)
-                    #raw_input()sigma_clip.meanclip( skyvals, clipsig = 3, maxiter = 8 ) 
+
                     mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
                     skysig=1.48*np.median(abs(vals-np.median(vals)))
                     mysky = np.median(vals)
                     mygain = (np.sqrt(mysky)/(skysig))**2
                     mygainsn =  (np.sqrt(skysn)/(skyerrsn))**2
-                    print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
-                    #import runsextractor
-                    #print im
+                    #print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
+
                     sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
                     sexsky *= scalefactor
                     sexrms *= scalefactor
-                    #print mysky,skysig,skysn,skyerrsn
-                    #print sexsky,sexrms,snparams.skysig[j]
-                    #print 'hahahahahahahaha'
-                    #raw_input()
-                    # for sss in im[ylow:yhi,xlow:xhi].ravel():
-                    #     print sss
-                    # print snparams.mjd[j]
-                    # raw_input()
+
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
-                    #m, s, clipped_skyvals = sigma_clip.meanclip( skyvals, clipsig = 3, maxiter = 8 )
-                    #Freedman Diaconis binwidth
-                    #IQR = np.subtract(*np.percentile(clipped_skyvals, [75, 25]))
-                    #bw = (max(clipped_skyvals)-min(clipped_skyvals)) / 2 * IQR / len(clipped_skyvals)**(1./3.)
-                    '''bw = 3.
-                    hist, bin_edges = np.histogram(clipped_skyvals,bins=np.arange(min(clipped_skyvals),max(clipped_skyvals),bw))
-                    bin_means = (bin_edges[:-1]+bin_edges[1:])/2.
-                    print hist.shape
-                    print 'bin_means'
-                    print bin_means[100:250]
-                    print hist[100:250]
-                    ww = (bin_means > skysn - 4*skysig) & (bin_means < skysn +4*skysig)
-                    bin_means = bin_means[ww]
-                    hist = hist[ww]
-                    guess = [1,skysn,skysig]
-                    xpopt, xpcov = curve_fit(gaussian, bin_means,hist,p0=guess)
-
-
-                    gauss_sky = xpopt[1]
-                    gauss_skysig = xpopt[2]
-
-                    print xpopt
-                    xs = np.arange(min(clipped_skyvals),max(clipped_skyvals),.1)
-
-                    thissky = np.median(im[ylow:yhi,xlow:xhi])
-                    plt.clf()
-                    plt.hist(clipped_skyvals,bins=np.arange(min(clipped_skyvals),max(clipped_skyvals),bw))
-                    plt.plot(bin_means,hist,color='green')
-                    plt.plot(xs,gaussian(xs, xpopt[0], xpopt[1], xpopt[2]),color='black')
-                    plt.axvline(xpopt[1],color='magenta')
-                    plt.axvline(thissky,color='yellow')
-                    plt.axvline(skysn,color='red')
-                    plt.xlim(skysn-3*skysig,skysn+3*skysig)
-                    #plt.xlim(gauss_sky-3*gauss_skysig,gauss_sky+3*gauss_skysig)
-                    plt.xlabel('Pixel Value')
-                    plt.savefig('backgroundtest.png')
-                    print skysig
-                    '''
 
 
 
-                    #raw_input()
                     pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,noise,mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     try:
@@ -1392,15 +1229,6 @@ class smp:
                     except ValueError:
                         raise ValueError('SN too close to edge of CCD!')
 
-                    print noise_stamp.shape
-                    print np.max(noise_stamp)
-                    print np.min(noise_stamp)
-                    print np.mean(noise_stamp)
-                    #raw_input()
-                    #mcmc_scale, mcmc_scale_err = pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,self.params.fitrad,
-                    ##                                                        mpfit_or_mcmc='mcmc',
-                    #                                                        counts_guess=scale,model_errors=False,
-                    #                                                        maxiter=10000,gewekenum=100,useskyerr=True)
 
                     msk = copy(image_stamp)
                     msk[msk!=0.] = 1
@@ -1410,48 +1238,17 @@ class smp:
                     stdev[-1] = np.sqrt(model[-1])
 
 
-                    '''result  = mcmc.metropolis_hastings(
-                                                model=model,psfs=psf_stamp,
-                                                data=image_stamp,weights=1./noise_stamp,
-                                                substamp=newsub, stdev=stdev, sky=[skysn],
-                                                model_errors=False,mask=msk,
-                                                Nimage=1,maxiter=10000,mjd=[float(snparams.mjd[j])],gewekenum=500,
-                                                skyerr=skyerrsn,useskyerr=True,shiftpsf=False)
-                    #try:
-                    model, uncertainty, history, sims, xhistory, yhistory = result.get_params()
-                    mcmc_scale = model[-1]
-                    mcmc_scale_err = uncertainty[-1]
-
-                    print len(model)
-                    '''
-                    print "mag sn pkfit"
-                    print 31 - 2.5*np.log10(model[-1])
-
 
                 if snparams.psf_model.lower() == 'psfex':
                     fwhm = float(snparams.psf[j])
                 if snparams.psf_unit.lower() == 'arcsec':
                     fwhm_arcsec = fwhm
                 elif snparams.psf_unit.lower().startswith('sigma-pix') or snparams.psf_unit.lower().startswith('pix'):
-                    print snparams.psf_model.lower()
                     fwhm_arcsec = fwhm*snparams.platescale
-                    print imfile
-                    print fwhm
-                    print snparams.platescale
-                    #raw_input()
+
                 else:
                     raise exceptions.RuntimeError('Error : FWHM units not recognized!!')
 
-                '''if snparams.fake_truemag[j] < 90.:
-                    print "FAKEMAG2"
-                    print snparams.fake_truemag[j]
-                    print badflag
-                    print fwhm_arcsec < params.fwhm_max 
-                    print np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3])
-                    print len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum
-                    print np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:])
-                    raw_input()
-                '''
                 
                 if not badflag:
                     if not np.isfinite(skysig):
@@ -1460,18 +1257,8 @@ class smp:
                     if skysig < 1:
                         print 'skysig less than one'
                         badflag = 1
-                print badflag
+                #print badflag
 
-                # try:
-                #     nm = self.checkstarfile.split('.')[0].split('/')[-1]+'_deltaradec.npz'
-                #     fname = os.path.join(outfile,stardeltasfolder,'np_data',filt,nm)
-                #     print 'fname',fname
-                #     #raw_input()
-                #     self.deltastarsfile = fname
-                #     df = np.load(self.deltastarsfile)
-                # except:
-                #     print 'MJD Skipped, could not load deltastarfile'
-                #     badflag = 1
 
                 badflags.append(badflag)
                 if not badflag:
@@ -1481,53 +1268,20 @@ class smp:
                                 if np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:]):
                                     
                                     noise_stamp[noise_stamp > 0.] = 1
-
                                     noise_stamp[noise_stamp <= 0.] = 0
 
                                     smp_im[i,:,:] = image_stamp
-
-                                    # ccr = -1
-                                    # for sss in image_stamp.ravel():
-                                    #     ccr += 1
-                                    #     if msk.ravel()[ccr] == 1:
-                                    #         print sss
-                                    # print snparams.mjd[j]
-                                    # raw_input()
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
-                                    print float(snparams.mjd[j])
-                                    print skysig
-                                    print 1/(skysig**2)
-                                    #raw_input()
-                                    #if float(snparams.mjd[j]) == 56536.243:
-                                    #    raw_input() 
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
 
                                     c = 20
                                     psa = self.snparams.platescale
 
-                                    #rmat = np.zeros(smp_psf[i,:,:].shape)
-                                    #for a in range(0,40):
-                                    #    for b in range(0,40):
-                                    #        r = np.sqrt((a-20)**2+(b-20)**2)
-                                    #        rmat[a,b] = r
-                                    #print rmat[20,:]
 
-                                    #Following formalism of 
-                                    #http://das.sdss2.org/ge/sample/sdsssn/SNANA-PUBLIC/doc/snana_manual.pdf
-                                    #page 8
-                                    #integral = 2*np.pi*np.trapz((smp_psf[i,:,:]**2*rmat).ravel())
-                                    #total_skyerr = np.sqrt(integral**(-1)*skysn)
-
-
-                                    #smp_dict['total_skyerr'][i] = total_skyerr
 
                                     smp_dict['scale'][i] = scale
-                                    #smp_dict['mcmc_scale'][i] = mcmc_scale
                                     smp_dict['scale_err'][i] = errmag
-                                    #smp_dict['mcmc_scale_err'][i] = mcmc_scale_err
-                                    #smp_dict['sky'][i] = skysn
-                                    #smp_dict['sky'][i] = mysky
-                                    #smp_dict['skyerr'][i] = skyerrsn
+
                                     smp_dict['sky'][i] = sexsky
                                     smp_dict['skyerr'][i] = sexrms
                                     smp_dict['flag'][i] = 0
@@ -1564,18 +1318,12 @@ class smp:
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
                                     fs = snparams.flux
                                     brightlimit = fs[np.argsort(fs)][::-1][:15]
-                                    print brightlimit
                                     brightlimit = brightlimit[-1]
-                                    print brightlimit
-                                    print snparams.flux[j]
-                                    #raw_input()
                                     if snparams.flux[j] > brightlimit:
                                         smp_dict['notbrightflag'][i] = 0
                                     else:
                                         smp_dict['notbrightflag'][i] = 1
-                                    #print 'sb flux', snparams.hostgal_sb_fluxcal
-                                    #raw_input()
-                                    #smp_dict['hostgal_sbmag'][i] = 1
+
 
 
                                     #START HERE TOMORROW
@@ -1650,9 +1398,7 @@ class smp:
         if mergeno == 0:
             zeroArray = np.zeros(smp_noise.shape)
             largeArray = zeroArray + 1E10
-            #largeArray = copy(zeroArray)
-            #smp_noise = np.fmin(smp_noise,largeArray)
-            #smp_psfWeight = np.fmin(smp_psf,largeArray) 
+
             smp_psfWeight = smp_psf
             smp_psf = np.fmax(smp_psf,zeroArray)
             smp_im = np.fmax(smp_im,zeroArray)
@@ -1681,41 +1427,22 @@ class smp:
                 params.substamp/=2.0
                 mergectr+=1
         '''
-        # Now all the images are in the arrays
-        # Begin the fitting
-        #badnoisecols = np.where(smp_noise <= 1)
+
         badnoisecols = np.where(smp_noise < 1e-5)
-        #smp_noise[badnoisecols] = 1e10
         smp_noise[badnoisecols] = 0.
         badpsfcols = np.where(smp_psf < 0)
-        #smp_noise[badpsfcols] = 1e10
         smp_noise[badpsfcols] = 0.0
         smp_psf[badpsfcols] = 0.0
 
-#        badnoisecols = np.where(smp_bignoise <= 1)
-#        smp_bignoise[badnoisecols] = 1e10
-#        badpsfcols = np.where(smp_bigpsf < 0)
-#        smp_bignoise[badpsfcols] = 1e10
-#        smp_bigpsf[badpsfcols] = 0.0
-        # data can't be sky subtracted with this cut in place
+
         infinitecols = np.where((smp_im == 0) | (np.isfinite(smp_im) == 0) | (np.isfinite(smp_noise) == 0))
-        #smp_noise[infinitecols] = 1e10
         smp_noise[infinitecols] = 0.0
-        #smp_noise[smp_noise > 1e9] = 0.0
         smp_im[infinitecols] = 0
         mpparams = np.concatenate((np.zeros(float(params.substamp)**2.),smp_dict['scale'],smp_dict['sky']))
 
         mpdict = [{'value':'','step':0,
                   'relstep':0,'fixed':0, 'xtol': 1E-15} for i in range(len(mpparams))]
-        # provide an initial guess - CHECK
-        #First Guess
-        #maxcol = np.where(smp_im[0,:,:].reshape(params.substamp**2.) == np.max(smp_im[0,:,:]))[0][0]
-        #mpparams[maxcol+1] = np.max(smp_im[0,:,:])/np.max(smp_psf[0,:,:])
-        #End First Guess
-        #badpsfweightcols = np.where(smp_psf == 0)
-        #smp_psf_weight = np.copy(smp_psf)
-        #smp_psf_weight[badpsfweightcols] = 1E10
-        #mpparams[:params.substamp**2] = (smp_im[0,:,:]/smp_psf_weight[0,:,:]).flatten()
+
         mpparams[:params.substamp**2] = np.fmax((np.nanmax(smp_im, axis=0)/np.nanmax(smp_psfWeight, axis =0)),np.zeros(smp_im[0].shape)).flatten()
 
 
@@ -1728,46 +1455,18 @@ class smp:
             else:
                 mpdict[i]['value'] = 0.0
                 mpdict[i]['fixed'] = 1
-        #mpdict[1012]['value'] = 10**((31-19.033)/2.5)
-        #mpdict[1012]['fixed'] = 1
+
         for col in range(int(params.substamp)**2+len(smp_dict['scale'])):
-            #mpdict[col]['step']=np.max(smp_dict['scale'])
             mpdict[col]['step']=np.sqrt(np.max(smp_dict['scale']))
-        #for i in range(len(mpparams)):
-        #    mpdict[i]['xtol'] = (np.fmax(0.1, np.sqrt(mpdict[i]['value'])/10.0))  
-        #Setting parameter values for all galaxy pixels with at least one valid psf and image pixel
-        #mpdict[:]['value'] = mpparams[:]
-        #Fixing parameter values for all galaxy pixels with no valid psf or galaxy pixel
-        #mpdict[mpparams != mpparams]['value'] = 0.0
-        #mpdict[mpparams != mpparams]['fixed'] = 1
-        #mpdict[mpparams >1E307]['value'] = 0.0
-        #mpdict[mpparams >1E307]['fixed'] = 1
-        #Fixing parameter values for all epochs that were flagged
+
         for col in np.where((smp_dict['mjd_flag'] == 1) | (smp_dict['flag'] == 1))[0]+int(params.substamp)**2:
             print 'flagged '+str(col)
             mpdict[col]['fixed'] = 1
             mpdict[col]['value'] = 0
-        #Setting parameter values for all good epochs
-
-        #Setting step values for all parameters
-        #Temporarily setting to zero to tell mpfit to calculate automatically.
-        #mpdict[range(int(params.substamp)**2+len(smp_dict['scale']))]['step']=0#np.max(smp_dict['scale'])
-        
-        #Setting other arguments to scene and scene_check for mpfit
-        #mpargs = {'x':smp_psf,'y':smp_im,'err':smp_noise,'params':params}
-
-        #Setting final iteration tolerance of mpfit to sqrt(value)/10.0
-        #mpdict[range(len(mpparams))]['xtol'] = (np.fmax(0.1, np.sqrt(mpdict[range(len(mpparams))]['value'])/10.0))  
 
 
         if verbose: print('Creating Initial Scene Model')
-        #first_result = mpfit(scene,parinfo=mpdict,functkw=mpargs, debug = True, quiet=False)
-        #print smp_psf.shape
-        #print mpdict[:]['value']
-        #raw_input()
-        
-        #make pixelized galaxy model from data outside mjd range (no supernova)
-        #ww = np.where((smp_dict['mjd_flag'] == 1))[-1][1]
+
         
 
         arg = -1
@@ -1782,34 +1481,26 @@ class smp:
                                 mn = sky
                                 usearg = arg
                         else:
-                            print 'herehhere neggggggg'
+                            #print 'herehhere neggggggg'
                             smp_dict['flag'][arg] = 1
 
         #Make sure the psf is not zero
         for i in np.arange(len(smp_dict['sky'])):
             if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
-                print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
+                #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
                 smp_dict['flag'][i] = 1
                 smp_dict['mjd'][i]
-
-
-        #print badflags
-        #raw_input()
 
         try:
             ww = usearg
         except:
             ww = 0
-        #print np.where((smp_dict['mjd_flag'] == 0))
-        print ww
+
 
         model, modelpeak = self.create_model(smp_im[ww,:,:]-smp_dict['sky'][ww],smp_psf[ww,:,:],smp_dict['scale'])
 
-        #stdev = np.sqrt(np.append(smp_im[ww,:,:]-smp_dict['sky'][ww],smp_dict['scale']))
-        
-        #model = model*0.0
+
         stdev = np.sqrt(copy(model))
-        #stdev[modelpeak] = np.sqrt(model[modelpeak])
         newsub = int(smp_im[ww].shape[0])
 
         modelvec = np.zeros(len(smp_dict['scale']))
@@ -1818,29 +1509,18 @@ class smp:
         for i,scale in enumerate(smp_dict['scale']):
             if i in np.where((smp_dict['mjd_flag'] == 1) | (smp_dict['flag'] == 1))[0]:
                 model[newsub**2+i] = 0
-                #stdev[newsub**2+i] = 0.
                 modelvec[i] = 0.
-                #modelstd[i] = 0.
             else:
-                if scale < 25.:
-                    #model[newsub**2+i] = scale/4.
-                    model[newsub**2+i] = 0.
-                    modelvec[i] = 0.
-                    #stdev[newsub**2+i] = 0.
-                else:
-                    modelvec[i] = scale
-                #modelstd[i] = np.sqrt(scale)
+                #if scale < 25.:
+                #    model[newsub**2+i] = 0.
+                #    modelvec[i] = 0.
+                #else:
+                modelvec[i] = scale
 
         #SET GALAXY MODEL HERE!!!! TO IMAGE - SKY
         galmodel = smp_im[ww,:,:]-smp_dict['sky'][ww]
 
         pkyerr = -2.5*np.log10(smp_dict['mcmc_scale']) + 2.5*np.log10(smp_dict['mcmc_scale'] + smp_dict['mcmc_scale_err'])
-
-        
-
-
-
-
 
         outfolder = os.path.join(outfile,foldername)
         out = os.path.join(outfile,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
@@ -1864,7 +1544,6 @@ class smp:
         save_fits_image(model[:params.substamp**2].reshape(params.substamp,params.substamp),os.path.join(outimages,'initialmodel.fits'))
 
         imodel = copy(model)
-        #self.gal_model = '/global/scratch2/sd/dbrout/smp_y1y2_pix/SNe/'+snparams.snfile.split('/')[-1].split('.')[0]+'/'+filt+'/image_stamps/finalmodel.fits'
 
         fakemag = smp_dict['fakemag']
         zpt = smp_dict['zpt']
@@ -1895,36 +1574,13 @@ class smp:
 
         maxiter = 1200
         print os.path.join(outdir,filename+'_mcmc_input.npz')
-        #self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
-        print outimages
-        print filename
+
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
         lightcurves = os.path.join(outfile,foldername+'/lightcurves/'+filt+'/')  
         if not os.path.exists(lightcurves):
             os.makedirs(lightcurves)  
 
 
-        for i,scale in enumerate(smp_dict['scale']):
-            if i in np.where((smp_dict['flag'] == 1))[0]:
-                pass
-            else:
-                pass
-                #smp_psf[i] = self.degrade_psf_to_fake(copy(smp_psf[i]),copy(smp_dict['fakepsf'][i]))
-                
-    
-        #print 'MJD','\t','\t','FIT_PSF','\t','FAKE_PSF'
-
-        for i,scale in enumerate(smp_dict['scale']):
-            if i in np.where((smp_dict['flag'] == 1))[0]:
-                pass
-            else:
-                #fitpsf = self.get_fwhm_of_2d_psf(smp_psf[i])
-                #smp_psf[i,:,:] *= self.sector_mask(smp_psf[i,:,:].shape,(smp_psf[i,:,:].shape[0]/2.,smp_psf[i,:,:].shape[1]/2.),2.*fitpsf/self.snparams.platescale)
-                
-                fakepsf = smp_dict['fakepsf'][i]
-                #print smp_dict['mjd'][i],'\t',round(fitpsf,2),'\t','\t',fakepsf
-                #print 'fit-fake psf', fitpsf-fakepsf
-                #raw_input()
 
         print smp_dict['image_filename'][-1]        
         print 'MJD','\t','BAND','\t','FIT_ZPT','\t','FAKE_ZPT','\t','PSF','\t','SKY','\t','Skyerr','\t','Skysig','\t','IMAGE_FILENAME',''
@@ -1935,7 +1591,6 @@ class smp:
                 print smp_dict['mjd'][i],'\t','FLAGGED'
             else:
                 fitzpt = smp_dict['zpt'][i]
-                #CuT PSF OFF AT 2*FWHM
                 fakezpt = smp_dict['fakezpt'][i]
                 psfs.append(round(self.get_fwhm_of_2d_psf(smp_psf[i]),2))
                 print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',round(self.get_fwhm_of_2d_psf(smp_psf[i]),2),round(smp_dict['sky'][i],2),round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),smp_dict['image_filename'][i]
@@ -1968,11 +1623,9 @@ class smp:
         fakefluxvec = []
 
         tstart = time.time()
-        #save_fits_image(galmodel,'./test/initalgalmodel.fits')
 
         nm = self.checkstarfile.split('.')[0].split('/')[-1] + '_deltaradec.npz'
         fname = os.path.join(outfile, foldername, 'np_data', filt, nm)
-        #fname = self.checkstarfile.split('.')[0]+'_deltaradec.npz'
         self.deltastarsfile = fname
         
         # if nozpt:
@@ -1997,15 +1650,10 @@ class smp:
 
         print 'skyerr',smp_dict['skyerr']
         print 'flag',smp_dict['flag']
-        print 'notbrightflag',smp_dict['notbrightflag']
-        #raw_input()
         print 'mjdflag',smp_dict['mjd_flag']
-        print 'fitflag',smp_dict['fitflag']
-        print snparams.peakmjd
         print smp_dict['mjd']
         print os.path.join(outdir,filename+'_mcmc_input.npz')
 
-        print 'mjdoff',smp_dict['mjdoff']
         print 'mjdslopeinteroff',smp_dict['mjdslopeinteroff']
 
         print os.path.join(outdir,filename+'_mcmc_input.npz')
@@ -2075,7 +1723,6 @@ class smp:
                 )
         
         self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
-        #raw_input()
 
         if self.dogalfit:
             aaa = mcmc3.metropolis_hastings( 
@@ -2088,7 +1735,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 50000
+                    , maxiter = self.params.galaxy_model_steps
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
@@ -2189,9 +1836,7 @@ class smp:
 
             xoff = np.mean(xhistory[int(3*len(xhistory)/4.):])/.27
             yoff = np.mean(yhistory[int(3*len(yhistory)/4.):])/.27
-            print xoff,yoff
-            print 'xoff,yoff'
-            #raw_input()
+
         if self.dosnfit:
             if not self.dogalfit:
                 chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
@@ -2210,7 +1855,6 @@ class smp:
                     modelstd = chains['modelvec_uncertainty']/5.
                 except:
                     print 'could not find ra dec file, setting to zero...'
-                    #sys.exit()
                     xoff = 0.
                     yoff = 0.
                     modelvec = scaled_diffim_flux
@@ -2218,29 +1862,14 @@ class smp:
             galmodel = galmodel_params
             galstd = np.sqrt(abs(galmodel))/10.
             tstart = time.time()
-            #if not self.dosnradecfit:
-            #    modelvec = scaled_diffim_flux
-            #    modelstd = scaled_diffim_fluxerr/5.
+
             if not self.floatallepochs:
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
 
-            print 'snfit modelvec',modelvec
-            print 'snfit modelstd',modelstd
-            print 'galmodelshape', galmodel.shape
-            print 'xoff,yoff',xoff,yoff
-            #print 'decoff',decoff
-            #if self.fixgalzero:
-            #    galmodel = galmodel*0.
-            #    galstd = galstd*0.
-            #    fixgal = True
-            #else:
-            #    fixgal = False
+
             fixgal = False
-            #print smp_dict['sky']
-            #print np.sqrt(smp_dict['sky']/4.)
-            #print smp_dict['skyerr']
-            #print 'skycheck',self.gain
+
             
             aaa = mcmc3.metropolis_hastings( 
                     galmodel = galmodel
@@ -2252,7 +1881,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 1000000
+                    , maxiter = self.params.sn_plus_galmodel_steps
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
@@ -2262,7 +1891,7 @@ class smp:
                     , usesimerr = False
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
-                    , psf_shift_std = .0001
+                    , psf_shift_std = self.params.sn_shift_std
                     , xoff = xoff
                     , yoff = yoff
                     , shiftpsf = False
@@ -2278,42 +1907,23 @@ class smp:
                     , chainsnpz = os.path.join(outdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
                     )
-            print 'modelvec before',modelvec
             modelveco = copy(modelvec)
             
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist  = aaa.get_params()
-            print 'modelvec after',modelvec
-            print 'modelvec after-before',modelvec-modelveco
-            #print modelvec
-            #raw_input()
-            print modelvec_nphistory[:,-5]
-            #raw_input()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
-
-            #self.tmpwriter.savez(os.path.join(outdir,filename+'_withSn.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist,redchisqhist=redchisqhist)
             print os.path.join(outdir,filename+'_withSn.npz')
-            print smp_dict['image_filename']
-            print smp_dict['image_filename'].shape
-            #raw_input()
-            #raw_input()
+
 
         if self.dogalsimfit:
-            #fixmodelvec = self.afterfit(self.snparams,self.params,donesn=False)
-            #print fixmodelvec.shape
-            #print modelvec.shape
-            #raw_input()
+
             if not self.dogalfit:
                 chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
                 galmodel_params = chains['galmodel_params']
                 galmodel_uncertainty = chains['galmodel_uncertainty']
                 
             galmodel = galmodel_params
-            #galstd = galmodel_uncertainty
             galstd = np.sqrt(abs(galmodel))/5.
-            #print galmodel[10:20,10:20]
-            #print galstd[10:20,10:20]
-            #print modelvec/2.
-            #raw_input()
+
             tstart = time.time()
 
             # fixmodels = np.array(fixmodelvec*((smp_dict['mjd_flag']+1)%2))
@@ -2372,16 +1982,10 @@ class smp:
                     , chainsnpz = os.path.join(outdir,filename+'_withSnAndGalsim.npz') 
                     )
 
-            print 'modelvec before',modelvec
             modelveco = copy(modelvec)
             
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist  = aaa.get_params()
-            print 'modelvec after',modelvec
-            print 'modelvec after-before',modelvec-modelveco
-            #print modelvec
-            #raw_input()
-            print modelvec_nphistory[:,-5]
-            #raw_input()
+
             print 'TOTAL SMP SN TIME ',time.time()-tstart
 
             self.tmpwriter.savez(os.path.join(outdir,filename+'_withSnAndGalsim.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist)
@@ -2402,12 +2006,8 @@ class smp:
                 modelvec = scaled_diffim_flux
                 modelstd = scaled_diffim_fluxerr/5.
                 galmodel = galmodel_params
-            #galstd = galmodel_uncertainty
             galstd = np.sqrt(abs(galmodel))/10.
-            #print galmodel[10:20,10:20]
-            #print galstd[10:20,10:20]
-            #print modelvec/2.
-            #raw_input()
+
             tstart = time.time()
 
             # fixmodels = np.array(fixmodelvec*((smp_dict['mjd_flag']+1)%2))
@@ -2437,11 +2037,9 @@ class smp:
                 fixgal = False
 
             extraflag = smp_dict['fitflag'] * 0.
-            #extraflag[-10:] = 1
 
             print 'image shapes',smp_im.shape
-            #raw_input()
-            aaa = mcmc3galsimpixshift.metropolis_hastings( 
+            aaa = mcmc3galsimpixshift.metropolis_hastings(
                     galmodel = galmodel
                     , modelvec = modelvec
                     , galstd = galstd
@@ -2486,16 +2084,9 @@ class smp:
             modelveco = copy(modelvec)
             
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,rahistory,dechistory  = aaa.get_params()
-            print 'modelvec after',modelvec
-            print  'modelvec before',modelveco
-            print 'modelvec after-before',modelvec-modelveco
-            #print modelvec
-            #raw_input()
-            #print modelvec_nphistory[:,-5]
-            #raw_input()
+
             print 'TOTAL SMP SN TIME ',time.time()-tstart
 
-            #self.tmpwriter.savez(os.path.join(outdir,filename+'_withSnAndGalsimPix.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist,snrahistory=rahistory,sndechistory=dechistory)
             print os.path.join(outdir,filename+'_withSnAndGalsimPix.npz')
 
         self.outdir = outdir
@@ -4130,13 +3721,14 @@ if __name__ == "__main__":
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
                       "filter=","nomask","nodiff","nozpt", "outfile=",
-                      "mergeno=", "loadzpt",
+                      "mergeno=", "loadzpt","usefake",
                       "debug","verbose","clearzpt",
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
-                      "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
+                      "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
-                      "snfilepath=","bigstarcatalog="])
+                      "snfilepath=","bigstarcatalog=",
+                      "--stardeltasfolder","--SNfoldername","--galaxyfoldername"])
 
 
         print opt
@@ -4154,13 +3746,14 @@ if __name__ == "__main__":
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
                       "filter=","nomask","nodiff","nozpt", "outfile=",
-                      "mergeno=", "loadzpt",
+                      "mergeno=", "loadzpt","usefake",
                       "debug","verbose","clearzpt",
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
-                      "dontgalfit","dontsnfit","dontgalsimfit","dontgalsimpixfit",
+                      "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
-                      "snfilepath=","bigstarcatalog="])
+                      "snfilepath=","bigstarcatalog=",
+                      "--stardeltasfolder", "--SNfoldername", "--galaxyfoldername"])
 
 
         print opt
@@ -4169,7 +3762,7 @@ if __name__ == "__main__":
         print "No command line arguments"
 
 
-    verbose,nodiff,debug,clear_zpt,psf_model,root_dir,mergeno,loadzpt,ismultiple,dogalfit,dosnfit,dogalsimfit,dogalsimpixfit = False,False,False,False,False,False,False,False,False,True,True,True,True
+    verbose,nodiff,debug,clear_zpt,psf_model,root_dir,mergeno,loadzpt,ismultiple,dogalfit,dosnfit,dogalsimfit,dogalsimpixfit = False,False,False,False,False,False,False,False,False,True,True,False,False
     fixgalzero,floatallepochs = False,False
     dailyoff = False
     usediffimzpt = False
@@ -4183,6 +3776,11 @@ if __name__ == "__main__":
     mergeno = 0
     snfilepath = None
     bigstarcatalog=None
+    stardeltasfolder=None
+    SNfoldername=None
+    galaxyfoldername=None
+
+    usefake = False
 
 
     for o,a in opt:
@@ -4207,6 +3805,8 @@ if __name__ == "__main__":
             loadzpt = True
         elif o == "--nomask":
             nomask = True
+        elif o == "--usefake":
+            usefake = True
         elif o == "--nodiff":
             nodiff = True
         elif o == "--nozpt":
@@ -4229,10 +3829,10 @@ if __name__ == "__main__":
             dogalfit = False
         elif o in ["--dontsnfit"]:
             dosnfit = False
-        elif o in ["--dontgalsimfit"]:
-            dogalsimfit = False        
-        elif o in ["--dontgalsimpixfit"]:
-            dogalsimpixfit = False
+        elif o in ["--dogalsimfit"]:
+            dogalsimfit = True
+        elif o in ["--dogalsimpixfit"]:
+            dogalsimpixfit = True
         elif o in ["--fixgalzero"]:
             fixgalzero = True
         elif o in ["--floatallepochs"]:
@@ -4247,6 +3847,12 @@ if __name__ == "__main__":
             snfilepath = a
         elif o in["--bigstarcatalog"]:
             bigstarcatalog = a
+        elif o in["--stardeltasfolder"]:
+            stardeltasfolder = a
+        elif o in["--SNfoldername"]:
+            SNfoldername = a
+        elif o in ["--galaxyfoldername"]:
+            galaxyfoldername = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4274,6 +3880,8 @@ if __name__ == "__main__":
             loadzpt = True
         elif o == "--nomask":
             nomask = True
+        elif o == "--usefake":
+            usefake = True
         elif o == "--nodiff":
             nodiff = True
         elif o == "--nozpt":
@@ -4296,10 +3904,10 @@ if __name__ == "__main__":
             dogalfit = False
         elif o in ["--dontsnfit"]:
             dosnfit = False
-        elif o in ["--dontgalsimfit"]:
-            dogalsimfit = False
-        elif o in ["--dontgalsimpixfit"]:
-            dogalsimpixfit = False
+        elif o in ["--dogalsimfit"]:
+            dogalsimfit = True
+        elif o in ["--dogalsimpixfit"]:
+            dogalsimpixfit = True
         elif o in ["--fixgalzero"]:
             fixgalzero = True
         elif o in ["--floatallepochs"]:
@@ -4314,19 +3922,33 @@ if __name__ == "__main__":
             snfilepath = a
         elif o in["--bigstarcatalog"]:
             bigstarcatalog = a
+        elif o in["--stardeltasfolder"]:
+            stardeltasfolder = a
+        elif o in["--SNfoldername"]:
+            SNfoldername = a
+        elif o in ["--galaxyfoldername"]:
+            galaxyfoldername = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
-        #elif o == "--clearzpt":
-        #    clear_zpt = True
 
 
     if bigstarcatalog is None:
         raise NameError("Must provide an all encompassing star catalog in default.config "+
                         "--bigstarcatalog=/location/to/bigstarcatalog.cat Exiting now...")
 
+    if stardeltasfolder is None:
+        raise NameError("Must provide "+
+                        "--stardeltasfolder=/location/to/previous/run in default.config \nExiting now...")
+    if SNfoldername is None:
+        raise NameError("Must provide "+
+                        "--SNfoldername=/location/to/photometry/output in default.config \n Exiting now...")
+    if galaxyfoldername is None:
+        raise NameError("Must provide " +
+                        "--galaxyfoldername=/location/to/previous/run in default.config \n Exiting now...")
+
     if not index is None:
         if index == 'all':
-            for iii in np.arange(16,50):
+            for iii in np.arange(0,5000):
 
                 a = open('./data/snfiles.txt','r')
                 files = a.readlines()
@@ -4357,8 +3979,7 @@ if __name__ == "__main__":
                     print("psf_model not specified. Assuming psfex...")
                     psf_model = 'psfex'
 
-                #print snfile
-                #raw_input()
+
                 snparams = get_snfile(snfile, root_dir)
 
                 params = get_params(param_file)
@@ -4386,11 +4007,12 @@ if __name__ == "__main__":
                 try:
                     scenemodel = smp(snparams,params,root_dir,psf_model)
                     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
-                                 ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=True,snfile=snfile,
+                                 ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                                  gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
-                                 dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog)
+                                 dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,
+                                 stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4438,8 +4060,7 @@ if __name__ == "__main__":
         print("psf_model not specified. Assuming psfex...")
         psf_model = 'psfex'
 
-    #print snfile
-    #raw_input()
+
     snparams = get_snfile(snfile, root_dir)
     params = get_params(param_file)
 
@@ -4466,11 +4087,12 @@ if __name__ == "__main__":
 
     scenemodel = smp(snparams,params,root_dir,psf_model)
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
-                     ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=True,snfile=snfile,
+                     ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                      gal_model=gal_model,stardumppsf=True,dogalfit=dogalfit,dosnfit=dosnfit,
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
-                     dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog)
+                     dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,
+                     stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
