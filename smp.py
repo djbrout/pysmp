@@ -68,7 +68,7 @@ paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'FORCERADEC':'string','FRA':'float','FDEC':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
                     'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
-                    'SN_SHIFT_STD':'float'
+                    'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string'
                     }
 
 def save_fits_image(image,filename):
@@ -311,7 +311,7 @@ class smp:
 
         self.useweights = useweights
         if not self.useweights:
-            self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snaparams.image_name_mask)
+            self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snparams.image_name_mask)
 
         self.dobigstarcat = dobigstarcat
         if self.dobigstarcat:
@@ -401,7 +401,7 @@ class smp:
         for i in np.arange(snparams.nvalid):
             smp_dict['image_filename'][i] = 'na'
 
-        snparams.cat_zpts = {}
+        #snparams.cat_zpts = {}
 
         """
         band = 'r'
@@ -466,9 +466,16 @@ class smp:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
-            imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
-                os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
+
+            imfile = os.path.join(self.rootdir,imfile)
             print imfile
+
+            psffile = os.path.join(self.rootdir,psffile)
+            if self.useweights:
+                weightsfile = os.path.join(self.rootdir,noisefile)
+            else:
+                noisefile, maskfile = os.path.join(self.rootdir,noisefile[0]),os.path.join(self.rootdir,noisefile[1])
+
             if not os.path.exists(imfile):
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
@@ -477,12 +484,28 @@ class smp:
                     raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
                 else:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%imfile)
-            if not os.path.exists(noisefile):
-                os.system('gunzip %s.gz'%noisefile)
+
+            if self.useweights:
+                if not os.path.exists(weightsfile):
+                    os.system('gunzip %s.gz'%weightsfile)
+                    if not os.path.exists(weightsfile):
+                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%weightsfile)
+                        if not os.path.exists(weightsfile):
+                            raise exceptions.RuntimeError('Error : file %s does not exist'%weightsfile)
+            else:
                 if not os.path.exists(noisefile):
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%noisefile)
+                    os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
-                        raise exceptions.RuntimeError('Error : file %s does not exist'%noisefile)
+                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % noisefile)
+                        if not os.path.exists(noisefile):
+                            raise exceptions.RuntimeError('Error : file %s does not exist' % noisefile)
+                if not os.path.exists(maskfile):
+                    os.system('gunzip %s.gz' % maskfile)
+                    if not os.path.exists(maskfile):
+                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % maskfile)
+                        if not os.path.exists(maskfile):
+                            raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
+
             if not os.path.exists(psffile):
                 if not os.path.exists(psffile+'.fz'):
                     raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
@@ -490,28 +513,34 @@ class smp:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%psffile)
 
             if not nomask:
-                maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
+                if useweights:
+                    maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
+                    mask = pyfits.getdata(maskfile)
 
-            fakeim = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
-            if not os.path.exists(fakeim):
-                os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%fakeim)
-                os.system('/global/u1/d/dbrout/cfitsio/gunzip %s.gz'%fakeim)
             if self.usefake:
-                try:
-                    im = pyfits.getdata(fakeim)
-                except:
-                    print fakeim+' is EMPTY, skipping star...'
-                    continue
-                hdr = pyfits.getheader(imfile)
-            else:
+                fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                if not os.path.exists(fakeim):
+                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % fakeim)
+                    os.system('/global/u1/d/dbrout/cfitsio/gunzip %s.gz' % fakeim)
+
+            try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
-            fakeim_hdr = pyfits.getheader(fakeim)
-            snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
-            snparams.platescale = hdr['PIXSCAL1']
-            snparams.airmass = hdr['AIRMASS']
+            except:
+                print 'Image is EMPTY, skipping star...'
+                continue
 
-            noise = pyfits.getdata(noisefile)
+            #fakeim_hdr = pyfits.getheader(fakeim)
+            #snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
+
+            snparams.platescale = hdr[self.params.hdr_platescale_name]
+            snparams.airmass = hdr[self.params.hdr_airmass_name]
+
+            if self.useweights:
+                weights = pyfits.getdata(weightsfile)
+            else:
+                noise = pyfits.getdata(noisefile)
+                mask = pyfits.getdata(maskfile)
 
             psf = pyfits.getdata(psffile)
 
@@ -526,8 +555,6 @@ class smp:
                 maskcols = np.where((noise < 0) |
                                     (np.isfinite(noise) == False))
                 mask[maskcols] = 100.0
-            else:
-                mask = pyfits.getdata(maskfile)
 
             wcsworked = True
             try:
@@ -576,13 +603,10 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
-                #print 'starcatfile',starcatfile
-                #print 'file should be here',os.listdir(starcatloc)
+
                 for fl in os.listdir(starcatloc):
-                    #print fl
                     if 'STARCAT' in fl:
                         starcatfile = fl
-                #print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
@@ -660,18 +684,15 @@ class smp:
         starras = staroffsets['starras']
         stardecs = staroffsets['stardecs']
         starids = staroffsets['starids']
-        #print star_offset_file
-        #raw_input()
+
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
-        #starcatras = []
         for ide in np.unique(np.array(starids)):
             ww = (starids == ide)
             starglobalids.append(ide)
             starglobalras.append(np.median(starras[ww]))
             starglobaldecs.append(np.median(stardecs[ww]))
-            #starcatras.append(np.median(starcatras[ww]))
 
         starglobalids = np.array(starglobalids)
         starglobalras = np.array(starglobalras)
@@ -686,11 +707,6 @@ class smp:
             offsetra = np.array(starglobalras)*0.
             offsetdec = np.array(starglobalras)*0.
 
-        #print starglobalras
-        #print starras
-        #print starcatras - starglobalras
-        #print 'checking global offsets'
-        #raw_input()
 
 
         #############################################################################################################################
@@ -716,9 +732,19 @@ class smp:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
-            imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
-                os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
+
+            imfile = os.path.join(self.rootdir, imfile)
             print imfile
+
+            psffile = os.path.join(self.rootdir, psffile)
+            if self.useweights:
+                weightsfile = os.path.join(self.rootdir, noisefile)
+            else:
+                noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir, noisefile[1])
+
+            #imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
+            #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
+            #print imfile
             if not os.path.exists(imfile):
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
@@ -727,12 +753,25 @@ class smp:
                     raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
                 else:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%imfile)
-            if not os.path.exists(noisefile):
-                os.system('gunzip %s.gz'%noisefile)
+            if self.useweights:
+                if not os.path.exists(weightsfile):
+                    os.system('gunzip %s.gz' % weightsfile)
+                    if not os.path.exists(weightsfile):
+                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % weightsfile)
+                        if not os.path.exists(weightsfile):
+                            raise exceptions.RuntimeError('Error : file %s does not exist' % weightsfile)
+            else:
                 if not os.path.exists(noisefile):
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%noisefile)
+                    os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
-                        raise exceptions.RuntimeError('Error : file %s does not exist'%noisefile)
+                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % noisefile)
+                        if not os.path.exists(noisefile):
+                            raise exceptions.RuntimeError('Error : file %s does not exist' % noisefile)
+                if not os.path.exists(maskfile):
+                    os.system('gunzip %s.gz' % maskfile)
+                    if not os.path.exists(maskfile):
+                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % maskfile)
+                        if not os.path.exists(maskfile):
             if not os.path.exists(psffile):
                 if not os.path.exists(psffile+'.fz'):
                     raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
@@ -740,29 +779,32 @@ class smp:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%psffile)
 
             if not nomask:
-                maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
+                if useweights:
+                    maskfile = os.path.join(self.rootdir, snparams.image_name_search[j])
+                    mask = pyfits.getdata(maskfile)
 
-            # read in the files
-            fakeim = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
-            if not os.path.exists(fakeim):
-                os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%fakeim)
-                os.system('/global/u1/d/dbrout/cfitsio/gunzip %s.gz'%fakeim)
             if self.usefake:
-                try:
-                    im = pyfits.getdata(fakeim)
-                except:
-                    print fakeim+' is EMPTY, skipping star...'
-                    continue
-                hdr = pyfits.getheader(imfile)
-            else:
+                fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                if not os.path.exists(fakeim):
+                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % fakeim)
+                    os.system('/global/u1/d/dbrout/cfitsio/gunzip %s.gz' % fakeim)
+
+            try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
-            fakeim_hdr = pyfits.getheader(fakeim)
-            snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
-            snparams.platescale = hdr['PIXSCAL1']
-            snparams.airmass = hdr['AIRMASS']
+            except:
+                print 'Image is EMPTY, skipping star...'
+                continue
 
-            noise = pyfits.getdata(noisefile)
+
+            snparams.platescale = hdr[self.params.hdr_platescale_name]
+            snparams.airmass = hdr[self.params.hdr_airmass_name]
+
+            if self.useweights:
+                weights = pyfits.getdata(weightsfile)
+            else:
+                noise = pyfits.getdata(noisefile)
+                mask = pyfits.getdata(maskfile)
 
             psf = pyfits.getdata(psffile)
 
@@ -777,8 +819,7 @@ class smp:
                 maskcols = np.where((noise < 0) |
                                     (np.isfinite(noise) == False))
                 mask[maskcols] = 100.0
-            else:
-                mask = pyfits.getdata(maskfile)
+
 
             wcsworked = True
             try:
