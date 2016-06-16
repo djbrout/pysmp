@@ -678,7 +678,7 @@ class smp:
                 try:
                     starcat.objid += 0.
                 except:
-                    starcat.objid = enumerate(starcat.mag)
+                    starcat.objid,mmmm = enumerate(starcat.mag)
 
                 for rrr in starcat.objid:
                     starids.append(rrr)
