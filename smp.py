@@ -201,6 +201,8 @@ class get_snfile:
 
 class get_params:
     def __init__(self,paramfile):
+        print paramfile
+        raw_input()
         fin = open(paramfile,'r')
         for line in fin:
             line = line.replace('\n','')
