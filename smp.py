@@ -898,14 +898,12 @@ class smp:
 
             if self.usefake:
                 try:
-                    snparams.RA = float(snparams.fake_ra)
-                    snparams.DECL = float(snparams.fake_dec)
+                    snparams.RA = float(snparams.ra)
+                    snparams.DECL = float(snparams.decl)
                 except:
-                    try:
-                        snparams.RA = astCoords.hms2decimal(snparams.ra, ':')
-                        snparams.DECL = astCoords.dms2decimal(snparams.decl, ':')
-                    except:
-                        raise exceptions.RuntimeError('Error : RA/Dec format unrecognized!!')
+                    snparams.RA = astCoords.hms2decimal(snparams.ra, ':')
+                    snparams.DECL = astCoords.dms2decimal(snparams.decl, ':')
+
             else:
                 try:
                     if self.exactpos:
@@ -915,16 +913,13 @@ class smp:
                         snparams.RA = float(snparams.ra)
                         snparams.DECL = float(snparams.decl)
                 except:
-                    try:
-                        if self.exactpos:
-                            snparams.RA = astCoords.hms2decimal(snparams.fake_ra,':')
-                            snparams.DECL = astCoords.dms2decimal(snparams.fake_dec,':')
-                        else:
-                            snparams.RA = astCoords.hms2decimal(snparams.ra,':')
-                            snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
+                    if self.exactpos:
+                        snparams.RA = astCoords.hms2decimal(snparams.fake_ra,':')
+                        snparams.DECL = astCoords.dms2decimal(snparams.fake_dec,':')
+                    else:
+                        snparams.RA = astCoords.hms2decimal(snparams.ra,':')
+                        snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
 
-                    except:
-                        raise exceptions.RuntimeError('Error : RA/Dec format unrecognized!!')
 
 
             if params.forceradec.lower() == 'true':
