@@ -1086,6 +1086,8 @@ class smp:
 
             elif snparams.psf_model.lower() == 'daophot':
                 self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                self.psf = rdpsf.rdpsf(psffile)[0]
+                self.psf = self.psf/np.sum(self.psf)
                 self.psfcenter = xsn,ysn
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
