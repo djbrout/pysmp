@@ -3751,7 +3751,7 @@ if __name__ == "__main__":
     doglobalstar = True
     index = None
     gal_model = None
-    snfile,param_file,outfile,filt = '','','',''
+    snfile,param_file,outfile,filt = '','','','r'
     nomask,nozpt = 'none',False
     mergeno = 0
     snfilepath = None
