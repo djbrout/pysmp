@@ -1352,8 +1352,8 @@ class smp:
 
 
 
-                if snparams.psf_model.lower() == 'psfex':
-                    fwhm = float(snparams.psf[j])
+                #if snparams.psf_model.lower() == 'psfex':
+                fwhm = float(snparams.psf[j])
                 if snparams.psf_unit.lower() == 'arcsec':
                     fwhm_arcsec = fwhm
                 elif snparams.psf_unit.lower().startswith('sigma-pix') or snparams.psf_unit.lower().startswith('pix'):
