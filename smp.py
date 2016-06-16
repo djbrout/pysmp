@@ -212,7 +212,7 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None):
 
-
+        print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
 
         tstart = time.time()
