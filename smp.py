@@ -449,7 +449,6 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             
-            print imfile,band,faketruemag,filt
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
@@ -829,9 +828,9 @@ class smp:
             elif params.weight_type.lower() != 'noise':
                 raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
             if nomask:
-                mask = np.zeros(np.shape(noise))
-                maskcols = np.where((noise < 0) |
-                                    (np.isfinite(noise) == False))
+                mask = np.zeros(np.shape(weights))
+                maskcols = np.where((weights < 0) |
+                                    (np.isfinite(weights) == False))
                 mask[maskcols] = 100.0
 
 
@@ -1178,7 +1177,7 @@ class smp:
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
-                                         badflag,mag_star,im,noise,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
+                                         badflag,mag_star,im,weights,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)    
                 else:
                     if doglobalstar:
@@ -1193,7 +1192,7 @@ class smp:
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 dotestoff = False
                 if dotestoff:
-                    self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,noise,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
+                    self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
 
 
             if not ('firstzpt' in locals()): firstzpt = 31. ####firstzpt = zpt
@@ -1282,7 +1281,7 @@ class smp:
 
 
 
-                    pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,noise,mask)
+                    pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,weights,mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     try:
                         errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
@@ -1370,7 +1369,7 @@ class smp:
                                     smp_dict['psf_filename'][i] = psffile
                                     smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
-                                    smp_dict['weight_filename'][i] = noisefile
+                                    smp_dict['weight_filename'][i] = weightsfile
                                     smp_dict['fakemag'][i] = snparams.fake_truemag[j]
                                     smp_dict['fakezpt'][i] = snparams.zp[j]
                                     smp_dict['diffim_flux'][i] = snparams.flux[j]
