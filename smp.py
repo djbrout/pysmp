@@ -1030,7 +1030,7 @@ class smp:
                     self.gain = hdr[params.gain_name] #1
                     cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
 
-                    print starglobalras[cols]
+                    #print starglobalras[cols]
 
 
                     if not len(cols):
@@ -1068,7 +1068,7 @@ class smp:
 
             # begin taking PSF stamps
 
-            print snparams.psf_model.lower()
+            #print snparams.psf_model.lower()
             if snparams.psf_model.lower() == 'psfex':
                 print snparams.psf_model.lower()
                 hdulist = fits.open(psffile)
@@ -1083,6 +1083,7 @@ class smp:
 
             elif snparams.psf_model.lower() == 'daophot':
                 self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                self.psfcenter = xsn,ysn
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
 
