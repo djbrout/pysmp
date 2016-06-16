@@ -679,7 +679,7 @@ class smp:
 
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
-                x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm,verbose=False)
+                x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
                 newra,newdec = zip(*w.wcs_pix2world(np.array(zip(x_star,y_star)),0))
                 try:
                     starcat.objid += 0.
@@ -1180,7 +1180,7 @@ class smp:
                 mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad)
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
-                newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm,verbose=False)
+                newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
 
                 if wcsworked:
                     newra,newdec = zip(*w.wcs_pix2world(np.array(zip(newx_star,newy_star)),0))
@@ -3134,7 +3134,7 @@ class smp:
         x_star1,y_star1 = np.array(x_star),np.array(y_star)
         mag1,magerr1,flux1,fluxerr1,sky1,skyerr1,badflag1,outstr1 = \
             aper.aper(im,x_star1,y_star1,apr = params.fitrad)
-        x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm,verbose=False)
+        x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
 
         #print len(x_star)
         #raw_input()
@@ -3258,7 +3258,7 @@ class smp:
         x_star1,y_star1 = np.array(x_star),np.array(y_star)
         mag1,magerr1,flux1,fluxerr1,sky1,skyerr1,badflag1,outstr1 = \
             aper.aper(im,x_star1,y_star1,apr = params.fitrad)
-        x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm,verbose=False)
+        x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
 
         flux_star = np.array([-999.]*len(x_star))
         flux_star_std = np.array([-999.]*len(x_star))
