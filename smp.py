@@ -1028,13 +1028,13 @@ class smp:
                 elif nozpt:
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name] #1
-                    cols = np.where((starglobalras > ra_low) &
+                    cols = (starglobalras > ra_low) &
                                     (starglobalras < ra_high) &
                                     (starglobaldecs > dec_low) &
-                                    (starglobaldecs < dec_high))
+                                    (starglobaldecs < dec_high)
 
                     print starglobalras
-                    print starglobalras > ra_low
+
 
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
@@ -1044,8 +1044,8 @@ class smp:
                     #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
                     x_star,y_star = [],[]
                     for c in coords:
-                        x_star += [c[0]]
-                        y_star += [c[1]]
+                        x_star.append(c[0])
+                        y_star.append(c[1])
                     x_star,y_star = np.array(x_star),np.array(y_star)
                     #if not doncentroid:
                     #    x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
