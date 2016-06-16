@@ -459,8 +459,12 @@ class smp:
             skysig=np.nan
             nozpt = copy(orig_nozpt)
 
-            self.ccdnum = imfile.split('/')[1].split('_')[1]
-            self.field = imfile.split('/')[0].split('-')[1]
+            try:
+                self.ccdnum = imfile.split('/')[1].split('_')[1]
+                self.field = imfile.split('/')[0].split('-')[1]
+            except:
+                self.ccdnum = np.nan
+                self.field = np.nan
 
             if filt != 'all' and band not in filt:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
@@ -725,8 +729,14 @@ class smp:
             skysig=np.nan
             nozpt = copy(orig_nozpt)
 
-            self.ccdnum = imfile.split('/')[1].split('_')[1]
-            self.field = imfile.split('/')[0].split('-')[1]
+            try:
+                self.ccdnum = imfile.split('/')[1].split('_')[1]
+                self.field = imfile.split('/')[0].split('-')[1]
+            except:
+                self.ccdnum = np.nan
+                self.field = np.nan
+
+
             self.rickfakestarfile = 'data/fixmagCoords_SN-'+self.field+'.dat'
             if filt != 'all' and band not in filt:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
