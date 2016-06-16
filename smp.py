@@ -837,6 +837,10 @@ class smp:
             else:
                 noise = pyfits.getdata(noisefile)
                 mask = pyfits.getdata(maskfile)
+                mask[mask>0] = -1000
+                mask[mask==0] = 1
+                mask[mask==-1000] = 0
+                weights = 1./noise**2 * mask
 
             psf = pyfits.getdata(psffile)
 
