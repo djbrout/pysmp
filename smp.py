@@ -1184,10 +1184,10 @@ class smp:
                     ccc = wcsinfo.tran([x_star,y_star])
                     newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
 
-
-                
-                catra,catdec = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
-
+                if self.dobigstarcat:
+                    catra,catdec = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
+                else:
+                    catra,catdec = self.starcat.ra[cols],self.starcat.dec[cols]
                 deltara = catra - newra
                 deltadec = catdec - newdec
                 deltamjd = copy(deltara)*0. + snparams.mjd[j]
