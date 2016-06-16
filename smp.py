@@ -121,6 +121,7 @@ class get_snfile:
                         val = val.replace(' ','')
                         self.__dict__[key.lower()] = val
                     elif key.lower() == 'starcat' and 'des' in snfile:
+                        print 'here1'
                         catfilter = val.split()[0]                        
                         if filt.lower() == catfilter.lower():
                             #print val
@@ -131,12 +132,8 @@ class get_snfile:
                             else:
                                 self.__dict__["starcat"] = {}
                                 self.__dict__["starcat"][val.split()[0]] = os.path.join(rootdir,val.split()[1])
-                    elif key.lower() == 'starcat':
-                        print 'here1'
-                        catfilter = val.split()[0]
-                        if filt.lower() == catfilter.lower():
-                            self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir, val.split()[2])}
                     else:
+                        print 'here2'
                         try:
                             self.__dict__[key.lower()] = np.array(val.split()).astype('float')
                         except:
