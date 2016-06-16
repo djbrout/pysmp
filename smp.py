@@ -4115,10 +4115,6 @@ if __name__ == "__main__":
 
             snfile = files[int(index)].rstrip()
 
-            if files_split_by_filter:
-                print 'filllllt',filt
-                filt = snfile.split('_')[1].split('.')[0]
-
             a.close()
             if not snfilepath is None:
                 snfile = os.path.join(snfilepath, snfile.split('/')[-1])
@@ -4154,6 +4150,8 @@ if __name__ == "__main__":
         print("psf_model not specified. Assuming psfex...")
         psf_model = 'psfex'
 
+    if files_split_by_filter:
+        filt = snfile.split('_')[1].split('.')[0]
 
     snparams = get_snfile(snfile, root_dir, useweights)
     params = get_params(param_file)
