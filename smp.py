@@ -1062,8 +1062,9 @@ class smp:
 
             # begin taking PSF stamps
 
+            print snparams.psf_model.lower()
             if snparams.psf_model.lower() == 'psfex':
-
+                print snparams.psf_model.lower()
                 hdulist = fits.open(psffile)
                 hdulist.info()
                 try:
