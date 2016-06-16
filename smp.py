@@ -643,8 +643,7 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
 
-            print starcat.mag
-            raw_input()
+
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain = hdr[params.gain_name]
@@ -676,6 +675,11 @@ class smp:
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
                 newra,newdec = zip(*w.wcs_pix2world(np.array(zip(x_star,y_star)),0))
+                try:
+                    starcat.objid += 0.
+                except:
+                    starcat.objid = enumerate(starcat.mag)
+
                 for rrr in starcat.objid:
                     starids.append(rrr)
                 for rrr,zzz in zip(newra,newdec):
