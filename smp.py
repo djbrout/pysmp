@@ -630,18 +630,18 @@ class smp:
                 else:
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
             else:
-                print snparams.starcat
-                if os.path.exists(snparams.starcat[1]):
-                    starcat = txtobj(snparams.starcat[1],useloadtxt=True)
+                print snparams.starcat[filt]
+                if os.path.exists(snparams.starcat[filt]):
+                    starcat = txtobj(snparams.starcat[filt],useloadtxt=True)
                     if not starcat.__dict__.has_key('mag'):
                         try:
                             starcat.mag = starcat.__dict__[band]
                             starcat.dmag = starcat.__dict__['d%s'%band]
                         except:
-                            print snparams.starcat[1]
-                            raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[1])
+                            print snparams.starcat[filt]
+                            raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[filt])
                 else: 
-                    raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[1])
+                    raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
 
 
             if nozpt:
