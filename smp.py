@@ -131,6 +131,11 @@ class get_snfile:
                             else:
                                 self.__dict__["starcat"] = {}
                                 self.__dict__["starcat"][val.split()[0]] = os.path.join(rootdir,val.split()[1])
+                    elif key.lower() == 'starcat':
+                        catfilter = val.split()[0]
+                        if filt.lower() == catfilter.lower():
+                            # print val
+                            self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir, val.split()[2])}
                     else:
                         try:
                             self.__dict__[key.lower()] = np.array(val.split()).astype('float')
