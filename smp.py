@@ -154,7 +154,8 @@ class get_snfile:
         for p in snkeywordlist.keys():
             if not self.__dict__.has_key(p.lower()):
                 if p.lower() != 'starcat':
-                    raise exceptions.RuntimeError("Error : keyword %s doesn't exist in supernova file!!!"%p)
+                    print "Error : keyword %s doesn't exist in supernova file!!!"%p
+                    #raise exceptions.RuntimeError("Error : keyword %s doesn't exist in supernova file!!!"%p)
                 else:
                     catalog_exists = False
             if snkeywordlist[p] == 'float':
@@ -167,7 +168,8 @@ class get_snfile:
             for p in snvarnameslist.keys():
                 if not self.__dict__.has_key(p.lower()):
                     if p.lower() != 'starcat':
-                        raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
+                        print "Error : field %s doesn't exist in supernova file!!!"%p
+                        #raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
                     elif catalog_exists == False:
                         raise exceptions.RuntimeError("Error : field %s doesn't exist in supernova file!!!"%p)
                 if snvarnameslist[p] == 'float':
