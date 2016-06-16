@@ -896,7 +896,7 @@ class smp:
             dec_high = np.max([dec1,dec2])
             dec_low = np.min([dec1,dec2])
 
-            if self.usefake:
+            if not self.usefake:
                 try:
                     snparams.RA = float(snparams.ra)
                     snparams.DECL = float(snparams.decl)
@@ -919,7 +919,6 @@ class smp:
                     else:
                         snparams.RA = astCoords.hms2decimal(snparams.ra,':')
                         snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
-
 
 
             if params.forceradec.lower() == 'true':
