@@ -4059,9 +4059,7 @@ if __name__ == "__main__":
 
 
     snparams = get_snfile(snfile, root_dir)
-    print 'read in sn photometry file'
     params = get_params(param_file)
-    print 'default.param loaded...'
     if nomask == 'none':
         if params.mask_type.lower() == 'none':
             nomask = True
