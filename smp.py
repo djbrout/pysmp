@@ -4116,6 +4116,7 @@ if __name__ == "__main__":
             snfile = files[int(index)].rstrip()
 
             if files_split_by_filter:
+                print 'filllllt',filt
                 filt = snfile.split('_')[1].split('.')[0]
 
             a.close()
