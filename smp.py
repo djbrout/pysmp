@@ -1055,6 +1055,8 @@ class smp:
                     print badflag.shape
                     print x_star
                     print x_star.shape
+                    print ra_low
+                    print ra_high
                     if badflag == 1:
                         print 'aper2 badflag'
                     hpsf = pyfits.getheader(psffile)
