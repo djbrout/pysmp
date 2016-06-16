@@ -772,6 +772,7 @@ class smp:
                     if not os.path.exists(maskfile):
                         os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % maskfile)
                         if not os.path.exists(maskfile):
+                            raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
             if not os.path.exists(psffile):
                 if not os.path.exists(psffile+'.fz'):
                     raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
