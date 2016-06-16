@@ -1180,8 +1180,8 @@ class smp:
                 mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad)
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
-                newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
-
+                #newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
+                newx_star,newy_star = x_star1,y_star1
                 if wcsworked:
                     newra,newdec = zip(*w.wcs_pix2world(np.array(zip(newx_star,newy_star)),0))
                 else:
