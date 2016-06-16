@@ -4185,15 +4185,19 @@ if __name__ == "__main__":
             root_dir = snfile.split('/')[:-1].join()
         except:
             root_dir = './'
-    if not psf_model:
-        print("psf_model not specified. Assuming psfex...")
-        psf_model = 'psfex'
+
 
     if files_split_by_filter:
         filt = snfile.split('_')[1].split('.')[0]
 
     snparams = get_snfile(snfile, root_dir, useweights)
     params = get_params(param_file)
+
+    if not params.psf_model:
+        print("psf_model not specified. Assuming psfex...")
+        psf_model = 'psfex'
+    else:
+        psf_model = params.psf_model
     if nomask == 'none':
         if params.mask_type.lower() == 'none':
             nomask = True
