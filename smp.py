@@ -708,9 +708,11 @@ class smp:
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
-        for ide in np.unique(np.array(starids)):
-            ww = (np.array(starids) == int(ide))
+        for ide in np.unique(starids):
+            ww = (starids == int(ide))
             print ide
+            print len(ww)
+            print ww.shape
             print starras[ww]
             raw_input()
             starglobalids.append(ide)
