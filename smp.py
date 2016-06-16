@@ -3712,7 +3712,7 @@ if __name__ == "__main__":
         else:
             args = sys.argv[1:]
         
-        print args
+        #print args
         opt,arg = getopt.getopt(
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
@@ -3727,8 +3727,8 @@ if __name__ == "__main__":
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername="])
 
 
-        print opt
-        print arg
+        #print opt
+        #print arg
     except getopt.GetoptError as err:
         print str(err)
         print "Error : incorrect option or missing argument."
@@ -3752,8 +3752,8 @@ if __name__ == "__main__":
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername="])
 
 
-        print opt
-        print arg
+        #print opt
+        #print arg
     except getopt.GetoptError as err:
         print "No command line arguments"
 
@@ -3778,6 +3778,7 @@ if __name__ == "__main__":
 
     usefake = False
 
+    print opt
 
     for o,a in opt:
         if o in ["-h","--help"]:
