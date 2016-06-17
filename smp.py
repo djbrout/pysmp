@@ -3322,8 +3322,8 @@ class smp:
         print '\n'
         import pkfit_norecent_noise_smp
         counter = 0
-        print 'skies',sky
-        raw_input()
+        #print 'skies',sky
+        #raw_input()
         flux_star = np.array([-999.]*len(xstar))        
         flux_star_std = np.array([-999.]*len(xstar))
         flux_chisq = np.array([-999.]*len(xstar))
@@ -3363,7 +3363,7 @@ class smp:
 
             if mc > 21:
                 continue
-            if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51:
+            if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
                         psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
@@ -3448,10 +3448,11 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                plt.savefig('teststamp.png')
-                #testsaved
-                #raw_input()
+                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                #plt.savefig('teststamp.png')
+        dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
+        plt.scatter(sky,flux_star)
+        plt.savefig('testsky.png')
 
         badflag = badflag.reshape(np.shape(badflag)[0])
         
