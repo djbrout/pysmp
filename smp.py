@@ -1085,8 +1085,8 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
 
             elif snparams.psf_model.lower() == 'daophot':
-                #self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                self.psf = rdpsf.rdpsf(psffile)[0]
+                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                #self.psf = rdpsf.rdpsf(psffile)[0]
                 #self.psf = self.psf/np.sum(self.psf)
                 self.psfcenter = None
             else:
@@ -3444,8 +3444,8 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                #plt.savefig('teststamp.png')
+                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                plt.savefig('teststamp.png')
                 #testsaved
                 #raw_input()
 
@@ -3578,7 +3578,7 @@ class smp:
             #print 'saving'
             #print mag_cat[goodstarcols].shape
             plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
-            #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
+            print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
             #raw_input()
 
             '''print 'mean python', np.mean(hh)
