@@ -3371,7 +3371,7 @@ class smp:
                         psf, psfcenter = self.psf, self.psfcenter
                     else:
                         print 'xyxyxyxy'
-                        psf, psfcenter = self.psf, (x,y)
+                        psf, psfcenter = self.psf, (round(x),round(y))
                 
                 counter += 1
                 mask = mask*0.
