@@ -3444,7 +3444,8 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-
+                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                plt.show()
 
         badflag = badflag.reshape(np.shape(badflag)[0])
         
