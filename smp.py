@@ -1088,7 +1088,7 @@ class smp:
                 self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
                 self.psf = rdpsf.rdpsf(psffile)[0]
                 self.psf = self.psf/np.sum(self.psf)
-                self.psfcenter = xsn,ysn
+                self.psfcenter = None
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
 
@@ -3367,11 +3367,10 @@ class smp:
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
                 else:
-                    psf, psfcenter = self.psf, self.psfcenter
-                    #print 'psf.shape',psf.shape
-                    #raw_input()
-                    #print 'psfcenter',psfcenter
-
+                    if not self.psfcenter is None:
+                        psf, psfcenter = self.psf, self.psfcenter
+                    else:
+                        psf, psfcenter = self.psf, (x,y)
                 
                 counter += 1
                 mask = mask*0.
