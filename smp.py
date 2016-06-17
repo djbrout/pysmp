@@ -1086,8 +1086,8 @@ class smp:
 
             elif snparams.psf_model.lower() == 'daophot':
                 self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                self.psf = rdpsf.rdpsf(psffile)[0]
-                self.psf = self.psf/np.sum(self.psf)
+                #self.psf = rdpsf.rdpsf(psffile)[0]
+                #self.psf = self.psf/np.sum(self.psf)
                 self.psfcenter = None
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
@@ -3375,7 +3375,9 @@ class smp:
                 
                 counter += 1
                 mask = mask*0.
-                pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
+                pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
+                                                          noise, mask)
+                #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                 #Run for MPFIT
                 #print 'initialized'
                 try:
