@@ -1085,8 +1085,8 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
 
             elif snparams.psf_model.lower() == 'daophot':
-                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                #self.psf = rdpsf.rdpsf(psffile)[0]
+                #self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                self.psf = rdpsf.rdpsf(psffile)[0]
                 #self.psf = self.psf/np.sum(self.psf)
                 self.psfcenter = None
             else:
@@ -3444,8 +3444,10 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                plt.show()
+                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                #plt.savefig('teststamp.png')
+                #testsaved
+                #raw_input()
 
         badflag = badflag.reshape(np.shape(badflag)[0])
         
