@@ -3522,7 +3522,7 @@ class smp:
 
             zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
             exposure_num = imfile.split('/')[-1].split('_')[1]
-
+            print 'writing zeropoints'
             if nozpt:
                 fn = self.big_zpt+'.txt'
                 if os.path.isfile(self.big_zpt+'.txt'):
@@ -3553,7 +3553,7 @@ class smp:
                 #raw_input()
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
             hh = hh[abs(hh < .25)]
-
+            print 'plotting zeropoints'
             plt.clf()
             #plt.hist([mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,istarmags-istarcats+30.6198],bins=np.arange(-.25,.25,.04),label=['python','idl'])
             plt.hist(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,bins=np.arange(-.25,.25,.04),label='mean: '+str(np.mean(hh))+' std: '+str(np.std(hh)))
