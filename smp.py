@@ -3370,6 +3370,7 @@ class smp:
                     if not self.psfcenter is None:
                         psf, psfcenter = self.psf, self.psfcenter
                     else:
+                        print 'xyxyxyxy'
                         psf, psfcenter = self.psf, (x,y)
                 
                 counter += 1
