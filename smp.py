@@ -3370,8 +3370,9 @@ class smp:
                     if not self.psfcenter is None:
                         psf, psfcenter = self.psf, self.psfcenter
                     else:
-                        print 'xyxyxyxy'
+                        #print 'xyxyxyxy'
                         psf, psfcenter = self.psf, (round(x),round(y))
+                        #print psfcenter
                 
                 counter += 1
                 mask = mask*0.
@@ -3430,6 +3431,7 @@ class smp:
                     #print 'checking!!!', cscale, oldcscale
                     # print 'DIFFFFFF',scale,cscale
                     scale = cscale
+                    print psfcenter,scale
                     #print 'scaled'
                     #print 'chisq',gchisq,chisq
                     #print 'flux',gscale,cscale
