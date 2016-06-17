@@ -1401,6 +1401,9 @@ class smp:
                                         smp_dict['sky'][i] = sexsky
                                         smp_dict['skyerr'][i] = sexrms
                                     else:
+                                        print 'skysn',skysn
+                                        print 'mysky',mysky
+                                        raw_input()
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skyerrsn
 
