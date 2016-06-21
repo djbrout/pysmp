@@ -240,7 +240,7 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
-             dosextractor=True
+             dosextractor=True,fermigrid=False,zptoutpath='./zpts/'
              ):
 
 
@@ -3883,7 +3883,7 @@ if __name__ == "__main__":
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
-                      "dosextractor","useweights"])
+                      "dosextractor","useweights","fermigrid","zptoutpath="])
 
 
         #print opt
@@ -3910,7 +3910,7 @@ if __name__ == "__main__":
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
-                      "dosextractor","useweights"])
+                      "dosextractor","useweights","fermigrid","zptoutpath="])
 
 
         #print opt
@@ -3941,7 +3941,8 @@ if __name__ == "__main__":
     useweights = False
     stardumppsf = False
     dosextractor=False
-
+    fermigrid = False
+    zptoutpath = './zpts/'
 
     dobigstarcat = True
 
@@ -4031,6 +4032,10 @@ if __name__ == "__main__":
             dosextractor = True
         elif o == "--useweights":
             useweights = True
+        elif o == "--fermigrid":
+            fermigrid = True
+        elif o == "--zptoutpath":
+             zptoutpath = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4118,9 +4123,15 @@ if __name__ == "__main__":
             dosextractor = True
         elif o == "--useweights":
             useweights = True
+        elif o == "--fermigrid":
+            fermigrid = True
+        elif o == "--zptoutpath":
+            zptoutpath = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
+    if not os.path.exists(zptoutpath):
+        os.makedirs(zptoutpath)
 
     if bigstarcatalog is None:
         dobigstarcat = False
@@ -4206,7 +4217,7 @@ if __name__ == "__main__":
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
-                                 useweights=useweights,dosextractor=dosextractor)
+                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4292,7 +4303,7 @@ if __name__ == "__main__":
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
-                     useweights=useweights,dosextractor=dosextractor)
+                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
