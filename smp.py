@@ -756,7 +756,6 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             if snparams.mjd[j] == 0:
                 continue
-            cccc += 1
             if cccc > 10:
                 continue
             #print imfile
@@ -780,6 +779,7 @@ class smp:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
+            cccc += 1
 
             imfile = os.path.join(self.rootdir, imfile)
             print imfile
