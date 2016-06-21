@@ -251,7 +251,8 @@ class smp:
             self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         else:
             self.snparams.photflag = self.snparams.photflag != 1
-        #print self.snparams.photflag
+
+        print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
 
