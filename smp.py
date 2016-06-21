@@ -4021,6 +4021,8 @@ if __name__ == "__main__":
             stardumppsf = True
         elif o == "--dosextractor":
             dosextractor = True
+        elif o == "--useweights":
+            useweights = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4106,6 +4108,8 @@ if __name__ == "__main__":
             stardumppsf = True
         elif o == "--dosextractor":
             dosextractor = True
+        elif o == "--useweights":
+            useweights = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
