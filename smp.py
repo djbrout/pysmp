@@ -567,11 +567,13 @@ class smp:
                 noise = np.sqrt(1/noise)
             elif params.weight_type.lower() != 'noise':
                 raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
+
             if nomask:
-                mask = np.zeros(np.shape(noise))
-                maskcols = np.where((noise < 0) |
-                                    (np.isfinite(noise) == False))
-                mask[maskcols] = 100.0
+                if self.useweights:
+                    mask = np.zeros(np.shape(weights))
+                    maskcols = np.where((noise < 0) |
+                                        (np.isfinite(noise) == False))
+                    mask[maskcols] = 100.0
 
             wcsworked = True
             try:
@@ -859,10 +861,11 @@ class smp:
             elif params.weight_type.lower() != 'noise':
                 raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
             if nomask:
-                mask = np.zeros(np.shape(weights))
-                maskcols = np.where((weights < 0) |
-                                    (np.isfinite(weights) == False))
-                mask[maskcols] = 100.0
+                if self.useweights:
+                    mask = np.zeros(np.shape(weights))
+                    maskcols = np.where((weights < 0) |
+                                        (np.isfinite(weights) == False))
+                    mask[maskcols] = 100.0
 
 
             wcsworked = True
