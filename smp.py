@@ -350,6 +350,8 @@ class smp:
         self.y_stars = []
         badflags = []
         pixstart = None
+        self.fermigrid = fermigrid
+        self.zptoutpath = zptoutpath
 
         if snparams.psf_model == 'psfex' and not snparams.__dict__.has_key('psf'):
             raise exceptions.RuntimeError('Error : PSF must be provided in supernova file!!!')
@@ -3569,8 +3571,8 @@ class smp:
             plt.ylabel('counts')
             plt.xlim(-.25,.25)
             #plt.legend()
-            print imfile.split('.')[-2].split('/')[-1] + '_' + str(filt) + 'band_starfitresids1s.png'
-            plt.savefig(imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+            print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+            plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
             #print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
@@ -3590,8 +3592,8 @@ class smp:
             #print mag_cat[goodstarcols].shape
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
-            plt.savefig(imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
-            print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'
+            plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+            print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
             #raw_input()
 
             '''print 'mean python', np.mean(hh)
@@ -3942,7 +3944,7 @@ if __name__ == "__main__":
     stardumppsf = False
     dosextractor=False
     fermigrid = False
-    zptoutpath = './zpts/'
+    zptoutpath = None
 
     dobigstarcat = True
 
@@ -4130,8 +4132,13 @@ if __name__ == "__main__":
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
+    if zptoutpath is None:
+        zptoutpath = os.path.join(outfile,'zpts')
+
     if not os.path.exists(zptoutpath):
         os.makedirs(zptoutpath)
+
+    print 'ZPTOUTSSSSS',zptoutpath
 
     if bigstarcatalog is None:
         dobigstarcat = False
