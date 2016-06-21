@@ -3569,7 +3569,10 @@ class smp:
             plt.ylabel('counts')
             plt.xlim(-.25,.25)
             #plt.legend()
-            plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
+            print imfile.split('.')[-2].split('/')[-1] + '_' + str(filt) + 'band_starfitresids1s.png'
+            plt.savefig(imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+            #print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'
+            #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
             #r.write(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png\n')
             #r.close()
@@ -3585,8 +3588,10 @@ class smp:
             #plt.legend()
             #print 'saving'
             #print mag_cat[goodstarcols].shape
-            plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
-            print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
+            #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
+            #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
+            plt.savefig(imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+            print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'
             #raw_input()
 
             '''print 'mean python', np.mean(hh)
