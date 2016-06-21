@@ -3875,7 +3875,7 @@ if __name__ == "__main__":
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
-                      "dosextractor"])
+                      "dosextractor","useweights"])
 
 
         #print opt
@@ -3902,7 +3902,7 @@ if __name__ == "__main__":
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
-                      "dosextractor"])
+                      "dosextractor","useweights"])
 
 
         #print opt
