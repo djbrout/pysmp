@@ -3930,7 +3930,7 @@ if __name__ == "__main__":
     galaxyfoldername=None
     snfilelist = None
     files_split_by_filter = False
-    useweights = True
+    useweights = False
     stardumppsf = False
     dosextractor=False
 
