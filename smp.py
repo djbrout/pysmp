@@ -245,6 +245,8 @@ class smp:
 
 
         #print filt
+        print self.snparams.photflag
+        raw_input()
         self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         #print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
@@ -752,7 +754,7 @@ class smp:
             if snparams.mjd[j] == 0:
                 continue
             cccc += 1
-            if cccc > 4:
+            if cccc > 10:
                 continue
             #print imfile
             #raw_input()
