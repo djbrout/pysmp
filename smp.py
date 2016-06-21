@@ -250,7 +250,7 @@ class smp:
         if 'x' in self.snparams.photflag[0]:
             self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         else:
-            self.snparams.photflag = (self.snparams.photflag > 1)
+            self.snparams.photflag = (self.snparams.photflag != '1')
 
         print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
