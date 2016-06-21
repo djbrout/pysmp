@@ -3880,7 +3880,7 @@ def scene(p,x=None,y=None,fjac=None,params=None,err=None):
     return(status, (y.reshape(Nimage*substamp*substamp)-model.reshape(Nimage*substamp*substamp))/err.reshape(Nimage*substamp*substamp))
 
 if __name__ == "__main__":
-
+    print 'ENTERING SMP'*100
     import sys,getopt
     # read in arguments and options
     try:
