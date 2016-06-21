@@ -1456,7 +1456,8 @@ class smp:
                                     else:
                                         smp_dict['notbrightflag'][i] = 1
 
-
+                                    print 'zpts',snparams.zp[j], zpt
+                                    raw_input()
 
                                     #START HERE TOMORROW
 
