@@ -4244,8 +4244,7 @@ if __name__ == "__main__":
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
-                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                                 zptfoldername=zptfoldername)
+                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4331,8 +4330,7 @@ if __name__ == "__main__":
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
-                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     zptfoldername=zptfoldername)
+                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
