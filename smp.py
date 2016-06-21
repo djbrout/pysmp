@@ -4153,7 +4153,7 @@ if __name__ == "__main__":
 
     if not os.path.exists(zptoutpath):
         if fermigrid:
-            if zptoutpath.split('/')[0] != 'pnfs':
+            if zptoutpath.split('/')[1] != 'pnfs':
                 raise ValueError('--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
             os.system( 'ifdh mkdir '+zptoutpath)
         else:
