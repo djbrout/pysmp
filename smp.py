@@ -571,8 +571,8 @@ class smp:
             if nomask:
                 if self.useweights:
                     mask = np.zeros(np.shape(weights))
-                    maskcols = np.where((noise < 0) |
-                                        (np.isfinite(noise) == False))
+                    maskcols = np.where((weights < 0) |
+                                        (np.isfinite(weights) == False))
                     mask[maskcols] = 100.0
 
             wcsworked = True
