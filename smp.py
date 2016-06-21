@@ -239,14 +239,14 @@ class smp:
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
-             stardeltasfolder=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
+             stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/'
              ):
 
 
         #print filt
         print self.snparams.photflag
-        raw_input()
+        #raw_input()
         if 'x' in self.snparams.photflag[0]:
             self.snparams.photflag = ~(self.snparams.photflag == '0x00')
         else:
@@ -3572,14 +3572,20 @@ class smp:
             hh = hh[abs(hh < .25)]
             print 'plotting zeropoints'
             plt.clf()
-            #plt.hist([mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,istarmags-istarcats+30.6198],bins=np.arange(-.25,.25,.04),label=['python','idl'])
             plt.hist(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,bins=np.arange(-.25,.25,.04),label='mean: '+str(np.mean(hh))+' std: '+str(np.std(hh)))
             plt.xlabel('cat mag + 2.5log10(flux) - zeropoint')
             plt.ylabel('counts')
             plt.xlim(-.25,.25)
-            #plt.legend()
-            print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-            plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+            if self.fermigrid:
+                if not os.path.exists('./zpts/'):
+                    os.makedirs('./zpts/')
+                print os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+                plt.savefig(os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                os.system('ifdh cp -D '+os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+                          + ' '+self.zptoutpath)
+            else:
+                print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
             #print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
@@ -3587,10 +3593,8 @@ class smp:
             #r.close()
 
             plt.clf()
-            #plt.hist([mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,istarmags-istarcats+30.6198],bins=np.arange(-.25,.25,.04),label=['python','idl'])
-            #print 'scatter'
+
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
-            #print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.xlabel('cat mag')
             plt.ylabel('-2.5log10(flux)')
@@ -3599,8 +3603,15 @@ class smp:
             #print mag_cat[goodstarcols].shape
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
-            plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-            print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+            if self.fermigrid:
+                print os.path.join('./zpts',imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+                plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                os.system('ifdh cp -D ' + os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot.png')
+                          + ' ' + self.zptoutpath)
+            else:
+                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
             #raw_input()
 
             '''print 'mean python', np.mean(hh)
@@ -4141,7 +4152,12 @@ if __name__ == "__main__":
 
 
     if not os.path.exists(zptoutpath):
-        os.makedirs(zptoutpath)
+        if fermigrid:
+            if zptoutpath.split('/')[0] != 'pnfs':
+                raise ValueError('--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
+            os.system( 'ifdh mkdir '+zptoutpath)
+        else:
+            os.makedirs(zptoutpath)
 
 
     if bigstarcatalog is None:
@@ -4228,7 +4244,8 @@ if __name__ == "__main__":
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
-                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
+                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
+                                 zptfoldername=zptfoldername)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4314,7 +4331,8 @@ if __name__ == "__main__":
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
-                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
+                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
+                     zptfoldername=zptfoldername)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
