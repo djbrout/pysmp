@@ -480,7 +480,7 @@ class smp:
                 self.field = np.nan
 
             if filt != 'all' and band not in filt:
-                print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
+                #print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
 
