@@ -3944,7 +3944,7 @@ if __name__ == "__main__":
     stardumppsf = False
     dosextractor=False
     fermigrid = False
-    zptoutpath = None
+    zptoutpath = './zpts/'
 
     dobigstarcat = True
 
@@ -4132,13 +4132,10 @@ if __name__ == "__main__":
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
-    if zptoutpath is None:
-        zptoutpath = os.path.join(outfile,'zpts')
 
     if not os.path.exists(zptoutpath):
         os.makedirs(zptoutpath)
 
-    print 'ZPTOUTSSSSS',zptoutpath
 
     if bigstarcatalog is None:
         dobigstarcat = False
