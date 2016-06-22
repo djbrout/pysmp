@@ -11,4 +11,4 @@ jobsub_submit -G des --resource-provides=usage_model=DEDICATED -M\
       --log_file=/data/des41.a/data/djbrout/pysmp/logs/log_$i.log\
       --generate-email-summary -N $num_jobs
 echo $num_jobs jobs submitted
-done
+echo done

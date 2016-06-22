@@ -471,10 +471,11 @@ class smp:
         
         #############################################################################################################################
         ################################################# GET STAR GLOBAL OFFSETS ###################################################
-        
+
+
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
-            
+
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
@@ -483,6 +484,14 @@ class smp:
                 continue
             skysig=np.nan
             nozpt = copy(orig_nozpt)
+
+            if self.fermigrid:
+                os.system('ifdh cp '+imfile+' .')
+                imfile = imfile.split('/')[-1]
+                os.system('ifdh cp '+noisefile+' .')
+                noisefile = noisefile.split('/')[-1]
+                os.system('ifdh cp ' + psffile + ' .')
+                psffile = psffile.split('/')[-1]
 
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
@@ -4274,10 +4283,14 @@ if __name__ == "__main__":
 
             a.close()
             if not snfilepath is None:
+                osnfile = copy(snfile.split('/')[-1])
                 snfile = os.path.join(snfilepath, snfile.split('/')[-1])
 
             print 'Index '+str(index)
             print 'SN File '+snfile
+            if fermigrid:
+                os.system('ifdh cp '+snfile+' .')
+                snfile = osnfile
 
     '''if ismultiple:
         pbsint = os.environ['PBS_ARRAYID']
