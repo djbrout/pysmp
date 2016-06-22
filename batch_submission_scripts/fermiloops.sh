@@ -4,7 +4,7 @@ source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
 
 setup jobsub_client
 
-num_jobs = 1
+num_jobs=1
 
 jobsub_submit -G des --resource-provides=usage_model=DEDICATED -M\
      --verbose --OS=SL6 file:///data/des41.a/data/djbrout/pysmp/batch_submission_scripts/runfermirun.csh $i g\
