@@ -24,4 +24,4 @@ cd pysmp
 pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
-python smp.py --index=0 -f g --nozpt --fermigrid
+python smp.py --index=0 -f g --nozpt --fermigrid --snfilelist=./data/snfiles.txt

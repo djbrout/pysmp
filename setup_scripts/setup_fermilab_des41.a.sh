@@ -14,3 +14,7 @@ setup autoscan v3.1+0
 setup easyaccess
 setup extralibs 1.0
 echo "EUPS setup complete"
+
+source /cvmfs/fermilab.opensciencegrid.org/products/common/etc/setups 
+setup jobsub_client
+echo 'done setting up jobsub_client'
