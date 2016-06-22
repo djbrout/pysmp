@@ -240,7 +240,7 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
-             dosextractor=True,fermigrid=False,zptoutpath='./zpts/'
+             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None
              ):
 
 
@@ -3917,7 +3917,7 @@ if __name__ == "__main__":
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar="])
+                      "embarrasinglyParallelEnvVar=","fermigriddir="])
 
 
         #print opt
@@ -3945,7 +3945,7 @@ if __name__ == "__main__":
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar="])
+                      "embarrasinglyParallelEnvVar=","fermigriddir="])
 
 
         #print opt
@@ -3980,6 +3980,7 @@ if __name__ == "__main__":
     zptoutpath = './zpts/'
     isEmbarrasinglyParallel = False
     parallelvar = None
+    fermigriddir = None
 
     dobigstarcat = True
 
@@ -4073,6 +4074,8 @@ if __name__ == "__main__":
             fermigrid = True
         elif o == "--zptoutpath":
              zptoutpath = a
+        elif o == "--fermigriddir":
+            fermigriddir = a
         elif o == "--embarrasinglyParallelEnvVar":
             isEmbarrasinglyParallel = True
             parallelvar= a
@@ -4165,6 +4168,8 @@ if __name__ == "__main__":
             useweights = True
         elif o == "--fermigrid":
             fermigrid = True
+        elif o == "--fermigriddir":
+            fermigriddir = a
         elif o == "--zptoutpath":
             zptoutpath = a
         elif o == "--embarrasinglyParallelEnvVar":
@@ -4181,6 +4186,9 @@ if __name__ == "__main__":
             if zptoutpath.split('/')[1] != 'pnfs':
                 raise ValueError('--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
             os.system( 'ifdh mkdir '+zptoutpath)
+            param_file = os.path.join(fermigriddir,param_file)
+            os.system('ifdh cp '+param_file+' .')
+            param_file = param_file.split('/')[-1]
         else:
             os.makedirs(zptoutpath)
 
@@ -4236,7 +4244,8 @@ if __name__ == "__main__":
 
 
                 snparams = get_snfile(snfile, root_dir, useweights)
-
+                if fermigrid:
+                    os.system('ifdh cp '+param_file)
                 params = get_params(param_file)
 
                 if nomask == 'none':
@@ -4268,7 +4277,8 @@ if __name__ == "__main__":
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
-                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
+                                 useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
+                                 fermigriddir=fermigriddir)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4358,7 +4368,8 @@ if __name__ == "__main__":
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
-                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath)
+                     useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
+                     fermigriddir=fermigriddir)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
