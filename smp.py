@@ -4186,11 +4186,12 @@ if __name__ == "__main__":
             if zptoutpath.split('/')[1] != 'pnfs':
                 raise ValueError('--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
             os.system( 'ifdh mkdir '+zptoutpath)
-            param_file = os.path.join(fermigriddir,param_file)
-            os.system('ifdh cp '+param_file+' .')
-            param_file = param_file.split('/')[-1]
         else:
             os.makedirs(zptoutpath)
+    if fermigrid:
+        param_file = os.path.join(fermigriddir, param_file)
+        os.system('ifdh cp ' + param_file + ' .')
+        param_file = param_file.split('/')[-1]
 
     if bigstarcatalog is None:
         dobigstarcat = False
