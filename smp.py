@@ -757,7 +757,7 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             if snparams.mjd[j] == 0:
                 continue
-            if cccc > 10:
+            if cccc > 2:
                 continue
             #print imfile
             #raw_input()
@@ -1798,7 +1798,7 @@ class smp:
         print os.path.join(outdir,filename+'_mcmc_input.npz')
         print 'idobs',smp_dict['id_obs']
         print 'idcoadd',smp_dict['id_coadd']
-
+        sys.exit()
         self.tmpwriter.savez( os.path.join(outdir,filename+'_mcmc_input.npz'), 
                 galmodel = galmodel
                 , modelvec = modelvec*0.
