@@ -3882,7 +3882,6 @@ def scene(p,x=None,y=None,fjac=None,params=None,err=None):
 if __name__ == "__main__":
     print 'ENTERING SMP'*100
     import sys,getopt
-    sys.exit()
     # read in arguments and options
     try:
         if os.path.exists("default.config"):
