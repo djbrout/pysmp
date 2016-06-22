@@ -58,6 +58,9 @@ weight_type: noise
 #Number of stars to remove from zpt to check zpt fit
 numcheckstars: 4
 
+#Set to true/false for running on clusters - must provide $embarassinglyPrallelEnvVar
+isEmbarrasinglyParallel: True
+embarrasinglyParallelEnvVar: Process
 
 #MUST BE IN DEGREES
 FORCERADEC: False

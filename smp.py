@@ -244,6 +244,10 @@ class smp:
              ):
 
 
+        if fermigrid:
+            if not os.path.exists(os.path.join(outfile,SNfoldername)):
+                os.system('ifdh mkdir '+os.path.join(outfile,SNfoldername))
+
         #print filt
         print self.snparams.photflag
         #raw_input()
@@ -3463,8 +3467,8 @@ class smp:
                 #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
                 #plt.savefig('teststamp.png')
         dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
-        plt.scatter(sky[sky>10],flux_star[sky>10])
-        plt.savefig('testsky.png')
+        #plt.scatter(sky[sky>10],flux_star[sky>10])
+        #plt.savefig('testsky.png')
 
         badflag = badflag.reshape(np.shape(badflag)[0])
         
