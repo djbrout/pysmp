@@ -122,7 +122,7 @@ class get_snfile:
                         val = val.replace(' ','')
                         self.__dict__[key.lower()] = val
                     elif key.lower() == 'starcat' and 'des' in snfile:
-                        print 'here1'
+                        #print 'here1'
                         catfilter = val.split()[0]                        
                         if filt.lower() == catfilter.lower():
                             #print val
@@ -140,7 +140,7 @@ class get_snfile:
                             # print val
                             self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir, val.split()[1])}
                     else:
-                        print 'here2',key.lower()
+                        #print 'here2',key.lower()
                         try:
                             self.__dict__[key.lower()] = np.array(val.split()).astype('float')
                         except:
@@ -246,6 +246,8 @@ class smp:
 
         if fermigrid:
             if not os.path.exists(os.path.join(outfile,SNfoldername)):
+                print 'ifdh mkdir ',os.path.join(outfile,SNfoldername)
+
                 os.system('ifdh mkdir '+os.path.join(outfile,SNfoldername))
 
         #print filt
@@ -486,6 +488,7 @@ class smp:
             nozpt = copy(orig_nozpt)
 
             if self.fermigrid:
+                print 'line 491'
                 os.system('ifdh cp '+imfile+' .')
                 imfile = imfile.split('/')[-1]
                 os.system('ifdh cp '+noisefile+' .')
@@ -776,6 +779,11 @@ class smp:
             #raw_input()
             skysig=np.nan
             nozpt = copy(orig_nozpt)
+
+            if self.fermigrid:
+                imfile = imfile.split('/')[-1]
+                noisefile = noisefile.split('/')[-1]
+                psffile = psffile.split('/')[-1]
 
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
@@ -4189,6 +4197,7 @@ if __name__ == "__main__":
         else:
             os.makedirs(zptoutpath)
     if fermigrid:
+        print '4200'
         param_file = os.path.join(fermigriddir, param_file)
         os.system('ifdh cp ' + param_file + ' .')
         param_file = param_file.split('/')[-1]
@@ -4246,6 +4255,7 @@ if __name__ == "__main__":
 
                 snparams = get_snfile(snfile, root_dir, useweights)
                 if fermigrid:
+                    print 'ifdh 4258'
                     os.system('ifdh cp '+param_file)
                 params = get_params(param_file)
 
@@ -4300,6 +4310,7 @@ if __name__ == "__main__":
             print 'Index '+str(index)
             print 'SN File '+snfile
             if fermigrid:
+                print 'ifdh 4313'
                 os.system('ifdh cp '+snfile+' .')
                 snfile = osnfile
 
@@ -4331,8 +4342,9 @@ if __name__ == "__main__":
 
     if files_split_by_filter:
         filt = snfile.split('_')[1].split('.')[0]
-
+    print 'getting snparams'
     snparams = get_snfile(snfile, root_dir, useweights)
+    print 'getting params'
     params = get_params(param_file)
 
     if not params.psf_model:
@@ -4360,7 +4372,7 @@ if __name__ == "__main__":
         outfile = os.path.join(out_dir,'test.out')
     if not mergeno:
         mergeno = 0
-
+    print 'beginning smp'
     scenemodel = smp(snparams,params,root_dir,psf_model)
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
                      ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
