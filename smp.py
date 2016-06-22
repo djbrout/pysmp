@@ -69,7 +69,7 @@ paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
                     'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
                     'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string',
-                    'HDR_PSF_FWHM':'string'
+                    'HDR_PSF_FWHM':'string','ISEMBARRASINGLYPARALLEL':'TRUE','embarrasinglyParallelEnvVar':'string'
                     }
 
 def save_fits_image(image,filename):
@@ -3907,7 +3907,8 @@ if __name__ == "__main__":
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
-                      "dosextractor","useweights","fermigrid","zptoutpath="])
+                      "dosextractor","useweights","fermigrid","zptoutpath=",
+                      "embarrasinglyParallelEnvVar="])
 
 
         #print opt
@@ -3934,7 +3935,8 @@ if __name__ == "__main__":
                       "snfilepath=","bigstarcatalog=",
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
-                      "dosextractor","useweights","fermigrid","zptoutpath="])
+                      "dosextractor","useweights","fermigrid","zptoutpath=",
+                      "embarrasinglyParallelEnvVar="])
 
 
         #print opt
@@ -3967,6 +3969,8 @@ if __name__ == "__main__":
     dosextractor=False
     fermigrid = False
     zptoutpath = './zpts/'
+    isEmbarrasinglyParallel = False
+    parallelvar = None
 
     dobigstarcat = True
 
@@ -4060,6 +4064,9 @@ if __name__ == "__main__":
             fermigrid = True
         elif o == "--zptoutpath":
              zptoutpath = a
+        elif o == "--embarrasinglyParallelEnvVar":
+            isEmbarrasinglyParallel = True
+            parallelvar= a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4151,9 +4158,14 @@ if __name__ == "__main__":
             fermigrid = True
         elif o == "--zptoutpath":
             zptoutpath = a
+        elif o == "--embarrasinglyParallelEnvVar":
+            isEmbarrasinglyParallel = True
+            parallelvar= a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
+    if isEmbarrasinglyParallel:
+        index = os.environ[parallelvar]
 
     if not os.path.exists(zptoutpath):
         if fermigrid:
@@ -4162,7 +4174,6 @@ if __name__ == "__main__":
             os.system( 'ifdh mkdir '+zptoutpath)
         else:
             os.makedirs(zptoutpath)
-
 
     if bigstarcatalog is None:
         dobigstarcat = False
