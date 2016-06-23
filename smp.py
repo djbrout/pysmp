@@ -201,8 +201,10 @@ class get_snfile:
 
 class get_params:
     def __init__(self,paramfile):
+        print 'opening paramfile'
         fin = open(paramfile,'r')
         for line in fin:
+            print line
             line = line.replace('\n','')
             if not line.startswith('#') and line.replace(' ',''):
                 try:
@@ -4201,7 +4203,8 @@ if __name__ == "__main__":
         param_file = os.path.join(fermigriddir, param_file)
         os.system('ifdh cp ' + param_file + ' .')
         param_file = param_file.split('/')[-1]
-
+        print 'paramfile',param_file
+        os.system('ls -ltr')
     if bigstarcatalog is None:
         dobigstarcat = False
 
@@ -4346,7 +4349,7 @@ if __name__ == "__main__":
     snparams = get_snfile(snfile, root_dir, useweights)
     print 'getting params'
     params = get_params(param_file)
-
+    print 'done with params'
     if not params.psf_model:
         print("psf_model not specified. Assuming psfex...")
         psf_model = 'psfex'
