@@ -1103,7 +1103,7 @@ class smp:
             # begin taking PSF stamps
 
             #print snparams.psf_model.lower()
-            if snparams.psf_model.lower() == 'psfex':
+            elif snparams.psf_model.lower() == 'psfex':
                 print snparams.psf_model.lower()
                 hdulist = fits.open(psffile)
                 hdulist.info()
@@ -1115,11 +1115,11 @@ class smp:
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
-            elif snparams.psf_model.lower() == 'daophot':
-                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                #self.psf = rdpsf.rdpsf(psffile)[0]
-                #self.psf = self.psf/np.sum(self.psf)
-                self.psfcenter = None
+                #elif snparams.psf_model.lower() == 'daophot':
+                #    self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                #    #self.psf = rdpsf.rdpsf(psffile)[0]
+                #    #self.psf = self.psf/np.sum(self.psf)
+                #    self.psfcenter = None
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
 
