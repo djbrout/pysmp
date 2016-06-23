@@ -3486,9 +3486,9 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                plt.savefig('teststamp.png')
-                raw_input('saved teststamp.png')
+                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                #plt.savefig('teststamp.png')
+                #raw_input('saved teststamp.png')
         dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
         #plt.savefig('testsky.png')
