@@ -1025,6 +1025,10 @@ class smp:
                     
 
             if snparams.psf_model.lower() == 'daophot':
+                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                #self.psf = rdpsf.rdpsf(psffile)[0]
+                #self.psf = self.psf/np.sum(self.psf)
+                self.psfcenter = None
                 if params.build_psf == 'yes':
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name]  # 1
@@ -1119,11 +1123,11 @@ class smp:
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
-            elif snparams.psf_model.lower() == 'daophot':
-                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                #self.psf = rdpsf.rdpsf(psffile)[0]
-                #self.psf = self.psf/np.sum(self.psf)
-                self.psfcenter = None
+            # elif snparams.psf_model.lower() == 'daophot':
+            #     self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+            #     #self.psf = rdpsf.rdpsf(psffile)[0]
+            #     #self.psf = self.psf/np.sum(self.psf)
+            #     self.psfcenter = None
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
 
