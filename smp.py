@@ -1025,23 +1025,23 @@ class smp:
 
             if snparams.psf_model.lower() == 'daophot':
                 if params.build_psf == 'yes':
-                    cols = np.where((starglobalras > ra_low) &
-                                    (starglobalras < ra_high) &
-                                    (starglobaldecs > dec_low) &
-                                    (starglobaldecs < dec_high))[0]
+                    self.rdnoise = hdr[params.rdnoise_name]
+                    self.gain = hdr[params.gain_name]  # 1
+                    cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (
+                    starglobaldecs < dec_high)
+
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
-                    
+
                     mag_star = starcat.mag[cols]
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    x_star, y_star = [], []
 
-                    x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    for xval, yval in zip(*coords):
+                        x_star += [xval]
+                        y_star += [yval]
 
-                    #x_star,y_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
-
-
-                    #if not dontcentroid:
-                    #    x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
-                    #    newra,newdec = zip(*w.wcs_pix2world(np.array(zip(x_star,y_star)),0))
+                    x_star, y_star = np.array(x_star), np.array(y_star)
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
@@ -1075,7 +1075,6 @@ class smp:
                     
                     mag_star = starcat.mag[cols]
                     coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
-                    #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
                     x_star,y_star = [],[]
 
                     for xval,yval in zip(*coords):
