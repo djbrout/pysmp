@@ -4207,13 +4207,13 @@ if __name__ == "__main__":
             os.system( 'ifdh mkdir '+zptoutpath)
         else:
             os.makedirs(zptoutpath)
-    if fermigrid:
-        print '4200'
-        param_file = os.path.join(fermigriddir, param_file)
-        os.system('ifdh cp ' + param_file + ' .')
-        param_file = param_file.split('/')[-1]
-        print 'paramfile',param_file
-        os.system('ls -ltr')
+    # if fermigrid:
+    #     print '4200'
+    #     param_file = os.path.join(fermigriddir, param_file)
+    #     os.system('ifdh cp ' + param_file + ' .')
+    #     param_file = param_file.split('/')[-1]
+    #     print 'paramfile',param_file
+    #     os.system('ls -ltr')
     if bigstarcatalog is None:
         dobigstarcat = False
 
@@ -4266,9 +4266,10 @@ if __name__ == "__main__":
 
 
                 snparams = get_snfile(snfile, root_dir, useweights)
-                if fermigrid:
-                    print 'ifdh 4258'
-                    os.system('ifdh cp '+param_file)
+                # if fermigrid:
+                #     print 'ifdh 4258'
+                #     os.system('ifdh cp '+param_file)
+                print 'getting params'
                 params = get_params(param_file)
 
                 if nomask == 'none':
