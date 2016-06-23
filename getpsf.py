@@ -412,7 +412,7 @@ def getpsf(image,xc,yc,
         print('Warning: Only one valid PSF star')
         hdu.header['NSTARS'] = goodstarlen #, '# of Stars Used to Create PSF'
         hdu.data = psf
-        hdu.writeto(psfname,clobber=True)
+        #hdu.writeto(psfname,clobber=True)
         return(gauss,psf,psfmag)
 
     else: 
@@ -420,7 +420,7 @@ def getpsf(image,xc,yc,
         hdu.header['PSFID'] = goodstar[-1]
         hdu.header['NSTARS'] = goodstarlen #, '# of Stars Used to Create PSF'
         hdu.data = psf
-        hdu.writeto(psfname,clobber=True)
+        #hdu.writeto(psfname,clobber=True)
         return(gauss,psf,psfmag)
 
 
