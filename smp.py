@@ -3437,7 +3437,7 @@ class smp:
                 #print 'initialized'
                 try:
                     errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                        pk.pkfit_norecent_noise_smp(1, x., y, s, se, params.fitrad, returnStamps=True,
+                        pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                     stampsize=params.substamp-1.)
 
                     noise_stamp[noise_stamp > 0.] = 1
