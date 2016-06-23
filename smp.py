@@ -1051,8 +1051,8 @@ class smp:
                     self.gain = hdr[params.gain_name]
                     #if not os.path.exists(psffile) or params.clobber_psf == 'yes':
                     gauss,psf,magzpt = getpsf.getpsf(im,x_star,y_star,mag,sky,
-                                                     hdr[params.rdnoise_name],hdr[params.gain_name],
-                                                     range(len(x_star)),params.fitrad,
+                                                     self.rdnoise,self.gain,
+                                                     range(len(x_star)),params.fitrad,params.fitrad-1.,
                                                      psffile)
                     hpsf = pyfits.getheader(psffile)
                     #else:
