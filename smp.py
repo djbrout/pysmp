@@ -1035,8 +1035,8 @@ class smp:
                         raise exceptions.RuntimeError("Error : No stars in image!!")
 
                     mag_star = starcat.mag[cols]
-                    #coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
                     x_star, y_star = [], []
 
                     for xval, yval in zip(*coords):
@@ -1049,16 +1049,16 @@ class smp:
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
 
 
-                    self.rdnoise = hdr[params.rdnoise_name]
-                    self.gain = hdr[params.gain_name]
-                    #if not os.path.exists(psffile) or params.clobber_psf == 'yes':
-                    gauss,psf,magzpt = getpsf.getpsf(im,x_star,y_star,mag,sky,
-                                                     self.rdnoise,self.gain,
-                                                     range(len(x_star)),params.fitrad,params.fitrad-1.,
-                                                     psffile)
-                    hpsf = pyfits.getheader(psffile)
-                    self.psf = psf
-                    self.psfcenter = None
+                    # self.rdnoise = hdr[params.rdnoise_name]
+                    # self.gain = hdr[params.gain_name]
+                    # #if not os.path.exists(psffile) or params.clobber_psf == 'yes':
+                    # gauss,psf,magzpt = getpsf.getpsf(im,x_star,y_star,mag,sky,
+                    #                                  self.rdnoise,self.gain,
+                    #                                  range(len(x_star)),params.fitrad,params.fitrad-1.,
+                    #                                  psffile)
+                    # hpsf = pyfits.getheader(psffile)
+                    # self.psf = psf
+                    # self.psfcenter = None
                     #else:
                     #    print('PSF file exists.  Not clobbering...')
                     #    hpsf = pyfits.getheader(psffile)
@@ -1119,11 +1119,11 @@ class smp:
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
-                #elif snparams.psf_model.lower() == 'daophot':
-                #    self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                #    #self.psf = rdpsf.rdpsf(psffile)[0]
-                #    #self.psf = self.psf/np.sum(self.psf)
-                #    self.psfcenter = None
+            elif snparams.psf_model.lower() == 'daophot':
+                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                #self.psf = rdpsf.rdpsf(psffile)[0]
+                #self.psf = self.psf/np.sum(self.psf)
+                self.psfcenter = None
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
 
@@ -3410,6 +3410,13 @@ class smp:
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
                 else:
+                    # pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,weights,mask)
+                    # #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
+                    # try:
+                    #     errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                    #         pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,returnStamps=True,stampsize=self.params.substamp)
+                    # except ValueError:
+                    #     raise ValueError('SN too close to edge of CCD!')
                     if not self.psfcenter is None:
                         psf, psfcenter = self.psf, self.psfcenter
                     else:
