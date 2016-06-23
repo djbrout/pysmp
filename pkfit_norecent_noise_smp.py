@@ -143,7 +143,7 @@ class pkfit_class:
                                  counts_guess=2500, gain = 1.0,
                                  model_errors = False,
                                  show=False, mpfit_or_mcmc='mpfit',
-                                 analytical='No',gewekenum=1000,useskyerr=False):
+                                 analytical='No',gewekenum=1000,useskyerr=False,dao_value=False):
         f = self.f; psf = self.psf;
         fnoise = self.fnoise; fmask = self.fmask
         if f.dtype != 'float64': f = f.astype('float64')
@@ -262,24 +262,25 @@ class pkfit_class:
             if returnStamps: return (errmag,chi,niter,scale, np.zeros([stampsize,stampsize]), np.zeros([stampsize,stampsize]), np.zeros([stampsize,stampsize]), np.zeros([stampsize,stampsize]))
             else: return(errmag,chi,niter,scale,np.zeros([stampsize,stampsize]))
 
-#            dx = dx[good[1]]# % ixx]
-#            dy = dy[good[0]]#/ixx]
-#            model,dvdx,dvdy = dao_value.dao_value(dx, dy, gauss, 
-#                                                  psf, #psf1d=psf1d, 
-#                                                  deriv=True)#,ps1d=True)
-
-            #        mshape = shape(model)
-            #        if len(mshape) > 2:
-            #            model = model.reshape(mshape[0]*mshape[1])
-
-        # D. Jones - modified from Scolnic
-#            if len(dvdx) == 0:
-#                print 'Return2'
-#                scale=1000000.0
-#                errmag=100000
-#                chi=100000
-#                sharp=100000
-#                return(errmag,chi,sharp,niter,scale)
+        # if dao_value:
+        #    dx = dx[good[1]]# % ixx]
+        #    dy = dy[good[0]]#/ixx]
+        #    model,dvdx,dvdy = dao_value.dao_value(dx, dy, gauss,
+        #                                          psf, #psf1d=psf1d,
+        #                                          deriv=True)#,ps1d=True)
+        #
+        #     #        mshape = shape(model)
+        #     #        if len(mshape) > 2:
+        #     #            model = model.reshape(mshape[0]*mshape[1])
+        #
+        #    # D. Jones - modified from Scolnic
+        #    if len(dvdx) == 0:
+        #        print 'Return2'
+        #        scale=1000000.0
+        #        errmag=100000
+        #        chi=100000
+        #        sharp=100000
+        #        return(errmag,chi,sharp,niter,scale)
 
         if debug: print('model created '); return(errmag,chi,niter,scale,np.zeros([stampsize,stampsize]))
 
