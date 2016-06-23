@@ -1025,9 +1025,9 @@ class smp:
                     
 
             if snparams.psf_model.lower() == 'daophot':
-                self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
-                #self.psf = rdpsf.rdpsf(psffile)[0]
-                #self.psf = self.psf/np.sum(self.psf)
+                #self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
+                self.psf = rdpsf.rdpsf(psffile)[0]
+                self.psf = self.psf/np.sum(self.psf)
                 self.psfcenter = None
                 if params.build_psf == 'yes':
                     self.rdnoise = hdr[params.rdnoise_name]
