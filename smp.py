@@ -201,7 +201,8 @@ class get_snfile:
 
 class get_params:
     def __init__(self,paramfile):
-        print 'opening paramfile'
+        print os.listdir('.')
+        print 'opening paramfile',paramfile
         fin = open(paramfile,'r')
         for line in fin:
             print line
