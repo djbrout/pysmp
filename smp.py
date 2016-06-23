@@ -1046,8 +1046,6 @@ class smp:
                     mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
 
-                    if badflag == 1:
-                        print 'aper1 badflag'
 
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name]
