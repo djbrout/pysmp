@@ -1034,7 +1034,8 @@ class smp:
                         raise exceptions.RuntimeError("Error : No stars in image!!")
 
                     mag_star = starcat.mag[cols]
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    #coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
                     x_star, y_star = [], []
 
                     for xval, yval in zip(*coords):
