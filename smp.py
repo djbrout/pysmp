@@ -1055,6 +1055,8 @@ class smp:
                                                      range(len(x_star)),params.fitrad,params.fitrad-1.,
                                                      psffile)
                     hpsf = pyfits.getheader(psffile)
+                    self.psf = psf
+                    self.psfcenter = None
                     #else:
                     #    print('PSF file exists.  Not clobbering...')
                     #    hpsf = pyfits.getheader(psffile)
