@@ -3497,11 +3497,11 @@ class smp:
                 #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
                 #plt.savefig('teststamp.png')
                 #raw_input('saved teststamp.png')
-        dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
-        dt.save_fits_image(image_stamp,'teststampim.fits')
-        dt.save_fits_image(sexsky-psf_stamp*scale,'teststamppsf.fits')
+                dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
+                dt.save_fits_image(image_stamp,'teststampim.fits')
+                dt.save_fits_image(sexsky-psf_stamp*scale,'teststamppsf.fits')
 
-        raw_input('saved teststamp.fits')
+                raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
         #plt.savefig('testsky.png')
 
