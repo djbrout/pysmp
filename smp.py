@@ -3491,6 +3491,7 @@ class smp:
                 #plt.savefig('teststamp.png')
                 #raw_input('saved teststamp.png')
         dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
+        raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
         #plt.savefig('testsky.png')
 
