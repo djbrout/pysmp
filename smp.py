@@ -1051,16 +1051,16 @@ class smp:
 
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name]
-                    if not os.path.exists(psffile) or params.clobber_psf == 'yes':
-                        gauss,psf,magzpt = getpsf.getpsf(im,x_star,y_star,mag,sky,
-                                                         hdr[params.rdnoise_name],hdr[params.gain_name],
-                                                         range(len(x_star)),params.fitrad,
-                                                         psffile)
-                        hpsf = pyfits.getheader(psffile)
-                    else:
-                        print('PSF file exists.  Not clobbering...')
-                        hpsf = pyfits.getheader(psffile)
-                        magzpt = hpsf['PSFMAG']
+                    #if not os.path.exists(psffile) or params.clobber_psf == 'yes':
+                    gauss,psf,magzpt = getpsf.getpsf(im,x_star,y_star,mag,sky,
+                                                     hdr[params.rdnoise_name],hdr[params.gain_name],
+                                                     range(len(x_star)),params.fitrad,
+                                                     psffile)
+                    hpsf = pyfits.getheader(psffile)
+                    #else:
+                    #    print('PSF file exists.  Not clobbering...')
+                    #    hpsf = pyfits.getheader(psffile)
+                    #    magzpt = hpsf['PSFMAG']
 
                 elif nozpt:
                     self.rdnoise = hdr[params.rdnoise_name]
