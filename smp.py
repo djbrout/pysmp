@@ -264,7 +264,7 @@ class smp:
         print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
-
+        print 'done with tmpwriter line 267'
         foldername = SNfoldername
 
         tstart = time.time()
@@ -272,6 +272,10 @@ class smp:
         from astropy import wcs
         import astropy.io.fits as pyfits
         self.outfile = outfile
+        print 'line 275'
+        if self.fermigrid: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
+            oldoutfile = copy(outfile)
+            outfile = ''
         cspath = os.path.join(outfile,foldername+'/SNe/starfits/')
         if not os.path.exists(cspath):
             os.makedirs(cspath)
