@@ -1190,6 +1190,8 @@ class smp:
                         x_starold += [xval]
                         y_starold += [yval]
                     if doglobalstar:
+                        print 'doing globalstars'
+                        raw_input()
                         tras = []
                         tdecs = []
                         try:
@@ -1205,6 +1207,7 @@ class smp:
                             for xval,yval in zip(*coords):
                                 x_star += [xval]
                                 y_star += [yval]
+
 
                     else:
                         x_star = x_starold
