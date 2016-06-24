@@ -273,7 +273,7 @@ class smp:
         import astropy.io.fits as pyfits
         self.outfile = outfile
         print 'line 275'
-        if self.fermigrid: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
+        if fermigrid: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
         cspath = os.path.join(outfile,foldername+'/SNe/starfits/')
