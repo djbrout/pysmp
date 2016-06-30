@@ -3634,8 +3634,11 @@ class smp:
                 os.system('ifdh cp -D '+os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
                           + ' '+self.zptoutpath)
             else:
+                print imfile.split('.fits')
                 print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                plt.savefig('tmp.png')
+                os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
             #print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
@@ -3660,10 +3663,13 @@ class smp:
                     filt) + 'band_starfit_zptplot.png')
                           + ' ' + self.zptoutpath)
             else:
-                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                plt.savefig('tmp.png')
+                os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                 print os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
             #raw_input()
-
+            print 'saved properly'
+            raw_input()
             '''print 'mean python', np.mean(hh)
             print 'mean idl ',np.mean(istarmags-istarcats+30.6198)
             print 'std python', np.std(hh)
