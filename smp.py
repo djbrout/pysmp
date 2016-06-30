@@ -1195,7 +1195,7 @@ class smp:
                         y_starold += [yval]
                     if doglobalstar:
                         print 'doing globalstars'
-                        raw_input()
+                        #raw_input()
                         tras = []
                         tdecs = []
                         try:
