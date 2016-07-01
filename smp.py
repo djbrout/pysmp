@@ -4066,6 +4066,7 @@ if __name__ == "__main__":
             verbose = True
         elif o in ["-o","--outfile"]:
             outfile = a
+            out_dir = a
         elif o in ["-m","--mergeno"]:
             mergeno = int(a)
         elif o in ["--loadzpt"]:
@@ -4163,6 +4164,7 @@ if __name__ == "__main__":
         elif o in ["-v","--verbose"]:
             verbose = True
         elif o in ["-o","--outfile"]:
+            out_dir = a
             outfile = a
         elif o in ["-m","--mergeno"]:
             mergeno = int(a)
