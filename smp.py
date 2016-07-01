@@ -497,6 +497,8 @@ class smp:
             imfile = os.path.join(outdir,imfile)
             noisefile = os.path.join(outdir,noisefile)
             psffile = os.path.join(outdir,psffile)
+            print imfile
+            raw_input()
             if self.fermigrid & self.worker:
                 print 'line 497 copying image files to here'
                 print 'ifdh cp '+imfile+' .'
