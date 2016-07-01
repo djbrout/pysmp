@@ -495,10 +495,13 @@ class smp:
 
             if self.fermigrid & self.worker:
                 print 'line 497 copying image files to here'
+                print 'ifdh cp '+imfile+' .'
                 os.system('ifdh cp '+imfile+' .')
                 imfile = imfile.split('/')[-1]
+                print 'ifdh cp '+noisefile+' .'
                 os.system('ifdh cp '+noisefile+' .')
                 noisefile = noisefile.split('/')[-1]
+                print 'ifdh cp ' + psffile + ' .'
                 os.system('ifdh cp ' + psffile + ' .')
                 psffile = psffile.split('/')[-1]
                 sys.exit()
