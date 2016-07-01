@@ -484,7 +484,6 @@ class smp:
         print 'getting star global offsets'
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
-            sys.exit()
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
@@ -495,14 +494,14 @@ class smp:
             nozpt = copy(orig_nozpt)
 
             if self.fermigrid & self.worker:
-                print 'line 491'
+                print 'line 497 copying image files to here'
                 os.system('ifdh cp '+imfile+' .')
                 imfile = imfile.split('/')[-1]
                 os.system('ifdh cp '+noisefile+' .')
                 noisefile = noisefile.split('/')[-1]
                 os.system('ifdh cp ' + psffile + ' .')
                 psffile = psffile.split('/')[-1]
-
+            sys.exit()
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
                 self.field = imfile.split('/')[0].split('-')[1]
