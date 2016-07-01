@@ -3430,12 +3430,12 @@ class smp:
                     #         pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,returnStamps=True,stampsize=self.params.substamp)
                     # except ValueError:
                     #     raise ValueError('SN too close to edge of CCD!')
-                    if not self.psfcenter is None:
-                        psf, psfcenter = self.psf, self.psfcenter
-                    else:
-                        #print 'xyxyxyxy'
-                        psf, psfcenter = self.psf, (x,y)
-                        #print psfcenter
+                    #if not self.psfcenter is None:
+                    #    psf, psfcenter = self.psf, self.psfcenter
+                    #else:
+                    #print 'xyxyxyxy'
+                    psf, psfcenter = self.psf, (x,y)
+                    #print psfcenter
                 
                 counter += 1
                 mask = mask*0.
@@ -3446,7 +3446,7 @@ class smp:
                 #print 'initialized'
                 try:
                     errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                        pk.pkfit_norecent_noise_smp(1, x+1., y+1., s, se, params.fitrad, returnStamps=True,
+                        pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                     stampsize=params.substamp)
 
                     noise_stamp[noise_stamp > 0.] = 1
@@ -3513,6 +3513,7 @@ class smp:
                 dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'teststamp.fits')
                 dt.save_fits_image(image_stamp,'teststampim.fits')
                 dt.save_fits_image(sexsky-psf_stamp*scale,'teststamppsf.fits')
+                raw_input('saved teststamps')
 
                 #raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
