@@ -4362,8 +4362,7 @@ if __name__ == "__main__":
 
             print 'Index '+str(index)
             print 'SN File '+snfile
-            print 'stopping here because dont know what happens after'
-            sys.exit()
+            print 'not stopping here because dont know what happens after'
             if fermigrid & worker:
                 print 'ifdh 4366'
                 os.system('ifdh cp '+snfile+' .')
@@ -4428,6 +4427,7 @@ if __name__ == "__main__":
     if not mergeno:
         mergeno = 0
     print 'beginning smp'
+    sys.exit()
     scenemodel = smp(snparams,params,root_dir,psf_model)
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
                      ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
