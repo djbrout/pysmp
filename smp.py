@@ -497,8 +497,8 @@ class smp:
             imfile = os.path.join(outdir,imfile)
             noisefile = os.path.join(outdir,noisefile)
             psffile = os.path.join(outdir,psffile)
-            print imfile
-            raw_input()
+            #print imfile
+            #raw_input()
             if self.fermigrid & self.worker:
                 print 'line 497 copying image files to here'
                 print 'ifdh cp '+imfile+' .'
@@ -4441,7 +4441,7 @@ if __name__ == "__main__":
     #sys.exit()
     scenemodel = smp(snparams,params,root_dir,psf_model)
     print out_dir
-    raw_input()
+    #raw_input()
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
                      verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                      gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
