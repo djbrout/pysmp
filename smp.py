@@ -266,7 +266,6 @@ class smp:
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
         print 'done with tmpwriter line 267'
         foldername = SNfoldername
-        sys.exit()
         tstart = time.time()
         from txtobj import txtobj
         from astropy import wcs
@@ -482,10 +481,10 @@ class smp:
         #############################################################################################################################
         ################################################# GET STAR GLOBAL OFFSETS ###################################################
 
-
+        print 'getting star global offsets'
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
-
+            sys.exit()
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
