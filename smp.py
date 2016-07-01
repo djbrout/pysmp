@@ -4362,8 +4362,10 @@ if __name__ == "__main__":
 
             print 'Index '+str(index)
             print 'SN File '+snfile
+            print 'stopping here because dont know what happens after'
+            sys.exit()
             if fermigrid & worker:
-                print 'ifdh 4313'
+                print 'ifdh 4366'
                 os.system('ifdh cp '+snfile+' .')
                 snfile = osnfile
 
