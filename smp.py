@@ -500,18 +500,21 @@ class smp:
             #print imfile
             #raw_input()
             if self.fermigrid & self.worker:
-                print 'line 497 copying image files to here'
-                print 'ifdh cp '+imfile+' .'
-                #sys.exit()
-                os.system('ifdh cp '+imfile+' .')
-                imfile = imfile.split('/')[-1]
-                print 'ifdh cp '+noisefile+' .'
-                os.system('ifdh cp '+noisefile+' .')
-                noisefile = noisefile.split('/')[-1]
-                print 'ifdh cp ' + psffile + ' .'
-                os.system('ifdh cp ' + psffile + ' .')
-                psffile = psffile.split('/')[-1]
-                sys.exit()
+                if os.path.exists(imfile):
+                    print 'line 497 copying image files to here'
+                    print 'ifdh cp '+imfile+' .'
+                    #sys.exit()
+                    os.system('ifdh cp '+imfile+' .')
+                    imfile = imfile.split('/')[-1]
+                    print 'ifdh cp '+noisefile+' .'
+                    os.system('ifdh cp '+noisefile+' .')
+                    noisefile = noisefile.split('/')[-1]
+                    print 'ifdh cp ' + psffile + ' .'
+                    os.system('ifdh cp ' + psffile + ' .')
+                    psffile = psffile.split('/')[-1]
+                    sys.exit()
+                else:
+                    print 'file not found',imfile
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
                 self.field = imfile.split('/')[0].split('-')[1]
