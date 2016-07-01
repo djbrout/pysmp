@@ -243,7 +243,7 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
-             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None
+             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False
              ):
 
 
@@ -341,6 +341,7 @@ class smp:
         self.dosnradecfit = dosnradecfit
         self.rickfakestarfile = ''
         self.dosextractor = dosextractor
+        self.worker=worker
 
 
         self.useweights = useweights
@@ -3627,19 +3628,22 @@ class smp:
             plt.ylabel('counts')
             plt.xlim(-.25,.25)
             if self.fermigrid:
-                if not os.path.exists('./zpts/'):
-                    os.makedirs('./zpts/')
-                print os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-                plt.savefig(os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-                os.system('ifdh cp -D '+os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-                          + ' '+self.zptoutpath)
+                if self.worker:
+                    if not os.path.exists('./zpts/'):
+                        os.makedirs('./zpts/')
+                    print os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+                    plt.savefig(os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                    os.system('ifdh cp -D '+os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+                              + ' '+self.zptoutpath)
+                else:
+                    print imfile.split('.fits')
+                    print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
+                    plt.savefig('tmp.png')
+                    if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
+                        os.sytem('rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                    os.system('ifdh cp -D  tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
             else:
-                print imfile.split('.fits')
-                print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-                plt.savefig('tmp.png')
-                if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
-                    os.sytem('rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-                os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
                 #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
             #print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
@@ -3659,18 +3663,21 @@ class smp:
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
             if self.fermigrid:
-                print os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
-                plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                os.system('ifdh cp -D ' + os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot.png')
-                          + ' ' + self.zptoutpath)
+                if self.worker:
+                    print os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+                    plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                    os.system('ifdh cp -D ' + os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                        filt) + 'band_starfit_zptplot.png')
+                              + ' ' + self.zptoutpath)
+                else:
+                    plt.savefig('tmp.png')
+                    if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
+                        os.system('rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                    os.system('ifdh cp -D tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                    #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                    print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
             else:
-                plt.savefig('tmp.png')
-                if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
-                    os.system('rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-                os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
             #raw_input()
             #print 'saved properly'
             #raw_input()
@@ -3964,7 +3971,7 @@ if __name__ == "__main__":
                       "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar=","fermigriddir="])
+                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker"])
 
 
         #print opt
@@ -3992,7 +3999,7 @@ if __name__ == "__main__":
                       "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar=","fermigriddir="])
+                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker"])
 
 
         #print opt
@@ -4028,6 +4035,7 @@ if __name__ == "__main__":
     isEmbarrasinglyParallel = False
     parallelvar = None
     fermigriddir = None
+    worker = False
 
     dobigstarcat = True
 
@@ -4126,6 +4134,8 @@ if __name__ == "__main__":
         elif o == "--embarrasinglyParallelEnvVar":
             isEmbarrasinglyParallel = True
             parallelvar= a
+        elif o == "--worker":
+            worker = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4222,6 +4232,8 @@ if __name__ == "__main__":
         elif o == "--embarrasinglyParallelEnvVar":
             isEmbarrasinglyParallel = True
             parallelvar= a
+        elif o == "--worker":
+            worker = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4330,7 +4342,7 @@ if __name__ == "__main__":
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                                 fermigriddir=fermigriddir)
+                                 fermigriddir=fermigriddir,worker=worker)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4423,7 +4435,7 @@ if __name__ == "__main__":
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     fermigriddir=fermigriddir)
+                     fermigriddir=fermigriddir,worker=worker)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
