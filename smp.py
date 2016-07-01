@@ -501,7 +501,7 @@ class smp:
                 noisefile = noisefile.split('/')[-1]
                 os.system('ifdh cp ' + psffile + ' .')
                 psffile = psffile.split('/')[-1]
-            sys.exit()
+                sys.exit()
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
                 self.field = imfile.split('/')[0].split('-')[1]
