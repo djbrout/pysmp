@@ -500,6 +500,7 @@ class smp:
             if self.fermigrid & self.worker:
                 print 'line 497 copying image files to here'
                 print 'ifdh cp '+imfile+' .'
+                sys.exit()
                 os.system('ifdh cp '+imfile+' .')
                 imfile = imfile.split('/')[-1]
                 print 'ifdh cp '+noisefile+' .'
