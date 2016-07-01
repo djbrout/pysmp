@@ -247,7 +247,7 @@ class smp:
              ):
 
 
-        if fermigrid:
+        if fermigrid & worker:
             if not os.path.exists(os.path.join(outfile,SNfoldername)):
                 print 'ifdh mkdir ',os.path.join(outfile,SNfoldername)
 
@@ -273,7 +273,7 @@ class smp:
         import astropy.io.fits as pyfits
         self.outfile = outfile
         print 'line 275'
-        if fermigrid: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
+        if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
         cspath = os.path.join(outfile,foldername+'/SNe/starfits/')
@@ -495,7 +495,7 @@ class smp:
             skysig=np.nan
             nozpt = copy(orig_nozpt)
 
-            if self.fermigrid:
+            if self.fermigrid & self.worker:
                 print 'line 491'
                 os.system('ifdh cp '+imfile+' .')
                 imfile = imfile.split('/')[-1]
@@ -788,7 +788,7 @@ class smp:
             skysig=np.nan
             nozpt = copy(orig_nozpt)
 
-            if self.fermigrid:
+            if self.fermigrid & self.worker:
                 imfile = imfile.split('/')[-1]
                 noisefile = noisefile.split('/')[-1]
                 psffile = psffile.split('/')[-1]
@@ -4241,7 +4241,7 @@ if __name__ == "__main__":
         index = os.environ[parallelvar]
 
     if not os.path.exists(zptoutpath):
-        if fermigrid:
+        if fermigrid & worker:
             if zptoutpath.split('/')[1] != 'pnfs':
                 raise ValueError('--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
             os.system( 'ifdh mkdir '+zptoutpath)
@@ -4362,7 +4362,7 @@ if __name__ == "__main__":
 
             print 'Index '+str(index)
             print 'SN File '+snfile
-            if fermigrid:
+            if fermigrid & worker:
                 print 'ifdh 4313'
                 os.system('ifdh cp '+snfile+' .')
                 snfile = osnfile
