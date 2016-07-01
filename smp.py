@@ -234,7 +234,7 @@ class smp:
 
         
 
-    def main(self,nodiff=False,nozpt=False,
+    def main(self,nodiff=False,nozpt=False,rootdir='',outdir='',
              nomask=False,outfile='',debug=False,
              verbose=False, clear_zpt=False,clear_checkstars=True,mergeno=0,
              mpfit_or_mcmc='mpfit',usefake=False,
@@ -248,10 +248,10 @@ class smp:
 
 
         if fermigrid & worker:
-            if not os.path.exists(os.path.join(outfile,SNfoldername)):
-                print 'ifdh mkdir ',os.path.join(outfile,SNfoldername)
+            if not os.path.exists(os.path.join(outdir,SNfoldername)):
+                print 'ifdh mkdir ',os.path.join(outdir,SNfoldername)
 
-                os.system('ifdh mkdir '+os.path.join(outfile,SNfoldername))
+                os.system('ifdh mkdir '+os.path.join(outdir,SNfoldername))
 
         #print filt
         print self.snparams.photflag
@@ -275,10 +275,11 @@ class smp:
         if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
-        cspath = os.path.join(outfile,foldername+'/SNe/starfits/')
+            outdir = ''
+        cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
         if not os.path.exists(cspath):
             os.makedirs(cspath)
-        self.checkstarfile = os.path.join(outfile,foldername+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
+        self.checkstarfile = os.path.join(outdir,foldername+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
                                           +'_'+filt+'_standardstarfits.txt')
         #print self.checkstarfile
         #print 'checkstarfile'
@@ -465,10 +466,10 @@ class smp:
         cols = None
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        outdir = os.path.join(outfile,stardeltasfolder+'/stardata/'+filt+'/')
-        if not os.path.exists(outdir):
-            os.makedirs(outdir)
-        star_offset_file = os.path.join(outdir,filename+'band_starGlobalOffsets.npz')
+        staroutdir = os.path.join(outdir,stardeltasfolder+'/stardata/'+filt+'/')
+        if not os.path.exists(staroutdir):
+            os.makedirs(staroutdir)
+        star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
 
         if not nozpt:
             try:
@@ -493,9 +494,9 @@ class smp:
             skysig=np.nan
             nozpt = copy(orig_nozpt)
 
-            imfile = os.path.join(outfile,imfile)
-            noisefile = os.path.join(outfile,noisefile)
-            psffile = os.path.join(outfile,psffile)
+            imfile = os.path.join(outdir,imfile)
+            noisefile = os.path.join(outdir,noisefile)
+            psffile = os.path.join(outdir,psffile)
             if self.fermigrid & self.worker:
                 print 'line 497 copying image files to here'
                 print 'ifdh cp '+imfile+' .'
@@ -1704,8 +1705,8 @@ class smp:
 
         pkyerr = -2.5*np.log10(smp_dict['mcmc_scale']) + 2.5*np.log10(smp_dict['mcmc_scale'] + smp_dict['mcmc_scale_err'])
 
-        outfolder = os.path.join(outfile,foldername)
-        out = os.path.join(outfile,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
+        outfolder = os.path.join(outdir,foldername)
+        out = os.path.join(outdir,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
         outimages = os.path.join(out,'image_stamps/')
 
         if not os.path.exists(out):
@@ -1749,8 +1750,8 @@ class smp:
         self.scaled_diffim_fluxerr = scaled_diffim_fluxerr
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        outdir = os.path.join(outfile,foldername+'/np_data/'+filt+'/')
-        galaxyoutdir = os.path.join(outfile,galaxyfoldername+'/np_data/'+filt+'/')
+        outdir = os.path.join(outdir,foldername+'/np_data/'+filt+'/')
+        galaxyoutdir = os.path.join(outdir,galaxyfoldername+'/np_data/'+filt+'/')
         if not os.path.exists(outdir):
             os.makedirs(outdir)
 
@@ -1758,7 +1759,7 @@ class smp:
         print os.path.join(outdir,filename+'_mcmc_input.npz')
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        lightcurves = os.path.join(outfile,foldername+'/lightcurves/'+filt+'/')  
+        lightcurves = os.path.join(outdir,foldername+'/lightcurves/'+filt+'/')
         if not os.path.exists(lightcurves):
             os.makedirs(lightcurves)  
 
@@ -1807,7 +1808,7 @@ class smp:
         tstart = time.time()
 
         nm = self.checkstarfile.split('.')[0].split('/')[-1] + '_deltaradec.npz'
-        fname = os.path.join(outfile, foldername, 'np_data', filt, nm)
+        fname = os.path.join(outdir, foldername, 'np_data', filt, nm)
         self.deltastarsfile = fname
         
         # if nozpt:
@@ -2183,7 +2184,7 @@ class smp:
                 galmodel_params = chains['galmodel_params']
                 galmodel_uncertainty = chains['galmodel_uncertainty']
             if not pixstart == None:
-                usedir = os.path.join(outfile,pixstart+'/np_data/'+filt+'/')
+                usedir = os.path.join(outdir,pixstart+'/np_data/'+filt+'/')
                 chains = np.load(os.path.join(usedir,filename+'_nosn.npz'))
                 modelvec = chains['modelvec']
                 modelstd = scaled_diffim_fluxerr/5.
@@ -2751,7 +2752,7 @@ class smp:
         
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
-        lightcurves = os.path.join(outfile,foldername+'/lightcurves/'+filt+'/') 
+        lightcurves = os.path.join(outdir,foldername+'/lightcurves/'+filt+'/')
         self.savefig(lightcurves+filename+'_chisqlike.pdf')
         
         #print lightcurves+filename+'_chisqlike.pdf'
@@ -4339,7 +4340,7 @@ if __name__ == "__main__":
                     mergeno = 0
                 try:
                     scenemodel = smp(snparams,params,root_dir,psf_model)
-                    scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
+                    scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir
                                  ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                                  gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
@@ -4434,8 +4435,8 @@ if __name__ == "__main__":
     print 'beginning smp'
     #sys.exit()
     scenemodel = smp(snparams,params,root_dir,psf_model)
-    scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
-                     ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
+    scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
+                     verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                      gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
