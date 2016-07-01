@@ -266,7 +266,7 @@ class smp:
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
         print 'done with tmpwriter line 267'
         foldername = SNfoldername
-
+        sys.exit()
         tstart = time.time()
         from txtobj import txtobj
         from astropy import wcs
@@ -4427,7 +4427,7 @@ if __name__ == "__main__":
     if not mergeno:
         mergeno = 0
     print 'beginning smp'
-    sys.exit()
+    #sys.exit()
     scenemodel = smp(snparams,params,root_dir,psf_model)
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile
                      ,verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
