@@ -1424,7 +1424,7 @@ class smp:
                 print badflag
                 print 'diffim zpt','smp zpt'
                 print snparams.zp[j],zpt
-                raw_input()
+                #raw_input()
                 badflags.append(badflag)
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
