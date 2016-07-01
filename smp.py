@@ -3672,7 +3672,7 @@ class smp:
                 else:
                     plt.savefig('tmp.png')
                     if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
-                        os.system('yes | rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
+                        os.system('yes | rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                     os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                     #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                     print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
