@@ -1453,7 +1453,7 @@ class smp:
                                     else:
                                         print 'skysn',skysn
                                         print 'mysky',mysky
-                                        raw_input()
+                                        #raw_input()
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skyerrsn
 
@@ -1502,7 +1502,7 @@ class smp:
                                         smp_dict['notbrightflag'][i] = 1
 
                                     print 'zpts',snparams.zp[j], zpt
-                                    raw_input()
+                                    #raw_input()
 
                                     #START HERE TOMORROW
 
