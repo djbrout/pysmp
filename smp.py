@@ -494,9 +494,9 @@ class smp:
             skysig=np.nan
             nozpt = copy(orig_nozpt)
 
-            imfile = os.path.join(outdir,imfile)
-            noisefile = os.path.join(outdir,noisefile)
-            psffile = os.path.join(outdir,psffile)
+            imfile = os.path.join(rootdir,imfile)
+            noisefile = os.path.join(rootdir,noisefile)
+            psffile = os.path.join(rootdir,psffile)
             #print imfile
             #raw_input()
             if self.fermigrid & self.worker:
