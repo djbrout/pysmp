@@ -503,12 +503,12 @@ class smp:
                 print 'line 497 copying image files to here'
                 print 'ifdh cp '+imfile+' .'
                 ifdhls = os.popen('ifdh ls '+imfile).read()
-                print 'ifdhls',ifdhls
+                #print 'ifdhls',ifdhls
                 file_exists = os.popen('echo $?').read()
-                print 'file_exists',file_exists
-                if file_exists == 0:
+                print 'file_exists',float(file_exists)
+                if float(file_exists) == 0:
                     print 'file does exist'
-                    #sys.exit()
+                    sys.exit()
                     os.system('ifdh cp '+imfile+' .')
                     imfile = imfile.split('/')[-1]
                     print 'ifdh cp '+noisefile+' .'
