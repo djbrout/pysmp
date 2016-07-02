@@ -517,7 +517,7 @@ class smp:
                     print 'ifdh cp ' + psffile + ' .'
                     os.system('ifdh cp ' + psffile + ' .')
                     psffile = psffile.split('/')[-1]
-                    sys.exit()
+                    #sys.exit()
                 else:
                     print 'file not found',imfile
             try:
