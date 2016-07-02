@@ -508,7 +508,7 @@ class smp:
                 print 'file_exists',float(file_exists)
                 if float(file_exists) == 0:
                     print 'file does exist'
-                    sys.exit()
+                    #sys.exit()
                     os.system('ifdh cp '+imfile+' .')
                     imfile = imfile.split('/')[-1]
                     print 'ifdh cp '+noisefile+' .'
