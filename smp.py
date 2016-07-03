@@ -3530,8 +3530,8 @@ class smp:
                 #plt.savefig('teststamp.png')
                 #raw_input('saved teststamp.png')
                 dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
-                #dt.save_fits_image(image_stamp,'teststampim.fits')
-                #dt.save_fits_image(sexsky-psf_stamp*scale,'teststamppsf.fits')
+                dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
+                dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
         raw_input('saved teststamps')
 
                 #raw_input('saved teststamp.fits')
