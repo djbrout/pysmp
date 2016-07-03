@@ -495,7 +495,11 @@ class smp:
             nozpt = copy(orig_nozpt)
 
             imfile = os.path.join(rootdir,imfile)
-            noisefile = os.path.join(rootdir,noisefile)
+            try:
+                noisefile = os.path.join(rootdir,noisefile)
+            except:
+                noisefile = [os.path.join(rootdir,noisefile[0]),os.path.join(rootdir,noisefile[1])]
+
             psffile = os.path.join(rootdir,psffile)
             #print imfile
             #raw_input()
