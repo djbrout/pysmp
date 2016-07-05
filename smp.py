@@ -3511,7 +3511,7 @@ class smp:
 
 
                     #print 'checking!!!', cscale, oldcscale
-                    # print 'DIFFFFFF',scale,cscale
+                    print 'DIFFFFFF',scale,cscale
                     #scale = cscale
                     print psfcenter,scale
                     #print 'scaled'
