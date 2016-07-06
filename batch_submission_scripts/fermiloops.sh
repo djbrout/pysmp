@@ -6,7 +6,7 @@ setup jobsub_client
 
 num_jobs=1
 
-jobsub_submit -G des --resource-provides=usage_model=DEDICATED -M\
+jobsub_submit -G des --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC -M\
      --verbose --OS=SL6 file:///data/des41.a/data/djbrout/pysmp/batch_submission_scripts/runfermirun.csh $i g\
       --log_file=/data/des41.a/data/djbrout/pysmp/logs/log_$i.log\
       --generate-email-summary -N $num_jobs
