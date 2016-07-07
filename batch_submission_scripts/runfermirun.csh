@@ -12,6 +12,10 @@ setup autoscan v3.1+0
 setup easyaccess
 setup extralibs 1.0
 
+source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
+kx509
+voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=DESGW
+
 echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 source /grid/fermiapp/products/common/etc/setups.sh
 setup mu2e
