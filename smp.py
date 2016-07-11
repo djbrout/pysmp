@@ -3461,7 +3461,7 @@ class smp:
                 counter += 1
                 mask = mask*0.
 
-                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,pdf_pages=pdf_pages)
+                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pages)
                 pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                 #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
