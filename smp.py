@@ -40,7 +40,8 @@ import cntrd,aper,getpsf,rdpsf
 import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
-
+from matplotlib.backends.backend_pdf import PdfPages
+import chkpsf
 
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
@@ -1297,7 +1298,7 @@ class smp:
 
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
-                    zpt,zpterr,zpt_file = self.getzpt(x_starold,y_starold,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflag,mag_star,im,weights,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)    
                 else:
@@ -3425,6 +3426,7 @@ class smp:
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
+        pdf_pages = PdfPages('daophot_resid.pdf')
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #print 'xstar',xstar
             #raw_input()
@@ -3458,6 +3460,8 @@ class smp:
                 
                 counter += 1
                 mask = mask*0.
+
+                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,pdf_pages=pdf_pages)
                 pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                 #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
@@ -3532,7 +3536,8 @@ class smp:
                 dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
                 dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
                 dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
-        raw_input('saved teststamps')
+        pdf_pages.close()
+        raw_input('saved teststamps daophot_resid.pdf')
 
                 #raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
