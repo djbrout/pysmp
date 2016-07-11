@@ -3435,7 +3435,7 @@ class smp:
         pdf_pages = PdfPages('daophot_resid.pdf')
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             cntr += 1
-            if cntr > 10:
+            if cntr > 50:
                 continue
             #print 'xstar',xstar
             #raw_input()
