@@ -1298,7 +1298,7 @@ class smp:
 
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
-                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file = self.getzpt(x_starold,y_starold,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflag,mag_star,im,weights,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)    
                 else:
