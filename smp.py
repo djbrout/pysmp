@@ -3433,8 +3433,12 @@ class smp:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
         pdf_pages = PdfPages('daophot_resid.pdf')
+        print imfile
+        print xstar,ystar
+        sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             cntr += 1
+
             if cntr > 50:
                 continue
             #print 'xstar',xstar
