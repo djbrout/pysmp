@@ -3422,6 +3422,7 @@ class smp:
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
         radius = 10.
+        cntr = 0
         fitrad = np.zeros([substamp,substamp])
         for x in np.arange(substamp):   
             for y in np.arange(substamp):
@@ -3433,6 +3434,9 @@ class smp:
             full_data_image = galsim.fits.read(imfile)
         pdf_pages = PdfPages('daophot_resid.pdf')
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
+            cntr += 1
+            if cntr > 10:
+                continue
             #print 'xstar',xstar
             #raw_input()
             #y -= 2.
