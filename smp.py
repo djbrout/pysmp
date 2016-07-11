@@ -18,6 +18,7 @@ import sys
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 import scipy.ndimage
+from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib as m
 import mcmc as mcmc3
 import mcmc3galsimpixshift as mcmc3galsimpixshift
@@ -40,7 +41,6 @@ import cntrd,aper,getpsf,rdpsf
 import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
-from matplotlib.backends.backend_pdf import PdfPages
 import chkpsf
 
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
