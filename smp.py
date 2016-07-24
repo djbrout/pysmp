@@ -108,6 +108,7 @@ class get_snfile:
     def __init__(self,snfile, rootdir, useweights):
         varnames = ''
         fin = open(snfile,'r')
+        survey = ''
         for line in fin:
             line = line.replace('\n','')
             if not line.startswith('#') and line.replace(' ',''):
@@ -115,6 +116,8 @@ class get_snfile:
                         not line.replace(' ','').startswith('VARNAMES:'):
                     key,val = line.split('#')[0].split(':')
                     key = key.replace(' ','')
+                    if key.upper() == 'SURVEY':
+                        survey = val
                     if key.upper() == 'HOSTGAL_SB_FLUXCAL':
                         val = val.split()
                         self.__dict__[key.lower()] = val
@@ -140,6 +143,9 @@ class get_snfile:
                         if filt.lower() == catfilter.lower():
                             # print val
                             self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir, val.split()[1])}
+                    elif key.lower() == 'starcat' and 'PS1' in survey:
+                        print 'ps1'
+                        self.__dict__["starcat"] = {filt.lower(): val.strip()}
                     else:
                         #print 'here2',key.lower()
                         try:
