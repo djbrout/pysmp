@@ -3440,8 +3440,11 @@ class smp:
             full_data_image = galsim.fits.read(imfile)
         pdf_pages = PdfPages('daophot_resid.pdf')
         print imfile
-        for ra,dec in zip(ras,decs):
-            print ra,dec
+        print thismjd
+        raw_input()
+        for ra,dec,x,y in zip(ras,decs,xstar,ystar):
+            print ra,dec,x,y
+        raw_input()
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             cntr += 1
