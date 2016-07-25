@@ -3449,9 +3449,8 @@ class smp:
         #raw_input()
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
-            #cntr += 1
-
-            if cntr > 50:
+            cntr += 1
+            if cntr > 100:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -3485,7 +3484,7 @@ class smp:
                 
                 counter += 1
                 mask = mask*0.
-
+                print 'ra,dec,x,y',ra,dec,x,y
                 chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc)
                 pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
@@ -3496,7 +3495,8 @@ class smp:
                     errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                         pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                     stampsize=params.substamp)
-
+                    print 'scale',scale
+                    raw_input()
                     noise_stamp[noise_stamp > 0.] = 1
                     noise_stamp[noise_stamp <= 0.] = 0
                     if self.dosextractor:
@@ -3567,6 +3567,7 @@ class smp:
                 #dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
                 #dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
         pdf_pages.close()
+        pdf_pagesc.close()
         raw_input('saved teststamps daophot_resid.pdf')
 
                 #raw_input('saved teststamp.fits')
