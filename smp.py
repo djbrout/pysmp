@@ -3485,7 +3485,7 @@ class smp:
                 counter += 1
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
-                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc)
+                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc,title=str(ra)+' '+str(dec))
                 pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                 #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
@@ -3496,7 +3496,7 @@ class smp:
                         pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                     stampsize=params.substamp)
                     print 'scale',scale
-                    raw_input()
+                    #raw_input()
                     noise_stamp[noise_stamp > 0.] = 1
                     noise_stamp[noise_stamp <= 0.] = 0
                     if self.dosextractor:
