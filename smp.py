@@ -1221,6 +1221,7 @@ class smp:
                     for xval,yval in zip(*coords):
                         x_starold += [xval]
                         y_starold += [yval]
+                    doglobalstar = False
                     if doglobalstar:
                         print 'doing globalstars'
                         #raw_input()
@@ -1304,7 +1305,7 @@ class smp:
 
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
-                    zpt,zpterr,zpt_file = self.getzpt(x_star,y_star,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflag,mag_star,im,weights,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
