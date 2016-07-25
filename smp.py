@@ -3428,7 +3428,7 @@ class smp:
         #mcmc_mag_std = np.array([-999.]*len(xstar))
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
-        radius = 10.
+        radius = 4.
         cntr = 0
         fitrad = np.zeros([substamp,substamp])
         for x in np.arange(substamp):   
@@ -3554,8 +3554,8 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                pdf_pages.savefig()
+                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
                 dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
