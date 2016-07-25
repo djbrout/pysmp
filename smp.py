@@ -3563,9 +3563,11 @@ class smp:
                 #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 #scale = scale*.93
-                #dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
-                #dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
-                #dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
+                dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
+                dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
+                dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
+                dt.save_fits_image(psf_stamp,'test/psf'+str(i)+'.fits')
+
         pdf_pages.close()
         pdf_pagesc.close()
         raw_input('saved teststamps daophot_resid.pdf')
