@@ -3442,7 +3442,7 @@ class smp:
         print imfile
         for ra,dec in zip(ras,decs):
             print ra,dec
-        sys.exit()
+        #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             cntr += 1
 
@@ -3550,8 +3550,8 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                #plt.savefig('teststamp.png')
+                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
                 dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
