@@ -3550,8 +3550,8 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                plt.imshow(image_stamp-sexsky-psf_stamp*scale)
-                pdf_pages.savefig()
+                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
                 dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
