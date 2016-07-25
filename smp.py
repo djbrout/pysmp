@@ -3440,12 +3440,13 @@ class smp:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
         pdf_pages = PdfPages('daophot_resid.pdf')
+        pdf_pagesc = PdfPages('daophot_residc.pdf')
         print imfile
         print thismjd
-        raw_input()
+        #raw_input()
         for ra,dec,x,y in zip(ras,decs,xstar,ystar):
             print ra,dec,x,y
-        raw_input()
+        #raw_input()
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             cntr += 1
@@ -3485,7 +3486,7 @@ class smp:
                 counter += 1
                 mask = mask*0.
 
-                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pages)
+                chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc)
                 pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                 #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
@@ -3554,13 +3555,17 @@ class smp:
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                #plt.imshow(image_stamp-sexsky-psf_stamp*scale)
+                fig = plt.figure()
+                plt.clf()
+                image_stamp[abs(image_stamp) < .1] = sexsky
+                plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
+                pdf_pages.savefig(fig)
                 #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
-                scale = scale*.93
-                dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
-                dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
-                dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
+                #scale = scale*.93
+                #dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
+                #dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
+                #dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
         pdf_pages.close()
         raw_input('saved teststamps daophot_resid.pdf')
 
