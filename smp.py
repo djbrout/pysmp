@@ -3685,7 +3685,7 @@ class smp:
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
             hh = hh[abs(hh < .25)]
             print 'plotting zeropoints'
-            plt.clf()
+            #plt.clf()
             # plt.hist(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,bins=np.arange(-.25,.25,.04),label='mean: '+str(np.mean(hh))+' std: '+str(np.std(hh)))
             # plt.xlabel('cat mag + 2.5log10(flux) - zeropoint')
             # plt.ylabel('counts')
@@ -3714,7 +3714,7 @@ class smp:
             # #r.write(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png\n')
             # #r.close()
 
-            plt.clf()
+            #plt.clf()
             print 'scatter'
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
             print 'plot'
