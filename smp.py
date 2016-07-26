@@ -19,11 +19,11 @@ sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 import scipy.ndimage
 from matplotlib.backends.backend_pdf import PdfPages
-import matplotlib as m
+#import matplotlib as m
 import mcmc as mcmc3
 import mcmc3galsimpixshift as mcmc3galsimpixshift
-m.use('Agg')
-import matplotlib.pyplot as plt
+#m.use('Agg')
+#import matplotlib.pyplot as plt
 import pyfits as pf
 import scipy.signal
 from copy import copy
