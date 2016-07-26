@@ -622,7 +622,7 @@ class smp:
 
             if params.weight_type.lower() == 'ivar':
                 print 'ivar'
-                raw_input()
+                #raw_input()
                 noise = np.sqrt(1/noise)
             elif params.weight_type.lower() != 'noise':
                 raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
@@ -920,7 +920,7 @@ class smp:
 
             if params.weight_type.lower() == 'ivar':
                 print 'ivar'
-                raw_input()
+                #raw_input()
                 noise = np.sqrt(1/noise)
             elif params.weight_type.lower() != 'noise':
                 raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
@@ -3443,6 +3443,7 @@ class smp:
         pdf_pagesc = PdfPages('daophot_residc.pdf')
         print imfile
         print thismjd
+        print 'mjdabove'
         #raw_input()
         for ra,dec,x,y in zip(ras,decs,xstar,ystar):
             print ra,dec,x,y
