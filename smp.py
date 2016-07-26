@@ -3715,8 +3715,9 @@ class smp:
             # #r.close()
 
             plt.clf()
-
+            print 'scatter'
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
+            print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.xlabel('cat mag')
             plt.ylabel('-2.5log10(flux)')
@@ -3726,6 +3727,7 @@ class smp:
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
             if self.fermigrid:
+                print 'insidefermigrid'
                 if self.worker:
                     print os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
                     plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
