@@ -3686,9 +3686,7 @@ class smp:
             hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
             hh = hh[abs(hh < .25)]
             print 'plotting zeropoints'
-            # import matplotlib as m
-            # m.use('Agg')
-            # import matplotlib.pyplot as plt
+            #
             #plt.clf()
             # plt.hist(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,bins=np.arange(-.25,.25,.04),label='mean: '+str(np.mean(hh))+' std: '+str(np.std(hh)))
             # plt.xlabel('cat mag + 2.5log10(flux) - zeropoint')
@@ -3749,6 +3747,18 @@ class smp:
             else:
                 plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                 print 'saved',os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+            plt.clf()
+            plt.scatter(ra[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+            plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                filt) + 'band_starfit_zptplot_ra.png'))
+            print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                filt) + 'band_starfit_zptplot_ra.png')
+            plt.clf()
+            plt.scatter(dec[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+            plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                filt) + 'band_starfit_zptplot_dec.png'))
+            print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                filt) + 'band_starfit_zptplot_dec.png')
             #raw_input()
             #print 'saved properly'
             #raw_input()
