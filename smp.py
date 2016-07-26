@@ -3485,93 +3485,95 @@ class smp:
                 counter += 1
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
-                scaleck = chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc,title=str(ra)+' '+str(dec)+' '+str(i))
-                pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
+                if self.snparams.survey == 'PS1':
+                    scale,cscale_std,chisq,dms = chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc,title=str(ra)+' '+str(dec)+' '+str(i))
+                else:
+                    pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
-                #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
-                #Run for MPFIT
-                #print 'initialized'
-                try:
-                    errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                        pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
-                                                    stampsize=params.substamp)
-                    print 'scale CHECKEEEEEE', scale, scaleck
+                    #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
+                    #Run for MPFIT
+                    #print 'initialized'
+                    try:
+                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
+                            pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                                                        stampsize=params.substamp)
+                        print 'scale CHECKEEEEEE', scale, scaleck
 
-                    raw_input()
-                    noise_stamp[noise_stamp > 0.] = 1
-                    noise_stamp[noise_stamp <= 0.] = 0
-                    if self.dosextractor:
-                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
-                    else:
-                        sexsky, sexrms = s,se
-                    # noise_stamp = noise_stamp*1/(se**2)
-                    noise_stamp = noise_stamp * 1 / (sexrms ** 2)
-                    gal = np.zeros(image_stamp.shape)
-                    mjd = 000.
-                    #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
-                    #                                                    mjd, scale)
-                    if self.dogalsimpixfit:
-                        fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
-                        stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
-                        cx = int(round(stamp_center.x))
-                        cy = int(round(stamp_center.y))
-                        des_psfex = galsim.des.DES_PSFEx(psffile)
-                        thispsf = des_psfex.getPSF(stamp_center)
-                        tim = full_data_image[galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
-                                                             cy - params.substamp/2, cy + params.substamp/2-1)]
-                        galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
-                        simstamp = full_data_image[ galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
-                                                                   cy - params.substamp/2, cy + params.substamp/2-1)] * 0.0
-                        offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
-                        sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
-                        sn = sn.shift(offset)
-                        conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
-                        conv.drawImage(image=simstamp,method='no_pixel')
-                        gpsf = simstamp.array
-                        gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
-                                                                           radius, gal, mjd, scale)
-                        gsflux[i] =gscale
-                        gsflux_std[i] = gscale_std
-                        gsflux_chisq[i]  = gchisq
-                        gsflux_dms[i] = gdms
-                        #print 'gchisq',gchisq
                         #raw_input()
-                    cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, radius,
-                                                                     gal, mjd, scale)
+                        noise_stamp[noise_stamp > 0.] = 1
+                        noise_stamp[noise_stamp <= 0.] = 0
+                        if self.dosextractor:
+                            sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
+                        else:
+                            sexsky, sexrms = s,se
+                        # noise_stamp = noise_stamp*1/(se**2)
+                        noise_stamp = noise_stamp * 1 / (sexrms ** 2)
+                        gal = np.zeros(image_stamp.shape)
+                        mjd = 000.
+                        #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
+                        #                                                    mjd, scale)
+                        if self.dogalsimpixfit:
+                            fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
+                            stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
+                            cx = int(round(stamp_center.x))
+                            cy = int(round(stamp_center.y))
+                            des_psfex = galsim.des.DES_PSFEx(psffile)
+                            thispsf = des_psfex.getPSF(stamp_center)
+                            tim = full_data_image[galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
+                                                                 cy - params.substamp/2, cy + params.substamp/2-1)]
+                            galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
+                            simstamp = full_data_image[ galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
+                                                                       cy - params.substamp/2, cy + params.substamp/2-1)] * 0.0
+                            offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
+                            sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
+                            sn = sn.shift(offset)
+                            conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
+                            conv.drawImage(image=simstamp,method='no_pixel')
+                            gpsf = simstamp.array
+                            gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
+                                                                               radius, gal, mjd, scale)
+                            gsflux[i] =gscale
+                            gsflux_std[i] = gscale_std
+                            gsflux_chisq[i]  = gchisq
+                            gsflux_dms[i] = gdms
+                            #print 'gchisq',gchisq
+                            #raw_input()
+                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, radius,
+                                                                         gal, mjd, scale)
 
 
-                    #print 'checking!!!', cscale, oldcscale
-                    print 'DIFFFFFF',scale,cscale
-                    #scale = cscale
-                    print psfcenter,scale
-                    #print 'scaled'
-                    #print 'chisq',gchisq,chisq
-                    #print 'flux',gscale,cscale
-                    #raw_input()
-                except ValueError:
-                    print 'skipped star...\n'
-                    continue
+                        #print 'checking!!!', cscale, oldcscale
+                        print 'DIFFFFFF',scale,cscale
+                        #scale = cscale
+                        print psfcenter,scale
+                        #print 'scaled'
+                        #print 'chisq',gchisq,chisq
+                        #print 'flux',gscale,cscale
+                        #raw_input()
+                    except ValueError:
+                        print 'skipped star...\n'
+                        continue
 
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = cscale_std
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
-                fig = plt.figure()
-                plt.clf()
-                image_stamp[abs(image_stamp) < .1] = sexsky
-                plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
-                pdf_pages.savefig(fig)
+                # fig = plt.figure()
+                # plt.clf()
+                # image_stamp[abs(image_stamp) < .1] = sexsky
+                # plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
+                # pdf_pages.savefig(fig)
                 #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 #scale = scale*.93
-                dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
-                dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
-                dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
-                dt.save_fits_image(psf_stamp,'test/psf'+str(i)+'.fits')
+                # dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
+                # dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
+                # dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
+                # dt.save_fits_image(psf_stamp,'test/psf'+str(i)+'.fits')
 
-        pdf_pages.close()
-        pdf_pagesc.close()
-        raw_input('saved teststamps daophot_resid.pdf')
+        #pdf_pages.close()
+        #pdf_pagesc.close()
+        #raw_input('saved teststamps daophot_resid.pdf')
 
                 #raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
