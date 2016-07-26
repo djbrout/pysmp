@@ -3716,6 +3716,7 @@ class smp:
 
             #plt.clf()
             print 'scatter'
+            print len(mag_cat[goodstarcols])
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
             print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
