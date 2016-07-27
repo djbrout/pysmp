@@ -3770,7 +3770,8 @@ class smp:
                 fff.write('circle '+str(x)+' '+str(y)+' 3\n')
             fff.close()
             print 'wrote badguys.reg'
-            #raw_input()
+            print imfile
+            raw_input()
             #print 'saved properly'
             #raw_input()
             '''print 'mean python', np.mean(hh)
