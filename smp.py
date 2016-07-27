@@ -3761,6 +3761,15 @@ class smp:
                 filt) + 'band_starfit_zptplot_dec.png'))
             print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                 filt) + 'band_starfit_zptplot_dec.png')
+
+            rrr = -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md
+            badguys = abs(rrr) > .35
+
+            fff = open('badguys.reg','w')
+            for x,y in zip(xstar[goodstarcols][badguys],ystar[goodstarcols][badguys]):
+                fff.write('circle '+str(x)+' '+str(y)+' 3\n')
+            fff.close()
+            print 'wrote badguys.reg'
             #raw_input()
             #print 'saved properly'
             #raw_input()
