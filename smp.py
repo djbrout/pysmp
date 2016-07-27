@@ -3490,7 +3490,9 @@ class smp:
                 if self.snparams.survey == 'PS1':
                     scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc,title=str(ra)+' '+str(dec)+' '+str(i))
                     if not good:
-                        badflag[i] == 1
+                        badflag[i] = 1
+                        mag_cat[i] = 99
+                        print 'badflaggg'*10
                 else:
                     pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
