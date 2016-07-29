@@ -3777,7 +3777,7 @@ class smp:
             fff.close()
             print 'wrote badguys.reg'
             print imfile
-            raw_input()
+            #raw_input()
             #print 'saved properly'
             #raw_input()
             '''print 'mean python', np.mean(hh)
