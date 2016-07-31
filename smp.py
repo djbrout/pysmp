@@ -816,6 +816,7 @@ class smp:
             #print imfile
             #raw_input()
             skysig=np.nan
+            badflag = 0
             nozpt = copy(orig_nozpt)
 
             if self.fermigrid & self.worker:
