@@ -1496,11 +1496,14 @@ class smp:
                                         smp_dict['skyerr'][i] = skyerrsn
 
                                     smp_dict['flag'][i] = 0
+                                    print smp_dict['flag'][i]
                                     #CHECK FOR DIFFIM FLAGS
                                     if self.snparams.photflag[j] == True:
+                                        print 'photometry flag!'
                                         smp_dict['flag'][i] = 1
                                         smp_dict['scale'][i] = np.nan
                                         smp_dict['scale_err'][i] = np.nan
+                                    raw_input('flags above')
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
