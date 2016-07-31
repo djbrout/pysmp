@@ -811,7 +811,7 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             if snparams.mjd[j] == 0:
                 continue
-            if cccc > 2:
+            if cccc > 2000:
                 continue
             #print imfile
             #raw_input()
@@ -3826,7 +3826,7 @@ class smp:
                 ,mjdoff=mjdoff
                 ,mjdslopeinteroff=mjdslopeinteroff
                 )
-            raw_input('ZEROPOINTING WAS GOOD')
+            #raw_input('ZEROPOINTING WAS GOOD')
         else:
             print len(goodstarcols)
             print len(checkstarcols)
@@ -3835,7 +3835,7 @@ class smp:
             md = 0
             std = 0
             mag_compare_out = 0
-            raw_input('Error : not enough good stars to compute zeropoint!!!')
+            #raw_input('Error : not enough good stars to compute zeropoint!!!')
             #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
         if self.verbose:
