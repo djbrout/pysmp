@@ -1084,7 +1084,7 @@ class smp:
 
                     x_star, y_star = np.array(x_star), np.array(y_star)
 
-                    mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
+                    mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
 
 
@@ -1127,7 +1127,7 @@ class smp:
                     #    x_star,y_star = cntrd.cntrd(im,x_star,y_star,params.cntrd_fwhm)
                     #    newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
 
-                    mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
+                    mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad)
 
                     hpsf = pyfits.getheader(psffile)
@@ -1306,6 +1306,7 @@ class smp:
 
                 self.psf = self.psf/np.sum(self.psf)
                 print badflag
+                print badflag.shape
                 raw_input('we are before the zpt calc')
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
