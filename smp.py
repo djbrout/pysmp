@@ -1257,7 +1257,7 @@ class smp:
 
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
-                mag,magerr,flux,fluxerr,sky,skyerr,badflag,outstr = \
+                mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad)
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
                 #newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
