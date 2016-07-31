@@ -1380,7 +1380,7 @@ class smp:
                 skyrad=[radius1*fff,radius2*fff]
 
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad)#,skyrad=skyrad)
-                raw_input('skysn',skysn)
+                raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
 
                 if badflagd == 1:
