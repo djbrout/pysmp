@@ -1396,6 +1396,11 @@ class smp:
                     badflag = 1
                     raw_input('skysn badflag')
                     #print 'skysn badflag'
+                mean, st, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
+                skysig = 1.48 * np.median(abs(vals - np.median(vals)))
+                mysky = np.median(vals)
+                print mysky
+                raw_input('mysky above')
                 if not badflag:
 
                     stampsize = 256
