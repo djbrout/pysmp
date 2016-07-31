@@ -1328,6 +1328,8 @@ class smp:
                     mjdoff = zptdata['mjdoff']
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 dotestoff = False
+                if zpt == -999:
+                    badflag = 1
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
 
@@ -3821,7 +3823,10 @@ class smp:
             print len(checkstarcols)
             print isnotcheckstars
             print params.numcheckstars
-            raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
+            md = -999
+            std = -999
+            mag_compare_out = -999
+            #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
         if self.verbose:
             print('measured ZPT: %.3f +/- %.3f'%(md,std))
