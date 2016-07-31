@@ -1332,7 +1332,7 @@ class smp:
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 dotestoff = False
                 if zpt == 0:
-                    #raw_input('zerpoint badflag')
+                    raw_input('zerpoint badflag')
                     badflag = 1
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
@@ -1345,6 +1345,7 @@ class smp:
                 if zpt != 0.0 and np.min(self.psf) > -10000:
                     scalefactor = 10.**(-0.4*(zpt-firstzpt))
                 if zpt == 0.:
+                    raw_input('zpt badflag')
                     badflag = 1
                     scalefactor = 0.
             print 'scalefactor',scalefactor
@@ -1354,10 +1355,10 @@ class smp:
             badflagd = 0
             if dailyoff:
                 if mjdoff[0] > .5:
-                    #raw_input('mjdoff badflag')
+                    raw_input('mjdoff badflag')
                     badflagd = 1
                 if mjdoff[1] > .5:
-                    #raw_input('mjdoff badflag')
+                    raw_input('mjdoff badflag')
                     badflagd = 1
 
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA+mjdoff[0],snparams.DECL+mjdoff[1]]]), 0))
@@ -1382,6 +1383,7 @@ class smp:
                 mygain = ((1/skyerrsn**2)*skysn)
 
                 if badflagd == 1:
+                    raw_input('badflagd')
                     badflag = 1
 
                 if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
@@ -1391,7 +1393,7 @@ class smp:
                         print 'mask badflag'
                 if skysn < -1e5:
                     badflag = 1
-                    #raw_input('skysn badflag')
+                    raw_input('skysn badflag')
                     #print 'skysn badflag'
                 if not badflag:
 
@@ -1462,9 +1464,11 @@ class smp:
                 if not badflag:
                     if not np.isfinite(skysig):
                         print 'infinite skysig'
+                        raw_input('skysig badflag')
                         badflag = 1
                     if skysig < 1:
                         print 'skysig less than one'
+                        raw_input('skysig1 badflag')
                         badflag = 1
                 #print badflag
 
