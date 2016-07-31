@@ -1329,7 +1329,7 @@ class smp:
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 dotestoff = False
                 if zpt == 0:
-                    raw_input('zerpoint badflag')
+                    #raw_input('zerpoint badflag')
                     badflag = 1
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
@@ -1351,10 +1351,10 @@ class smp:
             badflagd = 0
             if dailyoff:
                 if mjdoff[0] > .5:
-                    raw_input('mjdoff badflag')
+                    #raw_input('mjdoff badflag')
                     badflagd = 1
                 if mjdoff[1] > .5:
-                    raw_input('mjdoff badflag')
+                    #raw_input('mjdoff badflag')
                     badflagd = 1
 
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA+mjdoff[0],snparams.DECL+mjdoff[1]]]), 0))
@@ -1382,13 +1382,14 @@ class smp:
                     badflag = 1
 
                 if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
-                    badflag = 1
-                    raw_input('mask badflag')
-                    print 'mask badflag'
+                    if self.useweights:
+                        badflag = 1
+                        raw_input('mask badflag')
+                        print 'mask badflag'
                 if skysn < -1e5:
                     badflag = 1
-                    raw_input('skysn badflag')
-                    print 'skysn badflag'
+                    #raw_input('skysn badflag')
+                    #print 'skysn badflag'
                 if not badflag:
 
                     stampsize = 256
