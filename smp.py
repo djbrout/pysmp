@@ -1397,8 +1397,7 @@ class smp:
                     raw_input('skysn badflag')
                     #print 'skysn badflag'
 
-                #if not badflag:
-                if True:
+                if not badflag:
                     stampsize = 256
 
                     if ysn-stampsize < 0:
