@@ -1305,7 +1305,8 @@ class smp:
                 self.airmasses.extend(starcat.ra[cols]*0. + round(snparams.airmass,2))
 
                 self.psf = self.psf/np.sum(self.psf)
-
+                print badflag
+                raw_input('we are before the zpt calc')
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
