@@ -3817,7 +3817,7 @@ class smp:
                 ,mjdoff=mjdoff
                 ,mjdslopeinteroff=mjdslopeinteroff
                 )
-        raw_input('ZEROPOINTING WAS GOOD')
+            raw_input('ZEROPOINTING WAS GOOD')
         else:
             print len(goodstarcols)
             print len(checkstarcols)
