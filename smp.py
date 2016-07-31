@@ -1307,8 +1307,8 @@ class smp:
 
                 self.psf = self.psf/np.sum(self.psf)
                 print badflag
-                print badflag.shape
-                raw_input('we are before the zpt calc')
+                #print badflag.shape
+                #raw_input('we are before the zpt calc')
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
