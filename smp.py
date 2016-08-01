@@ -1436,7 +1436,7 @@ class smp:
                         sexrms *= scalefactor
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
-
+                    print im.shape
                     raw_input('xlow'+str(xlow)+' xhi'+str(xhi)+' ylow'+str(ylow)+' yhi'+str(yhi))
 
                     pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,weights,mask)
