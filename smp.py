@@ -1378,7 +1378,9 @@ class smp:
                 radius2 = 8 
                 fff = float(snparams.psf[j])
                 skyrad=[radius1*fff,radius2*fff]
-
+                print xsn,ysn
+                save_fits_image(im,'test/testim.fits')
+                raw_input('saved test image')
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad)#,skyrad=skyrad)
                 raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
@@ -1420,8 +1422,8 @@ class smp:
                     mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
                     skysig=1.48*np.median(abs(vals-np.median(vals)))
                     mysky = np.median(vals)
-                    print mysky
-                    raw_input('mysky above')
+                    #print mysky
+                    #raw_input('mysky above')
                     mygain = (np.sqrt(mysky)/(skysig))**2
                     mygainsn =  (np.sqrt(skysn)/(skyerrsn))**2
                     #print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
