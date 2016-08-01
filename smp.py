@@ -1350,8 +1350,9 @@ class smp:
                     scalefactor = 0.
             print 'scalefactor',scalefactor
             im *= scalefactor
-            if self.useweights:
-                im[np.where(mask != 0)] =-999999.0
+            #if self.useweights:
+            #    #raw_input('USING WEIGHTS SETTIN')
+            #    im[np.where(mask != 0)] =-999999.0
 
             badflagd = 0
             if dailyoff:
