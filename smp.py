@@ -1441,11 +1441,11 @@ class smp:
 
                     pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,weights,mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
-                    try:
-                        errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                    #try:
+                    errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                    except ValueError:
-                        raise ValueError('SN too close to edge of CCD!')
+                    #except ValueError:
+                    #    raise ValueError('SN too close to edge of CCD!')
 
 
                     msk = copy(image_stamp)
