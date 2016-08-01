@@ -1378,9 +1378,7 @@ class smp:
                 radius2 = 8 
                 fff = float(snparams.psf[j])
                 skyrad=[radius1*fff,radius2*fff]
-                print xsn,ysn
-                save_fits_image(im,'test/testim.fits')
-                raw_input('saved test image')
+                print im[round(xsn),round(ysn)]
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad)#,skyrad=skyrad)
                 raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
