@@ -249,6 +249,7 @@ class pkfit_class:
             errmag=100000
             chi=100000
             sharp=100000
+            print 'returning1'
             if returnStamps: return (errmag,chi,niter,scale, np.zeros([stampsize,stampsize]), np.zeros([stampsize,stampsize]), np.zeros([stampsize,stampsize]), np.zeros([stampsize,stampsize])) 
             else: return(errmag,chi,niter,scale,np.zeros([stampsize,stampsize]))
         if y < 50 or x < 50 or x > ny-50 or x > nx-50:
