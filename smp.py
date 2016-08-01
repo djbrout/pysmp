@@ -1337,7 +1337,8 @@ class smp:
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
 
-
+            for jjj in im[:,round(ysn)]:
+                print jjj
             if not ('firstzpt' in locals()): firstzpt = 31. ####firstzpt = zpt
             if self.usediffimzpt:
                 scalefactor = 10**(-.4*(snparams.zp[j]-firstzpt))
