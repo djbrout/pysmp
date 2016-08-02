@@ -181,5 +181,5 @@ def fit(
 
     if returnstamps:
         psf = model
-        fluxls,fluxerr,chisq,dms,good,subim, psf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']
+        return fluxls,fluxerr,chisq,dms,good,subim, psf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']
     return fluxls, fluxerr, chisq, dms, good
