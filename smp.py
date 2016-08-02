@@ -1436,14 +1436,23 @@ class smp:
                         sexrms *= scalefactor
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
-                    print im.shape
-                    raw_input('xlow'+str(xlow)+' xhi'+str(xhi)+' ylow'+str(ylow)+' yhi'+str(yhi))
+                    #print im.shape
+                    #raw_input('xlow'+str(xlow)+' xhi'+str(xhi)+' ylow'+str(ylow)+' yhi'+str(yhi))
 
                     pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,weights,mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     #try:
-                    errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
-                            pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
+                    if self.snparams.survey == 'PS1':
+                        scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, \
+                        fitrad, skysn, psfmag = chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn)
+                        print 'psfmag',psfmag
+                        raw_input()
+                        noise_stamp = copy(image_stamp)
+                        if not good:
+                            badflag = 1
+                    else:
+                        errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                                pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
                     #except ValueError:
                     #    raise ValueError('SN too close to edge of CCD!')
 

@@ -28,7 +28,7 @@ def resid(param, psf, im, sigma, fitrad, sky, psfmag):
 
 def fit(
         fileroot='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/workspace/PSc560121/g/PSc560121.md01s043.g.ut090831e.1917665_14.sw',
-        xpos=None, ypos=None, radius=6, pdf_pages=None, ra=None, dec=None, title=''):
+        xpos=None, ypos=None, radius=6, pdf_pages=None, ra=None, dec=None, title='', returnstamps = False):
     # xpos = xpos +1
     # ypos = ypos +1
     # from matplotlib.backends.backend_pdf import PdfPages
@@ -48,7 +48,7 @@ def fit(
     # raw_input()
     im = pyfits.getdata('%s.fits' % fileroot)
     w = wcs.WCS('%s.fits' % fileroot)
-    results2 = w.wcs_world2pix(np.array([[ra, dec]]), 0)
+    #results2 = w.wcs_world2pix(np.array([[ra, dec]]), 0)
     # xpos,ypos =results2[0][0], results2[0][1]
 
     imhdr = pyfits.getheader('%s.fits' % fileroot)
@@ -178,4 +178,8 @@ def fit(
     if len(thisclass) == 1:
         if thisclass[0] == 1:
             good = True
+
+    if returnstamps:
+        psf = model
+        fluxls,fluxerr,chisq,dms,good,subim, psf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']
     return fluxls, fluxerr, chisq, dms, good
