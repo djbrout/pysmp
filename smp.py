@@ -1550,6 +1550,7 @@ class smp:
                                         smp_dict['flag'][i] = 1
                                         smp_dict['scale'][i] = np.nan
                                         smp_dict['scale_err'][i] = np.nan
+                                        raw_input('photometry flag')
                                     #raw_input('flags above')
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
@@ -1747,13 +1748,16 @@ class smp:
                                 mn = sky
                                 usearg = arg
                         else:
-                            #print 'herehhere neggggggg'
+                            print 'herehhere neggggggg'
+                            raw_input()
                             smp_dict['flag'][arg] = 1
 
         #Make sure the psf is not zero
         for i in np.arange(len(smp_dict['sky'])):
             if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
                 #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
+                print 'hehehehehehehehehe'
+                raw_input()
                 smp_dict['flag'][i] = 1
                 smp_dict['mjd'][i]
 
