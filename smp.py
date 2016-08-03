@@ -1505,12 +1505,13 @@ class smp:
                 print badflag
                 print 'diffim zpt','smp zpt'
                 print snparams.zp[j],zpt
+                print fwhm_arcsec,params.fwhm_max
                 raw_input()
                 badflags.append(badflag)
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
-                            if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum:
+                            #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum:
                                 if np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:]):
                                     
                                     noise_stamp[noise_stamp > 0.] = 1
