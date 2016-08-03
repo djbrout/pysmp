@@ -1450,7 +1450,7 @@ class smp:
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
                         scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                            chkpsf.fit(imfile.split('.fits')[0], radius=params.substamp, xpos=xsn, ypos=ysn,
+                            chkpsf.fit(imfile.split('.fits')[0], radius=params.substamp/2., xpos=xsn, ypos=ysn,
                                        returnstamps=True, maskfile=maskfile)
                         print 'psfmag',psfmag
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
