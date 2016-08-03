@@ -1443,6 +1443,7 @@ class smp:
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     #try:
                     if self.snparams.survey == 'PS1':
+                        print maskfile
                         scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, returnstamps=True, maskfile=maskfile)
                         print 'psfmag',psfmag
