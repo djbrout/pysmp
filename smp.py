@@ -1013,6 +1013,7 @@ class smp:
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
                 badflag = 1
+                raw_input()
 
             if type(snparams.starcat) == np.array:
                 if os.path.exists(snparams.starcat[j]):
