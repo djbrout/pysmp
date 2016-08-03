@@ -1334,7 +1334,7 @@ class smp:
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 dotestoff = False
                 if zpt == 0:
-                    raw_input('zerpoint badflag')
+                    #raw_input('zerpoint badflag')
                     badflag = 1
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
@@ -1347,7 +1347,7 @@ class smp:
                 if zpt != 0.0 and np.min(self.psf) > -10000:
                     scalefactor = 10.**(-0.4*(zpt-firstzpt))
                 if zpt == 0.:
-                    raw_input('zpt badflag')
+                    #raw_input('zpt badflag')
                     badflag = 1
                     scalefactor = 0.
             print 'scalefactor',scalefactor
@@ -1400,7 +1400,7 @@ class smp:
                         print 'mask badflag'
                 if skysn < -1e5:
                     badflag = 1
-                    raw_input('skysn badflag')
+                    #raw_input('skysn badflag')
                     #print 'skysn badflag'
 
                 if not badflag:
@@ -1457,7 +1457,7 @@ class smp:
                         noise_stamp = noise_stamp*msk
                         if not good:
                             badflag = 1
-                            raw_input('badflagggggooood')
+                            #raw_input('badflagggggooood')
                         save_fits_image(msk,'test/mask.fits')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
@@ -1496,11 +1496,11 @@ class smp:
                 if not badflag:
                     if not np.isfinite(skysig):
                         print 'infinite skysig'
-                        raw_input('skysig badflag')
+                        #raw_input('skysig badflag')
                         badflag = 1
                     if skysig < 1:
                         print 'skysig less than one'
-                        raw_input('skysig1 badflag')
+                        #raw_input('skysig1 badflag')
                         badflag = 1
                 #print badflag
 
@@ -1550,7 +1550,7 @@ class smp:
                                         smp_dict['flag'][i] = 1
                                         smp_dict['scale'][i] = np.nan
                                         smp_dict['scale_err'][i] = np.nan
-                                    raw_input('flags above')
+                                    #raw_input('flags above')
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
