@@ -1448,7 +1448,7 @@ class smp:
                         # save_fits_image(mask,'test/fullmask.fits')
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
-                        scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
+                        scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], radius=params.substamp/2.-1, xpos=xsn, ypos=ysn,
                                        returnstamps=True, maskfile=maskfile)
                         print 'psfmag', psfmag
@@ -1504,11 +1504,11 @@ class smp:
                         badflag = 1
                 #print badflag
 
-                print badflag
-                print 'diffim zpt','smp zpt'
-                print snparams.zp[j],zpt
-                print fwhm_arcsec,params.fwhm_max
-                raw_input()
+                # print badflag
+                # print 'diffim zpt','smp zpt'
+                # print snparams.zp[j],zpt
+                # print fwhm_arcsec,params.fwhm_max
+                # raw_input()
                 badflags.append(badflag)
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
