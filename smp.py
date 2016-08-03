@@ -1725,7 +1725,7 @@ class smp:
         for col in range(int(params.substamp)**2+len(smp_dict['scale'])):
             mpdict[col]['step']=np.sqrt(np.max(smp_dict['scale']))
 
-        for col in np.where((smp_dict['mjd_flag'] == 1) | (smp_dict['flag'] == 1))[0]+int(params.substamp)**2:
+        for col in np.where((smp_dict['flag'] == 1))[0]+int(params.substamp)**2:
             print 'flagged '+str(col)
             mpdict[col]['fixed'] = 1
             mpdict[col]['value'] = 0
