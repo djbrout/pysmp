@@ -1312,7 +1312,7 @@ class smp:
                 skipactualzeropoint = False
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
-                                         badflagx,mag_star,im,weights,mask,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
+                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
                                          psf=self.psf)
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
@@ -1443,9 +1443,9 @@ class smp:
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     #try:
                     if self.snparams.survey == 'PS1':
-                        save_fits_image(mask,'test/fullmask.fits')
-                        print 'maskfile',maskfile
-                        raw_input('printed maskfile')
+                        # save_fits_image(mask,'test/fullmask.fits')
+                        # print 'maskfile',maskfile
+                        # raw_input('printed maskfile')
                         scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, returnstamps=True, maskfile=maskfile)
                         print 'psfmag',psfmag
@@ -3446,7 +3446,7 @@ class smp:
 
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
-                badflag,mag_cat,im,noise,mask,psffile,imfile,snparams,substamp,
+                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
                 mjdoff,mjdslopeinteroff,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
@@ -3535,7 +3535,10 @@ class smp:
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
                 if self.snparams.survey == 'PS1':
-                    scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,pdf_pages=pdf_pagesc,title=str(ra)+' '+str(dec)+' '+str(i))
+                    scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,
+                                                                 pdf_pages=pdf_pagesc,
+                                                                 title=str(ra)+' '+str(dec)+' '+str(i),
+                                                                 maskfile=maskfile)
                     if not good:
                         badflag[i] = 1
                         mag_cat[i] = 99
