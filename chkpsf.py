@@ -184,10 +184,11 @@ def fit(
         if thisclass[0] == 1:
             good = True
 
-    print 'fluxls',fluxls
-    print 'maxpsf',np.max(rpsf)
+
     if returnstamps:
         rpsf = model
         good = True#we know this wont be in the starcat file so set to good is true
+        print 'fluxls', fluxls
+        print 'maxpsf', np.max(rpsf)
         return fluxls,fluxerr,chisq,dms,good,subim, rpsf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'], submask
     return fluxls, fluxerr, chisq, dms, good
