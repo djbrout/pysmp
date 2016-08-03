@@ -193,6 +193,6 @@ def fit(
         return fluxls,fluxerr,chisq,dms,good,subim, rpsf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'], submask
     print fluxls
     print np.max(model)
-    raw_input('fluxls')
+    #raw_input('fluxls')
 
     return fluxls, fluxerr, chisq, dms, good
