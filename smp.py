@@ -1454,6 +1454,7 @@ class smp:
                         noise_stamp = noise_stamp*msk
                         if not good:
                             badflag = 1
+                            raw_input('badflagggggooood')
                         save_fits_image(msk,'test/mask.fits')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
@@ -1503,7 +1504,7 @@ class smp:
                 print badflag
                 print 'diffim zpt','smp zpt'
                 print snparams.zp[j],zpt
-                raw_input()
+                #raw_input()
                 badflags.append(badflag)
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
