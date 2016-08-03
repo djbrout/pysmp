@@ -392,6 +392,8 @@ class smp:
         else:
             snparams.nvalid = snparams.nobs
 
+        print snparams.nvalid
+        raw_input('nvalid')
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_psf = np.zeros([snparams.nvalid,params.substamp,params.substamp])
