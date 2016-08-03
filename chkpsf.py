@@ -28,7 +28,7 @@ def resid(param, psf, im, sigma, fitrad, sky, psfmag):
 
 def fit(
         fileroot='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/workspace/PSc560121/g/PSc560121.md01s043.g.ut090831e.1917665_14.sw',
-        xpos=None, ypos=None, radius=6, pdf_pages=None, ra=None, dec=None, title='', returnstamps = False, maskfile=None):
+        xpos=None, ypos=None, radius=8, pdf_pages=None, ra=None, dec=None, title='', returnstamps = False, maskfile=None):
     # xpos = xpos +1
     # ypos = ypos +1
     # from matplotlib.backends.backend_pdf import PdfPages
@@ -105,6 +105,9 @@ def fit(
                                 deriv=False)  # ,ps1d=False)
     subim = im[iylo - 1:iyhi, ixlo - 1:ixhi]
     submask = mask[iylo - 1:iyhi, ixlo - 1:ixhi]
+    submask[submask != 0] = 9
+    submask[submask == 0 ] = 1
+    submask[submask == 9 ] = 0
     # scaledpsf = model+impsf[psfy/2+1-radius:psfy/2+1+radius+1,
     #                        psfx/2+1-radius:psfx/2+1+radius+1]
     # print model.shape

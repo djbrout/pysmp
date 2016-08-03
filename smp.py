@@ -1450,14 +1450,15 @@ class smp:
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, returnstamps=True, maskfile=maskfile)
                         print 'psfmag',psfmag
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
-                        noise_stamp = copy(image_stamp)
+                        noise_stamp = copy(image_stamp)*0+1
+                        noise_stamp = noise_stamp*mask_stamp
                         if not good:
                             badflag = 1
                         save_fits_image(msk,'test/mask.fits')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
                         skysn *= scalefactor
-                        raw_input('saved mask')
+                        #raw_input('saved mask')
 
                     else:
                         try:
@@ -1502,7 +1503,7 @@ class smp:
                 print badflag
                 print 'diffim zpt','smp zpt'
                 print snparams.zp[j],zpt
-                #raw_input()
+                raw_input()
                 badflags.append(badflag)
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
