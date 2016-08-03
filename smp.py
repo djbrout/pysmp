@@ -1443,26 +1443,34 @@ class smp:
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     #try:
                     if self.snparams.survey == 'PS1':
-                        scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag = \
-                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, returnstamps=True)
+                        scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
+                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, returnstamps=True, maskfile=maskfile)
                         print 'psfmag',psfmag
-                        raw_input()
+                        psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
                         noise_stamp = copy(image_stamp)
                         if not good:
                             badflag = 1
+                        save_fits_image('test/mask.fits',msk)
+                        image_stamp *= scalefactor
+                        skysig *= scalefactor
+                        skysn *= scalefactor
+                        raw_input('saved mask')
+
                     else:
-                        errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                        try:
+                            errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                    #except ValueError:
-                    #    raise ValueError('SN too close to edge of CCD!')
+                        except ValueError:
+                            raise ValueError('SN too close to edge of CCD!')
 
 
-                    msk = copy(image_stamp)
-                    msk[msk!=0.] = 1
-                    model = np.append(np.zeros(len(image_stamp.ravel())),scale)
-                    newsub = int(image_stamp.shape[0])
-                    stdev = np.zeros(len(model))
-                    stdev[-1] = np.sqrt(model[-1])
+                        msk = copy(image_stamp)
+                        msk[msk!=0.] = 1
+
+                    # model = np.append(np.zeros(len(image_stamp.ravel())),scale)
+                    # newsub = int(image_stamp.shape[0])
+                    # stdev = np.zeros(len(model))
+                    # stdev[-1] = np.sqrt(model[-1])
 
 
 
