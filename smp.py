@@ -1448,7 +1448,8 @@ class smp:
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
                         scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, returnstamps=True, maskfile=maskfile)
+                            chkpsf.fit(imfile.split('.fits')[0], radius=params.substamp, xpos=xsn, ypos=ysn,
+                                       returnstamps=True, maskfile=maskfile)
                         print 'psfmag',psfmag
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
                         noise_stamp = copy(image_stamp)*0+1
@@ -1511,7 +1512,7 @@ class smp:
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
-                            #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum:
+                            #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum
                                 if np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:]):
                                     
                                     noise_stamp[noise_stamp > 0.] = 1
