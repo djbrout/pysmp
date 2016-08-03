@@ -1755,6 +1755,7 @@ class smp:
         #Make sure the psf is not zero
         for i in np.arange(len(smp_dict['sky'])):
             if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
+                save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
                 #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
                 print 'hehehehehehehehehe'
                 raw_input()
