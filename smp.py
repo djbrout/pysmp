@@ -1449,9 +1449,10 @@ class smp:
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
                         scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, radius=18,
+                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, radius=16,
                                        returnstamps=True, maskfile=maskfile)
                         print 'psfmag', psfmag
+                        print 'modelshape',image_stamp.shape
 
                         save_fits_image(psf_stamp,'test/psf.fits')
                         raw_input('saved psf stamp')
