@@ -1453,7 +1453,8 @@ class smp:
                                        returnstamps=True, maskfile=maskfile)
                         print 'psfmag', psfmag
 
-                        save_fits_image(psf_stamp,)
+                        save_fits_image(psf_stamp,'test/psf.fits')
+                        raw_input('saved psf stamp')
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
                         noise_stamp = copy(image_stamp)*0+1
                         noise_stamp = noise_stamp*msk
