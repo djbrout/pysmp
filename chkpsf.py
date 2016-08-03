@@ -191,4 +191,6 @@ def fit(
         print 'fluxls', fluxls
         print 'maxpsf', np.max(rpsf)
         return fluxls,fluxerr,chisq,dms,good,subim, rpsf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'], submask
+    print fluxls
+    raw_input('fluxls')
     return fluxls, fluxerr, chisq, dms, good
