@@ -392,7 +392,7 @@ class smp:
         else:
             snparams.nvalid = snparams.nobs
 
-        print snparams.nvalid
+        print snparams.nvalid,
         raw_input('nvalid')
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
@@ -1520,7 +1520,7 @@ class smp:
                                     noise_stamp[noise_stamp > 0.] = 1
                                     noise_stamp[noise_stamp <= 0.] = 0
                                     print 'image-stamp',image_stamp.shape
-                                    print 'smp_im',smp_im[i,:,:].shape
+                                    print 'smp_im',smp_im[i,:,:].shape,i
                                     smp_im[i,:,:] = image_stamp
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
