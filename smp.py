@@ -1443,8 +1443,8 @@ class smp:
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
                     #try:
                     if self.snparams.survey == 'PS1':
-                        scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, \
-                        fitrad, skysn, psfmag = chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn)
+                        scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag = \
+                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn)
                         print 'psfmag',psfmag
                         raw_input()
                         noise_stamp = copy(image_stamp)
