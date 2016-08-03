@@ -1451,7 +1451,7 @@ class smp:
                         print 'psfmag',psfmag
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
                         noise_stamp = copy(image_stamp)*0+1
-                        noise_stamp = noise_stamp*mask_stamp
+                        noise_stamp = noise_stamp*msk
                         if not good:
                             badflag = 1
                         save_fits_image(msk,'test/mask.fits')
