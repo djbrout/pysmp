@@ -1517,7 +1517,7 @@ class smp:
                                     
                                     noise_stamp[noise_stamp > 0.] = 1
                                     noise_stamp[noise_stamp <= 0.] = 0
-
+                                    print image_stamp.shape,smp_im[i,:,:].shape
                                     smp_im[i,:,:] = image_stamp
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
