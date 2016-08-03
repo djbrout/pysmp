@@ -186,5 +186,6 @@ def fit(
 
     if returnstamps:
         psf = model
+        good = True#we know this wont be in the starcat file so set to good is true
         return fluxls,fluxerr,chisq,dms,good,subim, psf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'], submask
     return fluxls, fluxerr, chisq, dms, good
