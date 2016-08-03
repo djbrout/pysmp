@@ -392,8 +392,7 @@ class smp:
         else:
             snparams.nvalid = snparams.nobs
 
-        print snparams.nvalid,
-        raw_input('nvalid')
+
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_psf = np.zeros([snparams.nvalid,params.substamp,params.substamp])
@@ -1450,9 +1449,9 @@ class smp:
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
                         scale, cscale_std, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                            chkpsf.fit(imfile.split('.fits')[0], radius=params.substamp/2.+1, xpos=xsn, ypos=ysn,
+                            chkpsf.fit(imfile.split('.fits')[0], radius=params.substamp/2.-1, xpos=xsn, ypos=ysn,
                                        returnstamps=True, maskfile=maskfile)
-                        print 'psfmag',psfmag
+                        print 'psfmag', psfmag
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
                         noise_stamp = copy(image_stamp)*0+1
                         noise_stamp = noise_stamp*msk
