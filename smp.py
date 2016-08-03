@@ -1385,7 +1385,7 @@ class smp:
                 for i in im[:,round(ysn)]:
                     print i
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad)#,skyrad=skyrad)
-                raw_input('skysn'+str(skysn))
+                #raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
 
                 if badflagd == 1:
@@ -1505,7 +1505,7 @@ class smp:
                 print badflag
                 print 'diffim zpt','smp zpt'
                 print snparams.zp[j],zpt
-                #raw_input()
+                raw_input()
                 badflags.append(badflag)
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
