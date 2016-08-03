@@ -1014,7 +1014,7 @@ class smp:
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
                 badflag = 1
-                raw_input()
+                #raw_input()
 
             if type(snparams.starcat) == np.array:
                 if os.path.exists(snparams.starcat[j]):
@@ -1359,10 +1359,10 @@ class smp:
             badflagd = 0
             if dailyoff:
                 if mjdoff[0] > .5:
-                    raw_input('mjdoff badflag')
+                    #raw_input('mjdoff badflag')
                     badflagd = 1
                 if mjdoff[1] > .5:
-                    raw_input('mjdoff badflag')
+                    #raw_input('mjdoff badflag')
                     badflagd = 1
 
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA+mjdoff[0],snparams.DECL+mjdoff[1]]]), 0))
@@ -1390,13 +1390,13 @@ class smp:
                 mygain = ((1/skyerrsn**2)*skysn)
 
                 if badflagd == 1:
-                    raw_input('badflagd')
+                    #raw_input('badflagd')
                     badflag = 1
 
                 if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
                     if self.useweights:
                         badflag = 1
-                        raw_input('mask badflag')
+                        #raw_input('mask badflag')
                         print 'mask badflag'
                 if skysn < -1e5:
                     badflag = 1
@@ -1527,7 +1527,7 @@ class smp:
                                     smp_im[i,:,:] = image_stamp
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
                                     save_fits_image(psf_stamp,'test/cpsf.fits')
-                                    raw_input('savedpsf')
+                                    #raw_input('savedpsf')
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
 
                                     c = 20
@@ -1556,7 +1556,7 @@ class smp:
                                         smp_dict['flag'][i] = 1
                                         smp_dict['scale'][i] = np.nan
                                         smp_dict['scale_err'][i] = np.nan
-                                        raw_input('photometry flag')
+                                        #raw_input('photometry flag')
                                     #raw_input('flags above')
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
@@ -1755,7 +1755,7 @@ class smp:
                                 usearg = arg
                         else:
                             print 'herehhere neggggggg'
-                            raw_input()
+                            #raw_input()
                             smp_dict['flag'][arg] = 1
 
         #Make sure the psf is not zero
@@ -1764,7 +1764,7 @@ class smp:
                 save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
                 #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
                 print 'hehehehehehehehehe'
-                raw_input()
+                #raw_input()
                 smp_dict['flag'][i] = 1
                 smp_dict['mjd'][i]
 
