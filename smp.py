@@ -1522,6 +1522,8 @@ class smp:
                                     print 'smp_im',smp_im[i,:,:].shape,i
                                     smp_im[i,:,:] = image_stamp
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
+                                    save_fits_image(psf_stamp,'test/cpsf.fits')
+                                    raw_input('savedpsf')
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
 
                                     c = 20
