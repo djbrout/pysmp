@@ -6,12 +6,13 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
     files = open(listfile).readlines()
     for fl in files:
         f = fl.split("/")[-1].strip()
+        npzfile = os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_'+filt+'_withSN.npz')
         print f
         print filedir
-        print os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz')
-        print os.path.exists(os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz'))
+        print os.path.join(npzfile)
+        print os.path.exists(npzfile)
         #raw_input()
-        if os.path.exists(os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz')):
+        if os.path.exists(npzfile):
             print "it existssssssssss"
             fin = os.path.join(filedir,f)
             fout = os.path.join(filedir,f+'_dillon')
