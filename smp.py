@@ -2142,6 +2142,7 @@ class smp:
                     modelstd = scaled_diffim_fluxerr/7.
             galmodel = galmodel_params
             galstd = np.sqrt(abs(galmodel))/10.
+            modelstd = np.sqrt(abs(modelvec))/2.
             tstart = time.time()
 
             if not self.floatallepochs:
