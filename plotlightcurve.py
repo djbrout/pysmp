@@ -75,7 +75,7 @@ def pslightcurve(mjd, fitmag, fitmagerr, fakemag, fakemagerr, fitflux, fitfluxer
     fig, ax = plt.subplots(3, 1, sharex=True, figsize=(7, 10))
 
     ax[0].set_title(title)
-    ax[0].set_xlim(mjd[np.argmin(fakemag)] - 50, mjd[np.argmin(fakemag)] + 250.)
+    ax[0].set_xlim(min(mjd[mjd>0.]), max(mjd))
 
     ax[0].scatter(fakemag * 0., fakemag, color='black', marker='+', label='Fake Mag')
     ax[0].scatter(fitmag * 0., fitmag, color='black', label='Fit Mag')
