@@ -101,8 +101,8 @@ def pslightcurve(mjd, fitmag, fitmagerr, fakemag, fakemagerr, fitflux, fitfluxer
         ww = aa == 1
         #ax[0].scatter(mjd,fakemag,color=color,marker='+')
         #ax[0].scatter(mjd,fitmag,color='black')
-        ax[0].errorbar(mjd[ww], fakemag[ww], fakemagerr[ww], color='black', fmt='o',marker='+')
-        ax[0].errorbar(mjd[ww], fitmag[ww], fitmagerr[ww], color=color, fmt='o', alpha=.3)
+        ax[0].errorbar(mjd[ww], fakemag[ww], fakemagerr[ww], color='black', fmt='o')
+        ax[0].errorbar(mjd[ww], fitmag[ww], fitmagerr[ww], color=color, fmt='o', alpha=.8)
         ff = fakemag[ww]
         ax[1].errorbar(mjd[ww], fakemag[ww] - fitmag[ww], fitmagerr[ww], color=color, fmt='o')
         ax[2].scatter(mjd[ww], (fakeflux[ww] - fitflux[ww]) / fitfluxerr[ww], color=color)
