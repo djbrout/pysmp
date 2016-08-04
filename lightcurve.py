@@ -1,25 +1,23 @@
 
 import numpy as np
 import os
+import plotlightcurve as lc
 
 def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
     files = open(listfile).readlines()
     for fl in files:
         f = fl.split("/")[-1].strip()
         npzfile = os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSn.npz')
-        print f
-        print filedir
-        print os.path.join(npzfile)
-        print os.path.exists(npzfile)
-        #raw_input()
+
         if os.path.exists(npzfile):
-            print "it existssssssssss"
             fin = os.path.join(filedir,f)
             fout = os.path.join(filedir,f+'_dillon')
             lcout = os.path.join(lightcurveoutdir,f.strip(".psmp")+'.png')
-            print fin
-            print fout
-            print lcout
+            data = np.load(npzfile)
+            print data.keys()
+            raw_input()
+            lc.lightcurve(mjd, fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filter, lcout, title='')
+            #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
             raw_input()
 
 def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fakemag):
@@ -52,8 +50,7 @@ def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fak
     origfile.close()
 #addtolightcurve('testlc.dat','./testdats/','testcol',,[888,777,000,111],[8,8,8,8],[31.,31.,31.,31.])
 
-def plot
-       
+
 
 
 if __name__ == "__main__":
