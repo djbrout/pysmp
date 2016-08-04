@@ -17,7 +17,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             print data.keys()
             input = np.load(inputfile)
             print input.keys()
-            print input['zpt']
+            print input['fakezpt']
             #fitmag =
             raw_input()
             lc.lightcurve(input['mjd'], fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filter, lcout, title='')
