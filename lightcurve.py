@@ -5,7 +5,7 @@ import os
 def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
     files = open(listfile).readlines()
     for fl in files:
-        f = fl.split("/")[-1]
+        f = fl.split("/")[-1].strip()
         print f
         print filedir
         print os.path.join(filedir,f.strip(".psmp")+'_'+filt+'_withSN.npz')
