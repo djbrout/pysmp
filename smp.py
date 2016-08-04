@@ -3897,8 +3897,8 @@ class smp:
             #raw_input('Error : not enough good stars to compute zeropoint!!!')
             #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
-        if self.verbose:
-            print('measured ZPT: %.3f +/- %.3f'%(md,std))
+        #if self.verbose:
+        print('measured ZPT: %.3f +/- %.3f'%(md,std))
 
         return(md,std,mag_compare_out)
 
