@@ -75,7 +75,7 @@ def pslightcurve(mjd, fitmag, fitmagerr, fakemag, fakemagerr, fitflux, fitfluxer
     fig, ax = plt.subplots(3, 1, sharex=True, figsize=(7, 10))
 
     ax[0].set_title(title)
-    ax[0].set_xlim(mjd[np.argmin(fitmag)] - 200, mjd[np.argmin(fitmag)] + 100.)
+    ax[0].set_xlim(mjd[np.argmin(fitmag)] - 150, mjd[np.argmin(fitmag)] + 100.)
 
     ax[0].scatter(fakemag * 0., fakemag, color='black', marker='+', label='Diffim Mag')
     ax[0].scatter(fitmag * 0., fitmag, color='green', label='Dillon SMP Fit Mag')
@@ -118,12 +118,12 @@ def pslightcurve(mjd, fitmag, fitmagerr, fakemag, fakemagerr, fitflux, fitfluxer
     except:
         ax[2].set_ylim(-2., 2.)
 
-    ax[1].set_xlim(mjd[np.argmin(fitmag)] - 200, mjd[np.argmin(fitmag)] + 100.)
+    ax[1].set_xlim(mjd[np.argmin(fitmag)] - 150, mjd[np.argmin(fitmag)] + 100.)
     ax[1].set_ylabel('Fake - Fit Mag')
     ax[1].plot([min(mjd), max(mjd)], [0, 0], color='black')
     ax[2].plot([min(mjd), max(mjd)], [0, 0], color='black')
     ax[2].set_ylabel('Fake - Fit Flux / Err')
-    ax[2].set_xlim(mjd[np.argmin(fitmag)] - 200, mjd[np.argmin(fitmag)] + 100.)
+    ax[2].set_xlim(mjd[np.argmin(fitmag)] - 150, mjd[np.argmin(fitmag)] + 100.)
     ax[2].set_xlabel('MJD')
 
     fig.subplots_adjust(hspace=0)
