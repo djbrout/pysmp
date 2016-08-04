@@ -32,7 +32,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
 
             print diffimflux,fitflux
             print diffimmag,fitmag
-
+            print input['mjd']
             lc.pslightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
                                                                                    diffimflux, diffimfluxerr,
                                                                                    filt, lcout,
