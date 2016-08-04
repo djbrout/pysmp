@@ -23,8 +23,8 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
 
 
             diffimmag = 31.-2.5*np.log10(input['diffim_flux'])
-            diffimmagerr = -2.5 * np.log10(data['diffim_flux']) + 2.5 * np.log10(
-                data['diffim_flux'] + data['diffim_fluxerr'])
+            diffimmagerr = -2.5 * np.log10(input['diffim_flux']) + 2.5 * np.log10(
+                input['diffim_flux'] + input['diffim_fluxerr'])
             diffimflux = input['diffim_flux']
             diffimfluxerr = input['diffim_fluxerr']
 
