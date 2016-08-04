@@ -787,7 +787,7 @@ class metropolis_hastings():
         numepochs = self.modelvec_nphistory.shape[1]
         #print self.modelvec_nphistory.shape
         #raw_input()
-        plt.clf()
+        #plt.clf()
         fig = plt.figure(1,figsize=(10,7))
         for e in np.arange(numepochs):
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
