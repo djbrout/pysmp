@@ -56,7 +56,7 @@ def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fak
 
 
 if __name__ == "__main__":
-    wraplightcurves("data/snfiles_ps.txt","/home/dscolnic/",
+    wraplightcurves("data/snfiles_psdill.txt","/home/dscolnic/",
                     "/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/np_data/g/",
                     "/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/lightcurves/g",
                     filt='g')
