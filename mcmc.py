@@ -402,7 +402,7 @@ class metropolis_hastings():
         print 'Accepted Percentage: ' + str( self.accepted_history )
         print 'Seconds per iteration: '+str(float(( self.t2 - self.t1 )/self.counter))
         chsqs = self.csv / len(self.mask[self.mask > 0.].ravel())
-        print 'Final Reduced ChiSq: ' + np.nanmean(chsqs[chsqs != 0.])
+        print 'Final Reduced ChiSq: ' + str(np.nanmean(chsqs[chsqs != 0.]))
         print 'Chisq For Each Epoch: ',chsqs
         #np.savez(self.results_npz, pixel_history = self.pixel_history
         #                        , simulated_stamps = self.simulated_images
