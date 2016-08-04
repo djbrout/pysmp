@@ -22,8 +22,8 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             fitfluxerr = data['modelvec_uncertainty']
 
             print input.keys()
-            diffimflux = input['diffim_flux']*10**(.4*(input['diffim_zpt']-31.))
-            diffimfluxerr = input['diffim_fluxerr']*10**(.4*(input['diffim_zpt']-31.))
+            diffimflux = input['diffim_flux']*10**(.4*(input['fakezpt']-31.))
+            diffimfluxerr = input['diffim_fluxerr']*10**(.4*(input['fakezpt']-31.))
 
 
             diffimmag = 31.-2.5*np.log10(diffimflux)
