@@ -30,7 +30,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
 
             fitmag[fitmag > 50.] = 99; fitmagerr[fitmagerr > 50]=0.;fitmag[np.isnan(fitmag)] = 99; fitmagerr[np.isnan(fitmag)] = 0
 
-
+            print fitmag
 
             lc.lightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
                                                                                    diffimflux, diffimfluxerr,
