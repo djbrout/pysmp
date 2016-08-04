@@ -21,7 +21,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             print lcout
             raw_input()
 
-def addtolightcurve(lightcurvef ile,saveloc,column_name,filt,mjd,flux,fluxerr,fakemag):
+def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fakemag):
     #if not os.path.exists(saveloc):
     #    os.makedirs(saveloc)
     savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
