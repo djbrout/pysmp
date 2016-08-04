@@ -8,9 +8,9 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
         f = fl.split("/")[-1].strip()
         print f
         print filedir
-        print os.path.join(filedir,f.strip(".psmp")+'_'+filt+'_withSN.npz')
+        print os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz')
         print os.path.exists(os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz'))
-        raw_input()
+        #raw_input()
         if os.path.exists(os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz')):
             print "it existssssssssss"
             fin = os.path.join(filedir,f)
@@ -21,7 +21,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             print lcout
             raw_input()
 
-def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fakemag):
+def addtolightcurve(lightcurvef ile,saveloc,column_name,filt,mjd,flux,fluxerr,fakemag):
     #if not os.path.exists(saveloc):
     #    os.makedirs(saveloc)
     savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
@@ -56,6 +56,6 @@ def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fak
 
 if __name__ == "__main__":
     wraplightcurves("data/snfiles_ps.txt","/home/dscolnic/",
-                    "/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/np_data/g/PS_TEST1/lightcurves/g/",
-                    "/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/np_data/g/PS_TEST1/lightcurves/g/",
+                    "/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/np_data/g/",
+                    "/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/lightcurves/g",
                     filt='g')
