@@ -8,13 +8,15 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
     for fl in files:
         f = fl.split("/")[-1].strip()
         npzfile = os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSn.npz')
-
-        if os.path.exists(npzfile):
+        inputfile = os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_mcmc_input.npz')
+        if os.path.exists(npzfile) & os.path.exists():
             fin = os.path.join(filedir,f)
             fout = os.path.join(filedir,f+'_dillon')
             lcout = os.path.join(lightcurveoutdir,f.strip(".psmp")+'.png')
             data = np.load(npzfile)
             print data.keys()
+            input = np.load(inputfile)
+            print input.keys()
             raw_input()
             lc.lightcurve(mjd, fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filter, lcout, title='')
             #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
