@@ -811,7 +811,7 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             if snparams.mjd[j] == 0:
-                raw_input('mjdddd')
+                #raw_input('mjdddd')
                 continue
             #if cccc < 5:
 
@@ -838,8 +838,8 @@ class smp:
                 self.rickfakestarfile = 'data/fixmagCoords_SN-'+self.field+'.dat'
             except:
                 self.rickfakestarfile = ''
-            print filt
-            raw_input('filttt')
+            #print filt
+            #raw_input('filttt')
             if filt != 'all' and band not in filt:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -1337,6 +1337,7 @@ class smp:
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 dotestoff = False
                 if zpt == 0:
+
                     raw_input('zerpoint badflag')
                     badflag = 1
                 if dotestoff:
