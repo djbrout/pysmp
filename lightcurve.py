@@ -14,19 +14,28 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             fout = os.path.join(filedir,f+'_dillon')
             lcout = os.path.join(lightcurveoutdir,f.strip(".psmp")+'.png')
             data = np.load(npzfile)
-            print data.keys()
             input = np.load(inputfile)
-            print input.keys()
-            print input['fakezpt']
+
             fitmag = 31.-2.5*np.log10(data['modelvec'])
             fitmagerr = -2.5*np.log10(data['modelvec'])+2.5*np.log10(data['modelvec']+data['modelvec_uncertainty'])
             fitflux = data['modelvec']
             fitfluxerr = data['modelvec_uncertainty']
-            fakemag = 31.-2.5*np.log10(input['fakeflux'])
-            fakeflux = input['fakeflux']
+
+
+            diffimmag = 31.-2.5*np.log10(input['diffim_flux'])
+            diffimmagerr = -2.5 * np.log10(data['diffim_flux']) + 2.5 * np.log10(
+                data['diffim_flux'] + data['diffim_fluxerr'])
+            diffimflux = input['diffim_flux']
+            diffimfluxerr = input['diffim_fluxerr']
+
             fitmag[fitmag > 50.] = 99; fitmagerr[fitmagerr > 50]=0.;fitmag[np.isnan(fitmag)] = 99; fitmagerr[np.isnan(fitmag)] = 0
-            print fitmag
-            lc.lightcurve(input['mjd'], fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filt, lcout, title='Dillon Test (Preliminary)')
+
+
+
+            lc.lightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
+                                                                                   diffimflux, diffimfluxerr,
+                                                                                   filt, lcout,
+                                                                                   title='Dillon Test (Preliminary)')
             #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
             raw_input()
 

@@ -8,7 +8,7 @@ import sys
 
 
 
-def lightcurve(mjd,fitmag,fitmagerr,fakemag,fitflux,fitfluxerr,fakeflux,filter,filename,title=''):
+def lightcurve(mjd,fitmag,fitmagerr,fakemag,fakemagerr,fitflux,fitfluxerr,fakeflux,fakefluxerr,filter,filename,title=''):
     plt.clf()
     fig,ax = plt.subplots(3,1,sharex=True,figsize=(7,10))
     
@@ -35,7 +35,7 @@ def lightcurve(mjd,fitmag,fitmagerr,fakemag,fitflux,fitfluxerr,fakeflux,filter,f
         if f == 'z':
             color = 'pink'
         ww = (filter == f) & (abs(fitmag - fakemag) < 10.)
-        ax[0].scatter(mjd[ww],fakemag[ww],color=color,marker='+')
+        ax[0].errorbar(mjd[ww],fakemag[ww],fakemagerr[ww],color=color,marker='+')
         ax[0].errorbar(mjd[ww],fitmag[ww],fitmagerr[ww],color=color,fmt='o',alpha=.3)
         ff = fakemag[ww]
         ax[1].errorbar(mjd[ww],fakemag[ww]-fitmag[ww],fitmagerr[ww],color=color,fmt='o')
