@@ -119,10 +119,10 @@ def pslightcurve(mjd, fitmag, fitmagerr, fakemag, fakemagerr, fitflux, fitfluxer
         ax[2].set_ylim(-2., 2.)
 
     ax[1].set_xlim(mjd[np.argmin(fitmag)] - 150, mjd[np.argmin(fitmag)] + 100.)
-    ax[1].set_ylabel('Fake - Fit Mag')
+    ax[1].set_ylabel('Diffim - SMP Fit Mag')
     ax[1].plot([min(mjd), max(mjd)], [0, 0], color='black')
     ax[2].plot([min(mjd), max(mjd)], [0, 0], color='black')
-    ax[2].set_ylabel('Fake - Fit Flux / Err')
+    ax[2].set_ylabel('Diffim - SMP Fit Flux / SMP Fit Err')
     ax[2].set_xlim(mjd[np.argmin(fitmag)] - 150, mjd[np.argmin(fitmag)] + 100.)
     ax[2].set_xlabel('MJD')
 
