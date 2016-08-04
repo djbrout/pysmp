@@ -97,7 +97,8 @@ def pslightcurve(mjd, fitmag, fitmagerr, fakemag, fakemagerr, fitflux, fitfluxer
         if f == 'z':
             color = 'pink'
         #ww = (filter == f) & (abs(fitmag - fakemag) < 10.)
-        ww=np.ones(len(mjd))
+        aa=np.ones(len(mjd))
+        ww = aa == 1
         ax[0].errorbar(mjd[ww], fakemag[ww], fakemagerr[ww], color=color, marker='+')
         ax[0].errorbar(mjd[ww], fitmag[ww], fitmagerr[ww], color=color, fmt='o', alpha=.3)
         ff = fakemag[ww]
