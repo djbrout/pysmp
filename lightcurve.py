@@ -24,6 +24,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             fitfluxerr = data['modelvec_uncertainty']
             fakemag = 31.-2.5*np.log10(input['fakeflux'])
             fakeflux = input['fakeflux']
+            print fitmag
             lc.lightcurve(input['mjd'], fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filt, lcout, title='Dillon Test (Preliminary)')
             #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
             raw_input()
