@@ -21,18 +21,21 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             fitflux = data['modelvec']
             fitfluxerr = data['modelvec_uncertainty']
 
+            diffimflux = input['diffim_flux']*10**(.4*(input['diffim_zpt']-31.))
+            diffimfluxerr = input['diffim_fluxerr']*10**(.4*(input['diffim_zpt']-31.))
 
-            diffimmag = 31.-2.5*np.log10(input['diffim_flux'])
-            diffimmagerr = -2.5 * np.log10(input['diffim_flux']) + 2.5 * np.log10(
-                input['diffim_flux'] + input['diffim_fluxerr'])
-            diffimflux = input['diffim_flux']
-            diffimfluxerr = input['diffim_fluxerr']
+
+            diffimmag = 31.-2.5*np.log10(diffimflux)
+            diffimmagerr = -2.5 * np.log10(diffimflux) + 2.5 * np.log10(
+                diffimflux + diffimfluxerr)
+
 
             fitmag[fitmag > 50.] = 99; fitmagerr[fitmagerr > 50]=0.;fitmag[np.isnan(fitmag)] = 99; fitmagerr[np.isnan(fitmag)] = 0
 
             print diffimflux,fitflux
             print diffimmag,fitmag
             print input['mjd']
+
             lc.pslightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
                                                                                    diffimflux, diffimfluxerr,
                                                                                    filt, lcout,
