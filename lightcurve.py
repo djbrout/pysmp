@@ -52,6 +52,7 @@ def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fak
     origfile.close()
 #addtolightcurve('testlc.dat','./testdats/','testcol',,[888,777,000,111],[8,8,8,8],[31.,31.,31.,31.])
 
+def plot
        
 
 
