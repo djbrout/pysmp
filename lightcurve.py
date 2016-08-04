@@ -32,7 +32,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
 
             print fitmag
 
-            lc.lightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
+            lc.pslightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
                                                                                    diffimflux, diffimfluxerr,
                                                                                    filt, lcout,
                                                                                    title='Dillon Test (Preliminary)')
