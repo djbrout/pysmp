@@ -7,8 +7,10 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
     for fl in files:
         f = fl.split("/")[-1]
         print f
-        print os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz')
+        print filedir
+        print os.path.join(filedir,f.strip(".psmp")+'_'+filt+'_withSN.npz')
         print os.path.exists(os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz'))
+        raw_input()
         if os.path.exists(os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSN.npz')):
             print "it existssssssssss"
             fin = os.path.join(filedir,f)
