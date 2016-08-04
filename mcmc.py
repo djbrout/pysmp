@@ -788,6 +788,9 @@ class metropolis_hastings():
         #print self.modelvec_nphistory.shape
         #raw_input()
         #plt.clf()
+        import matplotlib as m
+        m.use('Agg')
+        import matplotlib.pyplot as plt
         fig = plt.figure(1,figsize=(10,7))
         for e in np.arange(numepochs):
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
