@@ -2004,7 +2004,7 @@ class smp:
                 )
         
         self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
-        self.dogalfit = False
+        #self.dogalfit = False
         if self.dogalfit:
             aaa = mcmc3.metropolis_hastings( 
                     galmodel = galmodel
