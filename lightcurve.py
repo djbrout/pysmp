@@ -40,7 +40,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             lc.pslightcurve(input['mjd'], fitmag, fitmagerr, diffimmag, diffimmagerr, fitflux, fitfluxerr,
                                                                                    diffimflux, diffimfluxerr,
                                                                                    filt, lcout,
-                                                                                   title='Dillon Test (Preliminary2)')
+                                                                                   title='Dillon Test (Preliminary)')
             #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
             raw_input()
 
