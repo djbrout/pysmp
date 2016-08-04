@@ -17,7 +17,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             print data.keys()
             input = np.load(inputfile)
             print input.keys()
-            print len(data['modelvec'],len(input['mjd']))
+            print len(data['modelvec']),len(input['mjd'])
             raw_input()
             lc.lightcurve(mjd, fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filter, lcout, title='')
             #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
