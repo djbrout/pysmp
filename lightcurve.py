@@ -9,7 +9,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
         f = fl.split("/")[-1].strip()
         npzfile = os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_withSn.npz')
         inputfile = os.path.join(npzdir,f.strip(".psmp")+'_'+filt+'_mcmc_input.npz')
-        if os.path.exists(npzfile) & os.path.exists():
+        if os.path.exists(npzfile) & os.path.exists(inputfile):
             fin = os.path.join(filedir,f)
             fout = os.path.join(filedir,f+'_dillon')
             lcout = os.path.join(lightcurveoutdir,f.strip(".psmp")+'.png')
