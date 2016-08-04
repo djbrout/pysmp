@@ -48,8 +48,8 @@ from copy import copy
 import pdb
 from numpy import corrcoef, sum, log, arange
 from numpy.random import rand
-#from pylab import pcolor, show, colorbar, xticks, yticks
-#import pylab as plt
+from pylab import pcolor, show, colorbar, xticks, yticks
+import pylab as plt
 import time
 import pyfits as pf
 import os
