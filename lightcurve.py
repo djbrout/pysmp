@@ -25,6 +25,7 @@ def wraplightcurves(listfile,filedir,npzdir,lightcurveoutdir,filt=None):
             fakemag = 31.-2.5*np.log10(input['fakeflux'])
             fakeflux = input['fakeflux']
             print fitmag
+            fitmag[fitmag > 50.] = 99; fitmagerr[fitmagerr > 50]=0.;fitmag[np.isnan(fitmag)] = 99; fitmagerr[np.isnan(fitmag)] = 0
             lc.lightcurve(input['mjd'], fitmag, fitmagerr, fakemag, fitflux, fitfluxerr, fakeflux, filt, lcout, title='Dillon Test (Preliminary)')
             #addtolightcurve(fin,fout,'DILLON_SMP','g',mjd,flux,fluxerr,usezpt,fitzpt)
             raw_input()
