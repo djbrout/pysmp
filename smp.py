@@ -497,8 +497,8 @@ class smp:
                 print 'Could not find star offset file. Calculating...'
                 nozpt = True
 
-        print 'ABOUT TO GLOBALSTAR'*10
-        sys.exit()
+        #print 'ABOUT TO GLOBALSTAR'*10
+        #sys.exit()
         
         #############################################################################################################################
         ################################################# GET STAR GLOBAL OFFSETS ###################################################
@@ -545,6 +545,8 @@ class smp:
                     #sys.exit()
                 else:
                     print 'file not found',imfile
+                print 'grabbed sn files'
+                sys.exit()
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
                 self.field = imfile.split('/')[0].split('-')[1]
