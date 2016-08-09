@@ -281,12 +281,11 @@ class smp:
         import astropy.io.fits as pyfits
         self.outfile = outfile
         print 'line 275'
-        print 'done importing'
-        sys.exit()
         if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
             outdir = ''
+
         cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
         if not os.path.exists(cspath):
             os.makedirs(cspath)
@@ -479,17 +478,27 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
         staroutdir = os.path.join(outdir,stardeltasfolder+'/stardata/'+filt+'/')
-        if not os.path.exists(staroutdir):
-            os.makedirs(staroutdir)
+        if fermigrid and worker:
+            if not os.path.exists(staroutdir):
+                os.system('ifdh mkdir '+staroutdir)
+        else:
+            if not os.path.exists(staroutdir):
+                os.makedirs(staroutdir)
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
 
+
         if not nozpt:
+            if fermigrid and worker:
+                os.system('ifdh cp '+star_offset_file+' .')
+                star_offset_file = filename+'band_starGlobalOffsets.npz'
             try:
                 staroffsets = np.load(star_offset_file)
             except:
                 print 'Could not find star offset file. Calculating...'
                 nozpt = True
 
+        print 'ABOUT TO GLOBALSTAR'*10
+        sys.exit()
         
         #############################################################################################################################
         ################################################# GET STAR GLOBAL OFFSETS ###################################################
