@@ -261,6 +261,7 @@ class smp:
 
                 os.system('ifdh mkdir '+os.path.join(outdir,SNfoldername))
 
+
         #print filt
         print self.snparams.photflag
         #raw_input()
@@ -4415,6 +4416,7 @@ if __name__ == "__main__":
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
+    worker = True
     if isEmbarrasinglyParallel:
         index = os.environ[parallelvar]
 
@@ -4447,7 +4449,8 @@ if __name__ == "__main__":
     if snfilelist is None:
         raise NameError("Must provide " +
                         "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
-    print 'im just about to start scene model'
+
+    print 'about to start scene modeling'
     sys.exit()
     if not index is None:
         if index == 'all':
