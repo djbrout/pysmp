@@ -261,8 +261,7 @@ class smp:
 
                 os.system('ifdh mkdir '+os.path.join(outdir,SNfoldername))
 
-        print 'madedirr'*100
-        sys.exit()
+
         #print filt
         print self.snparams.photflag
         #raw_input()
@@ -282,6 +281,8 @@ class smp:
         import astropy.io.fits as pyfits
         self.outfile = outfile
         print 'line 275'
+        print 'done importing'
+        sys.exit()
         if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
