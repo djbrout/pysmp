@@ -4447,7 +4447,8 @@ if __name__ == "__main__":
     if snfilelist is None:
         raise NameError("Must provide " +
                         "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
-
+    print 'im just about to start scene model'
+    sys.exit()
     if not index is None:
         if index == 'all':
             for iii in np.arange(0,5000):
