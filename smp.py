@@ -525,9 +525,13 @@ class smp:
             #print imfile
             #raw_input()
             if self.fermigrid & self.worker:
-                print 'line 497 copying image files to here'
+                os.system('ifdh cp ' + imfile + ' .')
+                print 'line 529 copied image files to here'
+                sys.exit()
                 print 'ifdh cp '+imfile+' .'
                 ifdhls = os.popen('ifdh ls '+imfile).read()
+                print 'ls on the file'
+                sys.exit()
                 #print 'ifdhls',ifdhls
                 file_exists = os.popen('echo $?').read()
                 print 'file_exists',float(file_exists)
