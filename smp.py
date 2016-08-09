@@ -526,8 +526,6 @@ class smp:
             #raw_input()
             if self.fermigrid & self.worker:
                 print imfile
-                print 'exiting'
-                sys.exit()
                 os.system('ifdh cp ' + imfile + ' .')
                 print 'line 529 copied image files to here'
                 sys.exit()
