@@ -531,8 +531,10 @@ class smp:
                 #print 'line 529 copied image files to here'
                 #sys.exit()
                 #print 'ifdh cp '+imfile+' .'
-                ifdhls = os.popen('ifdh ls '+imfile).read()
-                print ifdhls
+                import subprocess
+                output = subprocess.check_output('ifdh ls '+imfile, shell=True)
+                #ifdhls = os.popen('ifdh ls '+imfile).read()
+                print output
                 print 'ls on the file'
                 sys.exit()
                 #print 'ifdhls',ifdhls
