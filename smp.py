@@ -538,19 +538,19 @@ class smp:
                 #file_exists = os.popen('echo $?').read()
                 #print 'file_exists',float(file_exists)
                 if len(ifdhls) > 0:
-                    print 'file does exist', imfile
+                    #print 'file does exist', imfile
                     #sys.exit()
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     imfile = imfile.split('/')[-1]
-                    print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                    #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
                     noisefile = noisefile.split('/')[-1]
-                    print 'ifdh cp ' + psffile + ' .'
+                    #print 'ifdh cp ' + psffile + ' .'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                     psffile = psffile.split('/')[-1]
-                    print 'copied all files'
-                    print os.popen('ifdh ls .').read()
-                    sys.exit()
+                    #print 'copied all files'
+                    #print os.popen('ifdh ls .').read()
+                    #sys.exit()
                 else:
                     print 'file not found',imfile
                     continue
@@ -567,6 +567,9 @@ class smp:
                 #print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
+
+            if fermigrid and worker:
+                self.rootdir = '.'
 
             imfile = os.path.join(self.rootdir,imfile)
             print imfile
@@ -629,10 +632,12 @@ class smp:
             try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
+                print im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
                 continue
-
+            print 'got image data!'
+            sys.exit()
             #fakeim_hdr = pyfits.getheader(fakeim)
             #snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
 
