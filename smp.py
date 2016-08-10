@@ -758,7 +758,8 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
 
-
+            print 'hhhhhhhh'
+            sys.exit()
 
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
@@ -809,9 +810,9 @@ class smp:
                 #print starras
 
                 #raw_input()
-        #print starcat.ra
-        #print 'got starcatalog exiting now'
-        #sys.exit()
+        print starcat.ra
+        print 'got starcatalog exiting now'
+        sys.exit()
         if nozpt:
             starids = np.array(starids)
             starras = np.array(starras)
