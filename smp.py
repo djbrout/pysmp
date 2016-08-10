@@ -1131,7 +1131,7 @@ class smp:
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
                     
             print 'about to do zeropoints'
-            sys.exit()
+            #sys.exit()
             if snparams.psf_model.lower() == 'daophot':
                 #self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
                 self.psf = rdpsf.rdpsf(psffile)[0]
@@ -1382,6 +1382,8 @@ class smp:
                 #print badflag.shape
                 #raw_input('we are before the zpt calc')
                 skipactualzeropoint = False
+                print 'just before getzpt'
+                sys.exit()
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
