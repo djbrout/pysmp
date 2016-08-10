@@ -526,12 +526,13 @@ class smp:
             #raw_input()
 
             if self.fermigrid & self.worker:
-                print imfile
-                os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
-                print 'line 529 copied image files to here'
-                sys.exit()
-                print 'ifdh cp '+imfile+' .'
+                #print imfile
+                #os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
+                #print 'line 529 copied image files to here'
+                #sys.exit()
+                #print 'ifdh cp '+imfile+' .'
                 ifdhls = os.popen('ifdh ls '+imfile).read()
+                print ifdhls
                 print 'ls on the file'
                 sys.exit()
                 #print 'ifdhls',ifdhls
