@@ -533,13 +533,7 @@ class smp:
                 #print 'ifdh cp '+imfile+' .'
 
                 ifdhls = os.popen('ifdh ls '+imfile).read()
-
-                #print 'ifdhls',ifdhls
-                #file_exists = os.popen('echo $?').read()
-                #print 'file_exists',float(file_exists)
                 if len(ifdhls) > 0:
-                    #print 'file does exist', imfile
-                    #sys.exit()
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     imfile = imfile.split('/')[-1]
                     #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
@@ -698,9 +692,9 @@ class smp:
             ra_low = np.min([ra1,ra2])
             dec_high = np.max([dec1,dec2])
             dec_low = np.min([dec1,dec2])
-            print 'starcat'*50
-            print snparams.starcat
-            sys.exit()
+            #print 'starcat'*50
+            #print snparams.starcat
+            #sys.exit()
             if type(snparams.starcat) == np.array:
                 if os.path.exists(snparams.starcat[j]):
                     starcat = txtobj(snparams.starcat[j],useloadtxt=True)
@@ -715,10 +709,16 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
-
-                for fl in os.listdir(starcatloc):
-                    if 'STARCAT' in fl:
-                        starcatfile = fl
+                if fermigrid and worker:
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+                    if len(ifdhls) > 0:
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls + ' .').read()
+                        starcatfile = ifdhls.split('/')[-1]
+                        starcatloc = ''
+                else:
+                    for fl in os.listdir(starcatloc):
+                        if 'STARCAT' in fl:
+                            starcatfile = fl
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
@@ -743,6 +743,7 @@ class smp:
                             raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[filt])
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
+
 
 
             if nozpt:
@@ -794,7 +795,9 @@ class smp:
                 #print starras
 
                 #raw_input()
-        
+        print starcat.ra
+        print 'got starcatalog exiting now'
+        sys.exit()
         if nozpt:
             starids = np.array(starids)
             starras = np.array(starras)
