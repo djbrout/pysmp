@@ -699,7 +699,7 @@ class smp:
             dec_high = np.max([dec1,dec2])
             dec_low = np.min([dec1,dec2])
             print 'starcat'*50
-            print snparams.starcat[j]
+            print snparams.starcat
             sys.exit()
             if type(snparams.starcat) == np.array:
                 if os.path.exists(snparams.starcat[j]):
