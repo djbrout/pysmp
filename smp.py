@@ -540,6 +540,7 @@ class smp:
                     #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
                     noisefile = noisefile.split('/')[-1]
+                    weightsfile = noisefile
                     #print 'ifdh cp ' + psffile + ' .'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                     psffile = psffile.split('/')[-1]
