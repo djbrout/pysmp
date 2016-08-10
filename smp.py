@@ -717,16 +717,18 @@ class smp:
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                    print ifdhls
-                    print 'ls on imfileloc'
+                    #print ifdhls
+                    #print 'ls on imfileloc'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                    print ifdhls
-                    print 'ls on imfileloc/STARCAT*.LIST'
-                    sys.exit()
+                    #print ifdhls
+                    #print 'ls on imfileloc/STARCAT*.LIST'
+                    #sys.exit()
                     if len(ifdhls) > 0:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls + ' .').read()
                         starcatfile = ifdhls.split('/')[-1]
                         starcatloc = ''
+                        ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
+                        print ifdhls
                 else:
                     for fl in os.listdir(starcatloc):
                         if 'STARCAT' in fl:
@@ -807,9 +809,9 @@ class smp:
                 #print starras
 
                 #raw_input()
-        print starcat.ra
-        print 'got starcatalog exiting now'
-        sys.exit()
+        #print starcat.ra
+        #print 'got starcatalog exiting now'
+        #sys.exit()
         if nozpt:
             starids = np.array(starids)
             starras = np.array(starras)
@@ -851,6 +853,9 @@ class smp:
 
         #############################################################################################################################
         #############################################################################################################################
+        print 'Done with centroiding!!'
+        sys.exit()
+
 
         cccc = 0
         for imfile,noisefile,psffile,band,faketruemag, j in \
