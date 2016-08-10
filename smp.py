@@ -4089,8 +4089,8 @@ class smp:
         '''
         ### psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
         ###                                                                           self.params.substamp)).read()
-        print "bash -c source dump_psfex.c -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,35)
-        psf = os.popen("bash -c source dump_psfex.c -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
+        #print "bash -c source dump_psfex.c -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,35)
+        psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
                                                                                    35)).readlines()
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
