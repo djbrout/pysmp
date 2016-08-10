@@ -711,6 +711,8 @@ class smp:
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
                 if fermigrid and worker:
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+                    print ifdhls
+                    sys.exit()
                     if len(ifdhls) > 0:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls + ' .').read()
                         starcatfile = ifdhls.split('/')[-1]
