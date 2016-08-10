@@ -531,31 +531,31 @@ class smp:
                 #print 'line 529 copied image files to here'
                 #sys.exit()
                 #print 'ifdh cp '+imfile+' .'
-                import subprocess
-                output = subprocess.check_output('ifdh ls '+imfile, shell=True)
-                #ifdhls = os.popen('ifdh ls '+imfile).read()
-                print output
-                print 'ls on the file'
-                sys.exit()
+
+                ifdhls = os.popen('ifdh ls '+imfile).read()
+
                 #print 'ifdhls',ifdhls
-                file_exists = os.popen('echo $?').read()
-                print 'file_exists',float(file_exists)
-                if float(file_exists) == 0:
-                    print 'file does exist'
+                #file_exists = os.popen('echo $?').read()
+                #print 'file_exists',float(file_exists)
+                if len(ifdhls) > 0:
+                    print 'file does exist', imfile
                     #sys.exit()
-                    os.system('ifdh cp '+imfile+' .')
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     imfile = imfile.split('/')[-1]
-                    print 'ifdh cp '+noisefile+' .'
-                    os.system('ifdh cp '+noisefile+' .')
+                    print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
                     noisefile = noisefile.split('/')[-1]
                     print 'ifdh cp ' + psffile + ' .'
-                    os.system('ifdh cp ' + psffile + ' .')
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                     psffile = psffile.split('/')[-1]
-                    #sys.exit()
+                    print 'copied all files'
+                    print os.popen('ifdh ls .').read()
+                    sys.exit()
                 else:
                     print 'file not found',imfile
-                print 'grabbed sn files'
-                sys.exit()
+                    continue
+                #print 'grabbed sn files'
+                #sys.exit()
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
                 self.field = imfile.split('/')[0].split('-')[1]
