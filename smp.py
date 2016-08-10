@@ -715,7 +715,7 @@ class smp:
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
 
                 if fermigrid and worker:
-                    starcatloc = '/'.join(imfileloc.split('/')[0:-1])+'/'
+                    starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
                     print ifdhls
                     print 'ls on imfileloc'
