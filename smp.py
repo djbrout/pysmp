@@ -717,14 +717,14 @@ class smp:
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                    #print ifdhls
-                    #print 'ls on imfileloc'
+                    print ifdhls
+                    print 'ls on imfileloc'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                    #print ifdhls
-                    #print 'ls on imfileloc/STARCAT*.LIST'
+                    print ifdhls
+                    print 'ls on imfileloc/STARCAT*.LIST'
                     #sys.exit()
                     if len(ifdhls) > 0:
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls + ' .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
                         starcatfile = ifdhls.split('/')[-1]
                         starcatloc = ''
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
@@ -733,9 +733,9 @@ class smp:
                     for fl in os.listdir(starcatloc):
                         if 'STARCAT' in fl:
                             starcatfile = fl
-                print starcatloc+starcatfile
-                print 'hhhhhhhh'
-                sys.exit()
+                #print starcatloc+starcatfile
+                #print 'hhhhhhhh'
+                #sys.exit()
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
