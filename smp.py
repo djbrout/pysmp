@@ -901,7 +901,7 @@ class smp:
             #raw_input('filttt')
             if filt != 'all' and band not in filt:
                 if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
-                #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
+                print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
             cccc += 1
 
@@ -1094,22 +1094,9 @@ class smp:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
                 if fermigrid and worker:
-                    starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
-                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                    print ifdhls
-                    print 'ls on imfileloc'
-                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                    print ifdhls
-                    print 'ls on imfileloc/STARCAT*.LIST'
-                    # sys.exit()
-                    if len(ifdhls) > 0:
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
-                        starcatfile = ifdhls.strip().split('/')[-1]
-                        starcatloc = ''
-                        ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-                        print ifdhls
-                    else:
-                        continue
+                    starcatfile = snparams.starcat[band].split('/')[-1]
+                    starcatloc = ''
+                    print 'starcat',starcatfile
                 else:
                     for fl in os.listdir(starcatloc):
                         #print fl
