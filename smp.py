@@ -272,7 +272,11 @@ class smp:
 
         print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
-        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt)
+        if fermigrid and worker:
+            useifdh = True
+        else:
+            useifdh = False
+        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt,useifdh=useifdh)
         print 'done with tmpwriter line 267'
         foldername = SNfoldername
         tstart = time.time()
@@ -735,9 +739,7 @@ class smp:
                     for fl in os.listdir(starcatloc):
                         if 'STARCAT' in fl:
                             starcatfile = fl
-                #print starcatloc+starcatfile
-                #print 'hhhhhhhh'
-                #sys.exit()
+
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
@@ -763,8 +765,6 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
 
-            #print 'hhhhhhhh'
-            #sys.exit()
 
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
@@ -815,13 +815,12 @@ class smp:
                 #print starras
 
                 #raw_input()
-        print starcat.ra
-        print 'got starcatalog exiting now'
-        sys.exit()
+
         if nozpt:
             starids = np.array(starids)
             starras = np.array(starras)
             stardecs = np.array(stardecs)
+            print star_offset_file
             self.tmpwriter.savez(star_offset_file,starras=starras,stardecs=stardecs,starids=starids)
         else:
             staroffsets = np.load(star_offset_file)
@@ -859,6 +858,8 @@ class smp:
 
         #############################################################################################################################
         #############################################################################################################################
+        print offsetra
+        print offsetdec
         print 'Done with centroiding!!'
         sys.exit()
 

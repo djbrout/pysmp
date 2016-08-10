@@ -170,10 +170,11 @@ def pixelate(matrix, pixelation_factor):
 class tmpwriter():
     # tempdir = location to write files
     # tmp_index = index for parallel computation to avoid over-writing files
-    def __init__(self, tempdir='./tmp/',tmp_subscript=0,usedccp=False):
+    def __init__(self, tempdir='./tmp/',tmp_subscript=0,usedccp=False,useifdh=False):
         self.tmpdir = tempdir
         self.tmp_index = str(tmp_subscript)
         self.usedccp = usedccp
+        self.useifdh = useifdh
     def writefile(self,text,filename):
         tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         if os.path.isfile(tempfile):
@@ -186,6 +187,8 @@ class tmpwriter():
         a.close()
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
+        elif self.useifdh:
+            os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
 
@@ -197,6 +200,8 @@ class tmpwriter():
             os.remove(tempfile)
         if self.usedccp:
             os.system('dccp ' + filename + ' ' + tempfile)
+        elif self.useifdh:
+            os.system('ifdh cp' + filename + ' ' + tempfile)
         else:
             os.system('mv ' + filename + ' ' + tempfile)
 
@@ -207,6 +212,8 @@ class tmpwriter():
             os.remove(filename)
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
+        elif self.useifdh:
+            os.system('ifdh cp' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
 
@@ -220,6 +227,8 @@ class tmpwriter():
         np.savez(tempfile,**kwargs)
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
+        elif self.useifdh:
+            os.system('ifdh cp' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
         print 'saved',filename
