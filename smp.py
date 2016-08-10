@@ -562,6 +562,8 @@ class smp:
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
 
+            imfileloc = os.path.join(self.rootdir,imfile)
+
             if fermigrid and worker:
                 self.rootdir = '.'
 
@@ -709,9 +711,15 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
+
                 if fermigrid and worker:
+                    starcatloc = '/'.join(imfileloc.split('/')[0:-1])+'/'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
                     print ifdhls
+                    print 'ls on imfileloc'
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+                    print ifdhls
+                    print 'ls on imfileloc/STARCAT*.LIST'
                     sys.exit()
                     if len(ifdhls) > 0:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls + ' .').read()
