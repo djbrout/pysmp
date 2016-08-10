@@ -516,6 +516,7 @@ class smp:
             nozpt = copy(orig_nozpt)
 
             imfile = os.path.join(rootdir,imfile)
+            longimfile = copy(imfile)
             try:
                 noisefile = os.path.join(rootdir,noisefile)
             except:
@@ -562,19 +563,19 @@ class smp:
                 #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
 
-            imfileloc = os.path.join(self.rootdir,imfile)
+            #imfileloc = copy(imfile)
 
-            if fermigrid and worker:
-                self.rootdir = '.'
+            #if fermigrid and worker:
+            #    self.rootdir = '.'
 
-            imfile = os.path.join(self.rootdir,imfile)
-            print imfile
+            #print imfile
+            #print imfileloc
 
-            psffile = os.path.join(self.rootdir,psffile)
-            if self.useweights:
-                weightsfile = os.path.join(self.rootdir,noisefile)
-            else:
-                noisefile, maskfile = os.path.join(self.rootdir,noisefile[0]),os.path.join(self.rootdir,noisefile[1])
+            if not worker:
+                if self.useweights:
+                    weightsfile = os.path.join(self.rootdir,noisefile)
+                else:
+                    noisefile, maskfile = os.path.join(self.rootdir,noisefile[0]),os.path.join(self.rootdir,noisefile[1])
 
             if not os.path.exists(imfile):
                 if not os.path.exists(imfile+'.fz'):
@@ -4458,7 +4459,7 @@ if __name__ == "__main__":
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
-    worker = True
+    #worker = True
     if isEmbarrasinglyParallel:
         index = os.environ[parallelvar]
 
