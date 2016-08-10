@@ -729,6 +729,8 @@ class smp:
                         starcatloc = ''
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
                         print ifdhls
+                    else:
+                        continue
                 else:
                     for fl in os.listdir(starcatloc):
                         if 'STARCAT' in fl:
