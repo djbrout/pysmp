@@ -524,9 +524,10 @@ class smp:
             psffile = os.path.join(rootdir,psffile)
             #print imfile
             #raw_input()
+
             if self.fermigrid & self.worker:
                 print imfile
-                os.system('ifdh cp ' + imfile + ' .')
+                os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
                 print 'line 529 copied image files to here'
                 sys.exit()
                 print 'ifdh cp '+imfile+' .'
