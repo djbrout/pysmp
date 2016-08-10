@@ -636,8 +636,8 @@ class smp:
             except:
                 print 'Image is EMPTY, skipping star...'
                 continue
-            print 'got image data!'
-            sys.exit()
+            #print 'got image data!'
+            #sys.exit()
             #fakeim_hdr = pyfits.getheader(fakeim)
             #snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
 
@@ -697,8 +697,10 @@ class smp:
             ra_high = np.max([ra1,ra2])
             ra_low = np.min([ra1,ra2])
             dec_high = np.max([dec1,dec2])
-            dec_low = np.min([dec1,dec2])    
-
+            dec_low = np.min([dec1,dec2])
+            print 'starcat'*50
+            print snparams.starcat[j]
+            sys.exit()
             if type(snparams.starcat) == np.array:
                 if os.path.exists(snparams.starcat[j]):
                     starcat = txtobj(snparams.starcat[j],useloadtxt=True)
