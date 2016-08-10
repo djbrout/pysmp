@@ -858,10 +858,10 @@ class smp:
 
         #############################################################################################################################
         #############################################################################################################################
-        print offsetra
-        print offsetdec
-        print 'Done with centroiding!!'
-        sys.exit()
+        #print offsetra
+        #print offsetdec
+        #print 'Done with centroiding!!'
+        #sys.exit()
 
 
         cccc = 0
@@ -880,8 +880,10 @@ class smp:
             nozpt = copy(orig_nozpt)
 
             if self.fermigrid & self.worker:
+                longimfile = copy(imfile)
                 imfile = imfile.split('/')[-1]
                 noisefile = noisefile.split('/')[-1]
+                weightsfile = noisefile
                 psffile = psffile.split('/')[-1]
 
             try:
@@ -903,14 +905,15 @@ class smp:
                 continue
             cccc += 1
 
-            imfile = os.path.join(self.rootdir, imfile)
-            print imfile
+            if not fermigrid:
+                imfile = os.path.join(self.rootdir, imfile)
+                print imfile
 
-            psffile = os.path.join(self.rootdir, psffile)
-            if self.useweights:
-                weightsfile = os.path.join(self.rootdir, noisefile)
-            else:
-                noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir, noisefile[1])
+                psffile = os.path.join(self.rootdir, psffile)
+                if self.useweights:
+                    weightsfile = os.path.join(self.rootdir, noisefile)
+                else:
+                    noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir, noisefile[1])
 
             #imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
             #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
@@ -1090,11 +1093,28 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
-
-                for fl in os.listdir(starcatloc):
-                    #print fl
-                    if 'STARCAT' in fl:
-                        starcatfile = fl
+                if fermigrid and worker:
+                    starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
+                    print ifdhls
+                    print 'ls on imfileloc'
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+                    print ifdhls
+                    print 'ls on imfileloc/STARCAT*.LIST'
+                    # sys.exit()
+                    if len(ifdhls) > 0:
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
+                        starcatfile = ifdhls.strip().split('/')[-1]
+                        starcatloc = ''
+                        ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
+                        print ifdhls
+                    else:
+                        continue
+                else:
+                    for fl in os.listdir(starcatloc):
+                        #print fl
+                        if 'STARCAT' in fl:
+                            starcatfile = fl
                 #print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
@@ -1121,7 +1141,8 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
                     
-
+            print 'about to do zeropoints'
+            sys.exit()
             if snparams.psf_model.lower() == 'daophot':
                 #self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
                 self.psf = rdpsf.rdpsf(psffile)[0]
