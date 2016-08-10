@@ -761,8 +761,8 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
 
-            print 'hhhhhhhh'
-            sys.exit()
+            #print 'hhhhhhhh'
+            #sys.exit()
 
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
