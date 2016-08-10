@@ -1113,6 +1113,8 @@ class smp:
                         except:
                             raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[band])
                 else:
+                    print 'Error : catalog file %s does not exist!!'
+                    continue
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
             else:
                 if os.path.exists(snparams.starcat[filt]):
