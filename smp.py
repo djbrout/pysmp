@@ -3281,7 +3281,7 @@ class smp:
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
         else: 
-            for i in np.arange(guess_scale-2000,guess_scale+2000,1):
+            for i in np.arange(guess_scale-2000,guess_scale+2000,.5):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
@@ -3690,7 +3690,7 @@ class smp:
                             gsflux_dms[i] = gdms
                             #print 'gchisq',gchisq
                             #raw_input()
-                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, radius,
+                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                                                                          gal, mjd, scale)
 
 
