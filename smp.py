@@ -1388,7 +1388,7 @@ class smp:
                 #sys.exit()
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
-                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
+                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          psf=self.psf)
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
@@ -3543,7 +3543,7 @@ class smp:
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
-                mjdoff,mjdslopeinteroff,psf='',mjd=None,
+                mjdoff,mjdslopeinteroff,j,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
         print 'Computing zeropoint for',imfile
@@ -3649,7 +3649,7 @@ class smp:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
-                        print 'scale CHECKEEEEEE', scale, scaleck
+                        #print 'scale CHECKEEEEEE', scale, scaleck
 
                         #raw_input()
                         noise_stamp[noise_stamp > 0.] = 1
@@ -3697,7 +3697,7 @@ class smp:
                         #print 'checking!!!', cscale, oldcscale
                         print 'DIFFFFFF',scale,cscale
                         #scale = cscale
-                        print psfcenter,scale
+                        #print psfcenter,scale
                         #print 'scaled'
                         #print 'chisq',gchisq,chisq
                         #print 'flux',gscale,cscale
@@ -3790,9 +3790,10 @@ class smp:
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
                                        startMedian=True,sigmaclip=1.5,iter=10)
             
-            print 'zpt',md
+            print 'fitzpt',md,'diffimzpt',snparams.zp[j]
             print 'std',std
 
+            sys.exit()
             dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
             std = float(std)/float(num**.5)
             #print 'reduced std', std
