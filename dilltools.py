@@ -240,7 +240,7 @@ class tmpwriter():
             os.remove(tempfile)
         if os.path.isfile(filename):
             os.remove(filename)
-        save_fits_image(data,filename)
+        save_fits_image(data,tempfile)
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
