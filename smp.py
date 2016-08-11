@@ -3259,7 +3259,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale):
+    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index=''):
 
         chisqvec = []
         fluxvec = []
@@ -3316,6 +3316,11 @@ class smp:
         
         #raw_input()
         sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)]*psf
+        self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
+        self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
+        self.tmpwriter.savefits(im-sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_dataminussim.fits')
+        self.tmpwriter.savefits((im-sim)**2*weight,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
+
         sum_data_minus_sim = np.sum(im-sim)
         return fluxvec[chisqvec == min(chisqvec)], fluxvec[chisqvec == min(chisqvec)] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
 
@@ -3691,7 +3696,7 @@ class smp:
                             #print 'gchisq',gchisq
                             #raw_input()
                         cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
-                                                                         gal, mjd, scale)
+                                                                         gal, mjd, scale,index=i)
 
 
                         #print 'checking!!!', cscale, oldcscale

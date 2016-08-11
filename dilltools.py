@@ -233,3 +233,18 @@ class tmpwriter():
             os.system('mv ' + tempfile + ' ' + filename)
         print 'saved',filename
 
+
+    def savefits(self,data,filename):
+        tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.fits')
+        if os.path.isfile(tempfile):
+            os.remove(tempfile)
+        if os.path.isfile(filename):
+            os.remove(filename)
+        save_fits_image(data,filename)
+        if self.usedccp:
+            os.system('dccp ' + tempfile + ' ' + filename)
+        elif self.useifdh:
+            os.system('ifdh cp' + tempfile + ' ' + filename)
+        else:
+            os.system('mv ' + tempfile + ' ' + filename)
+        print 'saved', filename
