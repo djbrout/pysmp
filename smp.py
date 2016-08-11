@@ -1382,8 +1382,8 @@ class smp:
                 #print badflag.shape
                 #raw_input('we are before the zpt calc')
                 skipactualzeropoint = False
-                print 'just before getzpt'
-                sys.exit()
+                #print 'just before getzpt'
+                #sys.exit()
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,
@@ -1407,7 +1407,7 @@ class smp:
                 dotestoff = False
                 if zpt == 0:
 
-                    raw_input('zerpoint badflag')
+                    print 'zerpoint badflag'
                     badflag = 1
                 if dotestoff:
                     self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
@@ -1463,17 +1463,17 @@ class smp:
                 mygain = ((1/skyerrsn**2)*skysn)
 
                 if badflagd == 1:
-                    raw_input('badflagd')
+                    #raw_input('badflagd')
                     badflag = 1
 
                 if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
                     if self.useweights:
                         badflag = 1
-                        raw_input('mask badflag')
+                        #raw_input('mask badflag')
                         print 'mask badflag'
                 if skysn < -1e5:
                     badflag = 1
-                    raw_input('skysn badflag')
+                    #raw_input('skysn badflag')
                     #print 'skysn badflag'
 
                 if not badflag:
@@ -1543,6 +1543,8 @@ class smp:
 
                     else:
                         try:
+                            print 'about to pkfit'
+                            sys.exit()
                             errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
                         except ValueError:
