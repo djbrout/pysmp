@@ -976,6 +976,7 @@ class smp:
 
             if self.useweights:
                 weights = pyfits.getdata(weightsfile)
+                maskfile = weightsfile
             else:
                 noise = pyfits.getdata(noisefile)
                 mask = pyfits.getdata(maskfile)
@@ -998,6 +999,7 @@ class smp:
                     maskcols = np.where((weights < 0) |
                                         (np.isfinite(weights) == False))
                     mask[maskcols] = 100.0
+
 
 
             wcsworked = True
