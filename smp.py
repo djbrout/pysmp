@@ -3260,7 +3260,7 @@ class smp:
         print 'saved',fname
 
     def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index=''):
-
+        print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
         
