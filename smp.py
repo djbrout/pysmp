@@ -4134,7 +4134,7 @@ class smp:
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   40)).readlines()
+                                                                                   34)).readlines()
 
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
@@ -4170,10 +4170,21 @@ class smp:
         print 'psfmax',np.max(psfout)
         print 'psffile',psffile
         print 'imfile',imfile
-        #self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
+        self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
         imstamp = pf.getdata(imfile)
-        imstamp = imstamp[xo-40/2:xo+40/2-1,yo-40/2:yo+40/2-1]
-        #self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
+        imstamp = imstamp[xo-34/2:xo+34/2-1,yo-34/2:yo+34/2-1]
+        imstamp = imstamp/np.sum(imstamp)
+
+        self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
+        self.tmpwriter.savefits(imstamp-psf, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
+
+        imstamp = pf.getdata(imfile)
+        imstamp = imstamp[xo - 34/2 + 1:xo + 34/2, yo - 34/2 + 1:yo + 34/2]
+        imstamp = imstamp / np.sum(imstamp)
+
+        self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
+        self.tmpwriter.savefits(imstamp - psf, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
+
         sys.exit()
         if dogalsim:
             print imfile
