@@ -843,22 +843,35 @@ class metropolis_hastings():
     def get_params( self ):
         #save_fits_image(self.data[ 0, :,:],'./data.fits')
         #if self.didtimeout:
+
+        datastamps = []
+        simstamps = []
+        galmodelstamps = []
+        weightstamps = []
+        psfstamps = []
+        chisqstamps = []
+
         if self.dosave:
-            #filelist = [ f for f in os.listdir("./out")]
-            #for f in filelist:
-            #    os.remove('./out/'+f)
-            
+
             for i in np.arange(self.Nimage):   
                 #print self.sims[i,:,:]
                 #print self.mjd[i] 
                 #print self.model_uncertainty[self.substamp**2+i]
-                save_fits_image(self.data[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_fluxdata.fits'))
-                save_fits_image(self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_fluxsim.fits'))
+                save_fits_image(self.data[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_data.fits'))
+                datastamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_data.fits'))
+                save_fits_image(self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_sim.fits'))
+                simstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_sim.fits'))
                 save_fits_image(self.data[i,:,:]-self.sky[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_fluxdataminussky.fits'))
                 save_fits_image(self.galaxy_model,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_galmodel.fits'))
-                save_fits_image(self.weights[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_fluxnoise.fits'))
+                galmodelstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_galmodel.fits'))
+                save_fits_image(self.weights[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_weight.fits'))
+                weightstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_weight.fits'))
                 save_fits_image(self.data[i,:,:]-self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_dataminussim.fits'))
+                save_fits_image((self.data[i,:,:]-self.sims[i])**2*self.weights[i,:,:]*self.mask,
+                                os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
+                chisqstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
                 save_fits_image(self.centered_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
+                psfstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
                 save_fits_image(self.centered_psfs[i,:,:]-self.kicked_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psfresidual.fits'))
                 save_fits_image(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyerr.fits'))
                 #a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyval.txt'),'w')
@@ -868,7 +881,8 @@ class metropolis_hastings():
                 #return self.model_params,self.model_uncertainty,self.nphistory, self.sims, np.asarray(self.xhistory),np.asarray(self.yhistory)
                 #return np.zeros(len(self.model_params))+1e8,np.zeros(len(self.model_params))+1e9,self.nphistory
             #save_fits_image(self.data[0,:,:],'./out/MDJ'+str(self.mjd)+'data.fits')
-        return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq # size: self.history[num_iter,len(self.model_params)]
+        stamps = [datastamps,simstamps,galmodelstamps,weightstamps,psfstamps,chisqstamps]
+        return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq,stamps # size: self.history[num_iter,len(self.model_params)]
 
     def get_params_analytical_weighted( self ):
         burn_in = int(self.nphistory.shape[0]*.5)
