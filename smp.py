@@ -4166,12 +4166,13 @@ class smp:
             psfout[y,x] = p
 
         print 'psfshape',psfout.shape
+        print 'psfmax',np.max(psfout)
         print 'psffile',psffile
         print 'imfile',imfile
-        self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
+        #self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
         imstamp = pf.getdata(imfile)
         imstamp = imstamp[xo-40/2:xo+40/2-1,yo-40/2:yo+40/2-1]
-        self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
+        #self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
         sys.exit()
         if dogalsim:
             print imfile
