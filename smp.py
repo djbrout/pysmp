@@ -4144,7 +4144,7 @@ class smp:
         IMAGE_CORNERX = 0
         IMAGE_CORNERY = 0
         for line in psf:
-            #print line
+            print line
             line = line.replace('\n','')
             if line.startswith('PSF:'):
                 #linelist = filter(None,line.split(' '))
@@ -4165,6 +4165,7 @@ class smp:
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
             psfout[y,x] = p
 
+        print 'psfvalmax',np.max(psfval)
         print 'psfshape',psfout.shape
         print 'psfmax',np.max(psfout)
         print 'psffile',psffile
