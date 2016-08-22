@@ -3345,12 +3345,11 @@ class smp:
         
         #raw_input()
         sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)]*psf
-        if index > 0:
-            self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
-            self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
-            self.tmpwriter.savefits(im-sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_dataminussim.fits')
-            self.tmpwriter.savefits((im-sim)**2*weight,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
-
+        #sys.exit()
+        #self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
+        #self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
+        #self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
+        #self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
         sum_data_minus_sim = np.sum(im-sim)
         return fluxvec[chisqvec == min(chisqvec)], fluxvec[chisqvec == min(chisqvec)] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
 
@@ -4130,8 +4129,13 @@ class smp:
         ### psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
         ###                                                                           self.params.substamp)).read()
         #print "bash -c source dump_psfex.c -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,35)
+        print 'inside build psfex'
+        print 'xpix',x,'ypix',y
+        xo = copy(x)
+        yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   35)).readlines()
+                                                                                   40)).readlines()
+
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
         yin = copy(y)
@@ -4140,7 +4144,7 @@ class smp:
         IMAGE_CORNERX = 0
         IMAGE_CORNERY = 0
         for line in psf:
-            print line
+            #print line
             line = line.replace('\n','')
             if line.startswith('PSF:'):
                 #linelist = filter(None,line.split(' '))
@@ -4157,11 +4161,18 @@ class smp:
         ix,iy,psfval = np.array(ix),np.array(iy),np.array(psfval)
         psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
         for x,y,p in zip(ix,iy,psfval):
-            if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
-                psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p 
-            #psfout[y,x] = p
+            #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
+            #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
+            psfout[y,x] = p
 
-
+        print 'psfshape',psfout.shape
+        print 'psffile',psffile
+        print 'imfile',imfile
+        self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
+        imstamp = pf.getdata(imfile)
+        imstamp = imstamp[xo-40/2:xo+40/2-1,yo-40/2:yo+40/2-1]
+        self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
+        sys.exit()
         if dogalsim:
             print imfile
             wcs = galsim.FitsWCS(imfile) #read in wcs
