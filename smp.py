@@ -4184,7 +4184,7 @@ class smp:
         print xo,yo
         xo = np.floor(xo)
         yo = np.floor(yo)
-        imstamp = imstamp[xo-17:xo+17+1,yo-17:yo+17+1]
+        imstamp = imstamp[yo-17:yo+17+1,xo-17:xo+17+1]
         imstamp = imstamp/np.sum(imstamp)
         print 'imstamp shape',imstamp.shape
         self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
