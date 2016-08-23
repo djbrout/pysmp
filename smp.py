@@ -1071,6 +1071,10 @@ class smp:
 
             xsn = xsn[0]
             ysn = ysn[0]
+            print 'usefake',self.usefake
+            print 'snra sndec',snparams.RA,snparams.DECL
+            print 'xsn ysnnnnnnnnnnnnnnnnn', xsn, ysn
+            print 'snparams.npix ypix',snparams.nxpix,snparams.nypix
             testoffset = False
             offsetx = .6
             offsety = .3
@@ -3646,7 +3650,7 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
+                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
                         #print psf.shape
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
@@ -4107,7 +4111,7 @@ class smp:
         variance = np.average((values-average)**2, weights=weights)  # Fast and numerically precise
         return (average, variance**.5)
 
-    def build_psfex(self, psffile,x,y,imfile,dogalsim=False):
+    def build_psfex(self, psffile,x,y,imfile,dogalsim=False,stop=False):
         '''
         Inputs from dump_psfex output file:
 
@@ -4192,8 +4196,8 @@ class smp:
         #
         # self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
         # self.tmpwriter.savefits(imstamp - psfout, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
-
-        sys.exit()
+        if stop:
+            sys.exit()
         if dogalsim:
             print imfile
             wcs = galsim.FitsWCS(imfile) #read in wcs
