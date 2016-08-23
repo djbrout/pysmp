@@ -4134,7 +4134,7 @@ class smp:
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   34)).readlines()
+                                                                                   35)).readlines()
 
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
@@ -4172,14 +4172,14 @@ class smp:
         print 'imfile',imfile
         self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
         imstamp = pf.getdata(imfile)
-        imstamp = imstamp[xo-34/2:xo+34/2-1,yo-34/2:yo+34/2-1]
+        imstamp = imstamp[xo-35/2:xo+35/2-1,yo-35/2:yo+35/2-1]
         imstamp = imstamp/np.sum(imstamp)
-
+        print 'imstamp shape',imstamp.shape
         self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
         self.tmpwriter.savefits(imstamp-psfout, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
 
         imstamp = pf.getdata(imfile)
-        imstamp = imstamp[xo - 34/2 + 1:xo + 34/2, yo - 34/2 + 1:yo + 34/2]
+        imstamp = imstamp[xo - 35/2 + 1:xo + 35/2, yo - 35/2 + 1:yo + 35/2]
         imstamp = imstamp / np.sum(imstamp)
 
         self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
