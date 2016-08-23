@@ -3447,7 +3447,8 @@ class smp:
 
                     except:
                         continue
-
+                else:
+                    print 'star not within bounds of image',x,y
 
         if os.path.isfile('fake20staroffsets.txt'):
             b = open('fake20staroffsets.txt','a')
@@ -3639,6 +3640,9 @@ class smp:
 
             if mc > 21:
                 continue
+            print 'nxpix',self.snparams.nxpix
+            print 'nypix',self.snparams.nypix
+            print x,y
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
@@ -4144,7 +4148,7 @@ class smp:
         IMAGE_CORNERX = 0
         IMAGE_CORNERY = 0
         for line in psf:
-            print line
+            #print line
             line = line.replace('\n','')
             if line.startswith('PSF:'):
                 #linelist = filter(None,line.split(' '))
