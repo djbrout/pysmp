@@ -4176,14 +4176,14 @@ class smp:
         imstamp = imstamp/np.sum(imstamp)
 
         self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
-        self.tmpwriter.savefits(imstamp-psf, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
+        self.tmpwriter.savefits(imstamp-psfout, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
 
         imstamp = pf.getdata(imfile)
         imstamp = imstamp[xo - 34/2 + 1:xo + 34/2, yo - 34/2 + 1:yo + 34/2]
         imstamp = imstamp / np.sum(imstamp)
 
         self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
-        self.tmpwriter.savefits(imstamp - psf, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
+        self.tmpwriter.savefits(imstamp - psfout, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
 
         sys.exit()
         if dogalsim:
