@@ -4172,18 +4172,20 @@ class smp:
         print 'imfile',imfile
         self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
         imstamp = pf.getdata(imfile)
-        imstamp = imstamp[xo-35/2:xo+35/2-1,yo-35/2:yo+35/2-1]
+        xo = np.floor(xo)
+        yo = np.floor(yo)
+        imstamp = imstamp[xo-17:xo+17,yo-17:yo+17]
         imstamp = imstamp/np.sum(imstamp)
         print 'imstamp shape',imstamp.shape
         self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
         self.tmpwriter.savefits(imstamp-psfout, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
 
-        imstamp = pf.getdata(imfile)
-        imstamp = imstamp[xo - 35/2 + 1:xo + 35/2, yo - 35/2 + 1:yo + 35/2]
-        imstamp = imstamp / np.sum(imstamp)
-
-        self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
-        self.tmpwriter.savefits(imstamp - psfout, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
+        # imstamp = pf.getdata(imfile)
+        # imstamp = imstamp[xo - 35/2 + 1:xo + 35/2, yo - 35/2 + 1:yo + 35/2]
+        # imstamp = imstamp / np.sum(imstamp)
+        #
+        # self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
+        # self.tmpwriter.savefits(imstamp - psfout, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
 
         sys.exit()
         if dogalsim:
