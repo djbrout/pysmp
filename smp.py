@@ -3292,7 +3292,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index=''):
+    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index='',mypsf=None,imfile=None,x=None,y=None):
         print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -3350,10 +3350,20 @@ class smp:
         #raw_input()
         sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)]*psf
         #sys.exit()
-        #self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
-        #self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
-        #self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
-        #self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
+        self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
+        self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
+        self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
+        self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
+        #if not mypsf is None:
+        #    self.tmpwriter.savefits(mypsf, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_sim.fits')
+        # if not imfile is None:
+        #     imstamp = pf.getdata(imfile)
+        #     print 'imstamp shape', imstamp.shape
+        #     print x, y
+        #     xo = round(x)
+        #     yo = round(y)
+        #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
+        #     imstamp = imstamp / np.sum(imstamp)
         sum_data_minus_sim = np.sum(im-sim)
         return fluxvec[chisqvec == min(chisqvec)], fluxvec[chisqvec == min(chisqvec)] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
 
@@ -3732,12 +3742,16 @@ class smp:
                             gsflux_dms[i] = gdms
                             #print 'gchisq',gchisq
                             #raw_input()
-                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
-                                                                         gal, mjd, scale,index=i)
+                        # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
+                        #                                                  gal, mjd, scale,index=i)
 
+                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                                                                         params.fitrad,
+                                                                         gal, mjd, scale, index=i)
 
                         #print 'checking!!!', cscale, oldcscale
                         print 'DIFFFFFF',scale,cscale
+                        sys.exit()
                         #scale = cscale
                         #print psfcenter,scale
                         #print 'scaled'
@@ -4173,22 +4187,22 @@ class smp:
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
             psfout[y,x] = p
 
-        print 'psfvalmax',np.max(psfval)
-        print 'psfshape',psfout.shape
-        print 'psfmax',np.max(psfout)
-        print 'psffile',psffile
-        print 'imfile',imfile
-        self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
-        imstamp = pf.getdata(imfile)
-        print 'imstamp shape',imstamp.shape
-        print xo,yo
-        xo = np.floor(xo)
-        yo = np.floor(yo)
-        imstamp = imstamp[yo-17:yo+17+1,xo-17:xo+17+1]
-        imstamp = imstamp/np.sum(imstamp)
-        print 'imstamp shape',imstamp.shape
-        self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
-        self.tmpwriter.savefits(imstamp-psfout, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
+        # print 'psfvalmax',np.max(psfval)
+        # print 'psfshape',psfout.shape
+        # print 'psfmax',np.max(psfout)
+        # print 'psffile',psffile
+        # print 'imfile',imfile
+        # self.tmpwriter.savefits(psfout,'/pnfs/des/scratch/pysmp/test/aaapsf.fits')
+        # imstamp = pf.getdata(imfile)
+        # print 'imstamp shape',imstamp.shape
+        # print xo,yo
+        # xo = np.floor(xo)
+        # yo = np.floor(yo)
+        # imstamp = imstamp[yo-17:yo+17+1,xo-17-1:xo+17]
+        # imstamp = imstamp/np.sum(imstamp)
+        # print 'imstamp shape',imstamp.shape
+        # self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim.fits')
+        # self.tmpwriter.savefits(imstamp-psfout, '/pnfs/des/scratch/pysmp/test/aaadms.fits')
 
         # imstamp = pf.getdata(imfile)
         # imstamp = imstamp[xo - 35/2 + 1:xo + 35/2, yo - 35/2 + 1:yo + 35/2]
@@ -4196,8 +4210,8 @@ class smp:
         #
         # self.tmpwriter.savefits(imstamp, '/pnfs/des/scratch/pysmp/test/aaaim2.fits')
         # self.tmpwriter.savefits(imstamp - psfout, '/pnfs/des/scratch/pysmp/test/aaadms2.fits')
-        if stop:
-            sys.exit()
+        #if stop:
+        #    sys.exit()
         if dogalsim:
             print imfile
             wcs = galsim.FitsWCS(imfile) #read in wcs
