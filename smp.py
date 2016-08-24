@@ -3758,7 +3758,8 @@ class smp:
                         #print 'chisq',gchisq,chisq
                         #print 'flux',gscale,cscale
                         #raw_input()
-                    except ValueError:
+                    #except ValueError:
+                    except NameError:
                         print 'skipped star...\n'
                         continue
 
