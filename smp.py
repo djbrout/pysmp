@@ -868,11 +868,11 @@ class smp:
         cccc = 0
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
-            smp_dict['mjd'][j] = float(snparams.mjd[j])
+            #smp_dict['mjd'][j] = float(snparams.mjd[j])
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if cccc < 15:
+            if cccc > 15:
                 continue
             #print imfile
             #raw_input()
