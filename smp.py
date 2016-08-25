@@ -872,17 +872,16 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            #if cccc < 5:
-
-            #    continue
+            if cccc < 15:
+                continue
             #print imfile
             #raw_input()
             skysig=np.nan
             badflag = 0
             nozpt = copy(orig_nozpt)
 
+            longimfile = copy(imfile)
             if self.fermigrid & self.worker:
-                longimfile = copy(imfile)
                 imfile = imfile.split('/')[-1]
                 noisefile = noisefile.split('/')[-1]
                 weightsfile = noisefile
@@ -1394,7 +1393,7 @@ class smp:
                 #sys.exit()
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
-                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
+                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,longimfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          psf=self.psf)
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
@@ -3939,36 +3938,45 @@ class smp:
             #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
             if self.fermigrid:
                 print 'insidefermigrid'
-                if self.worker:
-                    print os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
-                    plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                    os.system('ifdh cp -D ' + os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                        filt) + 'band_starfit_zptplot.png')
-                              + ' ' + self.zptoutpath)
-                else:
-                    plt.savefig('tmp.png')
-                    if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
-                        os.system('yes | rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                    os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                    #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                    print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+
+                print os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+                plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                #os.system('ifdh cp -D ' + os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #    filt) + 'band_starfit_zptplot.png')
+                #          + ' ' + self.zptoutpath)
+                plt.clf()
+                ras = np.array(ras)
+                decs = np.array(decs)
+                plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md)
+                plt.savefig(os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_ra.png'))
+                print 'saved', os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_ra.png')
+                plt.clf()
+                plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md)
+                plt.savefig(os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_dec.png'))
+                print 'saved', os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_dec.png')
+
+
             else:
                 plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                 print 'saved',os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
-            plt.clf()
-            ras = np.array(ras)
-            decs = np.array(decs)
-            plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
-            plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                filt) + 'band_starfit_zptplot_ra.png'))
-            print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                filt) + 'band_starfit_zptplot_ra.png')
-            plt.clf()
-            plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
-            plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                filt) + 'band_starfit_zptplot_dec.png'))
-            print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                filt) + 'band_starfit_zptplot_dec.png')
+                plt.clf()
+                ras = np.array(ras)
+                decs = np.array(decs)
+                plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+                plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_ra.png'))
+                print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_ra.png')
+                plt.clf()
+                plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+                plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_dec.png'))
+                print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot_dec.png')
 
             rrr = -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md
             badguys = abs(rrr) > .35
@@ -4031,7 +4039,9 @@ class smp:
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
-
+        if self.fermigrid:
+            os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
+            print 'copied from worker to zpt path',self.zptoutpath
         return(md,std,mag_compare_out)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
