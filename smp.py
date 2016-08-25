@@ -522,6 +522,7 @@ class smp:
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
+            self.impath = '/'.join(imfile.split('/')[:-1])
             try:
                 noisefile = os.path.join(rootdir,noisefile)
             except:
@@ -1393,8 +1394,8 @@ class smp:
                 #sys.exit()
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
-                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,longimfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                         psf=self.psf)
+                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
+                                         longimfile,psf=self.psf)
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
                     #                                     badflag, mag_star, im, weights, mask, psffile, imfile, snparams,
@@ -3591,7 +3592,7 @@ class smp:
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
-                mjdoff,mjdslopeinteroff,j,psf='',mjd=None,
+                mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
         print 'Computing zeropoint for',imfile
@@ -3998,16 +3999,20 @@ class smp:
             #raw_input()
             #Writing mags out to file .zpt in same location as image
             #print 'saving npz'
+            name = imfile.split('/')[-1].split('.')[-2]
             if doglobalstar:
                 if self.dogalsimpixfit:
-                    mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
+                    print name
+                    print self.impath
+                    mag_compare_out = os.path.join(self.impath,name + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
+                    print mag_compare_out
                 else:
-                    mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                    mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
             else:
                 if self.dogalsimpixfit:
-                    mag_compare_out = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz'
+                    mag_compare_out = os.path.join(self.impath,name + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz')
                 else:
-                    mag_compare_out = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
+                    mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo.npz')
             #print goodstarcols
             self.tmpwriter.savez( mag_compare_out
                 #,ra = ras[goodstarcols]
