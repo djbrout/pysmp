@@ -3850,7 +3850,7 @@ class smp:
             print 'fitzpt',md,'diffimzpt',snparams.zp[j]
             print 'std',std
 
-            sys.exit()
+            #sys.exit()
             dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
             std = float(std)/float(num**.5)
             #print 'reduced std', std
