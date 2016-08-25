@@ -1552,9 +1552,11 @@ class smp:
                     else:
                         try:
                             print 'about to pkfit'
-                            sys.exit()
-                            errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
+                            #sys.exit()
+                            psf_stamp = self.psf
+                            errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
+
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
 
