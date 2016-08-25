@@ -3751,7 +3751,7 @@ class smp:
 
                         #print 'checking!!!', cscale, oldcscale
                         print 'DIFFFFFF',scale,cscale
-                        sys.exit()
+                        #sys.exit()
                         #scale = cscale
                         #print psfcenter,scale
                         #print 'scaled'
