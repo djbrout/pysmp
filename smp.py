@@ -3748,13 +3748,16 @@ class smp:
                         # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                         #                                                  gal, mjd, scale,index=i)
 
+
                         cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i)
 
-                        mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp,
-                                                                         params.fitrad,
-                                                                         gal, mjd, scale, index=i+1000)
+                        print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
+
+                        #mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp,
+                        #                                                 params.fitrad,
+                        #                                                 gal, mjd, scale, index=i+1000)
                         #print 'checking!!!', cscale, oldcscale
                         print 'DIFFFFFF',scale,cscale,mcscale
                         #sys.exit()
