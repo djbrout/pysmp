@@ -3354,6 +3354,7 @@ class smp:
         #sys.exit()
         self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
         self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
+        self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
         self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
         self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
         #if not mypsf is None:
@@ -3751,8 +3752,11 @@ class smp:
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i)
 
+                        mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp,
+                                                                         params.fitrad,
+                                                                         gal, mjd, scale, index=i+1000)
                         #print 'checking!!!', cscale, oldcscale
-                        print 'DIFFFFFF',scale,cscale
+                        print 'DIFFFFFF',scale,cscale,mcscale
                         #sys.exit()
                         #scale = cscale
                         #print psfcenter,scale
@@ -4049,6 +4053,7 @@ class smp:
         if self.fermigrid:
             os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
             print 'copied from worker to zpt path',self.zptoutpath
+        sys.exit()
         return(md,std,mag_compare_out)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
