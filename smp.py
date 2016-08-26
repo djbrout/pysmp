@@ -3909,29 +3909,29 @@ class smp:
             zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
             exposure_num = imfile.split('/')[-1].split('_')[1]
             print 'writing zeropoints'
-            if nozpt:
-                fn = self.big_zpt+'.txt'
-                if os.path.isfile(self.big_zpt+'.txt'):
-                    pass
-                else:
-                   self.tmpwriter.writefile('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n',fn)
-                for i in goodstarcols:
-                    self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)\
-                        +'\t'+str(mcmc_md)+'\t'+str(mcmc_std)+'\t'+str(mcmc_me_md)+'\t'+str(mcmc_me_std)+'\t'+str(mag_cat[i])\
-                        +'\t'+str(-2.5*np.log10(flux_star[i]))+'\t'+str(-2.5*np.log10(flux_star_mcmc[i]))\
-                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_modelerrors[i]))\
-                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_simple[i]))
-                        +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]))
-                        +'\n',fn)
-                #b.close()
-
-                #b = open(self.checkstarfile,'a')
-                for i in goodstarcols:
-                    self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
-                            +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'
-                            +str(flux_star[i])+'\t'+str(flux_star_std[i])+'\t'+str(flux_chisq[i])+'\t'+str(flux_dms[i])+'\t'
-                            + str(gsflux[i]) + '\t' + str(gsflux_std[i]) + '\t' + str(gsflux_chisq[i]) + '\t' + str(gsflux_dms[i])
-                            +'\t'+str(mag_cat[i])+'\n',self.checkstarfile)
+            # if nozpt:
+            #     fn = self.big_zpt+'.txt'
+            #     if os.path.isfile(self.big_zpt+'.txt'):
+            #         pass
+            #     else:
+            #        self.tmpwriter.writefile('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n',fn)
+            #     for i in goodstarcols:
+            #         self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)\
+            #             +'\t'+str(mcmc_md)+'\t'+str(mcmc_std)+'\t'+str(mcmc_me_md)+'\t'+str(mcmc_me_std)+'\t'+str(mag_cat[i])\
+            #             +'\t'+str(-2.5*np.log10(flux_star[i]))+'\t'+str(-2.5*np.log10(flux_star_mcmc[i]))\
+            #             +'\t'+str(-2.5*np.log10(flux_star_mcmc_modelerrors[i]))\
+            #             +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_simple[i]))
+            #             +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]))
+            #             +'\n',fn)
+            #     #b.close()
+            #
+            #     #b = open(self.checkstarfile,'a')
+            #     for i in goodstarcols:
+            #         self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
+            #                 +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'
+            #                 +str(flux_star[i])+'\t'+str(flux_star_std[i])+'\t'+str(flux_chisq[i])+'\t'+str(flux_dms[i])+'\t'
+            #                 + str(gsflux[i]) + '\t' + str(gsflux_std[i]) + '\t' + str(gsflux_chisq[i]) + '\t' + str(gsflux_dms[i])
+            #                 +'\t'+str(mag_cat[i])+'\n',self.checkstarfile)
 
                 #b.close()
                 #print 'checkstarfilea appended'
