@@ -3778,7 +3778,20 @@ class smp:
                                                                          gal, mjd, scale, index=i)
 
                         print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
-                        mimage_stamp = im[np.round(y)-17:np.round(y)+17+1,np.round(x)-17:np.round(x)+17+1]
+                        if y-np.floor(y) < 5.:
+                            suby = 18
+                            addy = 17
+                        else:
+                            suby= 17
+                            addy = 18
+
+                        if x - np.floor(x) < 5.:
+                            subx = 18
+                            addx = 17
+                        else:
+                            subx = 17
+                            addx = 18
+                        mimage_stamp = im[np.round(y)-suby:np.round(y)+addy,np.round(x)-subx:np.round(x)+addx]
                         mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i+1000)
