@@ -1101,15 +1101,39 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 #starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
+
                 if fermigrid and worker:
-                    #starcatfile = longimfile.split('/')[-1]
-                    starcatloc = ''
-                    print 'starcat',starcatfile
+                    starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
+                    print ifdhls
+                    print 'ls on imfileloc'
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+                    print ifdhls
+                    print 'ls on imfileloc/STARCAT*.LIST'
+                    # sys.exit()
+                    if len(ifdhls) > 0:
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
+                        starcatfile = ifdhls.strip().split('/')[-1]
+                        starcatloc = ''
+                        ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
+                        print ifdhls
+                    else:
+                        continue
                 else:
                     for fl in os.listdir(starcatloc):
-                        #print fl
                         if 'STARCAT' in fl:
                             starcatfile = fl
+
+
+                # if fermigrid and worker:
+                #     #starcatfile = longimfile.split('/')[-1]
+                #     starcatloc = ''
+                #     print 'starcat',starcatfile
+                # else:
+                #     for fl in os.listdir(starcatloc):
+                #         #print fl
+                #         if 'STARCAT' in fl:
+                #             starcatfile = fl
                 print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
