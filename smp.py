@@ -1359,7 +1359,10 @@ class smp:
                 else:
                     coords = wcsinfo.tran([starcat.ra[cols]/radtodeg,starcat.dec[cols]/radtodeg],False)
 
-
+                for xi,yi,xo,yo in zip(x_star,y_star,x_starold,y_starold):
+                    print xi,xo,yi,yo
+                print 'printed globalstar locations'
+                sys.exit()
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
