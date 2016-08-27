@@ -1329,7 +1329,7 @@ class smp:
                     for xval,yval in zip(*coords):
                         x_starold += [xval]
                         y_starold += [yval]
-                    #doglobalstar = False
+                    doglobalstar = False
                     if doglobalstar:
                         print 'doing globalstars'
                         #raw_input()
@@ -1362,7 +1362,7 @@ class smp:
                 for xi,yi,xo,yo in zip(x_star,y_star,x_starold,y_starold):
                     print xi,xo,yi,yo
                 print 'printed globalstar locations'
-                sys.exit()
+                #sys.exit()
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
@@ -1778,7 +1778,7 @@ class smp:
                                         if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus:
                                             smp_dict['fitflag'][i] = 0
 
-
+                                    sys.exit()
                                     i += 1
         if mergeno == 0:
             zeroArray = np.zeros(smp_noise.shape)
