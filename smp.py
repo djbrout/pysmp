@@ -1325,6 +1325,11 @@ class smp:
                     x_starold,y_starold = [],[]
                     x_star,y_star = [],[]
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
+                    tras = []
+                    tdecs = []
+                    for ira,idec in zip(starcat.ra[cols],starcat.dec[cols]):
+                        tras.append(tra)
+                        tdecs.append(tdec)
 
                     for xval,yval in zip(*coords):
                         x_starold += [xval]
@@ -1420,7 +1425,7 @@ class smp:
                 #print 'just before getzpt'
                 #sys.exit()
                 if not skipactualzeropoint:
-                    zpt,zpterr,zpt_file = self.getzpt(x_star1+1,y_star1+1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf)
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
@@ -3713,7 +3718,7 @@ class smp:
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
                 if self.snparams.survey == 'PS1':
-                    scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x,ypos=y,ra=ra,dec=dec,
+                    scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)
@@ -3729,7 +3734,7 @@ class smp:
                     #print 'initialized'
                     try:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                            pk.pkfit_norecent_noise_smp(1, x-1., y-1., s, se, params.fitrad, returnStamps=True,
+                            pk.pkfit_norecent_noise_smp(1, x., y., s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -3782,18 +3787,18 @@ class smp:
 
                         print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
                         if y-np.floor(y) < 5.:
-                            suby = 18
-                            addy = 17
+                            suby = 17
+                            addy = 16
                         else:
-                            suby= 17
-                            addy = 18
+                            suby= 16
+                            addy = 17
 
                         if x - np.floor(x) < 5.:
-                            subx = 18
-                            addx = 17
-                        else:
                             subx = 17
-                            addx = 18
+                            addx = 16
+                        else:
+                            subx = 16
+                            addx = 17
                         mimage_stamp = im[np.round(y)-suby:np.round(y)+addy,np.round(x)-subx:np.round(x)+addx]
                         mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
                                                                          params.fitrad,
