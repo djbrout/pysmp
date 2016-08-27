@@ -3734,7 +3734,7 @@ class smp:
                     #print 'initialized'
                     try:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                            pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                            pk.pkfit_norecent_noise_smp(1, x-1., y-1., s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -3799,7 +3799,7 @@ class smp:
                         #else:
                         #    subx = 16
                         #    addx = 18
-                        mimage_stamp = im[np.round(y)-suby:np.round(y)+addy,np.round(x)-subx:np.round(x)+addx]
+                        mimage_stamp = im[np.round(y-1.)-suby:np.round(y-1.)+addy,np.round(x-1.)-subx:np.round(x-1.)+addx]
                         mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i+1000)
