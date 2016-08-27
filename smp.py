@@ -1328,8 +1328,8 @@ class smp:
                     tras = []
                     tdecs = []
                     for ira,idec in zip(starcat.ra[cols],starcat.dec[cols]):
-                        tras.append(tra)
-                        tdecs.append(tdec)
+                        tras.append(ira)
+                        tdecs.append(idec)
 
                     for xval,yval in zip(*coords):
                         x_starold += [xval]
