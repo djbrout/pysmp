@@ -4253,7 +4253,8 @@ class smp:
 
         #IMAGE_CENTERX -= IMAGE_CORNERX; IMAGE_CENTERY -= IMAGE_CORNERY
         ix,iy,psfval = np.array(ix),np.array(iy),np.array(psfval)
-        psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
+        #psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
+        psfout = np.zeros((self.params.substamp,self.params.substamp))
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
