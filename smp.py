@@ -3474,6 +3474,10 @@ class smp:
                     if self.stardumppsf:
                         if self.snparams.psf_model.lower() == 'psfex':
                             psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
+                            opsf, opsfcenter = self.build_psfex(psffile,np.floor(x)+.2,np.floor(y)+.2,imfile)
+                            ppsf, ppsfcenter = self.build_psfec(psffile,np.floor(x)+.4,np.floor(y)+.4,imfile)
+                            self.tmpwriter.savefits(opsf-ppsf,'/pnfs/des/scratch/pysmp/test/psfsub.fits')
+                            sys.exit()
                             #print psf.shape
                         elif psf == '':
                             raise exceptions.RuntimeError("Error : PSF array is required!")
@@ -4228,7 +4232,7 @@ class smp:
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   34)).readlines()
+                                                                                   31)).readlines()
 
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
