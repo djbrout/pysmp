@@ -3800,11 +3800,13 @@ class smp:
                         plt.clf()
                         plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
                         plt.plot(np.arange(0,len(imx)),(imx-sexsky)/np.sum(imx-sexsky),label='imx')
+                        plt.axvline(x-np.round(x) + 15)
                         plt.savefig('testpsfx.png')
                         os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx'+str(i)+'.png')
                         plt.clf()
                         plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
                         plt.plot(np.arange(0, len(imy)), (imy-sexsky)/np.sum(imy-sexsky), label='imy')
+                        plt.axvline(y-np.round(y) + 15)
                         plt.savefig('testpsfy.png')
                         os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy'+str(i)+'.png')
 
@@ -3813,20 +3815,24 @@ class smp:
                                                                          gal, mjd, scale, index=i)
 
                         print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
-                        if y-np.floor(y) < 5.:
-                            suby = 16
-                            addy = 14
-                        else:
-                            suby = 15
-                            addy = 15
-
-                        if x - np.floor(x) < 5.:
-                            subx = 16
-                            addx = 14
-                        else:
-                            subx = 15
-                            addx = 15
-                        mimage_stamp = im[np.floor(y)-suby:np.floor(y)+addy+1,np.floor(x)-subx:np.floor(x)+addx+1]
+                        # if y-np.floor(y) < 5.:
+                        #     suby = 16
+                        #     addy = 14
+                        # else:
+                        #     suby = 15
+                        #     addy = 15
+                        #
+                        # if x - np.floor(x) < 5.:
+                        #     subx = 16
+                        #     addx = 14
+                        # else:
+                        #     subx = 15
+                        #     addx = 15
+                        suby = 15
+                        addy = 15
+                        subx = 15
+                        addx = 15
+                        mimage_stamp = im[np.round(y)-suby:np.round(y)+addy+1,np.round(x)-subx:np.round(x)+addx+1]
                         mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i+1000)
