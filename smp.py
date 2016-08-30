@@ -364,8 +364,8 @@ class smp:
             self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snparams.image_name_mask)
 
         self.dobigstarcat = dobigstarcat
-        print self.dobigstarcat
-        sys.exit()
+        #print self.dobigstarcat
+        #sys.exit()
         if self.dobigstarcat:
             self.bigcatalog = pf.open(bigstarcatalog)[2].data
             self.bigcatalogmags = self.bigcatalog['mag']
@@ -3699,10 +3699,10 @@ class smp:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
                         psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
-                        opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
-                        ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
-                        self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
-                        sys.exit()
+                        #opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
+                        #ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
+                        #self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
+                        #sys.exit()
                         #print psf.shape
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
@@ -3791,6 +3791,24 @@ class smp:
                         cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i)
+
+
+                        psfx = np.sum(psf,axis=0)
+                        psfy = np.sum(psf,axis=1)
+                        imx = np.sum(image_stamp,axis=0)
+                        imy = np.sum(image_stamp,axis=1)
+                        plt.clf()
+                        plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
+                        plt.plot(np.arange(0,len(imx)),imx,label='imx')
+                        plt.savefig('testpsfx.png')
+                        plt.clf()
+                        plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
+                        plt.plot(np.arange(0, len(imy)), imy, label='imy')
+                        plt.savefig('testpsfy.png')
+
+                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp.T, psf, sexsky, noise_stamp,
+                                                                         params.fitrad,
+                                                                         gal, mjd, scale, index=1000+i)
 
                         print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
                         # #if y-np.floor(y) < 5.:
