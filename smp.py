@@ -724,7 +724,7 @@ class smp:
                 print starcatloc
                 print imfile
                 print longimfile
-                sys.exit()
+                #sys.exit()
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
@@ -746,7 +746,7 @@ class smp:
                     for fl in os.listdir(starcatloc):
                         if 'STARCAT' in fl:
                             starcatfile = fl
-
+                raw_input()
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
