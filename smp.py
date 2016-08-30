@@ -748,6 +748,7 @@ class smp:
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
                         print ifdhls
                         print 'sssssssssss'
+                        starcatloc = ''
                         #raw_input()
                     else:
                         continue
@@ -756,6 +757,7 @@ class smp:
                         if 'STARCAT' in fl:
                             starcatfile = fl
                 #raw_input()
+                print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
