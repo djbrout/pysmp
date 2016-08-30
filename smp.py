@@ -748,7 +748,7 @@ class smp:
                     for fl in os.listdir(starcatloc):
                         if 'STARCAT' in fl:
                             starcatfile = fl
-                raw_input()
+                #raw_input()
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
