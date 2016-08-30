@@ -721,7 +721,8 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
-
+                print starcatloc
+                sys.exit()
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
