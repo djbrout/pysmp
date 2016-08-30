@@ -3741,7 +3741,7 @@ class smp:
                     #print 'initialized'
                     try:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                            pk.pkfit_norecent_noise_smp(1, x-1., y-1., s, se, params.fitrad, returnStamps=True,
+                            pk.pkfit_norecent_noise_smp(1, x., y., s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -3799,39 +3799,39 @@ class smp:
                         imy = np.sum(image_stamp,axis=1)
                         plt.clf()
                         plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
-                        plt.plot(np.arange(0,len(imx)),(imx-sexsky)/np.sum(imx),label='imx')
+                        plt.plot(np.arange(0,len(imx)),(imx-sexsky)/np.sum(imx-sexsky),label='imx')
                         plt.savefig('testpsfx.png')
-                        os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx.png')
+                        os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx'+str(i)+'.png')
                         plt.clf()
                         plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
-                        plt.plot(np.arange(0, len(imy)), (imy-sexsky)/np.sum(imy), label='imy')
+                        plt.plot(np.arange(0, len(imy)), (imy-sexsky)/np.sum(imy-sexsky), label='imy')
                         plt.savefig('testpsfy.png')
-                        os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy.png')
+                        os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy'+str(i)+'.png')
 
-                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp.T, psf, sexsky, noise_stamp,
+                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
                                                                          params.fitrad,
-                                                                         gal, mjd, scale, index=1000+i)
+                                                                         gal, mjd, scale, index=i)
 
                         print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
-                        # #if y-np.floor(y) < 5.:
-                        # suby = 17
-                        # addy = 17
-                        # #else:
-                        # #    suby= 16
-                        # #    addy = 18
-                        #
-                        # #if x - np.floor(x) < 5.:
-                        # subx = 17
-                        # addx = 17
-                        # #else:
-                        # #    subx = 16
-                        # #    addx = 18
-                        # mimage_stamp = im[np.round(y-1.)-suby:np.round(y-1.)+addy,np.round(x-1.)-subx:np.round(x-1.)+addx]
-                        # mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
-                        #                                                  params.fitrad,
-                        #                                                  gal, mjd, scale, index=i+1000)
-                        # #print 'checking!!!', cscale, oldcscale
-                        # print 'DIFFFFFF',scale,cscale,mcscale
+                        if y-np.floor(y) < 5.:
+                            suby = 16
+                            addy = 14
+                        else:
+                            suby = 15
+                            addy = 15
+
+                        if x - np.floor(x) < 5.:
+                            subx = 16
+                            addx = 14
+                        else:
+                            subx = 15
+                            addx = 15
+                        mimage_stamp = im[np.floor(y)-suby:np.floor(y)+addy+1,np.floor(x)-subx:np.floor(x)+addx+1]
+                        mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
+                                                                         params.fitrad,
+                                                                         gal, mjd, scale, index=i+1000)
+                        #print 'checking!!!', cscale, oldcscale
+                        print 'DIFFFFFF',scale,cscale,mcscale
                         # self.tmpwriter.savefits(image_stamp-mimage_stamp,'/pnfs/des/scratch/pysmp/test/'+str(i)+'_pk-me.fits')
                         #sys.exit()
                         #scale = cscale
