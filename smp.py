@@ -742,6 +742,8 @@ class smp:
                         starcatloc = ''
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
                         print ifdhls
+                        print 'sssssssssss'
+                        raw_input()
                     else:
                         continue
                 else:
