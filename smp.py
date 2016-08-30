@@ -3801,10 +3801,12 @@ class smp:
                         plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
                         plt.plot(np.arange(0,len(imx)),imx,label='imx')
                         plt.savefig('testpsfx.png')
+                        os.system('cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx.png')
                         plt.clf()
                         plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
                         plt.plot(np.arange(0, len(imy)), imy, label='imy')
                         plt.savefig('testpsfy.png')
+                        os.system('cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy.png')
 
                         cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp.T, psf, sexsky, noise_stamp,
                                                                          params.fitrad,
