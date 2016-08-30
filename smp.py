@@ -720,9 +720,10 @@ class smp:
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
-                starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
+                starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                 print starcatloc
                 print imfile
+                print longimfile
                 sys.exit()
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
