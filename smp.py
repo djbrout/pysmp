@@ -1332,7 +1332,7 @@ class smp:
                     for xval,yval in zip(*coords):
                         x_starold += [xval]
                         y_starold += [yval]
-                    doglobalstar = False
+                    #doglobalstar = False
                     if doglobalstar:
                         print 'doing globalstars'
                         #raw_input()
