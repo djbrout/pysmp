@@ -740,15 +740,15 @@ class smp:
                     if len(ifdhls) > 0:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
                         a = os.popen('ls STARCAT*').read()
-                        print a
+                        print '743',a
                         starcatfile = ifdhls.strip().split('/')[-1]
-                        print starcatfile
-                        sys.exit()
+                        print '745',starcatfile
+                        #sys.exit()
                         starcatloc = ''
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
                         print ifdhls
                         print 'sssssssssss'
-                        raw_input()
+                        #raw_input()
                     else:
                         continue
                 else:
