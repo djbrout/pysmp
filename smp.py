@@ -364,6 +364,8 @@ class smp:
             self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snparams.image_name_mask)
 
         self.dobigstarcat = dobigstarcat
+        print self.dobigstarcat
+        sys.exit()
         if self.dobigstarcat:
             self.bigcatalog = pf.open(bigstarcatalog)[2].data
             self.bigcatalogmags = self.bigcatalog['mag']
