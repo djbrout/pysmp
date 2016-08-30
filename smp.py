@@ -722,6 +722,7 @@ class smp:
                 starcatfile = None
                 starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
                 print starcatloc
+                print imfile
                 sys.exit()
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
