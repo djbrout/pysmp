@@ -3698,7 +3698,7 @@ class smp:
                     if self.snparams.psf_model.lower() == 'psfex':
                         psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
                         opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
-                        ppsf, ppsfcenter = self.build_psfec(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
+                        ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
                         self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
                         sys.exit()
                         #print psf.shape
