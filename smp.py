@@ -974,7 +974,6 @@ class smp:
                 print 'Image is EMPTY, skipping star...'
                 continue
 
-
             snparams.platescale = hdr[self.params.hdr_platescale_name]
             snparams.airmass = hdr[self.params.hdr_airmass_name]
 
@@ -1003,8 +1002,6 @@ class smp:
                     maskcols = np.where((weights < 0) |
                                         (np.isfinite(weights) == False))
                     mask[maskcols] = 100.0
-
-
 
             wcsworked = True
             try:
@@ -1048,7 +1045,6 @@ class smp:
                 except:
                     snparams.RA = astCoords.hms2decimal(snparams.ra, ':')
                     snparams.DECL = astCoords.dms2decimal(snparams.decl, ':')
-
             else:
                 try:
                     if self.exactpos:
@@ -3810,9 +3806,9 @@ class smp:
                         plt.savefig('testpsfy.png')
                         os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy'+str(i)+'.png')
 
-                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                                                                         params.fitrad,
-                                                                         gal, mjd, scale, index=i)
+                        #cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                        #                                                 params.fitrad,
+                        #                                                 gal, mjd, scale, index=i)
 
                         print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
                         # if y-np.floor(y) < 5.:
@@ -3836,6 +3832,23 @@ class smp:
                         mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i+1000)
+
+                        psfx = np.sum(psf, axis=0)
+                        psfy = np.sum(psf, axis=1)
+                        imx = np.sum(mimage_stamp, axis=0)
+                        imy = np.sum(mimage_stamp, axis=1)
+                        plt.clf()
+                        plt.plot(np.arange(0, len(psfx)), psfx, label='psfx')
+                        plt.plot(np.arange(0, len(imx)), (imx - sexsky) / np.sum(imx - sexsky), label='imx')
+                        plt.axvline(x - np.round(x) + 15)
+                        plt.savefig('testpsfx.png')
+                        os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/mtestpsfx' + str(i) + '.png')
+                        plt.clf()
+                        plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
+                        plt.plot(np.arange(0, len(imy)), (imy - sexsky) / np.sum(imy - sexsky), label='imy')
+                        plt.axvline(y - np.round(y) + 15)
+                        plt.savefig('testpsfy.png')
+                        os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/mtestpsfy' + str(i) + '.png')
                         #print 'checking!!!', cscale, oldcscale
                         print 'DIFFFFFF',scale,cscale,mcscale
                         # self.tmpwriter.savefits(image_stamp-mimage_stamp,'/pnfs/des/scratch/pysmp/test/'+str(i)+'_pk-me.fits')
