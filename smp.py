@@ -603,6 +603,7 @@ class smp:
                         if not os.path.exists(weightsfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist'%weightsfile)
             else:
+
                 if not os.path.exists(noisefile):
                     os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
@@ -889,8 +890,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if cccc > 15:
-                continue
+            #if cccc > 15:
+            #    continue
             #print imfile
             #raw_input()
             skysig=np.nan
@@ -4162,7 +4163,7 @@ class smp:
         if self.fermigrid:
             os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
             print 'copied from worker to zpt path',self.zptoutpath
-        sys.exit()
+        #sys.exit()
         return(md,std,mag_compare_out)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
