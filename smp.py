@@ -2511,7 +2511,7 @@ class smp:
         self.smp_noise = smp_noise
 
         image_stampf,sim_stampf,galmodel_stampf,weight_stampf,psf_stampf,chisq_stampf = stamps[0],stamps[1],stamps[2],stamps[3],stamps[4],stamps[5],
-
+        print snparams.snfile
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
         fout = open(smplightcurvefile, 'w')
