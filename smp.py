@@ -1796,7 +1796,7 @@ class smp:
                                         if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus:
                                             smp_dict['fitflag'][i] = 0
 
-                                    sys.exit()
+                                    #sys.exit()
                                     i += 1
         if mergeno == 0:
             zeroArray = np.zeros(smp_noise.shape)
