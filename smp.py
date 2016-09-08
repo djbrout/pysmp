@@ -2514,28 +2514,28 @@ class smp:
 
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
-        # fout = open(smplightcurvefile, 'w')
-        # print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
-        #                'DIFFIM_FLAG SMP_FLAG MJD_FLAG SKY SKYERR ' \
-        #                'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP' \
-        #                'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
-        # for i in range(len(smp_dict['snx'])):
-        #     print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
-        #                    '%.3f %.3f %s %s %s %s %s %s %s %s %s' % (
-        #                         smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpt_err'][i],
-        #                         modelvec[i], modelvec_uncertainty[i],
-        #                         smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
-        #                         smp_dict['ra'][i], smp_dict['dec'][i],
-        #                         chisq[i], self.snparams.photflag[i], smp_dict['flag'],smp_dict['mjd_flag'][i],
-        #                         smp_dict['sky'][i], smp_dict['skyerr'][i],
-        #                         smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
-        #                         smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
-        #                         galmodel_stampf[i],
-        #                         image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
-        # fout.close()
-        # print('SMP was successful!!!')
-        # print('See stamps/mcmc_chains in',self.outdir)
-        # print('See lightcurve file',smplightcurvefile)
+        fout = open(smplightcurvefile, 'w')
+        print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
+                       'DIFFIM_FLAG SMP_FLAG MJD_FLAG SKY SKYERR ' \
+                       'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP' \
+                       'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
+        for i in range(len(smp_dict['snx'])):
+            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
+                           '%.3f %.3f %s %s %s %s %s %s %s %s %s' % (
+                                smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpt_err'][i],
+                                modelvec[i], modelvec_uncertainty[i],
+                                smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
+                                smp_dict['ra'][i], smp_dict['dec'][i],
+                                chisq[i], self.snparams.photflag[i], smp_dict['flag'],smp_dict['mjd_flag'][i],
+                                smp_dict['sky'][i], smp_dict['skyerr'][i],
+                                smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
+                                smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
+                                galmodel_stampf[i],
+                                image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
+        fout.close()
+        print('SMP was successful!!!')
+        print('See stamps/mcmc_chains in',self.outdir)
+        print('See lightcurve file',smplightcurvefile)
         return
 
     def closest_node(self,ra,dec):
