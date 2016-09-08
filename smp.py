@@ -2531,7 +2531,7 @@ class smp:
                                 smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
-                                smp_dict['ra'][i], smp_dict['dec'][i],
+                                smp_dict['snra'][i], smp_dict['sndec'][i],
                                 chisq[i], self.snparams.photflag[i], smp_dict['flag'],smp_dict['mjd_flag'][i],
                                 smp_dict['sky'][i], smp_dict['skyerr'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
