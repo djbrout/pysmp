@@ -1705,7 +1705,7 @@ class smp:
                                     smp_dict['mask'].append(msk)
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['image_filename'][i] = imfile
-                                    smp_dict['zpt_file'][i] = zpt_file
+                                    smp_dict['zpt_file'][i] = os.path.join(self.impath, zpt_file)
                                     smp_dict['psf_filename'][i] = psffile
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
@@ -2323,7 +2323,7 @@ class smp:
                     )
             modelveco = copy(modelvec)
             
-            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps  = aaa.get_params()
+            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(outdir,filename+'_withSn.npz')
 
@@ -2532,7 +2532,7 @@ class smp:
                                 modelvec[i], modelvec_uncertainty[i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
-                                -999.9, self.snparams.photflag[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
+                                chisqs[i], self.snparams.photflag[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
                                 smp_dict['sky'][i], smp_dict['skyerr'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
