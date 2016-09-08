@@ -2527,7 +2527,7 @@ class smp:
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
             print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
-                           '%.3f %.3f %s %s %s %s %s %s %s %s %s' % (
+                           '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
