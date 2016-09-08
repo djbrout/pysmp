@@ -1705,7 +1705,7 @@ class smp:
                                     smp_dict['mask'].append(msk)
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['image_filename'][i] = imfile
-                                    smp_dict['zpt_file'][i] = os.path.join(self.impath, zpt_file)
+                                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = psffile
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
