@@ -1696,6 +1696,8 @@ class smp:
                                     smp_dict['image_scalefactor'][i] = scalefactor
                                     smp_dict['snx'][i] = xsn
                                     smp_dict['sny'][i] = ysn
+                                    smp_dict['snra'][i] = snparams.RA
+                                    smp_dict['sndec'][i] = snparams.DECL
                                     smp_dict['skysig'][i] = skysig
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
