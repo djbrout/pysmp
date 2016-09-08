@@ -2511,7 +2511,7 @@ class smp:
         self.smp_noise = smp_noise
 
         image_stampf,sim_stampf,galmodel_stampf,weight_stampf,psf_stampf,chisq_stampf = stamps[0],stamps[1],stamps[2],stamps[3],stamps[4],stamps[5],
-        print self.lcfilepath
+        print 'lcfilepath',self.lcfilepath
 
         print snparams.snfile
         print snparams.snfile.split('/')[-1]
@@ -2526,7 +2526,7 @@ class smp:
         for i in range(len(smp_dict['snx'])):
             print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
                            '%.3f %.3f %s %s %s %s %s %s %s %s %s' % (
-                                smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpt_err'][i],
+                                smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['ra'][i], smp_dict['dec'][i],
