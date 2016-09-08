@@ -890,8 +890,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if cccc > 5:
-                continue
+            #if cccc > 5:
+            #    continue
             #print imfile
             #raw_input()
             skysig=np.nan
@@ -2542,6 +2542,7 @@ class smp:
         print('SMP was successful!!!')
         print('See stamps/mcmc_chains in',self.outdir)
         print('See lightcurve file',smplightcurvefile)
+        sys.exit()
         return
 
     def closest_node(self,ra,dec):
