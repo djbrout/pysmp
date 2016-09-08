@@ -890,8 +890,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            #if cccc > 15:
-            #    continue
+            if cccc > 5:
+                continue
             #print imfile
             #raw_input()
             skysig=np.nan
