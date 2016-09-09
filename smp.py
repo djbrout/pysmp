@@ -409,9 +409,9 @@ class smp:
                 if self.zptstamps.split('/')[1] != 'pnfs':
                     raise ValueError(
                         '--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
-                os.system('ifdh mkdir ' + zptoutpath)
+                os.system('ifdh mkdir ' + self.zptstamps)
             else:
-                os.makedirs(zptoutpath)
+                os.makedirs(self.zptstamps)
 
 
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
