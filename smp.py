@@ -3759,7 +3759,7 @@ class smp:
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
                 if self.snparams.survey == 'PS1':
-                    scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
+                    scale,cscale_std,chisq,dms,good,image_stamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)

@@ -195,4 +195,4 @@ def fit(
     print np.max(model)
     #raw_input('fluxls')
 
-    return fluxls, fluxerr, chisq, dms, good
+    return fluxls, fluxerr, chisq, dms, good, subim
