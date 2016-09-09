@@ -3908,7 +3908,7 @@ class smp:
                 flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
-                image_stamp[abs(image_stamp) < .1] = sexsky
+                image_stamp[abs(image_stamp) < .1] = s
                 # plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
                 # pdf_pages.savefig(fig)
                 #pdf_pages.savefig()
