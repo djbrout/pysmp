@@ -403,7 +403,7 @@ class smp:
         else:
             snparams.nvalid = snparams.nobs
 
-        self.zptstamps = os.path.join(self.outdir,'zptstamps')
+        self.zptstamps = os.path.join(outdir,'zptstamps')
         if not os.path.exists(self.zptstamps):
             if fermigrid & worker:
                 if self.zptstamps.split('/')[1] != 'pnfs':
