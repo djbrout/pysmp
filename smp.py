@@ -251,7 +251,8 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
-             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,lcfilepath='.'
+             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,lcfilepath='.',
+             savezptstamps=False
              ):
 
 
@@ -357,6 +358,7 @@ class smp:
         self.dosextractor = dosextractor
         self.worker=worker
         self.lcfilepath=lcfilepath
+        self.savezptstamps = savezptstamps
 
 
         self.useweights = useweights
@@ -400,6 +402,16 @@ class smp:
                     snparams.nvalid +=1
         else:
             snparams.nvalid = snparams.nobs
+
+        self.zptstamps = os.path.join(self.outdir,'zptstamps')
+        if not os.path.exists(self.zptstamps):
+            if fermigrid & worker:
+                if self.zptstamps.split('/')[1] != 'pnfs':
+                    raise ValueError(
+                        '--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
+                os.system('ifdh mkdir ' + zptoutpath)
+            else:
+                os.makedirs(zptoutpath)
 
 
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
@@ -1084,6 +1096,10 @@ class smp:
 
             xsn = xsn[0]
             ysn = ysn[0]
+
+            if self.snparams.psf_model.lower() == 'psfex':
+                xsn = xsn+1.
+                ysn = ysn+1.
             print 'usefake',self.usefake
             print 'snra sndec',snparams.RA,snparams.DECL
             print 'xsn ysnnnnnnnnnnnnnnnnn', xsn, ysn
@@ -3892,17 +3908,18 @@ class smp:
                 flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
-                # image_stamp[abs(image_stamp) < .1] = sexsky
+                image_stamp[abs(image_stamp) < .1] = sexsky
                 # plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
                 # pdf_pages.savefig(fig)
                 #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 #scale = scale*.93
-                # dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
-                # dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
-                # dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
-                # dt.save_fits_image(psf_stamp,'test/psf'+str(i)+'.fits')
-
+                if self.savezptstamps:
+                    dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
+                    dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
+                    dt.save_fits_image(sexsky+psf_stamp*scale,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
+                    dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
+                    print 'star fit stamps saved in ',self.zptstamps
         #pdf_pages.close()
         #pdf_pagesc.close()
         #raw_input('saved teststamps daophot_resid.pdf')
@@ -4437,7 +4454,7 @@ if __name__ == "__main__":
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
                       "filter=","nomask","nodiff","nozpt", "outfile=",
-                      "mergeno=", "loadzpt","usefake",
+                      "mergeno=", "loadzpt","usefake","savezptstamps",
                       "debug","verbose","clearzpt",
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
@@ -4466,7 +4483,7 @@ if __name__ == "__main__":
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
                       "filter=","nomask","nodiff","nozpt", "outfile=",
-                      "mergeno=", "loadzpt","usefake",
+                      "mergeno=", "loadzpt","usefake","savezptstamps",
                       "debug","verbose","clearzpt",
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
@@ -4487,6 +4504,7 @@ if __name__ == "__main__":
 
 
     verbose,nodiff,debug,clear_zpt,psf_model,root_dir,mergeno,loadzpt,ismultiple,dogalfit,dosnfit,dogalsimfit,dogalsimpixfit = False,False,False,False,False,False,False,False,False,True,True,False,False
+    savezptstamps = False
     fixgalzero,floatallepochs = False,False
     dailyoff = False
     usediffimzpt = False
@@ -4618,6 +4636,8 @@ if __name__ == "__main__":
             parallelvar= a
         elif o == "--worker":
             worker = True
+        elif o == "savezptstamps":
+            savezptstamps = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4719,6 +4739,8 @@ if __name__ == "__main__":
             parallelvar= a
         elif o == "--worker":
             worker = True
+        elif o == "savezptstamps":
+            savezptstamps = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4831,7 +4853,7 @@ if __name__ == "__main__":
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath)
+                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4928,7 +4950,7 @@ if __name__ == "__main__":
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath)
+                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
