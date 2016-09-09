@@ -4636,7 +4636,7 @@ if __name__ == "__main__":
             parallelvar= a
         elif o == "--worker":
             worker = True
-        elif o == "savezptstamps":
+        elif o == "--savezptstamps":
             savezptstamps = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
@@ -4739,7 +4739,7 @@ if __name__ == "__main__":
             parallelvar= a
         elif o == "--worker":
             worker = True
-        elif o == "savezptstamps":
+        elif o == "--savezptstamps":
             savezptstamps = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
