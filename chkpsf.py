@@ -196,6 +196,6 @@ def fit(
     print fluxls
     print np.max(model)
     #raw_input('fluxls')
-    simstamp = simstamp(fluxls,model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'])
+    sstamp = simstamp(fluxls,model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'])
 
-    return fluxls, fluxerr, chisq, dms, good, subim, simstamp
+    return fluxls, fluxerr, chisq, dms, good, subim, sstamp
