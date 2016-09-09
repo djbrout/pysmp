@@ -25,7 +25,9 @@ def resid(param, psf, im, sigma, fitrad, sky, psfmag):
     residsig = (im - model) / sigma
     return np.array(residsig.ravel())
 
-
+def simstamp(param, psf, im, sigma, fitrad, sky, psfmag):
+    model = psf * param / 10 ** (-0.4 * (psfmag - 25)) + sky
+    return model
 def fit(
         fileroot='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/workspace/PSc560121/g/PSc560121.md01s043.g.ut090831e.1917665_14.sw',
         xpos=None, ypos=None, radius=8, pdf_pages=None, ra=None, dec=None, title='', returnstamps = False, maskfile=None):
@@ -194,5 +196,6 @@ def fit(
     print fluxls
     print np.max(model)
     #raw_input('fluxls')
+    simstamp = simstamp(fluxls,model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'])
 
-    return fluxls, fluxerr, chisq, dms, good, subim, impsf
+    return fluxls, fluxerr, chisq, dms, good, subim, simstamp

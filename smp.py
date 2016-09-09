@@ -3759,7 +3759,7 @@ class smp:
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
                 if self.snparams.survey == 'PS1':
-                    scale,cscale_std,chisq,dms,good,image_stamp,psf_stamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
+                    scale,cscale_std,chisq,dms,good,image_stamp,sim_stamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)
@@ -3915,10 +3915,13 @@ class smp:
                 #raw_input('saved teststamp.png')
                 #scale = scale*.93
                 if self.savezptstamps:
-                    dt.save_fits_image(image_stamp-s-psf_stamp*scale,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
+                    if not self.snparams.survey == 'PS1':
+                        simstamp = s-psf_stamp*scale
+
+                    dt.save_fits_image(image_stamp-simstamp,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
                     dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
-                    dt.save_fits_image(s+psf_stamp*scale,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
-                    dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
+                    dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
+                    #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
         #pdf_pages.close()
         #pdf_pagesc.close()
