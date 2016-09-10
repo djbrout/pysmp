@@ -1,4 +1,10 @@
 import os
+import sys
+
+f = open('sntarfilesv3.txt','r').read()
+print f.split()
+
+sys.exit()
 
 filename = 'SN-S1_CCD01_v3.tar'
 'kx509; grid-proxy-init; voms-proxy-init -rfc -noregen -voms des:/des/Role=Analysis; '
