@@ -13,8 +13,8 @@ filename = 'SN-S1_CCD01_v3.tar'
 
 for filename in files:
 
-    if os.path.isfile():
-        if os.stat("file").st_size > 0.:
+    if os.path.isfile("/pnfs/des/scratch/pysmp/v3"+filename):
+        if os.stat("/pnfs/des/scratch/pysmp/v3"+filename).st_size > 0.:
             print filename,'already exists'
             continue
 
