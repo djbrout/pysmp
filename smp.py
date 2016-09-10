@@ -251,7 +251,8 @@ class smp:
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
-             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,lcfilepath='.'
+             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,lcfilepath='.',
+             savezptstamps=False
              ):
 
 
@@ -357,6 +358,7 @@ class smp:
         self.dosextractor = dosextractor
         self.worker=worker
         self.lcfilepath=lcfilepath
+        self.savezptstamps = savezptstamps
 
 
         self.useweights = useweights
@@ -400,6 +402,16 @@ class smp:
                     snparams.nvalid +=1
         else:
             snparams.nvalid = snparams.nobs
+
+        self.zptstamps = os.path.join(outdir,'zptstamps')
+        if not os.path.exists(self.zptstamps):
+            if fermigrid & worker:
+                if self.zptstamps.split('/')[1] != 'pnfs':
+                    raise ValueError(
+                        '--zptoutpath must be located at /pnfs/des/persistent/desdm/ for fermigrid running')
+                os.system('ifdh mkdir ' + self.zptstamps)
+            else:
+                os.makedirs(self.zptstamps)
 
 
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
@@ -603,6 +615,7 @@ class smp:
                         if not os.path.exists(weightsfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist'%weightsfile)
             else:
+
                 if not os.path.exists(noisefile):
                     os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
@@ -726,8 +739,8 @@ class smp:
                 print longimfile
                 #sys.exit()
                 if fermigrid and worker:
-                    #starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
-                    starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
+                    starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
+                    #starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
                     print starcatloc
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
                     print ifdhls
@@ -748,6 +761,7 @@ class smp:
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
                         print ifdhls
                         print 'sssssssssss'
+                        starcatloc = ''
                         #raw_input()
                     else:
                         continue
@@ -756,6 +770,7 @@ class smp:
                         if 'STARCAT' in fl:
                             starcatfile = fl
                 #raw_input()
+                print starcatloc+starcatfile
                 if os.path.exists(starcatloc+starcatfile):
                     starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
                     if not starcat.__dict__.has_key('mag_%s'%band):
@@ -887,8 +902,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if cccc > 15:
-                continue
+            #if cccc > 5:
+            #    continue
             #print imfile
             #raw_input()
             skysig=np.nan
@@ -1081,6 +1096,10 @@ class smp:
 
             xsn = xsn[0]
             ysn = ysn[0]
+
+            if self.snparams.psf_model.lower() == 'psfex':
+                xsn = xsn+1.
+                ysn = ysn+1.
             print 'usefake',self.usefake
             print 'snra sndec',snparams.RA,snparams.DECL
             print 'xsn ysnnnnnnnnnnnnnnnnn', xsn, ysn
@@ -1437,7 +1456,7 @@ class smp:
                 if not skipactualzeropoint:
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                         longimfile,psf=self.psf)
+                                         longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
                     #                                     badflag, mag_star, im, weights, mask, psffile, imfile, snparams,
@@ -1693,6 +1712,8 @@ class smp:
                                     smp_dict['image_scalefactor'][i] = scalefactor
                                     smp_dict['snx'][i] = xsn
                                     smp_dict['sny'][i] = ysn
+                                    smp_dict['snra'][i] = snparams.RA
+                                    smp_dict['sndec'][i] = snparams.DECL
                                     smp_dict['skysig'][i] = skysig
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
@@ -1700,7 +1721,7 @@ class smp:
                                     smp_dict['mask'].append(msk)
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['image_filename'][i] = imfile
-                                    smp_dict['zpt_file'][i] = zpt_file
+                                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = psffile
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
@@ -1793,7 +1814,7 @@ class smp:
                                         if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus:
                                             smp_dict['fitflag'][i] = 0
 
-                                    sys.exit()
+                                    #sys.exit()
                                     i += 1
         if mergeno == 0:
             zeroArray = np.zeros(smp_noise.shape)
@@ -2164,7 +2185,7 @@ class smp:
 
 
 
-            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps  = aaa.get_params()
+            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params()
 
             print 'TOTAL Galfit SMP TIME ',time.time()-tstart
 
@@ -2318,7 +2339,7 @@ class smp:
                     )
             modelveco = copy(modelvec)
             
-            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps  = aaa.get_params()
+            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(outdir,filename+'_withSn.npz')
 
@@ -2508,31 +2529,36 @@ class smp:
         self.smp_noise = smp_noise
 
         image_stampf,sim_stampf,galmodel_stampf,weight_stampf,psf_stampf,chisq_stampf = stamps[0],stamps[1],stamps[2],stamps[3],stamps[4],stamps[5],
+        print 'lcfilepath',self.lcfilepath
 
+        print snparams.snfile
+        print snparams.snfile.split('/')[-1]
+        print snparams.snfile.split('/')[-1].split('.')[0]
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
-        # fout = open(smplightcurvefile, 'w')
-        # print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
-        #                'DIFFIM_FLAG SMP_FLAG MJD_FLAG SKY SKYERR ' \
-        #                'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP' \
-        #                'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
-        # for i in range(len(smp_dict['snx'])):
-        #     print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
-        #                    '%.3f %.3f %s %s %s %s %s %s %s %s %s' % (
-        #                         smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpt_err'][i],
-        #                         modelvec[i], modelvec_uncertainty[i],
-        #                         smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
-        #                         smp_dict['ra'][i], smp_dict['dec'][i],
-        #                         chisq[i], self.snparams.photflag[i], smp_dict['flag'],smp_dict['mjd_flag'][i],
-        #                         smp_dict['sky'][i], smp_dict['skyerr'][i],
-        #                         smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
-        #                         smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
-        #                         galmodel_stampf[i],
-        #                         image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
-        # fout.close()
-        # print('SMP was successful!!!')
-        # print('See stamps/mcmc_chains in',self.outdir)
-        # print('See lightcurve file',smplightcurvefile)
+        fout = open(smplightcurvefile, 'w')
+        print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
+                       'DIFFIM_FLAG SMP_FLAG MJD_FLAG SKY SKYERR ' \
+                       'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP' \
+                       'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
+        for i in range(len(smp_dict['snx'])):
+            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
+                           '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
+                                smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
+                                modelvec[i], modelvec_uncertainty[i],
+                                smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
+                                smp_dict['snra'][i], smp_dict['sndec'][i],
+                                chisqs[i], self.snparams.photflag[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
+                                smp_dict['sky'][i], smp_dict['skyerr'][i],
+                                smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
+                                smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
+                                galmodel_stampf[i],
+                                image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
+        fout.close()
+        print('SMP was successful!!!')
+        print('See stamps/mcmc_chains in',self.outdir)
+        print('See lightcurve file',smplightcurvefile)
+        sys.exit()
         return
 
     def closest_node(self,ra,dec):
@@ -3733,7 +3759,7 @@ class smp:
                 mask = mask*0.
                 print 'ra,dec,x,y',ra,dec,x,y
                 if self.snparams.survey == 'PS1':
-                    scale,cscale_std,chisq,dms,good = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
+                    scale,cscale_std,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)
@@ -3882,17 +3908,21 @@ class smp:
                 flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
-                # image_stamp[abs(image_stamp) < .1] = sexsky
+                image_stamp[abs(image_stamp) < .1] = s
                 # plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
                 # pdf_pages.savefig(fig)
                 #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 #scale = scale*.93
-                # dt.save_fits_image(image_stamp-sexsky-psf_stamp*scale,'test/teststamp'+str(i)+'.fits')
-                # dt.save_fits_image(image_stamp,'test/teststampim'+str(i)+'.fits')
-                # dt.save_fits_image(sexsky+psf_stamp*scale,'test/teststamppsf'+str(i)+'.fits')
-                # dt.save_fits_image(psf_stamp,'test/psf'+str(i)+'.fits')
+                if self.savezptstamps:
+                    if not self.snparams.survey == 'PS1':
+                        simstamp = s-psf_stamp*scale
 
+                    dt.save_fits_image(image_stamp-simstamp,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
+                    dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
+                    dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
+                    #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
+                    print 'star fit stamps saved in ',self.zptstamps
         #pdf_pages.close()
         #pdf_pagesc.close()
         #raw_input('saved teststamps daophot_resid.pdf')
@@ -4160,7 +4190,7 @@ class smp:
         if self.fermigrid:
             os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
             print 'copied from worker to zpt path',self.zptoutpath
-        sys.exit()
+        #sys.exit()
         return(md,std,mag_compare_out)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
@@ -4427,7 +4457,7 @@ if __name__ == "__main__":
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
                       "filter=","nomask","nodiff","nozpt", "outfile=",
-                      "mergeno=", "loadzpt","usefake",
+                      "mergeno=", "loadzpt","usefake","savezptstamps",
                       "debug","verbose","clearzpt",
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
@@ -4456,7 +4486,7 @@ if __name__ == "__main__":
             args,"hs:p:r:f:o:m:v:i:d:s",
             longopts=["help","snfile=","params=","rootdir=",
                       "filter=","nomask","nodiff","nozpt", "outfile=",
-                      "mergeno=", "loadzpt","usefake",
+                      "mergeno=", "loadzpt","usefake","savezptstamps",
                       "debug","verbose","clearzpt",
                       "psf_model=","ismultiple",
                       "gal_model=","index=","diffimzpt","idlsky",
@@ -4477,6 +4507,7 @@ if __name__ == "__main__":
 
 
     verbose,nodiff,debug,clear_zpt,psf_model,root_dir,mergeno,loadzpt,ismultiple,dogalfit,dosnfit,dogalsimfit,dogalsimpixfit = False,False,False,False,False,False,False,False,False,True,True,False,False
+    savezptstamps = False
     fixgalzero,floatallepochs = False,False
     dailyoff = False
     usediffimzpt = False
@@ -4608,6 +4639,8 @@ if __name__ == "__main__":
             parallelvar= a
         elif o == "--worker":
             worker = True
+        elif o == "--savezptstamps":
+            savezptstamps = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4709,6 +4742,8 @@ if __name__ == "__main__":
             parallelvar= a
         elif o == "--worker":
             worker = True
+        elif o == "--savezptstamps":
+            savezptstamps = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -4821,7 +4856,7 @@ if __name__ == "__main__":
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath)
+                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -4918,7 +4953,7 @@ if __name__ == "__main__":
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath)
+                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
