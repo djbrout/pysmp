@@ -4,7 +4,7 @@
 source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
 #source /cvmfs/fermilab.opensciencegrid.org/products/common/etc/setups
 setup jobsub_client
-#kx509
+kx509
 voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis
 
 #alias sqs="jobsub_q -G des --role=DESGW --user=desgw"
