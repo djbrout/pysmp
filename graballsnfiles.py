@@ -13,6 +13,11 @@ filename = 'SN-S1_CCD01_v3.tar'
 
 for filename in files:
 
+    if os.path.isfile():
+        if os.stat("file").st_size > 0.:
+            print filename,'already exists'
+            continue
+
     out = os.popen( 'globus-url-copy -nodcau -cred /tmp/x509up_u48121 '
                 '-ss "/DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=dtn03-garchive.nersc.gov"'
                 ' gsiftp://garchive.nersc.gov:2811/home/projects/dessn/diffim/FinalPhoto/v3/' +
@@ -20,4 +25,3 @@ for filename in files:
     print out
     print filename
 
-    
