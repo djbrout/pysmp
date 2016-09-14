@@ -2300,7 +2300,7 @@ class smp:
             else:
                 fixgal = False
 
-            
+            st = time.time()
             aaa = mcmc3.metropolis_hastings( 
                     galmodel = galmodel
                     , modelvec = modelvec
