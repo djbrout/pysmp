@@ -1,7 +1,7 @@
 import os
 import sys
 
-f = open('sntarfilesv3.txt','r').read()
+f = open('sntarfilesv2.txt','r').read()
 files = f.split()
 
 #sys.exit()
