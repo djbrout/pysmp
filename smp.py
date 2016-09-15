@@ -286,6 +286,7 @@ class smp:
         import astropy.io.fits as pyfits
         self.outfile = outfile
         print 'line 275'
+        oldoutdir = copy(outdir)
         if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
@@ -402,8 +403,7 @@ class smp:
                     snparams.nvalid +=1
         else:
             snparams.nvalid = snparams.nobs
-
-        self.zptstamps = os.path.join(outdir,'zptstamps')
+        self.zptstamps = os.path.join(oldoutdir,'zptstamps')
         if not os.path.exists(self.zptstamps):
             if fermigrid & worker:
                 if self.zptstamps.split('/')[1] != 'pnfs':
