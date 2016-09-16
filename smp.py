@@ -598,7 +598,12 @@ class smp:
                 else:
                     noisefile, maskfile = os.path.join(self.rootdir,noisefile[0]),os.path.join(self.rootdir,noisefile[1])
 
+
             if not os.path.exists(imfile):
+                print os.popen('ls -ltr *.fz').read()
+                print 'funpack %s.fz' % imfile
+                os.system('funpack %s.fz' % imfile)
+                sys.exit()
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
                     continue
