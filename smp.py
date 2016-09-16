@@ -958,9 +958,9 @@ class smp:
             #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
             #print imfile
             if not os.path.exists(imfile):
-                print os.popen('ls -ltr *.fz').read()
+                print os.popen('ls -ltr').read()
                 print 'funpack %s.fz' % imfile
-                os.system('funpack %s.fz' % imfile)
+                print os.system('funpack %s.fz' % imfile).read()
                 d = pf.getdata(imfile)
                 print 'dshape',d.shape
                 sys.exit()
