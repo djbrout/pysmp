@@ -958,13 +958,16 @@ class smp:
             #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
             #print imfile
             if not os.path.exists(imfile):
+                print os.popen('ls -ltr *.fz').read()
+                print 'funpack %s.fz' % imfile
+                os.system('funpack %s.fz' % imfile)
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
                     continue
                     print('Error : file %s does not exist'%imfile)
                     raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
                 else:
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%imfile)
+                    os.system('funpack %s.fz'%imfile)
             if self.useweights:
                 if not os.path.exists(weightsfile):
                     os.system('gunzip %s.gz' % weightsfile)
