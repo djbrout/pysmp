@@ -557,6 +557,16 @@ class smp:
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     imfile = imfile.split('/')[-1]
+                    print 'imfile',imfile
+                    if self.usefake:
+                        if '.gz' in imfile:
+                            print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
+                            os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
+                            imfile = imfile.split('/')[-1]
+                        else:
+                            os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile.split('.fits')[
+                                0] + '+fakeSN.fits' + ' .').read()
+                            imfile = imfile.split('/')[-1]
                     #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
                     noisefile = noisefile.split('/')[-1]
