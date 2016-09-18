@@ -611,10 +611,10 @@ class smp:
 
 
             if not os.path.exists(imfile):
-                print os.popen('ls -ltr *.fz').read()
-                print 'funpack %s.fz' % imfile
-                os.system('funpack %s.fz' % imfile)
-                sys.exit()
+                #print os.popen('ls -ltr *.fz').read()
+                #print 'funpack %s.fz' % imfile
+                #os.system('funpack %s.fz' % imfile)
+                #sys.exit()
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
                     continue
@@ -624,7 +624,7 @@ class smp:
                     print os.popen('ls -ltr *.fz').read()
                     print 'funpack %s.fz'%imfile
                     os.system('funpack %s.fz'%imfile)
-                    sys.exit()
+                    #sys.exit()
 
             if self.useweights:
                 if not os.path.exists(weightsfile):
@@ -663,6 +663,10 @@ class smp:
 
             if self.usefake:
                 fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                print 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .'
+                print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+                    0] + '+fakeSN.fits.gz' + ' .'
+                sys.exit()
                 os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .')\
                     .read()
                 if not os.path.exists(fakeim):
