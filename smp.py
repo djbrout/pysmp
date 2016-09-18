@@ -960,10 +960,10 @@ class smp:
             if not os.path.exists(imfile):
                 print os.popen('ls -ltr').read()
                 print 'funpack %s.fz' % imfile
-                print os.system('funpack %s.fz' % imfile).read()
+                print os.popen('funpack %s.fz' % imfile).read()
                 d = pf.getdata(imfile)
                 print 'dshape',d.shape
-                sys.exit()
+                #sys.exit()
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
                     continue
@@ -975,27 +975,27 @@ class smp:
                 if not os.path.exists(weightsfile):
                     os.system('gunzip %s.gz' % weightsfile)
                     if not os.path.exists(weightsfile):
-                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % weightsfile)
+                        os.system('funpack %s.fz' % weightsfile)
                         if not os.path.exists(weightsfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist' % weightsfile)
             else:
                 if not os.path.exists(noisefile):
                     os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
-                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % noisefile)
+                        os.system('funpack %s.fz' % noisefile)
                         if not os.path.exists(noisefile):
                             raise exceptions.RuntimeError('Error : file %s does not exist' % noisefile)
                 if not os.path.exists(maskfile):
                     os.system('gunzip %s.gz' % maskfile)
                     if not os.path.exists(maskfile):
-                        os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % maskfile)
+                        os.system('funpack %s.fz' % maskfile)
                         if not os.path.exists(maskfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
             if not os.path.exists(psffile):
                 if not os.path.exists(psffile+'.fz'):
                     raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
                 else:
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%psffile)
+                    os.system('funpack %s.fz'%psffile)
 
             if not nomask:
                 if useweights:
@@ -1005,8 +1005,8 @@ class smp:
             if self.usefake:
                 fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
                 if not os.path.exists(fakeim):
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % fakeim)
-                    os.system('/global/u1/d/dbrout/cfitsio/gunzip %s.gz' % fakeim)
+                    os.system('funpack %s.fz' % fakeim)
+                    os.system('gunzip %s.gz' % fakeim)
 
             try:
                 im = pyfits.getdata(imfile)
@@ -1834,6 +1834,8 @@ class smp:
 
                                     #sys.exit()
                                     i += 1
+        print os.popen('ls -ltr').read()
+        sys.exit()
         if mergeno == 0:
             zeroArray = np.zeros(smp_noise.shape)
             largeArray = zeroArray + 1E10
