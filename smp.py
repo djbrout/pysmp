@@ -961,8 +961,8 @@ class smp:
                 print os.popen('ls -ltr').read()
                 print 'funpack %s.fz' % imfile
                 print os.popen('funpack %s.fz' % imfile).read()
-                d = pf.getdata(imfile)
-                print 'dshape',d.shape
+                #d = pf.getdata(imfile)
+                #print 'dshape',d.shape
                 #sys.exit()
                 if not os.path.exists(imfile+'.fz'):
                     print('Error : file %s does not exist'%imfile)
