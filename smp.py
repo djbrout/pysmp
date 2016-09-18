@@ -556,17 +556,18 @@ class smp:
                 ifdhls = os.popen('ifdh ls '+imfile).read()
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
+                    #imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
                     print 'imfile',imfile
-                    if self.usefake:
-                        if '.gz' in imfile:
-                            print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
-                            os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
-                            imfile = imfile.split('/')[-1]
-                        else:
-                            os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile.split('.fits')[
-                                0] + '+fakeSN.fits' + ' .').read()
-                            imfile = imfile.split('/')[-1]
+                    # if self.usefake:
+                    #     #if '.gz' in imfile:
+                    #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
+                    #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
+                    #     #imfile = imfilel.split('/')[-1]
+                    #     #else:
+                    #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
+                    #         0] + '+fakeSN.fits' + ' .').read()
+                    #     imfile = imfilel.split('/')[-1]
                     #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
                     noisefile = noisefile.split('/')[-1]
@@ -662,10 +663,16 @@ class smp:
 
             if self.usefake:
                 fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .')\
+                    .read()
                 if not os.path.exists(fakeim):
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % fakeim)
-                    os.system('/global/u1/d/dbrout/cfitsio/gunzip %s.gz' % fakeim)
-
+                    print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+                        0] + '+fakeSN.fits.gz' + ' .'
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+                        0] + '+fakeSN.fits.gz' + ' .').read()
+                    os.system('funpack %s.fz' % fakeim)
+                    os.system('gunzip %s.gz' % fakeim)
+                imfile = fakeim
             try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
@@ -1015,9 +1022,13 @@ class smp:
             if self.usefake:
                 fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
                 if not os.path.exists(fakeim):
+                    print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+                        0] + '+fakeSN.fits.gz' + ' .'
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+                        0] + '+fakeSN.fits.gz' + ' .').read()
                     os.system('funpack %s.fz' % fakeim)
                     os.system('gunzip %s.gz' % fakeim)
-
+                imfile = fakeim
             try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
