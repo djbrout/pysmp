@@ -672,6 +672,9 @@ class smp:
                         0] + '+fakeSN.fits.gz' + ' .').read()
                     os.system('funpack %s.fz' % fakeim)
                     os.system('gunzip %s.gz' % fakeim)
+                    print longimfile
+                    print longimfile.split('.fits.gz')[0] + '+fakeSN.fits.gz' + ' .'
+                    sys.exit()
                 imfile = fakeim
             try:
                 im = pyfits.getdata(imfile)
