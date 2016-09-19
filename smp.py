@@ -573,8 +573,12 @@ class smp:
 
                 ifdhls = os.popen('ifdh ls '+imfile).read()
                 if len(ifdhls) > 0:
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+'.fz .').read()
+                    try:
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
+                        print 'could not find ',imfile
+                    except:
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+'.fz .').read()
+                        
 
                     #imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
