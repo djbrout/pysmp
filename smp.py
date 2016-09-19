@@ -604,45 +604,45 @@ class smp:
                     raw_input()
                 else:
                     print 'file not found',imfile
-                    continue
+                    #continue
 
-                ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
-                print ifdhls
-                print 'line 610'
-                raw_input()
-                if len(ifdhls) > 0:
-                    a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
-                    a = os.popen('funpack '+imfile+'.fz').read()
-                    print a
-                    # imfilel = copy(imfilel)
-                    imfile = imfile.split('/')[-1]
-                    print 'imfile', imfile
-                    # if self.usefake:
-                    #     #if '.gz' in imfile:
-                    #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
-                    #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
-                    #     #imfile = imfilel.split('/')[-1]
-                    #     #else:
-                    #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
-                    #         0] + '+fakeSN.fits' + ' .').read()
-                    #     imfile = imfilel.split('/')[-1]
-                    # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
-                    os.popen('funpack '+noisefile+'.fz')
-                    noisefile = noisefile.split('/')[-1]
-                    weightsfile = noisefile
-                    # print 'ifdh cp ' + psffile + ' .'
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
-                    #os.popen('funpack '+psffile)
-                    psffile = psffile.split('/')[-1]
-                    # print 'copied all files'
-                    # print os.popen('ifdh ls .').read()
-                    # sys.exit()
-                    print 'here2'
+                    ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
+                    print ifdhls
+                    print 'line 610'
                     raw_input()
-                else:
-                    print 'file not found', imfile
-                    continue
+                    if len(ifdhls) > 0:
+                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
+                        a = os.popen('funpack '+imfile+'.fz').read()
+                        print a
+                        # imfilel = copy(imfilel)
+                        imfile = imfile.split('/')[-1]
+                        print 'imfile', imfile
+                        # if self.usefake:
+                        #     #if '.gz' in imfile:
+                        #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
+                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
+                        #     #imfile = imfilel.split('/')[-1]
+                        #     #else:
+                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
+                        #         0] + '+fakeSN.fits' + ' .').read()
+                        #     imfile = imfilel.split('/')[-1]
+                        # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
+                        os.popen('funpack '+noisefile+'.fz')
+                        noisefile = noisefile.split('/')[-1]
+                        weightsfile = noisefile
+                        # print 'ifdh cp ' + psffile + ' .'
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        #os.popen('funpack '+psffile)
+                        psffile = psffile.split('/')[-1]
+                        # print 'copied all files'
+                        # print os.popen('ifdh ls .').read()
+                        # sys.exit()
+                        print 'here2'
+                        raw_input()
+                    else:
+                        print 'file not found', imfile
+                        continue
                 #print 'grabbed sn files'
                 #sys.exit()
             try:
