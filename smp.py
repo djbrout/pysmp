@@ -506,8 +506,10 @@ class smp:
         else:
             if not os.path.exists(staroutdir):
                 os.makedirs(staroutdir)
+        print filename
+        print staroutdir
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
-
+        print star_offset_file
 
         if not nozpt:
             if fermigrid and worker:
