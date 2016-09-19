@@ -574,6 +574,7 @@ class smp:
 
                 ifdhls = os.popen('ifdh ls '+imfile).read()
                 print ifdhls
+                print 'line 576'
                 raw_input()
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
@@ -607,6 +608,7 @@ class smp:
 
                 ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
                 print ifdhls
+                print 'line 610'
                 raw_input()
                 if len(ifdhls) > 0:
                     a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
