@@ -291,13 +291,14 @@ class smp:
             oldoutfile = copy(outfile)
             outfile = ''
             outdir = ''
-
-        cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
-        if fermigrid and worker:
-            os.popen('ifdh mkdir '+cspath)
-
-        if not os.path.exists(cspath):
-            os.makedirs(cspath)
+        mainoutdir = copy(outdir)
+        # cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
+        # if fermigrid and worker:
+        #     if not os.path.exists(cspath)
+        #     os.popen('ifdh mkdir '+cspath)
+        #
+        # if not os.path.exists(cspath):
+        #     os.makedirs(cspath)
         self.checkstarfile = os.path.join(outdir,foldername+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
                                           +'_'+filt+'_standardstarfits.txt')
         #print self.checkstarfile
@@ -499,7 +500,7 @@ class smp:
         cols = None
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        staroutdir = os.path.join(outdir,stardeltasfolder+'/stardata/'+filt+'/')
+        staroutdir = os.path.join(mainoutdir,stardeltasfolder+'/stardata/'+filt+'/')
         if fermigrid and worker:
             if not os.path.exists(staroutdir):
                 os.system('ifdh mkdir '+staroutdir)
@@ -513,16 +514,18 @@ class smp:
 
         if not nozpt:
             if fermigrid and worker:
-                print star_offset_file
-                sys.exit()
-                os.system('ifdh cp '+star_offset_file+' .')
-                star_offset_file = filename+'band_starGlobalOffsets.npz'
+                if os.path.exists(star_offset_file):
+                    print star_offset_file
+                    #sys.exit()
+                    os.system('ifdh cp '+star_offset_file+' .')
+                    star_offset_file = filename+'band_starGlobalOffsets.npz'
             try:
                 staroffsets = np.load(star_offset_file)
+                print 'Found and loaded star offset file...'
             except:
                 print 'Could not find star offset file. Calculating...'
                 nozpt = True
-
+        sys.exit()
         #print 'ABOUT TO GLOBALSTAR'*10
         #sys.exit()
         
