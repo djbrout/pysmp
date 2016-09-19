@@ -573,6 +573,8 @@ class smp:
                 #print 'ifdh cp '+imfile+' .'
 
                 ifdhls = os.popen('ifdh ls '+imfile).read()
+                print ifdhls
+                raw_input()
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     #imfilel = copy(imfilel)
@@ -604,6 +606,8 @@ class smp:
                     continue
 
                 ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
+                print ifdhls
+                raw_input()
                 if len(ifdhls) > 0:
                     a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
                     a = os.popen('funpack '+imfile+'.fz').read()
