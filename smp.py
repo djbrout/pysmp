@@ -525,7 +525,7 @@ class smp:
             except:
                 print 'Could not find star offset file. Calculating...'
                 nozpt = True
-        sys.exit()
+        #sys.exit()
         #print 'ABOUT TO GLOBALSTAR'*10
         #sys.exit()
         
