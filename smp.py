@@ -533,6 +533,8 @@ class smp:
         ################################################# GET STAR GLOBAL OFFSETS ###################################################
 
         print 'getting star global offsets'
+        print self.usefake
+        sys.exit()
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             if not doglobalstar:
@@ -676,7 +678,7 @@ class smp:
                 print 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .'
                 print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
                     0] + '+fakeSN.fits.gz' + ' .'
-                sys.exit()
+                #sys.exit()
                 os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .')\
                     .read()
                 if not os.path.exists(fakeim):
