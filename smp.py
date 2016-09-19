@@ -535,7 +535,7 @@ class smp:
         print 'getting star global offsets'
         print nozpt
         #print self.usefake
-        sys.exit()
+        #sys.exit()
 
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -547,7 +547,7 @@ class smp:
             if not nozpt:
                 continue
             skysig=np.nan
-            nozpt = copy(orig_nozpt)
+            #nozpt = copy(orig_nozpt)
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
