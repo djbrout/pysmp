@@ -293,7 +293,7 @@ class smp:
             outdir = ''
 
         cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
-        if self.fermigrid and self.worker:
+        if fermigrid and worker:
             os.popen('ifdh mkdir '+cspath)
 
         if not os.path.exists(cspath):
