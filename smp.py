@@ -557,7 +557,7 @@ class smp:
             psffile = os.path.join(rootdir,psffile)
             #print imfile
             #raw_input()
-
+            print 'hereeeee'
             if self.fermigrid & self.worker:
                 #print imfile
                 #os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
@@ -590,6 +590,8 @@ class smp:
                     #print 'copied all files'
                     #print os.popen('ifdh ls .').read()
                     #sys.exit()
+                    print 'here2'
+                    raw_input()
                 else:
                     print 'file not found',imfile
                     continue
@@ -673,6 +675,8 @@ class smp:
                     maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
                     mask = pyfits.getdata(maskfile)
 
+            print 'here3'
+            raw_input()
             if self.usefake:
                 fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
                 print 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .'
