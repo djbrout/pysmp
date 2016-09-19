@@ -293,6 +293,9 @@ class smp:
             outdir = ''
 
         cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
+        if self.fermigrid and self.worker:
+            os.popen('ifdh mkdir '+cspath)
+
         if not os.path.exists(cspath):
             os.makedirs(cspath)
         self.checkstarfile = os.path.join(outdir,foldername+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
@@ -508,6 +511,8 @@ class smp:
 
         if not nozpt:
             if fermigrid and worker:
+                print star_offset_file
+                sys.exit()
                 os.system('ifdh cp '+star_offset_file+' .')
                 star_offset_file = filename+'band_starGlobalOffsets.npz'
             try:
