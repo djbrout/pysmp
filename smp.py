@@ -637,10 +637,6 @@ class smp:
                 else:
                     print 'file not found', imfile
                     continue
-
-                        print 'could not find ',imfile
-                    except:
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+'.fz .').read()
                 #print 'grabbed sn files'
                 #sys.exit()
             try:
