@@ -612,7 +612,7 @@ class smp:
                     raw_input()
                     if len(ifdhls) > 0:
                         a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
-                        a = os.popen('funpack '+imfile+'.fz').read()
+                        a = os.popen('funpack '+imfile.split('/')[-1]+'.fz').read()
                         print a
                         # imfilel = copy(imfilel)
                         imfile = imfile.split('/')[-1]
@@ -628,7 +628,7 @@ class smp:
                         #     imfile = imfilel.split('/')[-1]
                         # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
-                        os.popen('funpack '+noisefile+'.fz')
+                        os.popen('funpack '+noisefile.split('/')[-1]+'.fz')
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         # print 'ifdh cp ' + psffile + ' .'
