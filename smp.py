@@ -549,6 +549,9 @@ class smp:
             skysig=np.nan
             #nozpt = copy(orig_nozpt)
 
+            if self.usefake:
+                imfile = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
+
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
             self.impath = '/'.join(imfile.split('/')[:-1])
@@ -571,6 +574,8 @@ class smp:
                 ifdhls = os.popen('ifdh ls '+imfile).read()
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+'.fz .').read()
+
                     #imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
                     print 'imfile',imfile
