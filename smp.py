@@ -500,12 +500,18 @@ class smp:
         cols = None
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        staroutdir = stardeltasfolder+'/stardata/'+filt+'/'
+
+        staroutdir = stardeltasfolder+'/'+filt+'/'
+
         print staroutdir
         if fermigrid and worker:
+            if not os.path.exists(stardeltasfolder):
+                print os.popen('ifdh mkdir ' + stardeltasfolder).read()
             if not os.path.exists(staroutdir):
                 print os.popen('ifdh mkdir '+staroutdir).read()
         else:
+            if not os.path.exists(stardeltasfolder):
+                os.makedirs(stardeltasfolder)
             if not os.path.exists(staroutdir):
                 os.makedirs(staroutdir)
         raw_input('makedir')
