@@ -501,12 +501,14 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
         staroutdir = stardeltasfolder+'/stardata/'+filt+'/'
+        print staroutdir
         if fermigrid and worker:
             if not os.path.exists(staroutdir):
-                os.system('ifdh mkdir '+staroutdir)
+                print os.popen('ifdh mkdir '+staroutdir).read()
         else:
             if not os.path.exists(staroutdir):
                 os.makedirs(staroutdir)
+        raw_input('makedir')
         print filename
         print staroutdir
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
