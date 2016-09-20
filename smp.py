@@ -1439,6 +1439,39 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
             elif type(snparams.starcat) == dict and 'des' in snfile:
+
+                if fermigrid and worker:
+                    starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
+                    # starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
+                    print starcatloc
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
+                    print ifdhls
+                    print 'ls on imfileloc'
+                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+                    print ifdhls
+                    print 'ls on imfileloc/STARCAT*.LIST'
+                    print 'len starcat', len(ifdhls)
+                    # sys.exit()
+                    if len(ifdhls) > 0:
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
+                        a = os.popen('ls STARCAT*').read()
+                        print '743', a
+                        starcatfile = ifdhls.strip().split('/')[-1]
+                        print '745', starcatfile
+                        # sys.exit()
+                        starcatloc = ''
+                        ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
+                        print ifdhls
+                        print 'sssssssssss'
+                        starcatloc = ''
+                        # raw_input()
+                    else:
+                        continue
+                else:
+                    for fl in os.listdir(starcatloc):
+                        if 'STARCAT' in fl:
+                            starcatfile = fl
+
                 #starcatfile = None
                 # starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
                 #
