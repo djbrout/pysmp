@@ -1062,7 +1062,7 @@ class smp:
             #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
             #print imfile
             if not os.path.exists(imfile):
-                print os.popen('ls -ltr').read()
+                #print os.popen('ls -ltr').read()
                 print 'funpack %s.fz' % imfile
                 print os.popen('funpack %s.fz' % imfile).read()
                 #d = pf.getdata(imfile)
@@ -1280,7 +1280,7 @@ class smp:
                     #starcatfile = longimfile.split('/')[-1]
                     starcatloc = ''
                     a = os.popen('ls STARCAT*').read()
-                    print '743', a
+                    #print '743', a
                     starcatfile = ifdhls.strip().split('/')[-1]
                     print '745', starcatfile
                     print 'starcat',starcatfile
