@@ -500,7 +500,7 @@ class smp:
         cols = None
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        staroutdir = os.path.join(mainoutdir,stardeltasfolder+'/stardata/'+filt+'/')
+        staroutdir = stardeltasfolder+'/stardata/'+filt+'/'
         if fermigrid and worker:
             if not os.path.exists(staroutdir):
                 os.system('ifdh mkdir '+staroutdir)
@@ -549,6 +549,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
+            if cntrs > 10:
+                continue
             #nozpt = copy(orig_nozpt)
 
             if self.usefake:
