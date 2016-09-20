@@ -1154,6 +1154,9 @@ class smp:
                 print 'Image is EMPTY, skipping star...'
                 continue
 
+            snparams.platescale = hdr[self.params.hdr_platescale_name]
+            snparams.airmass = hdr[self.params.hdr_airmass_name]
+
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
