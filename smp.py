@@ -514,7 +514,7 @@ class smp:
                 os.makedirs(stardeltasfolder)
             if not os.path.exists(staroutdir):
                 os.makedirs(staroutdir)
-        raw_input('makedir')
+        #raw_input('makedir')
         print filename
         print staroutdir
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
