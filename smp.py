@@ -558,7 +558,7 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 2:
+            if cntrs > 10:
                 continue
             #nozpt = copy(orig_nozpt)
 
@@ -970,7 +970,7 @@ class smp:
             starras = np.array(staroffsets['starras'])
             stardecs = np.array(staroffsets['stardecs'])
             starids = np.array(staroffsets['starids'])
-        sys.exit()
+        #sys.exit()
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
@@ -1014,13 +1014,13 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            #if cccc > 5:
-            #    continue
-            #print imfile
+            if cccc > 10:
+                continue
+            print imfile
             #raw_input()
             skysig=np.nan
             badflag = 0
-            nozpt = copy(orig_nozpt)
+            #nozpt = copy(orig_nozpt)
 
             longimfile = copy(imfile)
             if self.fermigrid & self.worker:
