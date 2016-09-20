@@ -575,7 +575,7 @@ class smp:
                 ifdhls = os.popen('ifdh ls '+imfile).read()
                 print ifdhls
                 print 'line 576'
-                raw_input()
+                #raw_input()
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     #imfilel = copy(imfilel)
@@ -601,7 +601,7 @@ class smp:
                     #print os.popen('ifdh ls .').read()
                     #sys.exit()
                     print 'here2'
-                    raw_input()
+                    #raw_input()
                 else:
                     print 'file not found',imfile
                     #continue
@@ -609,9 +609,10 @@ class smp:
                     ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
                     print ifdhls
                     print 'line 610'
-                    raw_input()
+                    #raw_input()
                     if len(ifdhls) > 0:
                         a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
+                        print a
                         a = os.popen('funpack '+imfile.split('/')[-1]+'.fz').read()
                         print a
                         # imfilel = copy(imfilel)
