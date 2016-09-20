@@ -968,7 +968,7 @@ class smp:
             starras = np.array(staroffsets['starras'])
             stardecs = np.array(staroffsets['stardecs'])
             starids = np.array(staroffsets['starids'])
-
+        sys.exit()
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
