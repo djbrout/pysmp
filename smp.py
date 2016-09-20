@@ -546,6 +546,8 @@ class smp:
                 continue
             if not nozpt:
                 continue
+            if not band == filt:
+                continue
             skysig=np.nan
             #nozpt = copy(orig_nozpt)
 
