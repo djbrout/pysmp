@@ -501,7 +501,7 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
-        staroutdir = stardeltasfolder+'/'+filt+'/'
+        staroutdir = os.path.join(stardeltasfolder,filt)
 
         print staroutdir
         if fermigrid and worker:
@@ -557,7 +557,7 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 10:
+            if cntrs > 2:
                 continue
             #nozpt = copy(orig_nozpt)
 
@@ -961,6 +961,7 @@ class smp:
             starids = np.array(starids)
             starras = np.array(starras)
             stardecs = np.array(stardecs)
+            print starras
             print star_offset_file
             self.tmpwriter.savez(star_offset_file,starras=starras,stardecs=stardecs,starids=starids)
         else:
