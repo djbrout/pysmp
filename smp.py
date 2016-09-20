@@ -752,7 +752,7 @@ class smp:
             except:
                 print 'Image is EMPTY, skipping star...'
                 continue
-            raw_input()
+            #raw_input()
             #print 'got image data!'
             #sys.exit()
             #fakeim_hdr = pyfits.getheader(fakeim)
