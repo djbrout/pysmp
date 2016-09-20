@@ -528,6 +528,7 @@ class smp:
                     os.system('ifdh cp '+star_offset_file+' .')
                     star_offset_file = filename+'band_starGlobalOffsets.npz'
             try:
+                print 'loading',star_offset_file
                 staroffsets = np.load(star_offset_file)
                 print 'Found and loaded star offset file...'
             except:
