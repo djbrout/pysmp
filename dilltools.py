@@ -229,8 +229,8 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
-            print 'ifdh cp' + tempfile + ' ' + filename
-            os.system('ifdh cp' + tempfile + ' ' + filename)
+            print 'ifdh cp ' + tempfile + ' ' + filename
+            os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
         print 'saved',filename
