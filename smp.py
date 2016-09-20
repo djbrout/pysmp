@@ -640,7 +640,7 @@ class smp:
                         # print os.popen('ifdh ls .').read()
                         # sys.exit()
                         print 'here2'
-                        raw_input()
+                        #raw_input()
                     else:
                         print 'file not found', imfile
                         continue
@@ -724,34 +724,35 @@ class smp:
                     maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
                     mask = pyfits.getdata(maskfile)
 
-            print 'here3'
-            raw_input()
-            if self.usefake:
-                fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
-                print 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .'
-                print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-                    0] + '+fakeSN.fits.gz' + ' .'
-                sys.exit()
-                os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .')\
-                    .read()
-                if not os.path.exists(fakeim):
-                    print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-                        0] + '+fakeSN.fits.gz' + ' .'
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-                        0] + '+fakeSN.fits.gz' + ' .').read()
-                    os.system('funpack %s.fz' % fakeim)
-                    os.system('gunzip %s.gz' % fakeim)
-                    print longimfile
-                    print longimfile.split('.fits.gz')[0] + '+fakeSN.fits.gz' + ' .'
-                    sys.exit()
-                imfile = fakeim
+            #print 'here3'
+            #raw_input()
+            # if self.usefake:
+            #     fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+            #     print 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .'
+            #     print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+            #         0] + '+fakeSN.fits.gz' + ' .'
+            #     sys.exit()
+            #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .')\
+            #         .read()
+            #     if not os.path.exists(fakeim):
+            #         print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+            #             0] + '+fakeSN.fits.gz' + ' .'
+            #         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+            #             0] + '+fakeSN.fits.gz' + ' .').read()
+            #         os.system('funpack %s.fz' % fakeim)
+            #         os.system('gunzip %s.gz' % fakeim)
+            #         print longimfile
+            #         print longimfile.split('.fits.gz')[0] + '+fakeSN.fits.gz' + ' .'
+            #         sys.exit()
+            #     imfile = fakeim
             try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
-                print im.shape
+                print 'image shape',im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
                 continue
+            raw_input()
             #print 'got image data!'
             #sys.exit()
             #fakeim_hdr = pyfits.getheader(fakeim)
