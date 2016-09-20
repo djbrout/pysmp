@@ -220,6 +220,7 @@ class tmpwriter():
 
     def savez(self,filename,**kwargs):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
+        print tempfile
         if os.path.isfile(tempfile):
             os.remove(tempfile)
         if os.path.isfile(filename):
@@ -228,6 +229,7 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
+            print 'ifdh cp' + tempfile + ' ' + filename
             os.system('ifdh cp' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
