@@ -1028,8 +1028,7 @@ class smp:
                 noisefile = noisefile.split('/')[-1]
                 weightsfile = noisefile
                 psffile = psffile.split('/')[-1]
-                if self.usefake:
-                    imfile = imfile.split('.')[0]+'+fakeSN.fits'
+
 
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
@@ -1062,22 +1061,23 @@ class smp:
 
             #imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
             #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
-            #print imfile
-            #raw_input('imfile')
-            if not os.path.exists(imfile):
-                #print os.popen('ls -ltr').read()
-                print 'funpack %s.fz' % imfile
-                print os.popen('funpack %s.fz' % imfile).read()
-                #d = pf.getdata(imfile)
-                #print 'dshape',d.shape
-                #sys.exit()
-                if not os.path.exists(imfile+'.fz'):
-                    print('Error : file %s does not exist'%imfile)
-                    continue
-                    print('Error : file %s does not exist'%imfile)
-                    raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
-                else:
-                    os.system('funpack %s.fz'%imfile)
+            print imfile
+            raw_input('imfile')
+            if not self.usefake:
+                if not os.path.exists(imfile):
+                    #print os.popen('ls -ltr').read()
+                    print 'funpack %s.fz' % imfile
+                    print os.popen('funpack %s.fz' % imfile).read()
+                    #d = pf.getdata(imfile)
+                    #print 'dshape',d.shape
+                    #sys.exit()
+                    if not os.path.exists(imfile+'.fz'):
+                        print('Error : file %s does not exist'%imfile)
+                        continue
+                        print('Error : file %s does not exist'%imfile)
+                        raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
+                    else:
+                        os.system('funpack %s.fz'%imfile)
             if self.useweights:
                 if not os.path.exists(weightsfile):
                     os.system('gunzip %s.gz' % weightsfile)
