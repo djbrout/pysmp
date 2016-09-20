@@ -3782,11 +3782,12 @@ class smp:
         #raw_input()
         sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)]*psf
         #sys.exit()
-        self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
-        self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
-        self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
-        self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
-        self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
+        if self.savezptstamps:
+            self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
+            self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
+            self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
+            self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
+            self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
         #if not mypsf is None:
         #    self.tmpwriter.savefits(mypsf, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_sim.fits')
         # if not imfile is None:
