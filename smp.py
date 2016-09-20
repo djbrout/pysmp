@@ -544,6 +544,7 @@ class smp:
         print 'getting star global offsets'
         print nozpt
         #print self.usefake
+        didglobalstar = False
         #sys.exit()
 
         for imfile,noisefile,psffile,band,faketruemag, j in \
@@ -560,6 +561,7 @@ class smp:
             skysig=np.nan
             if cntrs > 10:
                 continue
+            didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
             if self.usefake:
@@ -1006,7 +1008,6 @@ class smp:
         #print 'Done with centroiding!!'
         #sys.exit()
 
-
         cccc = 0
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -1017,19 +1018,127 @@ class smp:
             if cccc > 10:
                 continue
             print imfile
+
+
+
             #raw_input()
             skysig=np.nan
             badflag = 0
             #nozpt = copy(orig_nozpt)
 
+            # longimfile = copy(imfile)
+            # if self.fermigrid & self.worker:
+            #     imfile = imfile.split('/')[-1]
+            #     noisefile = noisefile.split('/')[-1]
+            #     weightsfile = noisefile
+            #     psffile = psffile.split('/')[-1]
+            #
+            #
+            # try:
+            #     self.ccdnum = imfile.split('/')[1].split('_')[1]
+            #     self.field = imfile.split('/')[0].split('-')[1]
+            # except:
+            #     self.ccdnum = np.nan
+            #     self.field = np.nan
+
+            ########NEWWWWWWWWWWWWWWWW#######################
+            if self.usefake:
+                imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                # noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
+
+            imfile = os.path.join(rootdir, imfile)
             longimfile = copy(imfile)
+            self.impath = '/'.join(imfile.split('/')[:-1])
+            try:
+                noisefile = os.path.join(rootdir, noisefile)
+            except:
+                noisefile = [os.path.join(rootdir, noisefile[0]), os.path.join(rootdir, noisefile[1])]
+
+            psffile = os.path.join(rootdir, psffile)
+            # print imfile
+            # raw_input()
+            print 'hereeeee'
             if self.fermigrid & self.worker:
-                imfile = imfile.split('/')[-1]
-                noisefile = noisefile.split('/')[-1]
-                weightsfile = noisefile
-                psffile = psffile.split('/')[-1]
+                # print imfile
+                # os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
+                # print 'line 529 copied image files to here'
+                # sys.exit()
+                # print 'ifdh cp '+imfile+' .'
 
+                ifdhls = os.popen('ifdh ls ' + imfile).read()
+                print ifdhls
+                print 'line 576'
+                # raw_input()
+                if len(ifdhls) > 0:
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .').read()
+                    # imfilel = copy(imfilel)
+                    imfile = imfile.split('/')[-1]
+                    print 'imfile', imfile
+                    # if self.usefake:
+                    #     #if '.gz' in imfile:
+                    #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
+                    #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
+                    #     #imfile = imfilel.split('/')[-1]
+                    #     #else:
+                    #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
+                    #         0] + '+fakeSN.fits' + ' .').read()
+                    #     imfile = imfilel.split('/')[-1]
+                    # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + ' .').read()
+                    noisefile = noisefile.split('/')[-1]
+                    weightsfile = noisefile
+                    # print 'ifdh cp ' + psffile + ' .'
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                    psffile = psffile.split('/')[-1]
+                    # print 'copied all files'
+                    # print os.popen('ifdh ls .').read()
+                    # sys.exit()
+                    print 'here2'
+                    # raw_input()
+                else:
+                    print 'file not found', imfile
+                    # continue
 
+                    ifdhls = os.popen('ifdh ls ' + imfile + '.fz').read()
+                    print ifdhls
+                    print 'line 610'
+                    # raw_input()
+                    if len(ifdhls) > 0:
+                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
+                        print a
+                        a = os.popen('funpack ' + imfile.split('/')[-1] + '.fz').read()
+                        print a
+                        # imfilel = copy(imfilel)
+                        imfile = imfile.split('/')[-1]
+                        print 'imfile', imfile
+                        # if self.usefake:
+                        #     #if '.gz' in imfile:
+                        #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
+                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
+                        #     #imfile = imfilel.split('/')[-1]
+                        #     #else:
+                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
+                        #         0] + '+fakeSN.fits' + ' .').read()
+                        #     imfile = imfilel.split('/')[-1]
+                        # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
+                        os.popen('funpack ' + noisefile.split('/')[-1] + '.fz')
+                        noisefile = noisefile.split('/')[-1]
+                        weightsfile = noisefile
+                        # print 'ifdh cp ' + psffile + ' .'
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        # os.popen('funpack '+psffile)
+                        psffile = psffile.split('/')[-1]
+                        # print 'copied all files'
+                        # print os.popen('ifdh ls .').read()
+                        # sys.exit()
+                        print 'here2'
+                        # raw_input()
+                    else:
+                        print 'file not found', imfile
+                        continue
+                        # print 'grabbed sn files'
+                        # sys.exit()
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
                 self.field = imfile.split('/')[0].split('-')[1]
@@ -1037,47 +1146,42 @@ class smp:
                 self.ccdnum = np.nan
                 self.field = np.nan
 
-            try:
-                self.rickfakestarfile = 'data/fixmagCoords_SN-'+self.field+'.dat'
-            except:
-                self.rickfakestarfile = ''
-            #print filt
-            #raw_input('filttt')
             if filt != 'all' and band not in filt:
-                if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
-                print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
+                # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
+                # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
-            cccc += 1
 
-            if not fermigrid:
-                imfile = os.path.join(self.rootdir, imfile)
-                print imfile
+            # imfileloc = copy(imfile)
 
-                psffile = os.path.join(self.rootdir, psffile)
+            # if fermigrid and worker:
+            #    self.rootdir = '.'
+
+            # print imfile
+            # print imfileloc
+
+            if not worker:
                 if self.useweights:
                     weightsfile = os.path.join(self.rootdir, noisefile)
                 else:
-                    noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir, noisefile[1])
+                    noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir,
+                                                                                                 noisefile[1])
 
-            #imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
-            #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
-            print imfile
-            raw_input('imfile')
-            if not self.usefake:
-                if not os.path.exists(imfile):
-                    #print os.popen('ls -ltr').read()
+            if not os.path.exists(imfile):
+                # print os.popen('ls -ltr *.fz').read()
+                # print 'funpack %s.fz' % imfile
+                # os.system('funpack %s.fz' % imfile)
+                # sys.exit()
+                if not os.path.exists(imfile + '.fz'):
+                    print('Error : file %s does not exist' % imfile)
+                    continue
+                    print('Error : file %s does not exist' % imfile)
+                    raise exceptions.RuntimeError('Error : file %s does not exist' % imfile)
+                else:
+                    print os.popen('ls -ltr *.fz').read()
                     print 'funpack %s.fz' % imfile
-                    print os.popen('funpack %s.fz' % imfile).read()
-                    #d = pf.getdata(imfile)
-                    #print 'dshape',d.shape
-                    #sys.exit()
-                    if not os.path.exists(imfile+'.fz'):
-                        print('Error : file %s does not exist'%imfile)
-                        continue
-                        print('Error : file %s does not exist'%imfile)
-                        raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
-                    else:
-                        os.system('funpack %s.fz'%imfile)
+                    os.system('funpack %s.fz' % imfile)
+                    # sys.exit()
+
             if self.useweights:
                 if not os.path.exists(weightsfile):
                     os.system('gunzip %s.gz' % weightsfile)
@@ -1086,6 +1190,7 @@ class smp:
                         if not os.path.exists(weightsfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist' % weightsfile)
             else:
+
                 if not os.path.exists(noisefile):
                     os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
@@ -1098,36 +1203,117 @@ class smp:
                         os.system('funpack %s.fz' % maskfile)
                         if not os.path.exists(maskfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
+
             if not os.path.exists(psffile):
-                if not os.path.exists(psffile+'.fz'):
-                    raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
+                if os.path.exists(psffile + '.gz'):
+                    os.system('gunzip %s.gz' % psffile)
+                elif not os.path.exists(psffile + '.fz'):
+                    raise exceptions.RuntimeError('Error : file %s does not exist' % psffile)
                 else:
-                    os.system('funpack %s.fz'%psffile)
+                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % psffile)
 
             if not nomask:
                 if useweights:
                     maskfile = os.path.join(self.rootdir, snparams.image_name_search[j])
                     mask = pyfits.getdata(maskfile)
 
-            if self.usefake:
-                fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
-                if not os.path.exists(fakeim):
-                    print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-                        0] + '+fakeSN.fits.gz' + ' .'
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-                        0] + '+fakeSN.fits.gz' + ' .').read()
-                    os.system('funpack %s.fz' % fakeim)
-                    os.system('gunzip %s.gz' % fakeim)
-                imfile = fakeim
-            try:
-                im = pyfits.getdata(imfile)
-                hdr = pyfits.getheader(imfile)
-            except:
-                print 'Image is EMPTY, skipping star...'
-                continue
 
-            snparams.platescale = hdr[self.params.hdr_platescale_name]
-            snparams.airmass = hdr[self.params.hdr_airmass_name]
+
+            ########NEWWWWWWWWWWWWWWWWENDDDDDDDDDD############
+
+            try:
+
+                self.rickfakestarfile = 'data/fixmagCoords_SN-'+self.field+'.dat'
+            except:
+                self.rickfakestarfile = ''
+            #print filt
+            #raw_input('filttt')
+            if filt != 'all' and band not in filt:
+                if verbose: print('filter %s not in filter list for image file %s'%(band,filt,imfile))
+                print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
+                continue
+            cccc += 1
+
+            # if not fermigrid:
+            #     imfile = os.path.join(self.rootdir, imfile)
+            #     print imfile
+            #
+            #     psffile = os.path.join(self.rootdir, psffile)
+            #     if self.useweights:
+            #         weightsfile = os.path.join(self.rootdir, noisefile)
+            #     else:
+            #         noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir, noisefile[1])
+            #
+            # #imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
+            # #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
+            # #print imfile
+            # #raw_input('imfile')
+            # NEED TO IFDH CP FILES OVER FOR WHEN YOU DONT DO GLOBALSTARS... NEED TO REMEMBER MAINROOTDIR
+            # if not self.usefake:
+            #     if not os.path.exists(imfile):
+            #         #print os.popen('ls -ltr').read()
+            #         print 'funpack %s.fz' % imfile
+            #         print os.popen('funpack %s.fz' % imfile).read()
+            #         #d = pf.getdata(imfile)
+            #         #print 'dshape',d.shape
+            #         #sys.exit()
+            #         if not os.path.exists(imfile+'.fz'):
+            #             print('Error : file %s does not exist'%imfile)
+            #             continue
+            #             print('Error : file %s does not exist'%imfile)
+            #             raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
+            #         else:
+            #             os.system('funpack %s.fz'%imfile)
+            # if self.useweights:
+            #     if not os.path.exists(weightsfile):
+            #         os.system('gunzip %s.gz' % weightsfile)
+            #         if not os.path.exists(weightsfile):
+            #             os.system('funpack %s.fz' % weightsfile)
+            #             if not os.path.exists(weightsfile):
+            #                 raise exceptions.RuntimeError('Error : file %s does not exist' % weightsfile)
+            # else:
+            #     if not os.path.exists(noisefile):
+            #         os.system('gunzip %s.gz' % noisefile)
+            #         if not os.path.exists(noisefile):
+            #             os.system('funpack %s.fz' % noisefile)
+            #             if not os.path.exists(noisefile):
+            #                 raise exceptions.RuntimeError('Error : file %s does not exist' % noisefile)
+            #     if not os.path.exists(maskfile):
+            #         os.system('gunzip %s.gz' % maskfile)
+            #         if not os.path.exists(maskfile):
+            #             os.system('funpack %s.fz' % maskfile)
+            #             if not os.path.exists(maskfile):
+            #                 raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
+            # if not os.path.exists(psffile):
+            #     if not os.path.exists(psffile+'.fz'):
+            #         raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
+            #     else:
+            #         os.system('funpack %s.fz'%psffile)
+            #
+            # if not nomask:
+            #     if useweights:
+            #         maskfile = os.path.join(self.rootdir, snparams.image_name_search[j])
+            #         mask = pyfits.getdata(maskfile)
+            #
+            # if self.usefake:
+            #     fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+            #     if not os.path.exists(fakeim):
+            #         print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+            #             0] + '+fakeSN.fits.gz' + ' .'
+            #         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
+            #             0] + '+fakeSN.fits.gz' + ' .').read()
+            #         os.system('funpack %s.fz' % fakeim)
+            #         os.system('gunzip %s.gz' % fakeim)
+            #     imfile = fakeim
+            # try:
+            #     im = pyfits.getdata(imfile)
+            #     hdr = pyfits.getheader(imfile)
+            # except:
+            #     print 'Image is EMPTY, skipping star...'
+            #     continue
+            #
+            # snparams.platescale = hdr[self.params.hdr_platescale_name]
+            # snparams.airmass = hdr[self.params.hdr_airmass_name]
 
             if self.useweights:
                 weights = pyfits.getdata(weightsfile)
