@@ -1812,6 +1812,8 @@ class smp:
                 skipactualzeropoint = False
                 #print 'just before getzpt'
                 #sys.exit()
+                print 'nozpt',nozpt
+                sys.exit()
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
