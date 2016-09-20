@@ -1146,6 +1146,14 @@ class smp:
                 self.ccdnum = np.nan
                 self.field = np.nan
 
+            try:
+                im = pyfits.getdata(imfile)
+                hdr = pyfits.getheader(imfile)
+                print 'image shape', im.shape
+            except:
+                print 'Image is EMPTY, skipping star...'
+                continue
+
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
