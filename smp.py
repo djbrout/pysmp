@@ -1663,24 +1663,24 @@ class smp:
             self.gain = hdr[params.gain_name]
 
             if not nozpt:
-                try:
-                    if doglobalstar:
-                        if dogalsimpixfit:
-                            zpt_file = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
-                        else:
-                            zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                #try:
+                if doglobalstar:
+                    if dogalsimpixfit:
+                        zpt_file = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
                     else:
-                        zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
-                    zptdata = np.load(zpt_file) #load previous zpt information
+                        zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                else:
+                    zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
+                zptdata = np.load(zpt_file) #load previous zpt information
 
-                    zpt = zptdata['mpfit_zpt']
-                    zpterr = zptdata['mpfit_zpt_std']
-                    mjdoff = zptdata['mjdoff']
-                    mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                except:
-                    print('Warning : IMAGE_ZPT field does not exist!  Calculating')
-                    nozpt = True
-                    sys.exit()
+                zpt = zptdata['mpfit_zpt']
+                zpterr = zptdata['mpfit_zpt_std']
+                mjdoff = zptdata['mjdoff']
+                mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                #except:
+                print('Warning : IMAGE_ZPT field does not exist!  Calculating')
+                nozpt = True
+                sys.exit()
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain =  hdr[params.gain_name]
