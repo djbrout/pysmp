@@ -3819,7 +3819,7 @@ class smp:
             cbar = fig.colorbar(ax)
             ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest')
             cbar = fig.colorbar(ax)
-            ax = axchi.imshow((im - sim)**2/*weight*fitrad, cmap='gray', interpolation='nearest')
+            ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest')
             cbar = fig.colorbar(ax)
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
