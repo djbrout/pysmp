@@ -1664,7 +1664,7 @@ class smp:
             self.gain = hdr[params.gain_name]
 
             if not nozpt:
-                #try:
+                try:
                     if doglobalstar:
                         if dogalsimpixfit:
                             zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
