@@ -1687,7 +1687,7 @@ class smp:
                 except:
                     print('Warning : IMAGE_ZPT field does not exist!  Calculating')
                     nozpt = True
-                sys.exit()
+                #sys.exit()
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain =  hdr[params.gain_name]
