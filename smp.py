@@ -4158,7 +4158,7 @@ class smp:
                                                         stampsize=params.substamp)
                         x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
                         xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        psf, psfcenter = self.build_psfex(psffile, x-x_star+xpsf, y-y_star+ypsf, imfile, stop=True)
+                        psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
                         pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                                   noise * 0. + 1., mask)
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
