@@ -4160,7 +4160,7 @@ class smp:
 
                         #raw_input()
                         self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
-                        if i == 1:
+                        if i == 9:
                             sys.exit()
                         noise_stamp[noise_stamp > 0.] = 1
                         noise_stamp[noise_stamp <= 0.] = 0
