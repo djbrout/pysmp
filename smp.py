@@ -1826,7 +1826,7 @@ class smp:
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
-                    x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm*2.)
+                    #x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm*2.)
                     #print x_star1[0]-x_star1n[0]
                     #raw_input('stopped')
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
@@ -4111,7 +4111,7 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        psf, psfcenter = self.build_psfex(psffile,y,x,imfile,stop=True)
+                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
                         #opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
                         #ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
                         #self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
