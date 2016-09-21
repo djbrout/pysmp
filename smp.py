@@ -4111,7 +4111,7 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
+                        psf, psfcenter = self.build_psfex(psffile,y,x,imfile,stop=True)
                         #opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
                         #ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
                         #self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
