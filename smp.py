@@ -4162,7 +4162,7 @@ class smp:
                         pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                                   noise * 0. + 1., mask)
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                            pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                            pk.pkfit_norecent_noise_smp(1, x, y-1, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
 
