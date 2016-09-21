@@ -4159,7 +4159,7 @@ class smp:
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
                         #raw_input()
-                        self.tmpwriter.savefits(scale*psf_stamp-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
+                        self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
                         sys.exit()
                         noise_stamp[noise_stamp > 0.] = 1
                         noise_stamp[noise_stamp <= 0.] = 0
