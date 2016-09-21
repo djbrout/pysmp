@@ -4117,7 +4117,7 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            if cntr > 10:
+            if i > 20:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4346,6 +4346,7 @@ class smp:
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
         pdf_pages.close()
+        sys.exit()
         #pdf_pagesc.close()
         #raw_input('saved teststamps daophot_resid.pdf')
 
