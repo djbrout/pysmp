@@ -3740,7 +3740,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index='',mypsf=None,imfile=None,x=None,y=None):
+    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None):
         print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -3804,6 +3804,28 @@ class smp:
             self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
             self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
             self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
+
+        if not pdf_pages is None:
+            fig = plt.figure()
+            axim = plt.subplot(131)
+            axpsf = plt.subplot(132)
+            axdiff = plt.subplot(133)
+            axchi = plt.subplot(134)
+            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model','resid', 'chisq']):
+                ax.set_title(title)
+            ax = axim.imshow(im*fitrad, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax)
+            ax = axpsf.imshow(sim*fitrad, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax)
+            ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax)
+            ax = axchi.imshow((im - sim)**2/*weight*fitrad, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax)
+            # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+            # plt.colorbar()
+            plt.title(title)
+            pdf_pages.savefig(fig)
+
         #if not mypsf is None:
         #    self.tmpwriter.savefits(mypsf, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_sim.fits')
         # if not imfile is None:
@@ -4095,8 +4117,8 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            #if cntr > 50:
-            #    continue
+            if cntr > 10:
+                continue
             #print 'xstar',xstar
             #raw_input()
             #y -= 2.
@@ -4156,23 +4178,23 @@ class smp:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
-                        x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
-                        pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
-                                                                  noise * 0. + 1., mask)
-                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                            pk.pkfit_norecent_noise_smp(1, x, y-1, s, se, params.fitrad, returnStamps=True,
-                                                        stampsize=params.substamp)
-                        xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-
-                        print x_star,y_star
-                        print xpsf,ypsf
-                        print xpsf2,ypsf2
-                        print x,y
-
-                        print 'rerecentroid'
-                        raw_input('rerecentroid')
+                        # x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
+                        # xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
+                        # psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
+                        # pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
+                        #                                           noise * 0. + 1., mask)
+                        # errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
+                        #     pk.pkfit_norecent_noise_smp(1, x, y-1, s, se, params.fitrad, returnStamps=True,
+                        #                                 stampsize=params.substamp)
+                        # xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
+                        #
+                        # print x_star,y_star
+                        # print xpsf,ypsf
+                        # print xpsf2,ypsf2
+                        # print x,y
+                        #
+                        # print 'rerecentroid'
+                        # raw_input('rerecentroid')
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -4224,7 +4246,7 @@ class smp:
 
                         cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
                                                                          params.fitrad,
-                                                                         gal, mjd, scale, index=i)
+                                                                         gal, mjd, scale, index=i,pdf_pages=pdf_pages)
 
 
                         psfx = np.sum(psf,axis=0)
@@ -4323,7 +4345,7 @@ class smp:
                     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
-        #pdf_pages.close()
+        pdf_pages.close()
         #pdf_pagesc.close()
         #raw_input('saved teststamps daophot_resid.pdf')
 
