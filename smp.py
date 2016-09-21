@@ -4164,8 +4164,11 @@ class smp:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
+                        xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
+
                         print x_star,y_star
                         print xpsf,ypsf
+                        print xpsf2,ypsf2
 
                         print 'rerecentroid'
                         raw_input('rerecentroid')
