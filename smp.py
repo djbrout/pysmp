@@ -4160,7 +4160,8 @@ class smp:
 
                         #raw_input()
                         self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
-                        sys.exit()
+                        if i == 1:
+                            sys.exit()
                         noise_stamp[noise_stamp > 0.] = 1
                         noise_stamp[noise_stamp <= 0.] = 0
                         if self.dosextractor:
