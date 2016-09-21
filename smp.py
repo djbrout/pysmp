@@ -1667,11 +1667,16 @@ class smp:
                 #try:
                 if doglobalstar:
                     if dogalsimpixfit:
-                        zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
+                        zpt_file = os.path.join(longimfile.split('/')[-1].split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
                     else:
-                        zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
+                        zpt_file = os.path.join(longimfile.split('/')[-1].split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
                 else:
                     zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
+
+                if self.fermigrid and self.worker:
+                    os.popen('ifdh cp '+zpt_file+' .')
+                    zpt_file = zpt_file.spit('/')[-1]
+                    
                 zptdata = np.load(zpt_file) #load previous zpt information
 
                 zpt = zptdata['mpfit_zpt']
