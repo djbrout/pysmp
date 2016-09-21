@@ -2187,8 +2187,8 @@ class smp:
 
                                     #sys.exit()
                                     i += 1
-        print os.popen('ls -ltr').read()
-        sys.exit()
+        #print os.popen('ls -ltr').read()
+        #sys.exit()
         if mergeno == 0:
             zeroArray = np.zeros(smp_noise.shape)
             largeArray = zeroArray + 1E10
