@@ -560,8 +560,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            #if cntrs > 10:
-            #    continue
+            if cntrs > 5:
+                continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
@@ -1016,8 +1016,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            #if cccc > 10:
-            #    continue
+            if cccc > 5:
+                continue
             print imfile
 
 
@@ -4040,8 +4040,8 @@ class smp:
 
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
-                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,longimfile,snparams,substamp,
-                mjdoff,mjdslopeinteroff,j,psf='',mjd=None,
+                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
+                mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
         print 'Computing zeropoint for',imfile
