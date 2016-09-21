@@ -4169,6 +4169,7 @@ class smp:
                         print x_star,y_star
                         print xpsf,ypsf
                         print xpsf2,ypsf2
+                        print x,y
 
                         print 'rerecentroid'
                         raw_input('rerecentroid')
