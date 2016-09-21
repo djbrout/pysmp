@@ -1389,27 +1389,28 @@ class smp:
             dec_low = np.min([dec1,dec2])
 
             if not self.usefake:
-                try:
+                #try:
+                snparams.RA = float(snparams.ra)
+                snparams.DECL = float(snparams.decl)
+                #except:
+                    #snparams.RA = astCoords.hms2decimal(snparams.ra, ':')
+                    #snparams.DECL = astCoords.dms2decimal(snparams.decl, ':')
+
+            else:
+                #try:
+                if self.exactpos:
+                    snparams.RA = float(snparams.fake_ra)
+                    snparams.DECL = float(snparams.fake_dec)
+                else:
                     snparams.RA = float(snparams.ra)
                     snparams.DECL = float(snparams.decl)
-                except:
-                    snparams.RA = astCoords.hms2decimal(snparams.ra, ':')
-                    snparams.DECL = astCoords.dms2decimal(snparams.decl, ':')
-            else:
-                try:
-                    if self.exactpos:
-                        snparams.RA = float(snparams.fake_ra)
-                        snparams.DECL = float(snparams.fake_dec)
-                    else:
-                        snparams.RA = float(snparams.ra)
-                        snparams.DECL = float(snparams.decl)
-                except:
-                    if self.exactpos:
-                        snparams.RA = astCoords.hms2decimal(snparams.fake_ra,':')
-                        snparams.DECL = astCoords.dms2decimal(snparams.fake_dec,':')
-                    else:
-                        snparams.RA = astCoords.hms2decimal(snparams.ra,':')
-                        snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
+                # except:
+                #     if self.exactpos:
+                #         snparams.RA = astCoords.hms2decimal(snparams.fake_ra,':')
+                #         snparams.DECL = astCoords.dms2decimal(snparams.fake_dec,':')
+                #     else:
+                #         snparams.RA = astCoords.hms2decimal(snparams.ra,':')
+                #         snparams.DECL = astCoords.dms2decimal(snparams.decl,':')
 
 
             if params.forceradec.lower() == 'true':
@@ -1825,6 +1826,7 @@ class smp:
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
+                    x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm*2.)
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
@@ -4038,7 +4040,7 @@ class smp:
 
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
-                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
+                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,longimfile,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
@@ -4445,6 +4447,7 @@ class smp:
             #plt.clf()
             print 'scatter'
             print len(mag_cat[goodstarcols])
+            plt.clf()
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
             print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
@@ -4458,25 +4461,25 @@ class smp:
             if self.fermigrid:
                 print 'insidefermigrid'
 
-                print os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
-                plt.savefig(os.path.join('./zpts',imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                #os.system('ifdh cp -D ' + os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                #    filt) + 'band_starfit_zptplot.png')
-                #          + ' ' + self.zptoutpath)
-                plt.clf()
-                ras = np.array(ras)
-                decs = np.array(decs)
-                plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md)
-                plt.savefig(os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_ra.png'))
-                print 'saved', os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_ra.png')
-                plt.clf()
-                plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md)
-                plt.savefig(os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_dec.png'))
-                print 'saved', os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_dec.png')
+                #print os.path.join(longimfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+                plt.savefig(os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                os.system('ifdh cp -D ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot.png')
+                          + ' ' + self.zptoutpath)
+                # plt.clf()
+                # ras = np.array(ras)
+                # decs = np.array(decs)
+                # plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md)
+                # plt.savefig(os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #     filt) + 'band_starfit_zptplot_ra.png'))
+                # print 'saved', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #     filt) + 'band_starfit_zptplot_ra.png')
+                # plt.clf()
+                # plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md)
+                # plt.savefig(os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #     filt) + 'band_starfit_zptplot_dec.png'))
+                # print 'saved', os.path.join('./zpts', imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #     filt) + 'band_starfit_zptplot_dec.png')
 
 
             else:
