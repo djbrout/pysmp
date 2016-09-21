@@ -252,7 +252,7 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,lcfilepath='.',
-             savezptstamps=False
+             savezptstamps=False,usezpt=None
              ):
 
 
@@ -364,6 +364,7 @@ class smp:
         self.worker=worker
         self.lcfilepath=lcfilepath
         self.savezptstamps = savezptstamps
+        self.usezpt = usezpt
 
 
         self.useweights = useweights
@@ -1666,11 +1667,11 @@ class smp:
                 #try:
                 if doglobalstar:
                     if dogalsimpixfit:
-                        zpt_file = imfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz'
+                        zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
                     else:
-                        zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                        zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
                 else:
-                    zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
+                    zpt_file = os.path.join(self.usezpt,imfile.split('/')[-1].split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
                 zptdata = np.load(zpt_file) #load previous zpt information
 
                 zpt = zptdata['mpfit_zpt']
@@ -4836,7 +4837,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath="])
+                      "lcfilepath=","usezpt="])
 
 
         #print opt
@@ -4865,7 +4866,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath="])
+                      "lcfilepath=","usezpt="])
 
 
         #print opt
@@ -4903,6 +4904,7 @@ if __name__ == "__main__":
     parallelvar = None
     fermigriddir = None
     worker = False
+    usezpt = None
     lcfilepath=snfilepath
 
     dobigstarcat = True
@@ -5009,6 +5011,8 @@ if __name__ == "__main__":
             worker = True
         elif o == "--savezptstamps":
             savezptstamps = True
+        elif o == "--usezpt":
+            usezpt = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -5112,6 +5116,8 @@ if __name__ == "__main__":
             worker = True
         elif o == "--savezptstamps":
             savezptstamps = True
+        elif o == "--usezpt":
+            usezpt = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -5148,7 +5154,8 @@ if __name__ == "__main__":
     if snfilelist is None:
         raise NameError("Must provide " +
                         "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
-
+    if usezpt is None:
+        usezpt = out_dir
 
     if not index is None:
         if index == 'all':
@@ -5224,7 +5231,7 @@ if __name__ == "__main__":
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps)
+                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,usezpt=usezpt)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -5321,7 +5328,7 @@ if __name__ == "__main__":
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps)
+                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,usezpt=usezpt)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
