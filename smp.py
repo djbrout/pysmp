@@ -3807,10 +3807,10 @@ class smp:
 
         if not pdf_pages is None:
             fig = plt.figure()
-            axim = plt.subplot(131)
-            axpsf = plt.subplot(132)
-            axdiff = plt.subplot(133)
-            axchi = plt.subplot(134)
+            axim = plt.subplot(141)
+            axpsf = plt.subplot(142)
+            axdiff = plt.subplot(143)
+            axchi = plt.subplot(144)
             for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model','resid', 'chisq']):
                 ax.set_title(title)
             ax = axim.imshow(im*fitrad, cmap='gray', interpolation='nearest')
