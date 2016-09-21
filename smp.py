@@ -1664,28 +1664,29 @@ class smp:
             self.gain = hdr[params.gain_name]
 
             if not nozpt:
-                #try:
-                if doglobalstar:
-                    if dogalsimpixfit:
-                        zpt_file = os.path.join(longimfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
+                try:
+                    if doglobalstar:
+                        if dogalsimpixfit:
+                            zpt_file = os.path.join(longimfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
+                        else:
+                            zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
                     else:
-                        zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
-                else:
-                    zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
-                print zpt_file
-                if self.fermigrid and self.worker:
-                    os.popen('ifdh cp '+zpt_file+' .')
-                    zpt_file = zpt_file.split('/')[-1]
+                        zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
+                    print zpt_file
+                    if self.fermigrid and self.worker:
+                        os.popen('ifdh cp '+zpt_file+' .')
+                        zpt_file = zpt_file.split('/')[-1]
 
-                zptdata = np.load(zpt_file) #load previous zpt information
+                    zptdata = np.load(zpt_file) #load previous zpt information
 
-                zpt = zptdata['mpfit_zpt']
-                zpterr = zptdata['mpfit_zpt_std']
-                mjdoff = zptdata['mjdoff']
-                mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                #except:
-                print('Warning : IMAGE_ZPT field does not exist!  Calculating')
-                nozpt = True
+                    zpt = zptdata['mpfit_zpt']
+                    zpterr = zptdata['mpfit_zpt_std']
+                    mjdoff = zptdata['mjdoff']
+                    mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                    print 'thisworked'
+                except:
+                    print('Warning : IMAGE_ZPT field does not exist!  Calculating')
+                    nozpt = True
                 sys.exit()
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
