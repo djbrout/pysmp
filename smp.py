@@ -4105,7 +4105,7 @@ class smp:
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
-        pdf_pages = PdfPages('/pnfs/des/persistent/smp/daophot_resid.pdf')
+        pdf_pages = PdfPages('starfits.pdf')
         pdf_pagesc = PdfPages('daophot_residc.pdf')
         print imfile
         print thismjd
