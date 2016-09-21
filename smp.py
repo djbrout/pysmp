@@ -4156,6 +4156,13 @@ class smp:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
+                        x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
+                        xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
+
+                        print xstar,ystar
+                        print xpsf,ypsf
+                        raw_input('rerecentroid')
+
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
                         #raw_input()
@@ -4729,7 +4736,7 @@ class smp:
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
-            psfout[x,y] = p
+            psfout[y,x] = p
 
         # print 'psfvalmax',np.max(psfval)
         # print 'psfshape',psfout.shape
