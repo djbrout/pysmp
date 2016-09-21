@@ -4729,7 +4729,7 @@ class smp:
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
-            psfout[y,x] = p
+            psfout[x,y] = p
 
         # print 'psfvalmax',np.max(psfval)
         # print 'psfshape',psfout.shape
