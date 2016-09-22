@@ -4107,7 +4107,7 @@ class smp:
             full_data_image = galsim.fits.read(imfile)
         print 'starfits_'+str(thismjd)
         pdf_pages = PdfPages('starfits_'+str(thismjd)+'.pdf')
-        pdf_pagesc = PdfPages('daophot_residc.pdf')
+        pdf_pagesc = PdfPages('mystarfits_'+str(thismjd)+'.pdf')
         print imfile
         print thismjd
         print 'mjdabove'
@@ -4254,6 +4254,30 @@ class smp:
                         schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
                         cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
                         print 'pkfit chisq',schi,'fluxsmp chisq',cchi
+
+                        #for i in range(self.Nimage):
+                        fig = plt.figure(figsize=(20, 10))
+                        axim = plt.subplot(141)
+                        axpsf = plt.subplot(142)
+                        axdiff = plt.subplot(143)
+                        axchi = plt.subplot(144)
+                        for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq']):
+                            ax.set_title(title)
+                        axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
+                        cbar = fig.colorbar(axs, ax=axim)
+                        axs = axpsf.imshow(psf * fitrad, cmap='gray', interpolation='nearest')
+                        cbar = fig.colorbar(axs, ax=axpsf)
+                        axs = axdiff.imshow((image_stamp - psf) * fitrad, cmap='gray',
+                                            interpolation='nearest')
+                        cbar = fig.colorbar(axs, ax=axdiff)
+                        axs = axchi.imshow(
+                            (image_stamp - psf)**2 * fitrad *noise_stamp,
+                            cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
+                        cbar = fig.colorbar(axs, ax=axchi)
+                        # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+                        # plt.colorbar()
+                        plt.title(title)
+                        pdf_pagesc.savefig(fig)
                         # psfx = np.sum(psf,axis=0)
                         # psfy = np.sum(psf,axis=1)
                         # imx = np.sum(image_stamp,axis=0)
@@ -4351,8 +4375,11 @@ class smp:
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
         pdf_pages.close()
+        self.tmpwriter('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
         #sys.exit()
-        #pdf_pagesc.close()
+        pdf_pagesc.close()
+        self.tmpwriter('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
+
         #raw_input('saved teststamps daophot_resid.pdf')
 
                 #raw_input('saved teststamp.fits')
