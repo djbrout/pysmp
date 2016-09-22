@@ -3819,7 +3819,7 @@ class smp:
             cbar = fig.colorbar(ax,ax=axpsf)
             ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest',vmin=-100, vmax=10)
             cbar = fig.colorbar(ax,ax=axdiff)
-            ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest',vmin=0, vmax=5.)
+            ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest',vmin=0, vmax=10.)
             cbar = fig.colorbar(ax,ax=axchi)
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
@@ -4105,7 +4105,8 @@ class smp:
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
-        pdf_pages = PdfPages('starfits.pdf')
+        print 'starfits_'+str(thismjd)
+        pdf_pages = PdfPages('starfits_'+str(thismjd)+'.pdf')
         pdf_pagesc = PdfPages('daophot_residc.pdf')
         print imfile
         print thismjd
@@ -4178,23 +4179,23 @@ class smp:
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
-                        # x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        # xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        # psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
-                        # pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
-                        #                                           noise * 0. + 1., mask)
-                        # errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                        #     pk.pkfit_norecent_noise_smp(1, x, y-1, s, se, params.fitrad, returnStamps=True,
-                        #                                 stampsize=params.substamp)
-                        # xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        #
-                        # print x_star,y_star
-                        # print xpsf,ypsf
-                        # print xpsf2,ypsf2
-                        # print x,y
-                        #
-                        # print 'rerecentroid'
-                        # raw_input('rerecentroid')
+                        x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
+                        xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
+                        psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
+                        pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
+                                                                  noise * 0. + 1., mask)
+                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
+                            pk.pkfit_norecent_noise_smp(1, x, y-1, s, se, params.fitrad, returnStamps=True,
+                                                        stampsize=params.substamp)
+                        xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
+
+                        print x_star,y_star
+                        print xpsf,ypsf
+                        print xpsf2,ypsf2
+                        print x,y
+
+                        print 'rerecentroid'
+                        #raw_input('rerecentroid')
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
