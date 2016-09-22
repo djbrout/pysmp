@@ -4233,7 +4233,8 @@ class smp:
                             conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
                             conv.drawImage(image=simstamp,method='no_pixel')
                             gpsf = simstamp.array
-                            gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf, sexsky, noise_stamp,
+                            gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf,
+                                                                               sexsky, noise_stamp,
                                                                                radius, gal, mjd, scale)
                             gsflux[i] =gscale
                             gsflux_std[i] = gscale_std
@@ -4250,68 +4251,68 @@ class smp:
                                                                          gal, mjd, scale, index=i,pdf_pages=pdf_pages)
 
 
-                        psfx = np.sum(psf,axis=0)
-                        psfy = np.sum(psf,axis=1)
-                        imx = np.sum(image_stamp,axis=0)
-                        imy = np.sum(image_stamp,axis=1)
-                        plt.clf()
-                        plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
-                        plt.plot(np.arange(0,len(imx)),(imx-sexsky)/np.sum(imx-sexsky),label='imx')
-                        plt.axvline(x-np.round(x) + 15)
-                        plt.savefig('testpsfx.png')
-                        os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx'+str(i)+'.png')
-                        plt.clf()
-                        plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
-                        plt.plot(np.arange(0, len(imy)), (imy-sexsky)/np.sum(imy-sexsky), label='imy')
-                        plt.axvline(y-np.round(y) + 15)
-                        plt.savefig('testpsfy.png')
-                        os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy'+str(i)+'.png')
-
-                        #cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                        #                                                 params.fitrad,
-                        #                                                 gal, mjd, scale, index=i)
-
-                        print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
-                        # if y-np.floor(y) < 5.:
-                        #     suby = 16
-                        #     addy = 14
-                        # else:
-                        #     suby = 15
-                        #     addy = 15
+                        # psfx = np.sum(psf,axis=0)
+                        # psfy = np.sum(psf,axis=1)
+                        # imx = np.sum(image_stamp,axis=0)
+                        # imy = np.sum(image_stamp,axis=1)
+                        # plt.clf()
+                        # plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
+                        # plt.plot(np.arange(0,len(imx)),(imx-sexsky)/np.sum(imx-sexsky),label='imx')
+                        # plt.axvline(x-np.round(x) + 15)
+                        # plt.savefig('testpsfx.png')
+                        # os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx'+str(i)+'.png')
+                        # plt.clf()
+                        # plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
+                        # plt.plot(np.arange(0, len(imy)), (imy-sexsky)/np.sum(imy-sexsky), label='imy')
+                        # plt.axvline(y-np.round(y) + 15)
+                        # plt.savefig('testpsfy.png')
+                        # os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy'+str(i)+'.png')
                         #
-                        # if x - np.floor(x) < 5.:
-                        #     subx = 16
-                        #     addx = 14
-                        # else:
-                        #     subx = 15
-                        #     addx = 15
-                        suby = 15
-                        addy = 15
-                        subx = 15
-                        addx = 15
-                        mimage_stamp = im[np.round(y)-suby:np.round(y)+addy+1,np.round(x)-subx:np.round(x)+addx+1]
-                        mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
-                                                                         params.fitrad,
-                                                                         gal, mjd, scale, index=i+1000)
-
-                        psfx = np.sum(psf, axis=0)
-                        psfy = np.sum(psf, axis=1)
-                        imx = np.sum(mimage_stamp, axis=0)
-                        imy = np.sum(mimage_stamp, axis=1)
-                        plt.clf()
-                        plt.plot(np.arange(0, len(psfx)), psfx, label='psfx')
-                        plt.plot(np.arange(0, len(imx)), (imx - sexsky) / np.sum(imx - sexsky), label='imx')
-                        plt.axvline(x - np.round(x) + 15)
-                        plt.savefig('testpsfx.png')
-                        os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/mtestpsfx' + str(i) + '.png')
-                        plt.clf()
-                        plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
-                        plt.plot(np.arange(0, len(imy)), (imy - sexsky) / np.sum(imy - sexsky), label='imy')
-                        plt.axvline(y - np.round(y) + 15)
-                        plt.savefig('testpsfy.png')
-                        os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/mtestpsfy' + str(i) + '.png')
-                        #print 'checking!!!', cscale, oldcscale
-                        print 'DIFFFFFF',scale,cscale,mcscale
+                        # #cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                        # #                                                 params.fitrad,
+                        # #                                                 gal, mjd, scale, index=i)
+                        #
+                        # print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
+                        # # if y-np.floor(y) < 5.:
+                        # #     suby = 16
+                        # #     addy = 14
+                        # # else:
+                        # #     suby = 15
+                        # #     addy = 15
+                        # #
+                        # # if x - np.floor(x) < 5.:
+                        # #     subx = 16
+                        # #     addx = 14
+                        # # else:
+                        # #     subx = 15
+                        # #     addx = 15
+                        # suby = 15
+                        # addy = 15
+                        # subx = 15
+                        # addx = 15
+                        # mimage_stamp = im[np.round(y)-suby:np.round(y)+addy+1,np.round(x)-subx:np.round(x)+addx+1]
+                        # mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
+                        #                                                  params.fitrad,
+                        #                                                  gal, mjd, scale, index=i+1000)
+                        #
+                        # psfx = np.sum(psf, axis=0)
+                        # psfy = np.sum(psf, axis=1)
+                        # imx = np.sum(mimage_stamp, axis=0)
+                        # imy = np.sum(mimage_stamp, axis=1)
+                        # plt.clf()
+                        # plt.plot(np.arange(0, len(psfx)), psfx, label='psfx')
+                        # plt.plot(np.arange(0, len(imx)), (imx - sexsky) / np.sum(imx - sexsky), label='imx')
+                        # plt.axvline(x - np.round(x) + 15)
+                        # plt.savefig('testpsfx.png')
+                        # os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/mtestpsfx' + str(i) + '.png')
+                        # plt.clf()
+                        # plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
+                        # plt.plot(np.arange(0, len(imy)), (imy - sexsky) / np.sum(imy - sexsky), label='imy')
+                        # plt.axvline(y - np.round(y) + 15)
+                        # plt.savefig('testpsfy.png')
+                        # os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/mtestpsfy' + str(i) + '.png')
+                        # #print 'checking!!!', cscale, oldcscale
+                        # print 'DIFFFFFF',scale,cscale,mcscale
                         # self.tmpwriter.savefits(image_stamp-mimage_stamp,'/pnfs/des/scratch/pysmp/test/'+str(i)+'_pk-me.fits')
                         #sys.exit()
                         #scale = cscale
