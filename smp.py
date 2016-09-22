@@ -4200,7 +4200,7 @@ class smp:
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
                         #raw_input()
-                        self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
+                        #self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
                         #if i == 9:
                         #    sys.exit()
                         noise_stamp[noise_stamp > 0.] = 1
@@ -4250,7 +4250,7 @@ class smp:
                                                                          params.fitrad,
                                                                          gal, mjd, scale, index=i,pdf_pages=pdf_pages)
 
-
+                        print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
                         # psfx = np.sum(psf,axis=0)
                         # psfy = np.sum(psf,axis=1)
                         # imx = np.sum(image_stamp,axis=0)
