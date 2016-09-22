@@ -4375,10 +4375,10 @@ class smp:
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
         pdf_pages.close()
-        self.tmpwriter('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
+        self.tmpwriter.cp('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
         #sys.exit()
         pdf_pagesc.close()
-        self.tmpwriter('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
+        self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
 
         #raw_input('saved teststamps daophot_resid.pdf')
 
