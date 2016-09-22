@@ -4347,7 +4347,7 @@ class smp:
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
         pdf_pages.close()
-        sys.exit()
+        #sys.exit()
         #pdf_pagesc.close()
         #raw_input('saved teststamps daophot_resid.pdf')
 
