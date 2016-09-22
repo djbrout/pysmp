@@ -4251,6 +4251,9 @@ class smp:
                                                                          gal, mjd, scale, index=i,pdf_pages=pdf_pages)
 
                         print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
+                        schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*mask_stamp)
+                        cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*mask_stamp)
+                        print 'pkfit chisq',schi,'fluxsmp chisq',cchi
                         # psfx = np.sum(psf,axis=0)
                         # psfy = np.sum(psf,axis=1)
                         # imx = np.sum(image_stamp,axis=0)
