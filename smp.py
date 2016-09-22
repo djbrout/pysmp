@@ -3806,7 +3806,7 @@ class smp:
             self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
 
         if not pdf_pages is None:
-            fig = plt.figure()
+            fig = plt.figure(figsize=(20,10))
             axim = plt.subplot(141)
             axpsf = plt.subplot(142)
             axdiff = plt.subplot(143)
@@ -3817,9 +3817,9 @@ class smp:
             cbar = fig.colorbar(ax,ax=axim)
             ax = axpsf.imshow(sim*fitrad, cmap='gray', interpolation='nearest')
             cbar = fig.colorbar(ax,ax=axpsf)
-            ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest')
+            ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest',vmin=-100, vmax=10)
             cbar = fig.colorbar(ax,ax=axdiff)
-            ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest')
+            ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest',vmin=0, vmax=5.)
             cbar = fig.colorbar(ax,ax=axchi)
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
