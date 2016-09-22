@@ -254,6 +254,16 @@ class tmpwriter():
             os.system('mv ' + tempfile + ' ' + filename)
         print 'saved', filename
 
-
+    def cp(self,src,dst):
+        if os.path.isfile(dst):
+            os.remove(dst)
+        # print 'ifdh cp to ',filename
+        if self.usedccp:
+            os.system('dccp ' + src + ' ' + dst)
+        elif self.useifdh:
+            os.system('ifdh cp ' + src + ' ' + dst)
+        else:
+            os.system('mv ' + src + ' ' + dst)
+        print 'saved', dst
 
     #def doesfileexist(self):

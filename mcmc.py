@@ -59,6 +59,9 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 import scipy.interpolate as interpol
 import dilltools as dt
+from matplotlib.backends.backend_pdf import PdfPages
+
+
 
 #import pyfftw
 
@@ -115,6 +118,8 @@ class metropolis_hastings():
                 , customweights = None
                 , comboerr = False
                 , covarerr = False
+                , isfermigrid = False
+                , isworker = False
                 ):
         '''
         if model is None:
@@ -192,6 +197,10 @@ class metropolis_hastings():
         self.comboerr = True
         self.covarerr = False
         self.didtimeout = False
+        self.isfermigrid = False
+        self.isworker = False
+        if self.isfermigrid and self.isworker:
+            self.tmpwriter = dt.tmpwriter(tmp_subscript='snfit_', useifdh=True)
 
         self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
 
@@ -380,6 +389,7 @@ class metropolis_hastings():
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
                 self.savechains()
+                self.plotstamps()
                 #print 'index','mjd','chisq','raoff','decoff','flux'
                 #for i in np.arange(52):
                 #    print i,self.mjd[i], self.chisqvec[i]/len(self.mask[self.mask>0.].ravel()),self.mjdoff[i][0],self.mjdoff[i][1],np.mean(self.modelvec_nphistory[:,i])
@@ -781,6 +791,31 @@ class metropolis_hastings():
     def autocorr( self, x ):
         result = np.correlate( x, x, mode='full' )
         return result[ result.size / 2 : ]
+
+    def plotstamps(self):
+        pdf_pages = PdfPages('stamps.pdf')
+        for i in range(self.Nimage):
+            fig = plt.figure(figsize=(20, 10))
+            axim = plt.subplot(141)
+            axpsf = plt.subplot(142)
+            axdiff = plt.subplot(143)
+            axchi = plt.subplot(144)
+            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq']):
+                ax.set_title(title)
+            ax = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax, ax=axim)
+            ax = axpsf.imshow(self.sims[i,:,:] * self.mask, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax, ax=axpsf)
+            ax = axdiff.imshow((self.data[i,:,:] - self.sims[i,:,:]) * self.mask, cmap='gray', interpolation='nearest')
+            cbar = fig.colorbar(ax, ax=axdiff)
+            ax = axchi.imshow((self.data[i,:,:] - self.sims[i,:,:]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
+            cbar = fig.colorbar(ax, ax=axchi)
+            # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+            # plt.colorbar()
+            plt.title(title)
+            pdf_pages.savefig(fig)
+        pdf_pages.close()
+        self.tmpwriter.cp('stamps.pdf',str(self.lcout)+'_stamps.pdf')
 
     def plotchains( self ):
         self.model_params()
