@@ -561,7 +561,7 @@ class smp:
                 continue
             skysig=np.nan
             if cntrs > 5:
-                continue
+               continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
@@ -4118,7 +4118,7 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            if i > 50:
+            if i > 100:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4246,14 +4246,14 @@ class smp:
                         #                                                  gal, mjd, scale,index=i)
 
 
-                        cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                                                                         params.fitrad,
-                                                                         gal, mjd, scale, index=i,pdf_pages=pdf_pages)
+                        # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                        #                                                  params.fitrad,
+                        #                                                  gal, mjd, scale, index=i,pdf_pages=pdf_pages)
 
-                        print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
-                        schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
-                        cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
-                        print 'pkfit chisq',schi,'fluxsmp chisq',cchi
+                        # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
+                        # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
+                        # cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
+                        # print 'pkfit chisq',schi,'fluxsmp chisq',cchi
 
                         #for i in range(self.Nimage):
                         fig = plt.figure(figsize=(20, 10))
@@ -4377,8 +4377,8 @@ class smp:
         pdf_pages.close()
         self.tmpwriter.cp('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
         #sys.exit()
-        pdf_pagesc.close()
-        self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
+        #pdf_pagesc.close()
+        #self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
 
         #raw_input('saved teststamps daophot_resid.pdf')
 
