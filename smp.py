@@ -555,10 +555,10 @@ class smp:
             print self.fermilogfile
             if os.path.exists(self.fermilogfile):
                 print os.popen('ifdh rm '+self.fermilogfile).read()
-            self.tmpwriter.writefile('Starting SMP',self.fermilogfile)
+            self.tmpwriter.writefile('Starting SMP\n',self.fermilogfile)
             print 'Follow .smplog at ', self.fermilogfile
-            self.tmpwriter.appendfile('running globalstar',self.fermilogfile)
-            sys.exit()
+            self.tmpwriter.appendfile('running globalstar\n',self.fermilogfile)
+            #sys.exit()
 
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -590,7 +590,7 @@ class smp:
                 noisefile = [os.path.join(rootdir,noisefile[0]),os.path.join(rootdir,noisefile[1])]
 
             if self.fermilog:
-                self.tmpwriter.appendfile('running globalstar on '+longimfile, self.fermilogfile)
+                self.tmpwriter.appendfile('running globalstar on '+longimfile+'\n', self.fermilogfile)
 
             psffile = os.path.join(rootdir,psffile)
             #print imfile
@@ -1018,7 +1018,7 @@ class smp:
             offsetdec = np.array(starglobalras)*0.
 
         if self.fermilog:
-            self.tmpwriter.appendfile('\nDone with globalstars\n ' + longimfile, self.fermilogfile)
+            self.tmpwriter.appendfile('\nDone with globalstars\n ', self.fermilogfile)
 
         #############################################################################################################################
         #############################################################################################################################
@@ -1077,7 +1077,7 @@ class smp:
             # print imfile
             # raw_input()
             if self.fermilog:
-                self.tmpwriter.appendfile('running zeropoints on ' + longimfile, self.fermilogfile)
+                self.tmpwriter.appendfile('running zeropoints on ' + longimfile+'\n', self.fermilogfile)
 
             print 'hereeeee'
             if self.fermigrid & self.worker:
@@ -2488,7 +2488,7 @@ class smp:
         print 'idcoadd',smp_dict['id_coadd']
         #sys.exit()
         if self.fermilog:
-            self.tmpwriter.appendfile('saving mcmc input ', self.fermilogfile)
+            self.tmpwriter.appendfile('saving mcmc input\n', self.fermilogfile)
 
         self.tmpwriter.savez( os.path.join(outdir,filename+'_mcmc_input.npz'), 
                 galmodel = galmodel
@@ -2554,7 +2554,7 @@ class smp:
         
         self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
         if self.fermilog:
-            self.tmpwriter.appendfile('starting galaxy mcmc ', self.fermilogfile)
+            self.tmpwriter.appendfile('starting galaxy mcmc\n', self.fermilogfile)
         #self.dogalfit = False
         if self.dogalfit:
             aaa = mcmc3.metropolis_hastings( 
@@ -2670,7 +2670,7 @@ class smp:
             yoff = np.mean(yhistory[int(3*len(yhistory)/4.):])/.27
 
         if self.fermilog:
-            self.tmpwriter.appendfile('starting snfit mcmc ', self.fermilogfile)
+            self.tmpwriter.appendfile('starting snfit mcmc\n', self.fermilogfile)
         if self.dosnfit:
             if not self.dogalfit:
                 chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
@@ -2966,7 +2966,7 @@ class smp:
                                 image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
         fout.close()
         if self.fermilog:
-            self.tmpwriter.appendfile('SMP Successful ', self.fermilogfile)
+            self.tmpwriter.appendfile('SMP Successful\n', self.fermilogfile)
         print('SMP was successful!!!')
         print('See stamps/mcmc_chains in',self.outdir)
         print('See lightcurve file',smplightcurvefile)
