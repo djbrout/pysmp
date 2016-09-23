@@ -804,7 +804,7 @@ class metropolis_hastings():
                 ax.set_title(title)
             axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axim)
-            axs = axpsf.imshow(self.sims[i,:,:] * self.mask, cmap='gray', interpolation='nearest')
+            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axpsf)
             axs = axdiff.imshow((self.data[i,:,:] - self.sims[i,:,:]) * self.mask, cmap='gray', interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axdiff)
