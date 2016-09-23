@@ -9,6 +9,6 @@ num_jobs=2
 jobsub_submit -G des --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC -M\
      --verbose --OS=SL6 file:///data/des41.a/data/djbrout/pysmp/batch_submission_scripts/runfermirun.csh\
       --log_file=/pnfs/des/persistent/smp/logs/r1.log\
-      --generate-email-summary -N $num_jobs --no_log_buffer
+      --generate-email-summary -N $num_jobs
 echo $num_jobs jobs submitted
 echo done

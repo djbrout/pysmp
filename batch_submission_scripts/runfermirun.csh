@@ -28,4 +28,4 @@ cd pysmp
 pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
-python smp.py --index=$PROCESS -f r
+python smp.py --index=$PROCESS -f r --nozpt
