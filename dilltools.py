@@ -203,8 +203,8 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + filename + ' ' + tempfile)
         elif self.useifdh:
-            print 'ifdh cp' + filename + ' ' + tempfile
-            os.system('ifdh cp' + filename + ' ' + tempfile)
+            print 'ifdh cp ' + filename + ' ' + tempfile
+            os.system('ifdh cp ' + filename + ' ' + tempfile)
         else:
             os.system('mv ' + filename + ' ' + tempfile)
 
@@ -216,7 +216,7 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
-            os.system('ifdh cp' + tempfile + ' ' + filename)
+            os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
 
