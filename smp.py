@@ -4356,8 +4356,8 @@ class smp:
                 print 'DONEEEEE',scale,errmag
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
-                flux_chisq[i] = chisq
-                flux_dms[i] = dms
+                flux_chisq[i] = chi
+                #flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
                 image_stamp[abs(image_stamp) < .1] = s
