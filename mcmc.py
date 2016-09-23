@@ -828,7 +828,8 @@ class metropolis_hastings():
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
             plt.ylabel('SN Flux')
-        self.savefig(str(self.lcout)+'_SNchains.png')
+        self.savefig('SNchains.png')
+        self.tmpwriter.cp('SNchains.png',str(self.lcout)+'_SNchains.png')
         #print str(self.lcout)+'_SNchains.png'
         plt.clf()
         plt.close(1)
@@ -841,10 +842,12 @@ class metropolis_hastings():
         plt.xlabel('Step')
         plt.ylabel('Offset (arcsec)')
         if self.fitradec:
-            self.savefig(str(self.lcout)+'_SNoffset1.png')
+            self.savefig('SNoffset1.png')
+            self.tmpwriter.cp('SNoffset1.png',str(self.lcout)+'_SNoffset1.png')
             #print str(self.lcout)+'_SNoffset1.png'
         else:
-            self.savefig(str(self.lcout)+'_SNoffset2.png')
+            self.savefig('SNoffset2.png')
+            self.tmpwriter.cp('SNoffset2.png',str(self.lcout)+'_SNoffset2.png')
             #print str(self.lcout)+'_SNoffset2.png'
 
         plt.close(1)
@@ -860,7 +863,7 @@ class metropolis_hastings():
         else:
             raoff = np.nan
             decoff = np.nan
-        np.savez(self.chainsnpz,modelvec=self.modelvec, modelvec_uncertainty=self.modelvec_uncertainty,
+        self.tmpwriter.savez(self.chainsnpz,modelvec=self.modelvec, modelvec_uncertainty=self.modelvec_uncertainty,
                  galmodel_params=self.galmodel_params, galmodel_uncertainty=self.galmodel_uncertainty,
                  modelvec_nphistory=self.modelvec_nphistory, galmodel_nphistory=self.galmodel_nphistory,
                  sims=self.sims,data=self.data,accepted_history=self.accepted_history,chisqhist=self.chisq,
