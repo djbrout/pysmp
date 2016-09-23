@@ -1482,26 +1482,26 @@ class smp:
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
                     # starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
-                    print starcatloc
+                    #print starcatloc
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                    print ifdhls
-                    print 'ls on imfileloc'
+                    #print ifdhls
+                    #print 'ls on imfileloc'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                    print ifdhls
-                    print 'ls on imfileloc/STARCAT*.LIST'
-                    print 'len starcat', len(ifdhls)
+                    #print ifdhls
+                    #print 'ls on imfileloc/STARCAT*.LIST'
+                    #print 'len starcat', len(ifdhls)
                     # sys.exit()
                     if len(ifdhls) > 0:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
                         a = os.popen('ls STARCAT*').read()
-                        print '743', a
+                        #print '743', a
                         starcatfile = ifdhls.strip().split('/')[-1]
-                        print '745', starcatfile
+                        #print '745', starcatfile
                         # sys.exit()
                         starcatloc = ''
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-                        print ifdhls
-                        print 'sssssssssss'
+                        #print ifdhls
+                        #print 'sssssssssss'
                         starcatloc = ''
                         # raw_input()
                     else:
@@ -4184,7 +4184,7 @@ class smp:
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
-            print x,y
+            #print x,y
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
