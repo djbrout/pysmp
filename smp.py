@@ -562,7 +562,7 @@ class smp:
 
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
-            print doglobalstar, snparams.mjd[j], nozpt
+            #print doglobalstar, snparams.mjd[j], nozpt
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
@@ -604,10 +604,11 @@ class smp:
                 #print 'ifdh cp '+imfile+' .'
 
                 ifdhls = os.popen('ifdh ls '+imfile).read()
-                print ifdhls
-                print 'line 576'
+                #print ifdhls
+                #print 'line 576'
                 #raw_input()
                 if len(ifdhls) > 0:
+                    #print 'Copying over',imfile
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     #imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
@@ -631,15 +632,15 @@ class smp:
                     #print 'copied all files'
                     #print os.popen('ifdh ls .').read()
                     #sys.exit()
-                    print 'here2'
+                    #print 'here2'
                     #raw_input()
                 else:
                     print 'file not found',imfile
                     #continue
 
                     ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
-                    print ifdhls
-                    print 'line 610'
+                    #print ifdhls
+                    #print 'line 610'
                     #raw_input()
                     if len(ifdhls) > 0:
                         a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
@@ -670,7 +671,7 @@ class smp:
                         # print 'copied all files'
                         # print os.popen('ifdh ls .').read()
                         # sys.exit()
-                        print 'here2'
+                        #print 'here2'
                         #raw_input()
                     else:
                         print 'file not found', imfile
@@ -1079,7 +1080,7 @@ class smp:
             if self.fermilog:
                 self.tmpwriter.appendfile('running zeropoints on ' + longimfile+'\n', self.fermilogfile)
 
-            print 'hereeeee'
+            #print 'hereeeee'
             if self.fermigrid & self.worker:
                 # print imfile
                 # os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
@@ -1088,8 +1089,8 @@ class smp:
                 # print 'ifdh cp '+imfile+' .'
 
                 ifdhls = os.popen('ifdh ls ' + imfile).read()
-                print ifdhls
-                print 'line 576'
+                #print ifdhls
+                #print 'line 576'
                 # raw_input()
                 if len(ifdhls) > 0:
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .').read()
@@ -1115,15 +1116,15 @@ class smp:
                     # print 'copied all files'
                     # print os.popen('ifdh ls .').read()
                     # sys.exit()
-                    print 'here2'
+                    #print 'here2'
                     # raw_input()
                 else:
                     print 'file not found', imfile
                     # continue
 
                     ifdhls = os.popen('ifdh ls ' + imfile + '.fz').read()
-                    print ifdhls
-                    print 'line 610'
+                    #print ifdhls
+                    #print 'line 610'
                     # raw_input()
                     if len(ifdhls) > 0:
                         a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
@@ -1154,7 +1155,7 @@ class smp:
                         # print 'copied all files'
                         # print os.popen('ifdh ls .').read()
                         # sys.exit()
-                        print 'here2'
+                        #print 'here2'
                         # raw_input()
                     else:
                         print 'file not found', imfile
@@ -1538,8 +1539,8 @@ class smp:
                     a = os.popen('ls STARCAT*').read()
                     #print '743', a
                     starcatfile = ifdhls.strip().split('/')[-1]
-                    print '745', starcatfile
-                    print 'starcat',starcatfile
+                    #print '745', starcatfile
+                    #print 'starcat',starcatfile
                 else:
                     for fl in os.listdir(starcatloc):
                         #print fl
@@ -1705,7 +1706,7 @@ class smp:
                     zpterr = zptdata['mpfit_zpt_std']
                     mjdoff = zptdata['mjdoff']
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                    print 'thisworked'
+                    #print 'thisworked'
                 except:
                     print('Warning : IMAGE_ZPT field does not exist!  Calculating')
                     nozpt = True
@@ -1782,9 +1783,9 @@ class smp:
                 else:
                     coords = wcsinfo.tran([starcat.ra[cols]/radtodeg,starcat.dec[cols]/radtodeg],False)
 
-                for xi,yi,xo,yo in zip(x_star,y_star,x_starold,y_starold):
-                    print xi,xo,yi,yo
-                print 'printed globalstar locations'
+                #for xi,yi,xo,yo in zip(x_star,y_star,x_starold,y_starold):
+                #    print xi,xo,yi,yo
+                #print 'printed globalstar locations'
                 #sys.exit()
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
@@ -4153,7 +4154,7 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            if i > 20:
+            if i > 30:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4163,8 +4164,8 @@ class smp:
 
             if mc > 21:
                 continue
-            print 'nxpix',self.snparams.nxpix
-            print 'nypix',self.snparams.nypix
+            #print 'nxpix',self.snparams.nxpix
+            #print 'nypix',self.snparams.nypix
             print x,y
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
@@ -4194,7 +4195,7 @@ class smp:
                 
                 counter += 1
                 mask = mask*0.
-                print 'ra,dec,x,y',ra,dec,x,y
+                print 'index,ra,dec,x,y',i,ra,dec,x,y
                 if self.snparams.survey == 'PS1':
                     scale,cscale_std,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,
@@ -4205,6 +4206,7 @@ class smp:
                         mag_cat[i] = 99
                         print 'badflaggg'*10
                 else:
+                    print 'here1'
                     pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
@@ -4804,8 +4806,8 @@ class smp:
         ### psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
         ###                                                                           self.params.substamp)).read()
         #print "bash -c source dump_psfex.c -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,35)
-        print 'inside build psfex'
-        print 'xpix',x,'ypix',y
+        #print 'inside build psfex'
+        #print 'xpix',x,'ypix',y
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
