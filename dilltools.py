@@ -179,9 +179,11 @@ class tmpwriter():
         tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         if os.path.isfile(tempfile):
             os.remove(tempfile)
-        if os.path.isfile(filename):
-            os.remove(filename)
-
+        try:
+            if os.path.isfile(filename):
+                os.remove(filename)
+        except:
+            print 'could not remove file'
         a = open(tempfile,'w')
         a.write(text)
         a.close()
