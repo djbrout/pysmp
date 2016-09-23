@@ -2705,7 +2705,7 @@ class smp:
                     , shiftpsf = False
                     , fileappend = ''
                     , stop = False
-                    , skyerr_radius = 16.
+                    , skyerr_radius = 12.
                     , outpath = outimages
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
