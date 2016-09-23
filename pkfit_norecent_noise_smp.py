@@ -432,6 +432,8 @@ class pkfit_class:
             #        skys=yx[0]
             #        sky=skys
 
+        errmag = vals.perror[0]
+        chi = vals.fnorm / vals.dof
         if returnStamps:
             return(errmag,chi,vals.niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,out_noise_stamp,mask_stamp,psf_stamp)
         else:
