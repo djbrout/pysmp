@@ -555,7 +555,7 @@ class smp:
             print self.fermilogfile
             if os.path.exists(self.fermilogfile):
                 print os.popen('ifdh rm '+self.fermilogfile).read()
-            self.tmpwriter.appendfile('Starting SMP',self.fermilogfile)
+            self.tmpwriter.writefile('Starting SMP',self.fermilogfile)
             print 'Follow .smplog at ', self.fermilogfile
             self.tmpwriter.appendfile('running globalstar',self.fermilogfile)
 
