@@ -4353,8 +4353,9 @@ class smp:
                         print 'skipped star...\n'
                         continue
 
+                print 'DONEEEEE',scale,errmag
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
-                flux_star_std[i] = cscale_std
+                flux_star_std[i] = errmag
                 flux_chisq[i] = chisq
                 flux_dms[i] = dms
                 # fig = plt.figure()
