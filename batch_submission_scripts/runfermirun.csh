@@ -28,4 +28,4 @@ cd pysmp
 pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
-python smp.py --index=1 -f r 
+python smp.py --index=1 -f g --snfilelist=data/snfiles3.txt

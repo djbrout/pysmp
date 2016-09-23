@@ -16,6 +16,7 @@ setup ftools v6.17
 setup autoscan v3.1+0
 setup easyaccess
 setup extralibs 1.0
+setup ifdhc
 echo "EUPS setup complete"
 
 source /cvmfs/fermilab.opensciencegrid.org/products/common/etc/setups
