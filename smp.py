@@ -4353,7 +4353,7 @@ class smp:
                         print 'skipped star...\n'
                         continue
                 print np.median(noise_stamp)
-                mychi = np.sum((image_stamp - psf)**2 * fitrad *noise_stamp)/len(fitrad[fitrad>0.])
+                mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
