@@ -4203,14 +4203,14 @@ class smp:
                         #self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
                         #if i == 9:
                         #    sys.exit()
-                        noise_stamp[noise_stamp > 0.] = 1
-                        noise_stamp[noise_stamp <= 0.] = 0
+                        # noise_stamp[noise_stamp > 0.] = 1
+                        # noise_stamp[noise_stamp <= 0.] = 0
                         if self.dosextractor:
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
                         else:
                             sexsky, sexrms = s,se
                         # noise_stamp = noise_stamp*1/(se**2)
-                        noise_stamp = noise_stamp * 1 / (sexrms ** 2)
+                        # noise_stamp = noise_stamp * 1 / (sexrms ** 2)
                         gal = np.zeros(image_stamp.shape)
                         mjd = 000.
                         #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
@@ -4352,8 +4352,8 @@ class smp:
                     except NameError:
                         print 'skipped star...\n'
                         continue
-
-                mychi = np.sum((image_stamp - psf)**2 * fitrad *noise_stamp)
+                print np.median(noise_stamp)
+                mychi = np.sum((image_stamp - psf)**2 * fitrad *noise_stamp)/len(fitrad[fitrad>0.])
                 print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
