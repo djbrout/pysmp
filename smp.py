@@ -2710,7 +2710,7 @@ class smp:
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
                     , burnin = .75
-                    , lcout = lightcurves+filename
+                    , lcout = os.path.join(outdir,filename)
                     , chainsnpz = os.path.join(outdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
                     )
