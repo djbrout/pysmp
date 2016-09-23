@@ -292,6 +292,7 @@ class smp:
             outfile = ''
             outdir = ''
         mainoutdir = copy(outdir)
+
         # cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
         # if fermigrid and worker:
         #     if not os.path.exists(cspath)
@@ -2710,8 +2711,8 @@ class smp:
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
                     , burnin = .75
-                    , lcout = os.path.join(mainoutdir,filename)
-                    , chainsnpz = os.path.join(mainoutdir,filename+'_withSn.npz')
+                    , lcout = os.path.join(oldoutdir,filename)
+                    , chainsnpz = os.path.join(oldoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
                     )
             modelveco = copy(modelvec)
