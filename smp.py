@@ -557,6 +557,7 @@ class smp:
                 print os.popen('ifdh rm '+self.fermilogfile).read()
             self.tmpwriter.writefile('Starting SMP',self.fermilogfile)
             print 'Follow .smplog at ', self.fermilogfile
+            sys.exit()
             self.tmpwriter.appendfile('running globalstar',self.fermilogfile)
 
 
