@@ -557,9 +557,8 @@ class smp:
                 print os.popen('ifdh rm '+self.fermilogfile).read()
             self.tmpwriter.writefile('Starting SMP',self.fermilogfile)
             print 'Follow .smplog at ', self.fermilogfile
-            sys.exit()
             self.tmpwriter.appendfile('running globalstar',self.fermilogfile)
-
+            sys.exit()
 
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
