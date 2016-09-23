@@ -864,33 +864,33 @@ class smp:
             elif type(snparams.starcat) == dict and 'des' in snfile:
                 starcatfile = None
                 starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
-                print starcatloc
-                print imfile
-                print longimfile
+                #print starcatloc
+                #print imfile
+                #print longimfile
                 #sys.exit()
                 if fermigrid and worker:
                     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
                     #starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
                     print starcatloc
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                    print ifdhls
-                    print 'ls on imfileloc'
+                    #print ifdhls
+                    #print 'ls on imfileloc'
                     ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                    print ifdhls
-                    print 'ls on imfileloc/STARCAT*.LIST'
-                    print 'len starcat',len(ifdhls)
+                    #print ifdhls
+                    #print 'ls on imfileloc/STARCAT*.LIST'
+                    #print 'len starcat',len(ifdhls)
                     #sys.exit()
                     if len(ifdhls) > 0:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
                         a = os.popen('ls STARCAT*').read()
-                        print '743',a
+                        #print '743',a
                         starcatfile = ifdhls.strip().split('/')[-1]
-                        print '745',starcatfile
+                        #print '745',starcatfile
                         #sys.exit()
                         starcatloc = ''
                         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-                        print ifdhls
-                        print 'sssssssssss'
+                        #print ifdhls
+                        #print 'sssssssssss'
                         starcatloc = ''
                         #raw_input()
                     else:
@@ -2216,10 +2216,24 @@ class smp:
                                             smp_dict['fitflag'][i] = 0
 
                                     #sys.exit()
+                                    if self.fermigrid and self.worker:
+                                        print 'cleaning up copied files'
+                                        print os.popen('rm '+imfile).read()
+                                        print os.popen('rm '+imfile+'.fz').read()
+                                        print os.popen('rm '+noisefile).read()
+                                        print os.popen('rm '+psffile).read()
+
+
                                     i += 1
 
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with zeropoints\n ', self.fermilogfile)
+        if self.fermigrid and self.worker:
+            try:
+                os.environ('PROCESS')
+                print os.popen('rm -r data')
+            except:
+                print 'this is not really a worker'
 
         #print os.popen('ls -ltr').read()
         #sys.exit()
