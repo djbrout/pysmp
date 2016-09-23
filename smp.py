@@ -4154,7 +4154,7 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            if i > 30:
+            if i > 100:
                 continue
             #print 'xstar',xstar
             #raw_input()
