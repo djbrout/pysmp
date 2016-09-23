@@ -552,6 +552,7 @@ class smp:
 
         if self.fermilog:
             self.fermilogfile = os.path.join(oldoutdir, snfile.split('/')[-1].split('.')[0] + '.smplog')
+            print self.fermilogfile
             if os.path.exists(self.fermilogfile):
                 print os.popen('ifdh rm '+self.fermilogfile).read()
             self.tmpwriter.appendfile('Starting SMP',self.fermilogfile)
