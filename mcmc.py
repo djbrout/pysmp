@@ -386,6 +386,7 @@ class metropolis_hastings():
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
                 print 'Chisq For Each Epoch: ',chsqs
+                print 'Time per step:',(time.time()-self.t1)/self.counter
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
                 self.savechains()

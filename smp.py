@@ -561,8 +561,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 5:
-               continue
+            #if cntrs > 5:
+            #   continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
@@ -1017,8 +1017,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if cccc > 5:
-                continue
+            #if cccc > 5:
+            #    continue
             print imfile
 
 
@@ -4119,7 +4119,7 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            if i > 20:
+            if i > 100:
                 continue
             #print 'xstar',xstar
             #raw_input()
