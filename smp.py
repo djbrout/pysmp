@@ -4141,12 +4141,12 @@ class smp:
         if self.dogalsimpixfit:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
-        print 'starfits_'+str(thismjd)
+        #print 'starfits_'+str(thismjd)
         pdf_pages = PdfPages('starfits_'+str(thismjd)+'.pdf')
         pdf_pagesc = PdfPages('mystarfits_'+str(thismjd)+'.pdf')
-        print imfile
-        print thismjd
-        print 'mjdabove'
+        #print imfile
+        #print thismjd
+        #print 'mjdabove'
         #raw_input()
         for ra,dec,x,y in zip(ras,decs,xstar,ystar):
             print ra,dec,x,y
@@ -4213,11 +4213,11 @@ class smp:
                     #Run for MPFIT
                     #print 'initialized'
                     try:
-                        print 'here2'
+                        #print 'here2'
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
-                        print 'here3',scale
+                        #print 'here3',scale
                         # x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
                         # xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
                         # psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
