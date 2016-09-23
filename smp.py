@@ -4118,7 +4118,7 @@ class smp:
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #cntr += 1
-            if i > 100:
+            if i > 20:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4352,9 +4352,9 @@ class smp:
                     except NameError:
                         print 'skipped star...\n'
                         continue
-                print np.median(noise_stamp)
-                mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
-                print 'DONEEEEE',scale,errmag,chi,mychi
+                #print np.median(noise_stamp)
+                #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
+                #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
