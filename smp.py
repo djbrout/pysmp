@@ -2234,6 +2234,8 @@ class smp:
                 print os.popen('rm -r data')
             except:
                 print 'this is not really a worker'
+            if self.fermilog:
+                self.tmpwriter.appendfile(os.popen('ls -ltr data/').read(), self.fermilogfile)
 
         #print os.popen('ls -ltr').read()
         #sys.exit()
@@ -4316,28 +4318,29 @@ class smp:
                         # print 'pkfit chisq',schi,'fluxsmp chisq',cchi
 
                         #for i in range(self.Nimage):
-                        fig = plt.figure(figsize=(20, 10))
-                        axim = plt.subplot(141)
-                        axpsf = plt.subplot(142)
-                        axdiff = plt.subplot(143)
-                        axchi = plt.subplot(144)
-                        for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq']):
-                            ax.set_title(title)
-                        axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
-                        cbar = fig.colorbar(axs, ax=axim)
-                        axs = axpsf.imshow(psf * fitrad, cmap='gray', interpolation='nearest')
-                        cbar = fig.colorbar(axs, ax=axpsf)
-                        axs = axdiff.imshow((image_stamp - psf) * fitrad, cmap='gray',
-                                            interpolation='nearest')
-                        cbar = fig.colorbar(axs, ax=axdiff)
-                        axs = axchi.imshow(
-                            (image_stamp - psf)**2 * fitrad *noise_stamp,
-                            cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
-                        cbar = fig.colorbar(axs, ax=axchi)
-                        # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
-                        # plt.colorbar()
-                        plt.title(title)
-                        pdf_pagesc.savefig(fig)
+                        if self.savezptstamps:
+                            fig = plt.figure(figsize=(20, 10))
+                            axim = plt.subplot(141)
+                            axpsf = plt.subplot(142)
+                            axdiff = plt.subplot(143)
+                            axchi = plt.subplot(144)
+                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq']):
+                                ax.set_title(title)
+                            axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
+                            cbar = fig.colorbar(axs, ax=axim)
+                            axs = axpsf.imshow(psf * fitrad, cmap='gray', interpolation='nearest')
+                            cbar = fig.colorbar(axs, ax=axpsf)
+                            axs = axdiff.imshow((image_stamp - psf) * fitrad, cmap='gray',
+                                                interpolation='nearest')
+                            cbar = fig.colorbar(axs, ax=axdiff)
+                            axs = axchi.imshow(
+                                (image_stamp - psf)**2 * fitrad *noise_stamp,
+                                cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
+                            cbar = fig.colorbar(axs, ax=axchi)
+                            # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+                            # plt.colorbar()
+                            plt.title(title)
+                            pdf_pagesc.savefig(fig)
                         # psfx = np.sum(psf,axis=0)
                         # psfy = np.sum(psf,axis=1)
                         # imx = np.sum(image_stamp,axis=0)
@@ -4436,8 +4439,11 @@ class smp:
                     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
-        pdf_pagesc.close()
-        self.tmpwriter.cp('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
+                    pdf_pagesc.close()
+                    self.tmpwriter.cp('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
+                    os.popen('rm starfits_'+str(thismjd)+'.pdf')
+                    if self.fermilog:
+                        self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
         #sys.exit()
         #pdf_pagesc.close()
         #self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
@@ -4510,9 +4516,14 @@ class smp:
             print 'fitzpt',md,'diffimzpt',snparams.zp[j]
             print 'std',std
 
+            #std = float(std)/float(num**.5)
+
+
+            if self.fermilog:
+                self.tmpwriter.appendfile('fitzpt '+str(md)+' +-'+str(std)+' diffimzpt '+str(snparams.zp[j])+'\n', self.fermilogfile)
+
             #sys.exit()
             #dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
-            std = float(std)/float(num**.5)
             #print 'reduced std', std
             #print 'dan std',dstd
             #mcmc_md = -999.
@@ -4520,9 +4531,9 @@ class smp:
 
             #mcmc_me_md,mcmc_me_std = self.weighted_avg_and_std(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols]),1.0/(mcmc_me_mag_std[goodstarcols])**2)
 
-            zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
-            exposure_num = imfile.split('/')[-1].split('_')[1]
-            print 'writing zeropoints'
+            #zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
+            #exposure_num = imfile.split('/')[-1].split('_')[1]
+            #print 'writing zeropoints'
             # if nozpt:
             #     fn = self.big_zpt+'.txt'
             #     if os.path.isfile(self.big_zpt+'.txt'):
@@ -4553,7 +4564,7 @@ class smp:
                 #raw_input()
             #hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
             #hh = hh[abs(hh < .25)]
-            print 'plotting zeropoints'
+            #print 'plotting zeropoints'
             #
             #plt.clf()
             # plt.hist(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,bins=np.arange(-.25,.25,.04),label='mean: '+str(np.mean(hh))+' std: '+str(np.std(hh)))
@@ -4585,11 +4596,11 @@ class smp:
             # #r.close()
 
             #plt.clf()
-            print 'scatter'
-            print len(mag_cat[goodstarcols])
+            #print 'scatter'
+            #print len(mag_cat[goodstarcols])
             plt.clf()
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
-            print 'plot'
+            #print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.xlabel('cat mag')
             plt.ylabel('-2.5log10(flux)')
@@ -4606,6 +4617,11 @@ class smp:
                 os.system('ifdh cp -D ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt) + 'band_starfit_zptplot.png')
                           + ' ' + self.zptoutpath)
+                os.popen('rm '+os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                if self.fermilog:
+                    self.tmpwriter.appendfile(
+                        os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')+'\n',
+                        self.fermilogfile)
                 # plt.clf()
                 # ras = np.array(ras)
                 # decs = np.array(decs)
@@ -4647,8 +4663,8 @@ class smp:
             for x,y in zip(xstar[goodstarcols][badguys],ystar[goodstarcols][badguys]):
                 fff.write('circle '+str(x)+' '+str(y)+' 3\n')
             fff.close()
-            print 'wrote badguys.reg'
-            print imfile
+            #print 'wrote badguys.reg'
+            #print imfile
             #raw_input()
             #print 'saved properly'
             #raw_input()
@@ -4691,6 +4707,7 @@ class smp:
                 ,mjdoff=mjdoff
                 ,mjdslopeinteroff=mjdslopeinteroff
                 )
+
             #raw_input('ZEROPOINTING WAS GOOD')
         else:
             print len(goodstarcols)
@@ -4702,6 +4719,16 @@ class smp:
             mag_compare_out = 0
             #raw_input('Error : not enough good stars to compute zeropoint!!!')
             #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
+
+        if self.fermilog:
+            self.tmpwriter.appendfile(
+                'saved zpt file '+mag_compare_out+'\n', self.fermilogfile)
+            self.tmpwriter.appendfile(
+                os.popen('ls -ltr ').read()
+            )
+            self.tmpwriter.appendfile(
+                os.popen('ls -ltr zpts/').read()
+            )
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
