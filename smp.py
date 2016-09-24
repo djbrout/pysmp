@@ -4214,6 +4214,9 @@ class smp:
                 counter += 1
                 mask = mask*0.
                 print 'index,ra,dec,x,y',i,ra,dec,x,y
+                ppp = 'index,ra,dec '+str(i)+' '+str(ra)+' '+str(dec)
+                if self.fermilog:
+                    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
                 if self.snparams.survey == 'PS1':
                     scale,cscale_std,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,
