@@ -4659,10 +4659,10 @@ class smp:
             rrr = -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md
             badguys = abs(rrr) > .35
 
-            fff = open('badguys.reg','w')
-            for x,y in zip(xstar[goodstarcols][badguys],ystar[goodstarcols][badguys]):
-                fff.write('circle '+str(x)+' '+str(y)+' 3\n')
-            fff.close()
+            # fff = open('badguys.reg','w')
+            # for x,y in zip(xstar[goodstarcols][badguys],ystar[goodstarcols][badguys]):
+            #     fff.write('circle '+str(x)+' '+str(y)+' 3\n')
+            # fff.close()
             #print 'wrote badguys.reg'
             #print imfile
             #raw_input()
@@ -4691,22 +4691,25 @@ class smp:
                 else:
                     mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo.npz')
             #print goodstarcols
-            self.tmpwriter.savez( mag_compare_out
-                #,ra = ras[goodstarcols]
-                #,dec = decs[goodstarcols]
-                ,cat_mag = mag_cat[goodstarcols]
-                ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
-                #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
-                #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
-                ,mpfit_zpt = md
-                ,mpfit_zpt_std = std
-                #,mcmc_me_zpt = mcmc_me_md
-                #,mcmc_me_zpt_std = mcmc_me_std
-                ,cat_zpt = cat_zpt
-                ,mjd = mjd
-                ,mjdoff=mjdoff
-                ,mjdslopeinteroff=mjdslopeinteroff
-                )
+            self.tmpwriter.appendfile(
+                'about to write mag_compare out\n', self.fermilogfile)
+
+            # self.tmpwriter.savez( mag_compare_out
+            #     #,ra = ras[goodstarcols]
+            #     #,dec = decs[goodstarcols]
+            #     ,cat_mag = mag_cat[goodstarcols]
+            #     ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
+            #     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
+            #     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+            #     ,mpfit_zpt = md
+            #     ,mpfit_zpt_std = std
+            #     #,mcmc_me_zpt = mcmc_me_md
+            #     #,mcmc_me_zpt_std = mcmc_me_std
+            #     ,cat_zpt = cat_zpt
+            #     ,mjd = mjd
+            #     ,mjdoff=mjdoff
+            #     ,mjdslopeinteroff=mjdslopeinteroff
+            #     )
 
             #raw_input('ZEROPOINTING WAS GOOD')
         else:
@@ -4724,10 +4727,10 @@ class smp:
             self.tmpwriter.appendfile(
                 'saved zpt file '+mag_compare_out+'\n', self.fermilogfile)
             self.tmpwriter.appendfile(
-                os.popen('ls -ltr ').read()
+                os.popen('ls -ltr ').read(),self.fermilogfile
             )
             self.tmpwriter.appendfile(
-                os.popen('ls -ltr zpts/').read()
+                os.popen('ls -ltr zpts/').read(),self.fermilogfile
             )
 
         #if self.verbose:
