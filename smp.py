@@ -647,6 +647,7 @@ class smp:
                         print a
                         a = os.popen('funpack '+imfile.split('/')[-1]+'.fz').read()
                         print a
+                        os.popen('rm '+imfile.split('/')[-1]+'.fz').read()
                         # imfilel = copy(imfilel)
                         imfile = imfile.split('/')[-1]
                         print 'imfile', imfile
@@ -662,6 +663,7 @@ class smp:
                         # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
                         os.popen('funpack '+noisefile.split('/')[-1]+'.fz')
+                        os.popen('rm '+noisefile.split('/')[-1]+'.fz')
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         # print 'ifdh cp ' + psffile + ' .'
@@ -2691,7 +2693,7 @@ class smp:
             yoff = np.mean(yhistory[int(3*len(yhistory)/4.):])/.27
 
         if self.fermilog:
-            self.tmpwriter.appendfile('starting snfit mcmc\n', self.fermilogfile)
+            self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
         if self.dosnfit:
             if not self.dogalfit:
                 chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
@@ -2731,6 +2733,10 @@ class smp:
                 fixgal = False
 
             st = time.time()
+            log = None
+            if self.fermilog:
+                self.tmpwriter.appendfile('starting snfit mcmc\n', self.fermilogfile)
+                log = self.fermilogfile
             aaa = mcmc3.metropolis_hastings( 
                     galmodel = galmodel
                     , modelvec = modelvec
@@ -2759,7 +2765,7 @@ class smp:
                     , stop = False
                     , skyerr_radius = 12.
                     , outpath = outimages
-                    , compressionfactor = 100
+                    , compressionfactor = 1000
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
                     , burnin = .75
@@ -4694,22 +4700,42 @@ class smp:
             self.tmpwriter.appendfile(
                 'about to write mag_compare out\n', self.fermilogfile)
 
-            # self.tmpwriter.savez( mag_compare_out
-            #     #,ra = ras[goodstarcols]
-            #     #,dec = decs[goodstarcols]
-            #     ,cat_mag = mag_cat[goodstarcols]
-            #     ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
-            #     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
-            #     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
-            #     ,mpfit_zpt = md
-            #     ,mpfit_zpt_std = std
-            #     #,mcmc_me_zpt = mcmc_me_md
-            #     #,mcmc_me_zpt_std = mcmc_me_std
-            #     ,cat_zpt = cat_zpt
-            #     ,mjd = mjd
-            #     ,mjdoff=mjdoff
-            #     ,mjdslopeinteroff=mjdslopeinteroff
-            #     )
+            if self.fermigrid and self.worker:
+                ff = 'temp.npz'
+                self.tmpwriter.savez( ff
+                    #,ra = ras[goodstarcols]
+                    #,dec = decs[goodstarcols]
+                    ,cat_mag = mag_cat[goodstarcols]
+                    ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
+                    #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
+                    #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+                    ,mpfit_zpt = md
+                    ,mpfit_zpt_std = std
+                    #,mcmc_me_zpt = mcmc_me_md
+                    #,mcmc_me_zpt_std = mcmc_me_std
+                    ,cat_zpt = cat_zpt
+                    ,mjd = mjd
+                    ,mjdoff=mjdoff
+                    ,mjdslopeinteroff=mjdslopeinteroff
+                    )
+                print os.popen('ifdh cp '+ff+' '+mag_compare_out).read()
+            else:
+                self.tmpwriter.savez(mag_compare_out
+                                     # ,ra = ras[goodstarcols]
+                                     # ,dec = decs[goodstarcols]
+                                     , cat_mag=mag_cat[goodstarcols]
+                                     , mpfit_mag=-2.5 * np.log10(fluxcol[goodstarcols])
+                                     # ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
+                                     # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+                                     , mpfit_zpt=md
+                                     , mpfit_zpt_std=std
+                                     # ,mcmc_me_zpt = mcmc_me_md
+                                     # ,mcmc_me_zpt_std = mcmc_me_std
+                                     , cat_zpt=cat_zpt
+                                     , mjd=mjd
+                                     , mjdoff=mjdoff
+                                     , mjdslopeinteroff=mjdslopeinteroff
+                                     )
 
             #raw_input('ZEROPOINTING WAS GOOD')
         else:
@@ -4729,9 +4755,9 @@ class smp:
             self.tmpwriter.appendfile(
                 os.popen('ls -ltr ').read(),self.fermilogfile
             )
-            self.tmpwriter.appendfile(
-                os.popen('ls -ltr zpts/').read(),self.fermilogfile
-            )
+            #self.tmpwriter.appendfile(
+            #    os.popen('ls -ltr zpts/').read(),self.fermilogfile
+            #)
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))

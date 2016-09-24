@@ -831,6 +831,8 @@ class metropolis_hastings():
             plt.ylabel('SN Flux')
         self.savefig('SNchains.png')
         self.tmpwriter.cp('SNchains.png',str(self.lcout)+'_SNchains.png')
+        os.popen('rm SNchains.png').read()
+
         #print str(self.lcout)+'_SNchains.png'
         plt.clf()
         plt.close(1)
@@ -845,10 +847,12 @@ class metropolis_hastings():
         if self.fitradec:
             self.savefig('SNoffset1.png')
             self.tmpwriter.cp('SNoffset1.png',str(self.lcout)+'_SNoffset1.png')
+            os.popen('rm SNoffset1.png').read()
             #print str(self.lcout)+'_SNoffset1.png'
         else:
             self.savefig('SNoffset2.png')
             self.tmpwriter.cp('SNoffset2.png',str(self.lcout)+'_SNoffset2.png')
+            os.popen('rm SNoffset2.png').read()
             #print str(self.lcout)+'_SNoffset2.png'
 
         plt.close(1)
