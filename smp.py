@@ -4160,8 +4160,8 @@ class smp:
             big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
             full_data_image = galsim.fits.read(imfile)
         #print 'starfits_'+str(thismjd)
-        pdf_pages = PdfPages('starfits_'+str(thismjd)+'.pdf')
-        pdf_pagesc = PdfPages('mystarfits_'+str(thismjd)+'.pdf')
+        #pdf_pages = PdfPages('starfits_'+str(thismjd)+'.pdf')
+        pdf_pagesc = PdfPages('starfits_'+str(thismjd)+'.pdf')
         #print imfile
         #print thismjd
         #print 'mjdabove'
@@ -4219,7 +4219,7 @@ class smp:
                     self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
                 if self.snparams.survey == 'PS1':
                     scale,cscale_std,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
-                                                                 pdf_pages=pdf_pagesc,
+                                                                 pdf_pages=None,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)
                     if not good:
@@ -4436,7 +4436,7 @@ class smp:
                     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
                     print 'star fit stamps saved in ',self.zptstamps
-        pdf_pages.close()
+        pdf_pagesc.close()
         self.tmpwriter.cp('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
         #sys.exit()
         #pdf_pagesc.close()
@@ -4511,14 +4511,14 @@ class smp:
             print 'std',std
 
             #sys.exit()
-            dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
+            #dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
             std = float(std)/float(num**.5)
             #print 'reduced std', std
             #print 'dan std',dstd
-            mcmc_md = -999.
-            mcmc_std = -999.
+            #mcmc_md = -999.
+            #mcmc_std = -999.
 
-            mcmc_me_md,mcmc_me_std = self.weighted_avg_and_std(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols]),1.0/(mcmc_me_mag_std[goodstarcols])**2)
+            #mcmc_me_md,mcmc_me_std = self.weighted_avg_and_std(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols]),1.0/(mcmc_me_mag_std[goodstarcols])**2)
 
             zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
             exposure_num = imfile.split('/')[-1].split('_')[1]
@@ -4551,8 +4551,8 @@ class smp:
                 #print 'checkstarfilea appended'
                 #print self.checkstarfile
                 #raw_input()
-            hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
-            hh = hh[abs(hh < .25)]
+            #hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
+            #hh = hh[abs(hh < .25)]
             print 'plotting zeropoints'
             #
             #plt.clf()
@@ -4680,12 +4680,12 @@ class smp:
                 #,dec = decs[goodstarcols]
                 ,cat_mag = mag_cat[goodstarcols]
                 ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
-                ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
-                ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+                #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
+                #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                 ,mpfit_zpt = md
                 ,mpfit_zpt_std = std
-                ,mcmc_me_zpt = mcmc_me_md
-                ,mcmc_me_zpt_std = mcmc_me_std
+                #,mcmc_me_zpt = mcmc_me_md
+                #,mcmc_me_zpt_std = mcmc_me_std
                 ,cat_zpt = cat_zpt
                 ,mjd = mjd
                 ,mjdoff=mjdoff
