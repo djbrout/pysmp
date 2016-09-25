@@ -4720,7 +4720,9 @@ class smp:
                     )
                 self.tmpwriter.appendfile(
                     'about to copy to mag_compare out\n', self.fermilogfile)
+                print 'about to copy mag_compare_out'
                 print os.popen('ifdh cp '+ff+' '+mag_compare_out).read()
+                sys.exit()
             else:
                 self.tmpwriter.savez(mag_compare_out
                                      # ,ra = ras[goodstarcols]
