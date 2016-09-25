@@ -4698,11 +4698,11 @@ class smp:
                     mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo.npz')
             #print goodstarcols
             self.tmpwriter.appendfile(
-                'about to write mag_compare out\n', self.fermilogfile)
+                'about to write zpt tempfile\n', self.fermilogfile)
 
             if self.fermigrid and self.worker:
                 ff = 'temp.npz'
-                self.tmpwriter.savez( ff
+                np.savez( ff
                     #,ra = ras[goodstarcols]
                     #,dec = decs[goodstarcols]
                     ,cat_mag = mag_cat[goodstarcols]
@@ -4718,6 +4718,8 @@ class smp:
                     ,mjdoff=mjdoff
                     ,mjdslopeinteroff=mjdslopeinteroff
                     )
+                self.tmpwriter.appendfile(
+                    'about to copy to mag_compare out\n', self.fermilogfile)
                 print os.popen('ifdh cp '+ff+' '+mag_compare_out).read()
             else:
                 self.tmpwriter.savez(mag_compare_out
