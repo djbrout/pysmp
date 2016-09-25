@@ -2765,13 +2765,14 @@ class smp:
                     , stop = False
                     , skyerr_radius = 12.
                     , outpath = outimages
-                    , compressionfactor = 1000
+                    , compressionfactor = 100
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
                     , burnin = .75
                     , lcout = os.path.join(oldoutdir,filename)
                     , chainsnpz = os.path.join(oldoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
+                    , dontsavegalaxy=True
                     )
             modelveco = copy(modelvec)
             

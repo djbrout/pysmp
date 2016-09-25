@@ -120,6 +120,7 @@ class metropolis_hastings():
                 , covarerr = False
                 , isfermigrid = False
                 , isworker = False
+                , dontsavegalaxy = False
                 ):
         '''
         if model is None:
@@ -197,8 +198,9 @@ class metropolis_hastings():
         self.comboerr = True
         self.covarerr = False
         self.didtimeout = False
-        self.isfermigrid = False
-        self.isworker = False
+        self.isfermigrid = isfermigrid
+        self.isworker = isworker
+        self.dontsavegalaxy = dontsavegalaxy
         if self.isfermigrid and self.isworker:
             self.tmpwriter = dt.tmpwriter(tmp_subscript='snfit_', useifdh=True)
 
@@ -752,7 +754,8 @@ class metropolis_hastings():
         self.compressioncounter += 1
         if self.compressioncounter % self.compressionfactor == 0:
             #print 'len gal history', len(self.galhistory)
-            self.galhistory.append( self.kicked_galmodel )
+            if not self.dontsavegalaxy:
+                self.galhistory.append( self.kicked_galmodel )
             self.modelvechistory.append(self.kicked_modelvec)
             if self.shiftpsf:
                 self.current_x_offset = self.x_pix_offset
@@ -782,12 +785,15 @@ class metropolis_hastings():
         #self.model_uncertainty = copy( self.model )
         for i in np.arange( len( self.modelvec ) ):
             self.modelvec_params[ i ] = np.median( self.modelvec_nphistory[ burn_in : , i ] )
-            self.modelvec_uncertainty[ i ] = np.std( self.modelvec_nphistory[ burn_in : , i ] )            
-        for i in np.arange(self.galaxy_model.shape[0]):
-            for j in np.arange(self.galaxy_model.shape[1]):
-                self.galmodel_params[ i, j ] = np.median( self.galmodel_nphistory[ burn_in : , i, j ] )
-                self.galmodel_uncertainty[ i, j ] = np.std( self.galmodel_nphistory[ burn_in : , i, j ] )
-
+            self.modelvec_uncertainty[ i ] = np.std( self.modelvec_nphistory[ burn_in : , i ] )
+        if not self.dontsavegalaxy:
+            for i in np.arange(self.galaxy_model.shape[0]):
+                for j in np.arange(self.galaxy_model.shape[1]):
+                    self.galmodel_params[ i, j ] = np.median( self.galmodel_nphistory[ burn_in : , i, j ] )
+                    self.galmodel_uncertainty[ i, j ] = np.std( self.galmodel_nphistory[ burn_in : , i, j ] )
+        else:
+            self.galmodel_params = self.kicked_galmodel
+            self.galmodel_uncertainty = self.kicked_galmodel*0. + 1.
 
     def autocorr( self, x ):
         result = np.correlate( x, x, mode='full' )
@@ -968,10 +974,14 @@ class metropolis_hastings():
 
     def make_history( self ):
         num_iter = len( self.galhistory )
-        self.galmodel_nphistory = np.zeros( (num_iter , self.galaxy_model.shape[0], self.galaxy_model.shape[1]))
+        if not self.dontsavegalaxy:
+            self.galmodel_nphistory = np.zeros( (num_iter , self.galaxy_model.shape[0], self.galaxy_model.shape[1]))
         self.modelvec_nphistory = np.zeros( (num_iter , len(self.modelvec)))
         for i in np.arange( num_iter ):
-            self.galmodel_nphistory[ i , : , : ] = self.galhistory[ i ]
+            if not self.dontsavegalaxy:
+                self.galmodel_nphistory[ i , : , : ] = self.galhistory[ i ]
+            else:
+                self.galmodel_nphistory = self.kicked_galmodel
             self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
 
     #DIAGNOSTICS
