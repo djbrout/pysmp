@@ -4721,12 +4721,12 @@ class smp:
                 self.tmpwriter.appendfile(
                     'about to copy to mag_compare out\n', self.fermilogfile)
                 tt = time.time()
-                print 'about to copy mag_compare_out'
+                #print 'about to copy mag_compare_out'
                 print os.popen('ifdh cp '+ff+' '+mag_compare_out).read()
-                ttt = time.time()
-                self.tmpwriter.appendfile(
-                    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
-                sys.exit()
+                #ttt = time.time()
+                #self.tmpwriter.appendfile(
+                #    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
+                #sys.exit()
             else:
                 self.tmpwriter.savez(mag_compare_out
                                      # ,ra = ras[goodstarcols]
