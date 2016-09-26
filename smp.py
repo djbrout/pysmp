@@ -2775,7 +2775,8 @@ class smp:
                     , dontsavegalaxy=True
                     )
             modelveco = copy(modelvec)
-            
+            if self.fermilog:
+                self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params()
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(outdir,filename+'_withSn.npz')
