@@ -521,22 +521,27 @@ class smp:
         print filename
         print staroutdir
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
-        print star_offset_file
+        print 'loading',star_offset_file
 
         if not nozpt:
             if fermigrid and worker:
-                if os.path.exists(star_offset_file):
+                ls = os.popen('ifdh ls '+star_offset_file).read()
+                if len(ls) > 0:
                     print star_offset_file
                     #sys.exit()
                     os.system('ifdh cp '+star_offset_file+' .')
                     star_offset_file = filename+'band_starGlobalOffsets.npz'
-            try:
-                print 'loading',star_offset_file
-                staroffsets = np.load(star_offset_file)
-                print 'Found and loaded star offset file...'
-            except:
-                print 'Could not find star offset file. Calculating...'
-                nozpt = True
+                else:
+                    print 'Could not find star offset file. Calculating...'
+                    nozpt = True
+            else:
+                try:
+                    print 'loading',star_offset_file
+                    staroffsets = np.load(star_offset_file)
+                    print 'Found and loaded star offset file...'
+                except:
+                    print 'Could not find star offset file. Calculating...'
+                    nozpt = True
         #sys.exit()
         #print 'ABOUT TO GLOBALSTAR'*10
         #sys.exit()
