@@ -2985,7 +2985,11 @@ class smp:
         print chisqs
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
-        fout = open(smplightcurvefile, 'w')
+        if self.fermigrid and self.worker:
+            tmp = 'lc.txt'
+        else:
+            tmp = smplightcurvefile
+        fout = open(tmp, 'w')
         print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
                        'DIFFIM_FLAG SMP_FLAG MJD_FLAG SKY SKYERR ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP' \
@@ -3004,6 +3008,8 @@ class smp:
                                 galmodel_stampf[i],
                                 image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
         fout.close()
+        if self.fermigrid and self.worker:
+            os.popen('ifdh cp lc.txt '+smplightcurvefile)
         if self.fermilog:
             self.tmpwriter.appendfile('SMP Successful\n', self.fermilogfile)
         print('SMP was successful!!!')
