@@ -29,4 +29,4 @@ pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
 # python smp.py --index=$PROCESS -f r --nozpt
-python smp.py --index=1 -f r --nozpt
+python smp.py --index=1 -f r
