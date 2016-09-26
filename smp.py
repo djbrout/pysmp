@@ -1851,12 +1851,14 @@ class smp:
                 #sys.exit()
                 #print 'nozpt',nozpt
                 #sys.exit()
+                print '1854',nozpt
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
                     #x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm*2.)
                     #print x_star1[0]-x_star1n[0]
                     #raw_input('stopped')
+                    sys.exit()
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
