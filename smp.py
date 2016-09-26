@@ -525,7 +525,10 @@ class smp:
 
         if not nozpt:
             if fermigrid and worker:
+                lsa = os.popen('ifdh ls '+staroutdir).read()
+                print lsa
                 ls = os.popen('ifdh ls '+star_offset_file).read()
+                print ls
                 if len(ls) > 0:
                     print star_offset_file
                     #sys.exit()
