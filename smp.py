@@ -2985,6 +2985,7 @@ class smp:
         print chisqs
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
+        os.popen('ifdh mkdir '+self.lcfilepath).read()
         if self.fermigrid and self.worker:
             tmp = 'lc.txt'
         else:
@@ -3009,6 +3010,7 @@ class smp:
                                 image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
         fout.close()
         if self.fermigrid and self.worker:
+
             os.popen('ifdh cp lc.txt '+smplightcurvefile)
         if self.fermilog:
             self.tmpwriter.appendfile('SMP Successful\n', self.fermilogfile)
