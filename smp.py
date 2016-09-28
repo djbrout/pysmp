@@ -4490,7 +4490,6 @@ class smp:
                 #raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
         #plt.savefig('testsky.png')
-        sys.exit()
         badflag = badflag.reshape(np.shape(badflag)[0])
         
         #check for only good fits MPFIT
@@ -4800,6 +4799,8 @@ class smp:
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
+        sys.exit()
+
         if self.fermigrid:
             os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
             print 'copied from worker to zpt path',self.zptoutpath
