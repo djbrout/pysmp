@@ -4361,7 +4361,7 @@ class smp:
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq: '+
-                                    str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad *noise_stamp)/len(image_stamp.ravel()),2))]):
+                                    str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(image_stamp.ravel()),2))]):
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axim)
@@ -4371,7 +4371,7 @@ class smp:
                                                 interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axdiff)
                             axs = axchi.imshow(
-                                (image_stamp - s - (psf*scale))**2 * fitrad *noise_stamp,
+                                (image_stamp - s - (psf*scale))**2 * fitrad /se**2,
                                 cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
                             cbar = fig.colorbar(axs, ax=axchi)
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
@@ -4457,7 +4457,7 @@ class smp:
                 #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
-                flux_chisq[i] = chi
+                flux_chisq[i] = chi/len(image_stamp.ravel())
                 #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
                 #flux_dms[i] = dms
                 # fig = plt.figure()
