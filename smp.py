@@ -4202,7 +4202,7 @@ class smp:
         #print thismjd
         #print 'mjdabove'
         #raw_input()
-        for ra,dec,x,y,s,se in zip(ras,decs,xstar,ystar,sky,skerr):
+        for ra,dec,x,y,s,se in zip(ras,decs,xstar,ystar,sky,skyerr):
             print ra,dec,x,y,s,se
         raw_input()
         #sys.exit()
