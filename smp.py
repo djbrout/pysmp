@@ -4204,7 +4204,7 @@ class smp:
         #raw_input()
         for ra,dec,x,y,s,se in zip(ras,decs,xstar,ystar,sky,skyerr):
             print ra,dec,x,y,s,se
-        raw_input()
+        #raw_input()
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             print i
@@ -4363,13 +4363,13 @@ class smp:
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axim)
-                            axs = axpsf.imshow(psf * fitrad, cmap='gray', interpolation='nearest')
+                            axs = axpsf.imshow(psf * scale * fitrad, cmap='gray', interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axpsf)
-                            axs = axdiff.imshow((image_stamp - psf) * fitrad, cmap='gray',
+                            axs = axdiff.imshow((image_stamp - (psf*scale)) * fitrad, cmap='gray',
                                                 interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axdiff)
                             axs = axchi.imshow(
-                                (image_stamp - psf)**2 * fitrad *noise_stamp,
+                                (image_stamp - (psf*scale))**2 * fitrad *noise_stamp,
                                 cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
                             cbar = fig.colorbar(axs, ax=axchi)
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
