@@ -4375,7 +4375,7 @@ class smp:
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
                             # plt.colorbar()
                             plt.title(title)
-                            pdf_pagesc.savefig()
+                            pdf_pagesc.savefig(fig)
                         # psfx = np.sum(psf,axis=0)
                         # psfy = np.sum(psf,axis=1)
                         # imx = np.sum(image_stamp,axis=0)
@@ -4473,14 +4473,16 @@ class smp:
                     dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
                     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
-                    print 'star fit stamps saved in ',self.zptstamps
-                    pdf_pagesc.close()
-                    self.tmpwriter.cp('starfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/starfitstamps.pdf')
-                    os.popen('rm starfits_'+str(thismjd)+'.pdf')
-                    if self.fermilog:
-                        self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
-        sys.exit()
-        #pdf_pagesc.close()
+
+        #sys.exit()
+        if self.savezptstamps:
+            print 'star fit stamps saved in ', self.zptstamps
+            pdf_pagesc.close()
+            self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',
+                              '/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
+            os.popen('rm starfits_' + str(thismjd) + '.pdf')
+            if self.fermilog:
+                self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
         #self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
 
         #raw_input('saved teststamps daophot_resid.pdf')
@@ -4488,7 +4490,7 @@ class smp:
                 #raw_input('saved teststamp.fits')
         #plt.scatter(sky[sky>10],flux_star[sky>10])
         #plt.savefig('testsky.png')
-
+        sys.exit()
         badflag = badflag.reshape(np.shape(badflag)[0])
         
         #check for only good fits MPFIT
