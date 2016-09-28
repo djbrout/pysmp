@@ -1045,6 +1045,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
+            if not snparams.mjd[i] == 57045.109:
+                continue
             #if cccc > 5:
             #    continue
             if filt != 'all' and band not in filt:
@@ -2977,11 +2979,12 @@ class smp:
         self.smp_noise = smp_noise
 
         image_stampf,sim_stampf,galmodel_stampf,weight_stampf,psf_stampf,chisq_stampf = stamps[0],stamps[1],stamps[2],stamps[3],stamps[4],stamps[5],
-        print 'lcfilepath',self.lcfilepath
+        #print 'lcfilepath',self.lcfilepath
 
-        print snparams.snfile
-        print snparams.snfile.split('/')[-1]
-        print snparams.snfile.split('/')[-1].split('.')[0]
+        #print snparams.snfile
+        #print snparams.snfile.split('/')[-1]
+        #print snparams.snfile.split('/')[-1].split('.')[0]
+        print 'Chi Squares for Each Epoch'
         print chisqs
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
@@ -3918,6 +3921,7 @@ class smp:
         #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
         #     imstamp = imstamp / np.sum(imstamp)
         sum_data_minus_sim = np.sum(im-sim)
+
         return fluxvec[chisqvec == min(chisqvec)], fluxvec[chisqvec == min(chisqvec)] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
 
     def iterstat(self,d,startMedian=False,sigmaclip=3.0,
@@ -4469,7 +4473,7 @@ class smp:
                     os.popen('rm starfits_'+str(thismjd)+'.pdf')
                     if self.fermilog:
                         self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
-        #sys.exit()
+        sys.exit()
         #pdf_pagesc.close()
         #self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
 
