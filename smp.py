@@ -575,6 +575,9 @@ class smp:
                 continue
             if snparams.mjd[j] == 0:
                 continue
+
+            if not snparams.mjd[j] == 57045.109:
+                continue
             if not nozpt:
                 continue
             if not band == filt:
