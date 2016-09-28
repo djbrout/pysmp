@@ -4505,7 +4505,7 @@ class smp:
                                 (mag_cat < 21.5) &
                                 (flux_star != 1) & 
                                 (flux_star < 1e7) &
-                                (flux_chisq < 5) &
+                                (flux_chisq < 1.5) &
                                 (flux_chisq > 0) &
                                 #(flux_star_mcmc < 1e7) &
                                 #(flux_star_mcmc != 0) &
@@ -4523,7 +4523,7 @@ class smp:
                                     (mag_cat < 21.5) &
                                     (gsflux != 1) &
                                     (gsflux < 1e7) &
-                                    (flux_chisq < 5) &
+                                    (flux_chisq < 1.5) &
                                     (flux_chisq > 0) &
                                     # (flux_star_mcmc < 1e7) &
                                     # (flux_star_mcmc != 0) &
@@ -4542,7 +4542,7 @@ class smp:
                                 (mag_cat < 21.5) &
                                 (flux_star != 1) &
                                 (flux_star < 1e7) &
-                                (flux_chisq < 5) &
+                                (flux_chisq < 1.5) &
                                 (flux_chisq > 0) &
                                 (np.isfinite(mag_cat)) &
                                 (np.isfinite(flux_star)) &
