@@ -1048,7 +1048,7 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if float(snparams.mjd[i]) 57045:
+            if float(snparams.mjd[i]) < 57045:
                 continue
             #if cccc > 5:
             #    continue
