@@ -4360,7 +4360,8 @@ class smp:
                             axpsf = plt.subplot(142)
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
-                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq']):
+                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq: '+
+                                    round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad *noise_stamp)/len(image_stamp.ravel()),2)]):
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axim)
@@ -4370,7 +4371,7 @@ class smp:
                                                 interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axdiff)
                             axs = axchi.imshow(
-                                (image_stamp - s - (psf*scale))**2 * fitrad /se**2,
+                                (image_stamp - s - (psf*scale))**2 * fitrad *noise_stamp,
                                 cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
                             cbar = fig.colorbar(axs, ax=axchi)
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
