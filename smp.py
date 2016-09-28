@@ -4167,6 +4167,7 @@ class smp:
         flux_star = np.array([-999.]*len(xstar))        
         flux_star_std = np.array([-999.]*len(xstar))
         flux_chisq = np.array([-999.]*len(xstar))
+        flux_mychisq = np.array([-999.]*len(xstar))
         flux_dms = np.array([-999.]*len(xstar))
         gsflux = np.array([-999.]*len(xstar))
         gsflux_std = np.array([-999.]*len(xstar))
@@ -4456,6 +4457,7 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
+                flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
                 #flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
@@ -4474,6 +4476,10 @@ class smp:
                     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
 
+        print 'comparing chi sqaureds'
+        for f, m in zip(flux_chisq,flux_mychisq):
+            print f, m
+        print '-'*100
         #sys.exit()
         if self.savezptstamps:
             print 'star fit stamps saved in ', self.zptstamps
