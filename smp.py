@@ -4457,7 +4457,7 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
-                flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
+                #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
                 #flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
@@ -4476,9 +4476,9 @@ class smp:
                     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
 
-        print 'comparing chi sqaureds'
-        for f, m in zip(flux_chisq,flux_mychisq):
-            print f, m
+        #print 'comparing chi sqaureds'
+        #for f, m in zip(flux_chisq,flux_mychisq):
+        #    print f, m
         print '-'*100
         #sys.exit()
         if self.savezptstamps:
@@ -4504,6 +4504,8 @@ class smp:
                                 (mag_cat < 21.5) &
                                 (flux_star != 1) & 
                                 (flux_star < 1e7) &
+                                (flux_chisq < 5) &
+                                (flux_chisq > 0) &
                                 #(flux_star_mcmc < 1e7) &
                                 #(flux_star_mcmc != 0) &
                                 #(flux_star_mcmc_modelerrors != 0) &
@@ -4520,6 +4522,8 @@ class smp:
                                     (mag_cat < 21.5) &
                                     (gsflux != 1) &
                                     (gsflux < 1e7) &
+                                    (flux_chisq < 5) &
+                                    (flux_chisq > 0) &
                                     # (flux_star_mcmc < 1e7) &
                                     # (flux_star_mcmc != 0) &
                                     # (flux_star_mcmc_modelerrors != 0) &
@@ -4537,6 +4541,8 @@ class smp:
                                 (mag_cat < 21.5) &
                                 (flux_star != 1) &
                                 (flux_star < 1e7) &
+                                (flux_chisq < 5) &
+                                (flux_chisq > 0) &
                                 (np.isfinite(mag_cat)) &
                                 (np.isfinite(flux_star)) &
                                 (flux_star > 0) &
