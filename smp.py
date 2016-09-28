@@ -4375,7 +4375,7 @@ class smp:
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
                             # plt.colorbar()
                             plt.title(title)
-                            pdf_pagesc.savefig(fig)
+                            pdf_pagesc.savefig()
                         # psfx = np.sum(psf,axis=0)
                         # psfy = np.sum(psf,axis=1)
                         # imx = np.sum(image_stamp,axis=0)
