@@ -4651,7 +4651,7 @@ class smp:
             plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
             #print 'plot'
             plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
-            plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-30.734,color='red')
+            plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-39.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
             plt.xlabel('cat mag')
             plt.ylabel('-2.5log10(flux)')
