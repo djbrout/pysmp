@@ -576,7 +576,7 @@ class smp:
             if snparams.mjd[j] == 0:
                 continue
 
-            if not round(snparams.mjd[j]) == 57045:
+            if not round(snparams.mjd[j]) > 57045:
                 continue
             if not nozpt:
                 continue
@@ -1048,7 +1048,7 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if not round(snparams.mjd[i]) == 57045:
+            if not round(snparams.mjd[i]) > 57045:
                 continue
             #if cccc > 5:
             #    continue
