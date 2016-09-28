@@ -4361,7 +4361,7 @@ class smp:
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq: '+
-                                    round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad *noise_stamp)/len(image_stamp.ravel()),2)]):
+                                    str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad *noise_stamp)/len(image_stamp.ravel()),2))]):
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axim)
