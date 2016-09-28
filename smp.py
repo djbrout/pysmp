@@ -1049,7 +1049,9 @@ class smp:
                 #raw_input('mjdddd')
                 continue
             if float(snparams.mjd[i]) < 57045:
+                raw_input('did not pass')
                 continue
+            raw_input('passed')
             #if cccc > 5:
             #    continue
             if filt != 'all' and band not in filt:
