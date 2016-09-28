@@ -1048,8 +1048,8 @@ class smp:
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
-            if float(snparams.mjd[i]) < 57045:
-                raw_input('did not pass')
+            if float(snparams.mjd[j]) < 57045:
+                #raw_input('did not pass')
                 continue
             raw_input('passed')
             #if cccc > 5:
