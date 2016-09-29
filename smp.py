@@ -3005,8 +3005,8 @@ class smp:
         #print snparams.snfile
         #print snparams.snfile.split('/')[-1]
         #print snparams.snfile.split('/')[-1].split('.')[0]
-        print 'Chi Squares for Each Epoch'
-        print chisqs
+        #print 'Chi Squares for Each Epoch'
+        #print chisqs
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
         os.popen('ifdh mkdir '+self.lcfilepath).read()
