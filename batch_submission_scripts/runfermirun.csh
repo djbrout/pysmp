@@ -28,7 +28,16 @@ cd pysmp
 pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
+
+
+if [ -z "$PROCESS" ]; then
+echo 'nope'
+else
 echo 'THIS IS THE PROCESS NUMBER'
 echo $PROCESS
+fi
 
-python smp.py --index=$PROCESS -f r --nozpt
+exit
+
+#   python smp.py --index=1 -f r
+#   python smp.py --index=$PROCESS -f r
