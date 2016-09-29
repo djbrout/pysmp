@@ -2398,10 +2398,13 @@ class smp:
 
         pkyerr = -2.5*np.log10(smp_dict['mcmc_scale']) + 2.5*np.log10(smp_dict['mcmc_scale'] + smp_dict['mcmc_scale_err'])
 
-        outfolder = os.path.join(outdir,foldername)
-        out = os.path.join(outdir,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
+        outfolder = os.path.join(oldoutdir,foldername)
+        out = os.path.join(oldoutdir,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
         outimages = os.path.join(out,'image_stamps/')
 
+        if self.fermigrid and self.worker:
+            os.popen('ifdh mkdir '+out)
+            os.popen('ifdh mkdir '+outimages)
         if not os.path.exists(out):
             os.makedirs(out)
         if not os.path.exists(outimages):
