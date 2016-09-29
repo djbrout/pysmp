@@ -256,11 +256,6 @@ class smp:
              ):
 
         print 'snfile',snfile
-        try:
-            from guppy import hpy
-        except:
-            'could not import guppy'
-        sys.exit()
 
         if fermigrid & worker:
             if not os.path.exists(os.path.join(outdir,SNfoldername)):
