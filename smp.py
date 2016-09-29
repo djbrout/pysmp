@@ -1708,7 +1708,7 @@ class smp:
 
             self.rdnoise = hdr[params.rdnoise_name]
             self.gain = hdr[params.gain_name]
-
+            gogo = True
             if not nozpt:
                 try:
                     if doglobalstar:
@@ -1720,16 +1720,22 @@ class smp:
                         zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
                     print zpt_file
                     if self.fermigrid and self.worker:
-                        os.popen('ifdh cp '+zpt_file+' .')
-                        zpt_file = zpt_file.split('/')[-1]
+                        ls = os.popen('ifdh ls ' + zpt_file).read()
+                        print ls
+                        if len(ls) > 0:
+                            os.popen('ifdh cp '+zpt_file+' .')
+                            zpt_file = zpt_file.split('/')[-1]
+                        else:
+                            nozpt = True
+                            gogo = False
+                    if gogo:
+                        zptdata = np.load(zpt_file) #load previous zpt information
 
-                    zptdata = np.load(zpt_file) #load previous zpt information
-
-                    zpt = zptdata['mpfit_zpt']
-                    zpterr = zptdata['mpfit_zpt_std']
-                    mjdoff = zptdata['mjdoff']
-                    mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                    #print 'thisworked'
+                        zpt = zptdata['mpfit_zpt']
+                        zpterr = zptdata['mpfit_zpt_std']
+                        mjdoff = zptdata['mjdoff']
+                        mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                        #print 'thisworked'
                 except:
                     print('Warning : IMAGE_ZPT field does not exist!  Calculating')
                     nozpt = True
@@ -4833,7 +4839,7 @@ class smp:
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
-        sys.exit()
+        #sys.exit()
 
         if self.fermigrid:
             os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
