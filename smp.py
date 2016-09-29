@@ -448,6 +448,7 @@ class smp:
                     'total_skyerr':np.zeros(snparams.nvalid),         
                     'mjd':np.zeros(snparams.nvalid),
                     'mjd_flag':np.zeros(snparams.nvalid),
+                    'gain': np.zeros(snparams.nvalid),
                     'mjdoff':[],
                     'mjdslopeinteroff':[],
                     'cat_mag':np.zeros(snparams.nvalid),
@@ -2157,6 +2158,7 @@ class smp:
                                     smp_dict['diffim_fluxerr'][i] = snparams.fluxerr[j]
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
+                                    smp_dict['gain'][i] = self.gain
                                     fs = snparams.flux
                                     brightlimit = fs[np.argsort(fs)][::-1][:15]
                                     brightlimit = brightlimit[-1]
@@ -2451,7 +2453,7 @@ class smp:
 
 
         print smp_dict['image_filename'][-1]        
-        print 'MJD','\t','BAND','\t','FIT_ZPT','\t','FAKE_ZPT','\t','PSF','\t','SKY','\t','Skyerr','\t','Skysig','\t','IMAGE_FILENAME',''
+        print 'MJD','\t','BAND','\t','FIT_ZPT','\t','FAKE_ZPT','\t','PSF','\t','SKY','\t','Skyerr','\t','Skysig','\t','IMAGE_FILENAME','\t','GAIN',''
         psfs = []
         for i,scale in enumerate(smp_dict['scale']):
             if i in np.where((smp_dict['flag'] == 1))[0]:
@@ -2461,7 +2463,7 @@ class smp:
                 fitzpt = smp_dict['zpt'][i]
                 fakezpt = smp_dict['fakezpt'][i]
                 psfs.append(round(self.get_fwhm_of_2d_psf(smp_psf[i]),2))
-                print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',round(self.get_fwhm_of_2d_psf(smp_psf[i]),2),round(smp_dict['sky'][i],2),round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),smp_dict['image_filename'][i]
+                print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',round(self.get_fwhm_of_2d_psf(smp_psf[i]),2),round(smp_dict['sky'][i],2),round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),smp_dict['image_filename'][i],smp_dict['gain'][i]
                 #if abs(fitzpt - fakezpt) > .025:
                 #    smp_dict['fitflag'][i] = 1
                 #if smp_dict['mjd'][i] < snparams.peakmjd +100:
