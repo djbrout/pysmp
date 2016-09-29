@@ -395,7 +395,8 @@ class metropolis_hastings():
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
                 print 'Chisq For Each Epoch: ',chsqs
-                print 'Time per step:',(time.time()-self.t1)/self.counter
+                tps = (time.time()-self.t1)/self.counter
+                print 'Time per step:',tps
                 #print 'mjdoff: ',self.mjdoff
                 self.plotchains()
                 self.savechains()
@@ -405,7 +406,11 @@ class metropolis_hastings():
                 collected = gc.collect()
                 print "Garbage collector: collected %d objects." % (collected)
                 if not self.log is None:
+                    self.tmpwriter.appendfile('Acceptance Rate: '+str(self.accepted_history), self.log)
+                    self.tmpwriter.appendfile('Counter: '+str(self.counter), self.log)
+                    self.tmpwriter.appendfile('Time per step: '+str(tps), self.log)
                     self.tmpwriter.appendfile("Garbage collector: collected %d objects." % (collected), self.log)
+
                 #print 'index','mjd','chisq','raoff','decoff','flux'
                 #for i in np.arange(52):
                 #    print i,self.mjd[i], self.chisqvec[i]/len(self.mask[self.mask>0.].ravel()),self.mjdoff[i][0],self.mjdoff[i][1],np.mean(self.modelvec_nphistory[:,i])
