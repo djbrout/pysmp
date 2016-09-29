@@ -256,6 +256,10 @@ class smp:
              ):
 
         print 'snfile',snfile
+        try:
+            from guppy import hpy
+        except:
+            'could not import guppy'
         sys.exit()
 
         if fermigrid & worker:
@@ -2715,9 +2719,14 @@ class smp:
             self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
         if self.dosnfit:
             if not self.dogalfit:
-                chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
-                galmodel_params = chains['galmodel_params']
-                galmodel_uncertainty = chains['galmodel_uncertainty']
+                try:
+                    chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
+                    galmodel_params = chains['galmodel_params']
+                    galmodel_uncertainty = chains['galmodel_uncertainty']
+                except:
+                    print 'could not find galaxy chains, setting to image'
+                    minsky = np.argmin(smp_dict['sky'])
+                    galmodel_params = smp_im[minsky]-smp_dict['sky'][minsky]
             if not self.dosnradecfit:
                 try:
                     print os.path.join(outdir,filename+'_withSngetRADEC.npz')
@@ -2756,7 +2765,16 @@ class smp:
             if self.fermilog:
                 self.tmpwriter.appendfile('starting snfit mcmc\n', self.fermilogfile)
                 log = self.fermilogfile
-            aaa = mcmc3.metropolis_hastings( 
+            else:
+                log = None
+
+            import gc
+            collected = gc.collect()
+            print "Garbage collector: collected %d objects." % (collected)
+            if self.fermilog:
+                self.tmpwriter.appendfile("Garbage collector: collected %d objects." % (collected), self.fermilogfile)
+
+            aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
                     , modelvec = modelvec
                     , galstd = galstd
@@ -2792,6 +2810,7 @@ class smp:
                     , chainsnpz = os.path.join(oldoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
                     , dontsavegalaxy=True
+                    , log = log
                     )
             modelveco = copy(modelvec)
             if self.fermilog:

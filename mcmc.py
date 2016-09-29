@@ -60,7 +60,7 @@ import matplotlib.pyplot as plt
 import scipy.interpolate as interpol
 import dilltools as dt
 from matplotlib.backends.backend_pdf import PdfPages
-
+import gc
 
 
 #import pyfftw
@@ -121,6 +121,7 @@ class metropolis_hastings():
                 , isfermigrid = False
                 , isworker = False
                 , dontsavegalaxy = False
+                , log = None
                 ):
         '''
         if model is None:
@@ -201,10 +202,16 @@ class metropolis_hastings():
         self.isfermigrid = isfermigrid
         self.isworker = isworker
         self.dontsavegalaxy = dontsavegalaxy
+        self.log = log
         if self.isfermigrid and self.isworker:
             self.tmpwriter = dt.tmpwriter(tmp_subscript='snfit_', useifdh=True)
 
         self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
+
+        collected = gc.collect()
+        print "Garbage collector: collected %d objects." % (collected)
+        if not self.log is None:
+            self.tmpwriter.appendfile("Garbage collector: collected %d objects." % (collected), self.log)
 
         if Nimage == 1:
             self.psfs = np.zeros((1,substamp,substamp))
@@ -393,6 +400,11 @@ class metropolis_hastings():
                 self.plotchains()
                 self.savechains()
                 self.plotstamps()
+                import gc
+                collected = gc.collect()
+                print "Garbage collector: collected %d objects." % (collected)
+                if not self.log is None:
+                    self.tmpwriter.appendfile("Garbage collector: collected %d objects." % (collected), self.log)
                 #print 'index','mjd','chisq','raoff','decoff','flux'
                 #for i in np.arange(52):
                 #    print i,self.mjd[i], self.chisqvec[i]/len(self.mask[self.mask>0.].ravel()),self.mjdoff[i][0],self.mjdoff[i][1],np.mean(self.modelvec_nphistory[:,i])
