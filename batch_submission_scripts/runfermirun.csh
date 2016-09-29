@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # source /grid/fermiapp/products/common/etc/setups.sh
 # setup mu2e
 # setup ifdhc
