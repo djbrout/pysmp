@@ -33,13 +33,10 @@ echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
 
 if [ -z "$PROCESS" ]; then
-echo 'nope'
+python smp.py --index=1 -f r
 else
 echo 'THIS IS THE PROCESS NUMBER'
-echo $PROCESS
+python smp.py --index=$PROCESS -f r
 fi
 
 exit
-
-#   python smp.py --index=1 -f r
-#   python smp.py --index=$PROCESS -f r
