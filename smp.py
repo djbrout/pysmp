@@ -2414,7 +2414,7 @@ class smp:
 
         outfolder = oldoutdir
         out = os.path.join(oldoutdir,'SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
-        outimages = os.path.join(oldoutdir,/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/','image_stamps')
+        outimages = os.path.join(oldoutdir,'SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/','image_stamps')
         print 'outimages',outimages
 
         if self.fermigrid and self.worker:
