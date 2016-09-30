@@ -530,7 +530,8 @@ class smp:
         #print staroutdir
         staroutdir = os.path.join(oldoutdir,'staroffsets',filt)
         if self.fermigrid and self.worker:
-            os.popen('ifdh mkdir '+staroutdir)
+            print os.popen('ifdh mkdir '+os.path.join(oldoutdir,'staroffsets')).read()
+            print os.popen('ifdh mkdir '+staroutdir).read()
         else:
             if not os.path.exists(staroutdir):
                 os.mkdir(staroutdir)
