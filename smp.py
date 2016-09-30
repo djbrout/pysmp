@@ -2778,6 +2778,8 @@ class smp:
             else:
                 log = None
 
+            plt.clf()
+            plt.close()
             import gc
             collected = gc.collect()
             print "Garbage collector: collected %d objects." % (collected)
