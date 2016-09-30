@@ -61,6 +61,7 @@ import scipy.interpolate as interpol
 import dilltools as dt
 from matplotlib.backends.backend_pdf import PdfPages
 import gc
+import sys
 
 
 #import pyfftw
@@ -351,7 +352,7 @@ class metropolis_hastings():
         self.simsnosn = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
         self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky*0.,self.flags,self.fitflags,self.sims,self.gal_conv)
         
-
+        sys.exit()
         self.run_d_mc()
 
 

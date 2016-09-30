@@ -2728,7 +2728,6 @@ class smp:
         if self.fermilog:
             self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
         if self.dosnfit:
-            sys.exit()
             if not self.dogalfit:
                 try:
                     chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
