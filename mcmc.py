@@ -422,8 +422,9 @@ class metropolis_hastings():
                 self.didtimeout = True
             #plt.imshow(self.data[20,self.substamp/2.-14.:self.substamp/2.+14.,self.substamp/2.-14.:self.substamp/2.+14.])
             #plt.show()
-        sys.exit()
+        #sys.exit()
         self.summarize_run()
+        sys.exit()
         self.model_params()
 
         self.t2 = time.time()
