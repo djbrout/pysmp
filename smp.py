@@ -5199,7 +5199,6 @@ if __name__ == "__main__":
     snfilepath = None
     bigstarcatalog=None
     stardeltasfolder=None
-    SNfoldername=None
     galaxyfoldername=None
     snfilelist = None
     files_split_by_filter = False
@@ -5290,8 +5289,6 @@ if __name__ == "__main__":
             bigstarcatalog = a
         elif o in["--stardeltasfolder"]:
             stardeltasfolder = a
-        elif o in["--SNfoldername"]:
-            SNfoldername = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
@@ -5395,8 +5392,6 @@ if __name__ == "__main__":
             bigstarcatalog = a
         elif o in["--stardeltasfolder"]:
             stardeltasfolder = a
-        elif o in["--SNfoldername"]:
-            SNfoldername = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
@@ -5453,9 +5448,6 @@ if __name__ == "__main__":
     if stardeltasfolder is None:
         raise NameError("Must provide "+
                         "--stardeltasfolder=/location/to/previous/run in default.config \nExiting now...")
-    if SNfoldername is None:
-        raise NameError("Must provide "+
-                        "--SNfoldername=/location/to/photometry/output in default.config \n Exiting now...")
     if galaxyfoldername is None:
         raise NameError("Must provide " +
                         "--galaxyfoldername=/location/to/previous/run in default.config \n Exiting now...")
