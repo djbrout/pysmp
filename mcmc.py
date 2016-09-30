@@ -388,7 +388,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 3000) == 0:
+            if (self.counter % 4900) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
@@ -398,7 +398,7 @@ class metropolis_hastings():
                 tps = (time.time()-self.t1)/self.counter
                 print 'Time per step:',tps
                 #print 'mjdoff: ',self.mjdoff
-                sys.exit()
+                #sys.exit()
                 self.plotchains()
                 self.savechains()
                 sys.exit()
