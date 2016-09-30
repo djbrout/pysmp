@@ -440,7 +440,7 @@ class metropolis_hastings():
         print 'Chisq For Each Epoch: ',chsqs
         self.plotchains()
         self.savechains()
-        #self.plotstamps()
+        self.plotstamps()
         #np.savez(self.results_npz, pixel_history = self.pixel_history
         #                        , simulated_stamps = self.simulated_images
         #                        , data_stamps = self.real_data_stamps_trimmed
