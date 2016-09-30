@@ -2405,10 +2405,11 @@ class smp:
         if self.fermigrid and self.worker:
             os.popen('ifdh mkdir '+out)
             os.popen('ifdh mkdir '+outimages)
-        if not os.path.exists(out):
-            os.makedirs(out)
-        if not os.path.exists(outimages):
-            os.makedirs(outimages)
+        else:
+            if not os.path.exists(out):
+                os.makedirs(out)
+            if not os.path.exists(outimages):
+                os.makedirs(outimages)
 
         
         #pix_model, newsubstamp = self.pixelate(model,self.params.pixelation_factor,substamp=params.substamp)
