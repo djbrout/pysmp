@@ -2466,9 +2466,9 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
-        npoutdir = os.path.join(outdir,'/np_data/'+filt+'/')
+        npoutdir = os.path.join(oldoutdir,'np_data/'+filt+'/')
 
-        galaxyoutdir = os.path.join(galaxyfoldername,'/np_data/'+filt+'/')
+        galaxyoutdir = os.path.join(galaxyfoldername,'np_data/'+filt+'/')
 
         if self.fermigrid and self.worker:
             os.system('ifdh mkdir '+npoutdir)
