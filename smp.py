@@ -249,18 +249,20 @@ class smp:
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
-             stardeltasfolder=None, zptfoldername=None, SNfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
-             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,lcfilepath='.',
+             stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
+             dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
              savezptstamps=False,usezpt=None,fermilog=False
              ):
 
         print 'snfile',snfile
 
         if fermigrid & worker:
-            if not os.path.exists(os.path.join(outdir,SNfoldername)):
-                print 'ifdh mkdir ',os.path.join(outdir,SNfoldername)
-
-                os.system('ifdh mkdir '+os.path.join(outdir,SNfoldername))
+            #if not os.path.exists(os.path.join(outdir,SNfoldername)):
+            print 'ifdh mkdir ',outdir
+            os.system('ifdh mkdir '+outdir)
+        else:
+            if not os.path.exists(outdir):
+                os.mkdir(outdir)
 
 
         #print filt
@@ -279,7 +281,6 @@ class smp:
             useifdh = False
         self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt,useifdh=useifdh)
         print 'done with tmpwriter line 267'
-        foldername = SNfoldername
         tstart = time.time()
         from txtobj import txtobj
         from astropy import wcs
@@ -300,7 +301,7 @@ class smp:
         #
         # if not os.path.exists(cspath):
         #     os.makedirs(cspath)
-        self.checkstarfile = os.path.join(outdir,foldername+'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
+        self.checkstarfile = os.path.join(outdir,'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
                                           +'_'+filt+'_standardstarfits.txt')
         #print self.checkstarfile
         #print 'checkstarfile'
@@ -363,7 +364,7 @@ class smp:
         self.rickfakestarfile = ''
         self.dosextractor = dosextractor
         self.worker=worker
-        self.lcfilepath=lcfilepath
+        #self.lcfilepath=lcfilepath
         self.savezptstamps = savezptstamps
         self.usezpt = usezpt
         self.fermilog = fermilog
@@ -372,6 +373,7 @@ class smp:
         self.useweights = useweights
         if not self.useweights:
             self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snparams.image_name_mask)
+
 
         self.dobigstarcat = dobigstarcat
         #print self.dobigstarcat
@@ -411,6 +413,10 @@ class smp:
         else:
             snparams.nvalid = snparams.nobs
         self.zptstamps = os.path.join(oldoutdir,'zptstamps')
+        self.lcfilepath = os.path.join(oldoutdir,'lightcurves')
+        if self.fermigrid and self.worker:
+            os.popen('ifdh mkdir '+self.lcfilepath).read()
+
         if not os.path.exists(self.zptstamps):
             if fermigrid & worker:
                 if self.zptstamps.split('/')[1] != 'pnfs':
@@ -2397,8 +2403,8 @@ class smp:
 
         pkyerr = -2.5*np.log10(smp_dict['mcmc_scale']) + 2.5*np.log10(smp_dict['mcmc_scale'] + smp_dict['mcmc_scale_err'])
 
-        outfolder = os.path.join(oldoutdir,foldername)
-        out = os.path.join(oldoutdir,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
+        outfolder = oldoutdir
+        out = os.path.join(oldoutdir,'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
         outimages = os.path.join(out,'image_stamps/')
         print 'outimages',outimages
 
@@ -2450,18 +2456,24 @@ class smp:
         self.scaled_diffim_fluxerr = scaled_diffim_fluxerr
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        outdir = os.path.join(outdir,foldername+'/np_data/'+filt+'/')
-        galaxyoutdir = os.path.join(outdir,galaxyfoldername+'/np_data/'+filt+'/')
-        if not os.path.exists(outdir):
-            os.makedirs(outdir)
+
+        npoutdir = os.path.join(outdir,'/np_data/'+filt+'/')
+
+        galaxyoutdir = os.path.join(galaxyfoldername,'/np_data/'+filt+'/')
+
+        if self.fermigrid and self.worker:
+            os.system('ifdh mkdir '+npoutdir)
+        else:
+            if not os.path.exists(npoutdir):
+                os.makedirs(outdir)
 
         maxiter = 1200
         print os.path.join(outdir,filename+'_mcmc_input.npz')
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        lightcurves = os.path.join(outdir,foldername+'/lightcurves/'+filt+'/')
-        if not os.path.exists(lightcurves):
-            os.makedirs(lightcurves)  
+        #lightcurves = os.path.join(oldoutdir,'/lightcurves/'+filt+'/')
+        #if not os.path.exists(lightcurves):
+        #    os.makedirs(lightcurves)
 
 
 
@@ -2487,7 +2499,7 @@ class smp:
                     smp_dict['flag'][i] = 1
 
 
-        zptnpz = os.path.join(outdir,filename+'_imagezpts.npz')
+        zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
 
         self.tmpwriter.savez(zptnpz
                 , mjd = smp_dict['mjd']
@@ -2507,9 +2519,9 @@ class smp:
 
         tstart = time.time()
 
-        nm = self.checkstarfile.split('.')[0].split('/')[-1] + '_deltaradec.npz'
-        fname = os.path.join(outdir, foldername, 'np_data', filt, nm)
-        self.deltastarsfile = fname
+        # nm = self.checkstarfile.split('.')[0].split('/')[-1] + '_deltaradec.npz'
+        # fname = os.path.join(outdir, foldername, 'np_data', filt, nm)
+        # self.deltastarsfile = fname
         
         # if nozpt:
         #     self.tmpwriter.savez(self.deltastarsfile,deltaras=self.deltaras,deltadecs=self.deltadecs,mjds=self.deltamjds,ras=self.ras,decs=self.decs,airmasses=self.airmasses,x_star=self.x_stars,y_star=self.y_stars)
@@ -2535,7 +2547,7 @@ class smp:
         print 'flag',smp_dict['flag']
         print 'mjdflag',smp_dict['mjd_flag']
         print smp_dict['mjd']
-        print os.path.join(outdir,filename+'_mcmc_input.npz')
+        #print os.path.join(outdir,filename+'_mcmc_input.npz')
 
         print 'mjdslopeinteroff',smp_dict['mjdslopeinteroff']
 
@@ -2546,7 +2558,7 @@ class smp:
         if self.fermilog:
             self.tmpwriter.appendfile('saving mcmc input\n', self.fermilogfile)
 
-        self.tmpwriter.savez( os.path.join(outdir,filename+'_mcmc_input.npz'), 
+        self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
                 , modelvec = modelvec*0.
                 , galstd = np.sqrt(galmodel)*2.
@@ -2595,7 +2607,7 @@ class smp:
                 fwhm = smp_dict['fwhm_arcsec']*2.355,
                 snname = filename,
                 npzloc = outdir,
-                lcout = lightcurves+filename,
+                lcout = os.path.join(self.lcfilepath+filename),
                 model_data_index = ww,
                 mjdoff = smp_dict['mjdoff'],
                 mjdslopeinteroff = smp_dict['mjdslopeinteroff'],
@@ -2608,7 +2620,9 @@ class smp:
                 id_coadd = smp_dict['id_coadd']
                 )
         
-        self.tmpwriter.savez(os.path.join(outdir,filename+'_smpDict.npz'),**smp_dict)
+        self.tmpwriter.savez(os.path.join(npoutdir,filename+'_smpDict.npz'),**smp_dict)
+
+
         if self.fermilog:
             self.tmpwriter.appendfile('starting galaxy mcmc\n', self.fermilogfile)
         #self.dogalfit = False
@@ -2642,8 +2656,8 @@ class smp:
                     , fix_gal_model = None
                     , pixelate_model = 1.
                     , burnin = .75
-                    , lcout = lightcurves+filename
-                    , chainsnpz = os.path.join(outdir,filename+'_nosn.npz')
+                    , lcout = os.path.join(self.lcfilepath+filename)
+                    , chainsnpz = os.path.join(npoutdir,filename+'_nosn.npz')
                     )
 
 
@@ -2652,14 +2666,14 @@ class smp:
 
             print 'TOTAL Galfit SMP TIME ',time.time()-tstart
 
-            print os.path.join(outdir,filename+'_nosn.npz')
+            print os.path.join(npoutdir,filename+'_nosn.npz')
 
 
 
         self.outdir = outdir
         self.galaxyoutdir = galaxyoutdir
         self.filename = filename
-        self.foldername = foldername
+        #self.foldername = foldername
         self.filt = filt
         self.smp_dict = smp_dict
         self.smp_im = smp_im
@@ -2714,7 +2728,7 @@ class smp:
                 , fix_gal_model = fixgal
                 , pixelate_model = 1.
                 , burnin = .75
-                , lcout = lightcurves+filename
+                , lcout = os.path.join(self.lcfilepath,filename)
                 , chainsnpz = os.path.join(outdir,filename+'_withSngetRADEC.npz')
                 , platescale = .27
                 , mjdoff = smp_dict['mjdoff']
@@ -2740,7 +2754,7 @@ class smp:
             if not self.dosnradecfit:
                 try:
                     print os.path.join(outdir,filename+'_withSngetRADEC.npz')
-                    chains = np.load(os.path.join(outdir,filename+'_withSngetRADEC.npz'))
+                    chains = np.load(os.path.join(npoutdir,filename+'_withSngetRADEC.npz'))
                     xhistory = chains['xhistory']
                     yhistory = chains['yhistory']
                     decoff = chains['decoff']
@@ -2818,8 +2832,8 @@ class smp:
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
                     , burnin = .75
-                    , lcout = os.path.join(oldoutdir,filename)
-                    , chainsnpz = os.path.join(oldoutdir,filename+'_withSn.npz')
+                    , lcout = os.path.join(self.lcfilepath,filename)
+                    , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
                     , dontsavegalaxy=True
                     , log = log
@@ -2830,7 +2844,7 @@ class smp:
             #sys.exit()
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params(dosave=False)
             print 'TOTAL SMP SN TIME ',time.time()-tstart
-            print os.path.join(outdir,filename+'_withSn.npz')
+            print os.path.join(npoutdir,filename+'_withSn.npz')
 
 
         if self.dogalsimfit:
@@ -3027,7 +3041,7 @@ class smp:
         #print chisqs
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
-        os.popen('ifdh mkdir '+self.lcfilepath).read()
+        #os.popen('ifdh mkdir '+self.lcfilepath).read()
         if self.fermigrid and self.worker:
             tmp = 'lc.txt'
         else:
@@ -5128,7 +5142,7 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "stardeltasfolder=","SNfoldername=","galaxyfoldername=",
+                      "stardeltasfolder=","galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
@@ -5157,7 +5171,7 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "stardeltasfolder=", "SNfoldername=", "galaxyfoldername=",
+                      "stardeltasfolder=", "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
@@ -5529,7 +5543,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 stardeltasfolder=stardeltasfolder,SNfoldername=SNfoldername,galaxyfoldername=galaxyfoldername,
+                                 stardeltasfolder=stardeltasfolder,galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,usezpt=usezpt,
                                     fermilog=fermilog)
@@ -5627,9 +5641,9 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     stardeltasfolder=stardeltasfolder, SNfoldername=SNfoldername, galaxyfoldername=galaxyfoldername,
+                     stardeltasfolder=stardeltasfolder, galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,usezpt=usezpt,
+                     fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,usezpt=usezpt,
                     fermilog=fermilog)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"

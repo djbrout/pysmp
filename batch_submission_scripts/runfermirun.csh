@@ -16,7 +16,7 @@ setup extralibs 1.0
 
 source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
 kx509
-voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=DESGW
+voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis
 
 echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 source /grid/fermiapp/products/common/etc/setups.sh
