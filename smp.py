@@ -251,7 +251,7 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
              stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
-             savezptstamps=False,usezpt=None,fermilog=False
+             savezptstamps=False,fermilog=False
              ):
 
         print 'snfile',snfile
@@ -366,7 +366,6 @@ class smp:
         self.worker=worker
         #self.lcfilepath=lcfilepath
         self.savezptstamps = savezptstamps
-        self.usezpt = usezpt
         self.fermilog = fermilog
 
 
@@ -5146,7 +5145,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","usezpt=","fermilog"])
+                      "lcfilepath=","fermilog"])
 
 
         #print opt
@@ -5175,7 +5174,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","usezpt=","fermilog"])
+                      "lcfilepath=","fermilog"])
 
 
         #print opt
@@ -5213,7 +5212,6 @@ if __name__ == "__main__":
     parallelvar = None
     fermigriddir = None
     worker = False
-    usezpt = None
     lcfilepath=snfilepath
     fermilog = False
 
@@ -5321,8 +5319,6 @@ if __name__ == "__main__":
             worker = True
         elif o == "--savezptstamps":
             savezptstamps = True
-        elif o == "--usezpt":
-            usezpt = a
         elif o == "--fermilog":
             fermilog = True
         else:
@@ -5428,8 +5424,6 @@ if __name__ == "__main__":
             worker = True
         elif o == "--savezptstamps":
             savezptstamps = True
-        elif o == "--usezpt":
-            usezpt = a
         elif o == "--fermilog":
             fermilog = True
         else:
@@ -5468,8 +5462,6 @@ if __name__ == "__main__":
     if snfilelist is None:
         raise NameError("Must provide " +
                         "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
-    if usezpt is None:
-        usezpt = out_dir
 
     if not index is None:
         if index == 'all':
@@ -5545,7 +5537,7 @@ if __name__ == "__main__":
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                                  stardeltasfolder=stardeltasfolder,galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,usezpt=usezpt,
+                                 fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
                                     fermilog=fermilog)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
@@ -5643,7 +5635,7 @@ if __name__ == "__main__":
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
                      stardeltasfolder=stardeltasfolder, galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
-                     fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,usezpt=usezpt,
+                     fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog)
     scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
