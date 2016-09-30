@@ -288,8 +288,8 @@ class smp:
         self.outfile = outfile
         print 'line 275'
         oldoutdir = copy(outdir)
-        print oldoutdir
-        sys.exit()
+        #print oldoutdir
+        #sys.exit()
         if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
@@ -2409,6 +2409,7 @@ class smp:
         galmodel = smp_im[ww,:,:]-smp_dict['sky'][ww]
 
         pkyerr = -2.5*np.log10(smp_dict['mcmc_scale']) + 2.5*np.log10(smp_dict['mcmc_scale'] + smp_dict['mcmc_scale_err'])
+        print 'oldoutdir',oldoutdir
 
         outfolder = oldoutdir
         out = os.path.join(oldoutdir,'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
