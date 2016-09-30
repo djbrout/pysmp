@@ -2401,6 +2401,7 @@ class smp:
         outfolder = os.path.join(oldoutdir,foldername)
         out = os.path.join(oldoutdir,foldername+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0] + '/'+filt+'/')
         outimages = os.path.join(out,'image_stamps/')
+        print 'outimages',outimages
 
         if self.fermigrid and self.worker:
             os.popen('ifdh mkdir '+out)
@@ -2421,7 +2422,7 @@ class smp:
         params.substamp = newsubstamp #setting updated pixelated substamp
         '''
 
-        save_fits_image(model[:params.substamp**2].reshape(params.substamp,params.substamp),os.path.join(outimages,'initialmodel.fits'))
+        self.tmpwriter.savefits(model[:params.substamp**2].reshape(params.substamp,params.substamp),os.path.join(outimages,'initialmodel.fits'))
 
         imodel = copy(model)
 
