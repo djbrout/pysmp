@@ -510,22 +510,28 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
-        staroutdir = os.path.join(stardeltasfolder,filt)
-
-        print staroutdir
-        if fermigrid and worker:
-            if not os.path.exists(stardeltasfolder):
-                print os.popen('ifdh mkdir ' + stardeltasfolder).read()
-            if not os.path.exists(staroutdir):
-                print os.popen('ifdh mkdir '+staroutdir).read()
+        # staroutdir = os.path.join(stardeltasfolder,filt)
+        #
+        # print staroutdir
+        # if fermigrid and worker:
+        #     if not os.path.exists(stardeltasfolder):
+        #         print os.popen('ifdh mkdir ' + stardeltasfolder).read()
+        #     if not os.path.exists(staroutdir):
+        #         print os.popen('ifdh mkdir '+staroutdir).read()
+        # else:
+        #     if not os.path.exists(stardeltasfolder):
+        #         os.makedirs(stardeltasfolder)
+        #     if not os.path.exists(staroutdir):
+        #         os.makedirs(staroutdir)
+        # #raw_input('makedir')
+        # print filename
+        #print staroutdir
+        staroutdir = os.path.join(oldoutdir,'staroffsets',filt)
+        if self.fermigrid and self.worker:
+            os.popen('ifdh mkdir '+staroutdir)
         else:
-            if not os.path.exists(stardeltasfolder):
-                os.makedirs(stardeltasfolder)
             if not os.path.exists(staroutdir):
-                os.makedirs(staroutdir)
-        #raw_input('makedir')
-        print filename
-        print staroutdir
+                os.mkdir(staroutdir)
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
         print 'loading',star_offset_file
 
@@ -5141,7 +5147,7 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "stardeltasfolder=","galaxyfoldername=",
+                      "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
@@ -5170,7 +5176,7 @@ if __name__ == "__main__":
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
-                      "stardeltasfolder=", "galaxyfoldername=",
+                      "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
@@ -5198,7 +5204,6 @@ if __name__ == "__main__":
     mergeno = 0
     snfilepath = None
     bigstarcatalog=None
-    stardeltasfolder=None
     galaxyfoldername=None
     snfilelist = None
     files_split_by_filter = False
@@ -5287,8 +5292,6 @@ if __name__ == "__main__":
             lcfilepath = a
         elif o in["--bigstarcatalog"]:
             bigstarcatalog = a
-        elif o in["--stardeltasfolder"]:
-            stardeltasfolder = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
@@ -5390,8 +5393,6 @@ if __name__ == "__main__":
             lcfilepath = a
         elif o in["--bigstarcatalog"]:
             bigstarcatalog = a
-        elif o in["--stardeltasfolder"]:
-            stardeltasfolder = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
@@ -5445,9 +5446,6 @@ if __name__ == "__main__":
     if bigstarcatalog is None:
         dobigstarcat = False
 
-    if stardeltasfolder is None:
-        raise NameError("Must provide "+
-                        "--stardeltasfolder=/location/to/previous/run in default.config \nExiting now...")
     if galaxyfoldername is None:
         raise NameError("Must provide " +
                         "--galaxyfoldername=/location/to/previous/run in default.config \n Exiting now...")
@@ -5527,7 +5525,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 stardeltasfolder=stardeltasfolder,galaxyfoldername=galaxyfoldername,
+                                 galaxyfoldername=galaxyfoldername,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
                                     fermilog=fermilog)
@@ -5625,7 +5623,7 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     stardeltasfolder=stardeltasfolder, galaxyfoldername=galaxyfoldername,
+                     galaxyfoldername=galaxyfoldername,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog)
