@@ -288,6 +288,8 @@ class smp:
         self.outfile = outfile
         print 'line 275'
         oldoutdir = copy(outdir)
+        print oldoutdir
+        sys.exit()
         if fermigrid & worker: #NEED TO ZIP AND COPY ALL DATA BACK TO OLDOUTFULE AFTER SMP IS DONE
             oldoutfile = copy(outfile)
             outfile = ''
