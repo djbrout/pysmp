@@ -388,7 +388,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 4900) == 0:
+            if (self.counter % 5000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
@@ -439,6 +439,7 @@ class metropolis_hastings():
         print 'Chisq For Each Epoch: ',chsqs
         self.plotchains()
         self.savechains()
+        print 'plotting stamps... this may take a minute...'
         self.plotstamps()
         #np.savez(self.results_npz, pixel_history = self.pixel_history
         #                        , simulated_stamps = self.simulated_images
