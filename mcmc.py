@@ -912,7 +912,7 @@ class metropolis_hastings():
 
         print 'saved',fname
 
-    def get_params( self, dontreturn=False ):
+    def get_params( self, dosave=False, dontreturn=False ):
         #save_fits_image(self.data[ 0, :,:],'./data.fits')
         #if self.didtimeout:
 
