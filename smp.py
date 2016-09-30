@@ -584,8 +584,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 5:
-               continue
+            #if cntrs > 5:
+            #   continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
@@ -1053,8 +1053,8 @@ class smp:
             #    #raw_input('did not pass')
             #    continue
             #raw_input('passed')
-            if cccc > 5:
-                continue
+            #if cccc > 5:
+            #    continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -2826,7 +2826,7 @@ class smp:
             if self.fermilog:
                 self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
             #sys.exit()
-            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params(dosave=True)
+            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params(dosave=False)
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(outdir,filename+'_withSn.npz')
 
