@@ -402,8 +402,7 @@ class metropolis_hastings():
                 self.plotchains()
                 self.savechains()
                 #sys.exit()
-                if (self.counter % 5000) == 0:
-                    self.plotstamps()
+                self.plotstamps()
                 import gc
                 collected = gc.collect()
                 print "Garbage collector: collected %d objects." % (collected)
@@ -424,7 +423,7 @@ class metropolis_hastings():
             #plt.show()
         #sys.exit()
         self.summarize_run()
-        sys.exit()
+        #sys.exit()
         self.model_params()
 
         self.t2 = time.time()
@@ -826,8 +825,10 @@ class metropolis_hastings():
 
     def plotstamps(self):
         pdf_pages = PdfPages('stamps.pdf')
+        fig = plt.figure(figsize=(20, 10))
         for i in range(self.Nimage):
-            fig = plt.figure(figsize=(20, 10))
+            #fig = plt.figure(figsize=(20, 10))
+            plt.clf()
             axim = plt.subplot(141)
             axpsf = plt.subplot(142)
             axdiff = plt.subplot(143)
@@ -847,6 +848,7 @@ class metropolis_hastings():
             plt.title(title)
             pdf_pages.savefig(fig)
         pdf_pages.close()
+        plt.close()
         self.tmpwriter.cp('stamps.pdf',str(self.lcout)+'_stamps.pdf')
 
     def plotchains( self ):

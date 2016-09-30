@@ -584,7 +584,7 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 10:
+            if cntrs > 5:
                continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
@@ -1053,7 +1053,7 @@ class smp:
             #    #raw_input('did not pass')
             #    continue
             #raw_input('passed')
-            if cccc > 10:
+            if cccc > 5:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
