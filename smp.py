@@ -2408,7 +2408,7 @@ class smp:
             os.popen('ifdh mkdir '+outfolder+'/SNe/'+snparams.snfile.split('/')[-1].split('.')[0])
             os.popen('ifdh mkdir '+out)
             os.popen('ifdh mkdir '+outimages)
-            raw_input('made directories')
+            #raw_input('made directories')
         else:
             if not os.path.exists(out):
                 os.makedirs(out)
