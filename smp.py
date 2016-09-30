@@ -241,7 +241,6 @@ class smp:
         self.psf_model = psf_model
 
         
-    @profile
     def main(self,nodiff=False,nozpt=False,rootdir='',outdir='',
              nomask=False,outfile='',debug=False,
              verbose=False, clear_zpt=False,clear_checkstars=True,mergeno=0,
