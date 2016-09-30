@@ -931,7 +931,7 @@ class metropolis_hastings():
         psfstamps = []
         chisqstamps = []
 
-        if self.dosave:
+        if dosave:
 
             for i in np.arange(self.Nimage):
                 #print self.sims[i,:,:]
