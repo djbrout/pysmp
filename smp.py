@@ -574,7 +574,9 @@ class smp:
         #sys.exit()
 
         if self.fermilog:
-            self.fermilogfile = os.path.join(oldoutdir, snfile.split('/')[-1].split('.')[0] + '.smplog')
+            self.fermilogfile = os.path.join(oldoutdir,'fermilogs', snfile.split('/')[-1].split('.')[0] + '.smplog')
+            os.system('ifdh mkdir '+os.path.join(oldoutdir,'fermilogs'))
+
             print self.fermilogfile
             if os.path.exists(self.fermilogfile):
                 print os.popen('ifdh rm '+self.fermilogfile).read()
@@ -2471,6 +2473,7 @@ class smp:
         galaxyoutdir = os.path.join(galaxyfoldername,'np_data/'+filt+'/')
 
         if self.fermigrid and self.worker:
+            os.system('ifdh mkdir '+os.path.join(galaxyfoldername,'np_data'))
             os.system('ifdh mkdir '+npoutdir)
         else:
             if not os.path.exists(npoutdir):
