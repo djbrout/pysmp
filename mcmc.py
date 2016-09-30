@@ -402,7 +402,7 @@ class metropolis_hastings():
                 self.plotchains()
                 self.savechains()
                 #sys.exit()
-                self.plotstamps()
+                #self.plotstamps()
                 import gc
                 collected = gc.collect()
                 print "Garbage collector: collected %d objects." % (collected)
@@ -849,6 +849,7 @@ class metropolis_hastings():
             pdf_pages.savefig(fig)
         pdf_pages.close()
         plt.close()
+        gc.collect()
         self.tmpwriter.cp('stamps.pdf',str(self.lcout)+'_stamps.pdf')
 
     def plotchains( self ):
@@ -929,42 +930,42 @@ class metropolis_hastings():
         psfstamps = []
         chisqstamps = []
 
-        # if self.dosave:
-        #
-        #     for i in np.arange(self.Nimage):
-        #         #print self.sims[i,:,:]
-        #         #print self.mjd[i]
-        #         #print self.model_uncertainty[self.substamp**2+i]
-        #         #self.tmpwriter.savefits(self.data[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_data.fits'))
-        #         if not dontreturn:
-        #             datastamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_data.fits'))
-        #         self.tmpwriter.savefits(self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_sim.fits'))
-        #         if not dontreturn:
-        #             simstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_sim.fits'))
-        #         self.tmpwriter.savefits(self.data[i,:,:]-self.sky[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_fluxdataminussky.fits'))
-        #         self.tmpwriter.savefits(self.galaxy_model,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_galmodel.fits'))
-        #         if not dontreturn:
-        #             galmodelstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_galmodel.fits'))
-        #         self.tmpwriter.savefits(self.weights[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_weight.fits'))
-        #         if not dontreturn:
-        #             weightstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_weight.fits'))
-        #         self.tmpwriter.savefits(self.data[i,:,:]-self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_dataminussim.fits'))
-        #         self.tmpwriter.savefits((self.data[i,:,:]-self.sims[i])**2*self.weights[i,:,:]*self.mask,
-        #                         os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
-        #         if not dontreturn:
-        #             chisqstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
-        #         self.tmpwriter.savefits(self.centered_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
-        #         if not dontreturn:
-        #             psfstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
-        #         self.tmpwriter.savefits(self.centered_psfs[i,:,:]-self.kicked_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psfresidual.fits'))
-        #         self.tmpwriter.savefits(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyerr.fits'))
-        #         #a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyval.txt'),'w')
-        #         #a.write(str(self.sky[i]))
-        #         #a.close()
-        #         ##print self.sims.shape
-        #         #return self.model_params,self.model_uncertainty,self.nphistory, self.sims, np.asarray(self.xhistory),np.asarray(self.yhistory)
-        #         #return np.zeros(len(self.model_params))+1e8,np.zeros(len(self.model_params))+1e9,self.nphistory
-        #     #save_fits_image(self.data[0,:,:],'./out/MDJ'+str(self.mjd)+'data.fits')
+        if self.dosave:
+
+            for i in np.arange(self.Nimage):
+                #print self.sims[i,:,:]
+                #print self.mjd[i]
+                #print self.model_uncertainty[self.substamp**2+i]
+                #self.tmpwriter.savefits(self.data[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_data.fits'))
+                if not dontreturn:
+                    datastamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_data.fits'))
+                self.tmpwriter.savefits(self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_sim.fits'))
+                if not dontreturn:
+                    simstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_sim.fits'))
+                self.tmpwriter.savefits(self.data[i,:,:]-self.sky[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_fluxdataminussky.fits'))
+                self.tmpwriter.savefits(self.galaxy_model,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_galmodel.fits'))
+                if not dontreturn:
+                    galmodelstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_galmodel.fits'))
+                self.tmpwriter.savefits(self.weights[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_weight.fits'))
+                if not dontreturn:
+                    weightstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_weight.fits'))
+                self.tmpwriter.savefits(self.data[i,:,:]-self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_dataminussim.fits'))
+                self.tmpwriter.savefits((self.data[i,:,:]-self.sims[i])**2*self.weights[i,:,:]*self.mask,
+                                os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
+                if not dontreturn:
+                    chisqstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
+                self.tmpwriter.savefits(self.centered_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
+                if not dontreturn:
+                    psfstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
+                self.tmpwriter.savefits(self.centered_psfs[i,:,:]-self.kicked_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psfresidual.fits'))
+                self.tmpwriter.savefits(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyerr.fits'))
+                #a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_skyval.txt'),'w')
+                #a.write(str(self.sky[i]))
+                #a.close()
+                ##print self.sims.shape
+                #return self.model_params,self.model_uncertainty,self.nphistory, self.sims, np.asarray(self.xhistory),np.asarray(self.yhistory)
+                #return np.zeros(len(self.model_params))+1e8,np.zeros(len(self.model_params))+1e9,self.nphistory
+            #save_fits_image(self.data[0,:,:],'./out/MDJ'+str(self.mjd)+'data.fits')
         if not dontreturn:
             stamps = [datastamps,simstamps,galmodelstamps,weightstamps,psfstamps,chisqstamps]
             chsqs = self.csv / len(self.mask[self.mask > 0.].ravel())
