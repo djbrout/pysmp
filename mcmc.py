@@ -398,8 +398,10 @@ class metropolis_hastings():
                 tps = (time.time()-self.t1)/self.counter
                 print 'Time per step:',tps
                 #print 'mjdoff: ',self.mjdoff
+                sys.exit()
                 self.plotchains()
                 self.savechains()
+
                 if (self.counter % 5000) == 0:
                     self.plotstamps()
                 import gc
