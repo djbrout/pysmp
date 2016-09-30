@@ -401,7 +401,7 @@ class metropolis_hastings():
                 #sys.exit()
                 self.plotchains()
                 self.savechains()
-                sys.exit()
+                #sys.exit()
                 if (self.counter % 5000) == 0:
                     self.plotstamps()
                 import gc
@@ -422,7 +422,7 @@ class metropolis_hastings():
                 self.didtimeout = True
             #plt.imshow(self.data[20,self.substamp/2.-14.:self.substamp/2.+14.,self.substamp/2.-14.:self.substamp/2.+14.])
             #plt.show()
-
+        sys.exit()
         self.summarize_run()
         self.model_params()
 
