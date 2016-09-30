@@ -438,7 +438,7 @@ class metropolis_hastings():
         chsqs = self.csv / len(self.mask[self.mask > 0.].ravel())
         print 'Final Reduced ChiSq: ' + str(np.nanmean(chsqs[chsqs != 0.]))
         print 'Chisq For Each Epoch: ',chsqs
-        #self.plotchains()
+        self.plotchains()
         #self.savechains()
         #self.plotstamps()
         #np.savez(self.results_npz, pixel_history = self.pixel_history
