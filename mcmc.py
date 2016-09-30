@@ -352,7 +352,6 @@ class metropolis_hastings():
         self.simsnosn = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
         self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky*0.,self.flags,self.fitflags,self.sims,self.gal_conv)
         
-        sys.exit()
         self.run_d_mc()
 
 
@@ -789,7 +788,8 @@ class metropolis_hastings():
     def update_unaccepted_history( self ):
         self.compressioncounter += 1
         if self.compressioncounter % self.compressionfactor == 0:
-            self.galhistory.append( self.galaxy_model )
+            if not self.dontsavegalaxy:
+                self.galhistory.append( self.galaxy_model )
             self.modelvechistory.append( self.modelvec )
             if self.shiftpsf:
                 self.xhistory.append(self.current_x_offset*self.platescale)
