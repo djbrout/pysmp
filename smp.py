@@ -3034,7 +3034,7 @@ class smp:
 
             modelveco = copy(modelvec)
             
-            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,rahistory,dechistory  = aaa.get_params()
+            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,rahistory,dechistory  = aaa.get_params(dosave=True)
 
             print 'TOTAL SMP SN TIME ',time.time()-tstart
 
@@ -3048,7 +3048,7 @@ class smp:
         self.smp_psf = smp_psf
         self.smp_noise = smp_noise
 
-        image_stampf,sim_stampf,galmodel_stampf,weight_stampf,psf_stampf,chisq_stampf = stamps[0],stamps[1],stamps[2],stamps[3],stamps[4],stamps[5],
+        image_stampf,sim_stampf,galmodel_stampf,weight_stampf,psf_stampf,chisq_stampf = stamps[0],stamps[1],stamps[2],stamps[3],stamps[4],stamps[5]
         #print 'lcfilepath',self.lcfilepath
 
         #print snparams.snfile

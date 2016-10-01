@@ -339,15 +339,15 @@ class metropolis_hastings():
         self.pix_stamp = self.galaxy_model.shape[0]
         self.sims = copy(self.data)
         self.numfitepochs = len(self.mjd[(self.flags == 0) & (self.fitflags == 0)])
-        print 'modelstd',self.modelstd
+        #print 'modelstd',self.modelstd
         for x in np.arange(self.Nimage):
             self.centered_psfs[x] = self.centered_psfs[x]/np.sum(self.centered_psfs[x].ravel())
             if self.flags[x] == 1:
                 self.modelvec[x] = 0.
                 self.modelstd[x] = 0.
-        print 'modelstdafter',self.modelstd
-        print 'flags',self.flags
-        raw_input()
+        #print 'modelstdafter',self.modelstd
+        #print 'flags',self.flags
+        #raw_input()
         #print 'nimage', self.Nimage
         #print 'numfitepochs',self.numfitepochs
         #raw_input()
@@ -860,8 +860,8 @@ class metropolis_hastings():
     def plotchains( self ):
         self.model_params()
         numepochs = self.modelvec_nphistory.shape[1]
-        print 'numiter,numepochs',self.modelvec_nphistory.shape
-        raw_input()
+        #print 'numiter,numepochs',self.modelvec_nphistory.shape
+        #raw_input()
         plt.clf()
         fig = plt.figure(1,figsize=(10,7))
         for e in np.arange(numepochs):
@@ -877,7 +877,7 @@ class metropolis_hastings():
         #print str(self.lcout)+'_SNchains.png'
         plt.clf()
         plt.close(1)
-        raw_input()
+        #raw_input()
                                    
         fig = plt.figure(1,figsize=(10,7))
         #for e in np.arange(numepochs):
@@ -890,11 +890,11 @@ class metropolis_hastings():
             self.tmpwriter.cp('SNoffset1.png',str(self.lcout)+'_SNoffset1.png')
             os.popen('rm SNoffset1.png').read()
             #print str(self.lcout)+'_SNoffset1.png'
-        else:
-            self.savefig('SNoffset2.png')
-            self.tmpwriter.cp('SNoffset2.png',str(self.lcout)+'_SNoffset2.png')
-            os.popen('rm SNoffset2.png').read()
-            #print str(self.lcout)+'_SNoffset2.png'
+        #else:
+        #    self.savefig('SNoffset2.png')
+        #    self.tmpwriter.cp('SNoffset2.png',str(self.lcout)+'_SNoffset2.png')
+        #    os.popen('rm SNoffset2.png').read()
+        #    #print str(self.lcout)+'_SNoffset2.png'
 
         plt.close(1)
     def savechains( self ):
