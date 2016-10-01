@@ -1210,7 +1210,7 @@ class smp:
             try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
-                print 'image shape', im.shape
+                #print 'image shape', im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
                 continue
@@ -1484,10 +1484,10 @@ class smp:
             if self.snparams.psf_model.lower() == 'psfex':
                 xsn = xsn+1.
                 ysn = ysn+1.
-            print 'usefake',self.usefake
-            print 'snra sndec',snparams.RA,snparams.DECL
-            print 'xsn ysnnnnnnnnnnnnnnnnn', xsn, ysn
-            print 'snparams.npix ypix',snparams.nxpix,snparams.nypix
+            #print 'usefake',self.usefake
+            #print 'snra sndec',snparams.RA,snparams.DECL
+            #print 'xsn ysnnnnnnnnnnnnnnnnn', xsn, ysn
+            #print 'snparams.npix ypix',snparams.nxpix,snparams.nypix
             testoffset = False
             offsetx = .6
             offsety = .3
@@ -2260,11 +2260,11 @@ class smp:
 
                                     #sys.exit()
                                     if self.fermigrid and self.worker:
-                                        print 'cleaning up copied files'
-                                        print os.popen('rm '+imfile).read()
-                                        print os.popen('rm '+imfile+'.fz').read()
-                                        print os.popen('rm '+noisefile).read()
-                                        print os.popen('rm '+psffile).read()
+                                        #print 'cleaning up copied files'
+                                        os.popen('rm '+imfile).read()
+                                        os.popen('rm '+imfile+'.fz').read()
+                                        os.popen('rm '+noisefile).read()
+                                        os.popen('rm '+psffile).read()
 
 
                                     i += 1
