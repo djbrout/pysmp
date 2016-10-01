@@ -663,7 +663,7 @@ class smp:
                     #print 'here2'
                     #raw_input()
                 else:
-                    print 'file not found',imfile
+                    #print 'file not found',imfile
                     #continue
 
                     ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
@@ -672,13 +672,13 @@ class smp:
                     #raw_input()
                     if len(ifdhls) > 0:
                         a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
-                        print a
+                        #print a
                         a = os.popen('funpack '+imfile.split('/')[-1]+'.fz').read()
-                        print a
+                        #print a
                         os.popen('rm '+imfile.split('/')[-1]+'.fz').read()
                         # imfilel = copy(imfilel)
                         imfile = imfile.split('/')[-1]
-                        print 'imfile', imfile
+                        #print 'imfile', imfile
                         # if self.usefake:
                         #     #if '.gz' in imfile:
                         #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
