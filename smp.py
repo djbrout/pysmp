@@ -968,10 +968,10 @@ class smp:
                                 (starcat.dec < dec_high))[0]
 
                 if not len(cols):
-                    print "Error : No stars in image!!"
-                    badindices.append(j)
-                    continue
-                    #raise exceptions.RuntimeError("Error : No stars in image!!")
+                    #print "Error : No stars in image!!"
+                    #badindices.append(j)
+                    #continue
+                    raise exceptions.RuntimeError("Error : No stars in image!!")
 
                 if wcsworked:
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra,starcat.dec)),0))
@@ -1620,7 +1620,7 @@ class smp:
                 else: 
                     raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
                     
-            print 'about to do zeropoints'
+            #print 'about to do zeropoints'
             #sys.exit()
             if snparams.psf_model.lower() == 'daophot':
                 #self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
@@ -1675,8 +1675,8 @@ class smp:
 
 
                     if not len(cols):
-                        print 'Error: No stars in image!'
-                        continue
+                        #print 'Error: No stars in image!'
+                        #continue
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
@@ -1777,8 +1777,8 @@ class smp:
 
 
                 if not len(cols):
-                    print 'Error: no stars in image!'
-                    continue
+                    #print 'Error: no stars in image!'
+                    #continue
                     raise exceptions.RuntimeError("Error : No stars in image!!")
                 try:
                     if band.lower() == 'g':
