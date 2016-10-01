@@ -2849,8 +2849,8 @@ class smp:
                     , mjdoff = smp_dict['mjdoff']
                     , dontsavegalaxy=True
                     , log = log
-                    , isfermigrid=self.isfermigrid
-                    , isworker=self.isworker
+                    , isfermigrid=self.fermigrid
+                    , isworker=self.worker
                     )
             modelveco = copy(modelvec)
             if self.fermilog:
