@@ -600,8 +600,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 5:
-               continue
+            #if cntrs > 5:
+            #   continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
@@ -1069,8 +1069,8 @@ class smp:
             #    #raw_input('did not pass')
             #    continue
             #raw_input('passed')
-            if cccc > 5:
-                continue
+            #if cccc > 5:
+            #    continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -2785,14 +2785,14 @@ class smp:
             galstd = np.sqrt(abs(galmodel))/10.
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             tstart = time.time()
-            print 'modelstd',modelstd
-            raw_input()
+            #print 'modelstd',modelstd
+            #raw_input()
             if not self.floatallepochs:
-                raw_input('shouldnt be here floating all epochs')
+                #raw_input('shouldnt be here floating all epochs')
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
             print 'modelstd after',modelstd
-            raw_input()
+            #raw_input()
             if self.fixgalzero:
                 galmodel = galmodel*0.
                 galstd = galstd*0.
