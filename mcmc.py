@@ -865,9 +865,9 @@ class metropolis_hastings():
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
             plt.ylabel('SN Flux')
-        plt.savefig('SNchains.png')
-        self.tmpwriter.cp('SNchains.png',str(self.lcout)+'_SNchains.png')
-        os.popen('rm SNchains.png').read()
+        self.savefig('SNchains.png')
+        #self.tmpwriter.cp('SNchains.png',str(self.lcout)+'_SNchains.png')
+        #os.popen('rm SNchains.png').read()
 
         #print str(self.lcout)+'_SNchains.png'
         plt.clf()
@@ -1013,7 +1013,7 @@ class metropolis_hastings():
         return scale
 
     def make_history( self ):
-        num_iter = len( self.galhistory )
+        num_iter = len( self.modelvechistory )
         if not self.dontsavegalaxy:
             self.galmodel_nphistory = np.zeros( (num_iter , self.galaxy_model.shape[0], self.galaxy_model.shape[1]))
             self.modelvec_nphistory = np.zeros( (num_iter , len(self.modelvec)))
