@@ -1675,6 +1675,8 @@ class smp:
 
 
                     if not len(cols):
+                        print 'Error: No stars in image!'
+                        continue
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
@@ -1775,6 +1777,8 @@ class smp:
 
 
                 if not len(cols):
+                    print 'Error: no stars in image!'
+                    continue
                     raise exceptions.RuntimeError("Error : No stars in image!!")
                 try:
                     if band.lower() == 'g':
