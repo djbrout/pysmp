@@ -585,6 +585,7 @@ class smp:
             self.tmpwriter.appendfile('running globalstar\n',self.fermilogfile)
             #sys.exit()
 
+        badindices = []
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             #print doglobalstar, snparams.mjd[j], nozpt
@@ -967,7 +968,10 @@ class smp:
                                 (starcat.dec < dec_high))[0]
 
                 if not len(cols):
-                    raise exceptions.RuntimeError("Error : No stars in image!!")
+                    print "Error : No stars in image!!"
+                    badindices.append(j)
+                    continue
+                    #raise exceptions.RuntimeError("Error : No stars in image!!")
 
                 if wcsworked:
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra,starcat.dec)),0))
@@ -1064,6 +1068,8 @@ class smp:
             #smp_dict['mjd'][j] = float(snparams.mjd[j])
             smp_dict['mjd'][i] = float(snparams.mjd[j])
 
+            if j in badindices:
+                continue
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
