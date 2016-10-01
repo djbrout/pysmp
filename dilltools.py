@@ -265,7 +265,7 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + src + ' ' + dst)
         elif self.useifdh:
-            os.system('ifdh cp ' + src + ' ' + dst)
+            print os.popen('ifdh cp ' + src + ' ' + dst).read()
         else:
             os.system('mv ' + src + ' ' + dst)
         print 'saved', dst
