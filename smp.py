@@ -1062,6 +1062,8 @@ class smp:
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             #smp_dict['mjd'][j] = float(snparams.mjd[j])
+            smp_dict['mjd'][i] = float(snparams.mjd[j])
+
             if snparams.mjd[j] == 0:
                 #raw_input('mjdddd')
                 continue
@@ -2852,7 +2854,7 @@ class smp:
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
                     , dontsavegalaxy=True
-                    , log = log
+                    , log = self.fermilogfile
                     , isfermigrid=self.fermigrid
                     , isworker=self.worker
                     )
