@@ -2763,6 +2763,7 @@ class smp:
                     print 'could not find galaxy chains, setting to image'
                     minsky = np.argmin(smp_dict['sky'])
                     galmodel_params = smp_im[minsky]-smp_dict['sky'][minsky]
+                    modelvec = scaled_diffim_flux
             if not self.dosnradecfit:
                 try:
                     print os.path.join(outdir,filename+'_withSngetRADEC.npz')
@@ -2784,11 +2785,14 @@ class smp:
             galstd = np.sqrt(abs(galmodel))/10.
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             tstart = time.time()
-
+            print 'modelstd',modelstd
+            raw_input()
             if not self.floatallepochs:
+                raw_input('shouldnt be here floating all epochs')
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
-
+            print 'modelstd after',modelstd
+            raw_input()
             if self.fixgalzero:
                 galmodel = galmodel*0.
                 galstd = galstd*0.
