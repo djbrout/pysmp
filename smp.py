@@ -3036,7 +3036,6 @@ class smp:
 
         self.outdir = outdir
         self.filename = filename
-        self.foldername = foldername
         self.filt = filt
         self.smp_dict = smp_dict
         self.smp_im = smp_im
