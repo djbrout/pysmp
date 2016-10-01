@@ -865,7 +865,7 @@ class metropolis_hastings():
         plt.clf()
         fig = plt.figure(1,figsize=(10,7))
         for e in np.arange(numepochs):
-            print 'plottingchainsssssss',e
+            #print 'plottingchainsssssss',e
             if np.max(self.modelvec_nphistory[:,e]) > 0:
                 plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
         plt.xlabel('Step')
