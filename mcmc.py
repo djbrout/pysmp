@@ -856,8 +856,8 @@ class metropolis_hastings():
     def plotchains( self ):
         self.model_params()
         numepochs = self.modelvec_nphistory.shape[1]
-        print 'numepochs',self.modelvec_nphistory.shape
-        raw_input()
+        #print 'numepochs',self.modelvec_nphistory.shape
+        #raw_input()
         plt.clf()
         fig = plt.figure(1,figsize=(10,7))
         for e in np.arange(numepochs):
@@ -865,14 +865,14 @@ class metropolis_hastings():
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
             plt.ylabel('SN Flux')
-        self.savefig('SNchains.png')
+        plt.savefig('SNchains.png')
         self.tmpwriter.cp('SNchains.png',str(self.lcout)+'_SNchains.png')
         os.popen('rm SNchains.png').read()
 
         #print str(self.lcout)+'_SNchains.png'
         plt.clf()
         plt.close(1)
-
+        raw_input()
                                    
         fig = plt.figure(1,figsize=(10,7))
         #for e in np.arange(numepochs):
