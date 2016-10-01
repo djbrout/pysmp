@@ -2780,7 +2780,7 @@ class smp:
                     xoff = 0.
                     yoff = 0.
                     modelvec = scaled_diffim_flux
-                    modelstd = scaled_diffim_fluxerr/7.
+                    #modelstd = scaled_diffim_fluxerr/7.
             galmodel = galmodel_params
             galstd = np.sqrt(abs(galmodel))/10.
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
