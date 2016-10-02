@@ -836,6 +836,11 @@ class metropolis_hastings():
         pdf_pages = PdfPages('stamps.pdf')
         fig = plt.figure(figsize=(25, 10))
         for i in range(self.Nimage):
+            tchi = np.sum((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask)/len(self.mask[self.mask>0.].ravel())
+            if not tchi > -1.:
+                continue
+            if self.flags[i] == 1:
+                continue
             #fig = plt.figure(figsize=(20, 10))
             plt.clf()
             axgm = plt.subplot(151)
@@ -843,16 +848,15 @@ class metropolis_hastings():
             axpsf = plt.subplot(153)
             axdiff = plt.subplot(154)
             axchi = plt.subplot(155)
-            tchi = np.sum((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask)
             for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image', 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
                 ax.set_title(title)
             axs = axgm.imshow(self.galaxy_model * self.mask,cmap='gray',interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axgm)
-            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:]),vmax=np.max(self.data[i,:,:]))
+            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/5.),vmax=np.max(self.data[i,:,:]))
             cbar = fig.colorbar(axs, ax=axim)
-            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sims[i]),vmax=np.max(self.sims[i]))
+            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/5.),vmax=np.max(self.sims[i]))
             cbar = fig.colorbar(axs, ax=axpsf)
-            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:] - self.sims[i]),vmax=np.max(self.data[i,:,:] - self.sims[i]))
+            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=-1*self.skyerr[i]*5.,vmax=self.skyerr[i]*5.)
             cbar = fig.colorbar(axs, ax=axdiff)
             axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
             cbar = fig.colorbar(axs, ax=axchi)
