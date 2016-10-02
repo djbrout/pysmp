@@ -2775,8 +2775,8 @@ class smp:
                     galmodel_uncertainty = chains['galmodel_uncertainty']
                 except:
                     print 'could not find galaxy chains, setting to image'
-                    minsky = np.argmin(smp_dict['sky'])
-                    galmodel_params = smp_im[minsky]-smp_dict['sky'][minsky]
+                    minsky = np.argmin(smp_dict['sky'][smp_dict['sky']>0.])
+                    galmodel_params = smp_im[smp_dict['sky']>0.][minsky]-smp_dict['sky'][smp_dict['sky']>0.][minsky]
                     modelvec = scaled_diffim_flux
             if not self.dosnradecfit:
                 try:
@@ -2818,8 +2818,8 @@ class smp:
             else:
                 fixgal = False
 
-            print 'aftergalstd',galstd
-            raw_input()
+            #print 'aftergalstd',galstd
+            #raw_input()
             st = time.time()
             log = None
             if self.fermilog:
