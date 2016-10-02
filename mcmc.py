@@ -857,8 +857,10 @@ class metropolis_hastings():
         pdf_pages.close()
         plt.close()
         gc.collect()
-        if self.fermigrid and self.worker:
+        if self.isfermigrid and self.isworker:
             print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
+        else:
+            print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
             #print 'copied using ifdh'
             #raw_input()
     def plotchains( self ):
