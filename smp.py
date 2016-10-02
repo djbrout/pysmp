@@ -2796,7 +2796,10 @@ class smp:
                     modelvec = scaled_diffim_flux
                     #modelstd = scaled_diffim_fluxerr/7.
             galmodel = galmodel_params
+            print 'galmodel',galmodel
+
             galstd = np.sqrt(abs(galmodel))/8.
+            print 'galstd',galstd
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             tstart = time.time()
             #print 'modelstd',modelstd
@@ -2808,12 +2811,15 @@ class smp:
             print 'modelstd after',modelstd
             #raw_input()
             if self.fixgalzero:
+                print 'fixing galmodel to zero'
                 galmodel = galmodel*0.
                 galstd = galstd*0.
                 fixgal = True
             else:
                 fixgal = False
 
+            print 'aftergalstd',galstd
+            raw_input()
             st = time.time()
             log = None
             if self.fermilog:
