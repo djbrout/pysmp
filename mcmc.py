@@ -205,8 +205,8 @@ class metropolis_hastings():
         self.dontsavegalaxy = dontsavegalaxy
         self.log = log
         if self.isfermigrid and self.isworker:
-            print 'we have correct tempwriter'
-            raw_input()
+            #print 'we have correct tempwriter'
+            #raw_input()
             self.tmpwriter = dt.tmpwriter(tmp_subscript='snfit_', useifdh=True)
 
         self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
@@ -859,8 +859,8 @@ class metropolis_hastings():
         gc.collect()
         if self.fermigrid and self.worker:
             print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
-            print 'copied using ifdh'
-            raw_input()
+            #print 'copied using ifdh'
+            #raw_input()
     def plotchains( self ):
         self.model_params()
         numepochs = self.modelvec_nphistory.shape[1]
