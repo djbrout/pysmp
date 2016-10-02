@@ -28,8 +28,8 @@ def lightcurve(mjd,fitmag,fitmagerr,fakemag,fakemagerr,fitflux,fitfluxerr,fakefl
             color = 'green'
         if f == 'r':
             color = 'red'
-            print 'redddddd'
-            raw_input()
+            #print 'redddddd'
+            #raw_input()
         if f == 'i':
             color = 'blue'
         if f == 'z':
