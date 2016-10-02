@@ -848,7 +848,7 @@ class metropolis_hastings():
             axpsf = plt.subplot(153)
             axdiff = plt.subplot(154)
             axchi = plt.subplot(155)
-            for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image', 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
+            for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
                 ax.set_title(title)
             axs = axgm.imshow(self.galaxy_model * self.mask,cmap='gray',interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axgm)
