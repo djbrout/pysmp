@@ -338,6 +338,8 @@ class metropolis_hastings():
             #self.deltas[:len(self.galaxy_model.ravel())] = self.gal_stds.ravel()
             #self.deltas[len(self.galaxy_model.ravel()):] = everythingelse_stds
 
+        print 'galstd',self.galstd
+
         self.pix_stamp = self.galaxy_model.shape[0]
         self.sims = copy(self.data)
         self.numfitepochs = len(self.mjd[(self.flags == 0) & (self.fitflags == 0)])
@@ -593,7 +595,7 @@ class metropolis_hastings():
                 if fitflags == 0.:
                     galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
                     star_conv = kicked_modelvec * kicked_psfs/np.sum(kicked_psfs.ravel())
-                    sims =  (star_conv + galaxy_conv + sky)*self.mask
+                    sims = (star_conv + galaxy_conv + sky)*self.mask
                     
         return sims
 
@@ -832,21 +834,25 @@ class metropolis_hastings():
 
     def plotstamps(self):
         pdf_pages = PdfPages('stamps.pdf')
-        fig = plt.figure(figsize=(20, 10))
+        fig = plt.figure(figsize=(25, 10))
         for i in range(self.Nimage):
             #fig = plt.figure(figsize=(20, 10))
             plt.clf()
-            axim = plt.subplot(141)
-            axpsf = plt.subplot(142)
-            axdiff = plt.subplot(143)
-            axchi = plt.subplot(144)
-            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq']):
+            axgm = plt.subplot(151)
+            axim = plt.subplot(152)
+            axpsf = plt.subplot(153)
+            axdiff = plt.subplot(154)
+            axchi = plt.subplot(155)
+            tchi = np.sum((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask)
+            for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image', 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
                 ax.set_title(title)
-            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest')
+            axs = axgm.imshow(self.galaxy_model * self.mask,cmap='gray',interpolation='nearest')
+            cbar = fig.colorbar(axs, ax=axgm)
+            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:]),vmax=np.max(self.data[i,:,:]))
             cbar = fig.colorbar(axs, ax=axim)
-            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest')
+            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sims[i]),vmax=np.max(self.sims[i]))
             cbar = fig.colorbar(axs, ax=axpsf)
-            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest')
+            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:] - self.sims[i]),vmax=np.max(self.data[i,:,:] - self.sims[i]))
             cbar = fig.colorbar(axs, ax=axdiff)
             axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
             cbar = fig.colorbar(axs, ax=axchi)
