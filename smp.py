@@ -2818,8 +2818,8 @@ class smp:
             else:
                 fixgal = False
 
-            #print 'aftergalstd',galstd
-            #raw_input()
+            print 'aftergalstd',galstd
+            raw_input()
             st = time.time()
             log = None
             if self.fermilog:
