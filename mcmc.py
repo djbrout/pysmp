@@ -857,7 +857,7 @@ class metropolis_hastings():
             axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/5.),vmax=np.max(self.sims[i]))
             cbar = fig.colorbar(axs, ax=axpsf)
             md = np.median((self.data[i,:,:] - self.sims[i]).ravel())
-            std = np.std((self.data[i,:,:] - self.sims[i]).ravel())
+            std = np.std(((self.data[i,:,:] - self.sims[i])*self.mask).ravel())
             axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=md-3*std,vmax=md+3*std)
             cbar = fig.colorbar(axs, ax=axdiff)
             axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
@@ -958,6 +958,8 @@ class metropolis_hastings():
         if dosave:
 
             for i in np.arange(self.Nimage):
+                if float(self.mjd[i]) == 0:
+                    continue
                 #print self.sims[i,:,:]
                 #print self.mjd[i]
                 #print self.model_uncertainty[self.substamp**2+i]
