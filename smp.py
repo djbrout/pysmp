@@ -1073,10 +1073,10 @@ class smp:
 
             if j in badindices:
                 continue
-            if snparams.mjd[j] == 0:
+            if round(snparams.mjd[j]) == 0:
                 #raw_input('mjdddd')
                 continue
-            if snparams.mjd[j] != 56636.:
+            if round(snparams.mjd[j]) != 56636.:
                 if snparams.mjd[j] < 57000.:
                     continue
             #if float(snparams.mjd[j]) < 57045:
