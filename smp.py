@@ -604,7 +604,8 @@ class smp:
             #if cntrs > 5:
             #   continue
             if snparams.mjd[j] != 56636.:
-                continue
+                if snparams.mjd[j] < 57000.:
+                    continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
@@ -1076,7 +1077,8 @@ class smp:
                 #raw_input('mjdddd')
                 continue
             if snparams.mjd[j] != 56636.:
-                continue
+                if snparams.mjd[j] < 57000.:
+                    continue
             #if float(snparams.mjd[j]) < 57045:
             #    #raw_input('did not pass')
             #    continue
