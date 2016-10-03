@@ -888,6 +888,7 @@ class metropolis_hastings():
                 plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
         plt.xlabel('Step')
         plt.ylabel('SN Flux')
+        plt.title(self.lcout.split('/')[-1])
         self.savefig(str(self.lcout)+'_SNchains.png')
         #self.tmpwriter.cp('SNchains.png',str(self.lcout)+'_SNchains.png')
         #os.popen('rm SNchains.png').read()
