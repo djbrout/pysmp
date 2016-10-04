@@ -1494,6 +1494,7 @@ class smp:
 
             xsn = xsn[0]
             ysn = ysn[0]
+            print xsn,ysn
             raw_input('stopppppppppp')
 
             if self.snparams.psf_model.lower() == 'psfex':
