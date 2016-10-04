@@ -1590,9 +1590,9 @@ class smp:
                 if fermigrid and worker:
                     #starcatfile = longimfile.split('/')[-1]
                     starcatloc = ''
-                    a = os.popen('ls STARCAT*').read()
+                    a = os.popen('ls -ltr STARCAT*').read()
                     #print '743', a
-                    starcatfile = ifdhls.strip().split('/')[-1]
+                    starcatfile = a.split()[-1]
                     #print '745', starcatfile
                     #print 'starcat',starcatfile
                 else:
