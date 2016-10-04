@@ -1079,9 +1079,9 @@ class smp:
             if round(snparams.mjd[j]) != 56636.:
                 if snparams.mjd[j] < 57000.:
                     continue
-            if float(snparams.mjd[j]) < 57045:
-                #raw_input('did not pass')
-                continue
+            #if float(snparams.mjd[j]) < 57045:
+            #    #raw_input('did not pass')
+            #    continue
             #raw_input('passed')
             #if cccc > 5:
             #    continue
