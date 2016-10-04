@@ -1076,9 +1076,9 @@ class smp:
             if round(snparams.mjd[j]) == 0:
                 #raw_input('mjdddd')
                 continue
-            if round(snparams.mjd[j]) != 56636.:
-                if snparams.mjd[j] < 57000.:
-                    continue
+            #if round(snparams.mjd[j]) != 56636.:
+            #    if snparams.mjd[j] < 57000.:
+            #        continue
             #if float(snparams.mjd[j]) < 57045:
             #    #raw_input('did not pass')
             #    continue
@@ -1494,8 +1494,8 @@ class smp:
 
             xsn = xsn[0]
             ysn = ysn[0]
-            print xsn,ysn
-            raw_input('stopppppppppp')
+            #print xsn,ysn
+            #raw_input('stopppppppppp')
 
             if self.snparams.psf_model.lower() == 'psfex':
                 xsn = xsn+1.

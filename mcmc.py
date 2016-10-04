@@ -208,8 +208,8 @@ class metropolis_hastings():
             #print 'we have correct tempwriter'
             #raw_input()
             self.tmpwriter = dt.tmpwriter(tmp_subscript='snfit_', useifdh=True)
-
-        self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
+        else:
+            self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
 
         collected = gc.collect()
         print "Garbage collector: collected %d objects." % (collected)
