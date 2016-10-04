@@ -1683,8 +1683,8 @@ class smp:
 
 
                     if not len(cols):
-                        #print 'Error: No stars in image!'
-                        #continue
+                        print 'Error: No stars in image!'
+                        continue
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     mag_star = starcat.mag[cols]
