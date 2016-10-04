@@ -1785,8 +1785,8 @@ class smp:
 
 
                 if not len(cols):
-                    #print 'Error: no stars in image!'
-                    #continue
+                    print 'Error: no stars in image!'
+                    continue
                     print starcat.ra
                     print 'ralow,rahi',ra_low,ra_high
                     raise exceptions.RuntimeError("Error : No stars in image!!")
