@@ -21,7 +21,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02/'
 isfermigrid = True
-cacheddata = True
+cacheddata = False
 
 def go(resultsdir,isfermigrid=False):
 
@@ -38,6 +38,8 @@ def go(resultsdir,isfermigrid=False):
         data = np.load('tmp.npz')
     print data.keys()
     print len(data['Flux'])
+
+    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
 
 def grabdata(tmpwriter,resultsdir):
 
@@ -71,6 +73,57 @@ def grabdata(tmpwriter,resultsdir):
     print 'saved'
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
+
+
+def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
+    flux = np.array(flux)
+    fakemag = np.array(fakemag)
+    fitzpt = np.array(fitzpt)
+    fakezpt = np.array(fakezpt)
+
+    fakeflux = 10**(.4*(31. - fakemag))
+    fakeflux *= 10**(.4*(fitzpt - fakezpt))
+
+    ww = fakemag < 99
+
+    fig = plt.figure(figsize=(15, 10))
+    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
+    ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
+                            np.arange(min(fakemag[ww]),max(fakemag[ww]), .5))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    plt.plot([min(fakemag[ww]),max(fakemag[ww])],[0,0])
+    plt.xlabel('Fake Mag')
+    plt.ylabel('Percentage Flux Difference')
+    plt.savefig('percentagefluxdiff.png')
+    print 'saved png'
+
+def bindata(x, y, bins, returnn=False):
+    medians = np.zeros(len(bins) - 1)
+    mads = np.zeros(len(bins) - 1)
+    nums = np.zeros(len(bins) - 1)
+
+    for i in np.arange(len(bins) - 1):
+        bs = bins[i]
+        bf = bins[i + 1]
+        ww = [(x > bs) & (x < bf)]
+        yhere = y[ww]
+        yhere = yhere[np.isfinite(yhere)]
+        ss = [abs(yhere) < 3. * np.std(yhere)]
+        try:
+            nums[i] = len(yhere[ss])
+            medians[i] = np.median(yhere[ss])
+            mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i])) * 1 / np.sqrt(len(yhere[ss]))
+        except IndexError:
+            print 'excepted'
+            nums[i] = 0.
+            medians[i] = np.nan
+            mads[i] = np.nan
+    xvals = (bins[1:] + bins[:-1]) / 2.
+    if returnn:
+        return xvals, medians, mads, nums
+    return xvals, medians, mads
+
 
 if __name__ == "__main__":
     go(resultsdir)
