@@ -168,10 +168,10 @@ def readcol(filename,headline=1,startline=2,delim=' '):
 
             for col in cols:
                 try:
-                    return_cols[column_list[index]].append(float(col.strip()))
+                    print len(return_cols[column_list[index]])
                 except:
                     try:
-                        return_cols[column_list[index]].append(col.strip())
+                        print len(return_cols[column_list[index]])
                     except:
                         print 'WARNING: Could not read line ' + str(linenum + 1) + ' of ' + filename
                         passed = False
