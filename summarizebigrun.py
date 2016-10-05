@@ -21,7 +21,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02/'
 isfermigrid = True
-cacheddata = True
+cacheddata = False
 
 def go(resultsdir,isfermigrid=False):
 
@@ -67,7 +67,7 @@ def grabdata(tmpwriter,resultsdir):
         except:
             print 'Columns missing in file '+f
     print 'saving to cachfile'
-    np.savez(outfile,*bigdata)
+    np.savez(outfile,**bigdata)
     print 'saved'
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
