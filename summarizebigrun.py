@@ -82,7 +82,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     print fakemag.shape
     print flux.shape
     #print fakemag[0].shape
-    sys.exit()
+    #sys.exit()
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
 
