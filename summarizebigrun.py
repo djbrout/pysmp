@@ -20,14 +20,41 @@ import dilltools as dt
 
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02/'
+isfermigrid = True
+cacheddata = False
 
-def go(resultsdir):
+def go(resultsdir,isfermigrid=False):
+
+    if isfermigrid:
+        useifdh = True
+    else:
+        useifdh = False
+    tmpwriter = dt.tmpwriter(useifdh=useifdh)
+
     files = os.listdir(os.path.join(resultsdir,'lightcurves'))
     smpfiles = []
     for f in files:
         if '.smp' in f:
             smpfiles.append(os.path.join(resultsdir,'lightcurves',f))
             print smpfiles[-1]
+
+
+    if not cacheddata:
+        data = grabdata(smpfiles,tmpwriter,resultsdir)
+    else:
+        data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
+
+    print data.shape
+
+def grabdata(smpfiles,tmpwriter,resultsdir):
+    if not os.path.exists(os.path.join(resultsdir,'Summary')):
+        os.makedirs(os.path.join(resultsdir,'Summary'))
+    outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
+
+    for f in smpfiles:
+        data = dt.readcol(f)
+        print data.shape
+        sys.exit()
 
 if __name__ == "__main__":
     go(resultsdir)
