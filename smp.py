@@ -2082,10 +2082,10 @@ class smp:
                             psf_stamp = self.psf
                             errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                            image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
-                                                                                                       params.substamp - 1) / 2 + 1,
-                                          np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
-                                                                                                    params.substamp - 1) / 2 + 1]
+                            #image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
+                            #                                                                           params.substamp - 1) / 2 + 1,
+                            #              np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
+                            #                                                                        params.substamp - 1) / 2 + 1]
 
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
@@ -5076,7 +5076,7 @@ class smp:
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
-            psfout[y,x] = p
+            psfout[x,y] = p
 
         # print 'psfvalmax',np.max(psfval)
         # print 'psfshape',psfout.shape
