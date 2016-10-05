@@ -81,10 +81,10 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     fitzpt = np.array(fitzpt)
     fakezpt = np.array(fakezpt)
 
-    fakeflux = 10**(.4*(31. - fakemag))
+    fakeflux = 10**(.4*(np.float(31.) - fakemag))
     fakeflux *= 10**(.4*(fitzpt - fakezpt))
 
-    ww = fakemag < 99
+    ww = fakemag < 99.
 
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
