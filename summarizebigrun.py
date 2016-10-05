@@ -50,12 +50,21 @@ def grabdata(tmpwriter,resultsdir):
 
     if not os.path.exists(os.path.join(resultsdir,'Summary')):
         os.makedirs(os.path.join(resultsdir,'Summary'))
-    outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
+    #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
+    outfile = 'tmp.npz'
+    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[]}
 
     for f in smpfiles:
         data = dt.readcol(f)
-        print data.keys()
-        sys.exit()
+        bigdata['Flux'].extend(data['FLUX'])
+        bigdata['Fluxerr'].extend(data['FLUXERR'])
+        bigdata['FakeMag'].extend(data['FAKEMAG'])
+        bigdata['FitZPT'].extend(data['ZPT'])
+        bigdata['FakeZPT'].extend(data['FAKEZPT'])
+        print f,'read in'
+    print 'saving to cachfile'
+    dt.savez(outfile,*bigdata)
+    return bigdata
 
 if __name__ == "__main__":
     go(resultsdir)
