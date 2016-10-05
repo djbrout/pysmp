@@ -59,15 +59,15 @@ def grabdata(tmpwriter,resultsdir):
 
     for f in smpfiles:
         data = dt.readcol(f)
-        try:
-            bigdata['Flux'].extend(data['FLUX'])
-            bigdata['Fluxerr'].extend(data['FLUXERR'])
-            bigdata['FakeMag'].extend(data['FAKEMAG'])
-            bigdata['FitZPT'].extend(data['ZPT'])
-            bigdata['FakeZPT'].extend(data['FAKEZPT'])
-            print f,'read in'
-        except:
-            print 'Columns missing in file '+f
+        #try:
+        bigdata['Flux'].extend(data['FLUX'])
+        bigdata['Fluxerr'].extend(data['FLUXERR'])
+        bigdata['FakeMag'].extend(data['FAKEMAG'])
+        bigdata['FitZPT'].extend(data['ZPT'])
+        bigdata['FakeZPT'].extend(data['FAKEZPT'])
+        print f,'read in'
+        #except:
+        #    print 'Columns missing in file '+f
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
