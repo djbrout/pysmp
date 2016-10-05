@@ -54,7 +54,7 @@ def grabdata(tmpwriter,resultsdir):
 
     for f in smpfiles:
         data = dt.readcol(f)
-        print data.shape
+        print data.keys()
         sys.exit()
 
 if __name__ == "__main__":
