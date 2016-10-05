@@ -266,14 +266,14 @@ class smp:
 
 
         #print filt
-        print self.snparams.photflag
+        #print self.snparams.photflag
         #raw_input()
-        if 'x' in self.snparams.photflag[0]:
-            self.snparams.photflag = ~(self.snparams.photflag == '0x00')
-        else:
-            self.snparams.photflag = (self.snparams.photflag != '1')
+        #if 'x' in self.snparams.photflag[0]:
+        #    self.snparams.photflag = ~(self.snparams.photflag == '0x00')
+        #else:
+        #    self.snparams.photflag = (self.snparams.photflag != '1')
 
-        print self.snparams.photflag
+        #print self.snparams.photflag
         print 'Starting Scene Modeling Photometry'
         if fermigrid and worker:
             useifdh = True
@@ -3098,17 +3098,17 @@ class smp:
             tmp = smplightcurvefile
         fout = open(tmp, 'w')
         print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
-                       'DIFFIM_FLAG SMP_FLAG MJD_FLAG SKY SKYERR ' \
+                       'SMP_FLAG MJD_FLAG SKY SKYERR ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
+            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
                            '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
-                                chisqs[i], self.snparams.photflag[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
+                                chisqs[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
                                 smp_dict['sky'][i], smp_dict['skyerr'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
