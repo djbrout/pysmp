@@ -161,17 +161,17 @@ def readcol(filename,headline=1,startline=2,delim=' '):
                 go += 1
         if linenum >= startline - 1:
             index = 0
-            if len(cols) != numcols:
-                print 'WARNING: Could not read line ' + str(linenum + 1) + ' of ' + filename
-            else:
-                for col in cols:
+            # if len(cols) != numcols:
+            #     print 'WARNING: Could not read line ' + str(linenum + 1) + ' of ' + filename
+            # else:
+            for col in cols:
+                try:
+                    return_cols[column_list[index]].append(float(col.strip()))
+                except:
                     try:
-                        return_cols[column_list[index]].append(float(col.strip()))
+                        return_cols[column_list[index]].append(col.strip())
                     except:
-                        try:
-                            return_cols[column_list[index]].append(col.strip())
-                        except:
-                            print 'WARNING: Could not read line '+str(linenum+1)+' of '+filename
+                        print 'WARNING: Could not read line '+str(linenum+1)+' of '+filename
                 index += 1
         linenum += 1
     inf.close()
