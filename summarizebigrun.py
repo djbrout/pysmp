@@ -36,7 +36,8 @@ def go(resultsdir,isfermigrid=False):
     else:
         data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
 
-    print data.shape
+    print data.keys()
+    print len(data['Flux'])
 
 def grabdata(tmpwriter,resultsdir):
 
