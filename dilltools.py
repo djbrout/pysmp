@@ -3,6 +3,7 @@ import pyfits as pf
 import os
 import scipy.signal
 import scipy.ndimage as nd
+import sys
 
 #hello from fermilab2
 # Returns xvals, medians, mads
@@ -140,7 +141,7 @@ def readcol(filename,headline=1,startline=2,delim=' '):
     inf = open(filename)
     for line in inf:
         if linenum == 0:
-            print line[0:100]
+            print line[0:200]
             sys.exit()
             line = line[:100]
         #print line
