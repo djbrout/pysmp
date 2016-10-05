@@ -46,7 +46,7 @@ def grabdata(tmpwriter,resultsdir):
         if '.smp' in f:
             smpfiles.append(os.path.join(resultsdir, 'lightcurves', f))
 
-    print "Found " + len(smpfiles) + " .smp files"
+    print "Found " + str(len(smpfiles)) + " .smp files"
 
     if not os.path.exists(os.path.join(resultsdir,'Summary')):
         os.makedirs(os.path.join(resultsdir,'Summary'))
