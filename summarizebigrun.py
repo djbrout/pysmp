@@ -66,7 +66,9 @@ def grabdata(tmpwriter,resultsdir):
         except:
             print 'Columns missing in file '+f
     print 'saving to cachfile'
-    dt.savez(outfile,*bigdata)
+    np.savez(outfile,*bigdata)
+    print 'saved'
+    #tmpwriter.savez(outfile,*bigdata)
     return bigdata
 
 if __name__ == "__main__":
