@@ -141,7 +141,7 @@ def readcol(filename,headline=1,startline=2,delim=' '):
     inf = open(filename)
     for line in inf:
         if linenum == 0:
-            print line[0:200]
+            print line[0:191]
             sys.exit()
             line = line[:100]
         #print line
