@@ -26,7 +26,7 @@ def go(resultsdir):
     smpfiles = []
     for f in files:
         if '.smp' in f:
-            smpfiles.append(f)
+            smpfiles.append(os.path.join(resultsdir,'lightcurves',f))
             print f
 
 if __name__ == "__main__":
