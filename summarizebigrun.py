@@ -21,7 +21,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02/'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 
 def go(resultsdir,isfermigrid=False):
 
@@ -34,8 +34,8 @@ def go(resultsdir,isfermigrid=False):
     if not cacheddata:
         data = grabdata(tmpwriter,resultsdir)
     else:
-        data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
-
+        #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
+        data = np.load('tmp.npz')
     print data.keys()
     print len(data['Flux'])
 
