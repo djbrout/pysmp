@@ -154,15 +154,13 @@ def readcol(filename,headline=1,startline=2,delim=' '):
         cols[:] = (value for value in cols if value != '')
         if linenum == headline - 1:
             numcols = len(cols)
-            print numcols
+            #print numcols
             for col in cols:
                 return_cols[col.strip()] = []
                 column_list.append(col.strip())
                 go += 1
         if linenum >= startline - 1:
             index = 0
-            print len(cols)
-            sys.exit()
             if len(cols) != numcols:
                 print 'WARNING: Could not read line ' + str(linenum + 1) + ' of ' + filename
             else:
