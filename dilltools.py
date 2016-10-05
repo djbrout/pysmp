@@ -141,9 +141,9 @@ def readcol(filename,headline=1,startline=2,delim=' '):
     inf = open(filename)
     for line in inf:
         if linenum == 0:
-            print line[0:191]
+            line = line[:191] + ' '+ line[191:]
+            print line
             sys.exit()
-            line = line[:100]
         #print line
         line = line.replace('#', '')
         line = line.strip()
