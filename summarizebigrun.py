@@ -87,7 +87,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     fakezpt = np.asarray(fakezpt)
 
     fakeflux = 10**(.4*(31. - fakemag))
-    fakeflux *= 10**(.4*(fitzpt - fakezpt))
+    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
     ww = fakemag < 99.
 
