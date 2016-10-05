@@ -139,6 +139,7 @@ def readcol(filename,headline=1,startline=2,delim=' '):
     return_cols = {}
     inf = open(filename)
     for line in inf:
+        print line
         line = line.replace('#', '')
         line = line.strip()
         cols = line.split(delim)
