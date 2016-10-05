@@ -76,12 +76,12 @@ def grabdata(tmpwriter,resultsdir):
 
 
 def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
-    flux = np.array(flux)
-    fakemag = np.array(fakemag)
-    fitzpt = np.array(fitzpt)
-    fakezpt = np.array(fakezpt)
+    flux = np.asarray(flux)
+    fakemag = np.asarray(fakemag)
+    fitzpt = np.asarray(fitzpt)
+    fakezpt = np.asarray(fakezpt)
 
-    fakeflux = 10**(.4*(np.float(31.) - fakemag))
+    fakeflux = 10**(.4*(31. - fakemag))
     fakeflux *= 10**(.4*(fitzpt - fakezpt))
 
     ww = fakemag < 99.
