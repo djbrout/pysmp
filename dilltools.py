@@ -148,7 +148,7 @@ def readcol(filename,headline=1,startline=2,delim=' '):
         line = line.replace('#', '')
         line = line.strip()
         cols = line.split(delim)
-        print len(cols)
+        #print len(cols)
         #sys.exit()
         cols[:] = (value for value in cols if value != '')
         if linenum == headline - 1:
@@ -162,7 +162,10 @@ def readcol(filename,headline=1,startline=2,delim=' '):
                 try:
                     return_cols[column_list[index]].append(float(col.strip()))
                 except:
-                    return_cols[column_list[index]].append(col.strip())
+                    try:
+                        return_cols[column_list[index]].append(col.strip())
+                    except:
+                        print 'WARNING: Could not read line '+str(linenum+1)+' of '+filename
                 index += 1
         linenum += 1
     inf.close()
