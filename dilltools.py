@@ -164,8 +164,9 @@ def readcol(filename,headline=1,startline=2,delim=' '):
             # if len(cols) != numcols:
             #     print 'WARNING: Could not read line ' + str(linenum + 1) + ' of ' + filename
             # else:
+            passed = True
+
             for col in cols:
-                passed = True
                 try:
                     return_cols[column_list[index]].append(float(col.strip()))
                 except:
