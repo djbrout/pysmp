@@ -154,11 +154,8 @@ def readcol(filename,headline=1,startline=2,delim=' '):
                 return_cols[col.strip()] = []
                 column_list.append(col.strip())
                 go += 1
-            print return_cols.keys()
-            print len(return_cols)
         if linenum >= startline - 1:
             index = 0
-            print len(cols)
             for col in cols:
                 try:
                     return_cols[column_list[index]].append(float(col.strip()))
