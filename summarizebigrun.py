@@ -53,6 +53,7 @@ def grabdata(tmpwriter,resultsdir):
     outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
 
     for f in smpfiles:
+        print open(f,'r').readlines()[0]
         data = dt.readcol(f)
         print data.shape
         sys.exit()
