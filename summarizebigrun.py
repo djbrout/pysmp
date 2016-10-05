@@ -99,7 +99,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
 
     plt.plot([20,27],[0,0])
     plt.xlim(20,27)
-    plt.ylim(-4,4)
+    plt.ylim(-2,2)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig('percentagefluxdiff.png')
