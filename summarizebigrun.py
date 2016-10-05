@@ -54,7 +54,7 @@ def grabdata(tmpwriter,resultsdir):
 
     for f in smpfiles:
         #print open(f,'r').readlines()[0]
-        data = dt.readcol(f,firstlinehashashtag=True)
+        data = dt.readcol(f)
         print data.shape
         sys.exit()
 
