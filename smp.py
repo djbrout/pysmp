@@ -4573,14 +4573,14 @@ class smp:
                 #pdf_pages.savefig()
                 #raw_input('saved teststamp.png')
                 #scale = scale*.93
-                if self.savezptstamps:
-                    if not self.snparams.survey == 'PS1':
-                        simstamp = s-psf_stamp*scale
-
-                    dt.save_fits_image(image_stamp-simstamp,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
-                    dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
-                    dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
-                    #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
+                # if self.savezptstamps:
+                #     if not self.snparams.survey == 'PS1':
+                #         simstamp = s-psf_stamp*scale
+                #
+                #     dt.save_fits_image(image_stamp-simstamp,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
+                #     dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
+                #     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
+                #     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
 
         #print 'comparing chi sqaureds'
         #for f, m in zip(flux_chisq,flux_mychisq):
