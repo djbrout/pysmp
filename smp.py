@@ -4319,6 +4319,7 @@ class smp:
                 isnotcheckstars[i] = 0
 
             if mc > 21:
+                print 'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
@@ -4451,6 +4452,7 @@ class smp:
                                                                          params.fitrad,
                                                                          gal, mjd, scale)
 
+                        print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
                         # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
                         # cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
@@ -4466,9 +4468,9 @@ class smp:
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq: '+
                                     str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
                                 ax.set_title(title)
-                            axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
+                            axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axim)
-                            axs = axpsf.imshow(psf * scale * fitrad + s, cmap='gray', interpolation='nearest')
+                            axs = axpsf.imshow(psf * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axpsf)
                             axs = axdiff.imshow((image_stamp - s - (psf*scale)) * fitrad, cmap='gray',
                                                 interpolation='nearest')
