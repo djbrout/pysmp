@@ -4455,9 +4455,9 @@ class smp:
                         #                                                  gal, mjd, scale,index=i)
 
 
-                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                                                                         params.fitrad,
-                                                                         gal, mjd, scale)
+                        # scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                        #                                                  params.fitrad,
+                        #                                                  gal, mjd, scale)
 
                         print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
