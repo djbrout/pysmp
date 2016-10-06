@@ -4374,7 +4374,7 @@ class smp:
                     #print 'initialized'
                     try:
                         #print 'here2'
-                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
+                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         #print 'here3',scale
@@ -4396,8 +4396,8 @@ class smp:
                         # print 'rerecentroid'
                         # #raw_input('rerecentroid')
 
-                        image_stamp = im[np.round(y) - (params.substamp - 1) / 2:np.round(y) + (params.substamp - 1) / 2 + 1,
-                                      np.round(x) - (params.substamp - 1) / 2:np.round(x) + (params.substamp - 1) / 2 + 1]
+                        #image_stamp = im[np.round(y) - (params.substamp - 1) / 2:np.round(y) + (params.substamp - 1) / 2 + 1,
+                        #              np.round(x) - (params.substamp - 1) / 2:np.round(x) + (params.substamp - 1) / 2 + 1]
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
