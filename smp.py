@@ -1915,7 +1915,7 @@ class smp:
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
-                    x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
+                    #x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
                     #print x_star1[0]-x_star1n[0]
                     #raw_input('stopped')
                     #sys.exit()
