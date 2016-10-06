@@ -4409,8 +4409,13 @@ class smp:
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
                         px, py = cntrd.cntrd(psf, 15, 15, 3.)
 
-                        psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
+                        tt = time.time()
+                        for i in range(100):
+                            psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
 
+                        ttt = time.time()
+                        print 'time per psfdump is '+str((ttt-tt)/100.)
+                        raw_input()
                         ix = round(ix,2)
                         iy = round(iy,2)
                         px = round(px,2)
