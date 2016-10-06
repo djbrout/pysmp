@@ -4367,7 +4367,7 @@ class smp:
                         print 'badflaggg'*10
                 else:
                     #print 'here1'
-                    pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
+                    pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                     #Run for MPFIT
@@ -4470,7 +4470,7 @@ class smp:
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axim)
-                            axs = axpsf.imshow(psf * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
+                            axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axpsf)
                             axs = axdiff.imshow((image_stamp - s - (psf*scale)) * fitrad, cmap='gray',
                                                 interpolation='nearest')
@@ -5076,11 +5076,11 @@ class smp:
 
         #IMAGE_CENTERX -= IMAGE_CORNERX; IMAGE_CENTERY -= IMAGE_CORNERY
         ix,iy,psfval = np.array(ix),np.array(iy),np.array(psfval)
-        #psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
-        psfout = np.zeros((self.params.substamp,self.params.substamp))
+        psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
+        #psfout = np.zeros((self.params.substamp,self.params.substamp))
         for x,y,p in zip(ix,iy,psfval):
             if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
-                psfout[y-(35 - 2*self.params.fitrad - 1)/2 +1.,x-(35 - 2*self.params.fitrad -1)/2 +1] = p
+                psfout[y-(35 - 2*self.params.fitrad - 1)/2 ,x-(35 - 2*self.params.fitrad -1)/2 ] = p
             #psfout[y,x] = p
 
         # print 'psfvalmax',np.max(psfval)
