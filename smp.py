@@ -4378,7 +4378,7 @@ class smp:
                     try:
                         #print 'here2'
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf2 = \
-                            pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                            pk2.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
