@@ -4327,7 +4327,7 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51 and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        psfo, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
+                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
                         #psf2, psfcenter2 = self.build_psfex(psffile,x+.05,y+.05,imfile,stop=True)
                         #opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
                         #ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
@@ -4368,7 +4368,7 @@ class smp:
                         print 'badflaggg'*10
                 else:
                     #print 'here1'
-                    pk = pkfit_norecent_noise_smp.pkfit_class(im, psfo/np.sum(psfo), psfcenter, self.rdnoise, self.gain,
+                    pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                     #Run for MPFIT
@@ -4376,7 +4376,7 @@ class smp:
                     #try:
                     if True:
                         #print 'here2'
-                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf = \
+                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         #print 'here3',scale
