@@ -4310,7 +4310,7 @@ class smp:
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             print i
             #cntr += 1
-            if i > 500:
+            if i > 50:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4401,10 +4401,10 @@ class smp:
                         # print 'rerecentroid'
                         # #raw_input('rerecentroid')
 
-                        #image_stamp = im[np.floor(y+.5) - (params.substamp - 1) / 2:np.floor(y+.5) + (params.substamp - 1) / 2 ,
-                        #               np.floor(x+.5) - (params.substamp - 1) / 2:np.floor(x+.5) + (params.substamp - 1) / 2 ]
+                        image_stamp = im[np.floor(y+.5) - (params.substamp) / 2:np.floor(y+.5) + (params.substamp ) / 2 ,
+                                       np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
 
-                        image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        #image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
 
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
                         px, py = cntrd.cntrd(psf, 15, 15, 3.)
