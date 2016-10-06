@@ -4398,8 +4398,8 @@ class smp:
                         # print 'rerecentroid'
                         # #raw_input('rerecentroid')
 
-                        image_stamp = im[np.floor(y+.5) - (params.substamp - 1) / 2:np.floor(y+.5) + (params.substamp - 1) / 2 + 1,
-                                       np.floor(x+.5) - (params.substamp - 1) / 2:np.floor(x+.5) + (params.substamp - 1) / 2 + 1]
+                        image_stamp = im[np.floor(y+.5) - (params.substamp - 1) / 2:np.floor(y+.5) + (params.substamp - 1) / 2 ,
+                                       np.floor(x+.5) - (params.substamp - 1) / 2:np.floor(x+.5) + (params.substamp - 1) / 2 ]
 
 
 
