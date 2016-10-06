@@ -4310,7 +4310,7 @@ class smp:
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             print i
             #cntr += 1
-            if i > 50:
+            if i > 500:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4405,8 +4405,12 @@ class smp:
                         #               np.floor(x+.5) - (params.substamp - 1) / 2:np.floor(x+.5) + (params.substamp - 1) / 2 ]
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
                         px, py = cntrd.cntrd(psf, 15, 15, 3.)
+
+                        psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
+
                         ix = round(ix,2)
                         iy = round(iy,2)
                         px = round(px,2)
@@ -4478,7 +4482,7 @@ class smp:
                             axpsf = plt.subplot(142)
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
-                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['im '+str(ix)+', '+str(iy), 'mod '+str(px)+", "+str(py), 'resid', 'chisq: '+
+                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['im '+str(ix)+', '+str(iy), 'mod '+str(px)+", "+str(py), 'resid, se='+str(), 'chisq: '+
                                     str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
