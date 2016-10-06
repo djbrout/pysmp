@@ -5056,7 +5056,7 @@ class smp:
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   35)).readlines()
+                                                                                   30)).readlines()
 
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
@@ -5081,8 +5081,8 @@ class smp:
 
         #IMAGE_CENTERX -= IMAGE_CORNERX; IMAGE_CENTERY -= IMAGE_CORNERY
         ix,iy,psfval = np.array(ix),np.array(iy),np.array(psfval)
-        psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
-        #psfout = np.zeros((self.params.substamp,self.params.substamp))
+        #psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
+        psfout = np.zeros((self.params.substamp,self.params.substamp))
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #    psfout[y-(35 - 2*self.params.fitrad - 1)/2 ,x-(35 - 2*self.params.fitrad -1)/2 ] = p
