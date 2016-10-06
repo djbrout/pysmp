@@ -5056,7 +5056,7 @@ class smp:
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   31)).readlines()
+                                                                                   35)).readlines()
 
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
