@@ -593,7 +593,8 @@ class smp:
                 continue
             if snparams.mjd[j] == 0:
                 continue
-
+            if round(snparams.mjd[j]) != 56559:
+                continue
             #if float(snparams.mjd[j]) < 57045:
             #    continue
             if not nozpt:
@@ -1079,9 +1080,8 @@ class smp:
             #if round(snparams.mjd[j]) != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
-            #if float(snparams.mjd[j]) < 57045:
-            #    #raw_input('did not pass')
-            #    continue
+            if round(snparams.mjd[j]) != 56559:
+                continue
             #raw_input('passed')
             #if cccc > 5:
             #    continue
@@ -5076,7 +5076,7 @@ class smp:
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
-            psfout[x,y] = p
+            psfout[y,x] = p
 
         # print 'psfvalmax',np.max(psfval)
         # print 'psfshape',psfout.shape
