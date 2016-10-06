@@ -1915,7 +1915,7 @@ class smp:
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
-                    #x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm*2.)
+                    x_star1, y_star1 = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
                     #print x_star1[0]-x_star1n[0]
                     #raw_input('stopped')
                     #sys.exit()
@@ -3951,7 +3951,7 @@ class smp:
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
         else: 
-            for i in np.arange(guess_scale-2000,guess_scale+2000,.5):
+            for i in np.arange(guess_scale-5000,guess_scale+5000,5):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
@@ -5081,7 +5081,7 @@ class smp:
         for x,y,p in zip(ix,iy,psfval):
             #if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
             #psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
-            psfout[x,y] = p
+            psfout[y,x] = p
 
         # print 'psfvalmax',np.max(psfval)
         # print 'psfshape',psfout.shape
