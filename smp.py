@@ -4447,9 +4447,9 @@ class smp:
                         #                                                  gal, mjd, scale,index=i)
 
 
-                        # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                        #                                                  params.fitrad,
-                        #                                                  gal, mjd, scale, index=i,pdf_pages=pdf_pages)
+                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                                                                         params.fitrad,
+                                                                         gal, mjd, scale)
 
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
                         # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
@@ -4464,7 +4464,7 @@ class smp:
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model', 'resid', 'chisq: '+
-                                    str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(image_stamp.ravel()),2))]):
+                                    str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axim)
