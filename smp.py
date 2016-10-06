@@ -4397,7 +4397,7 @@ class smp:
                         # #raw_input('rerecentroid')
 
                         image_stamp = im[np.floor(y) - (params.substamp - 1) / 2:np.floor(y) + (params.substamp - 1) / 2 + 1,
-                                      np.floot(x) - (params.substamp - 1) / 2:np.floor(x) + (params.substamp - 1) / 2 + 1]
+                                      np.floor(x) - (params.substamp - 1) / 2:np.floor(x) + (params.substamp - 1) / 2 + 1]
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
