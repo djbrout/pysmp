@@ -303,7 +303,7 @@ class smp:
         #
         # if not os.path.exists(cspath):
         #     os.makedirs(cspath)
-        self.checkstarfile = os.path.join(outdir,'/SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
+        self.checkstarfile = os.path.join(outdir,'SNe/starfits/'+snfile.split('/')[-1].split('.')[0]
                                           +'_'+filt+'_standardstarfits.txt')
         #print self.checkstarfile
         #print 'checkstarfile'
