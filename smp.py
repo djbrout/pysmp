@@ -4396,8 +4396,8 @@ class smp:
                         # print 'rerecentroid'
                         # #raw_input('rerecentroid')
 
-                        image_stamp = im[np.floor(y) - (params.substamp - 1) / 2:np.floor(y) + (params.substamp - 1) / 2 + 1,
-                                      np.floor(x) - (params.substamp - 1) / 2:np.floor(x) + (params.substamp - 1) / 2 + 1]
+                        # image_stamp = im[np.floor(y) - (params.substamp - 1) / 2:np.floor(y) + (params.substamp - 1) / 2 + 1,
+                        #               np.floor(x) - (params.substamp - 1) / 2:np.floor(x) + (params.substamp - 1) / 2 + 1]
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -5051,7 +5051,7 @@ class smp:
         xo = copy(x)
         yo = copy(y)
         psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s"%(psffile,x,y,
-                                                                                   31)).readlines()
+                                                                                   35)).readlines()
 
         #ix, iy, psfval = np.genfromtxt(psffile, usecols = (1,2,5), skip_footer = 4)
         xin = copy(x)
@@ -5079,8 +5079,8 @@ class smp:
         #psfout = np.zeros((2*self.params.fitrad + 1,2*self.params.fitrad + 1))
         psfout = np.zeros((self.params.substamp,self.params.substamp))
         for x,y,p in zip(ix,iy,psfval):
-            if x >= (31 - 2*self.params.fitrad -1)/2 and y >= (31 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
-                psfout[y-(31 - 2*self.params.fitrad - 1)/2,x-(31 - 2*self.params.fitrad -1)/2] = p
+            if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
+                psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
             #psfout[y,x] = p
 
         # print 'psfvalmax',np.max(psfval)
