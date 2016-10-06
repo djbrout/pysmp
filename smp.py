@@ -1497,9 +1497,9 @@ class smp:
             #print xsn,ysn
             #raw_input('stopppppppppp')
 
-            if self.snparams.psf_model.lower() == 'psfex':
-                xsn = xsn+1.
-                ysn = ysn+1.
+            #if self.snparams.psf_model.lower() == 'psfex':
+            #    xsn = xsn
+            #    ysn = ysn
             #print 'usefake',self.usefake
             #print 'snra sndec',snparams.RA,snparams.DECL
             #print 'xsn ysnnnnnnnnnnnnnnnnn', xsn, ysn
@@ -2082,10 +2082,10 @@ class smp:
                             psf_stamp = self.psf
                             errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                            #image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
-                            #                                                                           params.substamp - 1) / 2 + 1,
-                            #              np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
-                            #                                                                        params.substamp - 1) / 2 + 1]
+                            image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
+                                                                                                       params.substamp - 1) / 2 + 1,
+                                          np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
+                                                                                                    params.substamp - 1) / 2 + 1]
 
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
@@ -4285,7 +4285,7 @@ class smp:
         #mcmc_mag_std = np.array([-999.]*len(xstar))
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
-        radius = 4.
+        radius = 8
         cntr = 0
         fitrad = np.zeros([substamp,substamp])
         for x in np.arange(substamp):   
@@ -4310,7 +4310,7 @@ class smp:
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             print i
             #cntr += 1
-            if i > 100:
+            if i > 50:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4394,6 +4394,9 @@ class smp:
                         #
                         # print 'rerecentroid'
                         # #raw_input('rerecentroid')
+
+                        image_stamp = im[np.floor(y) - (params.substamp - 1) / 2:np.floor(y) + (params.substamp - 1) / 2 + 1,
+                                      np.floor(x) - (params.substamp - 1) / 2:np.floor(x) + (params.substamp - 1) / 2 + 1]
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
