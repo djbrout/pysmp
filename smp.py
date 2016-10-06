@@ -3946,7 +3946,7 @@ class smp:
 
 
         if guess_scale is None:
-            for i in np.arange(-10000,200000,5):
+            for i in np.arange(-5000,200000,100):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
@@ -3987,12 +3987,12 @@ class smp:
         #raw_input()
         sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)]*psf
         #sys.exit()
-        if self.savezptstamps:
-            self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
-            self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
-            self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
-            self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
-            self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
+        # if self.savezptstamps:
+        #     self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
+        #     self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
+        #     self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
+        #     self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
+        #     self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
 
         if not pdf_pages is None:
             fig = plt.figure(figsize=(20,10))
