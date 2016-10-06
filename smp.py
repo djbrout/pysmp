@@ -593,8 +593,8 @@ class smp:
                 continue
             if snparams.mjd[j] == 0:
                 continue
-            #if round(snparams.mjd[j]) != 56559:
-            #    continue
+            if round(snparams.mjd[j]) != 56559:
+                continue
             #if float(snparams.mjd[j]) < 57045:
             #    continue
             if not nozpt:
@@ -4328,6 +4328,7 @@ class smp:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
                         psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
+                        psf2, psfcenter2 = self.build_psfex(psffile,x+.5,y+.5,imfile,stop=True)
                         #opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
                         #ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
                         #self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
@@ -4369,11 +4370,16 @@ class smp:
                     #print 'here1'
                     pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                                                           noise*0.+1., mask)
+                    pk2 = pkfit_norecent_noise_smp.pkfit_class(im, psf2 / np.sum(psf2), psfcenter2, self.rdnoise, self.gain,
+                                                              noise * 0. + 1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                     #Run for MPFIT
                     #print 'initialized'
                     try:
                         #print 'here2'
+                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf2 = \
+                            pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                                                        stampsize=params.substamp)
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
@@ -4472,8 +4478,9 @@ class smp:
                             cbar = fig.colorbar(axs, ax=axim)
                             axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axpsf)
-                            axs = axdiff.imshow((image_stamp - s - (psf*scale)) * fitrad, cmap='gray',
-                                                interpolation='nearest')
+                            #axs = axdiff.imshow((image_stamp - s - (psf*scale)) * fitrad, cmap='gray',
+                            #                    interpolation='nearest')
+                            axs = axdiff.imshow(psf-psf2,cmap='gray',interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axdiff)
                             axs = axchi.imshow(
                                 (image_stamp - s - (psf*scale))**2 * fitrad /se**2,
