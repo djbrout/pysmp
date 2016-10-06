@@ -4376,7 +4376,8 @@ class smp:
                     #Run for MPFIT
                     #print 'initialized'
                     #try:
-                    if True:
+                    #if True:
+                    try:
                         #print 'here2'
                         errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
@@ -4562,9 +4563,9 @@ class smp:
                         #print 'flux',gscale,cscale
                         #raw_input()
                     #except ValueError:
-                    #except NameError:
-                    #    print 'skipped star...\n'
-                    #    continue
+                    except:
+                        print 'skipped star...\n'
+                        continue
                 #print np.median(noise_stamp)
                 #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 #print 'DONEEEEE',scale,errmag,chi,mychi
