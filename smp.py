@@ -4476,9 +4476,9 @@ class smp:
                             cbar = fig.colorbar(axs, ax=axim)
                             axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axpsf)
-                            #axs = axdiff.imshow((image_stamp - s - (psf*scale)) * fitrad, cmap='gray',
-                            #                    interpolation='nearest')
-                            axs = axdiff.imshow(psfo-psf2,cmap='gray',interpolation='nearest')
+                            axs = axdiff.imshow((image_stamp - s - (psf*scale)) * fitrad, cmap='gray',
+                                                interpolation='nearest')
+                            #axs = axdiff.imshow(psfo-psf2,cmap='gray',interpolation='nearest')
                             cbar = fig.colorbar(axs, ax=axdiff)
                             axs = axchi.imshow(
                                 (image_stamp - s - (psf*scale))**2 * fitrad /se**2,
