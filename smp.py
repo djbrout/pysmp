@@ -4404,7 +4404,7 @@ class smp:
                         #image_stamp = im[np.floor(y+.5) - (params.substamp - 1) / 2:np.floor(y+.5) + (params.substamp - 1) / 2 ,
                         #               np.floor(x+.5) - (params.substamp - 1) / 2:np.floor(x+.5) + (params.substamp - 1) / 2 ]
 
-                        image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        image_stamp = im[psfcenter[1]-14:psfcenter[1]+16,psfcenter[0]-14:psfcenter[0]+16]
 
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
