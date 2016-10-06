@@ -5080,7 +5080,7 @@ class smp:
         psfout = np.zeros((self.params.substamp,self.params.substamp))
         for x,y,p in zip(ix,iy,psfval):
             if x >= (35 - 2*self.params.fitrad -1)/2 and y >= (35 - 2*self.params.fitrad -1)/2 and x < (2*self.params.fitrad +1) and y < (2*self.params.fitrad + 1):
-                psfout[y-(35 - 2*self.params.fitrad - 1)/2,x-(35 - 2*self.params.fitrad -1)/2] = p
+                psfout[y-(35 - 2*self.params.fitrad - 1)/2 +1.,x-(35 - 2*self.params.fitrad -1)/2 +1] = p
             #psfout[y,x] = p
 
         # print 'psfvalmax',np.max(psfval)
