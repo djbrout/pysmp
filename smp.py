@@ -4313,7 +4313,7 @@ class smp:
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             print i
             #cntr += 1
-            if i > 50:
+            if i > 150:
                 continue
             #print 'xstar',xstar
             #raw_input()
@@ -4474,7 +4474,7 @@ class smp:
                         # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                         #                                                  gal, mjd, scale,index=i)
 
-                        
+
                         scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
                                                                          params.fitrad,
                                                                          gal, mjd, scale)
