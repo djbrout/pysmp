@@ -593,8 +593,8 @@ class smp:
                 continue
             if snparams.mjd[j] == 0:
                 continue
-            #if round(snparams.mjd[j]) != 56559:
-            #    continue
+            if round(snparams.mjd[j]) != 56559:
+                continue
             #if float(snparams.mjd[j]) < 57045:
             #    continue
             if not nozpt:
@@ -4382,7 +4382,7 @@ class smp:
                     #if True:
                     try:
                         #print 'here2'
-                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf = \
+                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamppk, noise_stamp, mask_stamp, psf = \
                             pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
                                                         stampsize=params.substamp)
                         #print 'here3',scale
@@ -4408,6 +4408,8 @@ class smp:
                         #               np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+
+                        print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
                         px, py = cntrd.cntrd(psf, 15, 15, 3.)
