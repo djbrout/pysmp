@@ -36,7 +36,7 @@ if [ -z "$PROCESS" ]; then
 python smp.py --index=1 -f r
 else
 echo 'THIS IS THE PROCESS NUMBER'
-python smp.py --index=37 -f r
+python smp.py --index=$PROCESS -f r --nozpt
 fi
 
 exit
