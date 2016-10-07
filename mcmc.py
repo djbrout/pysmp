@@ -867,9 +867,10 @@ class metropolis_hastings():
             cbar = fig.colorbar(axs, ax=axim)
             axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
             cbar = fig.colorbar(axs, ax=axpsf)
-            md = np.median((self.data[i,:,:] - self.sims[i]).ravel())
-            std = np.std(((self.data[i,:,:] - self.sims[i])*self.mask).ravel())
-            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=md-3*std,vmax=md+3*std)
+            resid = (self.data[i,:,:] - self.sims[i])*self.mask
+            md = np.median(resid[resid!=0.].ravel())
+            std = np.std(resid[resid!=0.].ravel())
+            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=-4*std,vmax=4*std)
             cbar = fig.colorbar(axs, ax=axdiff)
             axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
             cbar = fig.colorbar(axs, ax=axchi)
