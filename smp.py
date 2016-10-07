@@ -3954,7 +3954,7 @@ class smp:
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
         else: 
-            for i in np.arange(guess_scale-5000,guess_scale+5000,5):
+            for i in np.arange(guess_scale-.2*guess_scale,guess_scale+.2*guess_scale,guess_scale/10000.):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
@@ -4409,10 +4409,10 @@ class smp:
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
 
-                        print 'sumimresid',np.sum(image_stamp-image_stamppk)
+                        #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
-                        ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
-                        px, py = cntrd.cntrd(psf, 15, 15, 3.)
+                        #ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
+                        #px, py = cntrd.cntrd(psf, 15, 15, 3.)
 
                         #tt = time.time()
                         #for i in range(100):
@@ -4421,10 +4421,10 @@ class smp:
                         #ttt = time.time()
                         #print 'time per psfdump is '+str((ttt-tt)/100.)
                         #raw_input()
-                        ix = round(ix,2)
-                        iy = round(iy,2)
-                        px = round(px,2)
-                        py = round(py,2)
+                        #ix = round(ix,2)
+                        #iy = round(iy,2)
+                        #px = round(px,2)
+                        #py = round(py,2)
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -4474,10 +4474,10 @@ class smp:
                         # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                         #                                                  gal, mjd, scale,index=i)
 
-
-                        # scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                        #                                                  params.fitrad,
-                        #                                                  gal, mjd, scale)
+                        
+                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
+                                                                         params.fitrad,
+                                                                         gal, mjd, scale)
 
                         print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
@@ -4638,8 +4638,8 @@ class smp:
                                 (mag_cat < 21.5) &
                                 (flux_star != 1) & 
                                 (flux_star < 1e7) &
-                                (flux_chisq < 1.5) &
-                                (flux_chisq > 0) &
+                                #(flux_chisq < 1.5) &
+                                #(flux_chisq > 0) &
                                 #(flux_star_mcmc < 1e7) &
                                 #(flux_star_mcmc != 0) &
                                 #(flux_star_mcmc_modelerrors != 0) &
@@ -4656,8 +4656,8 @@ class smp:
                                     (mag_cat < 21.5) &
                                     (gsflux != 1) &
                                     (gsflux < 1e7) &
-                                    (flux_chisq < 1.5) &
-                                    (flux_chisq > 0) &
+                                    #(flux_chisq < 1.5) &
+                                    #(flux_chisq > 0) &
                                     # (flux_star_mcmc < 1e7) &
                                     # (flux_star_mcmc != 0) &
                                     # (flux_star_mcmc_modelerrors != 0) &
@@ -4675,8 +4675,8 @@ class smp:
                                 (mag_cat < 21.5) &
                                 (flux_star != 1) &
                                 (flux_star < 1e7) &
-                                (flux_chisq < 1.5) &
-                                (flux_chisq > 0) &
+                                #(flux_chisq < 1.5) &
+                                #(flux_chisq > 0) &
                                 (np.isfinite(mag_cat)) &
                                 (np.isfinite(flux_star)) &
                                 (flux_star > 0) &
