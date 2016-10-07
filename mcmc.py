@@ -123,6 +123,8 @@ class metropolis_hastings():
                 , isworker = False
                 , dontsavegalaxy = False
                 , log = None
+                , x = None
+                , y = None
                 ):
         '''
         if model is None:
@@ -197,13 +199,15 @@ class metropolis_hastings():
         self.usecustomweight = usecustomweight
         self.customweights = customweights
         self.comboerr = comboerr
-        self.comboerr = True
+        #self.comboerr = True
         self.covarerr = False
         self.didtimeout = False
         self.isfermigrid = isfermigrid
         self.isworker = isworker
         self.dontsavegalaxy = dontsavegalaxy
         self.log = log
+        self.x = x
+        self.y = y
         if self.isfermigrid and self.isworker:
             #print 'we have correct tempwriter'
             #raw_input()
@@ -463,7 +467,10 @@ class metropolis_hastings():
         #t2 = time.time()
 
         if self.shiftpsf:
-            self.float_sn_pos()
+            self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
+            self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
+            self.shiftpsf
+            #self.float_sn_pos()
 
         # Contains the convolution
         #print self.kicked_galaxy_model.shape
@@ -584,6 +591,10 @@ class metropolis_hastings():
         self.x_pix_offset = self.current_x_offset + np.random.normal( scale= self.psf_shift_std )
         self.y_pix_offset = self.current_y_offset + np.random.normal( scale= self.psf_shift_std ) 
         self.shiftPSF(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
+
+    def movepsfs(self,x,y):
+        #tpsf = self.build_psfex()
+        pass
 
     def mapkernel( self, kicked_modelvec, kicked_psfs, centered_psfs,sky, flags, fitflags, sims, galconv):
 

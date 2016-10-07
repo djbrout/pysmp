@@ -2082,10 +2082,13 @@ class smp:
                             psf_stamp = self.psf
                             errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                            image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
-                                                                                                       params.substamp - 1) / 2 + 1,
-                                          np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
-                                                                                                    params.substamp - 1) / 2 + 1]
+                            # image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
+                            #                                                                            params.substamp - 1) / 2 + 1,
+                            #               np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
+                            #                                                                         params.substamp - 1) / 2 + 1]
+
+                            image_stamp = im[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
 
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
@@ -4401,21 +4404,21 @@ class smp:
                         # print 'rerecentroid'
                         # #raw_input('rerecentroid')
 
-                        image_stamp = im[np.floor(y+.5) - (params.substamp) / 2:np.floor(y+.5) + (params.substamp ) / 2 ,
-                                       np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
+                        #image_stamp = im[np.floor(y+.5) - (params.substamp) / 2:np.floor(y+.5) + (params.substamp ) / 2 ,
+                        #               np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
 
-                        #image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
 
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
                         px, py = cntrd.cntrd(psf, 15, 15, 3.)
 
-                        tt = time.time()
-                        for i in range(100):
-                            psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
+                        #tt = time.time()
+                        #for i in range(100):
+                        #    psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
 
-                        ttt = time.time()
-                        print 'time per psfdump is '+str((ttt-tt)/100.)
-                        raw_input()
+                        #ttt = time.time()
+                        #print 'time per psfdump is '+str((ttt-tt)/100.)
+                        #raw_input()
                         ix = round(ix,2)
                         iy = round(iy,2)
                         px = round(px,2)
@@ -4487,7 +4490,7 @@ class smp:
                             axpsf = plt.subplot(142)
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
-                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['im '+str(ix)+', '+str(iy), 'mod '+str(px)+", "+str(py), 'resid, se='+str(), 'chisq: '+
+                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['im '+str(ix)+', '+str(iy), 'mod '+str(px)+", "+str(py), 'resid '+str(round(x,2))+', '+str(round(y,2)), 'chisq: '+
                                     str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
                                 ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
@@ -5090,6 +5093,7 @@ class smp:
                 #linelist = filter(None,line.split(' '))
                 linelist = line.split()
                 ix += [int(linelist[1])]; iy += [int(linelist[2])]; psfval += [float(linelist[5])]
+
             elif line.startswith("IMAGE_CENTER"):
                 linelist = line.split()
                 IMAGE_CENTERX = float(linelist[1]); IMAGE_CENTERY = float(linelist[2])
