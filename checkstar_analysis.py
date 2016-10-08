@@ -99,7 +99,7 @@ def checkstars(smpfile):
         #mjd.append(zd['mjd'])
         fitmag.extend(zd['mpfit_mag'])
         catmag.extend(zd['cat_mag'])
-        fitzpt.extend(zd['mpfit_zpt'])
+        fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
         #ra.extend()
         #dec.extend()
         #raw_input()
