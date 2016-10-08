@@ -108,7 +108,7 @@ def checkstars(smpfile):
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
     resid = fitmag - catmag + fitzpt
-    md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=1.5, iter=10)
+    md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=4, iter=10)
     plt.hist(resid,bins=np.arange(-.1025,.1,.005),label='Medain:'+str(round(md,5))+'\nSTD: '+str(round(std,3)))
     plt.xlim(-.1,.1)
     plt.xlabel('Magnitude Residual From Zpt Fit')
