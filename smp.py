@@ -3954,14 +3954,14 @@ class smp:
 
         guessrange = None
         if guess_scale is None:
-            for i in np.arange(-55000,500000,2000):
+            for i in np.arange(-55000,500000,1000):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
             fluxvec = np.array(fluxvec)
             chisqvec = np.array(chisqvec)
             guess_scale = fluxvec[np.argmin(chisqvec)]
-            guessrange = 2000
+            guessrange = 1000
 
         chisqvec = []
         fluxvec = []
