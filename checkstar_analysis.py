@@ -99,7 +99,7 @@ def checkstars(smpfile):
         zd = np.load(z)
         #print z
         print zd.keys()
-        mjd.append(zd['cat_mag']*0.+ zd['mjd'])
+        mjd.extend(zd['cat_mag']*0.+ zd['mjd'])
         fitmag.extend(zd['mpfit_mag'])
         #print zd['mpfit_mag']
         #print zd['cat_mag']
