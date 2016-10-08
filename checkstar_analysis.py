@@ -167,6 +167,7 @@ def checkstars(smpfile):
 
     print np.unique(ra[ww])
     print np.unique(dec[ww])
+    print np.unique(catmag[ww])
 
 
 
