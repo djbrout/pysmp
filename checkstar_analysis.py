@@ -108,7 +108,8 @@ def checkstars(smpfile):
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
     resid = fitmag - catmag + fitzpt
-    plt.hist(resid,bins=np.arange(-.105,.1,.01),label='STD: '+str(round(np.std(resid),3)))
+    md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=1.5, iter=10)
+    plt.hist(resid,bins=np.arange(-.105,.1,.01),label='Medain:'+str(round(md,3))+'\nSTD: '+str(round(std,3)))
     plt.xlim(-.1,.1)
     plt.legend()
     plt.savefig('zpttest.png')
