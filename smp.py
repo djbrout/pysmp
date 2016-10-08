@@ -4446,6 +4446,7 @@ class smp:
                         #    sys.exit()
                         # noise_stamp[noise_stamp > 0.] = 1
                         # noise_stamp[noise_stamp <= 0.] = 0
+                        self.dosextractor = False
                         if self.dosextractor:
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ixlo, ixhi, iylo, iyhi)
                         else:
