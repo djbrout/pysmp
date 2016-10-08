@@ -95,7 +95,7 @@ def checkstars(smpfile):
     c = 0
     for z in zptfiles:
         c += 1
-        #print c
+        print z
         zd = np.load(z)
         #print z
         print zd.keys()
