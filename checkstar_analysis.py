@@ -132,6 +132,11 @@ def checkstars(smpfile):
     # plt.savefig('zpttestgt20.png')
     # print 'saved zpttest.png'
 
+    ww = abs(resid) > .5
+
+    catmag = catmag[ww]
+    resid = resid[ww]
+
     std = np.std(resid)
     ww = abs(resid) > 2*std
 
