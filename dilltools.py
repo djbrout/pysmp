@@ -228,13 +228,14 @@ class tmpwriter():
         a = open(tempfile,'a')
         a.write(text)
         a.close()
-        if os.path.isfile(filename):
-            os.remove(filename)
+
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
             os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
+            if os.path.isfile(filename):
+                os.remove(filename)
             os.system('mv ' + tempfile + ' ' + filename)
 
 
