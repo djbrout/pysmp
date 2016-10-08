@@ -4916,7 +4916,7 @@ class smp:
                     #,mcmc_me_zpt = mcmc_me_md
                     #,mcmc_me_zpt_std = mcmc_me_std
                     ,cat_zpt = cat_zpt
-                    ,mjd = mjd
+                    ,mjd = thismjd
                     ,mjdoff=mjdoff
                     ,mjdslopeinteroff=mjdslopeinteroff
                     )
