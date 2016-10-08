@@ -4904,11 +4904,11 @@ class smp:
                     #,ra = ras[goodstarcols]
                     #,dec = decs[goodstarcols]
                     ,cat_mag = mag_cat[goodstarcols]
-                    ,mpfit_mag = -2.5*np.log10(fluxcol[goodstarcols])
+                    ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
-                    ,mpfit_zpt = md
-                    ,mpfit_zpt_std = std
+                    ,fit_zpt = md
+                    ,fit_zpt_std = std
                     #,mcmc_me_zpt = mcmc_me_md
                     #,mcmc_me_zpt_std = mcmc_me_std
                     ,cat_zpt = cat_zpt

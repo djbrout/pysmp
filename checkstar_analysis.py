@@ -86,9 +86,23 @@ def checkstars(smpfile):
     print data.keys()
     print data['ZPTFILE']
     zptfiles = data['ZPTFILE'][:-1]
+    mjd = []
+    fitmag = []
+    catmag = []
+    fitzpt = []
+    ra = []
+    dec = []
     for z in zptfiles:
         zd = np.load(z)
         print zd.keys()
-        raw_input()
+        mjd.extend(zd['mjd'])
+        fitmag.extend(zd['mpfit_mag'])
+        catmag.extend(zd['cat_mag'])
+        fitzpt.extend(zd['mpfit_zpt'])
+        #ra.extend()
+        #dec.extend()
+        #raw_input()
+    print len(mjd),len(fitmag),len(catmag),len(fitzpt)
+    
 if __name__ == '__main__':
     a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00212904_r.smp')
