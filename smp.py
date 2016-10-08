@@ -2307,8 +2307,8 @@ class smp:
                 print os.popen('rm -r data')
             except:
                 print 'this is not really a worker'
-            if self.fermilog:
-                self.tmpwriter.appendfile(os.popen('ls -ltr data/').read(), self.fermilogfile)
+            #if self.fermilog:
+            #    self.tmpwriter.appendfile(os.popen('ls -ltr data/').read(), self.fermilogfile)
 
         #print os.popen('ls -ltr').read()
         #sys.exit()
@@ -4941,9 +4941,9 @@ class smp:
         if self.fermilog:
             self.tmpwriter.appendfile(
                 'saved zpt file '+mag_compare_out+'\n', self.fermilogfile)
-            self.tmpwriter.appendfile(
-                os.popen('ls -ltr ').read(),self.fermilogfile
-            )
+            #self.tmpwriter.appendfile(
+            #    os.popen('ls -ltr ').read(),self.fermilogfile
+            #)
             #self.tmpwriter.appendfile(
             #    os.popen('ls -ltr zpts/').read(),self.fermilogfile
             #)
@@ -4952,9 +4952,9 @@ class smp:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
         #sys.exit()
 
-        if self.fermigrid:
-            os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
-            print 'copied from worker to zpt path',self.zptoutpath
+        #if self.fermigrid:
+        #    os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
+        #    print 'copied from worker to zpt path',self.zptoutpath
         #sys.exit()
         return(md,std,mag_compare_out)
 
