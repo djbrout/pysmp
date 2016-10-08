@@ -4907,6 +4907,8 @@ class smp:
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+                    , ras=ras[goodstarcols]
+                    , decs=decs[goodstarcols]
                     ,fit_zpt = md
                     ,fit_zpt_std = std
                     #,mcmc_me_zpt = mcmc_me_md
