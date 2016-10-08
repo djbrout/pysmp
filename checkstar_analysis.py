@@ -101,12 +101,12 @@ def checkstars(smpfile):
         print zd.keys()
         try:
             mjd.extend(zd['cat_mag']*0.+ zd['mjd'])
-            fitmag.extend(zd['mpfit_mag'])
+            fitmag.extend(zd['fit_mag'])
             #print zd['mpfit_mag']
             #print zd['cat_mag']
             #raw_input(  )
             catmag.extend(zd['cat_mag'])
-            fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
+            fitzpt.extend(zd['cat_mag']*0. + zd['fit_zpt'])
             #ra.extend()
             #dec.extend()
             #raw_input()
