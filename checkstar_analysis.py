@@ -101,6 +101,9 @@ def checkstars(smpfile):
         #print zd.keys()
         #mjd.append(zd['mjd'])
         fitmag.extend(zd['mpfit_mag'])
+        print zd['mpfit_mag']
+        print zd['cat_mag']
+        raw_input(  )
         catmag.extend(zd['cat_mag'])
         fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
         #ra.extend()
