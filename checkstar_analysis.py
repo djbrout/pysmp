@@ -92,7 +92,10 @@ def checkstars(smpfile):
     fitzpt = []
     ra = []
     dec = []
+    c = 0
     for z in zptfiles:
+        c += 1
+        print c
         zd = np.load(z)
         print z
         #print zd.keys()
