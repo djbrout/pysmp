@@ -4898,6 +4898,8 @@ class smp:
             self.tmpwriter.appendfile(
                 'about to write zpt tempfile\n', self.fermilogfile)
 
+            ras = np.array(ras)
+            decs = np.array(decs)
             if self.fermigrid and self.worker:
                 ff = 'temp.npz'
                 np.savez( ff
