@@ -144,7 +144,7 @@ def checkstars(smpfile):
     resid = resid[ww]
 
     plt.scatter(catmag,resid)
-    plt.plot([min(catmag),max(catmag)],[0,0])
+    plt.plot([min(catmag),max(catmag)],[0,0],alpha=.1)
     ax, ay, aystd = dt.bindata(catmag, resid,
                             np.arange(min(catmag), max(catmag), .1))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
