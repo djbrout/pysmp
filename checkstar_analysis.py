@@ -83,8 +83,8 @@ default_checkstar_file = '/Volumes/ExtraSpace/pysmp_downloads/des_fake_00229567_
 
 def checkstars(smpfile):
     data = dt.readcol(smpfile)
-    print data.keys()
-    print data['ZPTFILE']
+    #print data.keys()
+    #print data['ZPTFILE']
     zptfiles = data['ZPTFILE'][:-1]
     mjd = []
     fitmag = []
@@ -95,11 +95,13 @@ def checkstars(smpfile):
     c = 0
     for z in zptfiles:
         c += 1
-        print z
-        zd = np.load(z)
         #print z
-        print zd.keys()
+        #print z
+        #print zd.keys()
         try:
+            print z
+            zd = np.load(z)
+
             mjd.extend(zd['cat_mag']*0.+ zd['mjd'])
             fitmag.extend(zd['fit_mag'])
             #print zd['mpfit_mag']
