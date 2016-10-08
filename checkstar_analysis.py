@@ -95,15 +95,15 @@ def checkstars(smpfile):
     c = 0
     for z in zptfiles:
         c += 1
-        print c
+        #print c
         zd = np.load(z)
-        print z
-        #print zd.keys()
+        #print z
+        print zd.keys()
         #mjd.append(zd['mjd'])
         fitmag.extend(zd['mpfit_mag'])
         #print zd['mpfit_mag']
         #print zd['cat_mag']
-        #raw_input(  )
+        raw_input(  )
         catmag.extend(zd['cat_mag'])
         fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
         #ra.extend()
@@ -127,4 +127,4 @@ def checkstars(smpfile):
     print 'saved zpttest.png'
 
 if __name__ == '__main__':
-    a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00212904_r.smp')
+    a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211248_r.smp')
