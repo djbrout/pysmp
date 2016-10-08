@@ -34,7 +34,7 @@ def bindata(x, y, bins, returnn=False):
     return xvals, medians, mads
 
 
-def iterstat(self, d, startMedian=False, sigmaclip=3.0,iter=6):
+def iterstat(d, startMedian=False, sigmaclip=3.0,iter=6):
     """Get the sigma-clipped mean of
     a distribution, d.
     Usage: mean,stdev = iterstat.iterstat
