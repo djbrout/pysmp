@@ -1072,6 +1072,8 @@ class smp:
             #smp_dict['mjd'][j] = float(snparams.mjd[j])
             #smp_dict['mjd'][i] = float(snparams.mjd[j])
 
+            epochtime  = time.time()
+
             if j in badindices:
                 continue
             if round(snparams.mjd[j]) == 0:
@@ -1919,9 +1921,11 @@ class smp:
                     #print x_star1[0]-x_star1n[0]
                     #raw_input('stopped')
                     #sys.exit()
+                    zpttime = time.time()
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
+                    print 'zpttime',time.time()-zpttime
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
                     #                                     badflag, mag_star, im, weights, mask, psffile, imfile, snparams,
@@ -2298,6 +2302,7 @@ class smp:
 
 
                                     i += 1
+                                    print 'epochtime',time.time()-epochtime
 
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with zeropoints\n ', self.fermilogfile)
