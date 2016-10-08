@@ -117,6 +117,8 @@ def checkstars(smpfile):
     print len(fitmag),len(catmag),len(fitzpt),len(mjd)
     fitmag = np.array(fitmag)
     catmag = np.array(catmag)
+    ra = np.array(ra)
+    dec = np.array(dec)
     fitzpt = np.array(fitzpt)
     mjd = np.array(mjd)
     ww = catmag > -99.
