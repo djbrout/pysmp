@@ -104,6 +104,13 @@ def checkstars(smpfile):
         #dec.extend()
         #raw_input()
     print len(fitmag),len(catmag),len(fitzpt)
+    fitmag = np.array(fitmag)
+    catmag = np.array(catmag)
+    fitzpt = np.array(fitzpt)
+    resid = fitmag - catmag + fitzpt
+    plt.hist(resid)
+    plt.savefig('zpttest.png')
+    print 'saved zpttest.png'
 
 if __name__ == '__main__':
     a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00212904_r.smp')
