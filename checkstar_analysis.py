@@ -163,7 +163,7 @@ def checkstars(smpfile):
     plt.savefig('zptresid.png')
     #print np.unique(mjd)
     #print np.unique(mjd[resid>.06])
-    ww = (catmag > 18.4) and (catmag < 18.5)
+    ww = catmag - 18.4 < .1
     print np.unique(ra[ww])
     print np.unique(dec[ww])
 
