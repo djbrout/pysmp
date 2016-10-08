@@ -109,7 +109,7 @@ def checkstars(smpfile):
         #ra.extend()
         #dec.extend()
         #raw_input()
-    print len(fitmag),len(catmag),len(fitzpt)
+    print len(fitmag),len(catmag),len(fitzpt),len(mjd)
     fitmag = np.array(fitmag)
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
