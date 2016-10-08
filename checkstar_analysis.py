@@ -127,4 +127,4 @@ def checkstars(smpfile):
     print 'saved zpttest.png'
 
 if __name__ == '__main__':
-    a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211248_r.smp')
+    a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211042_r.smp')
