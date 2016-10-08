@@ -3938,7 +3938,7 @@ class smp:
         print 'saved',fname
 
     def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None):
-        print 'inside getfluxsmp'
+        #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
         
@@ -3954,14 +3954,14 @@ class smp:
 
         guessrange = None
         if guess_scale is None:
-            for i in np.arange(-55000,500000,5000):
+            for i in np.arange(-55000,500000,2000):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
             fluxvec = np.array(fluxvec)
             chisqvec = np.array(chisqvec)
             guess_scale = fluxvec[np.argmin(chisqvec)]
-            guessrange = 5000
+            guessrange = 2000
 
         chisqvec = []
         fluxvec = []
@@ -4325,7 +4325,10 @@ class smp:
         #    print ra,dec,x,y,s,se
         #raw_input()
         #sys.exit()
+        prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
+            if prevra == ra:
+                continue
             #print i
             #cntr += 1
             #if i > 150:
@@ -4494,7 +4497,7 @@ class smp:
 
                         scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
 
-                        print scale
+                        #print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
                         # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
                         # cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
@@ -4624,7 +4627,7 @@ class smp:
                 #     dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
                 #     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
                 #     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
-
+                prevra = ra
         #print 'comparing chi sqaureds'
         #for f, m in zip(flux_chisq,flux_mychisq):
         #    print f, m
