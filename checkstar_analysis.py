@@ -84,7 +84,7 @@ default_checkstar_file = '/Volumes/ExtraSpace/pysmp_downloads/des_fake_00229567_
 def checkstars(smpfile):
     data = dt.readcol(smpfile)
     print data.keys()
-    print data['zptfile']
+    print data['ZPTFILE']
 
 if __name__ == '__main__':
     a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00212904_r.smp')
