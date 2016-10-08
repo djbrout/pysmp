@@ -85,6 +85,10 @@ def checkstars(smpfile):
     data = dt.readcol(smpfile)
     print data.keys()
     print data['ZPTFILE']
-
+    zptfiles = data['ZPTFILE'][:-1]
+    for z in zptfiles:
+        zd = np.load(z)
+        print zd.keys()
+        raw_input()
 if __name__ == '__main__':
     a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00212904_r.smp')
