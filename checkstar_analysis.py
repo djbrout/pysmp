@@ -108,7 +108,8 @@ def checkstars(smpfile):
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
     resid = fitmag - catmag + fitzpt
-    plt.hist(resid,bins=np.arange(-.105,.1,.01),normed=1)
+    plt.hist(resid,bins=np.arange(-.105,.1,.01),label='STD: '+str(round(np.std(resid),3)))
+    plt.xlim(-.1,.1)
     plt.savefig('zpttest.png')
     print 'saved zpttest.png'
 
