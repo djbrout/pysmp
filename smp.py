@@ -3967,7 +3967,8 @@ class smp:
         fluxvec = []
         if guessrange is None:
             guessrange = .2*guess_scale
-        for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale/10000.):
+        guess_scale_step = min([guess_scale/10000.,1])
+        for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
             sim = galconv + sky + i*psf
             chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
             fluxvec.append(i)
@@ -4327,8 +4328,8 @@ class smp:
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             print i
             #cntr += 1
-            if i > 150:
-                continue
+            #if i > 150:
+            #    continue
             #print 'xstar',xstar
             #raw_input()
             #y -= 2.
@@ -4393,8 +4394,8 @@ class smp:
                     #Run for MPFIT
                     #print 'initialized'
                     #try:
-                    if True:
-                        #try:
+                    #if True:
+                    try:
                         #print 'here2'
                         #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamppk, noise_stamp, mask_stamp, psf = \
                         #    pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
@@ -4596,9 +4597,9 @@ class smp:
                         #print 'flux',gscale,cscale
                         #raw_input()
                     #except ValueError:
-                    #except:
-                    #    print 'skipped star...\n'
-                    #    continue
+                    except:
+                        print 'skipped star...\n'
+                        continue
                 #print np.median(noise_stamp)
                 #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 #print 'DONEEEEE',scale,errmag,chi,mychi
@@ -4650,7 +4651,8 @@ class smp:
         if not self.dogalsimpixfit:
             goodstarcols = np.where((mag_cat != 0) &
                                 (mag_cat < 21.5) &
-                                (flux_star != 1) & 
+                                (flux_star != 1) &
+                                (flux_star != -999) &
                                 (flux_star < 1e7) &
                                 #(flux_chisq < 1.5) &
                                 #(flux_chisq > 0) &
