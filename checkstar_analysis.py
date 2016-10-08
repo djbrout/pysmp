@@ -99,35 +99,45 @@ def checkstars(smpfile):
         zd = np.load(z)
         #print z
         print zd.keys()
-        mjd.extend(zd['cat_mag']*0.+ zd['mjd'])
-        fitmag.extend(zd['mpfit_mag'])
-        #print zd['mpfit_mag']
-        #print zd['cat_mag']
-        #raw_input(  )
-        catmag.extend(zd['cat_mag'])
-        fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
-        #ra.extend()
-        #dec.extend()
-        #raw_input()
+        try:
+            mjd.extend(zd['cat_mag']*0.+ zd['mjd'])
+            fitmag.extend(zd['mpfit_mag'])
+            #print zd['mpfit_mag']
+            #print zd['cat_mag']
+            #raw_input(  )
+            catmag.extend(zd['cat_mag'])
+            fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
+            #ra.extend()
+            #dec.extend()
+            #raw_input()
+        except:
+            print 'missing column'
     print len(fitmag),len(catmag),len(fitzpt),len(mjd)
     fitmag = np.array(fitmag)
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
     mjd = np.array(mjd)
-    ww = catmag > 20.
+    ww = catmag > -99.
     resid = fitmag - catmag + fitzpt
-    resid = resid[ww]
-    mjd = mjd[ww]
+    #resid = resid[ww]
+    #mjd = mjd[ww]
 
-    md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=1.5, iter=10)
-    plt.hist(resid,bins=np.arange(-.2025,.2,.005),label='Median:'+str(round(md,5))+'\nSTD: '+str(round(std,3)))
-    plt.xlim(-.2,.2)
-    plt.xlabel('Magnitude Residual From Zpt Fit')
-    plt.ylabel('Counts')
-    plt.title('CAT MAG > 20.')
-    plt.legend()
-    plt.savefig('zpttestgt20.png')
-    print 'saved zpttest.png'
+    # md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=1.5, iter=10)
+    # plt.hist(resid,bins=np.arange(-.2025,.2,.005),label='Median:'+str(round(md,5))+'\nSTD: '+str(round(std,3)))
+    # plt.xlim(-.2,.2)
+    # plt.xlabel('Magnitude Residual From Zpt Fit')
+    # plt.ylabel('Counts')
+    # plt.title('CAT MAG > 20.')
+    # plt.legend()
+    # plt.savefig('zpttestgt20.png')
+    # print 'saved zpttest.png'
+
+
+    plt.scatter(catmag,resid)
+    plt.plot([min(catmag),max(catmag)],[0,0])
+    ax, ay, aystd = dt.bindata(catmag, resid,
+                            np.arange(min(catmag), max(catmag), .5))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     print np.unique(mjd)
     print np.unique(mjd[resid>.06])
