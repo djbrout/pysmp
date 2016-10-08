@@ -101,9 +101,9 @@ def checkstars(smpfile):
         #print zd.keys()
         #mjd.append(zd['mjd'])
         fitmag.extend(zd['mpfit_mag'])
-        print zd['mpfit_mag']
-        print zd['cat_mag']
-        raw_input(  )
+        #print zd['mpfit_mag']
+        #print zd['cat_mag']
+        #raw_input(  )
         catmag.extend(zd['cat_mag'])
         fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
         #ra.extend()
@@ -113,14 +113,17 @@ def checkstars(smpfile):
     fitmag = np.array(fitmag)
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
+    ww = catmag < 20.
     resid = fitmag - catmag + fitzpt
+    resid = resid[ww]
     md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=3, iter=10)
     plt.hist(resid,bins=np.arange(-.1025,.1,.005),label='Median:'+str(round(md,5))+'\nSTD: '+str(round(std,3)))
     plt.xlim(-.1,.1)
     plt.xlabel('Magnitude Residual From Zpt Fit')
     plt.ylabel('Counts')
+    plt.title('CAT MAG < 20.')
     plt.legend()
-    plt.savefig('zpttest.png')
+    plt.savefig('zpttestlt20.png')
     print 'saved zpttest.png'
 
 if __name__ == '__main__':
