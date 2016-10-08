@@ -3954,14 +3954,14 @@ class smp:
 
         guessrange = None
         if guess_scale is None:
-            for i in np.arange(-55000,500000,10000):
+            for i in np.arange(-55000,500000,5000):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
             fluxvec = np.array(fluxvec)
             chisqvec = np.array(chisqvec)
             guess_scale = fluxvec[np.argmin(chisqvec)]
-            guessrange = 10000
+            guessrange = 5000
 
         chisqvec = []
         fluxvec = []
@@ -4321,12 +4321,12 @@ class smp:
         #print thismjd
         #print 'mjdabove'
         #raw_input()
-        for ra,dec,x,y,s,se in zip(ras,decs,xstar,ystar,sky,skyerr):
-            print ra,dec,x,y,s,se
+        #for ra,dec,x,y,s,se in zip(ras,decs,xstar,ystar,sky,skyerr):
+        #    print ra,dec,x,y,s,se
         #raw_input()
         #sys.exit()
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
-            print i
+            #print i
             #cntr += 1
             #if i > 150:
             #    continue
@@ -4337,7 +4337,7 @@ class smp:
                 isnotcheckstars[i] = 0
 
             if mc > 21:
-                print 'star too dim'
+                #print 'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
@@ -4373,7 +4373,7 @@ class smp:
                 
                 counter += 1
                 mask = mask*0.
-                print 'index,ra,dec,x,y',i,ra,dec,x,y
+                #print 'index,ra,dec,x,y',i,ra,dec,x,y
                 #ppp = 'index,ra,dec '+str(i)+' '+str(ra)+' '+str(dec)
                 #if self.fermilog:
                 #    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
