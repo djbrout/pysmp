@@ -138,7 +138,7 @@ def checkstars(smpfile):
     resid = resid[ww]
 
     std = np.std(resid)
-    ww = abs(resid) > 2*std
+    ww = abs(resid) < 2*std
 
     catmag = catmag[ww]
     resid = resid[ww]
