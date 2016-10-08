@@ -136,11 +136,11 @@ def checkstars(smpfile):
     plt.scatter(catmag,resid)
     plt.plot([min(catmag),max(catmag)],[0,0])
     ax, ay, aystd = dt.bindata(catmag, resid,
-                            np.arange(min(catmag), max(catmag), .5))
+                            np.arange(min(catmag), max(catmag), .1))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-
-    print np.unique(mjd)
-    print np.unique(mjd[resid>.06])
+    plt.savefig('zptresid.png')
+    #print np.unique(mjd)
+    #print np.unique(mjd[resid>.06])
 
 
 
