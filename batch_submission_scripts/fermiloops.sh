@@ -7,6 +7,6 @@ setup jobsub_client
 
 
 jobsub_submit -G des --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC -M --verbose --OS=SL6\
-  --generate-email-summary -N 200 file://runfermirun.csh
+  --generate-email-summary -N 5 file://runfermirun.csh
 echo 200 jobs submitted
 echo done
