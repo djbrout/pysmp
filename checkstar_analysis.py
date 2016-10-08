@@ -129,7 +129,8 @@ def checkstars(smpfile):
     plt.savefig('zpttestgt20.png')
     print 'saved zpttest.png'
 
-    print np.unique(mjd[resid>.1])
+    print np.unique(mjd)
+    print np.unique(mjd[resid>.06])
 
 
 
