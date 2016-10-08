@@ -132,6 +132,11 @@ def checkstars(smpfile):
     # plt.savefig('zpttestgt20.png')
     # print 'saved zpttest.png'
 
+    std = np.std(resid)
+    ww = abs(resid) > 2*std
+
+    catmag = catmag[ww]
+    resid = resid[ww]
 
     plt.scatter(catmag,resid)
     plt.plot([min(catmag),max(catmag)],[0,0])
