@@ -109,8 +109,8 @@ def checkstars(smpfile):
             #raw_input(  )
             catmag.extend(zd['cat_mag'])
             fitzpt.extend(zd['cat_mag']*0. + zd['fit_zpt'])
-            #ra.extend()
-            #dec.extend()
+            ra.extend(zd['ras'])
+            dec.extend(zd['decs'])
             #raw_input()
         except:
             print 'missing column'
@@ -138,12 +138,16 @@ def checkstars(smpfile):
 
     catmag = catmag[ww]
     resid = resid[ww]
+    ra = ra[ww]
+    dec = dec[ww]
 
     std = np.std(resid)
     ww = abs(resid) < 2*std
 
     catmag = catmag[ww]
     resid = resid[ww]
+    ra = ra[ww]
+    dec = dec[ww]
 
     plt.scatter(catmag,resid,alpha=.1)
     plt.plot([min(catmag),max(catmag)],[0,0],color='black')
@@ -157,6 +161,9 @@ def checkstars(smpfile):
     plt.savefig('zptresid.png')
     #print np.unique(mjd)
     #print np.unique(mjd[resid>.06])
+    ww = (catmag > 18.4) and (catmag < 18.5)
+    print np.unique(ra[ww])
+    print np.unique(dec[ww])
 
 
 
