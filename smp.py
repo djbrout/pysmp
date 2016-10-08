@@ -3967,7 +3967,7 @@ class smp:
         fluxvec = []
         if guessrange is None:
             guessrange = .2*guess_scale
-        guess_scale_step = min([guess_scale/10000.,4])
+        guess_scale_step = min([guess_scale/10000.,5])
         for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
             sim = galconv + sky + i*psf
             chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
