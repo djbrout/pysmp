@@ -113,6 +113,7 @@ def checkstars(smpfile):
     fitmag = np.array(fitmag)
     catmag = np.array(catmag)
     fitzpt = np.array(fitzpt)
+    mjd = np.array(mjd)
     ww = catmag > 20.
     resid = fitmag - catmag + fitzpt
     resid = resid[ww]
