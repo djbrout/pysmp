@@ -3448,7 +3448,7 @@ class smp:
                 gfinal_mcmc_floatfluxes.append(np.nan)
                 gfinal_mcmc_floatstd.append(np.nan)
             else:
-                SNscale,SNscale_std,chisq,dms = self.getfluxsmp(im,psf,sky,weight,fitrad,galmodel_wosn,mjd,None)
+                SNscale,SNscale_std,chisq,dms = self.getfluxsmp(im,psf,sky,weight,fitrad,galmodel_wosn,mjd,guess_scale=None)
                 final_mcmc_fixfluxes.append(SNscale)
                 final_mcmc_fixstd.append(SNscale_std)
                 final_results_chisq.append(chisq)
@@ -3937,7 +3937,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,radius,gal,mjd,guess_scale,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None):
+    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None):
         print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -3946,23 +3946,28 @@ class smp:
 
         substamp = galconv.shape[0]
         #Make a mask with radius
-        fitrad = np.zeros([substamp,substamp])
-        for x in np.arange(substamp):   
-            for y in np.arange(substamp):
-                if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
-                    fitrad[int(x),int(y)] = 1.
+        # fitrad = np.zeros([substamp,substamp])
+        # for x in np.arange(substamp):
+        #     for y in np.arange(substamp):
+        #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
+        #             fitrad[int(x),int(y)] = 1.
 
 
         if guess_scale is None:
-            for i in np.arange(-5000,200000,100):
+            for i in np.arange(-55000,500000,10000):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
-        else: 
-            for i in np.arange(guess_scale-.2*guess_scale,guess_scale+.2*guess_scale,guess_scale/10000.):
-                sim = galconv + sky + i*psf
-                chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-                fluxvec.append(i)
+            fluxvec = np.array(fluxvec)
+            chisqvec = np.array(chisqvec)
+            guess_scale = fluxvec[np.argmin(chisqvec)]
+
+        chisqvec = []
+        fluxvec = []
+        for i in np.arange(guess_scale-.2*guess_scale,guess_scale+.2*guess_scale,guess_scale/10000.):
+            sim = galconv + sky + i*psf
+            chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
+            fluxvec.append(i)
 
         ii = fitrad.ravel()
         i = ii[ii != 0]
@@ -3993,7 +3998,9 @@ class smp:
         #if mjd > 
         
         #raw_input()
-        sim = galconv + sky + fluxvec[chisqvec == min(chisqvec)]*psf
+        argm = chisqvec == min(chisqvec)
+
+        sim = galconv + sky + fluxvec[argm]*psf
         #sys.exit()
         # if self.savezptstamps:
         #     self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
@@ -4034,8 +4041,7 @@ class smp:
         #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
         #     imstamp = imstamp / np.sum(imstamp)
         sum_data_minus_sim = np.sum(im-sim)
-
-        return fluxvec[chisqvec == min(chisqvec)], fluxvec[chisqvec == min(chisqvec)] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
+        return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
 
     def iterstat(self,d,startMedian=False,sigmaclip=3.0,
              iter=6):
@@ -4378,8 +4384,8 @@ class smp:
                         print 'badflaggg'*10
                 else:
                     #print 'here1'
-                    pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
-                                                          noise*0.+1., mask)
+                    #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
+                    #                                      noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
                     #Run for MPFIT
                     #print 'initialized'
@@ -4387,9 +4393,9 @@ class smp:
                     #if True:
                     try:
                         #print 'here2'
-                        errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamppk, noise_stamp, mask_stamp, psf = \
-                            pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
-                                                        stampsize=params.substamp)
+                        #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamppk, noise_stamp, mask_stamp, psf = \
+                        #    pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
+                        #                                stampsize=params.substamp)
                         #print 'here3',scale
                         # x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
                         # xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
@@ -4413,7 +4419,8 @@ class smp:
                         #               np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-
+                        #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        noise_stamp = np.ones(image_stamp.shape)/se**2
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
                         #ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
@@ -4480,9 +4487,7 @@ class smp:
                         #                                                  gal, mjd, scale,index=i)
 
 
-                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                                                                         params.fitrad,
-                                                                         gal, mjd, scale)
+                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
 
                         print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
@@ -4594,13 +4599,13 @@ class smp:
                 #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
-                flux_star_std[i] = errmag
-                flux_chisq[i] = chi/len(image_stamp.ravel())
+                #flux_star_std[i] = errmag
+                #flux_chisq[i] = chi/len(image_stamp.ravel())
                 #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
                 #flux_dms[i] = dms
                 # fig = plt.figure()
                 # plt.clf()
-                image_stamp[abs(image_stamp) < .1] = s
+                #image_stamp[abs(image_stamp) < .1] = s
                 # plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
                 # pdf_pages.savefig(fig)
                 #pdf_pages.savefig()
