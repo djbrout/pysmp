@@ -86,7 +86,7 @@ def checkstars(smpfile):
     print data.keys()
     print data['ZPTFILE']
     zptfiles = data['ZPTFILE'][:-1]
-    #mjd = []
+    mjd = []
     fitmag = []
     catmag = []
     fitzpt = []
@@ -99,11 +99,11 @@ def checkstars(smpfile):
         zd = np.load(z)
         #print z
         print zd.keys()
-        #mjd.append(zd['mjd'])
+        mjd.append(zd['cat_mag']*0.+ zd['mjd'])
         fitmag.extend(zd['mpfit_mag'])
         #print zd['mpfit_mag']
         #print zd['cat_mag']
-        raw_input(  )
+        #raw_input(  )
         catmag.extend(zd['cat_mag'])
         fitzpt.extend(zd['cat_mag']*0. + zd['mpfit_zpt'])
         #ra.extend()
@@ -116,15 +116,21 @@ def checkstars(smpfile):
     ww = catmag > 20.
     resid = fitmag - catmag + fitzpt
     resid = resid[ww]
-    md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=3, iter=10)
-    plt.hist(resid,bins=np.arange(-.1025,.1,.005),label='Median:'+str(round(md,5))+'\nSTD: '+str(round(std,3)))
-    plt.xlim(-.1,.1)
+    mjd = mjd[ww]
+
+    md, std, num = dt.iterstat(resid,startMedian=True, sigmaclip=1.5, iter=10)
+    plt.hist(resid,bins=np.arange(-.2025,.2,.005),label='Median:'+str(round(md,5))+'\nSTD: '+str(round(std,3)))
+    plt.xlim(-.2,.2)
     plt.xlabel('Magnitude Residual From Zpt Fit')
     plt.ylabel('Counts')
     plt.title('CAT MAG > 20.')
     plt.legend()
     plt.savefig('zpttestgt20.png')
     print 'saved zpttest.png'
+
+    print np.unique(mjd[resid>.1])
+
+
 
 if __name__ == '__main__':
     a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211042_r.smp')
