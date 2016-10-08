@@ -148,6 +148,7 @@ def checkstars(smpfile):
     ax, ay, aystd = dt.bindata(catmag, resid,
                             np.arange(min(catmag), max(catmag), .1))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    plt.xlim(min(catmag),max(catmag))
     plt.xlabel('Catalog Mag')
     plt.ylabel('Fit Mag - (Cat Mag + Fit Zpt)')
     plt.savefig('zptresid.png')
