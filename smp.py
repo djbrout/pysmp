@@ -3952,7 +3952,7 @@ class smp:
         #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
         #             fitrad[int(x),int(y)] = 1.
 
-
+        guessrange = None
         if guess_scale is None:
             for i in np.arange(-55000,500000,10000):
                 sim = galconv + sky + i*psf
@@ -3961,10 +3961,13 @@ class smp:
             fluxvec = np.array(fluxvec)
             chisqvec = np.array(chisqvec)
             guess_scale = fluxvec[np.argmin(chisqvec)]
+            guessrange = 10000
 
         chisqvec = []
         fluxvec = []
-        for i in np.arange(guess_scale-.2*guess_scale,guess_scale+.2*guess_scale,guess_scale/10000.):
+        if guessrange is None:
+            guessrange = .2*guess_scale
+        for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale/10000.):
             sim = galconv + sky + i*psf
             chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
             fluxvec.append(i)
@@ -4370,9 +4373,9 @@ class smp:
                 counter += 1
                 mask = mask*0.
                 print 'index,ra,dec,x,y',i,ra,dec,x,y
-                ppp = 'index,ra,dec '+str(i)+' '+str(ra)+' '+str(dec)
-                if self.fermilog:
-                    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
+                #ppp = 'index,ra,dec '+str(i)+' '+str(ra)+' '+str(dec)
+                #if self.fermilog:
+                #    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
                 if self.snparams.survey == 'PS1':
                     scale,cscale_std,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=None,
