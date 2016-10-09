@@ -4329,6 +4329,7 @@ class smp:
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             if round(prevra,5) == round(ra,5):
                 continue
+            prevra = ra
             #print i
             #cntr += 1
             #if i > 150:
@@ -4430,8 +4431,8 @@ class smp:
                         noise_stamp = np.ones(image_stamp.shape)/se**2
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
-                        #ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
-                        #px, py = cntrd.cntrd(psf, 15, 15, 3.)
+                        ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
+                        px, py = cntrd.cntrd(psf, 15, 15, 3.)
 
                         #tt = time.time()
                         #for i in range(100):
@@ -4440,10 +4441,10 @@ class smp:
                         #ttt = time.time()
                         #print 'time per psfdump is '+str((ttt-tt)/100.)
                         #raw_input()
-                        #ix = round(ix,2)
-                        #iy = round(iy,2)
-                        #px = round(px,2)
-                        #py = round(py,2)
+                        ix = round(ix,2)
+                        iy = round(iy,2)
+                        px = round(px,2)
+                        py = round(py,2)
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -4512,8 +4513,16 @@ class smp:
                             axchi = plt.subplot(144)
 
 
-                            for ax, title in zip([axim, axpsf, axdiff, axchi], ['im', 'mod', 'resid', 'chisq: '+
-                                    str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
+                            #for ax, title in zip([axim, axpsf, axdiff, axchi], ['im', 'mod', 'resid', 'chisq: '+
+                            #        str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
+
+                            for ax, title in zip([axim, axpsf, axdiff, axchi],
+                                                 ['im ' + str(ix) + ', ' + str(iy), 'mod ' + str(px) + ", " + str(py),
+                                                  'resid ' + str(round(x, 2)) + ', ' + str(round(y, 2)), 'chisq: ' +
+                                                          str(round(np.sum((image_stamp - s - (
+                                                              psf * scale)) ** 2 * fitrad / se ** 2) / len(
+                                                              fitrad[fitrad > 0].ravel()), 2))]):
+
                                 print ra
                                 if round(ra,5) == round(43.11884695,5):
                                     print 'found culprit'
