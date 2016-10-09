@@ -4510,9 +4510,14 @@ class smp:
                             axpsf = plt.subplot(142)
                             axdiff = plt.subplot(143)
                             axchi = plt.subplot(144)
+
+
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['im '+str(ix)+', '+str(iy), 'mod '+str(px)+", "+str(py), 'resid '+str(round(x,2))+', '+str(round(y,2)), 'chisq: '+
                                     str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
-                                ax.set_title(title)
+                                if ra == 43.11884695:
+                                    ax.set_title(title+' CULPRIT')
+                                else:
+                                    ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axim)
                             axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
