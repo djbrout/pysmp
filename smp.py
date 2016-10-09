@@ -4514,7 +4514,8 @@ class smp:
 
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['im', 'mod', 'resid', 'chisq: '+
                                     str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
-                                if ra == 43.11884695:
+                                print ra
+                                if round(ra,3) == round(43.11884695,3):
                                     ax.set_title(title+' CULPRIT')
                                 else:
                                     ax.set_title(title)
