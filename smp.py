@@ -4327,7 +4327,7 @@ class smp:
         #sys.exit()
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
-            if prevra == ra:
+            if round(prevra,5) == round(ra,5):
                 continue
             #print i
             #cntr += 1
@@ -4517,7 +4517,7 @@ class smp:
                                 print ra
                                 if round(ra,5) == round(43.11884695,5):
                                     print 'found culprit'
-                                    raw_input()
+                                    #raw_input()
                                     ax.set_title(title+' CULPRIT')
                                 else:
                                     ax.set_title(title)
