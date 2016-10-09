@@ -4515,7 +4515,7 @@ class smp:
                             for ax, title in zip([axim, axpsf, axdiff, axchi], ['im', 'mod', 'resid', 'chisq: '+
                                     str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
                                 print ra
-                                if round(ra,3) == round(43.11884695,3):
+                                if round(ra,5) == round(43.11884695,5):
                                     print 'found culprit'
                                     raw_input()
                                     ax.set_title(title+' CULPRIT')
