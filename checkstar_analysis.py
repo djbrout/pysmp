@@ -163,13 +163,48 @@ def checkstars(smpfile):
     plt.savefig('zptresid.png')
     #print np.unique(mjd)
     #print np.unique(mjd[resid>.06])
-    ww = (catmag - 18.49 < .01) & (catmag - 18.49 > 0) & (abs(resid) > .03) & (abs(resid) < .05)
+    #ww = (catmag - 18.49 < .01) & (catmag - 18.49 > 0) & (abs(resid) > .03) & (abs(resid) < .05)
 
-    print np.unique(ra[ww])
-    print np.unique(dec[ww])
-    print np.unique(catmag[ww])
+    #print np.unique(ra[ww])
+    #print np.unique(dec[ww])
+    #print np.unique(catmag[ww])
 
+
+    return catmag,resid
+
+
+def allcheckstars(lcdir,snlist,indices,filt='r'):
+    snarr = np.array(open(snlist,'r').readlines(),dtype='str')
+    indices = np.array(indices)
+    sns = snarr[indices]
+    catmags = []
+    resids = []
+    for sn in sns:
+        smpfile = os.path.join(lcdir,sn+'_'+filt+'.smp')
+        catmag, resid = checkstars(smpfile)
+        catmags.extend(catmag)
+        resids.extend(resid)
+
+    catmags = np.array(catmags)
+    resids = np.array(resids)
+
+    plt.scatter(catmags, resids, alpha=.1)
+    plt.plot([min(catmags), max(catmags)], [0, 0], color='black')
+    ax, ay, aystd = dt.bindata(catmags, resids,
+                               np.arange(min(catmags), max(catmags), .1))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    plt.xlim(min(catmags), max(catmags))
+    plt.ylim(min(ay) - .01, max(ay) + .01)
+    plt.xlabel('Catalog Mag')
+    plt.ylabel('Fit Mag - (Cat Mag + Fit Zpt)')
+    plt.savefig('zptresidall.png')
+    print 'saved'
 
 
 if __name__ == '__main__':
-    a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211042_r.smp')
+    #a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211042_r.smp')
+    indices = np.arange(10)
+    print indices
+    lcdir = '/pnfs/des/scratch/pysmp/smp_02/lightcurves/'
+    snlist = '/data/des41.a/data/djbrout/pysmp/data/snfilesS1.txt'
+    allcheckstars(lcdir,snlist,indices)
