@@ -180,7 +180,7 @@ def allcheckstars(lcdir,snlist,indices,filt='r'):
     catmags = []
     resids = []
     for sn in sns:
-        smpfile = os.path.join(lcdir,sn.strip()+'_'+filt+'.smp')
+        smpfile = os.path.join(lcdir,sn.split('/')[-1].strip()+'_'+filt+'.smp')
         catmag, resid = checkstars(smpfile)
         catmags.extend(catmag)
         resids.extend(resid)
