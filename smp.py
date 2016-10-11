@@ -593,8 +593,8 @@ class smp:
                 continue
             if snparams.mjd[j] == 0:
                 continue
-            if round(snparams.mjd[j]) != 56559:
-                continue
+            #if round(snparams.mjd[j]) != 56559:
+            #    continue
             #if float(snparams.mjd[j]) < 57045:
             #    continue
             if not nozpt:
