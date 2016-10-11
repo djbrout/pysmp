@@ -207,7 +207,7 @@ def allcheckstars(lcdir,snlist,indices,filt='r'):
 
 if __name__ == '__main__':
     #a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211042_r.smp')
-    indices = np.arange(10)
+    indices = np.arange(1,10)
     print indices
     lcdir = '/pnfs/des/scratch/pysmp/smp_02/lightcurves/'
     snlist = '/data/des41.a/data/djbrout/pysmp/data/snfilesS1.txt'
