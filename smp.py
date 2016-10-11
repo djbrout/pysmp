@@ -4500,8 +4500,8 @@ class smp:
                         # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                         #                                                  gal, mjd, scale,index=i)
 
-
-                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
+                        print 'guess_scale',m
+                        scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd, guess_scale=m)
 
                         #print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
