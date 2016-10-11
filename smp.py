@@ -4504,6 +4504,7 @@ class smp:
                         try:
                             scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
                         except:
+                            print 'could not scale'
                             scale, errmag, chi, dms = -999,-999,-999,-999
                         #print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
