@@ -1871,8 +1871,8 @@ class smp:
 
                 if self.dobigstarcat:
                     catra,catdec,mag_star = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
-                    print 'got proper cat ra and dec'
-                    raw_input()
+                    #print 'got proper cat ra and dec'
+                    #raw_input()
                 else:
                     catra,catdec = starcat.ra[cols],starcat.dec[cols]
                 deltara = catra - newra
