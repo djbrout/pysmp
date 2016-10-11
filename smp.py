@@ -248,7 +248,7 @@ class smp:
              snfile='/test.dat',gal_model=None,stardumppsf=True,
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
-             doglobalstar=True,exactpos=True,bigstarcatalog='/global/homes/d/dbrout/PySMP/SNscampCatalog/DES-SN_v2.cat',
+             doglobalstar=True,exactpos=True,bigstarcatalog=None,
              stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
              savezptstamps=False,fermilog=False
@@ -5740,7 +5740,9 @@ if __name__ == "__main__":
     #sys.exit()
     scenemodel = smp(snparams,params,root_dir,psf_model)
     print out_dir
-    #raw_input()
+    print dobigstarcat
+    print bigstarcatalog
+    raw_input()
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
                      verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                      gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
