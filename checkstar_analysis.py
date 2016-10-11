@@ -151,16 +151,16 @@ def checkstars(smpfile):
     ra = ra[ww]
     dec = dec[ww]
 
-    plt.scatter(catmag,resid,alpha=.1)
-    plt.plot([min(catmag),max(catmag)],[0,0],color='black')
-    ax, ay, aystd = dt.bindata(catmag, resid,
-                            np.arange(min(catmag), max(catmag), .1))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-    plt.xlim(min(catmag),max(catmag))
-    plt.ylim(min(ay)-.01,max(ay)+.01)
-    plt.xlabel('Catalog Mag')
-    plt.ylabel('Fit Mag - (Cat Mag + Fit Zpt)')
-    plt.savefig('zptresid.png')
+    # plt.scatter(catmag,resid,alpha=.1)
+    # plt.plot([min(catmag),max(catmag)],[0,0],color='black')
+    # ax, ay, aystd = dt.bindata(catmag, resid,
+    #                         np.arange(min(catmag), max(catmag), .1))
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    # plt.xlim(min(catmag),max(catmag))
+    # plt.ylim(min(ay)-.01,max(ay)+.01)
+    # plt.xlabel('Catalog Mag')
+    # plt.ylabel('Fit Mag - (Cat Mag + Fit Zpt)')
+    # plt.savefig('zptresid.png')
     #print np.unique(mjd)
     #print np.unique(mjd[resid>.06])
     #ww = (catmag - 18.49 < .01) & (catmag - 18.49 > 0) & (abs(resid) > .03) & (abs(resid) < .05)
