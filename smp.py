@@ -1049,9 +1049,10 @@ class smp:
 
 
         if self.dobigstarcat:
-            scampra,scampdec = self.getProperCatRaDec(starglobalras,starglobaldecs)
+            scampra,scampdec,mag_star = self.getProperCatRaDec(starglobalras,starglobaldecs)
             offsetra = np.array(starglobalras) - np.array(scampra)
             offsetdec = np.array(starglobaldecs) - np.array(scampdec)
+            print 'we are here inside bigstarcat'
         else:
             offsetra = np.array(starglobalras)*0.
             offsetdec = np.array(starglobalras)*0.
@@ -1869,7 +1870,9 @@ class smp:
                     newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
 
                 if self.dobigstarcat:
-                    catra,catdec = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
+                    catra,catdec,mag_star = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
+                    print 'got proper cat ra and dec'
+                    raw_input()
                 else:
                     catra,catdec = starcat.ra[cols],starcat.dec[cols]
                 deltara = catra - newra
@@ -3147,12 +3150,14 @@ class smp:
     def getProperCatRaDec(self,ra,dec):
         properra = np.zeros(len(ra))
         properdec = np.zeros(len(dec))
+        propermag = np.zeros(len(ra))
         #self.bigcatalog
         for i in np.arange(0,len(ra)):
             j = self.closest_node(ra[i],dec[i])
             properra[i] = self.bigcatalogras[j]
             properdec[i] = self.bigcatalogdecs[j]
-        return properra,properdec
+            propermag[i] = self.bigcatalogmags[j]
+        return properra,properdec,propermag
         
 
 
@@ -5739,10 +5744,10 @@ if __name__ == "__main__":
     print 'beginning smp'
     #sys.exit()
     scenemodel = smp(snparams,params,root_dir,psf_model)
-    print out_dir
-    print dobigstarcat
-    print bigstarcatalog
-    raw_input()
+    #print out_dir
+    #print dobigstarcat
+    #print bigstarcatalog
+    #raw_input()
     scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
                      verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                      gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
