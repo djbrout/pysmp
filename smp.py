@@ -1049,7 +1049,7 @@ class smp:
 
 
         if self.dobigstarcat:
-            scampra,scampdec,mag_star = self.getProperCatRaDec(starglobalras,starglobaldecs)
+            scampra,scampdec,mag_starwrong = self.getProperCatRaDec(starglobalras,starglobaldecs)
             offsetra = np.array(starglobalras) - np.array(scampra)
             offsetdec = np.array(starglobaldecs) - np.array(scampdec)
             print 'we are here inside bigstarcat'
@@ -1870,7 +1870,7 @@ class smp:
                     newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
 
                 if self.dobigstarcat:
-                    catra,catdec,mag_star = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
+                    catra,catdec,mag_starwrong = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
                     #print 'got proper cat ra and dec'
                     #raw_input()
                 else:
