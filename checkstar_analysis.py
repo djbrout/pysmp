@@ -180,7 +180,7 @@ def allcheckstars(lcdir,snlist,indices,filt='r'):
     catmags = []
     resids = []
     for sn in sns:
-        print sn
+        print 'NEW'*10,sn
         try:
             smpfile = os.path.join(lcdir,sn.split('/')[-1].split('.dat')[0].strip()+'_'+filt+'.smp')
             catmag, resid = checkstars(smpfile)
