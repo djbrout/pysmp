@@ -195,7 +195,7 @@ def allcheckstars(lcdir,snlist,indices,filt='r'):
     plt.scatter(catmags, resids, alpha=.1)
     plt.plot([min(catmags), max(catmags)], [0, 0], color='black')
     ax, ay, aystd = dt.bindata(catmags, resids,
-                               np.arange(min(catmags), max(catmags), .1))
+                               np.arange(min(catmags), max(catmags), .25))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
     plt.xlim(min(catmags), max(catmags))
     plt.ylim(min(ay) - .01, max(ay) + .01)
@@ -207,7 +207,7 @@ def allcheckstars(lcdir,snlist,indices,filt='r'):
 
 if __name__ == '__main__':
     #a = checkstars('/pnfs/des/scratch/pysmp/smp_02/lightcurves/des_fake_00211042_r.smp')
-    indices = np.arange(1,10)
+    indices = np.arange(0,7)
     print indices
     lcdir = '/pnfs/des/scratch/pysmp/smp_02/lightcurves/'
     snlist = '/data/des41.a/data/djbrout/pysmp/data/snfilesS1.txt'
