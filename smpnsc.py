@@ -1055,6 +1055,7 @@ class smp:
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
+        print starids.shape
         for ide in np.unique(starids):
             ww = (starids == ide)
             starglobalids.append(ide)
@@ -1079,7 +1080,7 @@ class smp:
         else:
             offsetra = np.array(starglobalras)*0.
             offsetdec = np.array(starglobalras)*0.
-
+        print 'Done with globalstars'
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with globalstars\n ', self.fermilogfile)
 
@@ -1095,7 +1096,7 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             #smp_dict['mjd'][j] = float(snparams.mjd[j])
             #smp_dict['mjd'][i] = float(snparams.mjd[j])
-
+            print imfile
             epochtime  = time.time()
 
             if j in badindices:
@@ -1155,6 +1156,7 @@ class smp:
             psffile = os.path.join(rootdir, psffile)
             # print imfile
             # raw_input()
+            print 'running zeropoints on ' + longimfile
             if self.fermilog:
                 self.tmpwriter.appendfile('running zeropoints on ' + longimfile+'\n', self.fermilogfile)
 
@@ -1701,6 +1703,7 @@ class smp:
                     #    magzpt = hpsf['PSFMAG']
 
                 elif nozpt:
+                    print 'getting stars'
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name] #1
                     cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
