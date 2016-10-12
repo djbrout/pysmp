@@ -4382,9 +4382,10 @@ class smp:
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             if round(prevra,5) == round(ra,5):
+                print 'same star, so skipping'
                 continue
             prevra = ra
-            #print i
+            print i
             #cntr += 1
             #if i > 150:
             #    continue
@@ -5034,7 +5035,7 @@ class smp:
             std = 0
             mag_compare_out = 0
             #raw_input('Error : not enough good stars to compute zeropoint!!!')
-            #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
+            raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
         if self.fermilog:
             self.tmpwriter.appendfile(
