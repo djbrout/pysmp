@@ -1787,6 +1787,8 @@ class smp:
 
             self.rdnoise = hdr[params.rdnoise_name]
             self.gain = hdr[params.gain_name]
+            mjdoff = 0.
+            mjdslopeinteroff = 0.
             gogo = True
             if not nozpt:
                 try:
