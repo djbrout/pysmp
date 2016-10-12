@@ -1829,7 +1829,9 @@ class smp:
                 #                 (starcat.bigdec < dec_high))[0]
 
                 cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
-
+                tras = starglobalras[cols]
+                tdecs = starglobaldecs[cols]
+                mag_star = starglobalmags[cols]
                 if not len(cols):
                     #print 'Error: no stars in image!'
                     #continue
@@ -1905,50 +1907,50 @@ class smp:
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False)
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
                 #newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
-                newx_star,newy_star = x_star1,y_star1
-                if wcsworked:
-                    newra,newdec = zip(*w.wcs_pix2world(np.array(zip(newx_star,newy_star)),0))
-                else:
-                    ccc = wcsinfo.tran([x_star,y_star])
-                    newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
+                # newx_star,newy_star = x_star1,y_star1
+                # if wcsworked:
+                #     newra,newdec = zip(*w.wcs_pix2world(np.array(zip(newx_star,newy_star)),0))
+                # else:
+                #     ccc = wcsinfo.tran([x_star,y_star])
+                #     newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
 
                 # if self.dobigstarcat:
                 #     catra,catdec,mag_starwrong = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
                 #     #print 'got proper cat ra and dec'
                 #     #raw_input()
                 # else:
-                catra,catdec = starcat.ra[cols],starcat.dec[cols]
-                deltara = catra - newra
-                deltadec = catdec - newdec
-                deltamjd = copy(deltara)*0. + snparams.mjd[j]
-
-                jjj = abs(deltara) < 1
-                deltaram = deltara[jjj]
-                ram = np.array(newra)[jjj]
-                mm, s, iii = meanclip.meanclip( deltaram, clipsig = 3., maxiter = 8, returnSubs=True)
-                bra = np.polyfit(ram[iii], deltaram[iii], 0)
-                mra,cra = np.polyfit(ram[iii], deltaram[iii], 1)
-
-                jjj = abs(deltadec) < 1
-                deltadecm = deltadec[jjj]
-                decm = np.array(newdec)[jjj]
-                mm, s, iii = meanclip.meanclip( deltadecm, clipsig = 3., maxiter = 8, returnSubs=True)
-                bdec = np.polyfit(decm[iii], deltadecm[iii], 0)
-                mdec,cdec = np.polyfit(decm[iii], deltadecm[iii], 1)
-
-            
-                mjdoff = [bra[0],bdec[0]]
-                mjdslopeinteroff = [[mra,cra],[mdec,cdec]]
-
-                self.deltaras.extend(deltara)
-                self.deltadecs.extend(deltadec)
-                self.deltamjds.extend(deltamjd)
-                self.ras.extend(catra)
-                self.decs.extend(catdec)
-                self.x_stars.extend(x_star)
-                self.y_stars.extend(y_star)
-
-                self.airmasses.extend(starcat.ra[cols]*0. + round(snparams.airmass,2))
+                # catra,catdec = starcat.ra[cols],starcat.dec[cols]
+                # deltara = catra - newra
+                # deltadec = catdec - newdec
+                # deltamjd = copy(deltara)*0. + snparams.mjd[j]
+                #
+                # jjj = abs(deltara) < 1
+                # deltaram = deltara[jjj]
+                # ram = np.array(newra)[jjj]
+                # mm, s, iii = meanclip.meanclip( deltaram, clipsig = 3., maxiter = 8, returnSubs=True)
+                # bra = np.polyfit(ram[iii], deltaram[iii], 0)
+                # mra,cra = np.polyfit(ram[iii], deltaram[iii], 1)
+                #
+                # jjj = abs(deltadec) < 1
+                # deltadecm = deltadec[jjj]
+                # decm = np.array(newdec)[jjj]
+                # mm, s, iii = meanclip.meanclip( deltadecm, clipsig = 3., maxiter = 8, returnSubs=True)
+                # bdec = np.polyfit(decm[iii], deltadecm[iii], 0)
+                # mdec,cdec = np.polyfit(decm[iii], deltadecm[iii], 1)
+                #
+                #
+                # mjdoff = [bra[0],bdec[0]]
+                # mjdslopeinteroff = [[mra,cra],[mdec,cdec]]
+                #
+                # self.deltaras.extend(deltara)
+                # self.deltadecs.extend(deltadec)
+                # self.deltamjds.extend(deltamjd)
+                # self.ras.extend(catra)
+                # self.decs.extend(catdec)
+                # self.x_stars.extend(x_star)
+                # self.y_stars.extend(y_star)
+                #
+                # self.airmasses.extend(starcat.ra[cols]*0. + round(snparams.airmass,2))
 
                 self.psf = self.psf/np.sum(self.psf)
                 print badflag
