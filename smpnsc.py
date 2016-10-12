@@ -4396,7 +4396,7 @@ class smp:
                 isnotcheckstars[i] = 0
 
             if mc > 21:
-                #print 'star too dim'
+                print mc,'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
@@ -4446,7 +4446,7 @@ class smp:
                         mag_cat[i] = 99
                         print 'badflaggg'*10
                 else:
-                    #print 'here1'
+                    print 'here1'
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                     #                                      noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
