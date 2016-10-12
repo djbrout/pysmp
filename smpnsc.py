@@ -595,7 +595,7 @@ class smp:
         print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
         self.starcat.ra = self.starcat.__dict__['RA']
         self.starcat.dec = self.starcat.__dict__['DEC']
-        self.starcat.mag = self.starcat.__dict__|['MAG_PSF_MEAN_%s'%filt.upper()]
+        self.starcat.mag = self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
         print self.starcat.ra
         sys.exit()
         badindices = []
