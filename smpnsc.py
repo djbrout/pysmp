@@ -1875,17 +1875,17 @@ class smp:
                     #         starcat.objid += 0.
                     #     except:
                     #         starcat.objid = np.arange(len(starcat.mag))
-                    for id,r,d in zip(starglobalids,starglobalras,starglobaldecs):
-                            # tra = starglobalras[starglobalids == ide]
-                            # tdec = starglobaldecs[starglobalids == ide]
-                            # tras.extend(tra)
-                            # tdecs.extend(tdec)
-                        coords = zip(*w.wcs_world2pix(np.array(zip(r,d)),0))
-                        for xval,yval in zip(*coords):
-                            x_star += [xval]
-                            y_star += [yval]
+                    # for id,r,d in zip(starglobalids,starglobalras,starglobaldecs):
+                    #         # tra = starglobalras[starglobalids == ide]
+                    #         # tdec = starglobaldecs[starglobalids == ide]
+                    #         # tras.extend(tra)
+                    #         # tdecs.extend(tdec)
+                    #     coords = zip(*w.wcs_world2pix(np.array(zip(r,d)),0))
+                    #     for xval,yval in zip(*coords):
+                    #         x_star += [xval]
+                    #         y_star += [yval]
 
-
+                    x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starglobalras,starglobaldecs)),0))
                     # else:
                     #     x_star = x_starold
                     #     y_star = y_starold
