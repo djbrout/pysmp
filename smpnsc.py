@@ -1087,15 +1087,15 @@ class smp:
         starglobalmags = np.array(starglobalmags)
 
 
-        if self.dobigstarcat:
-            # scampra,scampdec,mag_starwrong = self.getProperCatRaDec(starglobalras,starglobaldecs)
-            # offsetra = np.array(starglobalras) - np.array(scampra)
-            # offsetdec = np.array(starglobaldecs) - np.array(scampdec)
-            #jra,jdec,jmag = self.getJamesCat()
-            print 'we are here inside bigstarcat'
-        else:
-            offsetra = np.array(starglobalras)*0.
-            offsetdec = np.array(starglobalras)*0.
+        # if self.dobigstarcat:
+        #     # scampra,scampdec,mag_starwrong = self.getProperCatRaDec(starglobalras,starglobaldecs)
+        #     # offsetra = np.array(starglobalras) - np.array(scampra)
+        #     # offsetdec = np.array(starglobaldecs) - np.array(scampdec)
+        #     #jra,jdec,jmag = self.getJamesCat()
+        #     print 'we are here inside bigstarcat'
+        # else:
+        offsetra = np.array(starglobalras)*0.
+        offsetdec = np.array(starglobalras)*0.
         print 'Done with globalstars'
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with globalstars\n ', self.fermilogfile)
