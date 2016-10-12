@@ -587,17 +587,17 @@ class smp:
 
         print 'reading in starcaftile'
         self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
-        self.starcat = txtobj(self.starcatfile, useloadtxt=True)
+        starcat = txtobj(self.starcatfile, useloadtxt=True)
         print 'done reading in starcatfile'
-        print self.starcat.__dict__
-        print self.starcat.__dict__['RA']
-        print self.starcat.__dict__['DEC']
-        print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
-        self.starcat.ra = self.starcat.__dict__['RA']
-        self.starcat.dec = self.starcat.__dict__['DEC']
-        self.starcat.mag = self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
-        print self.starcat.ra
-        sys.exit()
+        #print self.starcat.__dict__
+        #print self.starcat.__dict__['RA']
+        #print self.starcat.__dict__['DEC']
+        #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+        starcat.ra = starcat.__dict__['RA']
+        starcat.dec = starcat.__dict__['DEC']
+        starcat.mag = starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+        #print self.starcat.ra
+        #sys.exit()
         badindices = []
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -1536,52 +1536,52 @@ class smp:
                 badflag = 1
                 #raw_input()
 
-            if type(snparams.starcat) == np.array:
-                if os.path.exists(snparams.starcat[j]):
-                    starcat = txtobj(snparams.starcat[j],useloadtxt=True)
-                    if not starcat.__dict__.has_key('mag'):
-                        try:
-                            starcat.mag = starcat.__dict__[band]
-                            starcat.dmag = starcat.__dict__['d%s'%band]
-                        except:
-                            raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[j])
-                else: 
-                    raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
-            elif type(snparams.starcat) == dict and 'des' in snfile:
+            # if type(snparams.starcat) == np.array:
+            #     if os.path.exists(snparams.starcat[j]):
+            #         starcat = txtobj(snparams.starcat[j],useloadtxt=True)
+            #         if not starcat.__dict__.has_key('mag'):
+            #             try:
+            #                 starcat.mag = starcat.__dict__[band]
+            #                 starcat.dmag = starcat.__dict__['d%s'%band]
+            #             except:
+            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[j])
+            #     else:
+            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
+            # elif type(snparams.starcat) == dict and 'des' in snfile:
+            #
+            #     if fermigrid and worker:
+            #         starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
+            #         # starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
+            #         #print starcatloc
+            #         ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
+            #         #print ifdhls
+            #         #print 'ls on imfileloc'
+            #         ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
+            #         #print ifdhls
+            #         #print 'ls on imfileloc/STARCAT*.LIST'
+            #         #print 'len starcat', len(ifdhls)
+            #         # sys.exit()
+            #         if len(ifdhls) > 0:
+            #             os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
+            #             a = os.popen('ls STARCAT*').read()
+            #             #print '743', a
+            #             starcatfile = ifdhls.strip().split('/')[-1]
+            #             #print '745', starcatfile
+            #             # sys.exit()
+            #             starcatloc = ''
+            #             ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
+            #             #print ifdhls
+            #             #print 'sssssssssss'
+            #             starcatloc = ''
+            #             # raw_input()
+            #         else:
+            #             continue
+            #     else:
+            #         for fl in os.listdir(starcatloc):
+            #             if 'STARCAT' in fl:
+            #                 starcatfile = fl
 
-                if fermigrid and worker:
-                    starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
-                    # starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
-                    #print starcatloc
-                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                    #print ifdhls
-                    #print 'ls on imfileloc'
-                    ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                    #print ifdhls
-                    #print 'ls on imfileloc/STARCAT*.LIST'
-                    #print 'len starcat', len(ifdhls)
-                    # sys.exit()
-                    if len(ifdhls) > 0:
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
-                        a = os.popen('ls STARCAT*').read()
-                        #print '743', a
-                        starcatfile = ifdhls.strip().split('/')[-1]
-                        #print '745', starcatfile
-                        # sys.exit()
-                        starcatloc = ''
-                        ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-                        #print ifdhls
-                        #print 'sssssssssss'
-                        starcatloc = ''
-                        # raw_input()
-                    else:
-                        continue
-                else:
-                    for fl in os.listdir(starcatloc):
-                        if 'STARCAT' in fl:
-                            starcatfile = fl
-
-                #starcatfile = None
+                # starcatfile = None
                 # starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
                 #
                 # if fermigrid and worker:
@@ -1607,46 +1607,46 @@ class smp:
                 #             starcatfile = fl
 
 
-                if fermigrid and worker:
-                    #starcatfile = longimfile.split('/')[-1]
-                    starcatloc = ''
-                    a = os.popen('ls -ltr STARCAT*').read()
-                    #print '743', a
-                    starcatfile = a.split()[-1]
-                    #print '745', starcatfile
-                    #print 'starcat',starcatfile
-                else:
-                    for fl in os.listdir(starcatloc):
-                        #print fl
-                        if 'STARCAT' in fl:
-                            starcatfile = fl
-                print starcatloc+starcatfile
-                if os.path.exists(starcatloc+starcatfile):
-                    starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
-                    if not starcat.__dict__.has_key('mag_%s'%band):
-                        try:
-                            print starcat.__dict__
-                            starcat.mag = starcat.__dict__[band]
-                            starcat.dmag = starcat.__dict__['d%s'%band]
-                        except:
-                            raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[band])
-                else:
-                    print 'Error : catalog file %s does not exist!!'
-                    continue
-                    raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
-            else:
-                if os.path.exists(snparams.starcat[filt]):
-                    starcat = txtobj(snparams.starcat[filt],useloadtxt=True)
-                    if not starcat.__dict__.has_key('mag'):
-                        try:
-                            starcat.mag = starcat.__dict__[band]
-                            starcat.dmag = starcat.__dict__['d%s'%band]
-                        except:
-                            print snparams.starcat
-                            raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[filt])
-
-                else: 
-                    raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
+            #     if fermigrid and worker:
+            #         #starcatfile = longimfile.split('/')[-1]
+            #         starcatloc = ''
+            #         a = os.popen('ls -ltr STARCAT*').read()
+            #         #print '743', a
+            #         starcatfile = a.split()[-1]
+            #         #print '745', starcatfile
+            #         #print 'starcat',starcatfile
+            #     else:
+            #         for fl in os.listdir(starcatloc):
+            #             #print fl
+            #             if 'STARCAT' in fl:
+            #                 starcatfile = fl
+            #     print starcatloc+starcatfile
+            #     if os.path.exists(starcatloc+starcatfile):
+            #         starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
+            #         if not starcat.__dict__.has_key('mag_%s'%band):
+            #             try:
+            #                 print starcat.__dict__
+            #                 starcat.mag = starcat.__dict__[band]
+            #                 starcat.dmag = starcat.__dict__['d%s'%band]
+            #             except:
+            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[band])
+            #     else:
+            #         print 'Error : catalog file %s does not exist!!'
+            #         continue
+            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
+            # else:
+            #     if os.path.exists(snparams.starcat[filt]):
+            #         starcat = txtobj(snparams.starcat[filt],useloadtxt=True)
+            #         if not starcat.__dict__.has_key('mag'):
+            #             try:
+            #                 starcat.mag = starcat.__dict__[band]
+            #                 starcat.dmag = starcat.__dict__['d%s'%band]
+            #             except:
+            #                 print snparams.starcat
+            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[filt])
+            #
+            #     else:
+            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
                     
             #print 'about to do zeropoints'
             #sys.exit()
