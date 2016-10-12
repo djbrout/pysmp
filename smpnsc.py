@@ -616,8 +616,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 5:
-               continue
+            #if cntrs > 5:
+            #   continue
             #if snparams.mjd[j] != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
@@ -1126,8 +1126,8 @@ class smp:
             #if round(snparams.mjd[j]) != 56559:
             #    continue
             #raw_input('passed')
-            if cccc > 5:
-                continue
+            #if cccc > 5:
+            #    continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -1972,9 +1972,9 @@ class smp:
                     #raw_input('stopped')
                     #sys.exit()
                     zpttime = time.time()
-                    print x_star1.shape,tras.shape,mag_star.shape,mag.shape,sky.shape,badflagx.shape
-                    print min(mag_star),np.median(mag_star),max(mag_star)
-                    raw_input()
+                    # print x_star1.shape,tras.shape,mag_star.shape,mag.shape,sky.shape,badflagx.shape
+                    # print min(mag_star),np.median(mag_star),max(mag_star)
+                    # raw_input()
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
@@ -4383,7 +4383,7 @@ class smp:
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             if round(prevra,5) == round(ra,5):
-                print 'same star, so skipping'
+                #print 'same star, so skipping'
                 continue
             prevra = ra
             print i
@@ -4397,7 +4397,7 @@ class smp:
                 isnotcheckstars[i] = 0
 
             if mc > 21:
-                print mc,'star too dim'
+                #print mc,'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
@@ -4447,7 +4447,7 @@ class smp:
                         mag_cat[i] = 99
                         print 'badflaggg'*10
                 else:
-                    print 'here1'
+                    #print 'here1'
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                     #                                      noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
@@ -4551,7 +4551,7 @@ class smp:
                         # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                         #                                                  gal, mjd, scale,index=i)
 
-                        print 'running star',x,y
+                        #print 'running star',x,y
                         try:
                             scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
                         except:
@@ -4582,13 +4582,13 @@ class smp:
                                                               psf * scale)) ** 2 * fitrad / se ** 2) / len(
                                                               fitrad[fitrad > 0].ravel()), 2))]):
 
-                                print ra
-                                if round(ra,5) == round(43.11884695,5):
-                                    print 'found culprit'
-                                    #raw_input()
-                                    ax.set_title(title+' CULPRIT')
-                                else:
-                                    ax.set_title(title)
+                                # print ra
+                                # if round(ra,5) == round(43.11884695,5):
+                                #     print 'found culprit'
+                                #     #raw_input()
+                                #     ax.set_title(title+' CULPRIT')
+                                # else:
+                                ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axim)
                             axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
