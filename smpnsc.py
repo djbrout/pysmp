@@ -590,8 +590,9 @@ class smp:
         self.starcat = txtobj(self.starcatfile, useloadtxt=True)
         print 'done reading in starcatfile'
         print self.starcat.__dict__
-        print self.starcat.ra
-        print self.starcat.dec
+        print self.starcat.__dict__['RA']
+        print self.starcat.__dict__['DEC']
+        print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt]
         sys.exit()
         badindices = []
         for imfile,noisefile,psffile,band,faketruemag, j in \
