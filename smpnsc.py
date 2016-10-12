@@ -987,7 +987,7 @@ class smp:
                 print 'rahi',ra_high
                 print 'min(starcat.ra)',min(starcat.ra)
                 print 'max(starcat.ra)',max(starcat.ra)
-                sys.exit()
+                #sys.exit()
                 cols = np.where((starcat.ra > ra_low) & 
                                 (starcat.ra < ra_high) & 
                                 (starcat.dec > dec_low) & 
