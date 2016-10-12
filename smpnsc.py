@@ -1973,7 +1973,8 @@ class smp:
                     #sys.exit()
                     zpttime = time.time()
                     print x_star1.shape,tras.shape,mag_star.shape,mag.shape,sky.shape,badflagx.shape
-                    #raw_input()
+                    print min(mag_star),np.median(mag_star),max(mag_star)
+                    raw_input()
                     zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
