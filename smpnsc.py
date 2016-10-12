@@ -982,6 +982,7 @@ class smp:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain = hdr[params.gain_name]
 
+                print starcat.ra
                 print 'ralow',ra_low
                 print 'rahi',ra_high
                 print 'min(starcat.ra)',min(starcat.ra)
