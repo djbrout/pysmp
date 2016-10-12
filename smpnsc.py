@@ -1831,9 +1831,9 @@ class smp:
                 #                 (starcat.bigdec < dec_high))[0]
 
                 cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
-                tras = starglobalras[cols]
-                tdecs = starglobaldecs[cols]
-                mag_star = starglobalmags[cols]
+                tras = starglobalras
+                tdecs = starglobaldecs
+                mag_star = starglobalmags
                 if not len(cols):
                     #print 'Error: no stars in image!'
                     #continue
