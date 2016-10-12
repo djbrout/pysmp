@@ -1700,7 +1700,7 @@ class smp:
                     x_star, y_star = np.array(x_star), np.array(y_star)
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                        aper.aper(im,x_star,y_star,apr = params.fitrad)
+                        aper.aper(im,x_star,y_star,apr = params.fitrad,verbose=False)
 
 
                     # self.rdnoise = hdr[params.rdnoise_name]
@@ -1747,7 +1747,7 @@ class smp:
                     #    newra,newdec = zip(*w.wcs_pix2world(np.array(zip(xstar_,y_star)),0))
 
                     mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                        aper.aper(im,x_star,y_star,apr = params.fitrad)
+                        aper.aper(im,x_star,y_star,apr = params.fitrad,verbose=False)
 
                     hpsf = pyfits.getheader(psffile)
                     magzpt = hpsf['PSFMAG']
@@ -1823,12 +1823,12 @@ class smp:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain =  hdr[params.gain_name]
 
-                cols = np.where((starcat.ra > ra_low) & 
-                                (starcat.ra < ra_high) & 
-                                (starcat.dec > dec_low) & 
-                                (starcat.dec < dec_high))[0]
+                # cols = np.where((starcat.bigra > ra_low) &
+                #                 (starcat.bigra < ra_high) &
+                #                 (starcat.bigdec > dec_low) &
+                #                 (starcat.bigdec < dec_high))[0]
 
-
+                cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
 
                 if not len(cols):
                     #print 'Error: no stars in image!'
@@ -1836,61 +1836,61 @@ class smp:
                     #print starcat.ra
                     #print 'ralow,rahi',ra_low,ra_high
                     raise exceptions.RuntimeError("Error : No stars in image!!")
-                try:
-                    if band.lower() == 'g':
-                        mag_star = starcat.mag_g[cols]
-                    elif band.lower() == 'r':
-                        mag_star = starcat.mag_r[cols]
-                    elif band.lower() == 'i':
-                        mag_star = starcat.mag_i[cols]
-                    elif band.lower() == 'z':
-                        mag_star = starcat.mag_z[cols]
-                    else:
-                        raise Exception("Throwing all instances where mag_%band fails to mag. Should not appear to user.")
-                except:
-                    mag_star = starcat.mag[cols]
+                # try:
+                #     if band.lower() == 'g':
+                #         mag_star = starcat.mag_g[cols]
+                #     elif band.lower() == 'r':
+                #         mag_star = starcat.mag_r[cols]
+                #     elif band.lower() == 'i':
+                #         mag_star = starcat.mag_i[cols]
+                #     elif band.lower() == 'z':
+                #         mag_star = starcat.mag_z[cols]
+                #     else:
+                #         raise Exception("Throwing all instances where mag_%band fails to mag. Should not appear to user.")
+                # except:
+                #     mag_star = starcat.bigmag[cols]
 
 
 
                 if wcsworked:
-                    x_starold,y_starold = [],[]
+                    # x_starold,y_starold = [],[]
                     x_star,y_star = [],[]
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
-                    tras = []
-                    tdecs = []
-                    for ira,idec in zip(starcat.ra[cols],starcat.dec[cols]):
-                        tras.append(ira)
-                        tdecs.append(idec)
+                    # coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols],starcat.dec[cols])),0))
+                    # tras = []
+                    # tdecs = []
+                    # for ira,idec in zip(starcat.ra[cols],starcat.dec[cols]):
+                    #     tras.append(ira)
+                    #     tdecs.append(idec)
+                    #
+                    # for xval,yval in zip(*coords):
+                    #     x_starold += [xval]
+                    #     y_starold += [yval]
+                    # #doglobalstar = False
+                    # if doglobalstar:
+                    #     print 'doing globalstars'
+                    #     #raw_input()
+                    #     tras = []
+                    #     tdecs = []
+                    #     try:
+                    #         starcat.objid += 0.
+                    #     except:
+                    #         starcat.objid = np.arange(len(starcat.mag))
+                    for id,r,d in zip(starglobalids,starglobalras,starglobaldecs):
+                            # tra = starglobalras[starglobalids == ide]
+                            # tdec = starglobaldecs[starglobalids == ide]
+                            # tras.extend(tra)
+                            # tdecs.extend(tdec)
+                        coords = zip(*w.wcs_world2pix(np.array(zip(r,d)),0))
+                        for xval,yval in zip(*coords):
+                            x_star += [xval]
+                            y_star += [yval]
 
-                    for xval,yval in zip(*coords):
-                        x_starold += [xval]
-                        y_starold += [yval]
-                    #doglobalstar = False
-                    if doglobalstar:
-                        print 'doing globalstars'
-                        #raw_input()
-                        tras = []
-                        tdecs = []
-                        try:
-                            starcat.objid += 0.
-                        except:
-                            starcat.objid = np.arange(len(starcat.mag))
-                        for ide in starcat.objid[cols]:
-                            tra = starglobalras[starglobalids == ide]
-                            tdec = starglobaldecs[starglobalids == ide]
-                            tras.extend(tra)
-                            tdecs.extend(tdec)
-                            coords = zip(*w.wcs_world2pix(np.array(zip(tra,tdec)),0))
-                            for xval,yval in zip(*coords):
-                                x_star += [xval]
-                                y_star += [yval]
 
-
-                    else:
-                        x_star = x_starold
-                        y_star = y_starold
-                        tra = starcat.ra[cols]
-                        tdec = starcat.dec[cols]
+                    # else:
+                    #     x_star = x_starold
+                    #     y_star = y_starold
+                    #     tra = starcat.ra[cols]
+                    #     tdec = starcat.dec[cols]
 
                 else:
                     coords = wcsinfo.tran([starcat.ra[cols]/radtodeg,starcat.dec[cols]/radtodeg],False)
@@ -1902,7 +1902,7 @@ class smp:
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                    aper.aper(im,x_star1,y_star1,apr = params.fitrad)
+                    aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False)
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
                 #newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
                 newx_star,newy_star = x_star1,y_star1
@@ -1912,12 +1912,12 @@ class smp:
                     ccc = wcsinfo.tran([x_star,y_star])
                     newra,newdec = ccc[0]*radtodeg,ccc[1]*radtodeg
 
-                if self.dobigstarcat:
-                    catra,catdec,mag_starwrong = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
-                    #print 'got proper cat ra and dec'
-                    #raw_input()
-                else:
-                    catra,catdec = starcat.ra[cols],starcat.dec[cols]
+                # if self.dobigstarcat:
+                #     catra,catdec,mag_starwrong = self.getProperCatRaDec(starcat.ra[cols],starcat.dec[cols])
+                #     #print 'got proper cat ra and dec'
+                #     #raw_input()
+                # else:
+                catra,catdec = starcat.ra[cols],starcat.dec[cols]
                 deltara = catra - newra
                 deltadec = catdec - newdec
                 deltamjd = copy(deltara)*0. + snparams.mjd[j]
@@ -2042,7 +2042,7 @@ class smp:
                 np.set_printoptions(threshold=50000)
                 #for i in im[:,round(ysn)]:
                 #    print i
-                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad)#,skyrad=skyrad)
+                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad,verbose=False)#,skyrad=skyrad)
                 #raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
 
@@ -4146,7 +4146,7 @@ class smp:
 
         x_star1,y_star1 = np.array(x_star),np.array(y_star)
         mag1,magerr1,flux1,fluxerr1,sky1,skyerr1,badflag1,outstr1 = \
-            aper.aper(im,x_star1,y_star1,apr = params.fitrad)
+            aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False)
         x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
 
         #print len(x_star)
