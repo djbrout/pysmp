@@ -1073,7 +1073,7 @@ class smp:
             try:
                 starglobalras.append(np.median(starras[ww]))
                 starglobaldecs.append(np.median(stardecs[ww]))
-                starglobalmags.append(np.median(starmags))
+                starglobalmags.append(np.median(starmags[ww]))
             except:
                 starglobalras.append(np.nan)
                 starglobaldecs.append(np.nan)
