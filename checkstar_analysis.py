@@ -197,8 +197,8 @@ def allcheckstars(lcdir,snlist,indices,filt='r'):
     ax, ay, aystd = dt.bindata(catmags, resids,
                                np.arange(min(catmags), max(catmags), .25))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-    plt.xlim(min(catmags), max(catmags))
-    plt.ylim(min(ay) - .01, max(ay) + .01)
+    plt.xlim(16.5, max(catmags))
+    plt.ylim(- .01, .01)
     plt.xlabel('Catalog Mag')
     plt.ylabel('Fit Mag - (Cat Mag + Fit Zpt)')
     plt.savefig('zptresidall.png')
