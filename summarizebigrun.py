@@ -98,8 +98,8 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.plot([20,27],[0,0])
-    plt.xlim(20,27)
-    plt.ylim(-2,2)
+    plt.xlim(20,24)
+    plt.ylim(-.1,.1)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig('percentagefluxdiff.png')
