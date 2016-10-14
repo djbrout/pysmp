@@ -925,10 +925,10 @@ class metropolis_hastings():
         plt.plot(np.arange(0,len(self.yhistory)*self.compressionfactor,self.compressionfactor),np.array(self.yhistory)[::1])
         plt.xlabel('Step')
         plt.ylabel('Offset (arcsec)')
-        if self.fitradec:
-            self.savefig('SNoffset1.png')
-            self.tmpwriter.cp('SNoffset1.png',str(self.lcout)+'_SNoffset1.png')
-            os.popen('rm SNoffset1.png').read()
+        if self.shiftpsf:
+            self.savefig('SNoffset.png')
+            self.tmpwriter.cp('SNoffset.png',str(self.lcout)+'_SNoffset.png')
+            os.popen('rm SNoffset.png').read()
             #print str(self.lcout)+'_SNoffset1.png'
         #else:
         #    self.savefig('SNoffset2.png')
@@ -1184,7 +1184,7 @@ class metropolis_hastings():
         #NEED TO MAP THIS FUNCTION
         print 'fitting position:', self.x[0] + x_off, self.y[0] + y_off
         for epoch in np.arange(self.Nimage):
-            if self.modelvec_std[epoch] > 0.:
+            if self.modelstd[epoch] > 0.:
                 if self.flags[epoch] == 0:
                     if self.mjdflag[epoch] == 0:
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + x_off, self.y[epoch] + y_off, self.substamp)
@@ -1223,7 +1223,7 @@ class metropolis_hastings():
 
     def mapshiftPSF(self, epoch, y_off=0.0, x_off=0.0):
         #print 'fitting position:', self.x[i] + x_off, self.y[i] + y_off
-        if self.modelvec_std[epoch] > 0.:
+        if self.modelstd[epoch] > 0.:
             if self.flags[epoch] == 0:
                 if self.mjdflag[epoch] == 0:
                     thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset,
