@@ -2358,7 +2358,7 @@ class smp:
                                         os.popen('rm '+imfile).read()
                                         os.popen('rm '+imfile+'.fz').read()
                                         os.popen('rm '+noisefile).read()
-                                        os.popen('rm '+psffile).read()
+                                        #os.popen('rm '+psffile).read()
 
 
                                     i += 1
