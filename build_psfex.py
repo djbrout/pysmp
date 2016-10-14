@@ -6,7 +6,7 @@ def build(psffile, x, y, stampsize):
                                                                                  stampsize)).readlines()
     ix, iy, psfval = [], [], []
     for line in psf:
-        print line
+        #print line
         line = line.replace('\n', '')
         if line.startswith('PSF:'):
             linelist = line.split()
