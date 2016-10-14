@@ -1,18 +1,20 @@
 import os
 import sys
 
-f = open('sntarfilesv3.txt','r').read()
+f = open('sntarfilesv2.txt','r').read()
 files = f.split()
 
 #sys.exit()
 
-filename = 'SN-S1_CCD01_v3.tar'
+#filename = 'SN-S1_CCD01_v3.tar'
 
 #NEED TO DO THIS EVERY DAY
 #'kx509; grid-proxy-init; voms-proxy-init -rfc -noregen -voms des:/des/Role=Analysis; '
 
 for filename in files:
     #print filename
+    if not '-E1' in filename:
+        continue
     if os.path.isfile("/pnfs/des/persistent/smp/v2/"+filename):
         if os.stat("/pnfs/des/persistent/smp/v2/"+filename).st_size > 0.:
             print filename,'already exists'
