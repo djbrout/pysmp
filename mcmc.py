@@ -1227,8 +1227,8 @@ class metropolis_hastings():
         if self.modelstd[epoch] > 0.:
             if self.flags[epoch] == 0:
                 if True:
-                    thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset,
-                                                               self.y[epoch] + self.y_pix_offset, self.substamp)
+                    thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,
+                                                               self.y[epoch] + self.y_pix_offset + .4, self.substamp)
 
                     if thispsfcenter[0] != self.psfcenter[epoch][0] or thispsfcenter[1] != self.psfcenter[epoch][1]:
                         newpsf = thispsf
