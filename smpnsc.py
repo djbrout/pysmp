@@ -1816,8 +1816,8 @@ class smp:
                     if gogo:
                         zptdata = np.load(zpt_file) #load previous zpt information
 
-                        zpt = zptdata['mpfit_zpt']
-                        zpterr = zptdata['mpfit_zpt_std']
+                        zpt = zptdata['fit_zpt']
+                        zpterr = zptdata['fit_zpt_std']
                         mjdoff = zptdata['mjdoff']
                         mjdslopeinteroff = zptdata['mjdslopeinteroff']
                         #print 'thisworked'
