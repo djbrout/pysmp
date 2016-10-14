@@ -1176,8 +1176,8 @@ class metropolis_hastings():
         return zscores
 
     def shiftPSF(self, y_off=0.0, x_off=0.0):
-        NEED TO GIVE POSITIONS TO MCMC AND PSF FILES AND PSFCENTERS
-        NEED TO MAP THIS FUNCTION
+        #NEED TO GIVE POSITIONS TO MCMC AND PSF FILES AND PSFCENTERS
+        #NEED TO MAP THIS FUNCTION
         print 'fitting position:', self.x[0] + x_off, self.y[0] + y_off
         for epoch in np.arange(self.Nimage):
             if self.modelvec_std[epoch] > 0.:
