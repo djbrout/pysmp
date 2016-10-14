@@ -473,10 +473,11 @@ class metropolis_hastings():
         #t2 = time.time()
 
         if self.shiftpsf:
-            print 'shifting'
+            #print 'shifting'
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
-            self.shiftpsf
+            map(self.mapshiftPSF(np.arange(self.Nimage)))
+            print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
 
         # Contains the convolution
@@ -1225,8 +1226,8 @@ class metropolis_hastings():
         if self.modelvec_std[epoch] > 0.:
             if self.flags[epoch] == 0:
                 if self.mjdflag[epoch] == 0:
-                    thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + x_off,
-                                                               self.y[epoch] + y_off, self.substamp)
+                    thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset,
+                                                               self.y[epoch] + self.y_pix_offset, self.substamp)
 
                     if thispsfcenter[0] != self.psfcenter[epoch][0] or thispsfcenter[1] != self.psfcenter[epoch][1]:
                         newpsf = thispsf
