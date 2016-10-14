@@ -1221,7 +1221,7 @@ class metropolis_hastings():
                             thispsf = newpsf
                         self.kicked_psfs[epoch, :, :] = thispsf
 
-    def mapshiftPSF(self, epoch, y_off=0.0, x_off=0.0):
+    def mapshiftPSF(self, epoch):
         #print 'fitting position:', self.x[i] + x_off, self.y[i] + y_off
         #print 'modelstd',epoch,self.modelstd[epoch]
         if self.modelstd[epoch] > 0.:

@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-def build(self, psffile, x, y, stampsize):
+def build(psffile, x, y, stampsize):
     '''
     Inputs from dump_psfex output file:
 
