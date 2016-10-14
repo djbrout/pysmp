@@ -473,6 +473,7 @@ class metropolis_hastings():
         #t2 = time.time()
 
         if self.shiftpsf:
+            print 'shifting'
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
             self.shiftpsf
