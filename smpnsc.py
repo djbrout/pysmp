@@ -2258,8 +2258,8 @@ class smp:
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = psffile
                                     smp_dict['psfcenter'].append(self.psfcenter)
-                                    print xsn,ysn,psffile,self.psfcenter
-                                    raw_input('testing new dict params')
+                                    #print xsn,ysn,psffile,self.psfcenter
+                                    #raw_input('testing new dict params')
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
                                     if self.useweights:
@@ -2940,7 +2940,7 @@ class smp:
                     , psf_shift_std = self.params.sn_shift_std
                     , xoff = xoff
                     , yoff = yoff
-                    , shiftpsf = False
+                    , shiftpsf = True
                     , fileappend = ''
                     , stop = False
                     , skyerr_radius = 12.

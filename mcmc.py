@@ -800,14 +800,15 @@ class metropolis_hastings():
 
     def update_history( self ):
         self.compressioncounter += 1
+        if self.shiftpsf:
+            self.current_x_offset = self.x_pix_offset
+            self.current_y_offset = self.y_pix_offset
         if self.compressioncounter % self.compressionfactor == 0:
             #print 'len gal history', len(self.galhistory)
             if not self.dontsavegalaxy:
                 self.galhistory.append( self.kicked_galmodel )
             self.modelvechistory.append(self.kicked_modelvec)
             if self.shiftpsf:
-                self.current_x_offset = self.x_pix_offset
-                self.current_y_offset = self.y_pix_offset
                 self.xhistory.append(self.current_x_offset*self.platescale)
                 self.yhistory.append(self.current_y_offset*self.platescale)
         return
