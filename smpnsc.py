@@ -1107,7 +1107,7 @@ class smp:
         #print offsetdec
         #print 'Done with centroiding!!'
         #sys.exit()
-
+        orig_nozpt = copy(nozpt)
         cccc = 0
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -1140,7 +1140,7 @@ class smp:
             #raw_input()
             skysig=np.nan
             badflag = 0
-            #nozpt = copy(orig_nozpt)
+            nozpt = copy(orig_nozpt)
 
             # longimfile = copy(imfile)
             # if self.fermigrid & self.worker:
