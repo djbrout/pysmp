@@ -45,7 +45,7 @@ def build(psffile, x, y, stampsize):
             IMAGE_CENTERY = float(linelist[2])
 
     ix, iy, psfval = np.array(ix), np.array(iy), np.array(psfval)
-    psfout = np.zeros((self.params.substamp, self.params.substamp))
+    psfout = np.zeros((stampsize, stampsize))
     for x, y, p in zip(ix, iy, psfval):
         psfout[y, x] = p
 
