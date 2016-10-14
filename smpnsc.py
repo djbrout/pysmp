@@ -446,6 +446,7 @@ class smp:
                     'flag':np.ones(snparams.nvalid),
                     'fitflag':np.ones(snparams.nvalid),
                     'psf':np.zeros(snparams.nvalid),
+                    'psfcenter':[],
                     'psf_fwhm':np.zeros(snparams.nvalid),
                     'fakepsf':np.zeros(snparams.nvalid),
                     'zpt':np.zeros(snparams.nvalid),
@@ -616,8 +617,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            #if cntrs > 5:
-            #   continue
+            if cntrs > 1:
+               continue
             #if snparams.mjd[j] != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
@@ -1774,7 +1775,7 @@ class smp:
                 except:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
-                self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
+                self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
             # elif snparams.psf_model.lower() == 'daophot':
@@ -2253,6 +2254,9 @@ class smp:
                                     smp_dict['image_filename'][i] = imfile
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = psffile
+                                    smp_dict['psfcenter'].append(self.psfcenter)
+                                    print xsn,ysn,psffile,self.psfcenter
+                                    raw_input('testing new dict params')
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
                                     if self.useweights:
@@ -2949,6 +2953,10 @@ class smp:
                     , log = self.fermilogfile
                     , isfermigrid=self.fermigrid
                     , isworker=self.worker
+                    , x=smp_dict['snx']
+                    , y=smp_dict['sny']
+                    , psffile=smp_dict['psf_filename']
+                    , psfcenter=smp_dict['psfcenter']
                     )
             modelveco = copy(modelvec)
             if self.fermilog:

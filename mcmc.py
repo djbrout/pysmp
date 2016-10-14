@@ -61,6 +61,7 @@ import scipy.interpolate as interpol
 import dilltools as dt
 from matplotlib.backends.backend_pdf import PdfPages
 import gc
+import build_psfex
 import sys
 
 
@@ -125,6 +126,8 @@ class metropolis_hastings():
                 , log = None
                 , x = None
                 , y = None
+                , psffile = None
+                , psfcenter = None
                 ):
         '''
         if model is None:
@@ -208,6 +211,8 @@ class metropolis_hastings():
         self.log = log
         self.x = x
         self.y = y
+        self.psffile = psffile
+        self.psfcenter = psfcenter
         if self.isfermigrid and self.isworker:
             #print 'we have correct tempwriter'
             #raw_input()
@@ -1169,6 +1174,88 @@ class metropolis_hastings():
         #print zscores[1,:,:]
         #raw_input()
         return zscores
+
+    def shiftPSF(self, y_off=0.0, x_off=0.0):
+        NEED TO GIVE POSITIONS TO MCMC AND PSF FILES AND PSFCENTERS
+        NEED TO MAP THIS FUNCTION
+        print 'fitting position:', self.x[0] + x_off, self.y[0] + y_off
+        for epoch in np.arange(self.Nimage):
+            if self.modelvec_std[epoch] > 0.:
+                if self.flags[epoch] == 0:
+                    if self.mjdflag[epoch] == 0:
+                        thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + x_off, self.y[epoch] + y_off, self.substamp)
+
+                        if thispsfcenter[0] != self.psfcenter[0][0] or thispsfcenter[1] != self.psfcenter[0][1]:
+                            newpsf = thispsf
+                            # print thispsfcenter[0] ,self.psfcenter[0][0]
+                            if thispsfcenter[1] == self.psfcenter[epoch][1]:
+                                pass
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] - 1:
+                                # print 'shifting1'
+                                newpsf[:-1, :] = thispsf[1:, :]
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] + 1:
+                                # print 'shifting2'
+                                newpsf[1:, :] = thispsf[:-1, :]
+                            else:
+                                print 'MCMC is attempting to offset the psf by more than one pixel!1'
+                                raise Exception('MCMC is attempting to offset the psf by more than one pixel!1')
+                            thispsf = copy(newpsf)
+
+                            newpsf = copy(thispsf)
+                            if thispsfcenter[0] == self.psfcenter[epoch][0]:
+                                pass
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] - 1:
+                                # print 'shifting3'
+                                newpsf[:, :-1] = copy(thispsf[:, 1:])
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] + 1:
+                                # print 'shifting4'
+                                newpsf[:, 1:] = copy(thispsf[:, :-1])
+                            else:
+                                print 'MCMC is attempting to offset the psf by more than one pixel!1'
+                                raise Exception('MCMC is attempting to offset the psf by more than one pixel!1')
+
+                            thispsf = newpsf
+                        self.kicked_psfs[epoch, :, :] = thispsf
+
+    def mapshiftPSF(self, epoch, y_off=0.0, x_off=0.0):
+        #print 'fitting position:', self.x[i] + x_off, self.y[i] + y_off
+        if self.modelvec_std[epoch] > 0.:
+            if self.flags[epoch] == 0:
+                if self.mjdflag[epoch] == 0:
+                    thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + x_off,
+                                                               self.y[epoch] + y_off, self.substamp)
+
+                    if thispsfcenter[0] != self.psfcenter[epoch][0] or thispsfcenter[1] != self.psfcenter[epoch][1]:
+                        newpsf = thispsf
+                        # print thispsfcenter[0] ,self.psfcenter[0][0]
+                        if thispsfcenter[1] == self.psfcenter[epoch][1]:
+                            pass
+                        elif thispsfcenter[1] == self.psfcenter[epoch][1] - 1:
+                            # print 'shifting1'
+                            newpsf[:-1, :] = thispsf[1:, :]
+                        elif thispsfcenter[1] == self.psfcenter[epoch][1] + 1:
+                            # print 'shifting2'
+                            newpsf[1:, :] = thispsf[:-1, :]
+                        else:
+                            print 'MCMC is attempting to offset the psf by more than one pixel!1'
+                            raise Exception('MCMC is attempting to offset the psf by more than one pixel!1')
+                        thispsf = copy(newpsf)
+
+                        newpsf = copy(thispsf)
+                        if thispsfcenter[0] == self.psfcenter[epoch][0]:
+                            pass
+                        elif thispsfcenter[0] == self.psfcenter[epoch][0] - 1:
+                            # print 'shifting3'
+                            newpsf[:, :-1] = copy(thispsf[:, 1:])
+                        elif thispsfcenter[0] == self.psfcenter[epoch][0] + 1:
+                            # print 'shifting4'
+                            newpsf[:, 1:] = copy(thispsf[:, :-1])
+                        else:
+                            print 'MCMC is attempting to offset the psf by more than one pixel!1'
+                            raise Exception('MCMC is attempting to offset the psf by more than one pixel!1')
+
+                        thispsf = newpsf
+                    self.kicked_psfs[epoch, :, :] = thispsf
 
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
