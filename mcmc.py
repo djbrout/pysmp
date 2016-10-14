@@ -1223,10 +1223,10 @@ class metropolis_hastings():
 
     def mapshiftPSF(self, epoch, y_off=0.0, x_off=0.0):
         #print 'fitting position:', self.x[i] + x_off, self.y[i] + y_off
-        print 'modelstd',epoch,self.modelstd[epoch]
+        #print 'modelstd',epoch,self.modelstd[epoch]
         if self.modelstd[epoch] > 0.:
             if self.flags[epoch] == 0:
-                if self.mjdflag[epoch] == 0:
+                if True:
                     thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset,
                                                                self.y[epoch] + self.y_pix_offset, self.substamp)
 
