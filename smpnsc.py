@@ -1791,6 +1791,7 @@ class smp:
             mjdoff = 0.
             mjdslopeinteroff = 0.
             gogo = True
+            print '1794',nozpt
             if not nozpt:
                 try:
                     if doglobalstar:
@@ -1808,6 +1809,7 @@ class smp:
                             os.popen('ifdh cp '+zpt_file+' .')
                             zpt_file = zpt_file.split('/')[-1]
                         else:
+                            print '1812 setting nozpt to True'
                             nozpt = True
                             gogo = False
                     if gogo:
