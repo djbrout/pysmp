@@ -32,7 +32,8 @@ def build(psffile, x, y, stampsize):
 def buildall(psffile, x, y, stampsize):
     pstring = ''
     for p,xi,yi in zip(psffile,x,y):
-        if os.path.exists(p):
+        print p
+        if 'SN-' in p:
             pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
 
     print pstring
