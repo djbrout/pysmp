@@ -47,6 +47,7 @@ def buildall(psffile, x, y, stampsize):
     psfouts = []
     imagecenterouts = []
     keepgoing = True
+    isnewpsf = True
     l = -1
     vec = 0
     while keepgoing:
