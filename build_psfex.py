@@ -32,17 +32,23 @@ def build(psffile, x, y, stampsize):
 def buildall(psffile, x, y, stampsize):
     pstring = ''
     for p,xi,yi in zip(psffile,x,y):
-        print p
-        if 'SN-' in p:
-            pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
+        pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
 
     print pstring
     psf = os.popen(pstring).readlines()
     print psf
     sys.exit()
-    ix, iy, psfval = [], [], []
-    for line in psf:
-        # print line
+    psfouts = []
+    imagecenterouts = []
+    keepgoing = True
+    l = -1
+    while keepgoing:
+        l+=1
+        if isnewpsf:
+            isnewpsf = False
+            ix, iy, psfval = [], [], []
+
+
         line = line.replace('\n', '')
         if line.startswith('PSF:'):
             linelist = line.split()
@@ -53,10 +59,12 @@ def buildall(psffile, x, y, stampsize):
             linelist = line.split()
             IMAGE_CENTERX = float(linelist[1]);
             IMAGE_CENTERY = float(linelist[2])
-
-    ix, iy, psfval = np.array(ix), np.array(iy), np.array(psfval)
-    psfout = np.zeros((stampsize, stampsize))
-    for x, y, p in zip(ix, iy, psfval):
-        psfout[y, x] = p
+            isnewpsf = True
+            ix, iy, psfval = np.array(ix), np.array(iy), np.array(psfval)
+            psfout = np.zeros((stampsize, stampsize))
+            for x, y, p in zip(ix, iy, psfval):
+                psfout[y, x] = p
+            psfouts.append(psfout)
+            imagecenterouts.append((IMAGE_CENTERX, IMAGE_CENTERY))
 
     return (psfout), (IMAGE_CENTERX, IMAGE_CENTERY)
