@@ -73,10 +73,10 @@ def buildall(psffile, x, y, stampsize):
             for x, y, p in zip(ix, iy, psfval):
                 psfout[y, x] = p
             psfouts.append(psfout)
-            imagecenterouts.append((IMAGE_CENTERX, IMAGE_CENTERY))
+            imagecenterouts.append([IMAGE_CENTERX, IMAGE_CENTERY])
             vec += 1
             if vec in badvec:
                 psfouts.append(psfout*0.)
-                imagecenterouts.append((0,0))
+                imagecenterouts.append([0,0])
 
     return psfouts, imagecenterouts
