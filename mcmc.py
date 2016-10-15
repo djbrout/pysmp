@@ -1234,8 +1234,9 @@ class metropolis_hastings():
 
         epoch = -1
         for thispsf, thispsfcenter in zip(thispsfs, thispsfcenters):
-            print 'thispsf',thispsf.shape
-            print 'thispsfcenter',thispsfcenter
+            #print 'thispsf',thispsf.shape
+            #print 'thispsfcenter',thispsfcenter
+            if thispsfcenter[0] == 0: continue
             epoch += 1
             if thispsfcenter[0] != self.psfcenter[epoch][0] or thispsfcenter[1] != self.psfcenter[epoch][1]:
                 newpsf = thispsf
