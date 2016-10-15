@@ -1,10 +1,13 @@
 import os
 import subprocess
+import commands
 import numpy as np
 
 def build(psffile, x, y, stampsize):
-    psf = subprocess.Popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
-                                                                                 stampsize)).readlines()
+    #psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
+    #                                                                             stampsize)).readlines()
+    psf = commands.getoutput("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
+                                                                                 stampsize))
     ix, iy, psfval = [], [], []
     for line in psf:
         #print line
