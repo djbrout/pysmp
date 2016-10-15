@@ -476,7 +476,8 @@ class metropolis_hastings():
             #print 'shifting'
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
-            map(self.mapshiftPSF,np.arange(self.Nimage))
+            #map(self.mapshiftPSF,np.arange(self.Nimage))
+            self.shiftPSFall()
             print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
 
