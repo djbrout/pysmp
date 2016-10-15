@@ -31,17 +31,22 @@ def build(psffile, x, y, stampsize):
 
 def buildall(psffile, x, y, stampsize):
     pstring = ''
-    for p,xi,yi in zip(psffile,x,y):
-        pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
-
-    print pstring
+    badvec = []
+    for i,p,xi,yi in zip(np.arange(len(x)),psffile,x,y):
+        if 'SN-' in p:
+            pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
+        else:
+            badvec.append(i)
+    #print pstring
     psf = os.popen(pstring).readlines()
-    print psf
-    sys.exit()
+    #print psf
+    #sys.exit()
+    badvec = np.array(badvec)
     psfouts = []
     imagecenterouts = []
     keepgoing = True
     l = -1
+    vec = 0
     while keepgoing:
         l+=1
         if isnewpsf:
@@ -66,5 +71,9 @@ def buildall(psffile, x, y, stampsize):
                 psfout[y, x] = p
             psfouts.append(psfout)
             imagecenterouts.append((IMAGE_CENTERX, IMAGE_CENTERY))
+            vec += 1
+            if vec in badvec:
+                psfouts.append(psfout*0.)
+                imagecenterouts.append((0,0))
 
-    return (psfout), (IMAGE_CENTERX, IMAGE_CENTERY)
+    return psfouts, imagecenterouts
