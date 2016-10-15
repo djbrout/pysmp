@@ -50,12 +50,12 @@ def buildall(psffile, x, y, stampsize):
     isnewpsf = True
     l = -1
     vec = 0
-    while keepgoing:
+    for line in psf:
+        if not keepgoing: continue
         l+=1
         if isnewpsf:
             isnewpsf = False
             ix, iy, psfval = [], [], []
-        line = psf[l]
 
         line = line.replace('\n', '')
         if line.startswith('PSF:'):
