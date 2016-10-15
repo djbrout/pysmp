@@ -33,6 +33,7 @@ def buildall(psffile, x, y, stampsize):
     pstring = ''
     badvec = []
     for i,p,xi,yi in zip(np.arange(len(x)),psffile,x,y):
+        if i > 5: continue
         print p
         if 'SN-' in p:
             pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
