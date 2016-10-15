@@ -32,8 +32,9 @@ def build(psffile, x, y, stampsize):
 def buildall(psffile, x, y, stampsize):
     pstring = ''
     for p,xi,yi in zip(psffile,x,y):
-        pstring += "dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s; " % (p, xi, yi, stampsize)
+        pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
 
+    print pstring
     psf = os.popen(pstring).readlines()
     print psf
     sys.exit()
