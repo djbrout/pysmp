@@ -33,11 +33,12 @@ def buildall(psffile, x, y, stampsize):
     pstring = ''
     badvec = []
     for i,p,xi,yi in zip(np.arange(len(x)),psffile,x,y):
+        print p
         if 'SN-' in p:
             pstring += "dump_psfex -inFile_psf "+p+" -xpix "+str(xi)+" -ypix "+str(yi)+" -gridSize "+str(stampsize)+"; "
         else:
             badvec.append(i)
-    #print pstring
+    print pstring
     psf = os.popen(pstring).readlines()
     #print psf
     #sys.exit()
@@ -52,7 +53,7 @@ def buildall(psffile, x, y, stampsize):
         if isnewpsf:
             isnewpsf = False
             ix, iy, psfval = [], [], []
-
+        line = psf[l]
 
         line = line.replace('\n', '')
         if line.startswith('PSF:'):
