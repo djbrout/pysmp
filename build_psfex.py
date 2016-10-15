@@ -7,7 +7,7 @@ def build(psffile, x, y, stampsize):
     #psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
     #                                                                             stampsize)).readlines()
     psf = commands.getoutput("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
-                                                                                 stampsize))
+                                                                                 stampsize)).split()
     ix, iy, psfval = [], [], []
     for line in psf:
         #print line
