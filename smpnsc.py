@@ -585,6 +585,8 @@ class smp:
             print 'Follow .smplog at ', self.fermilogfile
             self.tmpwriter.appendfile('running globalstar\n',self.fermilogfile)
             #sys.exit()
+        else:
+            self.fermilogfile = None
 
         print 'reading in starcaftile'
         self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
