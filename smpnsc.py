@@ -584,6 +584,7 @@ class smp:
             self.tmpwriter.writefile('Starting SMP\n',self.fermilogfile)
             print 'Follow .smplog at ', self.fermilogfile
             self.tmpwriter.appendfile('running globalstar\n',self.fermilogfile)
+            print 'DOING FERMILOG'*100
             #sys.exit()
         else:
             self.fermilogfile = None
