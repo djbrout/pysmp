@@ -2943,7 +2943,7 @@ class smp:
                     , psf_shift_std = self.params.sn_shift_std
                     , xoff = xoff
                     , yoff = yoff
-                    , shiftpsf = True
+                    , shiftpsf = False
                     , fileappend = ''
                     , stop = False
                     , skyerr_radius = 12.
