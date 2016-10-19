@@ -142,7 +142,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     variance = 1
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
-    ax2.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal',orientation='horizontal',)
+    ax2.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
 
     ax2.xlim(-5, 5)
     ax2.ylim(0,.5)
