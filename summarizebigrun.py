@@ -139,6 +139,27 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1 = plt.subplot(gs[0])
     ax2 = plt.subplot(gs[1])
 
+    nullfmt = NullFormatter()  # no labels
+
+    # definitions for the axes
+    left, width = 0.1, 0.65
+    bottom, height = 0.1, 0.65
+    bottom_h = left_h = left + width + 0.02
+
+    rect_scatter = [left, bottom, width, height]
+    rect_histx = [left, bottom_h, width, 0.2]
+    rect_histy = [left_h, bottom, 0.2, height]
+
+    # start with a rectangular Figure
+    plt.figure(1, figsize=(8, 8))
+
+    ax1 = plt.axes(rect_scatter)
+    ax3 = plt.axes(rect_histx)
+    ax2 = plt.axes(rect_histy)
+
+    # no labels
+    ax2.xaxis.set_major_formatter(nullfmt)
+    ax3.yaxis.set_major_formatter(nullfmt)
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS: ' + str(round(rms, 3)),
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
@@ -169,6 +190,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
+
+    ax3.set_xlim(ax1.get_xlim())
+    ax2.set_ylim(ax1.get_ylim())
+
     #plt.tight_layout()
     plt.subplots_adjust(wspace=0.001)
 
