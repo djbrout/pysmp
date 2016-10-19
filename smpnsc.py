@@ -984,11 +984,12 @@ class smp:
             #
 
             if nozpt:
+
+                self.rdnoise = hdr[params.rdnoise_name]
+                self.gain = hdr[params.gain_name]
                 print params.gain_name
                 print 'self.gain',self.gain
                 raw_input()
-                self.rdnoise = hdr[params.rdnoise_name]
-                self.gain = hdr[params.gain_name]
 
                 # print starcat.ra
                 # print 'ralow',ra_low
