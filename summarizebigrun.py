@@ -131,35 +131,37 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     dc = d[abs(d) < 3]
     rms = np.sqrt(np.nanmean(np.square(dc)))
 
-    plt.hist(d, bins=np.arange(-10, 10, .25), normed=True,
+    f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+
+    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,
              label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
-                 round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)))
+                 round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),orientation='horizontal')
     import matplotlib.mlab as mlab
     import math
     mean = 0
     variance = 1
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
-    plt.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
+    ax2.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal',orientation='horizontal',)
 
-    plt.xlim(-5, 5)
-    plt.ylim(0,.5)
-    plt.xlabel('STDEV')
-    plt.ylabel('Normalized Count')
-    plt.legend()
-    plt.savefig('stdresid.png')
+    ax2.xlim(-5, 5)
+    ax2.ylim(0,.5)
+    #.xlabel('STDEV')
+    #plt.ylabel('Normalized Count')
+    #plt.legend()
+    #plt.savefig('stdresid.png')
 
-    plt.clf()
-    plt.scatter(fakemag,d,alpha=.3)
+    #plt.clf()
+    ax1.scatter(fakemag,d,alpha=.3)
     ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    ax1.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
-    plt.plot([20, 27], [0, 0])
-    plt.xlim(20, 25)
-    plt.ylim(-4., 4.)
-    plt.xlabel('Fake Mag')
-    plt.ylabel('STD')
-    plt.savefig('stdvsmag.png')
+    ax1.plot([20, 27], [0, 0])
+    ax1.set_xlim(20, 25)
+    ax1.set_ylim(-4., 4.)
+    ax1.set_xlabel('Fake Mag')
+    ax1.set_ylabel('STD')
+    plt.savefig('std.png')
 
 
 
