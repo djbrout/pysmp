@@ -24,7 +24,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 cd = 'tmp_snse.npz'
 def go(resultsdir,isfermigrid=False):
 
@@ -94,7 +94,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     fakeflux = 10**(.4*(31. - fakemag))
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
-    ww = fakemag < 99.
+    ww = fakemag < 24.5
 
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
