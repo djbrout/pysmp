@@ -7,6 +7,8 @@ import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
+from matplotlib.ticker import NullFormatter
+
 from matplotlib.backends.backend_pdf import PdfPages
 
 import pyfits as pf
