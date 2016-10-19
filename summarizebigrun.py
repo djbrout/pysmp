@@ -120,7 +120,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fluxerr = np.asarray(fluxerr)+(flux/4.)**.5
 
 
-    ww = fakemag < 99.
+    ww = fakemag < 24.5
     flux = flux[ww]
     fakemag = fakemag[ww]
     fitzpt = fitzpt[ww]
