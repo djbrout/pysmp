@@ -117,10 +117,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fakezpt = np.asarray(fakezpt)
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
-    fluxerr = np.asarray(fluxerr)+(fakeflux/4.)**.5
+    fluxerr = np.asarray(fluxerr)+(max(flux,0)/4.)**.5
 
 
-    ww = fakemag != 0
+    d = (flux - fakeflux) / fluxerr
+    ww = d<.001
+
     fakemag[fakemag==99] = 29.5
     flux = flux[ww]
     fakemag = fakemag[ww]
@@ -128,6 +130,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fakezpt = fakezpt[ww]
     fakeflux=fakeflux[ww]
     fluxerr=fluxerr[ww]
+    d = d[ww]
 
     #print flux[0:10]
     #print fakeflux[0:10]
