@@ -160,8 +160,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax2 = plt.axes(rect_histy)
 
     # no labels
-    ax2.xaxis.set_major_formatter(nullfmt)
-    ax3.yaxis.set_major_formatter(nullfmt)
+    ax2.yaxis.set_major_formatter(nullfmt)
+    ax3.xaxis.set_major_formatter(nullfmt)
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS: ' + str(round(rms, 3)),
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
@@ -197,8 +197,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax2.set_ylim(ax1.get_ylim())
 
     #plt.tight_layout()
-    plt.subplots_adjust(wspace=0.001)
-
+    plt.subplots_adjust(wspace=0.001,hspace=0.001)
     plt.savefig('std.png')
 
 
