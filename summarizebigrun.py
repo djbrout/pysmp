@@ -121,6 +121,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
 
 
     ww = fakemag < 99.
+    flux = flux[ww]
+    fakemag = fakemag[ww]
+    fitzpt = fitzpt[ww]
+    fakezpt = fakezpt[ww]
+    fakeflux=fakeflux[ww]
+    fluxerr=fluxerr[ww]
+
     print flux[0:10]
     print fakeflux[0:10]
     print flux.shape
