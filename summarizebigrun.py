@@ -144,8 +144,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     x = np.arange(-5, 5, .1)
     ax2.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
 
-    ax2.set_xlim(-5, 5)
-    ax2.set_ylim(0,.5)
+    ax2.set_ylim(-5, 5)
+    ax2.set_xlim(0,.5)
     #.xlabel('STDEV')
     #plt.ylabel('Normalized Count')
     #plt.legend()
@@ -161,6 +161,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
+    plt.tight_layout()
     plt.savefig('std.png')
 
 
