@@ -368,7 +368,9 @@ class metropolis_hastings():
         self.kicked_galaxy_model = copy(self.galaxy_model)
         self.simsnosn = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
         self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky*0.,self.flags,self.fitflags,self.sims,self.gal_conv)
-        
+
+        self.simsnosnnosky = copy(self.modelvec)*0.
+
         self.run_d_mc()
 
 
@@ -416,6 +418,15 @@ class metropolis_hastings():
                 print 'Time per step:',tps
                 #print 'mjdoff: ',self.mjdoff
                 #sys.exit()
+                if (self.counter % 20000) == 0:
+
+                    self.gal_conv = []
+                    for i in np.arange(len(self.psfs)):
+                        self.gal_conv.append(scipy.signal.convolve2d(self.galaxy_model, self.psfs[i], mode='same'))
+
+                    self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
+                                             self.sky * 0., self.flags, self.fitflags, self.sims, self.gal_conv)
+
                 if (self.counter % 1000) == 0:
                     self.plotchains()
                     self.savechains()
