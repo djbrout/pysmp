@@ -193,8 +193,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
 
+    ax, ayrms= bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
+    ax3.scatter(ax, ay, markersize=20, color='green',label='SMP')
+
+
     ax3.set_xlim(ax1.get_xlim())
     ax2.set_ylim(ax1.get_ylim())
+
 
     #plt.tight_layout()
     plt.subplots_adjust(wspace=0.001,hspace=0.001)

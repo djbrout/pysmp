@@ -33,6 +33,29 @@ def bindata(x, y, bins, returnn=False):
         return xvals, medians, mads, nums
     return xvals, medians, mads
 
+def binrms(x, y, bins):
+    medians = np.zeros(len(bins) - 1)
+    mads = np.zeros(len(bins) - 1)
+    nums = np.zeros(len(bins) - 1)
+    rms = np.zeros(len(bins) - 1)
+    for i in np.arange(len(bins) - 1):
+        bs = bins[i]
+        bf = bins[i + 1]
+        ww = [(x > bs) & (x < bf)]
+        yhere = y[ww]
+        yhere = yhere[np.isfinite(yhere) & ~np.isnan(yhere)]
+        ss = [abs(yhere) < 3. * np.std(yhere)]
+        try:
+            nums[i] = len(yhere[ss])
+            d = yhere[ss]
+            dc = d[abs(d) < 3]
+            rms[i] = np.sqrt(np.nanmean(np.square(dc)))
+        except IndexError:
+            print 'excepted'
+            nums[i] = 0.
+            rms[i] = np.nan
+    xvals = (bins[1:] + bins[:-1]) / 2.
+    return xvals, rms
 
 def iterstat(d, startMedian=False, sigmaclip=3.0,iter=6):
     """Get the sigma-clipped mean of
