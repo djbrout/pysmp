@@ -162,14 +162,14 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     #plt.clf()
     ax1.scatter(fakemag,d,alpha=.3)
     ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
-    ax1.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
     ax1.plot([20, 27], [0, 0])
     ax1.set_xlim(20, 25)
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
-    plt.tight_layout()
+    #plt.tight_layout()
     plt.subplots_adjust(wspace=0.001)
 
     plt.savefig('std.png')
