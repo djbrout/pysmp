@@ -193,7 +193,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
 
-    ax, ayrms= dt.binrms(fakemag, d, np.arange(min(fakemag), max(fakemag), .1,.5))
+    ax, ayrms= dt.binrms(fakemag, d, np.arange(min(fakemag), max(fakemag), .1),.5)
     ax3.plot(ax, ay, color='black',label='SMP')
 
 
