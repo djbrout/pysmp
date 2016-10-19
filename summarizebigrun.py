@@ -126,8 +126,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     chisq = (flux - fakeflux) ** 2 / fluxerr ** 2
     chisq = np.mean(chisq[abs(d) < 3])
 
-    d = d[abs(d) < 3]
-    rms = np.sqrt(np.nanmean(np.square(d)))
+    plt.clf()
+
+    dc = d[abs(d) < 3]
+    rms = np.sqrt(np.nanmean(np.square(dc)))
 
     plt.hist(d, bins=np.arange(-10, 10, .25), normed=True,
              label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
@@ -143,6 +145,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     plt.xlim(-5, 5)
     plt.xlabel('STDEV')
     plt.ylabel('Normalized Count')
+    plt.legend()
     plt.savefig('stdresid.png')
     print 'saved stdresid.png'
 
