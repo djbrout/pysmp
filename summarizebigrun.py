@@ -21,7 +21,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 
 def go(resultsdir,isfermigrid=False):
 
@@ -148,7 +148,24 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     plt.ylabel('Normalized Count')
     plt.legend()
     plt.savefig('stdresid.png')
+
+    plt.clf()
+    plt.scatter(fakemag,d,alpha=.3)
+    ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    plt.plot([20, 27], [0, 0])
+    plt.xlim(20, 25)
+    plt.ylim(-4., 4.)
+    plt.xlabel('Fake Mag')
+    plt.ylabel('STD')
+    plt.savefig('stdvsmag.png')
+
+
+
     print 'saved stdresid.png'
+
+
 
 def bindata(x, y, bins, returnn=False):
     medians = np.zeros(len(bins) - 1)
