@@ -169,7 +169,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
     plt.tight_layout()
-    plt.subplots_adjust(vspace=0.001)
+    plt.subplots_adjust(wspace=0.001)
 
     plt.savefig('std.png')
 
