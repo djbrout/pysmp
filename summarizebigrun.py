@@ -143,6 +143,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     plt.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
 
     plt.xlim(-5, 5)
+    plt.ylim(0,.7)
     plt.xlabel('STDEV')
     plt.ylabel('Normalized Count')
     plt.legend()
