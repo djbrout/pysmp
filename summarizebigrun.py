@@ -22,10 +22,10 @@ import meanclip
 import dilltools as dt
 
 
-resultsdir = '/pnfs/des/scratch/pysmp/smp_02'
+resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = True
-
+cacheddata = False
+cd = 'tmp_snse.npz'
 def go(resultsdir,isfermigrid=False):
 
     if isfermigrid:
@@ -38,7 +38,7 @@ def go(resultsdir,isfermigrid=False):
         data = grabdata(tmpwriter,resultsdir)
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
-        data = np.load('tmp.npz')
+        data = np.load(cd)
     print data.keys()
     print len(data['Flux'])
 
@@ -59,7 +59,7 @@ def grabdata(tmpwriter,resultsdir):
     if not os.path.exists(os.path.join(resultsdir,'Summary')):
         os.makedirs(os.path.join(resultsdir,'Summary'))
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
-    outfile = 'tmp.npz'
+    outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[]}
 
     for f in smpfiles:
@@ -117,7 +117,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fakezpt = np.asarray(fakezpt)
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
-    fluxerr = np.asarray(fluxerr)+(fakeflux/4.)**.5
+    fluxerr = np.asarray(fluxerr)+(flux/4.)**.5
 
 
     ww = fakemag < 99.
