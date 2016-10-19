@@ -19,7 +19,7 @@ import meanclip
 import dilltools as dt
 
 
-resultsdir = '/pnfs/des/scratch/pysmp/smp_02/'
+resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
 cacheddata = True
 
