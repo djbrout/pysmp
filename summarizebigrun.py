@@ -22,9 +22,9 @@ import meanclip
 import dilltools as dt
 
 
-resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
+resultsdir = '/pnfs/des/scratch/pysmp/smp_02'
 isfermigrid = True
-cacheddata = True
+cacheddata = False
 
 def go(resultsdir,isfermigrid=False):
 
