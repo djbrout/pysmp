@@ -128,10 +128,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fakeflux=fakeflux[ww]
     fluxerr=fluxerr[ww]
 
-    print flux[0:10]
-    print fakeflux[0:10]
-    print flux.shape
-    print fakeflux.shape
+    #print flux[0:10]
+    #print fakeflux[0:10]
+    #print flux.shape
+    #print fakeflux.shape
     d = (flux - fakeflux) / fluxerr
 
     chisq = (flux - fakeflux) ** 2 / fluxerr ** 2
