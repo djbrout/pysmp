@@ -984,6 +984,9 @@ class smp:
             #
 
             if nozpt:
+                print params.gain_name
+                print 'self.gain',self.gain
+                raw_input()
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain = hdr[params.gain_name]
 
