@@ -6,6 +6,7 @@ import sys
 import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import gridspec
 from matplotlib.backends.backend_pdf import PdfPages
 
 import pyfits as pf
@@ -131,7 +132,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     dc = d[abs(d) < 3]
     rms = np.sqrt(np.nanmean(np.square(dc)))
 
-    f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+    #f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+
+    fig = plt.figure(figsize=(8, 6))
+    gs = gridspec.GridSpec(1, 2, width_ratios=[4, 1])
+    ax1 = plt.subplot(gs[0])
+    ax2 = plt.subplot(gs[1])
+
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,
              label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
@@ -162,6 +169,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
     plt.tight_layout()
+    plt.subplots_adjust(vspace=0.001)
+
     plt.savefig('std.png')
 
 
