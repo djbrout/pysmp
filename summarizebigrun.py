@@ -22,7 +22,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 
 def go(resultsdir,isfermigrid=False):
 
