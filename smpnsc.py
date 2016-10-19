@@ -2576,6 +2576,7 @@ class smp:
 
         if self.fermigrid and self.worker:
             os.system('ifdh mkdir '+os.path.join(galaxyfoldername,'np_data'))
+            os.system('ifdh mkdir '+os.path.join(oldoutdir,'np_data'))
             os.system('ifdh mkdir '+npoutdir)
         else:
             if not os.path.exists(npoutdir):
@@ -2614,7 +2615,6 @@ class smp:
 
 
         zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
-        os.popen('ifdh mkdir '+npoutdir)
         self.tmpwriter.savez(zptnpz
                 , mjd = smp_dict['mjd']
                 , band = filt
