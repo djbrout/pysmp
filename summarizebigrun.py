@@ -21,7 +21,7 @@ import dilltools as dt
 
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02/'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 
 def go(resultsdir,isfermigrid=False):
 
@@ -40,6 +40,8 @@ def go(resultsdir,isfermigrid=False):
     print len(data['Flux'])
 
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
+    plotsigmaresid['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'])
+
 
 def grabdata(tmpwriter,resultsdir):
 
@@ -104,6 +106,42 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     plt.ylabel('Percentage Flux Difference')
     plt.savefig('percentagefluxdiff.png')
     print 'saved png'
+
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
+    flux = np.asarray(flux)
+    fluxerr = np.asarray(fluxerr)
+    fakemag = np.asarray(fakemag)
+    fitzpt = np.asarray(fitzpt)
+    fakezpt = np.asarray(fakezpt)
+    fakeflux = 10 ** (.4 * (31. - fakemag))
+    fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
+
+    ww = fakemag < 99.
+
+    d = (flux - fakeflux) / fluxerr
+
+    chisq = (flux - fakeflux) ** 2 / fluxerr ** 2
+    chisq = np.mean(chisq[abs(d) < 3])
+
+    d = d[abs(d) < 3]
+    rms = np.sqrt(np.nanmean(np.square(d)))
+
+    plt.hist(d, bins=np.arange(-10, 10, .25), normed=True,
+             label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
+                 round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)))
+    import matplotlib.mlab as mlab
+    import math
+    mean = 0
+    variance = 1
+    sigma = math.sqrt(variance)
+    x = np.arange(-5, 5, .1)
+    plt.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
+
+    plt.xlim(-5, 5)
+    plt.xlabel('STDEV')
+    plt.ylabel('Normalized Count')
+    plt.savefig('stdresid.png')
+    print 'saved stdresid.png'
 
 def bindata(x, y, bins, returnn=False):
     medians = np.zeros(len(bins) - 1)
