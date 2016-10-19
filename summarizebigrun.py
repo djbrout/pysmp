@@ -124,7 +124,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     d = (flux - fakeflux) / fluxerr
 
     chisq = (flux - fakeflux) ** 2 / fluxerr ** 2
-    chisq = np.mean(chisq[abs(d) < 3])
+    chisq = np.nanmean(chisq[abs(d) < 3])
 
     plt.clf()
 

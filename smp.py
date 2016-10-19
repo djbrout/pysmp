@@ -965,7 +965,9 @@ class smp:
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain = hdr[params.gain_name]
-                
+                print params.gain_name
+                print 'self.gain',self.gain
+                raw_input()
                 cols = np.where((starcat.ra > ra_low) & 
                                 (starcat.ra < ra_high) & 
                                 (starcat.dec > dec_low) & 

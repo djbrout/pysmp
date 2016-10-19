@@ -202,7 +202,7 @@ class metropolis_hastings():
         self.usecustomweight = usecustomweight
         self.customweights = customweights
         self.comboerr = comboerr
-        #self.comboerr = True
+        self.comboerr = True
         self.covarerr = False
         self.didtimeout = False
         self.isfermigrid = isfermigrid
