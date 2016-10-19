@@ -421,7 +421,7 @@ class metropolis_hastings():
                 if (self.counter % 20000) == 0:
 
                     self.gal_conv = []
-                    for i in np.arange(len(self.psfs)):
+                    for i in np.arange(len(self.psfs)):#NEED TO MAKE THE GALAXY MODEL AN AVERAGE AND NOT JUST LAST MCMC STEP
                         self.gal_conv.append(scipy.signal.convolve2d(self.galaxy_model, self.psfs[i], mode='same'))
 
                     self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
