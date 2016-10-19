@@ -194,7 +194,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax1.set_ylabel('STD')
 
     ax, ayrms= dt.binrms(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
-    ax3.scatter(ax, ay, markersize=20, color='green',label='SMP')
+    ax3.scatter(ax, ay, size=20, color='green',label='SMP')
 
 
     ax3.set_xlim(ax1.get_xlim())
