@@ -40,7 +40,7 @@ def go(resultsdir,isfermigrid=False):
     print len(data['Flux'])
 
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
-    plotsigmaresid['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'])
+    plotsigmaresid(['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'])
 
 
 def grabdata(tmpwriter,resultsdir):
