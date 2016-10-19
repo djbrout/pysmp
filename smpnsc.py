@@ -987,9 +987,9 @@ class smp:
 
                 self.rdnoise = hdr[params.rdnoise_name]
                 self.gain = hdr[params.gain_name]
-                print params.gain_name
-                print 'self.gain',self.gain
-                raw_input()
+                # print params.gain_name
+                # print 'self.gain',self.gain
+                # raw_input()
 
                 # print starcat.ra
                 # print 'ralow',ra_low
@@ -1134,8 +1134,8 @@ class smp:
             #if round(snparams.mjd[j]) != 56559:
             #    continue
             #raw_input('passed')
-            #if cccc > 5:
-            #    continue
+            if cccc > 3:
+                continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
