@@ -121,7 +121,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
 
 
     d = (flux - fakeflux) / fluxerr
-    ww = abs(d)>.001
+    ww = fakemag < 27.
 
     fakemag[fakemag==99] = 29.5
     flux = flux[ww]
@@ -199,8 +199,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.plot([20, 30], [0, 0])
-    ax1.set_xlim(20, 30)
+    ax1.plot([20, 27], [0, 0])
+    ax1.set_xlim(20, 27)
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
