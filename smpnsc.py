@@ -2614,7 +2614,7 @@ class smp:
 
 
         zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
-
+        os.popen('ifdh mkdir '+npoutdir)
         self.tmpwriter.savez(zptnpz
                 , mjd = smp_dict['mjd']
                 , band = filt
