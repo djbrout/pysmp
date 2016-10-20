@@ -24,7 +24,7 @@ import dilltools as dt
 fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = True
+cacheddata = False
 cd = 'tmp_snse.npz'
 def go(resultsdir,isfermigrid=False):
 
