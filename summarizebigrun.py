@@ -162,7 +162,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     plt.clf()
 
     dc = d[abs(d) < 3]
-    rms = np.sqrt(np.nanmean(np.square(dc)))
+
+    dc99 = d[fakemag == 99]
+    rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
+    dcr = d[fakemag != 99]
+    rmsr = np.sqrt(np.nanmean(np.square(dcr[abs(dcr) < 3.])))
 
     #f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
 
@@ -193,7 +197,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax2.yaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
 
-    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS: ' + str(round(rms, 3)),orientation='horizontal')
+    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
+                                                                '\n RMS Fakemag < 99: '+ str(round(rms99, 3))
+             ,orientation='horizontal')
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
 
@@ -267,7 +273,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax2.yaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
 
-    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3)),
+    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
+                                                                '\n RMS Fakemag < 99: '+ str(round(rms99, 3)),
              # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
              orientation='horizontal')
