@@ -60,7 +60,7 @@ def grabdata(tmpwriter,resultsdir):
         os.makedirs(os.path.join(resultsdir,'Summary'))
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
-    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[]}
+    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[]}
 
     for f in smpfiles:
         data = dt.readcol(f)
@@ -76,8 +76,18 @@ def grabdata(tmpwriter,resultsdir):
             print 'Columns missing in file '+f
 
         fakef = f.split('/')[-1][:17]
+        filt = f.split('/')[-1][18]
         fakefile = os.path.join(fakedir,fakef+'.dat')
-        print fakefile
+        ff = open(fakefile,'r').readlines()
+        print 'fileter',filt
+        hostmag = -999
+        raw_input()
+        for l in ff:
+            key = l.split(':')[0]
+            if key == 'FAKE_HOSTMAG_'+filt:
+                hostmag = float(l.split(':')[1])
+        print 'hostmag',hostmag
+        bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
         raw_input()
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
