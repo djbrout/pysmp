@@ -81,14 +81,14 @@ def grabdata(tmpwriter,resultsdir):
         ff = open(fakefile,'r').readlines()
         print 'fileter',filt
         hostmag = -999
-        raw_input()
+        #raw_input()
         for l in ff:
             key = l.split(':')[0]
             if key == 'FAKE_HOSTMAG_'+filt:
                 hostmag = float(l.split(':')[1])
         print 'hostmag',hostmag
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
-        raw_input()
+        #raw_input()
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
