@@ -217,9 +217,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.plot([20, 28], [0, 0])
-    ax1.set_xlim(20, 28)
-    ax1.set_ylim(-4., 4.)
+    ax1.plot([20, 27], [0, 0])
+    ax1.set_xlim(20, 27)
+    ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
 
@@ -279,7 +279,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     x = np.arange(-5, 5, .1)
     ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
 
-    ax2.set_ylim(-4, 4)
+    #ax2.set_ylim(-3, 3)
     ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
@@ -291,9 +291,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax, ay, aystd = bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.plot([21.5, 28], [0, 0])
-    ax1.set_xlim(21.5, 28)
-    ax1.set_ylim(-4., 4.)
+    ax1.plot([21.5, 27], [0, 0])
+    ax1.set_xlim(21.5, 27)
+    ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('27.5 - 2.5 * log( Host SB Fluxcal )')
     ax1.set_ylabel('STD')
 
