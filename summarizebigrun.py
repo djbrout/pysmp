@@ -290,8 +290,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax, ay, aystd = bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.plot([18, 27], [0, 0])
-    ax1.set_xlim(18, 27)
+    ax1.plot([20, 27], [0, 0])
+    ax1.set_xlim(120, 27)
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Host Mag')
     ax1.set_ylabel('STD')
