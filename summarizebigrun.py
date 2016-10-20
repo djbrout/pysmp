@@ -262,16 +262,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
                             np.arange(min(fakemag), max(fakemag), .1),window=1.)
     ax4.plot([19, 28], [0, 0],color='grey')
 
-    ax, ayrms = dt.binrms(fakemag, d, np.arange(min(hostmag), max(hostmag), .1), .5)
+    ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
     ww = hostmag > 25.
-    ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(min(fakemag), max(fakemag), .1), .5)
+    ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
 
     ww = hostmag < 25.
-    ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(min(fakemag), max(fakemag), .1), .5)
+    ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     ax3.plot(ax, ayrms, color='green', label='HostMag < 25', linewidth=3)
     ax3.legend(fontsize='small')
 
