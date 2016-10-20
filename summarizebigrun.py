@@ -24,7 +24,7 @@ import dilltools as dt
 fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 cd = 'tmp_snse.npz'
 def go(resultsdir,isfermigrid=False):
 
@@ -43,7 +43,7 @@ def go(resultsdir,isfermigrid=False):
     print len(data['Flux'])
 
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
-    plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'])
+    plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'])
 
 
 def grabdata(tmpwriter,resultsdir):
@@ -125,7 +125,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     plt.savefig('percentagefluxdiff.png')
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fitzpt = np.asarray(fitzpt)
@@ -133,6 +133,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     fluxerr = np.asarray(fluxerr)+(abs(flux)/4.)**.5
+    hostmag = np.array(hostmag)
 
 
     d = (flux - fakeflux) / fluxerr
@@ -143,9 +144,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     fakemag = fakemag[ww]
     fitzpt = fitzpt[ww]
     fakezpt = fakezpt[ww]
-    fakeflux=fakeflux[ww]
+    fakeflux= fakeflux[ww]
     fluxerr=fluxerr[ww]
     d = d[ww]
+    hostmag = hostmag[ww]
 
     #print flux[0:10]
     #print fakeflux[0:10]
@@ -234,6 +236,79 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt):
     #plt.tight_layout()
     plt.subplots_adjust(wspace=0.001,hspace=0.001)
     plt.savefig('std.png')
+
+
+    #--------------------------------------------------------------------------------------
+    plt.clf()
+    fig = plt.figure(figsize=(16, 12))
+    gs = gridspec.GridSpec(1, 2, width_ratios=[4, 1])
+    ax1 = plt.subplot(gs[0])
+    ax2 = plt.subplot(gs[1])
+
+    nullfmt = NullFormatter()  # no labels
+
+    # definitions for the axes
+    left, width = 0.1, 0.65
+    bottom, height = 0.1, 0.65
+    bottom_h = left_h = left + width + 0.02
+
+    rect_scatter = [left, bottom, width, height]
+    rect_histx = [left, bottom_h, width, 0.2]
+    rect_histy = [left_h, bottom, 0.2, height]
+
+    plt.figure(1, figsize=(8, 8))
+
+    ax1 = plt.axes(rect_scatter)
+    ax3 = plt.axes(rect_histx)
+    ax2 = plt.axes(rect_histy)
+
+    # no labels
+    ax2.yaxis.set_major_formatter(nullfmt)
+    ax3.xaxis.set_major_formatter(nullfmt)
+
+    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3)),
+             # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
+             #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
+             orientation='horizontal')
+    import matplotlib.mlab as mlab
+    import math
+    mean = 0
+    variance = 1
+    sigma = math.sqrt(variance)
+    x = np.arange(-5, 5, .1)
+    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+
+    ax2.set_ylim(-4, 4)
+    ax2.set_xlim(0, .5)
+    # .xlabel('STDEV')
+    # plt.ylabel('Normalized Count')
+    ax2.legend()
+    # plt.savefig('stdresid.png')
+
+    # plt.clf()
+    ax1.scatter(hostmag, d, alpha=.3)
+    ax, ay, aystd = bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .5))
+    ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
+
+    ax1.plot([18, 27], [0, 0])
+    ax1.set_xlim(18, 27)
+    ax1.set_ylim(-4., 4.)
+    ax1.set_xlabel('Host Mag')
+    ax1.set_ylabel('STD')
+
+    ax, ayrms = dt.binrms(hostmag, d, np.arange(min(hostmag), max(hostmag), .1), .5)
+    ax3.plot(ax, ayrms, color='black', label='RMS', linewidth=3)
+    ax3.plot(ax, ax * 0 + 1., linestyle='--')
+    ax3.set_ylim(.7, 1.5)
+    ax3.legend()
+
+    ax3.set_xlim(ax1.get_xlim())
+    ax2.set_ylim(ax1.get_ylim())
+
+    # plt.tight_layout()
+    plt.subplots_adjust(wspace=0.001, hspace=0.001)
+    plt.savefig('hostmagstd.png')
+
 
 
 
