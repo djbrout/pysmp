@@ -200,6 +200,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     # no labels
     ax2.yaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
+    ax5.yaxis.set_major_formatter(nullfmt)
+
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
                                                                 '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))
@@ -223,7 +225,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     #plt.savefig('stdresid.png')
 
     #plt.clf()
-    ax1.scatter(fakemag,d,alpha=.3)
+    ax1.scatter(fakemag,d,alpha=.3,color='blue')
     ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
@@ -241,10 +243,22 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.set_ylim(.7,1.5)
     ax3.legend(fontsize='small')
 
+    fresid = (flux - fakeflux) / fakeflux
+    ax5.hist(fresid, bins=(-.10125,.1,.025),color='blue', orientation='horizontal')
+
+    ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
+    ax, ay, aystd = dt.bindata(fakemag,fresid,
+                            np.arange(min(fakemag), max(fakemag), .1),window=.5)
+    ax4.plot(ax, ay, linewidth=3, color='green')
+    ax4.plot(ax, ay+aystd, linewidth=2, color='green',linestyle='--')
+    ax4.plot(ax, ay-aystd, linewidth=2, color='green',linestyle='--')
+    ax4.set_xlim(ax1.get_xlim())
+    ax4.set_ylim(-.1,.1)
+
 
     ax3.set_xlim(ax1.get_xlim())
     ax2.set_ylim(ax1.get_ylim())
-
+    ax5.set_ylim(ax4.get_ylim())
 
     #plt.tight_layout()
     plt.subplots_adjust(wspace=0.001,hspace=0.001)

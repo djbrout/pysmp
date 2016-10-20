@@ -7,7 +7,7 @@ import sys
 
 #hello from fermilab2
 # Returns xvals, medians, mads
-def bindata(x, y, bins, returnn=False):
+def bindata(x, y, bins, returnn=False, window=0.):
     medians = np.zeros(len(bins) - 1)
     mads = np.zeros(len(bins) - 1)
     nums = np.zeros(len(bins) - 1)
@@ -15,7 +15,7 @@ def bindata(x, y, bins, returnn=False):
     for i in np.arange(len(bins) - 1):
         bs = bins[i]
         bf = bins[i + 1]
-        ww = [(x > bs) & (x < bf)]
+        ww = [(x > bs-window) & (x < bf+window)]
         yhere = y[ww]
         yhere = yhere[np.isfinite(yhere) & ~np.isnan(yhere)]
         ss = [abs(yhere) < 3. * np.std(yhere)]
@@ -32,6 +32,7 @@ def bindata(x, y, bins, returnn=False):
     if returnn:
         return xvals, medians, mads, nums
     return xvals, medians, mads
+
 
 def binrms(x, y, bins,rad):
     medians = np.zeros(len(bins) - 1)
