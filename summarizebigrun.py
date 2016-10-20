@@ -248,6 +248,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.legend(fontsize='small')
 
     fresid = (flux - fakeflux) / fakeflux
+    fresid[fakeflux < 1.] = flux[fakeflux < 1.] - fakeflux[fakeflux < 1.]
     ax5.hist(fresid, bins=np.arange(-.15,.15,.005),color='blue', orientation='horizontal')
 
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
