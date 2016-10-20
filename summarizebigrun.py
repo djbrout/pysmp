@@ -225,16 +225,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     #plt.savefig('stdresid.png')
 
     #plt.clf()
+    fakemag[fakemag == 99] = 28.5
+
     ax1.scatter(fakemag,d,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(fakemag, d, np.arange(19.5, max(fakemag), .1),window=.5)
-    ax1.plot([19, 28], [0, 0],color='grey')
+    ax1.plot([19, 28.7], [0, 0],color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
     ax1.plot(ax, ay-aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
 
     #ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(19, 28)
+    ax1.set_xlim(19, 28.7)
     ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
@@ -257,10 +259,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
+
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(fakemag,fresid,
                             np.arange(19.5, max(fakemag), .1),window=1.)
-    ax4.plot([19, 28], [0, 0],color='grey')
+    ax4.plot([19, 28.7], [0, 0],color='grey')
 
     ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
