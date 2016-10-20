@@ -215,7 +215,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax2.set_xlim(0,.5)
     #.xlabel('STDEV')
     #plt.ylabel('Normalized Count')
-    ax2.legend()
+    ax2.legend(fontsize='small')
     #plt.savefig('stdresid.png')
 
     #plt.clf()
@@ -244,7 +244,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     ax3.plot(ax,ax*0+1.,linestyle='--',color='black')
     ax3.set_ylim(.7,1.5)
-    ax3.legend()
+    ax3.legend(fontsize='small')
 
 
     ax3.set_xlim(ax1.get_xlim())
@@ -301,7 +301,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
-    ax2.legend()
+    ax2.legend(fontsize='small')
     # plt.savefig('stdresid.png')
 
     # plt.clf()
@@ -329,7 +329,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     ax3.set_ylim(.7, 1.5)
     ax3.set_ylabel('RMS')
-    ax3.legend()
+    ax3.legend(fontsize='small')
 
     ax3.set_xlim(ax1.get_xlim())
     ax2.set_ylim(ax1.get_ylim())
