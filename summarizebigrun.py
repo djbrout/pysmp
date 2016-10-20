@@ -198,7 +198,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.xaxis.set_major_formatter(nullfmt)
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-                                                                '\n RMS Fakemag < 99: '+ str(round(rms99, 3))
+                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))
              ,orientation='horizontal')
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
@@ -285,7 +285,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.xaxis.set_major_formatter(nullfmt)
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-                                                                '\n RMS Fakemag < 99: '+ str(round(rms99, 3)),
+                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3)),
              # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
              orientation='horizontal')
