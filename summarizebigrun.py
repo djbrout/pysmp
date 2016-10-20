@@ -262,6 +262,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax4.set_ylim(-.05,.05)
     ax4.set_xlabel('Fake Mag')
     ax5.set_xlabel('Counts')
+    ax3.set_ylabel('RMS')
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
     ax3.set_xlim(ax1.get_xlim())
