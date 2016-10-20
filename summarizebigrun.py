@@ -228,9 +228,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax1.scatter(fakemag,d,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(fakemag, d, np.arange(19.5, max(fakemag), .1),window=.5)
     ax1.plot([19, 28], [0, 0],color='grey')
-    ax1.plot(ax, ay, linewidth=3, color='green', label='SMP')
-    ax1.plot(ax, ay+aystd, linewidth=2, color='green',linestyle='--', label='SMP')
-    ax1.plot(ax, ay-aystd, linewidth=2, color='green',linestyle='--', label='SMP')
+    ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    ax1.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
+    ax1.plot(ax, ay-aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
 
     #ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
@@ -262,11 +262,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
                             np.arange(min(fakemag), max(fakemag), .1),window=1.)
     ax4.plot([19, 28], [0, 0],color='grey')
 
-    ax4.plot(ax, ay, linewidth=3, color='green')
-    ax4.plot(ax, ay+aystd, linewidth=2, color='green',linestyle='--')
-    ax4.plot(ax, ay-aystd, linewidth=2, color='green',linestyle='--')
+    ax4.plot(ax, ay, linewidth=3, color='orange')
+    ax4.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--')
+    ax4.plot(ax, ay-aystd, linewidth=2, color='orange',linestyle='--')
     ax4.set_xlim(ax1.get_xlim())
-    ax4.set_ylim(-.05,.05)
+    ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
