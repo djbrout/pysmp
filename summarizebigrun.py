@@ -277,6 +277,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax5.set_ylim(ax4.get_ylim())
     ax2.xaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
+    ax1.xaxis.set_major_formatter(nullfmt)
+
     plt.subplots_adjust(wspace=0.001,hspace=0.001)
     plt.savefig('std.png')
 
@@ -389,6 +391,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax5.set_ylim(ax4.get_ylim())
     ax2.xaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
+    ax1.xaxis.set_major_formatter(nullfmt)
     plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
     ax, ayrms = dt.binrms(hostmag, d, np.arange(min(hostmag), max(hostmag), .1), .5)
