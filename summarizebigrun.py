@@ -355,7 +355,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax1.set_ylabel('STD')
 
     ax, ayrms= dt.binrms(hostmag, d, np.arange(min(hostmag), max(hostmag), .1),.5)
-    ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
+    #ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
