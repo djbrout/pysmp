@@ -255,7 +255,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
             fresid[i] = (f - ff) / max([abs(ff),1.])
     #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-    ax5.hist(fresid, bins=np.arange(-.150,.15,.005),color='blue', orientation='horizontal',align='center')
+    ax5.hist(fresid, bins=np.arange(-.1525,.15,.005),color='blue', orientation='horizontal')
 
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(fakemag,fresid,
