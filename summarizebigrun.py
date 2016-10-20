@@ -243,7 +243,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
-    ax3.plot([0,100],[0.,0],linestyle='--',color='black')
+    ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
     ax3.set_ylim(.7,1.5)
     ax3.legend(fontsize='small')
 
