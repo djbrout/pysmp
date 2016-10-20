@@ -182,7 +182,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     bottom, height = 0.1, 0.65
     bottom_h = left_h = left + width + 0.02
 
-    rect_scatter = [left, bottom+height/2., width, height]
+    rect_scatter = [left, bottom+height/2., width, height/2.]
     rect_scatterflux = [left, bottom, width, height/2.]
     rect_histx = [left, bottom_h, width, 0.2]
     rect_histy = [left_h, bottom, 0.2, height]
