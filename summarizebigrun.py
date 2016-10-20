@@ -185,7 +185,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     rect_scatter = [left, bottom+height/2., width, height/2.]
     rect_scatterflux = [left, bottom, width, height/2.]
     rect_histx = [left, bottom_h, width, 0.2]
-    rect_histy = [left_h, bottom, 0.2, height]
+    rect_histy = [left_h, bottom+height/2., 0.2, height/2.]
+    rect_histyflux = [left_h, bottom, 0.2, height/2.]
 
     # start with a rectangular Figure
     plt.figure(1, figsize=(8, 8))
@@ -194,6 +195,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3 = plt.axes(rect_histx)
     ax2 = plt.axes(rect_histy)
     ax4 = plt.axes(rect_scatterflux)
+    ax5 = plt.axes(rect_histyflux)
 
     # no labels
     ax2.yaxis.set_major_formatter(nullfmt)
