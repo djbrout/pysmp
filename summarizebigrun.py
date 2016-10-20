@@ -21,7 +21,7 @@ import sigma_clip
 import meanclip
 import dilltools as dt
 
-
+fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
 cacheddata = True
@@ -74,6 +74,11 @@ def grabdata(tmpwriter,resultsdir):
             print f,'read in'
         except:
             print 'Columns missing in file '+f
+
+        fakef = f.split('/')[-1][:17]
+        fakefile = os.path.join(fakedir,fakef+'.dat')
+        print fakefile
+        raw_input()
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
