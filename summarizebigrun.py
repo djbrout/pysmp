@@ -275,7 +275,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     ww = hostmag < 22.
     ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    ax3.plot(ax, ayrms, color='green', label='HostMag < 25', linewidth=3)
+    ax3.plot(ax, ayrms, color='green', label='HostMag < 22', linewidth=3)
     ax3.legend(fontsize='small')
 
     ax4.plot(ax, ay, linewidth=3, color='orange')
