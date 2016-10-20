@@ -20,13 +20,13 @@ from scipy.interpolate import UnivariateSpline
 import sigma_clip
 import meanclip
 import dilltools as dt
-
-fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
-resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-isfermigrid = True
-cacheddata = True
-cd = 'tmp_snse.npz'
-def go(resultsdir,isfermigrid=False):
+#
+# fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
+# resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
+# isfermigrid = True
+# cacheddata = True
+# cd = 'tmp_snse.npz'
+def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 
     if isfermigrid:
         useifdh = True
@@ -351,4 +351,36 @@ def bindata(x, y, bins, returnn=False):
 
 
 if __name__ == "__main__":
-    go(resultsdir)
+    fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
+    resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
+    isfermigrid = True
+    cacheddata = True
+    cd = 'tmp_snse.npz'
+
+    import sys, getopt
+
+    try:
+        args = sys.argv[1:]
+
+        opt, arg = getopt.getopt(
+            args, "fd:rd:cd:cdf",
+            longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile="])
+
+    except getopt.GetoptError as err:
+        print "No command line arguments"
+
+
+    for o,a in opt:
+        if o in ["-h","--help"]:
+            print __doc__
+            sys.exit(0)
+        elif o in ["-fd","--fakedir"]:
+            fakedir = a
+        elif o in ["-rd","--resultsdir"]:
+            resultsdir = a
+        elif o in ["-cd","--cacheddata"]:
+            cacheddata = True
+        elif o in ["-cdf","--cachedfile"]:
+            cd = a
+
+    go(fakedir,resultsdir,cacheddata,cd)
