@@ -247,8 +247,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.set_ylim(.7,1.5)
     ax3.legend(fontsize='small')
 
-    fresid = (flux - fakeflux) / abs(fakeflux)
-    fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+    fresid = np.zeros(flux.shape)
+    for i,f,ff in zip(range(len(flux)),flux,fakeflux):
+        fresid[i] = (f - ff) / max([abs(fakeflux),1.])
+    #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+
     ax5.hist(fresid, bins=np.arange(-.15,.15,.005),color='blue', orientation='horizontal')
 
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
