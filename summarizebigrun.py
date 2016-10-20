@@ -138,17 +138,17 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
 
     d = (flux - fakeflux) / fluxerr
-    ww = fakemag < 27.
+    ww = fakemag < 28.
 
     #fakemag[fakemag==99] = 29.5
-    flux = flux[ww]
-    fakemag = fakemag[ww]
-    fitzpt = fitzpt[ww]
-    fakezpt = fakezpt[ww]
-    fakeflux= fakeflux[ww]
-    fluxerr=fluxerr[ww]
-    d = d[ww]
-    hostmag = hostmag[ww]
+    # flux = flux[ww]
+    # fakemag = fakemag[ww]
+    # fitzpt = fitzpt[ww]
+    # fakezpt = fakezpt[ww]
+    # fakeflux= fakeflux[ww]
+    # fluxerr=fluxerr[ww]
+    # d = d[ww]
+    # hostmag = hostmag[ww]
 
     #print flux[0:10]
     #print fakeflux[0:10]
@@ -217,8 +217,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax, ay, aystd = bindata(fakemag, d, np.arange(min(fakemag), max(fakemag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.plot([20, 27], [0, 0])
-    ax1.set_xlim(20, 27)
+    ax1.plot([20, 28], [0, 0])
+    ax1.set_xlim(20, 28)
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Fake Mag')
     ax1.set_ylabel('STD')
@@ -291,8 +291,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax, ay, aystd = bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .5))
     ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.plot([21.5, 27], [0, 0])
-    ax1.set_xlim(21.5, 27)
+    ax1.plot([21.5, 28], [0, 0])
+    ax1.set_xlim(21.5, 28)
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('27.5 - 2.5 * log( Host SB Fluxcal )')
     ax1.set_ylabel('STD')
