@@ -24,7 +24,7 @@ import dilltools as dt
 fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = True
+cacheddata = False
 cd = 'tmp_snse.npz'
 def go(resultsdir,isfermigrid=False):
 
@@ -84,8 +84,9 @@ def grabdata(tmpwriter,resultsdir):
         #raw_input()
         for l in ff:
             key = l.split(':')[0]
-            if key == 'FAKE_HOSTMAG_'+filt:
-                hostmag = float(l.split(':')[1])
+            if key == 'HOSTGAL_SB_FLUXCAL':
+                if filt == 'r':
+                    hostmag = 27.5 - 2.5 * np.log10(float(l.split(':')[2]))
         print 'hostmag',hostmag
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
         #raw_input()
