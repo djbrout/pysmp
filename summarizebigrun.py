@@ -358,7 +358,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
     ax3.set_ylim(.7,1.5)
-    ax3.legend(fontsize='small')
 
     fresid = np.zeros(flux.shape)
     for i,f,ff in zip(range(len(flux)),flux,fakeflux):
@@ -403,6 +402,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ww = fakemag < 22.
     ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), .5)
     ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
+    ax3.legend(fontsize='small')
 
     plt.savefig('hostmagstd.png')
 
