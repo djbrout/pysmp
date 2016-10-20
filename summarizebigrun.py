@@ -24,7 +24,7 @@ import dilltools as dt
 fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
 resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
 isfermigrid = True
-cacheddata = False
+cacheddata = True
 cd = 'tmp_snse.npz'
 def go(resultsdir,isfermigrid=False):
 
@@ -294,13 +294,19 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax1.plot([21.5, 27], [0, 0])
     ax1.set_xlim(21.5, 27)
     ax1.set_ylim(-4., 4.)
-    ax1.set_xlabel('Host Mag')
+    ax1.set_xlabel('27.5 - 2.5 * log( Host SB Fluxcal )')
     ax1.set_ylabel('STD')
 
     ax, ayrms = dt.binrms(hostmag, d, np.arange(min(hostmag), max(hostmag), .1), .5)
-    ax3.plot(ax, ayrms, color='black', label='RMS', linewidth=3)
-    ax3.plot(ax, ax * 0 + 1., linestyle='--')
+    ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
+    ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
+
+    ww = fakemag == 99
+    ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), .5)
+    ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
+
     ax3.set_ylim(.7, 1.5)
+    ax3.set_ylabel('RMS')
     ax3.legend()
 
     ax3.set_xlim(ax1.get_xlim())
