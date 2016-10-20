@@ -414,7 +414,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
 
-    ww = fakemag == 99
+    ww = fakemag == 28.5
     ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), .5)
     ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
 
