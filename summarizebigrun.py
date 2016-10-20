@@ -249,7 +249,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     fresid = np.zeros(flux.shape)
     for i,f,ff in zip(range(len(flux)),flux,fakeflux):
-        fresid[i] = (f - ff) / max([abs(ff),1.])
+        if f == 0.:
+            fresid[i] = np.nan
+        else:
+            fresid[i] = (f - ff) / max([abs(ff),1.])
     #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
     ax5.hist(fresid, bins=np.arange(-.15,.15,.005),color='blue', orientation='horizontal')
