@@ -170,10 +170,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag):
 
     #f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
 
-    fig = plt.figure(figsize=(16, 12))
-    gs = gridspec.GridSpec(1, 3, width_ratios=[4, 1])
-    ax1 = plt.subplot(gs[0])
-    ax2 = plt.subplot(gs[1])
+    # fig = plt.figure(figsize=(16, 12))
+    # gs = gridspec.GridSpec(1, 3, width_ratios=[4, 1])
+    # ax1 = plt.subplot(gs[0])
+    # ax2 = plt.subplot(gs[1])
 
     nullfmt = NullFormatter()  # no labels
 
