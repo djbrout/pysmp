@@ -471,7 +471,7 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     isfermigrid = False
-    cacheddata = True
+    cacheddata = False
     cd = 'tmp_snse.npz'
 
     import sys, getopt
