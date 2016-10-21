@@ -64,6 +64,8 @@ def grabdata(tmpwriter,resultsdir):
 
     for f in smpfiles:
         data = dt.readcol(f)
+        print data.keys()
+        raw_input()
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             bigdata['Flux'].extend(data['FLUX'])

@@ -4702,7 +4702,7 @@ class smp:
                 #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
-                #flux_star_std[i] = errmag
+                flux_star_std[i] = errmag
                 #flux_chisq[i] = chi/len(image_stamp.ravel())
                 #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
                 #flux_dms[i] = dms
@@ -5003,6 +5003,7 @@ class smp:
                     #,dec = decs[goodstarcols]
                     ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
+
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                     , ras=ras[goodstarcols]
