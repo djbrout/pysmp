@@ -551,16 +551,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
     ax1.xaxis.set_major_formatter(nullfmt)
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
 
-    ax, ayrms = dt.binrms(chisqarr, d, np.arange(0.8, 1.2, .001), .01)
+    ax, ayrms = dt.binrms(chisqarr, d, np.arange(0.8, 1.2, .005), .02)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
     ww = hostmag > 25
-    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .001), .01)
+    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
     ax3.plot(ax, ayrms, color='red', label='Hostmag > 25', linewidth=3)
 
     ww = hostmag < 23.
-    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .001), .01)
+    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
     ax3.legend(fontsize='small')
 
