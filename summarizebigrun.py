@@ -827,15 +827,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     # plt.clf()
 
     ax1.scatter(chisq, d, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(chisq, d, np.arange(.5, 6, .1), window=.5)
-    ax1.plot([.5, 5.], [0, 0], color='grey')
+    ax, ay, aystd = dt.bindata(chisq, d, np.arange(.1, 5, .01), window=.1)
+    ax1.plot([.1, 5.], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     ax1.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(.5, 5.)
+    ax1.set_xlim(.1, 5.)
     ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Chisq')
     ax1.set_ylabel('STD')
@@ -860,10 +860,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
     ax4.scatter(chisq, fresid, alpha=.3, color='blue')
     ax, ay, aystd = dt.bindata(chisq, fresid,
-                               np.arange(.5, 5, .01), window=.1)
-    ax4.plot([.5, 5], [0, 0], color='grey')
+                               np.arange(.1, 5, .01), window=.1)
+    ax4.plot([.1, 5], [0, 0], color='grey')
 
-    ax, ayrms = dt.binrms(chisq, d, np.arange(.5, 5., .01), .1)
+    ax, ayrms = dt.binrms(chisq, d, np.arange(.1, 5., .01), .1)
     ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
