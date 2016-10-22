@@ -744,7 +744,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     ax4.set_xlabel('Cat Mag')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
-    ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+    ax4.set_ylabel('(fitflux - catflux)/catflux')
 
     ax3.set_xlim(ax1.get_xlim())
     ax2.set_ylim(ax1.get_ylim())
