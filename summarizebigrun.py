@@ -147,17 +147,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
     d = (flux - fakeflux) / fluxerr
-    ww = fakemag < 28.
+    ww = flux != 0.
 
     #fakemag[fakemag==99] = 29.5
-    # flux = flux[ww]
-    # fakemag = fakemag[ww]
-    # fitzpt = fitzpt[ww]
-    # fakezpt = fakezpt[ww]
-    # fakeflux= fakeflux[ww]
-    # fluxerr=fluxerr[ww]
-    # d = d[ww]
-    # hostmag = hostmag[ww]
+    flux = flux[ww]
+    fakemag = fakemag[ww]
+    fitzpt = fitzpt[ww]
+    fakezpt = fakezpt[ww]
+    fakeflux= fakeflux[ww]
+    fluxerr=fluxerr[ww]
+    d = d[ww]
+    hostmag = hostmag[ww]
+    chisqarr = chisqarr[ww]
 
     #print flux[0:10]
     #print fakeflux[0:10]
