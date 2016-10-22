@@ -4914,16 +4914,10 @@ class smp:
 
                 #print os.path.join(longimfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
                 plt.savefig(os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                ifdhls = os.popen('ifdh ls ' + os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot.png')).read()
-                if len(ifdhls) > 0:
-                    print 'removing'
-                    os.popen('ifdh rm ' + os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                            filt) + 'band_starfit_zptplot.png'))
-                os.system('ifdh cp --force ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                os.system('ifdh mv ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt) + 'band_starfit_zptplot.png')
                           + ' ' + os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt)))
+                    filt) + 'band_starfit_zptplot.png'))
                 os.popen('rm '+os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                 if self.fermilog:
                     self.tmpwriter.appendfile(
@@ -5034,10 +5028,7 @@ class smp:
                         'about to copy to mag_compare out\n', self.fermilogfile)
                 tt = time.time()
                 #print 'about to copy mag_compare_out'
-                ifdhls = os.popen('ifdh ls '+mag_compare_out).read()
-                if len(ifdhls) > 0.:
-                    os.popen('ifdh rm '+mag_compare_out)
-                print os.popen('ifdh cp --force '+ff+' '+mag_compare_out).read()
+                print os.popen('ifdh mv '+ff+' '+mag_compare_out).read()
                 #ttt = time.time()
                 #self.tmpwriter.appendfile(
                 #    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
