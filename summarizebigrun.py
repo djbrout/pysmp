@@ -63,7 +63,7 @@ def grabdata(tmpwriter,resultsdir):
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[]}
-
+    zptfiles = []
     for f in smpfiles:
         data = dt.readcol(f)
         try:
@@ -80,14 +80,16 @@ def grabdata(tmpwriter,resultsdir):
 
         for sf in data['ZPTFILE']:
             zptdata = np.load(sf)
-            try:
-                bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
-                bigdata['starflux'].extend(zptdata['flux_star'])
-                bigdata['starzpt'].extend(zptdata['fit_zpt'])
-                bigdata['catmag'].extend(zptdata['cat_mag'])
-                print 'read in ',sf
-            except:
-                print 'Missing flux_star_std'
+            if not sf in zptfiles:
+                try:
+                    bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+                    bigdata['starflux'].extend(zptdata['flux_star'])
+                    bigdata['starzpt'].extend(zptdata['fit_zpt'])
+                    bigdata['catmag'].extend(zptdata['cat_mag'])
+                    print 'read in ',sf
+                    zptfiles.append(sf)
+                except:
+                    print 'Missing flux_star_std'
         fakef = f.split('/')[-1][:17]
         filt = f.split('/')[-1][18]
         fakefile = os.path.join(fakedir,fakef+'.dat')
