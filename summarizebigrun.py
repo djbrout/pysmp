@@ -56,6 +56,7 @@ def grabstardata(imagedir,outfile):
         for fname in fileList:
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
+                print os.path.join(imagedir,dirName,fname)
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 if not fname in zptfiles:
                     try:
