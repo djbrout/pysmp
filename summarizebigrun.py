@@ -50,9 +50,10 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 
 def grabstardata(imagedir):
     for dirName, subdirList, fileList in os.walk(imagedir):
-        print('Found directory: %s' % dirName)
+        #print('Found directory: %s' % dirName)
         for fname in fileList:
-            print('\t%s' % fname)
+            if 'globalstar.npz' in fname:
+                print('\t%s' % fname)
 
 def grabdata(tmpwriter,resultsdir):
 
