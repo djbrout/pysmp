@@ -505,7 +505,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(0, 5)
+    ax1.set_xlim(0.8, 1.2)
     ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Chi Sq')
     ax1.set_ylabel('STD')
