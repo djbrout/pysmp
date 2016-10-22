@@ -35,6 +35,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
+        grabstardata("/pnfs/des/persistent/smp/v2/20130907_SN-S2/")
+        sys.exit()
         data = grabdata(tmpwriter,resultsdir)
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -46,6 +48,11 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
 
+def grabstardata(imagedir):
+    for dirName, subdirList, fileList in os.walk(imagedir):
+        print('Found directory: %s' % dirName)
+        for fname in fileList:
+            print('\t%s' % fname)
 
 def grabdata(tmpwriter,resultsdir):
 
@@ -78,18 +85,18 @@ def grabdata(tmpwriter,resultsdir):
         except:
             print 'Columns missing in file '+f
 
-        for sf in data['ZPTFILE']:
-            zptdata = np.load(sf)
-            if not sf in zptfiles:
-                try:
-                    bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
-                    bigdata['starflux'].extend(zptdata['flux_star'])
-                    bigdata['starzpt'].extend(zptdata['fit_zpt'])
-                    bigdata['catmag'].extend(zptdata['cat_mag'])
-                    print 'read in ',sf
-                    zptfiles.append(sf)
-                except:
-                    print 'Missing flux_star_std'
+        # for sf in data['ZPTFILE']:
+        #     zptdata = np.load(sf)
+        #     if not sf in zptfiles:
+        #         try:
+        #             bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+        #             bigdata['starflux'].extend(zptdata['flux_star'])
+        #             bigdata['starzpt'].extend(zptdata['fit_zpt'])
+        #             bigdata['catmag'].extend(zptdata['cat_mag'])
+        #             print 'read in ',sf
+        #             zptfiles.append(sf)
+        #         except:
+        #             print 'Missing flux_star_std'
         fakef = f.split('/')[-1][:17]
         filt = f.split('/')[-1][18]
         fakefile = os.path.join(fakedir,fakef+'.dat')
