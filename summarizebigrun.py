@@ -60,12 +60,10 @@ def grabdata(tmpwriter,resultsdir):
         os.makedirs(os.path.join(resultsdir,'Summary'))
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
-    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[]}
+    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[]}
 
     for f in smpfiles:
         data = dt.readcol(f)
-        print data.keys()
-        raw_input()
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             bigdata['Flux'].extend(data['FLUX'])
@@ -73,6 +71,7 @@ def grabdata(tmpwriter,resultsdir):
             bigdata['FakeMag'].extend(data['FAKEMAG'])
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
+            bigdata['Chisq'].extend(data['CHI2'])
             print f,'read in'
         except:
             print 'Columns missing in file '+f
