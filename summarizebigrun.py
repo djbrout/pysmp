@@ -56,7 +56,7 @@ def grabstardata(imagedir,outfile):
         for fname in fileList:
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
-                zptdata = np.load(os.path.join(imagedir,fname))
+                zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 if not fname in zptfiles:
                     try:
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
