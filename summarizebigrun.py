@@ -85,6 +85,7 @@ def grabdata(tmpwriter,resultsdir):
                 bigdata['starflux'].extend(zptdata['flux_star'])
                 bigdata['starzpt'].extend(zptdata['fit_zpt'])
                 bigdata['catmag'].extend(zptdata['cat_mag'])
+                print 'read in ',sf
             except:
                 print 'Missing flux_star_std'
         fakef = f.split('/')[-1][:17]
