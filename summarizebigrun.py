@@ -20,6 +20,7 @@ from scipy.interpolate import UnivariateSpline
 import sigma_clip
 import meanclip
 import dilltools as dt
+from copy import copy
 #
 # fakedir='/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
 # resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
@@ -618,6 +619,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     fluxerr = fluxerr[ww]
     zpt = zpt[ww]
     catmag = catmag[ww]
+    fluxerro = copy(fluxerr)
     fluxerr = np.sqrt(fluxerr**2 + (abs(flux) / 3.))
     catflux = 10**(.4*(zpt-catmag))
     # plt.clf()
@@ -631,7 +633,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
     d = (flux - catflux) / fluxerr
 
-    chisq = (flux - catflux) ** 2 / fluxerr ** 2
+    chisq = (flux - catflux) ** 2 / fluxerro ** 2
     #chisq = np.nanmean(chisq[abs(d) < 3])
 
     plt.clf()
