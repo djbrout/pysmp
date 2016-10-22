@@ -613,6 +613,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 def plotstarrms(flux,fluxerr,zpt,catmag):
+    ww = catmag>16.
+    flux = flux[ww]
+    fluxerr = fluxerr[ww]
+    zpt = zpt[ww]
+    catmag = catmag[ww]
     fluxerr = np.sqrt(fluxerr**2 + (abs(flux) / 3.))
     catflux = 10**(.4*(zpt-catmag))
     # plt.clf()
