@@ -2671,7 +2671,8 @@ class smp:
         #sys.exit()
         if self.fermilog:
             self.tmpwriter.appendfile('saving mcmc input\n', self.fermilogfile)
-
+        print 'exiting succseffuly'
+        sys.exit()
         self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
                 , modelvec = modelvec*0.
@@ -4404,7 +4405,7 @@ class smp:
                 #print 'same star, so skipping'
                 continue
             prevra = ra
-            print i
+            #print i
             #cntr += 1
             #if i > 150:
             #    continue
