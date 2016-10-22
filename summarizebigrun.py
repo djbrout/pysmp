@@ -41,12 +41,15 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
+        stardata = np.load('stardata.npz')
     print data.keys()
     print len(data['Flux'])
 
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
+    plotstarrms(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['catmag'])
+
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': []}
@@ -604,11 +607,20 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
     plt.savefig('chisqstd.png')
 
 
-
-
     print 'saved stdresid.png'
 
 
+
+
+def plotstarrms(flux,fluxerr,zpt,catmag):
+    catflux = 10**(.4*(zpt-catmag))
+    plt.clf()
+    plt.scatter(catmag,(flux-catflux)/catflux)
+    plt.savefig('starresid.png')
+    plt.clf()
+    plt.scatter(catmag,(flux-catflux)/fluxerr)
+    plt.savefig('starstd.png')
+    print 'saved starstd.png'
 
 def bindata(x, y, bins, returnn=False):
     medians = np.zeros(len(bins) - 1)
@@ -641,7 +653,7 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     isfermigrid = False
-    cacheddata = False
+    cacheddata = True
     cd = 'tmp_snse.npz'
 
     import sys, getopt
