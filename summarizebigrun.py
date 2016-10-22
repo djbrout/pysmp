@@ -613,15 +613,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 def plotstarrms(flux,fluxerr,zpt,catmag):
+    fluxerr = np.sqrt(fluxerr**2 + (abs(flux) / 3.))
     catflux = 10**(.4*(zpt-catmag))
-    plt.clf()
-    plt.scatter(catmag,(flux-catflux)/catflux)
-    plt.ylim(-.5,.5)
-    plt.savefig('starresid.png')
-    plt.clf()
-    plt.scatter(catmag,(flux-catflux)/fluxerr)
-    plt.ylim(-5,5)
-    plt.savefig('starstd.png')
+    # plt.clf()
+    # plt.scatter(catmag,(flux-catflux)/catflux)
+    # plt.ylim(-.5,.5)
+    # plt.savefig('starresid.png')
+    # plt.clf()
+    # plt.scatter(catmag,(flux-catflux)/fluxerr)
+    # plt.ylim(-5,5)
+    # plt.savefig('starstd.png')
 
     d = (flux - catflux) / fluxerr
 
@@ -704,7 +705,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
 
     ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.5)
+    ax3.set_ylim(.7, 3.)
     ax3.legend(fontsize='small')
 
     fresid = np.zeros(flux.shape)
