@@ -4917,11 +4917,13 @@ class smp:
                 ifdhls = os.popen('ifdh ls ' + os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt) + 'band_starfit_zptplot.png')).read()
                 if len(ifdhls) > 0:
+                    print 'removing'
                     os.popen('ifdh rm ' + os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                             filt) + 'band_starfit_zptplot.png'))
-                os.system('ifdh cp -D ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                os.system('ifdh cp ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt) + 'band_starfit_zptplot.png')
-                          + ' ' + self.zptoutpath)
+                          + ' ' + os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt)))
                 os.popen('rm '+os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
                 if self.fermilog:
                     self.tmpwriter.appendfile(
