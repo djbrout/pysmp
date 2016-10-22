@@ -562,7 +562,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
     ww = hostmag < 23.
     ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-    ax3.legend(fontsize='small')
+    ax3.legend(fontsize='small',loc=2)
 
     plt.savefig('chisqstd.png')
 
