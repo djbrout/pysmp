@@ -5028,6 +5028,7 @@ class smp:
                         'about to copy to mag_compare out\n', self.fermilogfile)
                 tt = time.time()
                 #print 'about to copy mag_compare_out'
+                os.popen('ifdh rm '+mag_compare_out)
                 print os.popen('ifdh mv '+ff+' '+mag_compare_out).read()
                 #ttt = time.time()
                 #self.tmpwriter.appendfile(
