@@ -516,7 +516,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
     #ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.5)
+    ax3.set_ylim(.7, 1.8)
 
     fresid = np.zeros(flux.shape)
     for i, f, ff in zip(range(len(flux)), flux, fakeflux):
