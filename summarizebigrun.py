@@ -705,7 +705,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
 
     ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 3.)
+    ax3.set_ylim(.7, 1.7)
     ax3.legend(fontsize='small')
 
     fresid = np.zeros(flux.shape)
@@ -723,7 +723,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
                                np.arange(min(catmag), max(catmag), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
-    ax, ayrms = dt.binrms(catmag, d, np.arange(min(catmag), max(catmag), .1), .5)
+    ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
