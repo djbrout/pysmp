@@ -35,7 +35,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v2/20130907_SN-S2/")
+        grabstardata("/pnfs/des/persistent/smp/v2/20130907_SN-S2/","stardata.npz")
         sys.exit()
         data = grabdata(tmpwriter,resultsdir)
     else:
@@ -48,12 +48,26 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
 
-def grabstardata(imagedir):
+def grabstardata(imagedir,outfile):
+    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': []}
+    zptfiles = []
     for dirName, subdirList, fileList in os.walk(imagedir):
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             if 'globalstar.npz' in fname:
-                print('\t%s' % fname)
+                #print('\t%s' % fname)
+                zptdata = np.load(fname)
+                if not fname in zptfiles:
+                    try:
+                        bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+                        bigdata['starflux'].extend(zptdata['flux_star'])
+                        bigdata['starzpt'].extend(zptdata['fit_zpt'])
+                        bigdata['catmag'].extend(zptdata['cat_mag'])
+                        print 'read in ',fname
+                        zptfiles.append(fname)
+                    except:
+                        print 'Missing flux_star_std', fname
+    np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir):
 
