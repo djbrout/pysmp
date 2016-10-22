@@ -720,7 +720,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
     ax4.scatter(catmag, fresid, alpha=.3, color='blue')
     ax, ay, aystd = dt.bindata(catmag, fresid,
-                               np.arange(min(catmag), max(catmag), .1), window=1.)
+                               np.arange(16., max(catmag), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
     ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
