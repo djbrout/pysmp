@@ -4040,7 +4040,7 @@ class smp:
         fluxvec = []
         if guessrange is None:
             guessrange = .2*guess_scale
-        guess_scale_step = min([guess_scale/5000.,5])
+        guess_scale_step = min([guess_scale/5000.,1.])
         for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
             sim = galconv + sky + i*psf
             chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
@@ -4575,8 +4575,8 @@ class smp:
                         except:
                             print 'could not scale'
                             scale, errmag, chi, dms = -999,-999,-999,-999
-                        print 'scale and error',scale,errmag
-                        raw_input()
+                        #print 'scale and error',scale,errmag
+                        #raw_input()
                         #print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
                         # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
@@ -5009,7 +5009,6 @@ class smp:
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
                     ,flux_star = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
-
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                     , ras=ras[goodstarcols]
