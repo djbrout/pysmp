@@ -4914,6 +4914,11 @@ class smp:
 
                 #print os.path.join(longimfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
                 plt.savefig(os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
+                ifdhls = os.popen('ifdh ls ' + os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                    filt) + 'band_starfit_zptplot.png')).read()
+                if len(ifdhls) > 0:
+                    os.popen('ifdh rm ' + os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                            filt) + 'band_starfit_zptplot.png'))
                 os.system('ifdh cp -D ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt) + 'band_starfit_zptplot.png')
                           + ' ' + self.zptoutpath)
