@@ -616,9 +616,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     catflux = 10**(.4*(zpt-catmag))
     plt.clf()
     plt.scatter(catmag,(flux-catflux)/catflux)
+    plt.ylim(-.5,.5)
     plt.savefig('starresid.png')
     plt.clf()
     plt.scatter(catmag,(flux-catflux)/fluxerr)
+    plt.ylim(-5,5)
     plt.savefig('starstd.png')
     print 'saved starstd.png'
 
