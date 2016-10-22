@@ -4575,6 +4575,8 @@ class smp:
                         except:
                             print 'could not scale'
                             scale, errmag, chi, dms = -999,-999,-999,-999
+                        print 'scale and error',scale,errmag
+                        raw_input()
                         #print scale
                         # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
                         # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
