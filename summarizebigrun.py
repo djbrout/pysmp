@@ -497,7 +497,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
     # plt.clf()
     ax1.scatter(chisqarr, d, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(chisqarr, d, np.arange(0., 100, .1), window=.5)
+    ax, ay, aystd = dt.bindata(chisqarr, d, np.arange(0., 100, .05), window=.5)
     ax1.plot([min(chisqarr), max(chisqarr)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -505,12 +505,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(0, 100)
+    ax1.set_xlim(0, 5)
     ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Chi Sq')
     ax1.set_ylabel('STD')
 
-    ax, ayrms = dt.binrms(chisqarr, d, np.arange(0., 100, .1), .5)
+    ax, ayrms = dt.binrms(chisqarr, d, np.arange(0., 100, .05), .5)
     # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
@@ -529,7 +529,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
     ax4.scatter(chisqarr, fresid, alpha=.3, color='blue')
     ax, ay, aystd = dt.bindata(chisqarr, fresid,
-                               np.arange(0., 100, .1), window=1.)
+                               np.arange(0., 100, .05), window=1.)
     ax4.plot([min(chisqarr), max(chisqarr)], [0, 0], color='grey')
 
     ax4.plot(ax, ay, linewidth=3, color='orange')
@@ -550,16 +550,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
     ax1.xaxis.set_major_formatter(nullfmt)
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
 
-    ax, ayrms = dt.binrms(chisqarr, d, np.arange(0., 100, .1), .5)
+    ax, ayrms = dt.binrms(chisqarr, d, np.arange(0., 100, .05), .5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
     ww = fakemag == 28.5
-    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0., 100, .1), .5)
+    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0., 100, .05), .5)
     ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
 
     ww = fakemag < 22.
-    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0., 100, .1), .5)
+    ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0., 100, .05), .5)
     ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
     ax3.legend(fontsize='small')
 
