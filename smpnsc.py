@@ -4920,7 +4920,7 @@ class smp:
                     print 'removing'
                     os.popen('ifdh rm ' + os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                             filt) + 'band_starfit_zptplot.png'))
-                os.system('ifdh cp ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                os.system('ifdh cp --force ' + os.path.join(imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt) + 'band_starfit_zptplot.png')
                           + ' ' + os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                     filt)))
@@ -5037,7 +5037,7 @@ class smp:
                 ifdhls = os.popen('ifdh ls '+mag_compare_out).read()
                 if len(ifdhls) > 0.:
                     os.popen('ifdh rm '+mag_compare_out)
-                print os.popen('ifdh cp '+ff+' '+mag_compare_out).read()
+                print os.popen('ifdh cp --force '+ff+' '+mag_compare_out).read()
                 #ttt = time.time()
                 #self.tmpwriter.appendfile(
                 #    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
