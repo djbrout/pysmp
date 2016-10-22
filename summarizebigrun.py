@@ -745,7 +745,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
     ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
     ax4.set_xlim(ax1.get_xlim())
-    ax4.set_ylim(-.05, .05)
+    ax4.set_ylim(-.025, .025)
     ax4.set_xlabel('Cat Mag')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
