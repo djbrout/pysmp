@@ -4998,6 +4998,7 @@ class smp:
 
             ras = np.array(ras)
             decs = np.array(decs)
+            print 'magerr', -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
             if self.fermigrid and self.worker:
                 ff = 'temp.npz'
                 np.savez( ff
@@ -5005,6 +5006,9 @@ class smp:
                     #,dec = decs[goodstarcols]
                     ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
+                    ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
+                    ,flux_star = fluxcol[goodstarcols]
+                    ,flux_star_std = flux_star_std[goodstarcols]
 
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
