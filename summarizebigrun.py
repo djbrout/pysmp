@@ -61,7 +61,8 @@ def grabdata(tmpwriter,resultsdir):
         os.makedirs(os.path.join(resultsdir,'Summary'))
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
-    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[]}
+    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
+               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[]}
 
     for f in smpfiles:
         data = dt.readcol(f)
@@ -77,6 +78,15 @@ def grabdata(tmpwriter,resultsdir):
         except:
             print 'Columns missing in file '+f
 
+        for sf in data['ZPTFILE']:
+            zptdata = np.load(sf)
+            try:
+                bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+                bigdata['starflux'].extend(zptdata['flux_star'])
+                bigdata['starzpt'].extend(zptdata['fit_zpt'])
+                bigdata['catmag'].extend(zptdata['cat_mag'])
+            except:
+                print 'Missing flux_star_std'
         fakef = f.split('/')[-1][:17]
         filt = f.split('/')[-1][18]
         fakefile = os.path.join(fakedir,fakef+'.dat')
@@ -604,7 +614,7 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     isfermigrid = False
-    cacheddata = True
+    cacheddata = False
     cd = 'tmp_snse.npz'
 
     import sys, getopt
