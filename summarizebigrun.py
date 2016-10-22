@@ -555,13 +555,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
-    ww = fakemag == 28.5
+    ww = hostmag > 25
     ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .001), .01)
-    ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
+    ax3.plot(ax, ayrms, color='red', label='Hostmag > 25', linewidth=3)
 
-    ww = fakemag < 22.
+    ww = hostmag < 23.
     ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .001), .01)
-    ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
+    ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
     ax3.legend(fontsize='small')
 
     plt.savefig('chisqstd.png')
