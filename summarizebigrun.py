@@ -622,6 +622,147 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     plt.scatter(catmag,(flux-catflux)/fluxerr)
     plt.ylim(-5,5)
     plt.savefig('starstd.png')
+
+    d = (flux - catflux) / fluxerr
+
+    chisq = (flux - catflux) ** 2 / fluxerr ** 2
+    chisq = np.nanmean(chisq[abs(d) < 3])
+
+    plt.clf()
+
+    dc = d[abs(d) < 3]
+
+    rms = np.sqrt(np.nanmean(np.square(dc[abs(dc) < 3.])))
+
+    plt.clf()
+
+    nullfmt = NullFormatter()  # no labels
+
+    # definitions for the axes
+    left, width = 0.1, 0.65
+    bottom, height = 0.1, 0.65
+    bottom_h = left_h = left + width + 0.02
+
+    rect_scatter = [left, bottom + height / 2., width, height / 2.]
+    rect_scatterflux = [left, bottom, width, height / 2.]
+    rect_histx = [left, bottom_h, width, 0.2]
+    rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
+    rect_histyflux = [left_h, bottom, 0.2, height / 2.]
+
+    # start with a rectangular Figure
+    plt.figure(1, figsize=(8, 8))
+
+    ax1 = plt.axes(rect_scatter)
+    ax3 = plt.axes(rect_histx)
+    ax2 = plt.axes(rect_histy)
+    ax4 = plt.axes(rect_scatterflux)
+    ax5 = plt.axes(rect_histyflux)
+
+    # no labels
+    ax2.yaxis.set_major_formatter(nullfmt)
+    ax3.xaxis.set_major_formatter(nullfmt)
+    ax5.yaxis.set_major_formatter(nullfmt)
+
+    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS Fakemag = 99: ' + str(round(rms, 3))
+             , orientation='horizontal')
+    # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
+    #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
+
+    import matplotlib.mlab as mlab
+    import math
+    mean = 0
+    variance = 1
+    sigma = math.sqrt(variance)
+    x = np.arange(-5, 5, .1)
+    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+
+    ax2.set_ylim(-4, 4)
+    ax2.set_xlim(0, .5)
+    # .xlabel('STDEV')
+    # plt.ylabel('Normalized Count')
+    ax2.legend(fontsize='small')
+    # plt.savefig('stdresid.png')
+
+    # plt.clf()
+
+    ax1.scatter(catmag, d, alpha=.3, color='blue')
+    ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5)
+    ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
+    ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax1.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
+    # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
+
+    ax1.set_xlim(min(catmag), max(catmag))
+    ax1.set_ylim(-3., 3.)
+    ax1.set_xlabel('Cat Mag')
+    ax1.set_ylabel('STD')
+
+    # ax, ayrms= dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1),.5)
+    # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
+
+
+    ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
+    ax3.set_ylim(.7, 1.5)
+    ax3.legend(fontsize='small')
+
+    fresid = np.zeros(flux.shape)
+    for i, f, ff in zip(range(len(flux)), flux, catflux):
+        if f == 0.:
+            fresid[i] = np.nan
+        else:
+            fresid[i] = (f - ff) / max([abs(ff), 1.])
+    # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+
+    ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
+
+    ax4.scatter(catmag, fresid, alpha=.3, color='blue')
+    ax, ay, aystd = dt.bindata(catmag, fresid,
+                               np.arange(min(catmag), max(catmag), .1), window=1.)
+    ax4.plot([19, 28.7], [0, 0], color='grey')
+
+    ax, ayrms = dt.binrms(catmag, d, np.arange(min(catmag), max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
+    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+
+    # ww = hostmag > 25.
+    # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+    # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
+    #
+    # ww = hostmag < 23.
+    # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+    # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+    # ax3.legend(fontsize='small')
+
+    ax4.plot(ax, ay, linewidth=3, color='orange')
+    ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
+    ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
+    ax4.set_xlim(ax1.get_xlim())
+    ax4.set_ylim(-.1, .1)
+    ax4.set_xlabel('Cat Mag')
+    ax5.set_xlabel('Counts')
+    ax3.set_ylabel('RMS')
+    ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+
+    ax3.set_xlim(ax1.get_xlim())
+    ax2.set_ylim(ax1.get_ylim())
+    ax5.set_ylim(ax4.get_ylim())
+    ax2.xaxis.set_major_formatter(nullfmt)
+    ax3.xaxis.set_major_formatter(nullfmt)
+    ax1.xaxis.set_major_formatter(nullfmt)
+
+    plt.subplots_adjust(wspace=0.001, hspace=0.001)
+    plt.savefig('starstd.png')
+
+
+
+
+
+
+
+
+
     print 'saved starstd.png'
 
 def bindata(x, y, bins, returnn=False):
