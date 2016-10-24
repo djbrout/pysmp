@@ -49,7 +49,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    plotstarrms(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['catmag'])
+    plotstarrms(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['catmag'],stardata['chisq'])
 
 
 def grabstardata(imagedir,outfile):
@@ -614,7 +614,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq):
     ww = catmag>16.
     flux = flux[ww]
     fluxerr = fluxerr[ww]
@@ -623,6 +623,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
     fluxerro = copy(fluxerr)
     fluxerr = np.sqrt(fluxerr**2 + (abs(flux) / 3.))
     catflux = 10**(.4*(zpt-catmag))
+    chisq = chisq[ww]
     # plt.clf()
     # plt.scatter(catmag,(flux-catflux)/catflux)
     # plt.ylim(-.5,.5)
@@ -634,7 +635,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
     d = (flux - catflux) / fluxerr
 
-    chisq = (flux - catflux) ** 2 / catflux
+    #chisq = (flux - catflux) ** 2 / catflux
 
     plt.clf()
     plt.scatter(catmag,chisq)
@@ -941,7 +942,7 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     isfermigrid = False
-    cacheddata = True
+    cacheddata = False
     cd = 'tmp_snse.npz'
 
     import sys, getopt
