@@ -645,6 +645,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq):
     plt.ylim(0,15)
     plt.xlim(17,21)
     plt.axhline(1)
+    plt.xlabel('Cat Mag')
+    plt.ylabel('Chi Sq')
     plt.savefig('chivscat.png')
     #chisq = np.nanmean(chisq[abs(d) < 3])
 
