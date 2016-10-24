@@ -4119,8 +4119,8 @@ class smp:
         #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
         #     imstamp = imstamp / np.sum(imstamp)
         sum_data_minus_sim = np.sum(im-sim)
-        #sim = galconv + sky + fluxvec[argm]*psf
-        #mchisq = np.sum((im - sim) ** 2 * weight * fitrad
+        sim = galconv + sky + fluxvec[argm]*psf
+        mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+fluxvec[argm]/3.)**.5 * fitrad
         return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
 
     def iterstat(self,d,startMedian=False,sigmaclip=3.0,
@@ -5017,7 +5017,7 @@ class smp:
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
                     ,flux_star = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
-                    ,chisq=flux_chisq[goodstarcols]
+                    ,chisqu=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                     , ras=ras[goodstarcols]
