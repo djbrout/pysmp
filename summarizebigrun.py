@@ -55,7 +55,10 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': []}
     zptfiles = []
+    cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
+        cntr += 1
+        if cntr > 10.: continue
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             if 'globalstar.npz' in fname:
