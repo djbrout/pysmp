@@ -4405,7 +4405,7 @@ class smp:
                 #print 'same star, so skipping'
                 continue
             prevra = ra
-            #print i
+            print i
             #cntr += 1
             #if i > 150:
             #    continue
