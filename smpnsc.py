@@ -4405,7 +4405,7 @@ class smp:
                 #print 'same star, so skipping'
                 continue
             prevra = ra
-            print i
+            #print i
             #cntr += 1
             #if i > 150:
             #    continue
@@ -4707,8 +4707,8 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
-                print flux_chisq[i]
-                raw_input()
+                #print flux_chisq[i]
+                #raw_input()
                 #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
                 #flux_dms[i] = dms
                 # fig = plt.figure()
