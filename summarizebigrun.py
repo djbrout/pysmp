@@ -633,7 +633,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag):
 
     d = (flux - catflux) / fluxerr
 
-    chisq = (flux - catflux) ** 2 / fluxerro ** 2
+    chisq = (flux - catflux) ** 2 / catflux
 
     plt.clf()
     plt.scatter(catmag,chisq)
