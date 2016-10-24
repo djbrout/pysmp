@@ -57,8 +57,6 @@ def grabstardata(imagedir,outfile):
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        cntr += 1
-        if cntr > 10.: continue
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             if 'globalstar.npz' in fname:
@@ -67,6 +65,8 @@ def grabstardata(imagedir,outfile):
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 if not fname in zptfiles:
                     try:
+                        cntr += 1
+                        if cntr > 10.: continue
                         #if True:
                         bigdata['chisq'].extend(zptdata['chisq'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
