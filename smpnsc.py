@@ -5015,6 +5015,7 @@ class smp:
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
                     ,flux_star = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
+                    ,chisq=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                     , ras=ras[goodstarcols]
