@@ -62,7 +62,6 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
-                cntr += 1
                 if cntr > 10.: continue
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 if not fname in zptfiles:
@@ -75,6 +74,8 @@ def grabstardata(imagedir,outfile):
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         print 'read in ',fname
                         zptfiles.append(fname)
+                        cntr += 1
+
                     except:
                         print 'Missing flux_star_std', fname
     np.savez(outfile, **bigdata)
