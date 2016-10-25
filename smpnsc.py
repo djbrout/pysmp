@@ -4709,6 +4709,8 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
+                print scale,chi
+                raw_input()
                 #print flux_chisq[i]
                 #raw_input()
                 #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
