@@ -68,8 +68,8 @@ def grabstardata(imagedir,outfile):
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 print zptdata.keys()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                        #if True:
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starflux'].extend(zptdata['flux_star'])
@@ -79,8 +79,8 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
 
-                    #except:
-                    #    print 'Missing flux_star_std', fname
+                    except:
+                        print 'Missing flux_star_std', fname
     np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir):
