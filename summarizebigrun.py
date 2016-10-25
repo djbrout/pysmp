@@ -63,7 +63,7 @@ def grabstardata(imagedir,outfile):
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
                 if not 'SN-S2' in fname: continue
-                if cntr > 10.: continue
+                if cntr > 100.: break
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 print zptdata.keys()
                 if not fname in zptfiles:
