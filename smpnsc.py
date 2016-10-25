@@ -4121,7 +4121,8 @@ class smp:
         sum_data_minus_sim = np.sum(im-sim)
         sim = galconv + sky + fluxvec[argm]*psf
         mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf**2*fluxvec[argm])/3.)**.5 * fitrad)
-        return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim
+        return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)
+
 
     def iterstat(self,d,startMedian=False,sigmaclip=3.0,
              iter=6):
@@ -4574,10 +4575,10 @@ class smp:
 
                         #print 'running star',x,y
                         try:
-                            scale, errmag, chi, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
+                            scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
                         except:
                             print 'could not scale'
-                            scale, errmag, chi, dms = -999,-999,-999,-999
+                            scale, errmag, chi, dms, chinoposs = -999,-999,-999,-999,-999
                         #print 'scale and error',scale,errmag
                         #raw_input()
                         #print scale
@@ -4709,7 +4710,7 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
-                print scale,chi
+                print scale,chi,chinoposs
                 raw_input()
                 #print flux_chisq[i]
                 #raw_input()
