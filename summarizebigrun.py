@@ -62,8 +62,10 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
+                if not 'SN-S2' in fname: continue
                 if cntr > 10.: continue
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
+                print zptdata.keys()
                 if not fname in zptfiles:
                     try:
                         #if True:
