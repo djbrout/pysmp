@@ -72,9 +72,9 @@ def grabstardata(imagedir,outfile):
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20130902_SN-S2/r_11/SNp1_230168_SN-S2_tile20_r_11+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
-                        bigdata['chisq'].extend(zptdata['chisq'])
+                    try:
+                        #if True:
+                        bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starflux'].extend(zptdata['flux_staru'])
                         bigdata['starzpt'].extend(zptdata['flux_staru']*0. + zptdata['fit_zpt'])
@@ -95,9 +95,9 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
 
-                    # except:
-                    #     #print 'Missing flux_star_std', fname
-                    #     pass
+                    except:
+                        #print 'Missing flux_star_std', fname
+                        pass
     np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir):
