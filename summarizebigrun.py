@@ -49,8 +49,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    print stardata['rmsaddin'][:10]
-    raw_input()
+    #print stardata['rmsaddin'][:10]
+    #raw_input()
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + stardata['rmsaddin']**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],title='rmsaddin_')
 
@@ -84,6 +84,8 @@ def grabstardata(imagedir,outfile):
                         zp = zptdata['fit_zpt']
                         ww = cm < 19.
                         std = np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
+                        print 'worked now std',std
+                        raw_input()
                         bigdata['rmsaddin'].extend(zptdata['flux_star']*0. + std)
                         print 'read in ',fname
                         zptfiles.append(fname)
