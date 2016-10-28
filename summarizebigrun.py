@@ -49,15 +49,15 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    plotstarrms(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['catmag'],stardata['chisq'])
+    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + stardata['rmsaddin']**2),stardata['starzpt'],stardata['catmag'],stardata['chisq'])
 
 
 def grabstardata(imagedir,outfile):
-    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': []}
+    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': []}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 100.: break
+        if cntr > 100.: continue
         #print('Found directory: %s' % dirName)
         for fname in fileList:
 
@@ -75,6 +75,13 @@ def grabstardata(imagedir,outfile):
                         bigdata['starflux'].extend(zptdata['flux_star'])
                         bigdata['starzpt'].extend(zptdata['flux_star']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
+
+                        cm = zptdata['cat_mag']
+                        fs = zptdata['flux_star']
+                        zp = zptdata['fit_zpt']
+                        ww = cm < 19.
+                        std = np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
+                        bigdata['rmsaddin'].extend(std)
                         print 'read in ',fname
                         zptfiles.append(fname)
                         cntr += 1
