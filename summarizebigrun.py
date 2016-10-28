@@ -51,7 +51,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
                    data['Chisq'])
     #print stardata['rmsaddin'][:10]
     #raw_input()
-    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + 10**(.4*(31.-stardata['rmsaddin']**2),stardata['starzpt'],
+    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + (stardata['starflux']*stardata['rmsaddin'])**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],title='rmsaddin_')
 
 
@@ -76,8 +76,8 @@ def grabstardata(imagedir,outfile):
                         #if True:
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
-                        bigdata['starflux'].extend(zptdata['flux_star'])
-                        bigdata['starzpt'].extend(zptdata['flux_star']*0. + zptdata['fit_zpt'])
+                        bigdata['starflux'].extend(zptdata['flux_staru'])
+                        bigdata['starzpt'].extend(zptdata['flux_staru']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
 
                         cm = zptdata['cat_mag']
