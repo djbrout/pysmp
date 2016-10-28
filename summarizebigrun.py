@@ -49,8 +49,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    #print stardata['rmsaddin'][:10]
-    #raw_input()
+    print stardata['rmsaddin'][:10]
+    raw_input()
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + (stardata['starflux']*stardata['rmsaddin'])**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],title='rmsaddin_')
 
@@ -96,7 +96,7 @@ def grabstardata(imagedir,outfile):
                         cntr += 1
 
                     except:
-                        #print 'Missing flux_star_std', fname
+                        print 'FAILED', fname
                         pass
     np.savez(outfile, **bigdata)
 
