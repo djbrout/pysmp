@@ -647,7 +647,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,title=''):
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(zpt-catmag))
-    chisq = chisq[ww]*1/np.sqrt((abs(flux) / 3.))
+    chisq = chisq[ww]
+    #chisq = chisq[ww]*1/np.sqrt((abs(flux) / 3.))
     # plt.clf()
     # plt.scatter(catmag,(flux-catflux)/catflux)
     # plt.ylim(-.5,.5)
