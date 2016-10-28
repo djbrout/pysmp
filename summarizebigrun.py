@@ -49,7 +49,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + stardata['rmsaddin']**2),stardata['starzpt'],stardata['catmag'],stardata['chisq'])
+    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + stardata['rmsaddin']**2),stardata['starzpt'],
+                stardata['catmag'],stardata['chisq'],title='rmsaddin_')
 
 
 def grabstardata(imagedir,outfile):
@@ -628,7 +629,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,title=''):
     ww = catmag>16.
     flux = flux[ww]
     fluxerr = fluxerr[ww]
@@ -658,7 +659,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq):
     plt.axhline(1)
     plt.xlabel('Cat Mag')
     plt.ylabel('Chi Sq')
-    plt.savefig('chivscat.png')
+    plt.savefig(title+'chivscat.png')
     #chisq = np.nanmean(chisq[abs(d) < 3])
 
     plt.clf()
@@ -786,7 +787,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq):
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
-    plt.savefig('starstd.png')
+    plt.savefig(title+'starstd.png')
 
 
 
@@ -921,7 +922,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq):
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
-    plt.savefig('starchi.png')
+    plt.savefig(title+'starchi.png')
 
 
 
