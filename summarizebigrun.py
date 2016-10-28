@@ -73,7 +73,7 @@ def grabstardata(imagedir,outfile):
                 if not fname in zptfiles:
                     try:
                         #if True:
-                        bigdata['chisq'].extend(zptdata['chisq'])
+                        bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starflux'].extend(zptdata['flux_star'])
                         bigdata['starzpt'].extend(zptdata['flux_star']*0. + zptdata['fit_zpt'])
