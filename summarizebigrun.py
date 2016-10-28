@@ -49,10 +49,11 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    print np.unique(stardata['rmsaddin'])
-    raw_input()
-    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
-                stardata['catmag'],stardata['chisq'],title='rmsaddin_')
+    #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
+    #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
+    #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
+    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + (stardata['starflux']*stardata['rmsaddin'])**2),stardata['starzpt'],
+                stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],title='rmsaddin_')
 
 
 def grabstardata(imagedir,outfile):
@@ -638,8 +639,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,title=''):
-    ww = catmag>16.
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
+    ww = rmsaddin < .3
     flux = flux[ww]
     fluxerr = fluxerr[ww]
     zpt = zpt[ww]
