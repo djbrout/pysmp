@@ -51,7 +51,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
                    data['Chisq'])
     #print stardata['rmsaddin'][:10]
     #raw_input()
-    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + stardata['rmsaddin']**2),stardata['starzpt'],
+    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2 + 10**(.4*(31.-stardata['rmsaddin']**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],title='rmsaddin_')
 
 
