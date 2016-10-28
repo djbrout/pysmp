@@ -75,14 +75,14 @@ def grabstardata(imagedir,outfile):
                     try:
                         #if True:
 
-                        bigdata['starflux'].extend(zptdata['flux_staru'])
-                        bigdata['starzpt'].extend(zptdata['flux_staru']*0. + zptdata['fit_zpt'])
+                        bigdata['starflux'].extend(zptdata['flux_staruu'])
+                        bigdata['starzpt'].extend(zptdata['flux_staruu']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
 
                         cm = zptdata['cat_mag']
-                        fs = zptdata['flux_staru']
+                        fs = zptdata['flux_staruu']
                         zp = zptdata['fit_zpt']
                         ww = cm < 19.
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
@@ -90,7 +90,7 @@ def grabstardata(imagedir,outfile):
                         plt.savefig('testzpt.png')
                         std = np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         print 'worked now std',std
-                        bigdata['rmsaddin'].extend(zptdata['flux_staru']*0. + std)
+                        bigdata['rmsaddin'].extend(zptdata['flux_staruu']*0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
                         cntr += 1
