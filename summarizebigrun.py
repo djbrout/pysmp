@@ -85,14 +85,15 @@ def grabstardata(imagedir,outfile):
                         ww = cm < 19.
                         std = np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         print 'worked now std',std
-                        raw_input()
+                        #raw_input()
                         bigdata['rmsaddin'].extend(zptdata['flux_star']*0. + std)
-                        print 'read in ',fname
+                        #print 'read in ',fname
                         zptfiles.append(fname)
                         cntr += 1
 
                     except:
-                        print 'Missing flux_star_std', fname
+                        #print 'Missing flux_star_std', fname
+                        pass
     np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir):
