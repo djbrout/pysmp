@@ -4028,7 +4028,7 @@ class smp:
 
         guessrange = None
         if guess_scale is None:
-            for i in np.arange(-55000,500000,1000):
+            for i in np.arange(-55000,5000000,1000):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
@@ -4710,8 +4710,8 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
-                print scale,chi,chinoposs
-                raw_input()
+                #print scale,chi,chinoposs
+                #raw_input()
                 #print flux_chisq[i]
                 #raw_input()
                 #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
@@ -5045,6 +5045,8 @@ class smp:
                 #self.tmpwriter.appendfile(
                 #    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
                 #sys.exit()
+                print mag_compare_out
+                raw_input('saved')
             else:
                 self.tmpwriter.savez(mag_compare_out
                                      # ,ra = ras[goodstarcols]
