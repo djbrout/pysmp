@@ -49,7 +49,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'])
-    print stardata['rmsaddin'][:10]
+    print np.unique(stardata['rmsaddin'])
     raw_input()
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],title='rmsaddin_')
