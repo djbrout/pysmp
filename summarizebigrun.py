@@ -670,7 +670,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     # plt.ylim(-5,5)
     # plt.savefig('starstd.png')
 
-    fluxerr = np.sqrt(fluxerr**2 + )
+    #fluxerr = np.sqrt(fluxerr**2 + )
 
     starmag = -2.5*np.log10(flux) + zpt
 
