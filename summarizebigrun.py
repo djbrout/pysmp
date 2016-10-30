@@ -93,7 +93,7 @@ def grabstardata(imagedir,outfile):
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
                         plt.savefig('testzpt.png')
-                        md, std, num = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
+                        md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=1.5, iter=10)
                         print 'worked now std',std
                         bigdata['rmsaddin'].extend(zptdata['flux_staruu']*0. + std)
