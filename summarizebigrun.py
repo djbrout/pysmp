@@ -665,6 +665,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
     starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)
     print starmag[0:10]
     print catmag[0:10]
+    dm = (starmag - catmag) / starmagerr
+
     raw_input('printing mags')
     d = (flux - catflux) / fluxerr
 
@@ -738,7 +740,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
     # plt.clf()
 
     ax1.scatter(catmag, d, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5)
+    ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5
+
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -776,6 +779,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
 
     ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
+    ax, ayrms = dt.binrms(catmag, dm, np.arange(16., max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band -MAGGG', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
     # ww = hostmag > 25.
