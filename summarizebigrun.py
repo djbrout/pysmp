@@ -675,10 +675,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     starmag = -2.5*np.log10(flux) + zpt
 
     starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin[ww]**2)**.5
+    starmagerr3 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+skyerr))**2 + rmsaddin[ww]**2)**.5
+
+
     print starmag[0:10]
     print catmag[0:10]
     dm = (starmag - catmag) / starmagerr
-    dmas = (starmag - catmag) / starmagerr2
+    dmam = (starmag - catmag) / starmagerr2
+    dmas = (starmag - catmag) / starmagerr3
 
     raw_input('printing mags')
     d = (flux - catflux) / fluxerr
@@ -762,7 +766,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(min(catmag), max(catmag))
+    ax1.set_xlim(16., max(catmag))
     ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Cat Mag')
     ax1.set_ylabel('STD')
@@ -791,13 +795,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
     ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='blue', label='MCMC Err', linewidth=3)
+    ax3.plot(ax, ayrms, color='blue', label='MCMC Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, ds, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3)
+    ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dm, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3)
+    ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3)
+    ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
+    ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='grey', label='ZPT Scatter Err and MCMC Err', linewidth=3,alpha=.4)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
     ax3.legend(loc=2,fontsize='small')
     # ww = hostmag > 25.
@@ -820,6 +826,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax4.set_ylabel('(fitflux - catflux)/catflux')
 
     ax3.set_xlim(ax1.get_xlim())
+    ax3.set_ylim(.8,2.)
     ax2.set_ylim(ax1.get_ylim())
     ax5.set_ylim(ax4.get_ylim())
     ax2.xaxis.set_major_formatter(nullfmt)
