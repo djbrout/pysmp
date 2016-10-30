@@ -674,11 +674,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     starmag = -2.5*np.log10(flux) + zpt
 
-    starmagerr2 = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr) + rmsaddin[ww]
+    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin[ww]**2)**.5
     print starmag[0:10]
     print catmag[0:10]
     dm = (starmag - catmag) / starmagerr
-    dmas = (starmag - catmag) / starmagerr
+    dmas = (starmag - catmag) / starmagerr2
 
     raw_input('printing mags')
     d = (flux - catflux) / fluxerr
@@ -799,7 +799,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-    ax3.legend()
+    ax3.legend(loc=2,fontsize='small')
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
