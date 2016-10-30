@@ -740,8 +740,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
     # plt.clf()
 
     ax1.scatter(catmag, d, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5
-
+    ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
