@@ -79,14 +79,14 @@ def grabstardata(imagedir,outfile):
                         #if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
-                        bigdata['starflux'].extend(zptdata['flux_starw'])
-                        bigdata['starzpt'].extend(zptdata['flux_starw']*0. + zptdata['fit_zpt'])
+                        bigdata['starflux'].extend(zptdata['flux_starwn'])
+                        bigdata['starzpt'].extend(zptdata['flux_starwn']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
 
                         cm = zptdata['cat_mag']
-                        fs = zptdata['flux_starw']
+                        fs = zptdata['flux_starwn']
                         zp = zptdata['fit_zpt']
                         ww = (cm < 19.) & (cm > 17.)
 
@@ -96,7 +96,7 @@ def grabstardata(imagedir,outfile):
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=1.5, iter=10)
                         print 'worked now std',std
-                        bigdata['rmsaddin'].extend(zptdata['flux_starw']*0. + std)
+                        bigdata['rmsaddin'].extend(zptdata['flux_starwn']*0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
                         cntr += 1
