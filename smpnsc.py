@@ -4057,7 +4057,7 @@ class smp:
             guess_scale_step = min([guess_scale / 5000., 1.])
             for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                 sim = galconv + sky + i * psf
-                sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.) / float(i)
+                sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.)
                 weight = 1. / sigtot ** 2
                 chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                 fluxvec.append(i)
@@ -4157,8 +4157,8 @@ class smp:
         #     yo = round(y)
         #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
         #     imstamp = imstamp / np.sum(imstamp)
-        #sum_data_minus_sim = np.sum(im-sim)
-        #sim = galconv + sky + fluxvec[argm]*psf
+        sum_data_minus_sim = np.sum(im-sim)
+        sim = galconv + sky + fluxvec[argm]*psf
         #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
         return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof
 
