@@ -779,7 +779,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
     ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
     ax, ayrms = dt.binrms(catmag, dm, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band -MAGGG', linewidth=3)
+    ax3.plot(ax, ayrms, color='red', label='ALL Standard Stars in r Band -MAGGG', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
     # ww = hostmag > 25.
