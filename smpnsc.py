@@ -4584,9 +4584,9 @@ class smp:
 
                         #print 'running star',x,y
                         try:
-                            scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
-                            oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
-                                                                             fitrad, gal, mjd)
+                            # scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
+                            # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
+                            #                                                  fitrad, gal, mjd)
                             gscale, gerrmag, gchi, gdms, gchinoposs = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
                                                                              fitrad, gal, mjd)
 
@@ -4722,10 +4722,10 @@ class smp:
                 #print np.median(noise_stamp)
                 #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 #print 'DONEEEEE',scale,errmag,chi,mychi
-                flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
-                flux_star_std[i] = errmag
+                flux_star[i] = gscale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
+                flux_star_std[i] = gerrmag
                 #print 'ccc',scale,errmag,oscale,oerrmag,gscale,gerrmag
-                flux_chisq[i] = chi
+                flux_chisq[i] = gchi
                 starsky[i] = s
                 starskyerr[i] = se
                 #print scale,chi,chinoposs
