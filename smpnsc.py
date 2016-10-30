@@ -4103,9 +4103,11 @@ class smp:
 
             argm = chisqvec == min(chisqvec)
 
-            sim = galconv + sky + fluxvec[argm]*psf
-
-
+            try:
+                sim = galconv + sky + fluxvec[argm]*psf
+            except:
+                bad = True
+        if not bad
             if not pdf_pages is None:
                 fig = plt.figure(figsize=(20,10))
                 axim = plt.subplot(141)
@@ -4140,6 +4142,7 @@ class smp:
             sum_data_minus_sim = np.sum(im-sim)
             sim = galconv + sky + fluxvec[argm]*psf
             #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
+        if not bad:
             return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
             return 1,1,1,1,1,True
