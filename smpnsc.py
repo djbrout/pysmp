@@ -4362,6 +4362,9 @@ class smp:
         flux_star = np.array([-999.]*len(xstar))        
         flux_star_std = np.array([-999.]*len(xstar))
         flux_chisq = np.array([-999.]*len(xstar))
+        starsky = np.array([-999.]*len(xstar))
+        starskyerr = np.array([-999.]*len(xstar))
+
         flux_mychisq = np.array([-999.]*len(xstar))
         flux_dms = np.array([-999.]*len(xstar))
         gsflux = np.array([-999.]*len(xstar))
@@ -4710,6 +4713,8 @@ class smp:
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
                 flux_chisq[i] = chi
+                starsky[i] = s
+                starskyerr[i] = se
                 #print scale,chi,chinoposs
                 #raw_input()
                 #print flux_chisq[i]
@@ -5027,6 +5032,8 @@ class smp:
                     , decs=decs[goodstarcols]
                     ,fit_zpt = md
                     ,fit_zpt_std = std
+                    ,sky = starsky[goodstarcols]
+                    ,skyerr = starskyerr[goodstarcols]
                     #,mcmc_me_zpt = mcmc_me_md
                     #,mcmc_me_zpt_std = mcmc_me_std
                     ,cat_zpt = cat_zpt
@@ -5046,7 +5053,7 @@ class smp:
                 #    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
                 #sys.exit()
                 print mag_compare_out
-                raw_input('saved')
+                #raw_input('saved')
             else:
                 self.tmpwriter.savez(mag_compare_out
                                      # ,ra = ras[goodstarcols]
