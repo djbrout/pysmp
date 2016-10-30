@@ -4509,7 +4509,7 @@ class smp:
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-                        noise_stamp = np.ones(image_stamp.shape)/se**2
+                        noise_stamp = np.ones(image_stamp.shape)/(se/np.sum(psf**2))**2
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
@@ -5023,7 +5023,7 @@ class smp:
                     ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
-                    ,flux_staruu = fluxcol[goodstarcols]
+                    ,flux_staruup = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
                     ,chisqu=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
