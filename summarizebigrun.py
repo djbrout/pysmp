@@ -640,13 +640,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
-    ww = rmsaddin < .3
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,skyerr,title=''):
+    ww = rmsaddin < 1.
     flux = flux[ww]
     fluxerr = fluxerr[ww]
     zpt = zpt[ww]
     catmag = catmag[ww]
-
+    skyerr= skyerr[ww]
+    rmsaddin = rmsaddin[ww]
+    starmagerr = np.sqrt((-2.5*np.log10(skyerr)+zpt)**2+rmsaddin**2)
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(zpt-catmag))
@@ -663,7 +665,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
 
 
     starmag = -2.5*np.log10(flux) + zpt
-    starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr) + rmsaddin[ww]
+
+    #starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr) + rmsaddin[ww]
     print starmag[0:10]
     print catmag[0:10]
     dm = (starmag - catmag) / starmagerr
