@@ -4034,11 +4034,12 @@ class smp:
             #             totalarea+=1
             totalarea = len(fitrad[fitrad > 0])
             print 'totalarea',totalarea
+            print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
                 for i in np.arange(-100000, 10000000, 5000):
                     sim = galconv + sky + i * psf
-                    sigtot = np.sqrt(totalarea*skyerr**2 + float(i)/4.)/float(i)
+                    sigtot = np.sqrt(totalarea*skyerr**2 + float(i)/4.)
                     weight = 1./sigtot**2
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
