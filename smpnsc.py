@@ -4053,8 +4053,8 @@ class smp:
             chisqvec = []
             fluxvec = []
             if guessrange is None:
-                guessrange = .2 * guess_scale
-            guess_scale_step = min([guess_scale / 5000., 1.])
+                guessrange = .2 * abs(guess_scale)
+            guess_scale_step = min([abs(guess_scale) / 5000., 1.])
             for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                 sim = galconv + sky + i * psf
                 sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.)
