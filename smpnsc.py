@@ -4712,6 +4712,7 @@ class smp:
                 #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
+                print scale,errmag
                 flux_chisq[i] = chi
                 starsky[i] = s
                 starskyerr[i] = se
