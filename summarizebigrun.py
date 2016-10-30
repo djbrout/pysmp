@@ -75,8 +75,8 @@ def grabstardata(imagedir,outfile):
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20130902_SN-S2/r_11/SNp1_230168_SN-S2_tile20_r_11+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
                 if not fname in zptfiles:
-                    try:
-                        #if True:
+                    #try:
+                    if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_staruu'])
@@ -101,9 +101,9 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
 
-                    except:
-                        print 'FAILED', fname
-                        pass
+                    # except:
+                    #     print 'FAILED', fname
+                    #     pass
     np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir):
