@@ -4013,7 +4013,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None):
+    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
         #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -4023,31 +4023,63 @@ class smp:
         substamp = galconv.shape[0]
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
-        # for x in np.arange(substamp):
-        #     for y in np.arange(substamp):
-        #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < radius:
-        #             fitrad[int(x),int(y)] = 1.
 
-        guessrange = None
-        if guess_scale is None:
-            for i in np.arange(-100000,10000000,5000):
+
+        if dosimultaneous:
+            totalarea = 0
+            for x in np.arange(substamp):
+                for y in np.arange(substamp):
+                    if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= fitrad:
+                        totalarea+=1
+
+            guessrange = None
+            if guess_scale is None:
+                for i in np.arange(-100000, 10000000, 5000):
+                    sim = galconv + sky + i * psf
+                    sigtot = np.sqrt(totalarea*skyerr**2 + float(i)/4.)/float(i)
+                    weight = 1./sigtot**2
+                    chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+                    fluxvec.append(i)
+                fluxvec = np.array(fluxvec)
+                chisqvec = np.array(chisqvec)
+                guess_scale = fluxvec[np.argmin(chisqvec)]
+                guessrange = 5000
+
+            chisqvec = []
+            fluxvec = []
+            if guessrange is None:
+                guessrange = .2 * guess_scale
+            guess_scale_step = min([guess_scale / 5000., 1.])
+            for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
+                sim = galconv + sky + i * psf
+                sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.) / float(i)
+                weight = 1. / sigtot ** 2
+                chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+                fluxvec.append(i)
+
+
+        else:
+
+            guessrange = None
+            if guess_scale is None:
+                for i in np.arange(-100000,10000000,5000):
+                    sim = galconv + sky + i*psf
+                    chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
+                    fluxvec.append(i)
+                fluxvec = np.array(fluxvec)
+                chisqvec = np.array(chisqvec)
+                guess_scale = fluxvec[np.argmin(chisqvec)]
+                guessrange = 5000
+
+            chisqvec = []
+            fluxvec = []
+            if guessrange is None:
+                guessrange = .2*guess_scale
+            guess_scale_step = min([guess_scale/5000.,1.])
+            for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
                 sim = galconv + sky + i*psf
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
-            fluxvec = np.array(fluxvec)
-            chisqvec = np.array(chisqvec)
-            guess_scale = fluxvec[np.argmin(chisqvec)]
-            guessrange = 5000
-
-        chisqvec = []
-        fluxvec = []
-        if guessrange is None:
-            guessrange = .2*guess_scale
-        guess_scale_step = min([guess_scale/5000.,1.])
-        for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
-            sim = galconv + sky + i*psf
-            chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-            fluxvec.append(i)
 
         ii = fitrad.ravel()
         i = ii[ii != 0]
@@ -4120,9 +4152,9 @@ class smp:
         #     yo = round(y)
         #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
         #     imstamp = imstamp / np.sum(imstamp)
-        sum_data_minus_sim = np.sum(im-sim)
-        sim = galconv + sky + fluxvec[argm]*psf
-        mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
+        #sum_data_minus_sim = np.sum(im-sim)
+        #sim = galconv + sky + fluxvec[argm]*psf
+        #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
         return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof
 
 
@@ -4512,7 +4544,8 @@ class smp:
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         gnoise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-                        onoise_stamp = np.ones(image_stamp.shape)/se**2
+                        #gnoise_stamp = np.ones(image_stamp.shape)/se**2
+
 
                         noise_stamp = np.ones(image_stamp.shape)/(se**2/np.sum(psf**2))
                         #print 'errrrr',se**2,(se**2/np.sum(psf**2))
@@ -4588,7 +4621,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                             gscale, gerrmag, gchi, gdms, gchinoposs = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
-                                                                             fitrad, gal, mjd)
+                                                                             fitrad, gal, mjd, se)
 
                         except:
 
