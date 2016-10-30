@@ -662,7 +662,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
 
 
     starmag = -2.5*np.log10(flux) + zpt
-    starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)
+    starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr) + rmsaddin[ww]
     print starmag[0:10]
     print catmag[0:10]
     dm = (starmag - catmag) / starmagerr
