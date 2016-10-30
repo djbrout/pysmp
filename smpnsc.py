@@ -4029,7 +4029,8 @@ class smp:
             totalarea = 0
             for x in np.arange(substamp):
                 for y in np.arange(substamp):
-                    if np.sqrt((15 - x)**2 + (15. - y)**2) <= fitrad:
+                    print np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2)
+                    if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= fitrad:
                         totalarea+=1
 
             guessrange = None
