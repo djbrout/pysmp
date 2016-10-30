@@ -677,13 +677,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin[ww]**2)**.5
     starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
-
+    skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
 
     print starmag[0:10]
     print catmag[0:10]
     dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr2
     dmas = (starmag - catmag) / starmagerr3
+    dsss = (starmag - catmag) / skymagerr
+
 
     raw_input('printing mags')
     d = (flux - catflux) / fluxerr
@@ -797,7 +799,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='MCMC Err', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, ds, np.arange(16., max(catmag), .1), .5)
+    ax, ayrms = dt.binrms(catmag, dsss, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
     print ayrms
