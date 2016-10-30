@@ -53,12 +53,13 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
-                stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],stardata['skyerr'],title='rmsaddin_')
+                stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],stardata['sky'],stardata['skyerr'],
+                title='rmsaddin_')
 
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'skyerr': []}
+               'sky':[], 'skyerr': []}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
@@ -77,6 +78,7 @@ def grabstardata(imagedir,outfile):
                     try:
                         #if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
+                        bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_staruu'])
                         bigdata['starzpt'].extend(zptdata['flux_staruu']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
@@ -640,7 +642,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,skyerr,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ww = rmsaddin < 1.
     flux = flux[ww]
     fluxerr = fluxerr[ww]
@@ -648,7 +650,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,skyerr,title=''):
     catmag = catmag[ww]
     skyerr= skyerr[ww]
     rmsaddin = rmsaddin[ww]
-    starmagerr = np.sqrt((-2.5*np.log10(skyerr)+zpt)**2+rmsaddin**2)
+    #print -2.5*np.log10(skyerr)+zpt
+    #raw_input('skyerr in mags')
+    starmagerr = np.sqrt((-2.5*np.log10(sky)+2.5*np.log10(skyerr))**2+rmsaddin**2)
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(zpt-catmag))
