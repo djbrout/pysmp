@@ -799,6 +799,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax, ayrms = dt.binrms(catmag, ds, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
+    print ayrms
+    raw_input('zpt scatter err')
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
