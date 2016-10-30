@@ -75,8 +75,8 @@ def grabstardata(imagedir,outfile):
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20130902_SN-S2/r_11/SNp1_230168_SN-S2_tile20_r_11+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                        #if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_staruu'])
@@ -101,9 +101,9 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
 
-                    # except:
-                    #     print 'FAILED', fname
-                    #     pass
+                    except:
+                        print 'FAILED', fname
+                        pass
     np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir):
@@ -670,13 +670,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     # plt.ylim(-5,5)
     # plt.savefig('starstd.png')
 
+    fluxerr = np.sqrt(fluxerr**2 + )
 
     starmag = -2.5*np.log10(flux) + zpt
 
-    #starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr) + rmsaddin[ww]
+    starmagerr2 = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr) + rmsaddin[ww]
     print starmag[0:10]
     print catmag[0:10]
     dm = (starmag - catmag) / starmagerr
+    dmas = (starmag - catmag) / starmagerr
 
     raw_input('printing mags')
     d = (flux - catflux) / fluxerr
@@ -794,6 +796,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3)
     ax, ayrms = dt.binrms(catmag, dm, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3)
+    ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
     ax3.legend()
     # ww = hostmag > 25.
