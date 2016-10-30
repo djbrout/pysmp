@@ -4046,6 +4046,7 @@ class smp:
                 guess_scale = fluxvec[np.argmin(chisqvec)]
                 guessrange = 5000
 
+            print guess_scale
             chisqvec = []
             fluxvec = []
             if guessrange is None:
