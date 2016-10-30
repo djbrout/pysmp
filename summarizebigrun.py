@@ -680,7 +680,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     print starmag[0:10]
     print catmag[0:10]
-    dm = (starmag - catmag) / starmagerr
+    dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr2
     dmas = (starmag - catmag) / starmagerr3
 
@@ -798,7 +798,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax3.plot(ax, ayrms, color='blue', label='MCMC Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, ds, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, dm, np.arange(16., max(catmag), .1), .5)
+    ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
