@@ -4017,7 +4017,7 @@ class smp:
         #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
-        
+        bad = False
         galconv = scipy.signal.fftconvolve(gal,psf,mode='same')
 
         substamp = galconv.shape[0]
@@ -4033,8 +4033,8 @@ class smp:
             #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= 13:
             #             totalarea+=1
             totalarea = len(fitrad[fitrad > 0])
-            print 'totalarea',totalarea
-            print 'skyerr2',skyerr**2
+            #print 'totalarea',totalarea
+            #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
                 for i in np.arange(-100000, 10000000, 5000):
@@ -4043,25 +4043,28 @@ class smp:
                     weight = 1./sigtot**2
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
-                    print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
+                    #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
                 fluxvec = np.array(fluxvec)
                 chisqvec = np.array(chisqvec)
+                #print 'argmin guesscale',np.argmin(chisqvec)
                 guess_scale = fluxvec[np.argmin(chisqvec)]
                 guessrange = 5000
 
-            print guess_scale
+            #print guess_scale
             chisqvec = []
             fluxvec = []
             if guessrange is None:
                 guessrange = .2 * abs(guess_scale)
-            guess_scale_step = min([abs(guess_scale) / 5000., 1.])
-            for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
-                sim = galconv + sky + i * psf
-                sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.)
-                weight = 1. / sigtot ** 2
-                chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
-                fluxvec.append(i)
-
+            try:
+                guess_scale_step = min([abs(guess_scale) / 5000., 1.])
+                for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
+                    sim = galconv + sky + i * psf
+                    sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.)
+                    weight = 1. / sigtot ** 2
+                    chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+                    fluxvec.append(i)
+            except:
+                bad=True
 
         else:
 
@@ -4160,7 +4163,7 @@ class smp:
         sum_data_minus_sim = np.sum(im-sim)
         sim = galconv + sky + fluxvec[argm]*psf
         #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
-        return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof
+        return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
 
 
     def iterstat(self,d,startMedian=False,sigmaclip=3.0,
@@ -4626,7 +4629,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
-                            gscale, gerrmag, gchi, gdms, gchinoposs = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
+                            gscale, gerrmag, gchi, gdms, gchinoposs, bad = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
                                                                              fitrad, gal, mjd, se)
 
                         # except:
@@ -4761,7 +4764,10 @@ class smp:
                 #print np.median(noise_stamp)
                 #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
                 #print 'DONEEEEE',scale,errmag,chi,mychi
-                flux_star[i] = gscale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
+                if bad:
+                    flux_star[i] = 1
+                else:
+                    flux_star[i] = gscale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = gerrmag
                 #print 'ccc',scale,errmag,oscale,oerrmag,gscale,gerrmag
                 flux_chisq[i] = gchi
