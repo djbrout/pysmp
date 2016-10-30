@@ -53,11 +53,12 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
-                stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],title='rmsaddin_')
+                stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],stardata['skyerr'],title='rmsaddin_')
 
 
 def grabstardata(imagedir,outfile):
-    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': []}
+    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
+               'skyerr': []}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
@@ -75,7 +76,7 @@ def grabstardata(imagedir,outfile):
                 if not fname in zptfiles:
                     try:
                         #if True:
-
+                        bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['starflux'].extend(zptdata['flux_staruu'])
                         bigdata['starzpt'].extend(zptdata['flux_staruu']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
