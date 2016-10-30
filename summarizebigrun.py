@@ -805,7 +805,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='grey', label='ZPT Scatter Err and MCMC Err', linewidth=3,alpha=.4)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-    ax3.legend(loc=2,fontsize='x-small')
+    ax3.legend(loc=3,fontsize='x-small')
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
@@ -826,7 +826,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax4.set_ylabel('(fitflux - catflux)/catflux')
 
     ax3.set_xlim(ax1.get_xlim())
-    ax3.set_ylim(.8,2.)
+    ax3.set_ylim(.5,2.)
     ax2.set_ylim(ax1.get_ylim())
     ax5.set_ylim(ax4.get_ylim())
     ax2.xaxis.set_major_formatter(nullfmt)
