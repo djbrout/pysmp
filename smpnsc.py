@@ -4616,17 +4616,18 @@ class smp:
                         #                                                  gal, mjd, scale,index=i)
 
                         #print 'running star',x,y
-                        try:
+                        #try:
                             # scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
+                        if True:
                             gscale, gerrmag, gchi, gdms, gchinoposs = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
                                                                              fitrad, gal, mjd, se)
 
-                        except:
-
-                            print 'could not scale'
-                            scale, errmag, chi, dms, chinoposs = -999,-999,-999,-999,-999
+                        # except:
+                        #
+                        #     print 'could not scale'
+                        #     scale, errmag, chi, dms, chinoposs = -999,-999,-999,-999,-999
                         #print 'scale and error',scale,errmag
                         #raw_input()
                         #print scale
