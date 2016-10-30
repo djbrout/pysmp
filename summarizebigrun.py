@@ -645,6 +645,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
     fluxerr = fluxerr[ww]
     zpt = zpt[ww]
     catmag = catmag[ww]
+
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(zpt-catmag))
@@ -659,6 +660,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
     # plt.ylim(-5,5)
     # plt.savefig('starstd.png')
 
+
+    starmag = -2.5*np.log10(flux) + zpt
+    starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)
+    print starmag[0:10]
+    print catmag[0:10]
+    raw_input('printing mags')
     d = (flux - catflux) / fluxerr
 
     #chisq = (flux - catflux) ** 2 / catflux
@@ -749,7 +756,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,title=''):
 
 
     ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.7)
+    ax3.set_ylim(0., 3.)
     ax3.legend(fontsize='small')
 
     fresid = np.zeros(flux.shape)
