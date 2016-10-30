@@ -8,7 +8,7 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from matplotlib.ticker import NullFormatter
-
+import iterstat
 from matplotlib.backends.backend_pdf import PdfPages
 
 import pyfits as pf
@@ -88,11 +88,13 @@ def grabstardata(imagedir,outfile):
                         cm = zptdata['cat_mag']
                         fs = zptdata['flux_staruu']
                         zp = zptdata['fit_zpt']
-                        ww = cm < 19.
+                        ww = (cm < 19.) and (cm > 17.)
+
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
                         plt.savefig('testzpt.png')
-                        std = np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
+                        md, std, num = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
+                                                     startMedian=True, sigmaclip=1.5, iter=10)
                         print 'worked now std',std
                         bigdata['rmsaddin'].extend(zptdata['flux_staruu']*0. + std)
                         #print 'read in ',fname
