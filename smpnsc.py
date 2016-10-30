@@ -4107,7 +4107,7 @@ class smp:
                 sim = galconv + sky + fluxvec[argm]*psf
             except:
                 bad = True
-        if not bad
+        if not bad:
             if not pdf_pages is None:
                 fig = plt.figure(figsize=(20,10))
                 axim = plt.subplot(141)
