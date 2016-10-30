@@ -4089,81 +4089,60 @@ class smp:
                 chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                 fluxvec.append(i)
 
-        ii = fitrad.ravel()
-        i = ii[ii != 0]
-        
-        ndof = len(i)
+        if not bad:
+            ii = fitrad.ravel()
+            i = ii[ii != 0]
 
-        fluxvec = np.array(fluxvec)
-        chisqvec = np.array(chisqvec)
-        hh = chisqvec*0 + min(chisqvec)
-        mchisq = min(chisqvec)
-        idx = np.isclose(chisqvec, hh, atol=1.)
-        # print len(fluxvec[idx])
-        #
-        # plt.clf()
-        # plt.plot(fluxvec,np.array(chisqvec),color='black')
-        # plt.axhline(min(chisqvec)+1.0,color='red')
-        # plt.axvline(fluxvec[idx][0])
-        # plt.axvline(fluxvec[idx][-1])
-        # plt.xlabel('Flux')
-        # plt.ylabel('Chisq')
-        # plt.ylim(min(chisqvec),min(chisqvec)+10.)
-        # plt.xlim(-1000,10000)
-        # plt.savefig('./chisqmin/testflux_'+str(mjd)+'.png')
-        # print './chisqmin/testflux_'+str(mjd)+'.png'
-        #raw_input()
+            ndof = len(i)
+
+            fluxvec = np.array(fluxvec)
+            chisqvec = np.array(chisqvec)
+            hh = chisqvec*0 + min(chisqvec)
+            mchisq = min(chisqvec)
+            idx = np.isclose(chisqvec, hh, atol=1.)
+
+            argm = chisqvec == min(chisqvec)
+
+            sim = galconv + sky + fluxvec[argm]*psf
 
 
-        #if mjd > 
-        
-        #raw_input()
-        argm = chisqvec == min(chisqvec)
+            if not pdf_pages is None:
+                fig = plt.figure(figsize=(20,10))
+                axim = plt.subplot(141)
+                axpsf = plt.subplot(142)
+                axdiff = plt.subplot(143)
+                axchi = plt.subplot(144)
+                for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model','resid', 'chisq']):
+                    ax.set_title(title)
+                ax = axim.imshow(im*fitrad, cmap='gray', interpolation='nearest')
+                cbar = fig.colorbar(ax,ax=axim)
+                ax = axpsf.imshow(sim*fitrad, cmap='gray', interpolation='nearest')
+                cbar = fig.colorbar(ax,ax=axpsf)
+                ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest',vmin=-100, vmax=10)
+                cbar = fig.colorbar(ax,ax=axdiff)
+                ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest',vmin=0, vmax=10.)
+                cbar = fig.colorbar(ax,ax=axchi)
+                # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+                # plt.colorbar()
+                plt.title(title)
+                pdf_pages.savefig(fig)
 
-        sim = galconv + sky + fluxvec[argm]*psf
-        #sys.exit()
-        # if self.savezptstamps:
-        #     self.tmpwriter.savefits(sim,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_sim.fits')
-        #     self.tmpwriter.savefits(im,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_data.fits')
-        #     self.tmpwriter.savefits((im-sim)*fitrad, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_dataminussim.fits')
-        #     self.tmpwriter.savefits((im-sim)*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_std.fits')
-        #     self.tmpwriter.savefits((im-sim)**2*weight*fitrad,'/pnfs/des/scratch/pysmp/test/'+str(index)+'_chisq.fits')
-
-        if not pdf_pages is None:
-            fig = plt.figure(figsize=(20,10))
-            axim = plt.subplot(141)
-            axpsf = plt.subplot(142)
-            axdiff = plt.subplot(143)
-            axchi = plt.subplot(144)
-            for ax, title in zip([axim, axpsf, axdiff, axchi], ['image', 'model','resid', 'chisq']):
-                ax.set_title(title)
-            ax = axim.imshow(im*fitrad, cmap='gray', interpolation='nearest')
-            cbar = fig.colorbar(ax,ax=axim)
-            ax = axpsf.imshow(sim*fitrad, cmap='gray', interpolation='nearest')
-            cbar = fig.colorbar(ax,ax=axpsf)
-            ax = axdiff.imshow((im - sim)*fitrad, cmap='gray', interpolation='nearest',vmin=-100, vmax=10)
-            cbar = fig.colorbar(ax,ax=axdiff)
-            ax = axchi.imshow((im - sim)**2*weight*fitrad, cmap='gray', interpolation='nearest',vmin=0, vmax=10.)
-            cbar = fig.colorbar(ax,ax=axchi)
-            # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
-            # plt.colorbar()
-            plt.title(title)
-            pdf_pages.savefig(fig)
-
-        #if not mypsf is None:
-        #    self.tmpwriter.savefits(mypsf, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_sim.fits')
-        # if not imfile is None:
-        #     imstamp = pf.getdata(imfile)
-        #     print 'imstamp shape', imstamp.shape
-        #     print x, y
-        #     xo = round(x)
-        #     yo = round(y)
-        #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
-        #     imstamp = imstamp / np.sum(imstamp)
-        sum_data_minus_sim = np.sum(im-sim)
-        sim = galconv + sky + fluxvec[argm]*psf
-        #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
-        return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+            #if not mypsf is None:
+            #    self.tmpwriter.savefits(mypsf, '/pnfs/des/scratch/pysmp/test/' + str(index) + '_sim.fits')
+            # if not imfile is None:
+            #     imstamp = pf.getdata(imfile)
+            #     print 'imstamp shape', imstamp.shape
+            #     print x, y
+            #     xo = round(x)
+            #     yo = round(y)
+            #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
+            #     imstamp = imstamp / np.sum(imstamp)
+            sum_data_minus_sim = np.sum(im-sim)
+            sim = galconv + sky + fluxvec[argm]*psf
+            #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
+            return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+        else:
+            return 1,1,1,1,1,True
 
 
     def iterstat(self,d,startMedian=False,sigmaclip=3.0,
