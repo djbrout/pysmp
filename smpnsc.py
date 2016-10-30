@@ -4026,13 +4026,14 @@ class smp:
 
 
         if dosimultaneous:
-            totalarea = 0
-            for x in np.arange(substamp):
-                for y in np.arange(substamp):
-                    #print np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2)
-                    if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= 13:
-                        totalarea+=1
-
+            # totalarea = 0
+            # for x in np.arange(substamp):
+            #     for y in np.arange(substamp):
+            #         #print np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2)
+            #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= 13:
+            #             totalarea+=1
+            totalarea = len(fitrad[fitrad > 0])
+            print 'totalarea',totalarea
             guessrange = None
             if guess_scale is None:
                 for i in np.arange(-100000, 10000000, 5000):
@@ -4041,6 +4042,7 @@ class smp:
                     weight = 1./sigtot**2
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
+                    print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec
                 fluxvec = np.array(fluxvec)
                 chisqvec = np.array(chisqvec)
                 guess_scale = fluxvec[np.argmin(chisqvec)]
