@@ -4509,7 +4509,8 @@ class smp:
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-                        noise_stamp = np.ones(image_stamp.shape)/(se/np.sum(psf**2))**2
+                        noise_stamp = np.ones(image_stamp.shape)/(se**2/np.sum(psf**2))
+                        print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
                         ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
