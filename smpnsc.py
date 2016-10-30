@@ -4509,6 +4509,8 @@ class smp:
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        onoise_stamp = np.ones(image_stamp.shape)/se**2
+
                         noise_stamp = np.ones(image_stamp.shape)/(se**2/np.sum(psf**2))
                         print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
@@ -4580,7 +4582,11 @@ class smp:
                         #print 'running star',x,y
                         try:
                             scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
+                            oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
+                                                                             fitrad, gal, mjd)
+
                         except:
+
                             print 'could not scale'
                             scale, errmag, chi, dms, chinoposs = -999,-999,-999,-999,-999
                         #print 'scale and error',scale,errmag
@@ -4713,7 +4719,7 @@ class smp:
                 #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
-                print scale,errmag
+                print scale,errmag,oerrmag
                 flux_chisq[i] = chi
                 starsky[i] = s
                 starskyerr[i] = se
