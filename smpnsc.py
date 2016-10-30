@@ -1463,6 +1463,8 @@ class smp:
                 mask[mask==0] = 1
                 mask[mask==-1000] = 0
                 weights = 1./noise**2 * mask
+                weights = pyfits.getdata(weightsfile)
+
 
             psf = pyfits.getdata(psffile)
 
@@ -4508,6 +4510,7 @@ class smp:
                         #               np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
 
                         image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        gnoise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         onoise_stamp = np.ones(image_stamp.shape)/se**2
 
@@ -4583,6 +4586,8 @@ class smp:
                         try:
                             scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
                             oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
+                                                                             fitrad, gal, mjd)
+                            gscale, gerrmag, gchi, gdms, gchinoposs = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
                                                                              fitrad, gal, mjd)
 
                         except:
@@ -4719,7 +4724,7 @@ class smp:
                 #print 'DONEEEEE',scale,errmag,chi,mychi
                 flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
                 flux_star_std[i] = errmag
-                print scale,errmag,oerrmag
+                print 'ccc',scale,errmag,oscale,oerrmag,gscale,gerrmag
                 flux_chisq[i] = chi
                 starsky[i] = s
                 starskyerr[i] = se
