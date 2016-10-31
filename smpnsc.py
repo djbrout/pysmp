@@ -4043,7 +4043,7 @@ class smp:
                     weight = 1./sigtot**2
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
-                    print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
+                    #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
 
                 fluxvec = np.array(fluxvec)
                 chisqvec = np.array(chisqvec)
@@ -4051,8 +4051,8 @@ class smp:
                 guess_scale = fluxvec[np.argmin(chisqvec)]
                 guessrange = 5000
 
-            print guess_scale
-            raw_input()
+            #print guess_scale
+            #raw_input()
             chisqvec = []
             fluxvec = []
             if guessrange is None:
