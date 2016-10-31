@@ -89,13 +89,13 @@ def grabstardata(imagedir,outfile):
                         cm = zptdata['cat_mag']
                         fs = zptdata['flux_starnormm']
                         zp = zptdata['fit_zpt']
-                        ww = (cm < 19.) & (cm > 17.)
+                        ww = (cm < 18.) & (cm > 16.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
                         plt.savefig('testzpt.png')
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
-                                                     startMedian=True, sigmaclip=3, iter=5)
+                                                     startMedian=True, sigmaclip=3, iter=10)
                         print 'worked now std',std
                         bigdata['rmsaddin'].extend(zptdata['flux_starnormm']*0. + std)
                         #print 'read in ',fname
@@ -813,7 +813,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax, ayrms = dt.binstd(catmag, dmam, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='grey', label='ZPT Scatter and ChisMin Err', linewidth=3,alpha=.4)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-    ax3.legend(loc=3,fontsize='x-small')
+    ax3.legend(fontsize='x-small')
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
