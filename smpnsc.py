@@ -4039,7 +4039,7 @@ class smp:
             if guess_scale is None:
                 for i in np.arange(-100000, 10000000, 5000):
                     sim = galconv + sky + i * psf
-                    sigtot = np.sqrt(totalarea*skyerr**2 + float(i)/4.)
+                    sigtot = np.sqrt(skyerr**2 + float(i)/4.)
                     weight = 1./sigtot**2
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
@@ -4059,7 +4059,7 @@ class smp:
                 guess_scale_step = min([abs(guess_scale) / 5000., 1.])
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
-                    sigtot = np.sqrt(totalarea * skyerr ** 2 + float(i) / 4.)
+                    sigtot = np.sqrt(skyerr ** 2 + float(i) / 4.)
                     weight = 1. / sigtot ** 2
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
@@ -5063,7 +5063,7 @@ class smp:
                     ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
-                    ,flux_starwn = fluxcol[goodstarcols]
+                    ,flux_starwnn = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
                     ,chisqu=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
