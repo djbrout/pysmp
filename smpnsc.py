@@ -4105,7 +4105,7 @@ class smp:
                 hh = chisqvec*0 + min(chisqvec)
             except:
                 bad = True
-        if not bad
+        if not bad:
             mchisq = min(chisqvec)
             idx = np.isclose(chisqvec, hh, atol=1.)
 
