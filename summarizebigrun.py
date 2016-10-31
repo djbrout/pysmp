@@ -676,7 +676,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     starmag = -2.5*np.log10(flux) + zpt
 
-    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin[ww]**2)**.5
+    starmagerr2 = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)) + rmsaddin
     starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
 
