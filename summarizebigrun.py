@@ -71,8 +71,9 @@ def grabstardata(imagedir,outfile):
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
                 if not 'SN-S2' in fname: continue
+
                 zptdata = np.load(os.path.join(imagedir,dirName,fname))
-                #zptdata = np.load('/pnfs/des/persistent/smp/v2/20130902_SN-S2/r_11/SNp1_230168_SN-S2_tile20_r_11+fakeSN_rband_dillonzptinfo_globalstar.npz')
+                zptdata = np.load('/pnfs/des/persistent/smp/v2/20131109_SN-S2/r_21/SNp1_252530_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
                 if not fname in zptfiles:
                     try:
