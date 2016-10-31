@@ -4039,8 +4039,8 @@ class smp:
             if guess_scale is None:
                 for i in np.arange(-100000, 10000000, 5000):
                     sim = galconv + sky + i * psf
-                    sigtot = np.sqrt(skyerr**2 + abs(float(i))/4.)
-                    weight = 1./sigtot**2
+                    #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
+                    weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
                     #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
@@ -4061,8 +4061,8 @@ class smp:
                 guess_scale_step = min([abs(guess_scale) / 5000., 1.])
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
-                    sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1. / sigtot ** 2
+                    #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
+                    weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
             except:
