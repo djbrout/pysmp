@@ -58,6 +58,31 @@ def binrms(x, y, bins,rad):
     xvals = (bins[1:] + bins[:-1]) / 2.
     return xvals, rms
 
+
+def binstd(x, y, bins,rad):
+    medians = np.zeros(len(bins) - 1)
+    mads = np.zeros(len(bins) - 1)
+    nums = np.zeros(len(bins) - 1)
+    std = np.zeros(len(bins) - 1)
+    for i in np.arange(len(bins) - 1):
+        bs = bins[i]
+        bf = bins[i + 1]
+        ww = [(x > bs - rad) & (x < bf + rad)]
+        yhere = y[ww]
+        yhere = yhere[np.isfinite(yhere) & ~np.isnan(yhere)]
+        ss = [abs(yhere) < 3. * np.std(yhere)]
+        try:
+            nums[i] = len(yhere[ss])
+            d = yhere[ss]
+            dc = d[abs(d) < 3]
+            std[i] = np.std(dc)
+        except IndexError:
+            print 'excepted'
+            nums[i] = 0.
+            std[i] = np.nan
+    xvals = (bins[1:] + bins[:-1]) / 2.
+    return xvals, std
+
 def iterstat(d, startMedian=False, sigmaclip=3.0,iter=6):
     """Get the sigma-clipped mean of
     a distribution, d.

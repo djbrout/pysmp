@@ -214,7 +214,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
     for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
         print a,f,fe
     #print ,flux[am],fluxerr[am]
-    raw_input()
+    #raw_input()
     fluxerr = np.sqrt(np.asarray(fluxerr)**2+(abs(flux)/3.) + 10**(.4*(fitzpt - hostmag))/3.)
     hostmag = np.array(hostmag)
 
@@ -676,9 +676,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     starmag = -2.5*np.log10(flux) + zpt
 
-    print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
-    raw_input()
-    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))+ rmsaddin)
+    #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
+    #raw_input()
+    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2)**.5
     starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
 
@@ -800,17 +800,17 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
                                np.arange(16., max(catmag), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
-    ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
+    ax, ayrms = dt.binstd(catmag, d, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='blue', label='Chisq Min Err', linewidth=3,alpha=.9)
     # ax, ayrms = dt.binrms(catmag, dsss, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
+    ax, ayrms = dt.binstd(catmag, dmz, np.arange(16., max(catmag), .1), .5)
     # print ayrms
     # raw_input('zpt scatter err')
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3)
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
+    ax, ayrms = dt.binstd(catmag, dmam, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='grey', label='ZPT Scatter and ChisMin Err', linewidth=3,alpha=.4)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
     ax3.legend(loc=3,fontsize='x-small')
