@@ -4101,7 +4101,11 @@ class smp:
 
             fluxvec = np.array(fluxvec)
             chisqvec = np.array(chisqvec)
-            hh = chisqvec*0 + min(chisqvec)
+            try:
+                hh = chisqvec*0 + min(chisqvec)
+            except:
+                bad = True
+        if not bad
             mchisq = min(chisqvec)
             idx = np.isclose(chisqvec, hh, atol=1.)
 
@@ -4759,7 +4763,7 @@ class smp:
                 flux_chisq[i] = gchi
                 starsky[i] = s
                 starskyerr[i] = se
-                #print scale,chi,chinoposs
+                print i,gscale,gerrmag
                 #raw_input()
                 #print flux_chisq[i]
                 #raw_input()
