@@ -805,13 +805,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     # ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
     # print ayrms
     # raw_input('zpt scatter err')
-    # ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3)
-    # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
-    # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
-    # ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3)
+    ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
+    ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='grey', label='ZPT Scatter Err and MCMC Err', linewidth=3,alpha=.4)
     # ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-    # ax3.legend(loc=3,fontsize='x-small')
+    ax3.legend(loc=3,fontsize='x-small')
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)

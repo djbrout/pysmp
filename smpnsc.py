@@ -4013,7 +4013,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
+    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=False):
         #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -4538,8 +4538,8 @@ class smp:
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
-
-                        noise_stamp = np.ones(image_stamp.shape)/(se**2/np.sum(psf**2))
+                        totalarea = len(fitrad[fitrad>0])
+                        noise_stamp = np.ones(image_stamp.shape)/(totalarea*se/4.)
                         #print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
@@ -5065,7 +5065,7 @@ class smp:
                     ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
-                    ,flux_starwnnn = fluxcol[goodstarcols]
+                    ,flux_starnorm = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
                     ,chisqu=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
