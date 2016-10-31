@@ -4088,10 +4088,14 @@ class smp:
             if guessrange is None:
                 guessrange = .2*guess_scale
             guess_scale_step = min([guess_scale/5000.,1.])
-            for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
-                sim = galconv + sky + i*psf
-                chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-                fluxvec.append(i)
+            try:
+                for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
+                    sim = galconv + sky + i*psf
+                    chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
+                    fluxvec.append(i)
+
+            except:
+                bad = True
 
         if not bad:
             ii = fitrad.ravel()
@@ -5071,7 +5075,7 @@ class smp:
                     ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
-                    ,flux_starnorm = fluxcol[goodstarcols]
+                    ,flux_starnormm = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
                     ,chisqu=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
