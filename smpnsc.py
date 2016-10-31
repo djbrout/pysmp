@@ -4075,7 +4075,7 @@ class smp:
                 for i in np.arange(-100000,10000000,5000):
                     sim = galconv + sky + i*psf
                     chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-                    print i,weight,chisqvec[-1]
+                    #print i,weight,chisqvec[-1]
 
                     fluxvec.append(i)
                 fluxvec = np.array(fluxvec)
