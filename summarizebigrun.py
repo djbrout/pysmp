@@ -676,7 +676,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     starmag = -2.5*np.log10(flux) + zpt
 
-    print 'fluxerr vs rmsadding' np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
+    print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
     raw_input()
     starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))+ rmsaddin)
     starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
