@@ -604,7 +604,7 @@ class smp:
             self.starcatfile = self.snparams.starcat[self.snparams.band[0]]
             print self.snparams.band[0]
             print self.starcatfile
-            print self.starcatfile['g']
+            #print self.starcatfile['g']
             #starcat = dt.readcol)
             starcat = txtobj(self.starcatfile, useloadtxt=True)
             print 'done reading in starcatfile'
