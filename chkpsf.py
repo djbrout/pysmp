@@ -149,6 +149,7 @@ def fit(
                                args=(model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']))
 
     # print 'flux fit comparo',flux,fluxls,
+    scaledpsf = model*fluxls/10**(-0.4*(hpsf['PSFMAG']-25)) + imhdr['SKYADU']
 
     fluxerr = 100.
     chisq = 1.
@@ -165,17 +166,21 @@ def fit(
         axpsf = plt.subplot(132)
         axdiff = plt.subplot(133)
         for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
-        ax.set_title(title)
-        axim.imshow(subim,
-        cmap='gray',interpolation='nearest')
-        axpsf.imshow(model,cmap='gray',interpolation='nearest')
-        axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
-        plt.colorbar()
-        axim = plt.subplot(131)
-        axpsf = plt.subplot(132)
-        axdiff = plt.subplot(133)
-        for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
             ax.set_title(title)
+            axim.imshow(subim,
+            cmap='gray',interpolation='nearest')
+            axpsf.imshow(model,cmap='gray',interpolation='nearest')
+            axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
+            plt.colorbar()
+            axim = plt.subplot(131)
+            axpsf = plt.subplot(132)
+            axdiff = plt.subplot(133)
+        #for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
+            if good:
+                ax.set_title(title + 'GOOD')
+            else:
+                ax.set_title(title + 'BADD')
+            #ax.set_title(title)
         axim.imshow(subim,cmap='gray',interpolation='nearest')
         axpsf.imshow(scaledpsf,cmap='gray',interpolation='nearest')
         ax = axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
