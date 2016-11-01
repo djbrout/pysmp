@@ -690,7 +690,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     dsss = (starmag - catmag) / skymagerr
 
 
-    raw_input('printing mags')
+    #raw_input('printing mags')
     d = (flux - catflux) / fluxerr
     ds = (flux - catflux) / skyerr
 
