@@ -4431,6 +4431,7 @@ class smp:
         print '\n'
         import pkfit_norecent_noise_smp
         counter = 0
+        bad = False
         #print 'skies',sky
         #raw_input()
         flux_star = np.array([-999.]*len(xstar))        
