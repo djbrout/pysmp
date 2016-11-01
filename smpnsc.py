@@ -146,6 +146,7 @@ class get_snfile:
                             self.__dict__["starcat"] = {catfilter.lower(): os.path.join(rootdir, val.split()[1])}
                     elif key.lower() == 'starcat' and 'PS1' in survey:
                         print 'ps1'
+                        raw_input()
                         self.__dict__["starcat"] = {filt.lower(): val.strip()}
                     else:
                         #print 'here2',key.lower()
