@@ -708,7 +708,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     plt.clf()
 
-    dc = d[abs(d) < 3]
+    dc = dmam[abs(dmam) < 3]
 
     rms = np.sqrt(np.nanmean(np.square(dc[abs(dc) < 3.])))
 
@@ -741,7 +741,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     ax3.xaxis.set_major_formatter(nullfmt)
     ax5.yaxis.set_major_formatter(nullfmt)
 
-    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3))
+    ax2.hist(dmam, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3))
              , orientation='horizontal')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
@@ -763,8 +763,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     # plt.clf()
 
-    ax1.scatter(catmag, d, alpha=.02, color='blue')
-    ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5)
+    ax1.scatter(catmag, dmam, alpha=.02, color='blue')
+    ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.5)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -793,7 +793,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
             fresid[i] = (f - ff) / max([abs(ff), 1.])
     # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-    ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
+    ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='blue', orientation='horizontal')
 
     ax4.scatter(catmag, fresid, alpha=.02, color='blue')
     ax, ay, aystd = dt.bindata(catmag, fresid,
