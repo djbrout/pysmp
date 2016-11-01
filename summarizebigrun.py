@@ -763,7 +763,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     # plt.clf()
 
-    ax1.scatter(catmag, d, alpha=.3, color='blue')
+    ax1.scatter(catmag, d, alpha=.02, color='blue')
     ax, ay, aystd = dt.bindata(catmag, d, np.arange(min(catmag), max(catmag), .1), window=.5)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
@@ -795,7 +795,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
 
-    ax4.scatter(catmag, fresid, alpha=.3, color='blue')
+    ax4.scatter(catmag, fresid, alpha=.02, color='blue')
     ax, ay, aystd = dt.bindata(catmag, fresid,
                                np.arange(16., max(catmag), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
