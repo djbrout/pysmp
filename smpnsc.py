@@ -4538,7 +4538,7 @@ class smp:
                 #if self.fermilog:
                 #    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
                 if self.snparams.survey == 'PS1':
-                    scale,cscale_std,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
+                    scale,errmag,chisq,dms,good,image_stamp,simstamp = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=None,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)
