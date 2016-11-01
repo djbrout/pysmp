@@ -117,8 +117,8 @@ class get_snfile:
                         not line.replace(' ','').startswith('VARNAMES:'):
                     key,val = line.split('#')[0].split(':')
                     key = key.replace(' ','')
-                    print key
-                    raw_input()
+                    #print key
+                    #raw_input()
                     if key.upper() == 'SURVEY':
                         survey = val
                     if key.upper() == 'HOSTGAL_SB_FLUXCAL':
@@ -142,7 +142,7 @@ class get_snfile:
                                 self.__dict__["starcat"][val.split()[0]] = os.path.join(rootdir,val.split()[1])
                     elif key.lower() == 'starcat' and 'PS1' in survey:
                         print 'ps1'
-                        raw_input()
+                        #raw_input()
                         self.__dict__["starcat"] = {filt.lower(): val.strip()}
                     elif key.lower() == 'starcat':
                         print 'here33'
