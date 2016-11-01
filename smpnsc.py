@@ -4546,6 +4546,7 @@ class smp:
                         badflag[i] = 1
                         mag_cat[i] = 99
                         print 'badflaggg'*10
+                        bad = True
                 else:
                     #print 'here1'
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
