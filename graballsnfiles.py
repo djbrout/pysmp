@@ -15,7 +15,7 @@ for filename in files:
     #print filename
     #if not '-E1' in filename:
     #    continue
-    if not 'SN-E1' in filename: continue
+    #if not 'SN-E1' in filename: continue
     if os.path.isfile("/pnfs/des/persistent/smp/v2/"+filename):
         if os.stat("/pnfs/des/persistent/smp/v2/"+filename).st_size > 0.:
             print filename,'already exists'
