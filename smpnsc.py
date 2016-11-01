@@ -1028,7 +1028,7 @@ class smp:
                 # print 'min(starcat.ra)',min(starcat.ra)
                 # print 'max(starcat.ra)',max(starcat.ra)
                 #sys.exit()
-                print starcat.__dict___
+                #print starcat.__dict___
                 cols = np.where((starcat.bigra > ra_low) &
                                 (starcat.bigra < ra_high) &
                                 (starcat.bigdec > dec_low) &
