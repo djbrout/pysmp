@@ -4662,7 +4662,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
-                            gscale, gerrmag, gchi, gdms, gchinoposs, bad = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
+                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
                                                                              fitrad, gal, mjd, se)
 
                         # except:
@@ -4800,14 +4800,14 @@ class smp:
                 if bad:
                     flux_star[i] = 1
                 else:
-                    flux_star[i] = gscale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
-                flux_star_std[i] = gerrmag
+                    flux_star[i] = scale #write file mag,magerr,pkfitmag,pkfitmagerr and makeplots
+                flux_star_std[i] = errmag
                 #print 'ccc',scale,errmag,oscale,oerrmag,gscale,gerrmag
-                flux_chisq[i] = gchi
+                flux_chisq[i] = chi
                 starsky[i] = s
                 starskyerr[i] = se
                 psfs[i,:,:] = psf
-                print i,gscale,gerrmag
+                print 'Fit star',i,scale,errmag
                 #raw_input()
                 #print flux_chisq[i]
                 #raw_input()
