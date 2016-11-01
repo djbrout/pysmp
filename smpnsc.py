@@ -4400,7 +4400,7 @@ class smp:
         flux_chisq = np.array([-999.]*len(xstar))
         starsky = np.array([-999.]*len(xstar))
         starskyerr = np.array([-999.]*len(xstar))
-
+        psfs = np.zeros((len(xstar),substamp,substamp))
         flux_mychisq = np.array([-999.]*len(xstar))
         flux_dms = np.array([-999.]*len(xstar))
         gsflux = np.array([-999.]*len(xstar))
@@ -4767,6 +4767,7 @@ class smp:
                 flux_chisq[i] = gchi
                 starsky[i] = s
                 starskyerr[i] = se
+                psfs[i,:,:] = psf
                 print i,gscale,gerrmag
                 #raw_input()
                 #print flux_chisq[i]
@@ -5090,6 +5091,7 @@ class smp:
                     #,mcmc_me_zpt_std = mcmc_me_std
                     ,cat_zpt = cat_zpt
                     ,mjd = thismjd
+                    ,psfs = psfs[goodstarcols,:,:]
                     ,mjdoff=mjdoff
                     ,mjdslopeinteroff=mjdslopeinteroff
                     )
