@@ -651,8 +651,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            if cntrs > 1:
-               continue
+            #if cntrs > 1:
+            #   continue
             #if snparams.mjd[j] != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
@@ -1495,7 +1495,7 @@ class smp:
                 mask[mask==0] = 1
                 mask[mask==-1000] = 0
                 weights = 1./noise**2 * mask
-                weights = pyfits.getdata(weightsfile)
+                #weights = pyfits.getdata(weightsfile)
 
 
             psf = pyfits.getdata(psffile)
