@@ -117,6 +117,8 @@ class get_snfile:
                         not line.replace(' ','').startswith('VARNAMES:'):
                     key,val = line.split('#')[0].split(':')
                     key = key.replace(' ','')
+                    print key
+                    raw_input()
                     if key.upper() == 'SURVEY':
                         survey = val
                     if key.upper() == 'HOSTGAL_SB_FLUXCAL':
