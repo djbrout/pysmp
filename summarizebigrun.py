@@ -59,11 +59,11 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'sky':[], 'skyerr': []}
+               'sky':[], 'skyerr': [],'psf',[]}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        #if cntr > 100.: continue
+        if cntr > 100.: continue
         #print('Found directory: %s' % dirName)
         for fname in fileList:
 
@@ -85,6 +85,9 @@ def grabstardata(imagedir,outfile):
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+                        psfs = zptdata['psfs']
+                        for i in range(len(psfs)):
+                            bigdata['psf'].append(psfs[i,:,:])
 
                         cm = zptdata['cat_mag']
                         fs = zptdata['flux_starnormm']
@@ -92,8 +95,8 @@ def grabstardata(imagedir,outfile):
                         ww = (cm < 18.) & (cm > 16.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
-                        plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
-                        plt.savefig('testzpt.png')
+                        # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
+                        # plt.savefig('testzpt.png')
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=3, iter=10)
                         print 'worked now std',std
