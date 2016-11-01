@@ -59,7 +59,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'sky':[], 'skyerr': [],'psf',[]}
+               'sky':[], 'skyerr': [],'psf':[]}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
