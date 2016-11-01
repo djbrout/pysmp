@@ -616,6 +616,7 @@ class smp:
             starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
             starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
             starcat.bigmag = np.array(starcat.__dict__['g'][1:], dtype='float')
+            starcat.mag = starcat.bigmag
             starcat.bigid = np.arange(len(starcat.bigra))
             starcat.objid = np.arange(len(starcat.bigra))
             newra = starcat.bigra
