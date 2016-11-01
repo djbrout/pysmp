@@ -4816,7 +4816,7 @@ class smp:
         #check for only good fits MPFIT
         if not self.dogalsimpixfit:
             goodstarcols = np.where((mag_cat != 0) &
-                                (mag_cat < 21.5) &
+                                (mag_cat < 26) &
                                 (flux_star != 1) &
                                 (flux_star != -999) &
                                 (flux_star < 1e7) &
@@ -4835,7 +4835,7 @@ class smp:
                                 (isnotcheckstars == 1))[0]
         else:
             goodstarcols = np.where((mag_cat != 0) &
-                                    (mag_cat < 21.5) &
+                                    (mag_cat < 26) &
                                     (gsflux != 1) &
                                     (gsflux < 1e7) &
                                     #(flux_chisq < 1.5) &
@@ -4854,7 +4854,7 @@ class smp:
 
 
         checkstarcols = np.where((mag_cat != 0) &
-                                (mag_cat < 21.5) &
+                                (mag_cat < 26) &
                                 (flux_star != 1) &
                                 (flux_star < 1e7) &
                                 #(flux_chisq < 1.5) &
