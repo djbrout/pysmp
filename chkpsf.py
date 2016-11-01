@@ -75,6 +75,10 @@ def fit(
     # print fcmp.Xpos-xpos
     # print fcmp.Ypos-ypos
     # raw_input()
+    print fcmp.__dict__['class']
+    print fcmp.Xpos
+    print xpos
+    raw_input()
     ww = (abs(fcmp.Xpos - xpos) < 1.) & (abs(fcmp.Ypos - ypos) < 1.)
     thisclass = fcmp.__dict__['class'][ww]
     print 'THIS CLASS IS', thisclass
