@@ -164,16 +164,13 @@ def fit(
         axim = plt.subplot(131)
         axpsf = plt.subplot(132)
         axdiff = plt.subplot(133)
-        for ax,title in zip([axim,axpsf,axdiff],
-        ['image','model','difference']):
+        for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
         ax.set_title(title)
         axim.imshow(subim,
         cmap='gray',interpolation='nearest')
         axpsf.imshow(model,cmap='gray',interpolation='nearest')
         axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
         plt.colorbar()
-        '''
-        '''
         axim = plt.subplot(131)
         axpsf = plt.subplot(132)
         axdiff = plt.subplot(133)
