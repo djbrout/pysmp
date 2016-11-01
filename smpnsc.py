@@ -606,10 +606,10 @@ class smp:
             # print self.starcat.__dict__['RA']
             # print self.starcat.__dict__['DEC']
             # print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
-            starcat.bigra = np.array(starcat.__dict__['RA'][1:], dtype='float')
-            starcat.bigdec = np.array(starcat.__dict__['DEC'][1:], dtype='float')
-            starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s' % filt.upper()][1:], dtype='float')
-            starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:], dtype='float')
+            starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
+            starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
+            starcat.bigmag = np.array(starcat.__dict__['g'][1:], dtype='float')
+            starcat.bigid = np.arange(len(starcat.bigra))
         else:
             print 'reading in starcaftile'
             self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
