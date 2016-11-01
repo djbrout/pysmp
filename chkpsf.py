@@ -171,7 +171,7 @@ def fit(
             cmap='gray',interpolation='nearest')
             axpsf.imshow(model,cmap='gray',interpolation='nearest')
             axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
-            plt.colorbar()
+            #plt.colorbar()
             axim = plt.subplot(131)
             axpsf = plt.subplot(132)
             axdiff = plt.subplot(133)
