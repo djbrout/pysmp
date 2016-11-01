@@ -811,7 +811,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='grey', label='ZPT Scatter and ChisMin Err', linewidth=3,alpha=.7)
+    ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter and ChisMin Err', linewidth=3,alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
     ax3.legend(fontsize='x-small')
     # ww = hostmag > 25.
