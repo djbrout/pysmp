@@ -601,7 +601,7 @@ class smp:
         print self.snparams.__dict__
         if self.snparams.survey == 'PS1':
             print 'reading in starcaftile'
-            self.starcatfile = self.snparams.starcat[snparams.band]
+            self.starcatfile = self.snparams.starcat
             print self.starcatfile
             #starcat = dt.readcol)
             starcat = txtobj(self.starcatfile, useloadtxt=True)
