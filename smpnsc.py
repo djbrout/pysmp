@@ -618,6 +618,8 @@ class smp:
             starcat.bigmag = np.array(starcat.__dict__['g'][1:], dtype='float')
             starcat.bigid = np.arange(len(starcat.bigra))
             starcat.objid = np.arange(len(starcat.bigra))
+            newra = starcat.bigra
+            newdec = starcat.bigdec
         elif self.snparams.survey == 'DES':
             print 'reading in starcaftile'
             self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
@@ -631,6 +633,7 @@ class smp:
             starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
             starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
             starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+
         else:
             raise Exception('Unknown survey. Not supported. Please contact Dillon Brout at dbrout@phsyics.upenn.edu')
         #print self.starcat.ra
