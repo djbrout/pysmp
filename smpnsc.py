@@ -4819,7 +4819,7 @@ class smp:
                                 (mag_cat < 26) &
                                 (flux_star != 1) &
                                 (flux_star != -999) &
-                                (flux_star < 1e7) &
+                                (flux_star < 9e6) &
                                 #(flux_chisq < 1.5) &
                                 #(flux_chisq > 0) &
                                 #(flux_star_mcmc < 1e7) &
@@ -4837,7 +4837,7 @@ class smp:
             goodstarcols = np.where((mag_cat != 0) &
                                     (mag_cat < 26) &
                                     (gsflux != 1) &
-                                    (gsflux < 1e7) &
+                                    (gsflux < 9e6) &
                                     #(flux_chisq < 1.5) &
                                     #(flux_chisq > 0) &
                                     # (flux_star_mcmc < 1e7) &
@@ -4856,7 +4856,7 @@ class smp:
         checkstarcols = np.where((mag_cat != 0) &
                                 (mag_cat < 26) &
                                 (flux_star != 1) &
-                                (flux_star < 1e7) &
+                                (flux_star < 9e6) &
                                 #(flux_chisq < 1.5) &
                                 #(flux_chisq > 0) &
                                 (np.isfinite(mag_cat)) &
