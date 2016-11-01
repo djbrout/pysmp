@@ -602,7 +602,7 @@ class smp:
         if self.snparams.survey == 'PS1':
             print 'reading in starcaftile'
             self.starcatfile = self.snparams.starcat
-
+            print self.snparams.band
             print self.starcatfile
             print self.starcatfile['g']
             #starcat = dt.readcol)
