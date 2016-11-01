@@ -150,38 +150,6 @@ def fit(
 
     # print 'flux fit comparo',flux,fluxls,
 
-    # fig = plt.figure()
-    '''plt.clf()
-    axim = plt.subplot(131)
-    axpsf = plt.subplot(132)
-    axdiff = plt.subplot(133)
-    for ax,title in zip([axim,axpsf,axdiff],
-    ['image','model','difference']):
-    ax.set_title(title)
-    axim.imshow(subim,
-    cmap='gray',interpolation='nearest')
-    axpsf.imshow(model,cmap='gray',interpolation='nearest')
-    axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
-    plt.colorbar()
-    '''
-    '''
-    axim = plt.subplot(131)
-    axpsf = plt.subplot(132)
-    axdiff = plt.subplot(133)
-    for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
-        ax.set_title(title)
-    axim.imshow(subim,cmap='gray',interpolation='nearest')
-    axpsf.imshow(scaledpsf,cmap='gray',interpolation='nearest')
-    ax = axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
-    cbar = fig.colorbar(ax)
-    #plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
-    #plt.colorbar()
-    plt.title(title)
-    pdf_pages.savefig(fig)
-
-    #pdf_pages.close()
-    #plt.savefig('')
-    '''
     fluxerr = 100.
     chisq = 1.
     dms = 1.
@@ -189,6 +157,44 @@ def fit(
     if len(thisclass) == 1:
         if thisclass[0] == 1:
             good = True
+
+    if not pdf_pages is None:
+        fig = plt.figure()
+        plt.clf()
+        axim = plt.subplot(131)
+        axpsf = plt.subplot(132)
+        axdiff = plt.subplot(133)
+        for ax,title in zip([axim,axpsf,axdiff],
+        ['image','model','difference']):
+        ax.set_title(title)
+        axim.imshow(subim,
+        cmap='gray',interpolation='nearest')
+        axpsf.imshow(model,cmap='gray',interpolation='nearest')
+        axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
+        plt.colorbar()
+        '''
+        '''
+        axim = plt.subplot(131)
+        axpsf = plt.subplot(132)
+        axdiff = plt.subplot(133)
+        for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
+            ax.set_title(title)
+        axim.imshow(subim,cmap='gray',interpolation='nearest')
+        axpsf.imshow(scaledpsf,cmap='gray',interpolation='nearest')
+        ax = axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
+        cbar = fig.colorbar(ax)
+        #plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+        #plt.colorbar()
+        if good:
+            plt.title(title + 'GOOD' )
+        else:
+            plt.title(title + 'BADD' )
+        pdf_pages.savefig(fig)
+
+        #pdf_pages.close()
+        #plt.savefig('')
+
+
 
 
     if returnstamps:
