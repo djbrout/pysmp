@@ -58,7 +58,7 @@ snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'
 snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
                   'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_MASK': 'string', 'IMAGE_NAME_NOISE': 'string',
                   'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
-                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string', 'SKYSIG': 'float', 'STARCAT': 'string'}
+                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string', 'SKYSIG': 'float'}
 
 paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'RADIUS2':'float','SUBSTAMP':'float',
@@ -595,7 +595,7 @@ class smp:
             #sys.exit()
         else:
             self.fermilogfile = None
-
+        print self.snparams.__dict__
         if self.snparams.survey == 'PS1':
             print 'reading in starcaftile'
             self.starcatfile = self.snparams.starcat
