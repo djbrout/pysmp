@@ -596,18 +596,19 @@ class smp:
         else:
             self.fermilogfile = None
 
-        print 'reading in starcaftile'
-        self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
-        starcat = txtobj(self.starcatfile, useloadtxt=True)
-        print 'done reading in starcatfile'
-        #print self.starcat.__dict__
-        #print self.starcat.__dict__['RA']
-        #print self.starcat.__dict__['DEC']
-        #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
-        starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
-        starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
-        starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
-        starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+        if not self.snparams.survey == 'PS1':
+            print 'reading in starcaftile'
+            self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
+            starcat = txtobj(self.starcatfile, useloadtxt=True)
+            print 'done reading in starcatfile'
+            #print self.starcat.__dict__
+            #print self.starcat.__dict__['RA']
+            #print self.starcat.__dict__['DEC']
+            #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+            starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
+            starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
+            starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
+            starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
         #print self.starcat.ra
         #sys.exit()
         badindices = []
