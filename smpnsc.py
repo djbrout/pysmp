@@ -4037,7 +4037,7 @@ class smp:
             #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-100000, 10000000, 5000):
+                for i in np.arange(-300000, 10000000, 5000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
                     weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)
@@ -4457,7 +4457,7 @@ class smp:
             if i < float(params.numcheckstars):
                 isnotcheckstars[i] = 0
 
-            if mc > 21:
+            if mc > 26:
                 #print mc,'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
