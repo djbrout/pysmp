@@ -617,6 +617,7 @@ class smp:
             starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
             starcat.bigmag = np.array(starcat.__dict__['g'][1:], dtype='float')
             starcat.bigid = np.arange(len(starcat.bigra))
+            starcat.objid = np.arange(len(starcat.bigra))
         elif self.snparams.survey == 'DES':
             print 'reading in starcaftile'
             self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
