@@ -535,6 +535,7 @@ class smp:
             print os.popen('ifdh mkdir '+staroutdir).read()
         else:
             if not os.path.exists(staroutdir):
+                os.mkdir(oldoutdir)
                 os.mkdir(staroutdir)
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
         print 'loading',star_offset_file
