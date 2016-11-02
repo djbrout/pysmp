@@ -39,6 +39,7 @@ def fit(
 
     im = pyfits.getdata('%s.fits' % fileroot)
     mask = pyfits.getdata(maskfile)
+    impsf = pyfits.getdata('%s.dao.psf.fits' % fileroot)
 
     if dofcmp:
         p = pyfits.open('%s.fcmp' % fileroot)
@@ -63,7 +64,6 @@ def fit(
 
         imhdr = pyfits.getheader('%s.fits' % fileroot)
         fullpsf, hpsf = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
-        impsf = pyfits.getdata('%s.dao.psf.fits' % fileroot)
 
         psfsize = np.shape(impsf)[0]
 
