@@ -36,6 +36,7 @@ def fit(
     # from matplotlib.backends.backend_pdf import PdfPages
     # pdf_pages = PdfPages('daophot_resid.pdf')
     dofcmp = False
+    good = False
 
     im = pyfits.getdata('%s.fits' % fileroot)
     mask = pyfits.getdata(maskfile)
@@ -90,6 +91,14 @@ def fit(
         #print 'all classes', fcmp.__dict__['class']
         # flux = fcmp.flux
         # fluxerr = fcmp.dflux
+
+        if len(thisclass) == 1:
+            if thisclass[0] == 1:
+                good = True
+
+    fluxerr = 100.
+    chisq = 1.
+    dms = 1.
 
     x = xpos
     y = ypos
@@ -159,13 +168,7 @@ def fit(
     # print 'flux fit comparo',flux,fluxls,
     scaledpsf = model*fluxls/10**(-0.4*(hpsf['PSFMAG']-25)) + imhdr['SKYADU']
 
-    fluxerr = 100.
-    chisq = 1.
-    dms = 1.
-    good = False
-    if len(thisclass) == 1:
-        if thisclass[0] == 1:
-            good = True
+
 
     dontplot = True
     if not pdf_pages is None:
