@@ -4496,7 +4496,7 @@ class smp:
             if i < float(params.numcheckstars):
                 isnotcheckstars[i] = 0
 
-            if mc > 26:
+            if mc > 21:
                 #print mc,'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
@@ -4548,7 +4548,8 @@ class smp:
                         #badflag[i] = 1
                         #mag_cat[i] = 99
                         #print 'badflaggg'*10
-                        print 'star not in fcmp... still including in fit.'
+                        print ''
+                        #print 'star not in fcmp... still including in fit.'
                         #bad = True
                 else:
                     #print 'here1'
