@@ -4925,6 +4925,7 @@ class smp:
 
             print '-'*100
             print '-'*39,'Done Fitting Zeropoint','-'*39
+            print '-'*100
             print 'fitzpt',md,'diffimzpt',snparams.zp[j]
             print 'std',std
             print '-'*200
