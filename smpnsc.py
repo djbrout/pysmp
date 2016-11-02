@@ -1380,8 +1380,10 @@ class smp:
                     if not os.path.exists(maskfile):
                         os.system('funpack %s.fz' % maskfile)
                         if not os.path.exists(maskfile):
-                            raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
-
+                            if not os.path.exists(maskfile[:-3]):
+                                raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
+                            else:
+                                maskfile = maskfile[:-3]
             if not os.path.exists(psffile):
                 if os.path.exists(psffile + '.gz'):
                     os.system('gunzip %s.gz' % psffile)
