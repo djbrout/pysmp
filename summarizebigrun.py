@@ -649,7 +649,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
-    ww = rmsaddin < 1.
+    ww = catmag < 21.
     flux = flux[ww]
     fluxerr = fluxerr[ww]
     zpt = zpt[ww]
