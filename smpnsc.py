@@ -4845,8 +4845,8 @@ class smp:
             self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',
                               '/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
             self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',self.zptstamps)
-            #os.popen('rm starfits_' + str(thismjd) + '.pdf')
-            raw_input()
+            os.popen('rm starfits_' + str(thismjd) + '.pdf')
+            #raw_input()
             if self.fermilog:
                 self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
         #self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
