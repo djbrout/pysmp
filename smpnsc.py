@@ -2626,7 +2626,10 @@ class smp:
             os.system('ifdh mkdir '+npoutdir)
         else:
             if not os.path.exists(npoutdir):
-                os.makedirs(outdir)
+                try:
+                    os.makedirs(outdir)
+                except:
+                    pass
 
         maxiter = 1200
         print os.path.join(outdir,filename+'_mcmc_input.npz')
