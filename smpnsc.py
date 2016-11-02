@@ -4843,6 +4843,7 @@ class smp:
             pdf_pagesc.close()
             self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',
                               '/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
+            self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',self.zptstamps)
             #os.popen('rm starfits_' + str(thismjd) + '.pdf')
             raw_input()
             if self.fermilog:
