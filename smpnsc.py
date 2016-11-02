@@ -1365,7 +1365,7 @@ class smp:
                         if not os.path.exists(weightsfile):
                             raise exceptions.RuntimeError('Error : file %s does not exist' % weightsfile)
             else:
-
+                print noisefile
                 if not os.path.exists(noisefile):
                     os.system('gunzip %s.gz' % noisefile)
                     if not os.path.exists(noisefile):
