@@ -146,7 +146,7 @@ def fit(
     #print model, subim, imhdr['SKYSIG']
     '''
     fluxls, cov = opti.leastsq(resid, 100000,
-                               args=(model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']),verbose=False)
+                               args=(model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']))
 
     # print 'flux fit comparo',flux,fluxls,
     scaledpsf = model*fluxls/10**(-0.4*(hpsf['PSFMAG']-25)) + imhdr['SKYADU']
