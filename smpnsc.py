@@ -4923,8 +4923,8 @@ class smp:
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
                                        startMedian=True,sigmaclip=1.5,iter=10)
 
-            print '-'*200
-            print '-'*70,'Done Fitting Zeropoint','-'*70
+            print '-'*100
+            print '-'*39,'Done Fitting Zeropoint','-'*39
             print 'fitzpt',md,'diffimzpt',snparams.zp[j]
             print 'std',std
             print '-'*200
