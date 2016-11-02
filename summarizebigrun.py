@@ -77,6 +77,8 @@ def grabstardata(imagedir,outfile):
                 print zptdata.keys()
                 if not fname in zptfiles:
                     try:
+                        if max(zptdata['cat_mag'])>21.1:
+                            continue
                         #if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
