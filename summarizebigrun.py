@@ -54,6 +54,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],stardata['sky'],stardata['skyerr'],
+                stardata['poisson']
                 title='rmsaddin_')
 
 
@@ -652,7 +653,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=''):
     ww = catmag < 21.
     flux = flux[ww]
     fluxerr = fluxerr[ww]
@@ -661,6 +662,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     skyerr= skyerr[ww]
     sky = sky[ww]
     rmsaddin = rmsaddin[ww]
+    poisson = poisson[ww]
     #print -2.5*np.log10(skyerr)+zpt
     #raw_input('skyerr in mags')
     #starmagerr = np.sqrt((-2.5*np.log10(sky)+2.5*np.log10(skyerr))**2+rmsaddin**2)
@@ -685,7 +687,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
 
     #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
     #raw_input()
-    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2)**.5
+    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + poisson**2)**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
 
@@ -693,6 +695,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     print catmag[0:10]
     dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr2
+
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
 
@@ -700,6 +703,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     #raw_input('printing mags')
     d = (flux - catflux) / fluxerr
     ds = (flux - catflux) / skyerr
+    dp = (flux-catflux) / poisson
 
     #chisq = (flux - catflux) ** 2 / catflux
 
@@ -815,6 +819,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,title=''):
     # print ayrms
     # raw_input('zpt scatter err')
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.7)
+
+    ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
+    ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
+
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
