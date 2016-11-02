@@ -5163,6 +5163,10 @@ class smp:
                 print mag_compare_out
                 #raw_input('saved')
             else:
+                os.mkdir(os.path.join(self.outdir,'stardata'))
+                os.mkdir(os.path.join(self.outdir,'stardata',filt))
+                name = imfile.split('/')[-1].split('.')[-2]
+                mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_' + str(filt) + 'band_zptstardata.npz')
                 self.tmpwriter.savez(mag_compare_out
                                      # ,ra = ras[goodstarcols]
                                      # ,dec = decs[goodstarcols]
@@ -5172,8 +5176,8 @@ class smp:
                                      # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                                      , ras = ras[goodstarcols]
                                      , decs = decs[goodstarcols]
-                                     , mpfit_zpt=md
-                                     , mpfit_zpt_std=std
+                                     , zpt=md
+                                     , zpt_std=std
                                      # ,mcmc_me_zpt = mcmc_me_md
                                      # ,mcmc_me_zpt_std = mcmc_me_std
                                      , cat_zpt=cat_zpt
