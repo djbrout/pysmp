@@ -202,11 +202,11 @@ def fit(
     if returnstamps:
         rpsf = model
         good = True#we know this wont be in the starcat file so set to good is true
-        print 'fluxls', fluxls
-        print 'maxpsf', np.max(rpsf)
+        #print 'fluxls', fluxls
+        #print 'maxpsf', np.max(rpsf)
         return fluxls,fluxerr,chisq,dms,good,subim, rpsf, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'], submask
-    print fluxls
-    print np.max(model)
+    #print fluxls
+    #print np.max(model)
     #raw_input('fluxls')
     sstamp = simstamp(fluxls,model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'])
 
