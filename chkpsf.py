@@ -22,7 +22,7 @@ import scipy.optimize as opti
 
 def resid(param, psf, im, sigma, fitrad, sky, psfmag):
     model = psf * param / 10 ** (-0.4 * (psfmag - 25)) + sky
-    residsig = (im - model) / sigma
+    residsig = (im - model) / sigma * fitrad
     return np.array(residsig.ravel())
 
 def simstamp(param, psf, im, sigma, fitrad, sky, psfmag):

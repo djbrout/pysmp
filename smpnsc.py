@@ -4069,6 +4069,7 @@ class smp:
         # fitrad = np.zeros([substamp,substamp])
 
 
+
         if dosimultaneous:
             # totalarea = 0
             # for x in np.arange(substamp):
@@ -5496,6 +5497,16 @@ def scene(p,x=None,y=None,fjac=None,params=None,err=None):
         # model = scale + convolution + sky
     model = (p[substamp**2.:substamp**2 +Nimage]*x.T + conv_prod.T + p[substamp**2+Nimage:]).T
     return(status, (y.reshape(Nimage*substamp*substamp)-model.reshape(Nimage*substamp*substamp))/err.reshape(Nimage*substamp*substamp))
+
+def resid(param, psf, im, sigma, fitrad, sky, psfmag):
+    model = psf * param / 10 ** (-0.4 * (psfmag - 25)) + sky
+    residsig = (im - model) / sigma
+    return np.array(residsig.ravel())
+
+def simstamp(param, psf, im, sigma, fitrad, sky, psfmag):
+    model = psf * param / 10 ** (-0.4 * (psfmag - 25)) + sky
+    return model
+
 
 if __name__ == "__main__":
     print 'ENTERING SMP'*100
