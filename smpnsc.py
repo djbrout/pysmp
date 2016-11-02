@@ -5068,23 +5068,35 @@ class smp:
 
 
             else:
-                plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png'))
-                print 'saved',os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfit_zptplot.png')
+                try:
+                    os.mkdir(os.path.join(self.outdir,'stardata'))
+                except:
+                    pass
+                try:
+                    os.mkdir(os.path.join(self.outdir,'stardata',filt))
+                except:
+                    pass
+                #print imfile
+                #raw_input()
+                name = imfile.split('/')[-1][:-8]
+                zptplotout = os.path.join(self.outdir,'stardata',filt, name + '_zptplot.png')
+                plt.savefig(zptplotout)
+                print 'saved',zptplotout
                 plt.clf()
                 ras = np.array(ras)
                 decs = np.array(decs)
                 plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
-
-                plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_ra.png'))
-                print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_ra.png')
+                zptplotoutra = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_ra.png')
+                plt.savefig(zptplotoutra)
+                #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #    filt) + 'band_starfit_zptplot_ra.png')
                 plt.clf()
                 plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
-                plt.savefig(os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_dec.png'))
-                print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                    filt) + 'band_starfit_zptplot_dec.png')
+                zptplotoutdec = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_dec.png')
+
+                plt.savefig(zptplotoutdec)
+                #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                #    filt) + 'band_starfit_zptplot_dec.png')
 
             rrr = -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md
             badguys = abs(rrr) > .35
