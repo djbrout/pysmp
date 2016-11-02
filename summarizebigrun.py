@@ -91,8 +91,8 @@ def grabstardata(imagedir,outfile):
                         for i in range(len(psfs)):
                             bigdata['psf'].append(psfs[i,:,:])
                             bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starnormm'][i])))
-                            print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
-                            raw_input()
+                            #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
+                            #raw_input()
                         cm = zptdata['cat_mag']
                         fs = zptdata['flux_starnormm']
                         zp = zptdata['fit_zpt']
