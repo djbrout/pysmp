@@ -4843,7 +4843,7 @@ class smp:
             pdf_pagesc.close()
             self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',
                               '/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
-            os.popen('rm starfits_' + str(thismjd) + '.pdf')
+            #os.popen('rm starfits_' + str(thismjd) + '.pdf')
             raw_input()
             if self.fermilog:
                 self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
@@ -4910,6 +4910,7 @@ class smp:
 
 
         #NEED TO MAKE A PLOT HERE!
+        print goodstarcols
         if len(goodstarcols) > self.params.minzptstars:
 
             if not self.dogalsimpixfit:
