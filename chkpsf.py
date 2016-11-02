@@ -75,14 +75,14 @@ def fit(
     # print fcmp.Xpos-xpos
     # print fcmp.Ypos-ypos
     # raw_input()
-    print fcmp.__dict__['class']
-    print fcmp.Xpos
-    print xpos
+    #print fcmp.__dict__['class']
+    #print fcmp.Xpos
+    #print xpos
     #raw_input()
     ww = (abs(fcmp.Xpos - xpos) < 1.) & (abs(fcmp.Ypos - ypos) < 1.)
     thisclass = fcmp.__dict__['class'][ww]
-    print 'THIS CLASS IS', thisclass
-    print 'all classes', fcmp.__dict__['class']
+    #print 'THIS CLASS IS', thisclass
+    #print 'all classes', fcmp.__dict__['class']
     # flux = fcmp.flux
     # fluxerr = fcmp.dflux
 
@@ -146,7 +146,7 @@ def fit(
     #print model, subim, imhdr['SKYSIG']
     '''
     fluxls, cov = opti.leastsq(resid, 100000,
-                               args=(model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']))
+                               args=(model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG']),full_output=False)
 
     # print 'flux fit comparo',flux,fluxls,
     scaledpsf = model*fluxls/10**(-0.4*(hpsf['PSFMAG']-25)) + imhdr['SKYADU']
