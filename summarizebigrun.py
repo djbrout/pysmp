@@ -54,7 +54,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
     plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
                 stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],stardata['sky'],stardata['skyerr'],
-                stardata['poisson']
+                stardata['poisson'],
                 title='rmsaddin_')
 
 
