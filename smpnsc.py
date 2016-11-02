@@ -2762,7 +2762,7 @@ class smp:
                 fwhm = smp_dict['fwhm_arcsec']*2.355,
                 snname = filename,
                 npzloc = outdir,
-                lcout = os.path.join(self.lcfilepath+filename),
+                lcout = os.path.join(self.lcfilepath+'/'+filename),
                 model_data_index = ww,
                 mjdoff = smp_dict['mjdoff'],
                 mjdslopeinteroff = smp_dict['mjdslopeinteroff'],
@@ -2811,7 +2811,7 @@ class smp:
                     , fix_gal_model = None
                     , pixelate_model = 1.
                     , burnin = .75
-                    , lcout = os.path.join(self.lcfilepath+filename)
+                    , lcout = os.path.join(self.lcfilepath+'/'+filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_nosn.npz')
                     )
 
