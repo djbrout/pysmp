@@ -35,56 +35,62 @@ def fit(
     # ypos = ypos +1
     # from matplotlib.backends.backend_pdf import PdfPages
     # pdf_pages = PdfPages('daophot_resid.pdf')
-    p = pyfits.open('%s.fcmp' % fileroot)
-    p.verify("fix")
+    dofcmp = False
 
-    if os.path.exists('test.fcmp'):
-        os.remove('test.fcmp')
-    p.writeto('test.fcmp', output_verify='fix')
-    # fcmp = p[0].header
-    # print p[1]
+    if dofcmp:
+        p = pyfits.open('%s.fcmp' % fileroot)
+        p.verify("fix")
 
-    fcmp = txtobj('test.fcmp', cmpheader=True)
-    # print fcmp.__dict__['class']
-    # print fcmp['class']
-    # raw_input()
-    im = pyfits.getdata('%s.fits' % fileroot)
-    mask = pyfits.getdata(maskfile)
 
-    w = wcs.WCS('%s.fits' % fileroot)
-    #results2 = w.wcs_world2pix(np.array([[ra, dec]]), 0)
-    # xpos,ypos =results2[0][0], results2[0][1]
+        if os.path.exists('test.fcmp'):
+            os.remove('test.fcmp')
+        p.writeto('test.fcmp', output_verify='fix')
+        # fcmp = p[0].header
+        # print p[1]
 
-    imhdr = pyfits.getheader('%s.fits' % fileroot)
-    fullpsf, hpsf = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
-    impsf = pyfits.getdata('%s.dao.psf.fits' % fileroot)
+        fcmp = txtobj('test.fcmp', cmpheader=True)
+        # print fcmp.__dict__['class']
+        # print fcmp['class']
+        # raw_input()
+        im = pyfits.getdata('%s.fits' % fileroot)
+        mask = pyfits.getdata(maskfile)
 
-    psfsize = np.shape(impsf)[0]
+        w = wcs.WCS('%s.fits' % fileroot)
+        #results2 = w.wcs_world2pix(np.array([[ra, dec]]), 0)
+        # xpos,ypos =results2[0][0], results2[0][1]
 
-    fcmp.Xpos = fcmp.Xpos[1:].astype(float)
-    fcmp.Ypos = fcmp.Ypos[1:].astype(float)
-    fcmp.__dict__['class'] = fcmp.__dict__['class'][1:].astype(float)
+        imhdr = pyfits.getheader('%s.fits' % fileroot)
+        fullpsf, hpsf = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
+        impsf = pyfits.getdata('%s.dao.psf.fits' % fileroot)
 
-    fcmp.flux = fcmp.flux[1:].astype(float)
-    fcmp.dflux = fcmp.dflux[1:].astype(float)
-    # for x,y,flux,fluxerr in zip(fcmp.Xpos,fcmp.Ypos,
-    #                            fcmp.flux,fcmp.dflux):
+        psfsize = np.shape(impsf)[0]
+
+        fcmp.Xpos = fcmp.Xpos[1:].astype(float)
+        fcmp.Ypos = fcmp.Ypos[1:].astype(float)
+        fcmp.__dict__['class'] = fcmp.__dict__['class'][1:].astype(float)
+
+        fcmp.flux = fcmp.flux[1:].astype(float)
+        fcmp.dflux = fcmp.dflux[1:].astype(float)
+        # for x,y,flux,fluxerr in zip(fcmp.Xpos,fcmp.Ypos,
+        #                            fcmp.flux,fcmp.dflux):
+
+
+        # print fcmp.Xpos-xpos
+        # print fcmp.Ypos-ypos
+        # raw_input()
+        #print fcmp.__dict__['class']
+        #print fcmp.Xpos
+        #print xpos
+        #raw_input()
+        ww = (abs(fcmp.Xpos - xpos) < 1.) & (abs(fcmp.Ypos - ypos) < 1.)
+        thisclass = fcmp.__dict__['class'][ww]
+        #print 'THIS CLASS IS', thisclass
+        #print 'all classes', fcmp.__dict__['class']
+        # flux = fcmp.flux
+        # fluxerr = fcmp.dflux
 
     x = xpos
     y = ypos
-    # print fcmp.Xpos-xpos
-    # print fcmp.Ypos-ypos
-    # raw_input()
-    #print fcmp.__dict__['class']
-    #print fcmp.Xpos
-    #print xpos
-    #raw_input()
-    ww = (abs(fcmp.Xpos - xpos) < 1.) & (abs(fcmp.Ypos - ypos) < 1.)
-    thisclass = fcmp.__dict__['class'][ww]
-    #print 'THIS CLASS IS', thisclass
-    #print 'all classes', fcmp.__dict__['class']
-    # flux = fcmp.flux
-    # fluxerr = fcmp.dflux
 
     ny, nx = np.shape(im)
     psfy, psfx = np.shape(impsf)
@@ -159,42 +165,44 @@ def fit(
         if thisclass[0] == 1:
             good = True
 
+    dontplot = True
     if not pdf_pages is None:
-        fig = plt.figure()
-        plt.clf()
-        axim = plt.subplot(131)
-        axpsf = plt.subplot(132)
-        axdiff = plt.subplot(133)
-        for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
-            ax.set_title(title)
-            axim.imshow(subim,
-            cmap='gray',interpolation='nearest')
-            axpsf.imshow(model,cmap='gray',interpolation='nearest')
-            axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
-            #plt.colorbar()
+        if not dontplot:
+            fig = plt.figure()
+            plt.clf()
             axim = plt.subplot(131)
             axpsf = plt.subplot(132)
             axdiff = plt.subplot(133)
-        #for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
+            for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
+                ax.set_title(title)
+                axim.imshow(subim,
+                cmap='gray',interpolation='nearest')
+                axpsf.imshow(model,cmap='gray',interpolation='nearest')
+                axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
+                #plt.colorbar()
+                axim = plt.subplot(131)
+                axpsf = plt.subplot(132)
+                axdiff = plt.subplot(133)
+            #for ax,title in zip([axim,axpsf,axdiff],['image','model','difference']):
+                if good:
+                    ax.set_title(title + 'GOOD')
+                else:
+                    ax.set_title(title + 'BADD')
+                #ax.set_title(title)
+            axim.imshow(subim,cmap='gray',interpolation='nearest')
+            axpsf.imshow(scaledpsf,cmap='gray',interpolation='nearest')
+            ax = axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
+            cbar = fig.colorbar(ax)
+            #plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+            #plt.colorbar()
             if good:
-                ax.set_title(title + 'GOOD')
+                plt.title(title + 'GOOD' )
             else:
-                ax.set_title(title + 'BADD')
-            #ax.set_title(title)
-        axim.imshow(subim,cmap='gray',interpolation='nearest')
-        axpsf.imshow(scaledpsf,cmap='gray',interpolation='nearest')
-        ax = axdiff.imshow(subim-scaledpsf,cmap='gray',interpolation='nearest')
-        cbar = fig.colorbar(ax)
-        #plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
-        #plt.colorbar()
-        if good:
-            plt.title(title + 'GOOD' )
-        else:
-            plt.title(title + 'BADD' )
-        pdf_pages.savefig(fig)
+                plt.title(title + 'BADD' )
+            pdf_pages.savefig(fig)
 
-        #pdf_pages.close()
-        #plt.savefig('')
+            #pdf_pages.close()
+            #plt.savefig('')
 
 
 
