@@ -5192,6 +5192,8 @@ class smp:
                                      , decs = decs[goodstarcols]
                                      , zpt=md
                                      , zpt_std=std
+                                     , sky=starsky[goodstarcols]
+                                     , skyerr=starskyerr[goodstarcols]
                                      # ,mcmc_me_zpt = mcmc_me_md
                                      # ,mcmc_me_zpt_std = mcmc_me_std
                                      , cat_zpt=cat_zpt
