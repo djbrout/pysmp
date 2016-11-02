@@ -5169,8 +5169,14 @@ class smp:
                 print mag_compare_out
                 #raw_input('saved')
             else:
-                os.mkdir(os.path.join(self.outdir,'stardata'))
-                os.mkdir(os.path.join(self.outdir,'stardata',filt))
+                try:
+                    os.mkdir(os.path.join(self.outdir,'stardata'))
+                except:
+                    pass
+                try:
+                    os.mkdir(os.path.join(self.outdir,'stardata',filt))
+                except:
+                    pass
                 name = imfile.split('/')[-1].split('.')[-2]
                 mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_' + str(filt) + 'band_zptstardata.npz')
                 self.tmpwriter.savez(mag_compare_out
