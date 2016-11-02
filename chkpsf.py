@@ -37,6 +37,9 @@ def fit(
     # pdf_pages = PdfPages('daophot_resid.pdf')
     dofcmp = False
 
+    im = pyfits.getdata('%s.fits' % fileroot)
+    mask = pyfits.getdata(maskfile)
+
     if dofcmp:
         p = pyfits.open('%s.fcmp' % fileroot)
         p.verify("fix")
@@ -52,8 +55,7 @@ def fit(
         # print fcmp.__dict__['class']
         # print fcmp['class']
         # raw_input()
-        im = pyfits.getdata('%s.fits' % fileroot)
-        mask = pyfits.getdata(maskfile)
+
 
         w = wcs.WCS('%s.fits' % fileroot)
         #results2 = w.wcs_world2pix(np.array([[ra, dec]]), 0)
