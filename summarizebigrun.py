@@ -59,7 +59,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'sky':[], 'skyerr': [],'psf':[]}
+               'sky':[], 'skyerr': [],'psf':[],'poisson':[]}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
@@ -90,7 +90,9 @@ def grabstardata(imagedir,outfile):
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
                             bigdata['psf'].append(psfs[i,:,:])
-
+                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starnormm'][i])))
+                            print bigdata['poisson'][-1]
+                            raw_input()
                         cm = zptdata['cat_mag']
                         fs = zptdata['flux_starnormm']
                         zp = zptdata['fit_zpt']
