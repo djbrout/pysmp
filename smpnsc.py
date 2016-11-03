@@ -4962,7 +4962,7 @@ class smp:
 
             #std = float(std)/float(num**.5)
 
-            med, stde, num = self.iterstat(float(md) - mag_cat - 2.5 * np.log10(fluxcol),
+            med, stde, num = self.iterstat(float(md) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
                                         startMedian=True, sigmaclip=3, iter=10)
             zptresid = float(md) - mag_cat - 2.5 * np.log10(fluxcol)
             print abs(zptresid) < 3.*stde
