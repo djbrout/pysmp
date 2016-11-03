@@ -4962,7 +4962,7 @@ class smp:
 
             #std = float(std)/float(num**.5)
 
-            med, stde = self.iterstat(float(md) - mag_cat - 2.5 * np.log10(fluxcol),
+            med, stde, num = self.iterstat(float(md) - mag_cat - 2.5 * np.log10(fluxcol),
                                         startMedian=True, sigmaclip=3, iter=10)
             zptresid = float(md) - mag_cat - 2.5 * np.log10(fluxcol)
             goodstarcols = np.where((mag_cat != 0) &
