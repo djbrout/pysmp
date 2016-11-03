@@ -83,19 +83,19 @@ def grabstardata(imagedir,outfile):
                         #if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
-                        bigdata['starflux'].extend(zptdata['flux_starse'])
-                        bigdata['starzpt'].extend(zptdata['flux_starse']*0. + zptdata['fit_zpt'])
+                        bigdata['starflux'].extend(zptdata['flux_starsee'])
+                        bigdata['starzpt'].extend(zptdata['flux_starsee']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
                             bigdata['psf'].append(psfs[i,:,:])
-                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starse'][i])))
+                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starsee'][i])))
                             #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
                             #raw_input()
                         cm = zptdata['cat_mag']
-                        fs = zptdata['flux_starse']
+                        fs = zptdata['flux_starsee']
                         zp = zptdata['fit_zpt']
                         ww = (cm < 18.) & (cm > 16.)
 
@@ -105,7 +105,7 @@ def grabstardata(imagedir,outfile):
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=3, iter=10)
                         print 'worked now std',std
-                        bigdata['rmsaddin'].extend(zptdata['flux_starse']*0. + std)
+                        bigdata['rmsaddin'].extend(zptdata['flux_starsee']*0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
                         cntr += 1
