@@ -4962,6 +4962,27 @@ class smp:
 
             #std = float(std)/float(num**.5)
 
+            med, stde = self.iterstat(float(md) - mag_cat - 2.5 * np.log10(fluxcol),
+                                        startMedian=True, sigmaclip=3, iter=10)
+            zptresid = float(md) - mag_cat - 2.5 * np.log10(fluxcol)
+            goodstarcols = np.where((mag_cat != 0) &
+                                    (mag_cat < 26) &
+                                    (gsflux != 1) &
+                                    (gsflux < 9e6) &
+                                    # (flux_chisq < 1.5) &
+                                    # (flux_chisq > 0) &
+                                    # (flux_star_mcmc < 1e7) &
+                                    # (flux_star_mcmc != 0) &
+                                    # (flux_star_mcmc_modelerrors != 0) &
+                                    # (flux_star_mcmc_modelerrors < 1e7) &
+                                    # (flux_star_std_mcmc > 1.0) &
+                                    # (flux_star_std_mcmc_modelerrors > 1.0) &
+                                    (np.isfinite(mag_cat)) &
+                                    (np.isfinite(flux_star)) &
+                                    (abs(zptresid) < 3.*stde ) &
+                                    (flux_star > 0) &
+                                    (badflag == 0) &
+                                    (isnotcheckstars == 1))[0]
 
             if self.fermilog:
                 self.tmpwriter.appendfile('fitzpt '+str(md)+' +-'+str(std)+' diffimzpt '+str(snparams.zp[j])+'\n', self.fermilogfile)
@@ -5161,6 +5182,8 @@ class smp:
             decs = np.array(decs)
             print 'magerr', -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
             if self.fermigrid and self.worker:
+                print fluxcol[goodstarcols]
+                raw_input('testing123')
                 ff = 'temp.npz'
                 np.savez( ff
                     #,ra = ras[goodstarcols]
