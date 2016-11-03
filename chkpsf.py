@@ -127,7 +127,7 @@ def fit(
                                 impsf,  # psf1d=psf1d,
                                 deriv=False)  # ,ps1d=False)
     subim = im[iylo - 1:iyhi, ixlo - 1:ixhi]
-    print 'modelshape', model.shape, 'imshape', subim.shape
+    #print 'modelshape', model.shape, 'imshape', subim.shape
     #raw_input()
     submask = mask[iylo - 1:iyhi, ixlo - 1:ixhi]
     submask[submask != 0] = 9
