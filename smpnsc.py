@@ -1878,7 +1878,7 @@ class smp:
                             gogo = False
                     if gogo:
                         zptdata = np.load(zpt_file) #load previous zpt information
-
+                        print zptdata.keys()
                         zpt = zptdata['fit_zpt']
                         zpterr = zptdata['fit_zpt_std']
                         mjdoff = zptdata['mjdoff']
