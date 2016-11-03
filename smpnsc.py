@@ -4096,7 +4096,7 @@ class smp:
             #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-300000, 10000000, 5000):
+                for i in np.arange(-10000, 10000000, 5000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
                     weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)
@@ -4618,7 +4618,7 @@ class smp:
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
                         totalarea = len(fitrad[fitrad>0])
-                        gnoise_stamp = np.ones(image_stamp.shape)/(se**2)
+                        noise_stamp = np.ones(image_stamp.shape)/(se**2)
                         #print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
