@@ -4965,6 +4965,12 @@ class smp:
             med, stde, num = self.iterstat(float(md) - mag_cat - 2.5 * np.log10(fluxcol),
                                         startMedian=True, sigmaclip=3, iter=10)
             zptresid = float(md) - mag_cat - 2.5 * np.log10(fluxcol)
+            print abs(zptresid) < 3.*stde
+
+            print zptresid
+
+            print med,stde
+
             goodstarcols = np.where((mag_cat != 0) &
                                     (mag_cat < 26) &
                                     (gsflux != 1) &
