@@ -4564,7 +4564,11 @@ class smp:
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
                                                                  maskfile=maskfile)
 
-
+                    if scale == 1:
+                        badflag[i] = 1
+                        mag_cat[i] = 99
+                        print 'bad star'
+                        bad = True
                     if not good:
                         #badflag[i] = 1
                         #mag_cat[i] = 99
