@@ -612,7 +612,7 @@ class smp:
             #starcat = dt.readcol)
             starcat = txtobj(self.starcatfile, useloadtxt=True)
             print 'done reading in starcatfile'
-            print starcat.__dict__
+            #print starcat.__dict__
             # print self.starcat.__dict__
             # print self.starcat.__dict__['RA']
             # print self.starcat.__dict__['DEC']
@@ -1156,6 +1156,8 @@ class smp:
         #print 'Done with centroiding!!'
         #sys.exit()
         orig_nozpt = copy(nozpt)
+        print nozpt
+        raw_input()
         cccc = 0
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -1856,7 +1858,10 @@ class smp:
                         else:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
                     else:
-                        zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
+                        if self.snparams.survey == 'PS1':
+                            zpt_file = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
+                        else:
+                            zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
                     print zpt_file
                     if self.fermigrid and self.worker:
                         ls = os.popen('ifdh ls ' + zpt_file).read()
