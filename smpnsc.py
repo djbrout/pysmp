@@ -1859,6 +1859,7 @@ class smp:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
                     else:
                         if self.snparams.survey == 'PS1':
+                            name = longimfile.split('/')[-1][:-8]
                             zpt_file = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
                         else:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
