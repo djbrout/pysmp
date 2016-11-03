@@ -227,4 +227,4 @@ def fit(
     #raw_input('fluxls')
     sstamp = simstamp(fluxls,model, subim, imhdr['SKYSIG'], fitrad, imhdr['SKYADU'], hpsf['PSFMAG'])
 
-    return fluxls, fluxerr, chisq, dms, good, subim, sstamp
+    return fluxls, fluxerr, chisq, dms, good, subim, sstamp, model
