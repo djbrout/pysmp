@@ -123,9 +123,14 @@ def fit(
     dy = dy.reshape(len(dy), 1)
     dx = rebin.rebin(dx, [np.shape(dx)[1], np.shape(dx)[1]])
     dy = rebin.rebin(dy, [len(dy), len(dy)])
-    model = dao_value.dao_value(dx, dy, gauss,
-                                impsf,  # psf1d=psf1d,
-                                deriv=False)  # ,ps1d=False)
+    try:
+        model = dao_value.dao_value(dx, dy, gauss,
+                                    impsf,  # psf1d=psf1d,
+                                    deriv=False)  # ,ps1d=False)
+    except:
+        return 1, 1, 0, 0, False, 0, 0, 0
+
+
     subim = im[iylo - 1:iyhi, ixlo - 1:ixhi]
     #print 'modelshape', model.shape, 'imshape', subim.shape
     #raw_input()
