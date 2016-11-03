@@ -1850,8 +1850,8 @@ class smp:
             gogo = True
             print '1794',nozpt
             if not nozpt:
-                #if True:
-                try:
+                if True:
+                #try:
                     if doglobalstar:
                         if dogalsimpixfit:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
@@ -1859,7 +1859,9 @@ class smp:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
                     else:
                         if self.snparams.survey == 'PS1':
+
                             name = longimfile.split('/')[-1][:-8]
+
                             zpt_file = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
                         else:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
@@ -1882,9 +1884,9 @@ class smp:
                         mjdoff = zptdata['mjdoff']
                         mjdslopeinteroff = zptdata['mjdslopeinteroff']
                         #print 'thisworked'
-                except:
-                    print('Warning : IMAGE_ZPT field does not exist!  Calculating')
-                    nozpt = True
+                # except:
+                #     print('Warning : IMAGE_ZPT field does not exist!  Calculating')
+                #     nozpt = True
                 #sys.exit()
             if nozpt:
                 self.rdnoise = hdr[params.rdnoise_name]
