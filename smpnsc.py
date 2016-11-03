@@ -4836,7 +4836,8 @@ class smp:
                 flux_chisq[i] = chi
                 starsky[i] = s
                 starskyerr[i] = se
-                psfs[i,:,:] = psf
+                if not bad:
+                    psfs[i,:,:] = psf
                 print 'Fit star',i,scale,errmag
                 #raw_input()
                 #print flux_chisq[i]
