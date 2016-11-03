@@ -1157,7 +1157,7 @@ class smp:
         #sys.exit()
         orig_nozpt = copy(nozpt)
         print nozpt
-        raw_input()
+        #raw_input()
         cccc = 0
         for imfile,noisefile,psffile,band,faketruemag, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
@@ -1879,8 +1879,8 @@ class smp:
                     if gogo:
                         zptdata = np.load(zpt_file) #load previous zpt information
                         print zptdata.keys()
-                        zpt = zptdata['fit_zpt']
-                        zpterr = zptdata['fit_zpt_std']
+                        zpt = zptdata['zpt']
+                        zpterr = zptdata['zpt_std']
                         mjdoff = zptdata['mjdoff']
                         mjdslopeinteroff = zptdata['mjdslopeinteroff']
                         #print 'thisworked'
