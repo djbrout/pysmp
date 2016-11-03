@@ -5188,8 +5188,8 @@ class smp:
             decs = np.array(decs)
             print 'magerr', -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
             if self.fermigrid and self.worker:
-                print fluxcol[goodstarcols]
-                raw_input('testing123' )
+                #print fluxcol[goodstarcols]
+                #raw_input('testing123' )
                 ff = 'temp.npz'
                 np.savez( ff
                     #,ra = ras[goodstarcols]
