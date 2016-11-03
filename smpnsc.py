@@ -570,8 +570,11 @@ class smp:
                     staroffsets = np.load(star_offset_file)
                     print 'Found and loaded star offset file...'
                 except:
-                    print 'Could not find star offset file. Calculating...'
-                    nozpt = True
+                    if not doglobalstar:
+                        pass
+                    else:
+                        print 'Could not find star offset file. Calculating...'
+                        nozpt = True
         #sys.exit()
         #print 'ABOUT TO GLOBALSTAR'*10
         #sys.exit()
