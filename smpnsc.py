@@ -4618,7 +4618,9 @@ class smp:
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
                         totalarea = len(fitrad[fitrad>0])
-                        noise_stamp = np.ones(image_stamp.shape)/(se**2)
+                        print se**2, s/3.8,
+                        raw_input()
+                        gnoise_stamp = np.ones(image_stamp.shape)/(se**2)
                         #print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
