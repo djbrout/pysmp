@@ -1975,6 +1975,8 @@ class smp:
                 print x_star1,y_star1
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False)
+                print sky
+                raw_input()
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
                 #newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
                 # newx_star,newy_star = x_star1,y_star1
@@ -4071,7 +4073,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=False):
+    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
         #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -4096,10 +4098,10 @@ class smp:
             #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-10000, 10000000, 5000):
+                for i in np.arange(-100000, 10000000, 5000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
-                    weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)
+                    weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
                     #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
@@ -4121,7 +4123,9 @@ class smp:
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)
+                    weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
+
+                    #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
             except:
