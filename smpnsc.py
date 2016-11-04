@@ -1975,8 +1975,8 @@ class smp:
                 print x_star1,y_star1
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False)
-                print sky
-                raw_input()
+                #print sky
+                #raw_input()
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
                 #newx_star,newy_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
                 # newx_star,newy_star = x_star1,y_star1
@@ -4124,7 +4124,6 @@ class smp:
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
                     weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
-
                     #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
@@ -4698,7 +4697,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
-                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, sexsky, gnoise_stamp,
+                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, s, gnoise_stamp,
                                                                              fitrad, gal, mjd, se)
 
                         # except:
