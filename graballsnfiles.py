@@ -11,13 +11,13 @@ files = f.split()
 #NEED TO DO THIS EVERY DAY
 #'kx509; grid-proxy-init; voms-proxy-init -rfc -noregen -voms des:/des/Role=Analysis; '
 cntr = 0
-for filename in files:
+for filename in files[::-1]:
     #print filename
     if not '-X1' in filename:
         continue
     if '.idx' in filename: continue
     cntr += 1
-    if cntr < 40: continue
+    if cntr > 40: continue
     #if not 'SN-E1' in filename: continue
     if os.path.isfile("/pnfs/des/persistent/smp/v4/"+filename):
         if os.stat("/pnfs/des/persistent/smp/v4/"+filename).st_size > 0.:
