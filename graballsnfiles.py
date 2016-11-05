@@ -11,7 +11,7 @@ files = f.split()
 #NEED TO DO THIS EVERY DAY
 #'kx509; grid-proxy-init; voms-proxy-init -rfc -noregen -voms des:/des/Role=Analysis; '
 
-for filename in files:
+for filename in files[::-1]:
     #print filename
     if not '-X1' in filename:
         continue
