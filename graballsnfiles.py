@@ -17,7 +17,7 @@ for filename in files[::-1]:
         continue
     if '.idx' in filename: continue
     cntr += 1
-    if cntr < 30: continue
+    if cntr < 20: continue
     #if not 'SN-E1' in filename: continue
     if os.path.isfile("/pnfs/des/persistent/smp/v4/"+filename):
         if os.stat("/pnfs/des/persistent/smp/v4/"+filename).st_size > 0.:
