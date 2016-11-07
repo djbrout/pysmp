@@ -4103,7 +4103,7 @@ class smp:
             #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-100000, 2000000, 5000):
+                for i in np.arange(-100000, 1000000, 1000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
                     weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
@@ -4115,7 +4115,7 @@ class smp:
                 chisqvec = np.array(chisqvec)
                 #print 'argmin guesscale',np.argmin(chisqvec)
                 guess_scale = fluxvec[np.argmin(chisqvec)]
-                guessrange = 5000
+                guessrange = 1000
 
             #print guess_scale
             #raw_input()
@@ -4124,7 +4124,7 @@ class smp:
             if guessrange is None:
                 guessrange = .2 * abs(guess_scale)
             try:
-                guess_scale_step = min([abs(guess_scale) / 5000., 1.])
+                guess_scale_step = min([abs(guess_scale) / 1000., 1.])
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
@@ -4224,8 +4224,9 @@ class smp:
             #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
 
         if not bad:
-            if fluxvec[argm] > 1800000:
+            if fluxvec[argm] > 800000:
                 bad = True
+                print 'star too bright...'
 
         if not bad:
             return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
