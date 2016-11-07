@@ -697,7 +697,9 @@ class metropolis_hastings():
         if flags == 0:
             if fitflags == 0:
                 if self.model_errors:
-                    chisq = np.sum( ( (sims - data)**2 / (sims/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
+                    #v = ( (sims - data)**2 / (sims/self.gain + (self.readnoise/self.gain)**2) ).ravel()
+                    v = ((sims - data) ** 2 / (sims / 3.8 + 1.)).ravel()#hardcoded gain
+                    chisq = np.sum(v[(v > 0.) & (v < 9999999.)])
                 else:
                     if self.comboerr:
                         v = ((sims - data) ** 2 / (skyerr ** 2 + simnosnnosky / self.gain) * self.mask).ravel()

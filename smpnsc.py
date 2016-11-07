@@ -461,6 +461,7 @@ class smp:
                     'mjd_flag':np.zeros(snparams.nvalid),
                     'gain': np.zeros(snparams.nvalid),
                     'mjdoff':[],
+                    'rmsaddin': np.zeros(snparams.nvalid),
                     'mjdslopeinteroff':[],
                     'cat_mag':np.zeros(snparams.nvalid),
                     'image_filename':np.chararray(snparams.nvalid,itemsize=200),
@@ -2045,7 +2046,7 @@ class smp:
                     # print x_star1.shape,tras.shape,mag_star.shape,mag.shape,sky.shape,badflagx.shape
                     # print min(mag_star),np.median(mag_star),max(mag_star)
                     # raw_input()
-                    zpt,zpterr,zpt_file = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
@@ -2065,6 +2066,7 @@ class smp:
                     zpterr = zptdata['mpfit_zpt_std']
                     mjdoff = zptdata['mjdoff']
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                    rmsaddin = zptdata['rmsaddin']
                 dotestoff = False
                 if zpt == 0:
 
@@ -2340,6 +2342,7 @@ class smp:
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
                                     smp_dict['gain'][i] = self.gain
+                                    smp_dict['rmsaddin'][i] = rmsaddin
                                     fs = snparams.flux
                                     brightlimit = fs[np.argsort(fs)][::-1][:15]
                                     brightlimit = brightlimit[-1]
@@ -3003,7 +3006,7 @@ class smp:
                     , mjd=smp_dict['mjd']
                     , gewekenum=9999999
                     , skyerr=smp_dict['skyerr']
-                    , useskyerr = True
+                    , useskyerr = False
                     , usesimerr = False
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
@@ -3018,7 +3021,7 @@ class smp:
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
-                    , burnin = .5
+                    , burnin = .3
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
@@ -3030,6 +3033,8 @@ class smp:
                     , y=smp_dict['sny']
                     , psffile=smp_dict['psf_filename']
                     , psfcenter=smp_dict['psfcenter']
+                    , model_errors=True
+
                     )
             modelveco = copy(modelvec)
             if self.fermilog:
@@ -3241,11 +3246,11 @@ class smp:
         fout = open(tmp, 'w')
         print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
                        'XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
-                       'SMP_FLAG MJD_FLAG SKY SKYERR ' \
+                       'SMP_FLAG MJD_FLAG SKY SKYERR RMSADDIN ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
+            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
                            '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i], smp_dict['fakezpt'][i],
@@ -3253,7 +3258,7 @@ class smp:
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
                                 chisqs[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
-                                smp_dict['sky'][i], smp_dict['skyerr'][i],
+                                smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
                                 galmodel_stampf[i],
@@ -4967,14 +4972,9 @@ class smp:
 
             #std = float(std)/float(num**.5)
 
-            med, stde, num = self.iterstat(float(md) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
+            med, rmsaddin, num = self.iterstat(float(md) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
                                         startMedian=True, sigmaclip=3, iter=10)
             zptresid = float(md) - mag_cat - 2.5 * np.log10(fluxcol)
-            print abs(zptresid) < 3.*stde
-
-            print zptresid
-
-            print med,stde
 
             goodstarcols = np.where((mag_cat != 0) &
                                     (mag_cat < 26) &
@@ -4990,7 +4990,7 @@ class smp:
                                     # (flux_star_std_mcmc_modelerrors > 1.0) &
                                     (np.isfinite(mag_cat)) &
                                     (np.isfinite(flux_star)) &
-                                    (abs(zptresid) < 3.*stde ) &
+                                    (abs(zptresid) < 3.*rmsaddin ) &
                                     (flux_star > 0) &
                                     (badflag == 0) &
                                     (isnotcheckstars == 1))[0]
@@ -5209,6 +5209,7 @@ class smp:
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                     , ras=ras[goodstarcols]
                     , decs=decs[goodstarcols]
+                    , rmsaddin = rmsaddin
                     ,fit_zpt = md
                     ,fit_zpt_std = std
                     ,sky = starsky[goodstarcols]
@@ -5264,6 +5265,7 @@ class smp:
                                      # ,mcmc_me_zpt = mcmc_me_md
                                      # ,mcmc_me_zpt_std = mcmc_me_std
                                      , cat_zpt=cat_zpt
+                                     , rmsaddin=rmsaddin
                                      , mjd=mjd
                                      , mjdoff=mjdoff
                                      , mjdslopeinteroff=mjdslopeinteroff
@@ -5299,7 +5301,7 @@ class smp:
         #    os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
         #    print 'copied from worker to zpt path',self.zptoutpath
         #sys.exit()
-        return(md,std,mag_compare_out)
+        return(md,std,mag_compare_out,rmsaddin)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
 
