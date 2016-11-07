@@ -1882,6 +1882,7 @@ class smp:
                         print zptdata.keys()
                         zpt = zptdata['fit_zpt']
                         zpterr = zptdata['fit_zpt_std']
+                        rmsaddin = zptdata['rmsaddin']
                         mjdoff = zptdata['mjdoff']
                         mjdslopeinteroff = zptdata['mjdslopeinteroff']
                         #print 'thisworked'
