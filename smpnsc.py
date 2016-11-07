@@ -2062,8 +2062,8 @@ class smp:
                         zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
 
                     zptdata = np.load(zpt_file) #load previous zpt information                                                                                                                       
-                    zpt = zptdata['mpfit_zpt']
-                    zpterr = zptdata['mpfit_zpt_std']
+                    zpt = zptdata['fit_zpt']
+                    zpterr = zptdata['fit_zpt_std']
                     mjdoff = zptdata['mjdoff']
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                     rmsaddin = zptdata['rmsaddin']
@@ -5267,8 +5267,8 @@ class smp:
                                      # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                                      , ras = ras[goodstarcols]
                                      , decs = decs[goodstarcols]
-                                     , zpt=md
-                                     , zpt_std=std
+                                     , fit_zpt=md
+                                     , fit_zpt_std=std
                                      , sky=starsky[goodstarcols]
                                      , skyerr=starskyerr[goodstarcols]
                                      # ,mcmc_me_zpt = mcmc_me_md
