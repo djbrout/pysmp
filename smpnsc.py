@@ -4103,7 +4103,7 @@ class smp:
             #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-100000, 10000000, 5000):
+                for i in np.arange(-100000, 2000000, 5000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
                     weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
@@ -4139,7 +4139,7 @@ class smp:
 
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-100000,10000000,5000):
+                for i in np.arange(-100000,2000000,5000):
                     sim = galconv + sky + i*psf
                     chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
                     #print i,weight,chisqvec[-1]
@@ -4176,6 +4176,7 @@ class smp:
                 hh = chisqvec*0 + min(chisqvec)
             except:
                 bad = True
+
         if not bad:
             mchisq = min(chisqvec)
             idx = np.isclose(chisqvec, hh, atol=1.)
@@ -4221,6 +4222,11 @@ class smp:
             sum_data_minus_sim = np.sum(im-sim)
             sim = galconv + sky + fluxvec[argm]*psf
             #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
+
+        if not bad:
+            if fluxvec[argm] > 1800000:
+                bad = True
+
         if not bad:
             return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
