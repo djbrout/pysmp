@@ -4103,7 +4103,7 @@ class smp:
             #print 'skyerr2',skyerr**2
             guessrange = None
             if guess_scale is None:
-                for i in np.arange(-100000, 1000000, 1000):
+                for i in np.arange(-1000, 1000000, 1000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
                     weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
@@ -4227,7 +4227,9 @@ class smp:
             if fluxvec[argm] > 800000:
                 bad = True
                 print 'star too bright...'
-
+            elif fluxvec[argm] < 100.:
+                bad = True
+                print 'star too dim...'
         if not bad:
             return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
