@@ -1178,8 +1178,8 @@ class smp:
             #if round(snparams.mjd[j]) != 56559:
             #    continue
             #raw_input('passed')
-            if cccc > 15:
-                continue
+            #if cccc > 25:
+            #    continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -2953,7 +2953,7 @@ class smp:
             galmodel = galmodel_params
             print 'galmodel',galmodel
 
-            galstd = np.sqrt(abs(galmodel))/10.
+            galstd = np.sqrt(abs(galmodel))/20.
             print 'galstd',galstd
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             tstart = time.time()
