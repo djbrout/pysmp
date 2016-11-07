@@ -973,6 +973,7 @@ class metropolis_hastings():
     def savefig(self, fname):
         if self.isfermigrid and self.isworker:
             plt.savefig('tmp.png')
+            os.popen('ifdh rm ' + fname).read()
             print os.popen('ifdh cp tmp.png '+fname).read()
             os.popen('rm tmp.png')
         else:
