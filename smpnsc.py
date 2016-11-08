@@ -654,11 +654,11 @@ class smp:
             #starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
             starcat.bigra = rastarr[:,0]
             starcat.bigdec = decstarr[:,0]
-            starcat.bigmag = smag[:,0]
+            starcat.bigmag = smag
             # starcat.x = xstarr
             # starcat.y = ystarr
             # starcat.bigmag = np.array(starcat.__dict__[filt.lower()][1:], dtype='float')
-            starcat.mag = starcat.bigmag[:,0]
+            starcat.mag = starcat.bigmag
             starcat.bigid = np.arange(len(rastarr))
             starcat.objid = np.arange(len(rastarr))
             starcat.ra = starcat.bigra[:,0]
@@ -1101,7 +1101,6 @@ class smp:
                     raise exceptions.RuntimeError("Error : No stars in image!!")
                 '''
                 if wcsworked:
-
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
                     x_star, y_star = [], []
                     for xval, yval in zip(*coords):
