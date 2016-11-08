@@ -324,7 +324,6 @@ class tmpwriter():
 
     def savez(self,filename,**kwargs):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
-        print tempfile
         if os.path.isfile(tempfile):
             os.remove(tempfile)
         if os.path.isfile(filename):
