@@ -618,8 +618,8 @@ class smp:
             # print self.starcat.__dict__['RA']
             # print self.starcat.__dict__['DEC']
             # print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
-            print starcat.__dict__
-            raw_input()
+            #print starcat.__dict__
+            #raw_input()
             starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
             starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
             starcat.bigmag = np.array(starcat.__dict__[filt.lower()][1:], dtype='float')
