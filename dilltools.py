@@ -334,6 +334,7 @@ class tmpwriter():
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
             print 'ifdh cp ' + tempfile + ' ' + filename
+            os.system('ifdh rm '+filename)
             os.system('ifdh cp ' + tempfile + ' ' + filename)
             os.popen('rm '+tempfile)
         else:
