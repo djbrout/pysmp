@@ -609,7 +609,7 @@ class smp:
             self.starcatfile = self.snparams.starcat[self.snparams.band[0]]
             print self.snparams.band[0]
             print self.starcatfile
-            raw_input()
+            #raw_input()
             #print self.starcatfile['g']
             #starcat = dt.readcol)
             self.starcatmagfile = self.starcatfile.replace('/abswcs','')
@@ -634,8 +634,8 @@ class smp:
                 try:
                     print starcat.__dict__['ra'][wwww]
                     if len(starcat.__dict__['ra'][wwww]) >0 :
-                        rastarr.append(starcat.__dict__['ra'][wwww])
-                        decstarr.append(starcat.__dict__['dec'][wwww])
+                        rastarr.append(float(starcat.__dict__['ra'][wwww][0]))
+                        decstarr.append(float(starcat.__dict__['dec'][wwww][0]))
                         smag.append(m)
                     #raw_input()
                 except:
