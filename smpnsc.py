@@ -657,6 +657,8 @@ class smp:
             #raw_input()
             #starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
             #starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
+            print rastarr
+            print rastarr.shape
             starcat.bigra = rastarr[1:,0]
             starcat.bigdec = decstarr[1:,0]
             starcat.bigmag = smag[1:]
