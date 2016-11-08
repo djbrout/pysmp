@@ -618,6 +618,8 @@ class smp:
             # print self.starcat.__dict__['RA']
             # print self.starcat.__dict__['DEC']
             # print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+            print starcat.__dict__
+            raw_input()
             starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
             starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
             starcat.bigmag = np.array(starcat.__dict__[filt.lower()][1:], dtype='float')
@@ -635,6 +637,7 @@ class smp:
             #print self.starcat.__dict__['RA']
             #print self.starcat.__dict__['DEC']
             #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+
             starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
             starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
             starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
@@ -1749,8 +1752,8 @@ class smp:
 
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
-                    print starcat.__dict__
-                    raw_input()
+                    #print starcat.__dict__
+                    #raw_input()
                     mag_star = starcat.mag[cols]
                     coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
                     #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
