@@ -630,9 +630,9 @@ class smp:
                 try:
                     print starcat.__dict__['ra'][wwww]
                     if len(starcat.__dict__['ra'][wwww]) >0 :
-                    rastarr.append(starcat.__dict__['ra'][wwww])
-                    decstarr.append(starcat.__dict__['dec'][wwww])
-                    smag.append(m)
+                        rastarr.append(starcat.__dict__['ra'][wwww])
+                        decstarr.append(starcat.__dict__['dec'][wwww])
+                        smag.append(m)
                     #raw_input()
                 except:
                     print 'could not find associated star'
