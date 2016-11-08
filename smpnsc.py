@@ -618,6 +618,8 @@ class smp:
 
             xstarr = []
             ystarr = []
+            print starcatmag.__dict__['Xpos']
+            raw_input()
             for iii, xm,ym,m in zip(range(len(starcatmag.__dict__['Xpos'])),starcatmag.__dict__['Xpos'],
                                starcatmag.__dict__['Ypos'],starcatmag.__dict__[filt.lower()]):
                 print starcat.__dict__['Xpos'][0:10]
