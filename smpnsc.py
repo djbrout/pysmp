@@ -659,8 +659,8 @@ class smp:
             #starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
             print rastarr
             print rastarr.shape
-            starcat.bigra = rastarr[1:,0]
-            starcat.bigdec = decstarr[1:,0]
+            starcat.bigra = rastarr[1:]
+            starcat.bigdec = decstarr[1:]
             starcat.bigmag = smag[1:]
             # starcat.x = xstarr
             # starcat.y = ystarr
