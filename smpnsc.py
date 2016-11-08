@@ -1798,7 +1798,7 @@ class smp:
                         y_star += [yval]
 
                     x_star, y_star = np.array(x_star), np.array(y_star)
-
+                    print x_star
                     mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                         aper.aper(im,x_star,y_star,apr = params.fitrad,verbose=False)
 
