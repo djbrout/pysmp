@@ -620,7 +620,9 @@ class smp:
             ystarr = []
             for iii, xm,ym,m in zip(range(len(starcatmag.__dict__['Xpos'])),starcatmag.__dict__['Xpos'],
                                starcatmag.__dict__['Ypos'],starcatmag.__dict__[filt.lower()]):
-                print np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2)
+                print starcat.__dict__['Xpos'][0:10]
+                print xm
+                #print np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2)
                 wwww = np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2) < 5.
                 try:
                     print starcat.__dict__['Xpos'][wwww]
