@@ -3245,15 +3245,16 @@ class smp:
         else:
             tmp = smplightcurvefile
         fout = open(tmp, 'w')
-        print >> fout, '# MJD ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
+        print >> fout, '# MJD ID_OBS ID_COADD BAND ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
                        'XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
                        'SMP_FLAG MJD_FLAG SKY SKYERR RMSADDIN ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.1f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
+            print >> fout, '%.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
                            '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
-                                smp_dict['mjd'][i], smp_dict['zpt'][i], smp_dict['zpterr'][i],
+                                smp_dict['mjd'][i], smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
+                                smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i], smp_dict['fakezpt'][i],
                                 smp_dict['diffim_flux'][i],smp_dict['diffim_fluxerr'][i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
