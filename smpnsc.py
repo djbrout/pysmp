@@ -1749,7 +1749,8 @@ class smp:
 
                     if not len(cols):
                         raise exceptions.RuntimeError("Error : No stars in image!!")
-
+                    print starcat.__dict__
+                    raw_input()
                     mag_star = starcat.mag[cols]
                     coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
                     #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
