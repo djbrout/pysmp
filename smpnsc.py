@@ -613,6 +613,7 @@ class smp:
             #starcat = dt.readcol)
             starcat = txtobj(self.starcatfile, useloadtxt=True)
             print 'done reading in starcatfile'
+            raw_input()
             #print starcat.__dict__
             # print self.starcat.__dict__
             # print self.starcat.__dict__['RA']
