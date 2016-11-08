@@ -4529,7 +4529,7 @@ class smp:
         #    print ra,dec,x,y,s,se
         #raw_input()
         #sys.exit()
-        if self.snparams.psf_model.lower() == 'psfex':
+        if self.snparams.survey == 'PS1':
             mag_cat *= -1.
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
