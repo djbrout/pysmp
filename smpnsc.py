@@ -1160,7 +1160,7 @@ class smp:
         starglobaldecs = []
         starglobalmags = []
         print starids.shape
-        print np.unique.starids
+        print np.unique(starids)
         raw_input()
         for ide in np.unique(starids):
             ww = (starids == ide)
