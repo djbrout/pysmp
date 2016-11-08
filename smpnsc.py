@@ -1163,14 +1163,14 @@ class smp:
         print np.unique(starids)
         #raw_input()
         for ide in np.unique(starids):
-            print ide
-            print starids
+            #print starids
             ww = (starids == ide)
             starglobalids.append(ide)
-            print starras[ww]
+            #print starras[ww]
             try:
-                print 'aaa', starras
-                raw_input()
+                #print 'aaa', starras
+                #raw_input()
+                print ide,np.median(starras[ww]),np.median(stardecs[ww]),np.median(starmags[ww])
                 starglobalras.append(np.median(starras[ww]))
                 starglobaldecs.append(np.median(stardecs[ww]))
                 starglobalmags.append(np.median(starmags[ww]))
