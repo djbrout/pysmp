@@ -1101,7 +1101,7 @@ class smp:
                     raise exceptions.RuntimeError("Error : No stars in image!!")
                 '''
                 if wcsworked:
-                    print starcat.ra
+                    print starcat.ra[:5]
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
                     x_star, y_star = [], []
                     for xval, yval in zip(*coords):
