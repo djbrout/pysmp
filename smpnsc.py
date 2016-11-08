@@ -4530,6 +4530,8 @@ class smp:
         #raw_input()
         #sys.exit()
         if self.snparams.survey == 'PS1':
+            print mag_cat
+            raw_input()
             mag_cat *= -1.
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
