@@ -1164,6 +1164,8 @@ class smp:
             ww = (starids == ide)
             starglobalids.append(ide)
             try:
+                print 'aaa', starras[ww]
+                raw_input()
                 starglobalras.append(np.median(starras[ww]))
                 starglobaldecs.append(np.median(stardecs[ww]))
                 starglobalmags.append(np.median(starmags[ww]))
