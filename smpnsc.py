@@ -619,15 +619,15 @@ class smp:
             xstarr = []
             ystarr = []
             print starcatmag.__dict__
-            raw_input()
-            for iii, xm,ym,m in zip(range(len(starcatmag.__dict__['Xpos'])),starcatmag.__dict__['Xpos'],
-                               starcatmag.__dict__['Ypos'],starcatmag.__dict__[filt.lower()]):
-                print starcat.__dict__['Xpos'][0:10]
-                print xm
+            #raw_input()
+            for iii, ram,decm,m in zip(range(len(starcatmag.__dict__['ra'])),starcatmag.__dict__['ra'],
+                               starcatmag.__dict__['dec'],starcatmag.__dict__[filt.lower()]):
+                #print starcat.__dict__['ra'][0:10]
+                #print xm
                 #print np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2)
-                wwww = np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2) < 5.
+                wwww = np.sqrt((starcat.__dict__['ra']-ram)**2 + (starcat.__dict__['dec']-decm)**2) < .1
                 try:
-                    print starcat.__dict__['Xpos'][wwww]
+                    print starcat.__dict__['ra'][wwww]
                     xstarr.append(starcat.__dict__['Xpos'][wwww])
                     raw_input()
                 except:
