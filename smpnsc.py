@@ -675,8 +675,8 @@ class smp:
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
-            print longimfile
-            raw_input()
+            #print longimfile
+            #raw_input()
             self.impath = '/'.join(imfile.split('/')[:-1])
             try:
                 noisefile = os.path.join(rootdir,noisefile)
@@ -772,6 +772,7 @@ class smp:
                     else:
                         print 'file not found', imfile
                         continue
+                    raw_input('cpied fz filehere')
                 #print 'grabbed sn files'
                 #sys.exit()
             try:
