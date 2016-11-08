@@ -659,8 +659,8 @@ class smp:
             # starcat.y = ystarr
             # starcat.bigmag = np.array(starcat.__dict__[filt.lower()][1:], dtype='float')
             starcat.mag = starcat.bigmag
-            starcat.bigid = np.arange(len(rastarr))
-            starcat.objid = np.arange(len(rastarr))
+            starcat.bigid = np.arange(len(starcat.bigra))
+            starcat.objid = np.arange(len(starcat.bigra))
             starcat.ra = starcat.bigra
             starcat.dec = starcat.bigdec
             newra = starcat.bigra
