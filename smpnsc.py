@@ -4533,10 +4533,10 @@ class smp:
         #    print ra,dec,x,y,s,se
         #raw_input()
         #sys.exit()
-        if self.snparams.survey == 'PS1':
-            print mag_cat
-            raw_input()
-            mag_cat *= -1.
+        # if self.snparams.survey == 'PS1':
+        #     print mag_cat
+        #     raw_input()
+        #     mag_cat *= -1.
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             if round(prevra,5) == round(ra,5):
