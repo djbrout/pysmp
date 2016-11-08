@@ -616,6 +616,15 @@ class smp:
             starcat = txtobj(self.starcatfile, useloadtxt=True)
             starcatmag = txtobj(self.starcatmagfile, useloadtxt=True)
 
+            xstarr = np.zeros(len(starcatmag.__dict__['Xpos']))
+            ystarr = starcatmag.__dict__['Ypos']
+            for iii, xm,ym,m in zip(range(len(starcatmag.__dict__['Xpos'])),starcatmag.__dict__['Xpos'],
+                               starcatmag.__dict__['Ypos'],starcatmag.__dict__[filt.lower()]):
+                wwww = np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2) < 5.
+                print starcat.__dict__['Xpos'][wwww]
+                xstarr[iii] = starcat.__dict__['Xpos'][wwww]
+                raw_input()
+
             print starcatmag.__dict__
             print starcatmag.__dict__['i'] - starcat.__dict__['i']
             print 'done reading in starcatfile'
