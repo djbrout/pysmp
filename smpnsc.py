@@ -729,7 +729,7 @@ class smp:
             psffile = os.path.join(rootdir,psffile)
             #print imfile
             #raw_input()
-            print 'hereeeee'
+            #print 'hereeeee'
             if self.fermigrid & self.worker:
                 #print imfile
                 #os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
@@ -917,7 +917,8 @@ class smp:
             try:
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
-                print 'image shape',im.shape
+                print 'running globalstars on ',imfile
+                #print 'image shape',im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
                 continue
