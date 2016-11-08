@@ -609,9 +609,11 @@ class smp:
             self.starcatfile = self.snparams.starcat[self.snparams.band[0]]
             print self.snparams.band[0]
             print self.starcatfile
+            raw_input()
             #print self.starcatfile['g']
             #starcat = dt.readcol)
             self.starcatmagfile = self.starcatfile.replace('full','star')
+            '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/absphotcat/0x1615/PSc000010.0x1615.dougpv3.phot1'
             print self.starcatmagfile
             starcat = txtobj(self.starcatfile, useloadtxt=True)
             starcatmag = txtobj(self.starcatmagfile, useloadtxt=True)
