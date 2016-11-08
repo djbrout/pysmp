@@ -675,6 +675,8 @@ class smp:
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
+            print longimfile
+            raw_input()
             self.impath = '/'.join(imfile.split('/')[:-1])
             try:
                 noisefile = os.path.join(rootdir,noisefile)
