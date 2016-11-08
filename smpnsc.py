@@ -1780,15 +1780,16 @@ class smp:
                 if params.build_psf == 'yes':
                     self.rdnoise = hdr[params.rdnoise_name]
                     self.gain = hdr[params.gain_name]  # 1
-                    cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (
-                    starglobaldecs < dec_high)
+                    #cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (
+                    #starglobaldecs < dec_high)
 
-                    if not len(cols):
-                        raise exceptions.RuntimeError("Error : No stars in image!!")
+                    #if not len(cols):
+                    #    raise exceptions.RuntimeError("Error : No stars in image!!")
                     #print starcat.__dict__
                     #raw_input()
-                    mag_star = starcat.mag[cols]
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    mag_star = starcat.mag
+                    #mag_star = starcat.mag[cols]
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras, starglobaldecs)), 0))
                     #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
                     x_star, y_star = [], []
 
