@@ -1084,6 +1084,7 @@ class smp:
                 # print 'max(starcat.ra)',max(starcat.ra)
                 # sys.exit()
                 # print starcat.__dict___
+                '''
                 cols = np.where((starcat.bigra > ra_low) &
                                 (starcat.bigra < ra_high) &
                                 (starcat.bigdec > dec_low) &
@@ -1098,7 +1099,7 @@ class smp:
                     # badindices.append(j)
                     # continue
                     raise exceptions.RuntimeError("Error : No stars in image!!")
-
+                '''
                 if wcsworked:
                     coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
                     x_star, y_star = [], []
