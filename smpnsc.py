@@ -2091,6 +2091,7 @@ class smp:
                     #aw_input('zpt badflag')
                     badflag = 1
                     scalefactor = 0.
+            print 'zpt',zpt,'nominal,firstzpt'
             print 'scalefactor',scalefactor
             print 'before',np.max(im)
             im *= scalefactor
