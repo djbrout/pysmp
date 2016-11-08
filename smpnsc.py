@@ -617,6 +617,7 @@ class smp:
             starcatmag = txtobj(self.starcatmagfile, useloadtxt=True)
 
             print starcatmag.__dict__
+            print starcatmag.__dict__['i'] - starcat.__dict['i']
             print 'done reading in starcatfile'
             raw_input()
             #print starcat.__dict__
