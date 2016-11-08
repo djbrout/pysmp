@@ -616,8 +616,9 @@ class smp:
             starcat = txtobj(self.starcatfile, useloadtxt=True)
             starcatmag = txtobj(self.starcatmagfile, useloadtxt=True)
 
-            xstarr = []
-            ystarr = []
+            rastarr = []
+            decstarr = []
+            smag = []
             print starcatmag.__dict__
             #raw_input()
             for iii, ram,decm,m in zip(range(len(starcatmag.__dict__['ra'])),starcatmag.__dict__['ra'],
@@ -628,15 +629,20 @@ class smp:
                 wwww = np.sqrt((starcat.__dict__['ra']-ram)**2 + (starcat.__dict__['dec']-decm)**2) < .001
                 try:
                     print starcat.__dict__['ra'][wwww]
-                    xstarr.append(starcat.__dict__['Xpos'][wwww])
-                    raw_input()
+                    rastarr.append(starcat.__dict__['ra'][wwww])
+                    decstarr.append(starcat.__dict__['dec'][wwww])
+                    smag.append(m)
+                    #raw_input()
                 except:
                     print 'could not find associated star'
                 #raw_input()
-            print starcatmag.__dict__
-            print starcatmag.__dict__['i'] - starcat.__dict__['i']
-            print 'done reading in starcatfile'
-            raw_input()
+            rastarr = np.array(rastarr)
+            decstarr = np.array(decstarr)
+            smag = np.array(smag)
+            # print starcatmag.__dict__
+            # print starcatmag.__dict__['i'] - starcat.__dict__['i']
+            # print 'done reading in starcatfile'
+            # raw_input()
             #print starcat.__dict__
             # print self.starcat.__dict__
             # print self.starcat.__dict__['RA']
@@ -644,12 +650,17 @@ class smp:
             # print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
             #print starcat.__dict__
             #raw_input()
-            starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
-            starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
-            starcat.bigmag = np.array(starcat.__dict__[filt.lower()][1:], dtype='float')
-            starcat.mag = starcat.bigmag
-            starcat.bigid = np.arange(len(starcat.bigra))
-            starcat.objid = np.arange(len(starcat.bigra))
+            #starcat.bigra = np.array(starcat.__dict__['ra'][1:], dtype='float')
+            #starcat.bigdec = np.array(starcat.__dict__['dec'][1:], dtype='float')
+            starcat.bigra = rastarr
+            starcat.bigdec = decstarr
+            starcat.bigmag = smag
+            # starcat.x = xstarr
+            # starcat.y = ystarr
+            # starcat.bigmag = np.array(starcat.__dict__[filt.lower()][1:], dtype='float')
+            # starcat.mag = starcat.bigmag
+            starcat.bigid = np.arange(len(xstarr))
+            starcat.objid = np.arange(len(xstarr))
             newra = starcat.bigra
             newdec = starcat.bigdec
         elif self.snparams.survey == 'DES':
@@ -1054,6 +1065,8 @@ class smp:
             #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
             #
 
+            #if not self.snparams.survey == 'PS1':
+
             if nozpt:
 
                 self.rdnoise = hdr[params.rdnoise_name]
@@ -1067,8 +1080,8 @@ class smp:
                 # print 'rahi',ra_high
                 # print 'min(starcat.ra)',min(starcat.ra)
                 # print 'max(starcat.ra)',max(starcat.ra)
-                #sys.exit()
-                #print starcat.__dict___
+                # sys.exit()
+                # print starcat.__dict___
                 cols = np.where((starcat.bigra > ra_low) &
                                 (starcat.bigra < ra_high) &
                                 (starcat.bigdec > dec_low) &
@@ -1079,50 +1092,47 @@ class smp:
                 starcat.mag = starcat.bigmag[cols]
                 starcat.objid = starcat.bigid[cols]
                 if not len(cols):
-                    #print "Error : No stars in image!!"
-                    #badindices.append(j)
-                    #continue
+                    # print "Error : No stars in image!!"
+                    # badindices.append(j)
+                    # continue
                     raise exceptions.RuntimeError("Error : No stars in image!!")
 
                 if wcsworked:
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra,starcat.dec)),0))
-                    x_star,y_star = [],[]
-                    for xval,yval in zip(*coords):
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
+                    x_star, y_star = [], []
+                    for xval, yval in zip(*coords):
                         x_star += [xval]
                         y_star += [yval]
 
                 else:
-                    coords = wcsinfo.tran([starcat.ra/radtodeg,starcat.dec/radtodeg],False)
+                    coords = wcsinfo.tran([starcat.ra / radtodeg, starcat.dec / radtodeg], False)
 
-                x_star,y_star = [],[]
-                for xval,yval in zip(*coords):
+                x_star, y_star = [], []
+                for xval, yval in zip(*coords):
                     x_star += [xval]
                     y_star += [yval]
 
-
-                x_star1,y_star1 = np.array(x_star),np.array(y_star)
-                x_star,y_star = cntrd.cntrd(im,x_star1,y_star1,params.cntrd_fwhm)
-                newra,newdec = zip(*w.wcs_pix2world(np.array(zip(x_star,y_star)),0))
+                x_star1, y_star1 = np.array(x_star), np.array(y_star)
+                x_star, y_star = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
+                newra, newdec = zip(*w.wcs_pix2world(np.array(zip(x_star, y_star)), 0))
                 # try:
                 #     starcat.objid += 0.
                 # except:
                 #     starcat.objid = np.arange(len(starcat.mag))
 
-                #for rrr in starcat.objid:
+                # for rrr in starcat.objid:
                 #    starids.append(rrr)
-                #for rrr,zzz in zip(newra,newdec):
+                # for rrr,zzz in zip(newra,newdec):
                 #    starras.append(rrr)
                 #    stardecs.append(zzz)
-                #for rrr in starcat.ra:
+                # for rrr in starcat.ra:
                 #    starcatras.append(rrr)
                 cntrs += 1
-                #print len(starids)
-                #print len(starras)
-                #print starras
+                # print len(starids)
+                # print len(starras)
+                # print starras
 
-                #raw_input()
-
-
+                # raw_input()
 
         if nozpt:
             starids = np.array(starcat.objid)
@@ -1130,18 +1140,17 @@ class smp:
             stardecs = np.array(newdec)
             starmags = np.array(starcat.mag)
 
-
             print starras
             print star_offset_file
-            self.tmpwriter.savez(star_offset_file,starras=np.array(newra),stardecs=np.array(newdec),
-                                 starids=np.array(starcat.objid),starmags=np.array(starcat.mag))
+            self.tmpwriter.savez(star_offset_file, starras=np.array(newra), stardecs=np.array(newdec),
+                                 starids=np.array(starcat.objid), starmags=np.array(starcat.mag))
         else:
             staroffsets = np.load(star_offset_file)
             starras = np.array(staroffsets['starras'])
             stardecs = np.array(staroffsets['stardecs'])
             starids = np.array(staroffsets['starids'])
             starmags = np.array(staroffsets['starmags'])
-        #sys.exit()
+            # sys.exit()
         starglobalids = []
         starglobalras = []
         starglobaldecs = []
@@ -1158,14 +1167,10 @@ class smp:
                 starglobalras.append(np.nan)
                 starglobaldecs.append(np.nan)
 
-
-
-
         starglobalids = np.array(starglobalids)
         starglobalras = np.array(starglobalras)
         starglobaldecs = np.array(starglobaldecs)
         starglobalmags = np.array(starglobalmags)
-
 
         # if self.dobigstarcat:
         #     # scampra,scampdec,mag_starwrong = self.getProperCatRaDec(starglobalras,starglobaldecs)
@@ -1174,8 +1179,8 @@ class smp:
         #     #jra,jdec,jmag = self.getJamesCat()
         #     print 'we are here inside bigstarcat'
         # else:
-        offsetra = np.array(starglobalras)*0.
-        offsetdec = np.array(starglobalras)*0.
+        offsetra = np.array(starglobalras) * 0.
+        offsetdec = np.array(starglobalras) * 0.
         print 'Done with globalstars'
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with globalstars\n ', self.fermilogfile)
