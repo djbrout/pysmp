@@ -629,6 +629,7 @@ class smp:
                 wwww = np.sqrt((starcat.__dict__['ra']-ram)**2 + (starcat.__dict__['dec']-decm)**2) < .001
                 try:
                     print starcat.__dict__['ra'][wwww]
+                    if len(starcat.__dict__['ra'][wwww]) >0 :
                     rastarr.append(starcat.__dict__['ra'][wwww])
                     decstarr.append(starcat.__dict__['dec'][wwww])
                     smag.append(m)
