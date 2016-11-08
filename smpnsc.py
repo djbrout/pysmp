@@ -661,6 +661,8 @@ class smp:
             starcat.mag = starcat.bigmag
             starcat.bigid = np.arange(len(rastarr))
             starcat.objid = np.arange(len(rastarr))
+            starcat.ra = starcat.bigra
+            starcat.dec = starcat.bigdec
             newra = starcat.bigra
             newdec = starcat.bigdec
         elif self.snparams.survey == 'DES':
