@@ -179,7 +179,7 @@ def fit(
 
 
 
-    dontplot = False
+    dontplot = True
     if not pdf_pages is None:
         if not dontplot:
             fig = plt.figure()
