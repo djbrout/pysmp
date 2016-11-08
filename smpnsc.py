@@ -632,7 +632,7 @@ class smp:
                     raw_input()
                 except:
                     print 'could not find associated star'
-                raw_input()
+                #raw_input()
             print starcatmag.__dict__
             print starcatmag.__dict__['i'] - starcat.__dict__['i']
             print 'done reading in starcatfile'
