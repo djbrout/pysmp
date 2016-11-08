@@ -625,7 +625,7 @@ class smp:
                 #print starcat.__dict__['ra'][0:10]
                 #print xm
                 #print np.sqrt((starcat.__dict__['Xpos']-xm)**2 + (starcat.__dict__['Ypos']-ym)**2)
-                wwww = np.sqrt((starcat.__dict__['ra']-ram)**2 + (starcat.__dict__['dec']-decm)**2) < .01
+                wwww = np.sqrt((starcat.__dict__['ra']-ram)**2 + (starcat.__dict__['dec']-decm)**2) < .005
                 try:
                     print starcat.__dict__['ra'][wwww]
                     xstarr.append(starcat.__dict__['Xpos'][wwww])
