@@ -2126,10 +2126,10 @@ class smp:
                     scalefactor = 0.
             print 'zpt',zpt,'nominal',firstzpt
             print 'scalefactor',scalefactor
-            print 'before',np.max(im)
+            #print 'before',np.max(im)
             im *= scalefactor
-            print 'after',np.max(im)
-            raw_input()
+            #print 'after',np.max(im)
+            #raw_input()
 
             #if self.useweights:
             #    #raw_input('USING WEIGHTS SETTIN')
@@ -5305,8 +5305,8 @@ class smp:
                 #raw_input()
                 name = imfile.split('/')[-1][:-8]
                 mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
-                print 'lengoodstarcols',len(mag_cat[goodstarcols])
-                raw_input()
+                #print 'lengoodstarcols',len(mag_cat[goodstarcols])
+                #raw_input()
                 self.tmpwriter.savez(mag_compare_out
                                      # ,ra = ras[goodstarcols]
                                      # ,dec = decs[goodstarcols]
