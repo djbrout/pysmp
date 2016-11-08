@@ -611,7 +611,12 @@ class smp:
             print self.starcatfile
             #print self.starcatfile['g']
             #starcat = dt.readcol)
+            self.starcatmagfile = self.starcatfile.replace('full','star')
+            print self.starcatmagfile
             starcat = txtobj(self.starcatfile, useloadtxt=True)
+            starcatmag = txtobj(self.starcatmagfile, useloadtxt=True)
+
+            print starcatmag.__dict__
             print 'done reading in starcatfile'
             raw_input()
             #print starcat.__dict__
