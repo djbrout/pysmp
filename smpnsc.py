@@ -2092,7 +2092,11 @@ class smp:
                     badflag = 1
                     scalefactor = 0.
             print 'scalefactor',scalefactor
+            print 'before',np.max(im)
             im *= scalefactor
+            print 'after',np.max(im)
+            raw_input()
+
             #if self.useweights:
             #    #raw_input('USING WEIGHTS SETTIN')
             #    im[np.where(mask != 0)] =-999999.0
