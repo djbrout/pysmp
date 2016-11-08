@@ -772,7 +772,7 @@ class smp:
                     else:
                         print 'file not found', imfile
                         continue
-                    raw_input('cpied fz filehere')
+                    #raw_input('cpied fz filehere')
                 #print 'grabbed sn files'
                 #sys.exit()
             try:
