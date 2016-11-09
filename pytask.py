@@ -9,7 +9,7 @@ logdir = '/home/dscolnic/testdir/smplogs'
 
 
 
-runninglist = np.zeros(24)
+runninglist = np.chararray(24,itemsize=300)
 
 lightcurves = lcf.readlines()
 lcf.close()
