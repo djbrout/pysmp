@@ -2265,8 +2265,8 @@ class smp:
                         noise_stamp = noise_stamp*msk
                         if not good:
                             badflag = 1
-                            raw_input('badflagggggooood')
-                        save_fits_image(msk,'test/mask.fits')
+                            #raw_input('badflagggggooood')
+                        #save_fits_image(msk,'test/mask.fits')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
                         skysn *= scalefactor
