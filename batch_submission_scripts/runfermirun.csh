@@ -24,7 +24,7 @@ setup mu2e
 setup ifdhc
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 ifdh cp /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
-echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 unzip pysmp.zip
 cd pysmp
 pwd

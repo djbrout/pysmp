@@ -643,7 +643,7 @@ class smp:
                 #raw_input()
             rastarr = np.array(rastarr)
             decstarr = np.array(decstarr)
-            smag = np.array(smag)
+            smag = np.array( smag )
             # print starcatmag.__dict__
             # print starcatmag.__dict__['i'] - starcat.__dict__['i']
             # print 'done reading in starcatfile'
