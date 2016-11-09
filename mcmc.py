@@ -905,6 +905,7 @@ class metropolis_hastings():
         plt.close()
         gc.collect()
         if self.isfermigrid and self.isworker:
+            print os.popen('ifdh rm ' + self.lcout + '_stamps.pdf').read()
             print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
         else:
             print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
