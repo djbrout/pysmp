@@ -6155,6 +6155,8 @@ if __name__ == "__main__":
     #print bigstarcatalog
     #raw_input()
     if snparams.survey == 'PS1':
+        print 'isps1'
+        raw_input()
         try:
             scenemodel.main(nodiff=nodiff, nozpt=nozpt, nomask=nomask, debug=debug, outfile=outfile, rootdir=root_dir,
                             outdir=out_dir,
