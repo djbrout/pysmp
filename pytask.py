@@ -17,8 +17,8 @@ lcf.close()
 corelist = np.arange(24)
 
 for i in range(24):
-    print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > '+
-             os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
+    print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
+        ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
     #os.popen('taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > '+
     #         os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &')
     print lightcurves[i],'Submitted to SMP. Core #'+str(int(i))
