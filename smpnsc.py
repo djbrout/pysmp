@@ -6178,7 +6178,8 @@ if __name__ == "__main__":
                 os.mkdirs(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
 
-    scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
+    else:
+        scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
                      verbose=verbose,clear_zpt=True, mergeno=mergeno,usefake=usefake,snfile=snfile,
                      gal_model=gal_model,stardumppsf=stardumppsf,dogalfit=dogalfit,dosnfit=dosnfit,
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
@@ -6188,6 +6189,6 @@ if __name__ == "__main__":
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog)
-    scenemodel.afterfit(snparams,params,donesn=True)
+        scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
