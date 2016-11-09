@@ -6172,8 +6172,8 @@ if __name__ == "__main__":
                             zptoutpath=zptoutpath,
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
                             fermilog=fermilog)
-        except Exception as inst:
-            print inst
+        except:
+            print sys.exc_info()[0]
             if not os.path.exists(isdonedir):
                 os.mkdirs(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
