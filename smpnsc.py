@@ -6060,7 +6060,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir
+                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
                                     fermilog=fermilog)
@@ -6160,7 +6160,7 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     galaxyfoldername=galaxyfoldername,isdonedir=isdonedir
+                     galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog)
