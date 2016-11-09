@@ -3344,7 +3344,7 @@ class smp:
             if not os.path.exits(self.isdonedir):
                 os.mkdirs(self.isdonedir)
             os.system('touch '+os.path.join(self.isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
-        sys.exit()
+        #sys.exit()
         return
 
     def closest_node(self,ra,dec):
