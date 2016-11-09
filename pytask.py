@@ -34,11 +34,14 @@ while j <= maxlightcurves:
     for core in corelist:
         if runninglist[core].split('.')[0]+'.done' in donefiles:
             print ''
+            print 'Running SN '+str(int(j))+'/'+str(int(maxlightcurves))
             print runninglist[core],'Has finished photometry on core',int(core)
             #print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
             os.popen('taskset -c ' + str(int(core)) + ' python smp.py --index=' + str(int(j)) +' >& '+
                 os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &')
             print lightcurves[j].strip(),'Submitted to SMP. Core #'+str(int(core))
+            print 'See log file here', os.path.join(logdir, lightcurves[j].split('.')[0] + '.log')
+
             runninglist[core] = lightcurves[j]
             j += 1
             print ''
