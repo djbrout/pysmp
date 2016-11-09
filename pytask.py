@@ -2,7 +2,7 @@ import os
 import numpy as np
 import time
 
-maxlightcurves = 287
+maxlightcurves = 419
 isdonedir = '/home/dscolnic/testdir/isdone'
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
 logdir = '/home/dscolnic/testdir/smplogs'
