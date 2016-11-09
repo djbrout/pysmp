@@ -740,7 +740,7 @@ class smp:
             psffile = os.path.join(rootdir,psffile)
             #print imfile
             #raw_input()
-            #print 'hereeeee'
+            print 'hereeeee'
             if self.fermigrid & self.worker:
                 #print imfile
                 #os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
@@ -753,7 +753,7 @@ class smp:
                 #print 'line 576'
                 #raw_input()
                 if len(ifdhls) > 0:
-                    #print 'Copying over',imfile
+                    print 'Copying over',imfile
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                     #imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
@@ -777,7 +777,7 @@ class smp:
                     #print 'copied all files'
                     #print os.popen('ifdh ls .').read()
                     #sys.exit()
-                    #print 'here2'
+                    print 'here2'
                     #raw_input()
                 else:
                     #print 'file not found',imfile
@@ -824,7 +824,7 @@ class smp:
                         print 'file not found', imfile
                         continue
                     #raw_input('cpied fz filehere')
-                #print 'grabbed sn files'
+                print 'grabbed sn files'
                 #sys.exit()
             try:
                 self.ccdnum = imfile.split('/')[1].split('_')[1]
@@ -904,7 +904,7 @@ class smp:
                     maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
                     mask = pyfits.getdata(maskfile)
 
-            #print 'here3'
+            print 'here3'
             #raw_input()
             # if self.usefake:
             #     fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
@@ -934,7 +934,7 @@ class smp:
                 print 'Image is EMPTY, skipping star...'
                 continue
             #raw_input()
-            #print 'got image data!'
+            print 'got image data!'
             #sys.exit()
             #fakeim_hdr = pyfits.getheader(fakeim)
             #snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
