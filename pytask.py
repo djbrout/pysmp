@@ -18,10 +18,10 @@ corelist = np.arange(24)
 
 for i in range(24):
     print ''
-    print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
-        ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
-    #os.popen('taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > '+
-    #         os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &')
+    #print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
+    #    ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
+    os.popen('taskset -c '+str(int(i))+' python smp.py --index='+str(int(i))+' > '+
+             os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' 2>&1 &')
     print lightcurves[i].strip(),'Submitted to SMP. Core #'+str(int(i))
     print 'See log file here',os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')
     print ''
@@ -35,8 +35,9 @@ while j <= maxlightcurves:
         if runninglist[core].split('.')[0]+'.done' in donefiles:
             print ''
             print runninglist[core],'Has finished photometry on core',int(core)
-            print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
-            #os.popen('taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &')
+            #print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
+            os.popen('taskset -c ' + str(int(core)) + ' python smp.py --index=' + str(int(j)) +' > '+
+                os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' 2>&1 &')
             print lightcurves[j].strip(),'Submitted to SMP. Core #'+str(int(core))
             runninglist[core] = lightcurves[j]
             j += 1
