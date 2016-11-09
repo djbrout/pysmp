@@ -6173,7 +6173,7 @@ if __name__ == "__main__":
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
                             fermilog=fermilog)
         except:
-            if not os.path.exits(isdonedir):
+            if not os.path.exists(isdonedir):
                 os.mkdirs(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
 
