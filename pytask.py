@@ -1,0 +1,42 @@
+import os
+import numpy as np
+import time
+
+maxlightcurves = 287
+isdonedir = '/home/dscolnic/testdir/isdone'
+lcf = open('/home/dscolnic/testdir/runfile.txt','r')
+logdir = '/home/dscolnic/testdir/smplogs'
+
+
+
+runninglist = np.zeros(24)
+
+lightcurves = lcf.readlines()
+lcf.close()
+
+corelist = np.arange(24)
+
+for i in range(24):
+    print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > '+
+             os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
+    #os.popen('taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > '+
+    #         os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &')
+    print lightcurves[i],'Submitted to SMP. Core #'+str(int(i))
+    print 'See log file here',os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')
+
+    runninglist[i] = lightcurves[i]
+
+
+j=24
+while j <= maxlightcurves:
+    donefiles = os.listdir(isdonedir)
+    for core in corelist:
+        if runninglist[core].split('.')[0]+'.done' in donefiles:
+            print runninglist[core],'Has finished photometry on core',int(core)
+            print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
+            #os.popen('taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &')
+            print lightcurves[j],'Submitted to SMP. Core #'+str(int(core))
+            runninglist[core] = lightcurves[j]
+            j += 1
+
+    time.sleep(10)

@@ -254,7 +254,7 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog=None,
              stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
-             savezptstamps=False,fermilog=False
+             savezptstamps=False,fermilog=False,isdonedir=None
              ):
 
         print 'snfile',snfile
@@ -373,6 +373,7 @@ class smp:
         #self.lcfilepath=lcfilepath
         self.savezptstamps = savezptstamps
         self.fermilog = fermilog
+        self.isdonedir = isdonedir
 
 
         self.useweights = useweights
@@ -3339,7 +3340,10 @@ class smp:
         print('SMP was successful!!!')
         print('See stamps/mcmc_chains in',self.outdir)
         print('See lightcurve file',smplightcurvefile)
-
+        if self.snparams.survey == 'PS1':
+            if not os.path.exits(self.isdonedir):
+                os.mkdirs(self.isdonedir)
+            os.system('touch '+os.path.join(self.isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
         sys.exit()
         return
 
@@ -5674,7 +5678,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog"])
+                      "lcfilepath=","fermilog","isdonedir="])
 
 
         #print opt
@@ -5703,7 +5707,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog"])
+                      "lcfilepath=","fermilog","isdonedir"])
 
 
         #print opt
@@ -5741,6 +5745,7 @@ if __name__ == "__main__":
     worker = False
     lcfilepath=snfilepath
     fermilog = False
+    isdonedir = None
 
     dobigstarcat = True
 
@@ -5835,6 +5840,8 @@ if __name__ == "__main__":
              zptoutpath = a
         elif o == "--fermigriddir":
             fermigriddir = a
+        elif o == "--isdonedir":
+            isdonedir = a
         elif o == "--embarrasinglyParallelEnvVar":
             isEmbarrasinglyParallel = True
             parallelvar= a
@@ -5945,6 +5952,8 @@ if __name__ == "__main__":
             savezptstamps = True
         elif o == "--fermilog":
             fermilog = True
+        elif o == "--isdonedir":
+            isdonedir = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -5975,6 +5984,9 @@ if __name__ == "__main__":
     if snfilelist is None:
         raise NameError("Must provide " +
                         "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
+
+    if isdonedir is None:
+        isdonedir = os.path.join(out_dir,'isdone')
 
     if not index is None:
         if index == 'all':
@@ -6048,7 +6060,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 galaxyfoldername=galaxyfoldername,
+                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
                                     fermilog=fermilog)
@@ -6148,7 +6160,7 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     galaxyfoldername=galaxyfoldername,
+                     galaxyfoldername=galaxyfoldername,isdonedir=isdonedir
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog)
