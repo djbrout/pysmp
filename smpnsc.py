@@ -689,6 +689,8 @@ class smp:
             starcat.ra = starcat.bigra
             starcat.dec = starcat.bigdec
 
+
+
         else:
             raise Exception('Unknown survey. Not supported. Please contact Dillon Brout at dbrout@phsyics.upenn.edu')
         #print self.starcat.ra
@@ -1116,7 +1118,8 @@ class smp:
                     for xval, yval in zip(*coords):
                         x_star += [xval]
                         y_star += [yval]
-
+                    print starcat.ra
+                    print x_star
                 else:
                     coords = wcsinfo.tran([starcat.ra / radtodeg, starcat.dec / radtodeg], False)
 
