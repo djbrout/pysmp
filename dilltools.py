@@ -155,6 +155,10 @@ def read(filename, headline, startline, delim=' '):
 
 
 def save_fits_image(image,filename):
+    try:
+        os.remove(filename)
+    except:
+        pass
     hdu = pf.PrimaryHDU(image)
     if os.path.exists(filename):
         os.remove(filename)
