@@ -3341,7 +3341,7 @@ class smp:
         print('See stamps/mcmc_chains in',self.outdir)
         print('See lightcurve file',smplightcurvefile)
         if self.snparams.survey == 'PS1':
-            if not os.path.exits(self.isdonedir):
+            if not os.path.exists(self.isdonedir):
                 os.mkdirs(self.isdonedir)
             os.system('touch '+os.path.join(self.isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
         #sys.exit()
@@ -6157,8 +6157,7 @@ if __name__ == "__main__":
     if snparams.survey == 'PS1':
         #print 'isps1'
         #raw_input()
-        #try:
-        if True:
+        try:
             scenemodel.main(nodiff=nodiff, nozpt=nozpt, nomask=nomask, debug=debug, outfile=outfile, rootdir=root_dir,
                             outdir=out_dir,
                             verbose=verbose, clear_zpt=True, mergeno=mergeno, usefake=usefake, snfile=snfile,
@@ -6173,11 +6172,11 @@ if __name__ == "__main__":
                             zptoutpath=zptoutpath,
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
                             fermilog=fermilog)
-        # except:
-        #     print sys.exc_info()[0]
-        #     if not os.path.exists(isdonedir):
-        #         os.mkdirs(isdonedir)
-        #     os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
+        except:
+            print sys.exc_info()
+            if not os.path.exists(isdonedir):
+                os.mkdirs(isdonedir)
+            os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
 
     else:
         scenemodel.main(nodiff=nodiff,nozpt=nozpt,nomask=nomask,debug=debug,outfile=outfile,rootdir=root_dir,outdir=out_dir,
