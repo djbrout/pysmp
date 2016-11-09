@@ -21,7 +21,7 @@ for i in range(24):
         ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
     #os.popen('taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > '+
     #         os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &')
-    print lightcurves[i],'Submitted to SMP. Core #'+str(int(i))
+    print lightcurves[i].strip(),'Submitted to SMP. Core #'+str(int(i))
     print 'See log file here',os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')
 
     runninglist[i] = lightcurves[i]
@@ -35,7 +35,7 @@ while j <= maxlightcurves:
             print runninglist[core],'Has finished photometry on core',int(core)
             print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
             #os.popen('taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &')
-            print lightcurves[j],'Submitted to SMP. Core #'+str(int(core))
+            print lightcurves[j].strip(),'Submitted to SMP. Core #'+str(int(core))
             runninglist[core] = lightcurves[j]
             j += 1
 
