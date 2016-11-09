@@ -686,6 +686,8 @@ class smp:
             starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
             starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
             starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+            starcat.ra = starcat.bigra
+            starcat.dec = starcat.bigdec
 
         else:
             raise Exception('Unknown survey. Not supported. Please contact Dillon Brout at dbrout@phsyics.upenn.edu')
