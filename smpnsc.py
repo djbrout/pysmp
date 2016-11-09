@@ -6155,8 +6155,8 @@ if __name__ == "__main__":
     #print bigstarcatalog
     #raw_input()
     if snparams.survey == 'PS1':
-        print 'isps1'
-        raw_input()
+        #print 'isps1'
+        #raw_input()
         try:
             scenemodel.main(nodiff=nodiff, nozpt=nozpt, nomask=nomask, debug=debug, outfile=outfile, rootdir=root_dir,
                             outdir=out_dir,
@@ -6172,7 +6172,8 @@ if __name__ == "__main__":
                             zptoutpath=zptoutpath,
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
                             fermilog=fermilog)
-        except:
+        except Exception as inst:
+            print inst
             if not os.path.exists(isdonedir):
                 os.mkdirs(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
