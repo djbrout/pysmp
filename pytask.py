@@ -40,6 +40,12 @@ while j <= maxlightcurves:
     donefiles = os.listdir(isdonedir)
     for core in corelist:
         if runninglist[core].split('.')[0]+'.done' in donefiles:
+            kg = True
+            while kg:
+                if lightcurves[j].split('.')[0] + '.smp' in os.listdir(os.path.join(smpdir, 'lightcurves')):
+                    j += 1
+                else:
+                    kg = False
             print ''
             print 'Running SN '+str(int(j))+'/'+str(int(maxlightcurves))
             print runninglist[core],'Has finished photometry on core',int(core)
