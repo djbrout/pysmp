@@ -21,6 +21,7 @@ i = -1
 while i < 23:
     cntr += 1
     if lightcurves[cntr].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
+        print lightcurves[cntr].split('.')[0]+'.smp', 'already exists'
         cntr += 1
     else:
         i += 1
@@ -43,6 +44,7 @@ while j <= maxlightcurves:
             kg = True
             while kg:
                 if lightcurves[j].split('.')[0] + '.smp' in os.listdir(os.path.join(smpdir, 'lightcurves')):
+                    print lightcurves[j].split('.')[0] + '.smp','already exists'
                     j += 1
                 else:
                     kg = False
