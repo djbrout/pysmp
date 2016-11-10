@@ -21,7 +21,7 @@ i = -1
 while i < 23:
     cntr += 1
     #print os.listdir(os.path.join(smpdir,'lightcurves'))
-    print lightcurves[cntr][:9]+lightcurves[cntr][11:].split('.')[0]+'.smp'
+    print lightcurves[cntr][:11]+lightcurves[cntr][9:].split('.')[0]+'.smp'
     raw_input()
     if lightcurves[cntr][:9]+lightcurves[cntr][11:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
         print lightcurves[cntr].split('.')[0]+'.smp', 'already exists'
