@@ -2317,11 +2317,11 @@ class smp:
                 if not badflag:
                     if not np.isfinite(skysig):
                         print 'infinite skysig'
-                        raw_input('skysig badflag')
+                        #raw_input('skysig badflag')
                         badflag = 1
                     if skysig < 1:
                         print 'skysig less than one'
-                        raw_input('skysig1 badflag')
+                        #raw_input('skysig1 badflag')
                         badflag = 1
                 #print badflag
 
