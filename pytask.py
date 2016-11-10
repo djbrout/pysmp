@@ -6,7 +6,7 @@ maxlightcurves = 419
 isdonedir = '/home/dscolnic/testdir/isdone'
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
 logdir = '/home/dscolnic/testdir/smplogs'
-
+smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1'
 
 
 runninglist = np.chararray(24,itemsize=300)
@@ -16,19 +16,26 @@ lcf.close()
 
 corelist = np.arange(24)
 
-for i in range(24):
-    print ''
-    #print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
-    #    ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
-    os.popen('taskset -c '+str(int(i))+' python smp.py --index='+str(int(i))+' 1>& '+
-             os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &')
-    print lightcurves[i].strip(),'Submitted to SMP. Core #'+str(int(i))
-    print 'See log file here',os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')
-    print ''
-    runninglist[i] = lightcurves[i]
+cntr = -1
+i = -1
+while i < 24:
+    cntr += 1
+    if lightcurves[cntr].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
+        cntr += 1
+    else:
+        i += 1
+        print ''
+        #print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
+        #    ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
+        os.popen('taskset -c '+str(int(i))+' python smp.py --index='+str(int(cntr))+' 1>& '+
+                 os.path.join(logdir,lightcurves[cntr].split('.')[0]+'.log')+' &')
+        print lightcurves[cntr].strip(),'Submitted to SMP. Core #'+str(int(i))
+        print 'See log file here',os.path.join(logdir,lightcurves[cntr].split('.')[0]+'.log')
+        print ''
+        runninglist[i] = lightcurves[cntr]
 
 
-j=24
+j=cntr+1
 while j <= maxlightcurves:
     donefiles = os.listdir(isdonedir)
     for core in corelist:
