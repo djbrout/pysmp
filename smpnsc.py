@@ -2113,6 +2113,9 @@ class smp:
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
+                    if zpt == 0:
+                        badflag = 1
+
                     # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
                     #                                     snparams.mjd[j],
                     #                                     badflag, mag_star, im, weights, mask, psffile, imfile, snparams,
@@ -2132,7 +2135,6 @@ class smp:
                     rmsaddin = zptdata['rmsaddin']
                 dotestoff = False
                 if zpt == 0:
-
                     print 'zerpoint badflag'
                     badflag = 1
                 if dotestoff:
@@ -5362,7 +5364,7 @@ class smp:
                                      , mjdoff=mjdoff
                                      , mjdslopeinteroff=mjdslopeinteroff
                                      )
-
+            bad = False
             #raw_input('ZEROPOINTING WAS GOOD')
         else:
             print len(goodstarcols)
@@ -5373,11 +5375,15 @@ class smp:
             std = 0
             mag_compare_out = 0
             #raw_input('Error : not enough good stars to compute zeropoint!!!')
-            raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
+            bad = True
+            #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
-        if self.fermilog:
-            self.tmpwriter.appendfile(
-                'saved zpt file '+mag_compare_out+'\n', self.fermilogfile)
+            print 'Error : not enough good stars to compute zeropoint!!!'*20
+
+        if not bad:
+            if self.fermilog:
+                self.tmpwriter.appendfile(
+                    'saved zpt file '+mag_compare_out+'\n', self.fermilogfile)
             #self.tmpwriter.appendfile(
             #    os.popen('ls -ltr ').read(),self.fermilogfile
             #)
@@ -5393,6 +5399,8 @@ class smp:
         #    os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
         #    print 'copied from worker to zpt path',self.zptoutpath
         #sys.exit()
+        if bad:
+            return 0,0,0,0
         return(md,std,mag_compare_out,rmsaddin)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
