@@ -58,7 +58,7 @@ snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'
 snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
                   'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_MASK': 'string', 'IMAGE_NAME_NOISE': 'string',
                   'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
-                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string', 'SKYSIG': 'float'}
+                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string'}
 
 paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
                     'RADIUS2':'float','SUBSTAMP':'float',
@@ -4581,7 +4581,10 @@ class smp:
             full_data_image = galsim.fits.read(imfile)
         #print 'starfits_'+str(thismjd)
         #pdf_pages = PdfPages('starfits_'+str(thismjd)+'.pdf')
-        pdf_pagesc = PdfPages('starfits_'+str(thismjd)+'.pdf')
+        if self.savezptstamps:
+            pdf_pagesc = PdfPages('starfits_'+str(thismjd)+'.pdf')
+        else:
+            pdf_pagesc = None
         #print imfile
         #print thismjd
         #print 'mjdabove'
