@@ -5394,12 +5394,13 @@ class smp:
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
-        #sys.exit()
+        sys.exit()
 
         #if self.fermigrid:
         #    os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
         #    print 'copied from worker to zpt path',self.zptoutpath
         #sys.exit()
+
         if bad:
             return 0,0,0,0
         return(md,std,mag_compare_out,rmsaddin)
