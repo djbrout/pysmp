@@ -2260,7 +2260,7 @@ class smp:
                         print 'psfmag', psfmag
                         print 'modelshape',image_stamp.shape
 
-                        save_fits_image(psf_stamp,'test/psf.fits')
+                        #save_fits_image(psf_stamp,'test/psf.fits')
                         #raw_input('saved psf stamp')
                         psf_stamp = psf_stamp / 10 ** (-0.4 * (psfmag - 25))
                         noise_stamp = copy(image_stamp)*0+1
@@ -2343,7 +2343,7 @@ class smp:
                                     #print 'smp_im',smp_im[i,:,:].shape,i
                                     smp_im[i,:,:] = image_stamp
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
-                                    save_fits_image(psf_stamp,'test/cpsf.fits')
+                                    #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
 
@@ -2609,7 +2609,7 @@ class smp:
         #Make sure the psf is not zero
         for i in np.arange(len(smp_dict['sky'])):
             if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
-                save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
+                #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
                 #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
                 print 'hehehehehehehehehe'
                 #raw_input()
