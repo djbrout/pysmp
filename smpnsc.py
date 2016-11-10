@@ -6165,7 +6165,7 @@ if __name__ == "__main__":
     #print dobigstarcat
     #print bigstarcatalog
     #raw_input()
-    if snparams.survey == 'PS1':
+    if snparams.survey == 'PS1111':
         #print 'isps1'
         #raw_input()
         try:

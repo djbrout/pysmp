@@ -8,7 +8,7 @@ import sys
 
 
 
-def lightcurve(mjd,fitmag,fitmagerr,fakemag,fakemagerr,fitflux,fitfluxerr,fakeflux,fakefluxerr,filter,filename,title=''):
+def lightcurve(mjd,fitmag,fitmagerr,fakemag,fakemagerr,fitflux,fitfluxerr,fakeflux,filter,filename,title=''):
     plt.clf()
     fig,ax = plt.subplots(3,1,sharex=True,figsize=(7,10))
     
