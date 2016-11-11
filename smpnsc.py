@@ -554,8 +554,8 @@ class smp:
 
         if not nozpt:
             if fermigrid and worker:
-                lsa = os.popen('ifdh ls '+staroutdir).read()
-                print lsa
+                #lsa = os.popen('ifdh ls '+staroutdir).read()
+                #print lsa
                 ls = os.popen('ifdh ls '+star_offset_file).read()
                 print ls
                 if len(ls) > 0:
@@ -565,6 +565,7 @@ class smp:
                     star_offset_file = filename+'band_starGlobalOffsets.npz'
                 else:
                     print 'Could not find star offset file. Calculating...'
+                    raw_input('hereweare')
                     nozpt = True
             else:
                 try:
