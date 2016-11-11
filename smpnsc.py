@@ -605,7 +605,7 @@ class smp:
             #sys.exit()
         else:
             self.fermilogfile = None
-        print self.snparams.__dict__
+        #print self.snparams.__dict__
         if self.snparams.survey == 'PS1':
             print 'reading in starcaftile'
             self.starcatfile = self.snparams.starcat[self.snparams.band[0]]
@@ -625,7 +625,7 @@ class smp:
             rastarr = []
             decstarr = []
             smag = []
-            print starcatmag.__dict__
+            #print starcatmag.__dict__
             #raw_input()
             for iii, ram,decm,m in zip(range(len(starcatmag.__dict__['ra'])),starcatmag.__dict__['ra'],
                                starcatmag.__dict__['dec'],starcatmag.__dict__[filt.lower()]):
@@ -1943,8 +1943,8 @@ class smp:
 
                         zptdata = np.load(zpt_file) #load previous zpt information
                         print zptdata.keys()
-                        zpt = zptdata['zpt']
-                        zpterr = zptdata['zpt_std']
+                        zpt = zptdata['fit_zpt']
+                        zpterr = zptdata['fit_zpt_std']
                         #rmsaddin = zptdata['rmsaddin']
                         rmsaddin=1
                         mjdoff = zptdata['mjdoff']
