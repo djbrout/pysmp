@@ -523,7 +523,7 @@ class smp:
         datf = os.path.join(npoutdir, filename + '_withSn.npz')
 
         dat = np.load(datf)
-        print dat.keys()
+        print dat['modelvec_nphistory'].shape
         raw_input()
 
         # staroutdir = os.path.join(stardeltasfolder,filt)
