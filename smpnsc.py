@@ -523,10 +523,13 @@ class smp:
             npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
             datf = os.path.join(npoutdir, filename + '_withSn.npz')
             ls = os.popen('ifdh ls ' + datf).read()
+            print ls
+            raw_input('hhhh')
             if len(ls) > 0:
                 os.system('ifdh cp '+datf+' .')
                 dat = np.load(filename + '_withSn.npz')
                 if dat['modelvec_nphistory'].shape[0] == 1000:
+                    print 'already fitted. Exiting gracefully'
                     sys.exit()
 
         # staroutdir = os.path.join(stardeltasfolder,filt)
