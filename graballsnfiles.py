@@ -13,8 +13,8 @@ files = f.split()
 cntr = 0
 for filename in files[::-1]:
     #print filename
-    if not '-X1' in filename:
-        continue
+    #if not '-X1' in filename:
+    #    continue
     if '.idx' in filename: continue
     cntr += 1
     if cntr < 20: continue
