@@ -5395,7 +5395,7 @@ class smp:
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
-        sys.exit()
+        #sys.exit()
 
         #if self.fermigrid:
         #    os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
