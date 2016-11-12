@@ -526,14 +526,15 @@ class smp:
             ls = os.popen('ifdh ls ' + datf).read()
             print 'ls',ls
             print len(ls) > 0
-            raw_input('hhhh')
+            #raw_input('hhhh')
             if len(ls) > 0:
                 os.system('ifdh cp '+datf+' .')
                 dat = np.load(filename + '_withSn.npz')
+                print dat['modelvec_nphistory'].shape[0]
                 if dat['modelvec_nphistory'].shape[0] == 1000:
                     print 'already fitted. Exiting gracefully'
                     sys.exit()
-
+            raw_input()
         # staroutdir = os.path.join(stardeltasfolder,filt)
         #
         # print staroutdir
