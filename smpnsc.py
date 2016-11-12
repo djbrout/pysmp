@@ -519,12 +519,15 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
-        npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
-        datf = os.path.join(npoutdir, filename + '_withSn.npz')
-
-        dat = np.load(datf)
-        print dat['modelvec_nphistory'].shape
-        raw_input()
+        if not nozpt:
+            npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
+            datf = os.path.join(npoutdir, filename + '_withSn.npz')
+            ls = os.popen('ifdh ls ' + datf).read()
+            if len(ls) > 0:
+                os.system('ifdh cp '+datf+' .')
+                dat = np.load(filename + '_withSn.npz')
+                if dat['modelvec_nphistory'].shape[0] == 1000:
+                    sys.exit()
 
         # staroutdir = os.path.join(stardeltasfolder,filt)
         #
