@@ -525,6 +525,7 @@ class smp:
             print datf
             ls = os.popen('ifdh ls ' + datf).read()
             print 'ls',ls
+            print len(ls) > 0
             raw_input('hhhh')
             if len(ls) > 0:
                 os.system('ifdh cp '+datf+' .')
