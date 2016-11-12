@@ -522,8 +522,9 @@ class smp:
         if not nozpt:
             npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
             datf = os.path.join(npoutdir, filename + '_withSn.npz')
+            print datf
             ls = os.popen('ifdh ls ' + datf).read()
-            print ls
+            print 'ls',ls
             raw_input('hhhh')
             if len(ls) > 0:
                 os.system('ifdh cp '+datf+' .')
