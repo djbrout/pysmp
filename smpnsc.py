@@ -519,6 +519,13 @@ class smp:
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
 
+        npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
+        datf = os.path.join(npoutdir, filename + '_withSn.npz')
+
+        dat = np.load(datf)
+        print dat.keys()
+        raw_input()
+
         # staroutdir = os.path.join(stardeltasfolder,filt)
         #
         # print staroutdir
