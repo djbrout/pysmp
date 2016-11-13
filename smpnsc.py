@@ -518,7 +518,8 @@ class smp:
         cols = None
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-
+        print 'TESTING EMAIL'
+        sys.exit()
         if not nozpt:
             npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
             datf = os.path.join(npoutdir, filename + '_withSn.npz')
