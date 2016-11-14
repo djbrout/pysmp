@@ -1,7 +1,7 @@
 import os
 import sys
 
-f = open('sntarfilesv5.txt','r').read()
+f = open('sntarfilesv4.txt','r').read()
 files = f.split()
 
 #sys.exit()
@@ -17,7 +17,7 @@ for filename in files:
     #    continue
     if '.idx' in filename: continue
     cntr += 1
-    #if '-S1' in filename: continue
+    if not '-S1' in filename: continue
     #if '-S2' in filename: continue
 
     #if cntr < 20: continue
