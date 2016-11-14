@@ -36,13 +36,13 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v2/","stardata.npz")
+        grabstardata("/pnfs/des/persistent/smp/v2/","stardata2.npz")
         sys.exit()
         data = grabdata(tmpwriter,resultsdir)
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
-        stardata = np.load('stardata.npz')
+        stardata = np.load('stardata2.npz')
     print data.keys()
     print len(data['Flux'])
 
@@ -71,7 +71,8 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
-                if not 'SN-S2' in fname: continue
+                if not 'SN-S2' in fname:
+                    if not 'SN-S1' in fname: continue
                 try:
                     zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 except:
