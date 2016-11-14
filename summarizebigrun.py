@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v2/","stardata2.npz")
+        grabstardata("/pnfs/des/persistent/smp/v2/","/pnfs/des/persistent/smp/v2/stardata2.npz")
         sys.exit()
         data = grabdata(tmpwriter,resultsdir)
     else:
