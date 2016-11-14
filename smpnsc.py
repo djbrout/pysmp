@@ -582,7 +582,7 @@ class smp:
                     star_offset_file = filename+'band_starGlobalOffsets.npz'
                 else:
                     print 'Could not find star offset file. Calculating...'
-                    raw_input('hereweare')
+                    #raw_input('hereweare')
                     nozpt = True
             else:
                 try:

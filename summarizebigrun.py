@@ -42,7 +42,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
-        stardata = np.load('stardata2.npz')
+        stardata = np.load('/pnfs/des/persistent/smp/v2/stardata2.npz')
     print data.keys()
     print len(data['Flux'])
 
