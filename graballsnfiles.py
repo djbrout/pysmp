@@ -21,7 +21,7 @@ for filename in files:
     #if not '-S1' in filename: continue
     #if not '-S2' in filename: continue
 
-    #if cntr < 20: continue
+    if cntr < 30: continue
     #if not 'SN-E1' in filename: continue
     if os.path.isfile("/pnfs/des/persistent/smp/v4/"+filename):
         if os.stat("/pnfs/des/persistent/smp/v4/"+filename).st_size > 0.:
