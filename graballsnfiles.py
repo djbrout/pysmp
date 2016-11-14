@@ -15,6 +15,7 @@ for filename in files:
     #print filename
     #if not '-X1' in filename:
     #    continue
+    filename = filename.replace('v4','v5')
     if '.idx' in filename: continue
     cntr += 1
     if not '-S1' in filename: continue
@@ -22,8 +23,8 @@ for filename in files:
 
     #if cntr < 20: continue
     #if not 'SN-E1' in filename: continue
-    if os.path.isfile("/pnfs/des/persistent/smp/v4/"+filename):
-        if os.stat("/pnfs/des/persistent/smp/v4/"+filename).st_size > 0.:
+    if os.path.isfile("/pnfs/des/persistent/smp/v5/"+filename):
+        if os.stat("/pnfs/des/persistent/smp/v5/"+filename).st_size > 0.:
             print filename,'already exists'
             continue
     print 'globus copying',filename
