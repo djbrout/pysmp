@@ -18,8 +18,8 @@ for filename in files:
     filename = filename.replace('v4','v5')
     if '.idx' in filename: continue
     cntr += 1
-    if not '-S1' in filename: continue
-    #if '-S2' in filename: continue
+    #if not '-S1' in filename: continue
+    if '-S2' in filename: continue
 
     #if cntr < 20: continue
     #if not 'SN-E1' in filename: continue
