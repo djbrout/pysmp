@@ -43,19 +43,20 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
         stardata = np.load('/pnfs/des/persistent/smp/v2/stardata2.npz')
+        plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
+                    stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
+                    stardata['poisson'],
+                    title='rmsaddin_')
     print data.keys()
     print len(data['Flux'])
 
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
-                   data['Chisq'])
+                   data['Chisq'],data['rmsaddin'])
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
-    plotstarrms(stardata['starflux'],np.sqrt(stardata['starfluxerr']**2),stardata['starzpt'],
-                stardata['catmag'],stardata['chisq'],stardata['rmsaddin'],stardata['sky'],stardata['skyerr'],
-                stardata['poisson'],
-                title='rmsaddin_')
+
 
 
 def grabstardata(imagedir,outfile):
@@ -220,21 +221,34 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     plt.savefig('percentagefluxdiff.png')
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
+    rmsaddin = np.asarray(rmsaddin)
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     chisqarr = np.asarray(chisqarr)
     print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
     am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
-    for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
-        print a,f,fe
+    #for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
+    #    print a,f,fe
     #print ,flux[am],fluxerr[am]
     #raw_input()
-    fluxerr = np.sqrt(np.asarray(fluxerr)**2+(abs(flux)/3.) + 10**(.4*(fitzpt - hostmag))/3.)
+
+    #fluxerr = np.sqrt(np.asarray(fluxerr)**2+(abs(flux)/3.) + 10**(.4*(fitzpt - hostmag))/3.)
+    #fitmag = 31-2.5*np.log10(flux)
+
+
+    #MY CALCULATION TO GET FLUX RMS ADDIN
+    #.1 = -2.5*np.log10(flux) + 2.5*np.log10(flux+rmsfluxerr)
+    #rmsaddin + 2.5*log(flux) = 2.5*np.log10(flux+rmsfluxerr)
+    #(rmsaddin + 2.5*log(flux))/2.5 = np.log10(flux+rmsfluxerr)
+    #10**(.4*(rmsaddin + 2.5*log(flux))) = flux + rmsfluxerr
+
+    fluxrmsaddin = 10 ** (.4 * (rmsaddin + 2.5 * np.log10(flux))) - flux
+    fluxerr = (fluxerr**2 + fluxrmsaddin**2)**.5
     hostmag = np.array(hostmag)
 
 
