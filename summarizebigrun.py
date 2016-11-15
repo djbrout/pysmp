@@ -134,10 +134,15 @@ def grabdata(tmpwriter,resultsdir,cd):
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
-               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[]}
+               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
+    deep = 0
     for f in smpfiles:
         data = dt.readcol(f)
+        if not '-S1' in f:
+            if not '-S2' in f:
+                deep = 1
+
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             bigdata['Flux'].extend(data['FLUX'])
@@ -146,6 +151,8 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
+            bigdata['rmsaddin'].extend(data['RMSADDIN'])
+            bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
         except:
             print 'Columns missing in file '+f
