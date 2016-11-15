@@ -391,7 +391,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(fakemag,fresid,
-                            np.arange(19.5, max(fakemag), .1),window=2.)
+                            np.arange(19.5, 25., .1),window=2.)
     ax4.plot([19, 28.7], [0, 0],color='grey')
 
     ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1), .5)
