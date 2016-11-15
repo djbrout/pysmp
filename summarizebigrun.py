@@ -390,7 +390,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
-    ax, ay, aystd = dt.bindata(fakemag,fresid,
+    ax1, ay1, aystd = dt.bindata(fakemag,fresid,
                             np.arange(19.5, 25., .1),window=2.)
     ax4.plot([19, 28.7], [0, 0],color='grey')
 
@@ -407,9 +407,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
     ax3.legend(fontsize='small')
 
-    ax4.plot(ax, ay, linewidth=3, color='orange')
-    ax4.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--')
-    ax4.plot(ax, ay-aystd, linewidth=2, color='orange',linestyle='--')
+    ax4.plot(ax1, ay1, linewidth=3, color='orange')
+    ax4.plot(ax1, ay1+aystd, linewidth=2, color='orange',linestyle='--')
+    ax4.plot(ax1, ay1-aystd, linewidth=2, color='orange',linestyle='--')
     ax4.set_xlim(ax1.get_xlim())
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
