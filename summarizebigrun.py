@@ -283,7 +283,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #print fakeflux[0:10]
     #print flux.shape
     #print fakeflux.shape
-    d = (flux - fakeflux) / fluxerr
+    #d = (flux - fakeflux) / fluxerr
 
     chisq = (flux - fakeflux) ** 2 / fluxerr ** 2
     chisq = np.nanmean(chisq[abs(d) < 3])
