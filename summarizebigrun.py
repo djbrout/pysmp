@@ -42,7 +42,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
-        dostars = True
+        dostars = False
         if dostars:
             stardata = np.load('/pnfs/des/persistent/smp/v2/stardata2.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
