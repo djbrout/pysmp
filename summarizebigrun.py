@@ -42,7 +42,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
-        dostars = False
+        dostars = True
         if dostars:
             stardata = np.load('/pnfs/des/persistent/smp/v2/stardata2.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
@@ -250,11 +250,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #10**(.4*(rmsaddin + 2.5*log(flux))) = flux + rmsfluxerr
 
     fluxrmsaddin = 10 ** (.4 * (rmsaddin + 2.5 * np.log10(flux))) - flux
-    fluxerr = (fluxerr**2 + fluxrmsaddin**2)**.5
+    #fluxerr = (fluxerr**2 + fluxrmsaddin**2)**.5
+
+    fitmag = 31-2.5*np.log10(flux)
+    fitmagerr = ((-2.5*np.log10(flux)+2.5*np.log10(flux+fluxerr))**2+(rmsaddin)**2)**.5
+    fakemag = fakemag + fakezpt - fitzpt
+
     hostmag = np.array(hostmag)
 
 
-    d = (flux - fakeflux) / fluxerr
+    d = (fitmag - fakemag)/(fitmagerr*1.08)
+    #d = (flux - fakeflux) / fluxerr
+
     ww = flux != 0.
 
     #fakemag[fakemag==99] = 29.5
