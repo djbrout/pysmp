@@ -36,9 +36,9 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v2/","/pnfs/des/persistent/smp/v2/stardata2.npz")
-        sys.exit()
-        data = grabdata(tmpwriter,resultsdir)
+        #grabstardata("/pnfs/des/persistent/smp/v2/","/pnfs/des/persistent/smp/v2/stardata2.npz")
+        #sys.exit()
+        data = grabdata(tmpwriter,resultsdir,cd)
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
@@ -119,7 +119,7 @@ def grabstardata(imagedir,outfile):
                         pass
     np.savez(outfile, **bigdata)
 
-def grabdata(tmpwriter,resultsdir):
+def grabdata(tmpwriter,resultsdir,cd):
 
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
     smpfiles = []
@@ -1037,10 +1037,10 @@ def bindata(x, y, bins, returnn=False):
 
 if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
-    resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
+    resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     isfermigrid = False
     cacheddata = False
-    cd = 'tmp_snse.npz'
+    cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
 
     import sys, getopt
 
