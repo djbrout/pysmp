@@ -144,7 +144,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
-    for f in smpfiles[:1000]:
+    for f in smpfiles[:450]:
         cntr += 1
         print cntr, 'of',tot
         deep = 0
@@ -207,7 +207,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
         #raw_input()
     print 'saving to cachfile'
-    np.savez(outfile,**bigdata)
+    #np.savez(outfile,**bigdata)
     print 'saved'
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
@@ -285,7 +285,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #d = (fifx-fafx)/fime
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
+    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2)**.5
 
     ww = (flux != 0.) #& (deep == 0)
 
