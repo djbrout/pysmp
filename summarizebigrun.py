@@ -161,7 +161,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         print data.keys()
         raw_input()
         try:
-            print data['OBSID']
+            print data['ID_OBS']
             raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             bigdata['Flux'].extend(data['FLUX'])
