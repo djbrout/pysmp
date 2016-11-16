@@ -1090,7 +1090,7 @@ if __name__ == "__main__":
             longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile="])
 
     except getopt.GetoptError as err:
-        print "No command line arguments"
+        print "No command line argument s"
 
 
     for o,a in opt:
