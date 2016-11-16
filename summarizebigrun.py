@@ -318,7 +318,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height/2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(8, 8))
+    plt.figure(1, figsize=(16, 12))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
@@ -449,7 +449,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height/2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(8, 8))
+    plt.figure(1, figsize=(16, 12))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
@@ -584,7 +584,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(8, 8))
+    plt.figure(1, figsize=(16, 12))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
@@ -784,7 +784,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(8, 8))
+    plt.figure(1, figsize=(16, 12))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
@@ -934,7 +934,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(8, 8))
+    plt.figure(1, figsize=(16, 12))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
