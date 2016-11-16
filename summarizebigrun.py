@@ -285,7 +285,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #d = (fifx-fafx)/fime
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2)**.5
+    d = (flux - fakeflux) / (fluxerr**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
 
     ww = (flux != 0.) #& (deep == 0)
 
@@ -1098,7 +1098,7 @@ if __name__ == "__main__":
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     resultsdir= './working/'
-    #resultsdir = './workingsimnosn'
+    resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
