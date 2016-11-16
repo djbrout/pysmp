@@ -213,7 +213,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     return bigdata
 
 
-def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
+def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     print fakemag.shape
@@ -239,10 +239,10 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     plt.ylim(-.2,.2)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
-    plt.savefig('percentagefluxdiff.png')
+    plt.savefig(outdir+'/percentagefluxdiff.png')
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -446,7 +446,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.001,hspace=0.001)
-    plt.savefig('std.png')
+    plt.savefig(outdir+'/std.png')
 
 
     #--------------------------------------------------------------------------------------
@@ -576,7 +576,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
     ax3.legend(fontsize='small')
 
-    plt.savefig('hostmagstd.png')
+    plt.savefig(outdir+'/hostmagstd.png')
 
 
 
@@ -707,7 +707,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
     ax3.legend(fontsize='small',loc=2)
 
-    plt.savefig('chisqstd.png')
+    plt.savefig(outdir+'/chisqstd.png')
 
 
     print 'saved stdresid.png'
@@ -1098,6 +1098,7 @@ if __name__ == "__main__":
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     resultsdir= './working/'
+    resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
