@@ -264,7 +264,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #d = (fifx-fafx)/fime
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2)**.5
+    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.))**.5
 
     ww = flux != 0.
 
