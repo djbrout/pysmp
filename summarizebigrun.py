@@ -155,7 +155,8 @@ def grabdata(tmpwriter,resultsdir,cd):
             if not '-S2' in snd:
                 deep = 1
                 print 'deep'
-                raw_input()
+                continue
+                #raw_input()
 
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
@@ -206,7 +207,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
         #raw_input()
     print 'saving to cachfile'
-    #np.savez(outfile,**bigdata)
+    np.savez(outfile,**bigdata)
     print 'saved'
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
