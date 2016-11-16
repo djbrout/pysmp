@@ -50,7 +50,8 @@ def binrms(x, y, bins,rad):
             nums[i] = len(yhere[ss])
             d = yhere[ss]
             dc = d[abs(d) < 3]
-            rms[i] = np.sqrt(np.nanmean(np.square(dc)))
+
+            rms[i] = np.sqrt(np.nanmean(np.square(d[d < 3.])))
         except IndexError:
             print 'excepted'
             nums[i] = 0.

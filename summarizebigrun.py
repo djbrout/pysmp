@@ -276,9 +276,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     frms = 10**(.4*(2.5*np.log10(abs(flux))+rmsaddin)) - abs(flux)
 
-    print frms[0:100]
-    print flux[0:100]*rmsaddin[0:100]
-    raw_input()
+    #print frms[0:100]
+    #print flux[0:100]*rmsaddin[0:100]
+    #raw_input()
 
     fitmag = 31-2.5*np.log10(flux)
     fitmagerr = ((-2.5*np.log10(flux)+2.5*np.log10(flux+fluxerr))**2+(rmsaddin)**2)**.5
