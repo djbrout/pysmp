@@ -376,7 +376,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
     ax3.set_ylim(.7,1.5)
-    ax3.legend('x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
+    ax3.legend(fontsize='small')
 
     fresid = np.zeros(flux.shape)
     for i,f,ff in zip(range(len(flux)),flux,fakeflux):
@@ -405,7 +405,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ww = hostmag < 23.
     ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-    ax3.legend('x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
+    ax3.legend(fontsize='small')
 
     ax4.plot(axa, aya, linewidth=3, color='orange')
     ax4.plot(axa, aya+aystd, linewidth=2, color='orange',linestyle='--')
@@ -553,7 +553,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ww = fakemag < 22.
     ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
     ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
-    ax3.legend('x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
+    ax3.legend(fontsize='small')
 
     plt.savefig('hostmagstd.png')
 
@@ -684,7 +684,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ww = hostmag < 23.
     ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-    ax3.legend('x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
+    ax3.legend(fontsize='small',loc=2)
 
     plt.savefig('chisqstd.png')
 
@@ -839,7 +839,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
 
     ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
     ax3.set_ylim(0., 3.)
-    ax3.legend('x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
+    ax3.legend(fontsize='small')
 
     fresid = np.zeros(flux.shape)
     for i, f, ff in zip(range(len(flux)), flux, catflux):
@@ -1075,10 +1075,11 @@ def bindata(x, y, bins, returnn=False):
 if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
+    resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
-    #cd = '/pnfs/des/scratch/pysmp/smp_04/np_data/summary_results.npz'
+    cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
     try:
