@@ -487,7 +487,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #plt.clf()
     ww = fakemag > 28.
     ax1.scatter(hostmag[ww],d[ww],alpha=.3,color='blue')
-    ax, ay, aystd = dt.bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .1),window=.5)
+    ax, ay, aystd = dt.bindata(hostmag, d, np.arange(min(hostmag), 27.25, .1),window=.5)
     ax1.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
@@ -500,7 +500,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax1.set_xlabel('Host Mag')
     ax1.set_ylabel('STD')
 
-    ax, ayrms= dt.binrms(hostmag, d, np.arange(min(hostmag), 27., .1),.5)
+    ax, ayrms= dt.binrms(hostmag, d, np.arange(min(hostmag), 27.25, .1),.5)
     #ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
@@ -519,7 +519,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ax4.scatter(hostmag,fresid,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(hostmag,fresid,
-                            np.arange(min(hostmag), 27., .1),window=1.)
+                            np.arange(min(hostmag), 27.25, .1),window=1.)
     ax4.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
 
     ax4.plot(ax, ay, linewidth=3, color='orange')
