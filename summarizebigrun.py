@@ -267,8 +267,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     chisqarr = np.asarray(chisqarr)
-    print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
-    am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
+    #print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
+    #am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
     #for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
     #    print a,f,fe
     #print ,flux[am],fluxerr[am]
