@@ -135,13 +135,14 @@ def grabdata(tmpwriter,resultsdir,cd):
 
     if not os.path.exists(os.path.join(resultsdir,'Summary')):
         os.makedirs(os.path.join(resultsdir,'Summary'))
+    os.system('rm '+cd+' -f')
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
     #deep = 0
-    for f in smpfiles[0:10]:
+    for f in smpfiles[0:200]:
         deep = 0
         data = dt.readcol(f)
         sn = f.split('/')[-1][0:17]+'.dat'
