@@ -142,7 +142,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
     #deep = 0
-    for f in smpfiles[0:200]:
+    for f in smpfiles[::-1]:
         deep = 0
         data = dt.readcol(f)
         sn = f.split('/')[-1][0:17]+'.dat'
