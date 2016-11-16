@@ -176,7 +176,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #print np.mean(data['RMSADDIN'])
                 #raw_input()
             except:
-                data2 = np.load('/pnfs/des/scratch/pysmp/smp_04_modelerrors/lightcurves/'+f.split('/')[-1])
+                data2 = np.load('./working/lightcurves/'+f.split('/')[-1])
                 rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
                 print rms
                 raw_input()
