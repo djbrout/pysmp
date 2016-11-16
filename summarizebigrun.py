@@ -172,6 +172,8 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['Chisq'].extend(data['CHI2'])
             try:
                 bigdata['rmsaddin'].extend(data['RMSADDIN'])
+                print data['RMSADDIN']
+                raw_input()
                 #print data['RMSADDIN']
                 #print np.mean(data['RMSADDIN'])
                 #raw_input()
