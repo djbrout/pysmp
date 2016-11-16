@@ -485,7 +485,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #plt.savefig('stdresid.png')
 
     #plt.clf()
-    ax1.scatter(hostmag,d,alpha=.3,color='blue')
+    ww = fakemag > 28.
+    ax1.scatter(hostmag,d[ww],alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .1),window=.5)
     ax1.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
@@ -540,12 +541,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax1.xaxis.set_major_formatter(nullfmt)
     plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
-    ww = fakemag < 28.5
+    ww = fakemag < 28.
     ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
 
-    ww = fakemag == 28.5
+    ww = fakemag > 28.
     ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
     ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
 
