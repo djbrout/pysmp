@@ -533,7 +533,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
     ax3.set_xlim(ax1.get_xlim())
-    ax3.set_ylim(.6,1.8)
+    ax3.set_ylim(.8,1.4)
     ax2.set_ylim(ax1.get_ylim())
     ax5.set_ylim(ax4.get_ylim())
     ax2.xaxis.set_major_formatter(nullfmt)
@@ -1078,7 +1078,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
-
+    #cd = '/pnfs/des/scratch/pysmp/smp_04/np_data/summary_results.npz'
     import sys, getopt
 
     try:
