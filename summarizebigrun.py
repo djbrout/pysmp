@@ -164,6 +164,10 @@ def grabdata(tmpwriter,resultsdir,cd):
         # try:
         # print data['ID_OBS']
         # raw_input()
+        try:
+            data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
+        except:
+            continue
         print len(data['FLUX']), len(data['FLUXERR']), len(data['FAKEMAG']), len(data['ZPT']), (data['FAKEZPT'])
         bigdata['Flux'].extend(data['FLUX'])
         bigdata['Fluxerr'].extend(data['FLUXERR'])
@@ -179,7 +183,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         # print np.mean(data['RMSADDIN'])
         # raw_input()
         # except:
-        data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
+
         rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
         print rms
         raw_input()
