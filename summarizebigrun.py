@@ -145,7 +145,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
-    for f in smpfiles[2:]:
+    for f in smpfiles[:488]:
         cntr += 1
         print cntr, 'of',tot
         deep = 0
@@ -160,43 +160,31 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #raw_input()
         #print data.keys()
         #raw_input()
-        #print data['RMSADDIN']
-        # try:
-        # print data['ID_OBS']
-        # raw_input()
         try:
-            print './working/lightcurves/' + f.split('/')[-1]
+            #print data['ID_OBS']
             #raw_input()
-            data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
-            #raw_input()
-            #prin t'./working/lightcurves/' + f.split('/')[-1]
+            print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
+            bigdata['Flux'].extend(data['FLUX'])
+            bigdata['Fluxerr'].extend(data['FLUXERR'])
+            bigdata['FakeMag'].extend(data['FAKEMAG'])
+            bigdata['FitZPT'].extend(data['ZPT'])
+            bigdata['FakeZPT'].extend(data['FAKEZPT'])
+            bigdata['Chisq'].extend(data['CHI2'])
+            try:
+                bigdata['rmsaddin'].extend(data['RMSADDIN'])
+                #print data['RMSADDIN']
+                #print np.mean(data['RMSADDIN'])
+                #raw_input()
+            except:
+                data2 = np.load('/pnfs/des/scratch/pysmp/smp_04_modelerrors/lightcurves/'+f.split('/')[-1])
+                rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
+                print rms
+                raw_input()
+                bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
+            bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
+            print f,'read in'
         except:
-            print 'cnfffff'
-            continue
-        print len(data['FLUX']), len(data['FLUXERR']), len(data['FAKEMAG']), len(data['ZPT']), (data['FAKEZPT'])
-        bigdata['Flux'].extend(data['FLUX'])
-        bigdata['Fluxerr'].extend(data['FLUXERR'])
-        bigdata['FakeMag'].extend(data['FAKEMAG'])
-        bigdata['FitZPT'].extend(data['ZPT'])
-        bigdata['FakeZPT'].extend(data['FAKEZPT'])
-        bigdata['Chisq'].extend(data['CHI2'])
-        # try:
-        bigdata['rmsaddin'].extend(data['RMSADDIN'])
-        #print data['RMSADDIN']
-        #raw_input()
-        # print data['RMSADDIN']
-        # print np.mean(data['RMSADDIN'])
-        # raw_input()
-        # except:
-
-        # rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
-        # print rms
-        # raw_input()
-        # bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
-        # bigdata['field'].extend(data['CHI2'] * 0 + np.float(deep))
-        # print f, 'read in'
-        #except:
-        #    print 'Columns missing in file '+f
+            print 'Columns missing in file '+f
 
         # for sf in data['ZPTFILE']:
         #     zptdata = np.load(sf)
@@ -313,7 +301,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #d = (fifx-fafx)/fime
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+frms**2 +(abs(flux)/3.) + 10**(.4*(fitzpt - hostmag))/3.)**.5
+    d = (flux - fakeflux) / (fluxerr**2+frms**2)**.5
 
     ww = (flux != 0.) #& (deep == 0)
 
@@ -1125,8 +1113,8 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir= './working/'
-    #resultsdir = './workingsimnosn'
+    #resultsdir= './working/'
+    resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
