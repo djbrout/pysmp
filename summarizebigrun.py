@@ -300,8 +300,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fime = 10**(.4*(31-fitmag+fitmagerr)) - 10**(.4*(31-fitmag))
 
     #d = (fifx-fafx)/fime
-    #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+frms**2)**.5
+    d = (fitmag - fakemag)/(fitmagerr*1.08)
+    #d = (flux - fakeflux) / (fluxerr**2+frms**2)**.5
 
     ww = (flux != 0.) #& (deep == 0)
 
