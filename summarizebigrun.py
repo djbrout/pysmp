@@ -1079,7 +1079,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
-    cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
+    #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
     try:
