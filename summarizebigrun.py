@@ -142,7 +142,11 @@ def grabdata(tmpwriter,resultsdir,cd):
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
     #deep = 0
-    for f in smpfiles[::-1]:
+    tot = len(smpfiles)
+    cntr = 0
+    for f in smpfiles:
+        cntr += 1
+        print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
         sn = f.split('/')[-1][0:17]+'.dat'
@@ -193,8 +197,11 @@ def grabdata(tmpwriter,resultsdir,cd):
             key = l.split(':')[0]
             if key == 'HOSTGAL_SB_FLUXCAL':
                 if filt == 'r':
-                    print l.split()[2]
-                    hostmag = 27.5 - 2.5 * np.log10(float(l.split()[2]))
+                    if float(l.split()[2]) <= 0.:
+                        hgf = 1.
+                    else:
+                        hgf = float(l.split()[2])
+                    hostmag = 27.5 - 2.5 * np.log10(hgf)
         print 'hostmag',hostmag
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
         #raw_input()
