@@ -54,7 +54,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
 
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
-                   data['Chisq'],data['rmsaddin'])
+                   data['Chisq'],data['rmsaddin'],data['deep'])
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
@@ -226,7 +226,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt):
     plt.savefig('percentagefluxdiff.png')
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fitzpt = np.asarray(fitzpt)
@@ -269,7 +269,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
     d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
 
-    ww = flux != 0.
+    ww = (flux != 0.) & (deep == 0)
 
     #fakemag[fakemag==99] = 29.5
     flux = flux[ww]
@@ -1082,7 +1082,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
-    cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
+    #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
     try:
