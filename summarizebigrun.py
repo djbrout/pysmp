@@ -165,7 +165,9 @@ def grabdata(tmpwriter,resultsdir,cd):
         # print data['ID_OBS']
         # raw_input()
         try:
+            print './working/lightcurves/' + f.split('/')[-1]
             data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
+            #prin t'./working/lightcurves/' + f.split('/')[-1]
         except:
             continue
         print len(data['FLUX']), len(data['FLUXERR']), len(data['FAKEMAG']), len(data['ZPT']), (data['FAKEZPT'])
