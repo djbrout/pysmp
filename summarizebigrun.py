@@ -292,7 +292,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #d = (fifx-fafx)/fime
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+(abs(flux)/3.8))**.5
+    d = (flux - fakeflux) / (fluxerr**2+frms**2)**.5
 
     ww = (flux != 0.) #& (deep == 0)
 
@@ -322,7 +322,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     dc99 = d[fakemag > 90]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
-    dcr = d[fakemag != 99]
+    dcr = d[fakemag < 28]
     rmsr = np.sqrt(np.nanmean(np.square(dcr[abs(dcr) < 3.])))
 
     #f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
