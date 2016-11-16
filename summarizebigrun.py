@@ -253,7 +253,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #fluxerr = (fluxerr**2 + fluxrmsaddin**2)**.5
 
     fitmag = 31-2.5*np.log10(flux)
-    fitmagerr = ((-2.5*np.log10(flux)+2.5*np.log10(flux+fluxerr))**2+(rmsaddin)**2+(abs(flux)/3.8))**.5
+    fitmagerr = ((-2.5*np.log10(flux)+2.5*np.log10(flux+fluxerr))**2+(rmsaddin)**2)**.5
     fakemag = fakemag + fakezpt - fitzpt
 
     hostmag = np.array(hostmag)
@@ -263,8 +263,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fime = 10**(.4*(31-fitmag+fitmagerr)) - 10**(.4*(31-fitmag))
 
     #d = (fifx-fafx)/fime
-    #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
+    d = (fitmag - fakemag)/(fitmagerr*1.08)
+    #d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
 
     ww = flux != 0.
 
@@ -1079,7 +1079,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
-    #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
+    cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
     try:
