@@ -263,8 +263,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fime = 10**(.4*(31-fitmag+fitmagerr)) - 10**(.4*(31-fitmag))
 
     #d = (fifx-fafx)/fime
-    d = (fitmag - fakemag)/(fitmagerr*1.08)
-    #d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
+    #d = (fitmag - fakemag)/(fitmagerr*1.08)
+    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
 
     ww = flux != 0.
 
@@ -1079,7 +1079,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
-    #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
+    cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
     try:
