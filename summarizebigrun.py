@@ -51,7 +51,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
                         title='rmsaddin_')
     print data.keys()
     print len(data['Flux'])
-
+    print np.unique(data['field'])
+    raw_input()
     plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'])
@@ -145,8 +146,8 @@ def grabdata(tmpwriter,resultsdir,cd):
         if not '-S1' in f:
             if not '-S2' in f:
                 deep = 1
-                print 'deep'
-                raw_input()
+                #print 'deep'
+                #raw_input()
 
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
