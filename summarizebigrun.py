@@ -158,11 +158,11 @@ def grabdata(tmpwriter,resultsdir,cd):
                 print 'deep'
                 continue
                 #raw_input()
-        print data.keys()
-        raw_input()
+        #print data.keys()
+        #raw_input()
         try:
-            print data['ID_OBS']
-            raw_input()
+            #print data['ID_OBS']
+            #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
@@ -172,10 +172,11 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['Chisq'].extend(data['CHI2'])
             try:
                 bigdata['rmsaddin'].extend(data['RMSADDIN'])
-                #print data['RMSADDIN']
-                #raw_input()
+                print data['RMSADDIN']
+                print np.mean(data['RMSADDIN'])
+                raw_input()
             except:
-                bigdata['rmsaddin'].extend(data['CHI2']*0.)
+                bigdata['rmsaddin'].extend(data['CHI2']*0. + 0.008)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
         except:
