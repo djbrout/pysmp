@@ -193,6 +193,7 @@ def grabdata(tmpwriter,resultsdir,cd):
             key = l.split(':')[0]
             if key == 'HOSTGAL_SB_FLUXCAL':
                 if filt == 'r':
+                    print l.split()[2]
                     hostmag = 27.5 - 2.5 * np.log10(float(l.split()[2]))
         print 'hostmag',hostmag
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
