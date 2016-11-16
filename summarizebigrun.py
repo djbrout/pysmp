@@ -145,6 +145,8 @@ def grabdata(tmpwriter,resultsdir,cd):
         if not '-S1' in f:
             if not '-S2' in f:
                 deep = 1
+                print 'deep'
+                raw_input()
 
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
