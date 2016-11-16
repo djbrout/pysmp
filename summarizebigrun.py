@@ -168,6 +168,8 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['Chisq'].extend(data['CHI2'])
             try:
                 bigdata['rmsaddin'].extend(data['RMSADDIN'])
+                print data['RMSADDIN']
+                raw_input()
             except:
                 bigdata['rmsaddin'].extend(data['CHI2']*0.)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
@@ -285,7 +287,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #d = (fifx-fafx)/fime
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
-    d = (flux - fakeflux) / (fluxerr**2+(abs(flux)/3.8)+10**(.4*(fitzpt - hostmag))/3.8)**.5
+    d = (flux - fakeflux) / (fluxerr**2+(flux*rmsaddin)**2+)**.5
 
     ww = (flux != 0.) #& (deep == 0)
 
