@@ -172,11 +172,15 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['Chisq'].extend(data['CHI2'])
             try:
                 bigdata['rmsaddin'].extend(data['RMSADDIN'])
-                print data['RMSADDIN']
-                print np.mean(data['RMSADDIN'])
-                raw_input()
+                #print data['RMSADDIN']
+                #print np.mean(data['RMSADDIN'])
+                #raw_input()
             except:
-                bigdata['rmsaddin'].extend(data['CHI2']*0. + 0.008)
+                data2 = np.load('/pnfs/des/scratch/pysmp/smp_04_modelerrors/lightcurves/'+f.split('/')[-1])
+                rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
+                print rms
+                raw_input()
+                bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
         except:
