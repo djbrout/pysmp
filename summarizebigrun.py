@@ -144,7 +144,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
-    for f in smpfiles[:450]:
+    for f in smpfiles[:488]:
         cntr += 1
         print cntr, 'of',tot
         deep = 0
