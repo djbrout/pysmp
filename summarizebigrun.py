@@ -160,7 +160,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #raw_input()
         #print data.keys()
         #raw_input()
-        print data['RMSADDIN']
+        #print data['RMSADDIN']
         # try:
         # print data['ID_OBS']
         # raw_input()
