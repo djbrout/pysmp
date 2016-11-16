@@ -60,7 +60,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
 
-
+def lookup_rms_addin(smpfile,obsid):
+    pass
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
@@ -159,6 +160,8 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #raw_input()
 
         try:
+            print data['OBSID']
+            raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
