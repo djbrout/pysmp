@@ -166,6 +166,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         # raw_input()
         try:
             print './working/lightcurves/' + f.split('/')[-1]
+            raw_input()
             data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
             raw_input()
             #prin t'./working/lightcurves/' + f.split('/')[-1]
