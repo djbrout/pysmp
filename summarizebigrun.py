@@ -42,7 +42,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
-        dostars = True
+        dostars = False
         if dostars:
             stardata = np.load('/pnfs/des/persistent/smp/v2/stardata2.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
@@ -449,7 +449,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height/2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(16, 12))
+    plt.figure(1, figsize=(32, 24))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
