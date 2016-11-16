@@ -140,11 +140,14 @@ def grabdata(tmpwriter,resultsdir,cd):
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
-    deep = 0
+    #deep = 0
     for f in smpfiles:
+        deep = 0
         data = dt.readcol(f)
-        if not '-S1' in f:
-            if not '-S2' in f:
+        sn = f.split('/')[-1][0:17]+'.dat'
+        snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
+        if not '-S1' in snd:
+            if not '-S2' in snd:
                 deep = 1
                 #print 'deep'
                 #raw_input()
