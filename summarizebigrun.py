@@ -432,10 +432,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
     axa, aya, aystd = dt.bindata(fakemag,fresid,
-                            np.arange(19.5, 25., .1),window=2.)
+                            np.arange(19.5, 26., .1),window=2.)
     ax4.plot([19, 28.7], [0, 0],color='grey')
 
-    ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1), .5)
+    ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1), 1.5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
@@ -528,7 +528,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #plt.clf()
     ww = fakemag > 28.
     ax1.scatter(hostmag,d,alpha=.3,color='blue')
-    ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1),window=.5)
+    ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1),window=1.5)
     ax1.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
@@ -587,19 +587,19 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
 
-    ww = fakemag > 28.
-    ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
-    ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
-
-    ww = fakemag < 22.
-    ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
-    ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
-    ax3.legend(fontsize='small')
-
-    ww = (fakemag > 22.) & (fakemag < 28)
-    ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
-    ax3.plot(ax, ayrms, color='purple', label='FakeMag < 22', linewidth=3)
-    ax3.legend(fontsize='small')
+    # ww = fakemag > 28.
+    # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+    # ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
+    #
+    # ww = fakemag < 22.
+    # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+    # ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
+    # ax3.legend(fontsize='small')
+    #
+    # ww = (fakemag > 22.) & (fakemag < 28)
+    # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+    # ax3.plot(ax, ayrms, color='purple', label='FakeMag < 22', linewidth=3)
+    # ax3.legend(fontsize='small')
 
     plt.savefig(outdir+'/hostmagstd.png')
 
