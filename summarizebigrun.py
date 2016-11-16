@@ -486,7 +486,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #plt.clf()
     ww = fakemag > 28.
-    ax1.scatter(hostmag,d[ww],alpha=.3,color='blue')
+    ax1.scatter(hostmag[ww],d[ww],alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(hostmag, d, np.arange(min(hostmag), max(hostmag), .1),window=.5)
     ax1.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
