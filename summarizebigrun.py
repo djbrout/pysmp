@@ -141,7 +141,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
     #deep = 0
-    for f in smpfiles:
+    for f in smpfiles[0:10]:
         deep = 0
         data = dt.readcol(f)
         sn = f.split('/')[-1][0:17]+'.dat'
@@ -149,8 +149,8 @@ def grabdata(tmpwriter,resultsdir,cd):
         if not '-S1' in snd:
             if not '-S2' in snd:
                 deep = 1
-                #print 'deep'
-                #raw_input()
+                print 'deep'
+                raw_input()
 
         try:
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
