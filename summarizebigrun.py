@@ -167,8 +167,10 @@ def grabdata(tmpwriter,resultsdir,cd):
         try:
             print './working/lightcurves/' + f.split('/')[-1]
             data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
+            raw_input()
             #prin t'./working/lightcurves/' + f.split('/')[-1]
         except:
+            print 'cnfffff'
             continue
         print len(data['FLUX']), len(data['FLUXERR']), len(data['FAKEMAG']), len(data['ZPT']), (data['FAKEZPT'])
         bigdata['Flux'].extend(data['FLUX'])
