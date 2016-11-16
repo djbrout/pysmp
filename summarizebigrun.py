@@ -177,7 +177,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #raw_input()
             except:
                 data2 = np.load('/pnfs/des/scratch/pysmp/smp_04_modelerrors/lightcurves/'+f.split('/')[-1])
-                rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
+                rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.015])
                 print rms
                 raw_input()
                 bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
