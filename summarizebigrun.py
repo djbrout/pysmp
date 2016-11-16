@@ -144,7 +144,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
-    for f in smpfiles:
+    for f in smpfiles[:100]:
         cntr += 1
         print cntr, 'of',tot
         deep = 0
@@ -206,7 +206,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
         #raw_input()
     print 'saving to cachfile'
-    np.savez(outfile,**bigdata)
+    #np.savez(outfile,**bigdata)
     print 'saved'
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
