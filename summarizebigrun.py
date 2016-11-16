@@ -145,7 +145,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
-    for f in smpfiles[:]:
+    for f in smpfiles[4:]:
         cntr += 1
         print cntr, 'of',tot
         deep = 0
@@ -164,15 +164,15 @@ def grabdata(tmpwriter,resultsdir,cd):
         # try:
         # print data['ID_OBS']
         # raw_input()
-        try:
-            print './working/lightcurves/' + f.split('/')[-1]
-            raw_input()
-            data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
-            raw_input()
+        #try:
+        print './working/lightcurves/' + f.split('/')[-1]
+        raw_input()
+        data2 = np.load('./working/lightcurves/' + f.split('/')[-1])
+        raw_input()
             #prin t'./working/lightcurves/' + f.split('/')[-1]
-        except:
-            print 'cnfffff'
-            continue
+        #except:
+        #    print 'cnfffff'
+        #    continue
         print len(data['FLUX']), len(data['FLUXERR']), len(data['FAKEMAG']), len(data['ZPT']), (data['FAKEZPT'])
         bigdata['Flux'].extend(data['FLUX'])
         bigdata['Fluxerr'].extend(data['FLUXERR'])
