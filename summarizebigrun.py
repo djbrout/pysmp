@@ -154,7 +154,10 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
-            bigdata['rmsaddin'].extend(data['RMSADDIN'])
+            try:
+                bigdata['rmsaddin'].extend(data['RMSADDIN'])
+            except:
+                bigdata['rmsaddin'].extend(data['CHI2']*0.)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
         except:
