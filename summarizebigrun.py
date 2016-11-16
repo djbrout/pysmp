@@ -181,7 +181,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         bigdata['FakeZPT'].extend(data['FAKEZPT'])
         bigdata['Chisq'].extend(data['CHI2'])
         # try:
-        #bigdata['rmsaddin'].extend(data['RMSADDIN'])
+        bigdata['rmsaddin'].extend(data['RMSADDIN'])
         #print data['RMSADDIN']
         #raw_input()
         # print data['RMSADDIN']
@@ -189,12 +189,12 @@ def grabdata(tmpwriter,resultsdir,cd):
         # raw_input()
         # except:
 
-        rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
-        print rms
-        raw_input()
-        bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
-        bigdata['field'].extend(data['CHI2'] * 0 + np.float(deep))
-        print f, 'read in'
+        # rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.])
+        # print rms
+        # raw_input()
+        # bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
+        # bigdata['field'].extend(data['CHI2'] * 0 + np.float(deep))
+        # print f, 'read in'
         #except:
         #    print 'Columns missing in file '+f
 
@@ -1125,8 +1125,8 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    #resultsdir= './working/'
-    resultsdir = './workingsimnosn'
+    resultsdir= './working/'
+    #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
     cd = '/pnfs/des/scratch/pysmp/smp_04_modelerrors/np_data/summary_results.npz'
