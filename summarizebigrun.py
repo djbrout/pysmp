@@ -158,7 +158,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                 print 'deep'
                 continue
                 #raw_input()
-
+        print data.keys()
         try:
             print data['OBSID']
             raw_input()
