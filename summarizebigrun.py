@@ -435,14 +435,14 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
-    ww = hostmag > 25.
-    ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
-
-    ww = hostmag < 23.
-    ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-    ax3.legend(fontsize='small')
+    # ww = hostmag > 25.
+    # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+    # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
+    #
+    # ww = hostmag < 23.
+    # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+    # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+    # ax3.legend(fontsize='small')
 
     ax4.plot(axa, aya, linewidth=3, color='orange')
     ax4.plot(axa, aya+aystd, linewidth=2, color='orange',linestyle='--')
@@ -583,14 +583,14 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
 
-    # ww = fakemag > 28.
-    # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
-    # ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
-    #
-    # ww = fakemag < 22.
-    # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
-    # ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
-    # ax3.legend(fontsize='small')
+    ww = fakemag > 28.
+    ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+    ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
+
+    ww = fakemag < 22.
+    ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+    ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
+    ax3.legend(fontsize='small')
 
     plt.savefig(outdir+'/hostmagstd.png')
 
