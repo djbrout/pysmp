@@ -164,23 +164,27 @@ def grabdata(tmpwriter,resultsdir,cd):
             #print data['ID_OBS']
             #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
+            data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
+            rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
+            bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
+
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
             bigdata['FakeMag'].extend(data['FAKEMAG'])
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
-            try:
-                bigdata['rmsaddin'].extend(data['RMSADDIN'])
-                #print data['RMSADDIN']
-                #print np.mean(data['RMSADDIN'])
-                #raw_input()
-            except:
-                data2 = dt.readcol('./working/lightcurves/'+f.split('/')[-1])
-                rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.015])
-                print rms
-                raw_input()
-                bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
+            # try:
+            #     bigdata['rmsaddin'].extend(data['RMSADDIN'])
+            #     #print data['RMSADDIN']
+            #     #print np.mean(data['RMSADDIN'])
+            #     #raw_input()
+            # except:
+            #     data2 = dt.readcol('./working/lightcurves/'+f.split('/')[-1])
+            #     rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
+            #     print rms
+            #     raw_input()
+            #     bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
         except:
