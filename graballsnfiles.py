@@ -21,10 +21,10 @@ for filename in files:
     if not '-E1' in filename: continue
     #if not '-S2' in filename: continue
 
-    if cntr < 30: continue
+    #if cntr < 30: continue
     #if not 'SN-E1' in filename: continue
-    if os.path.isfile("/pnfs/des/persistent/smp/v4/"+filename):
-        if os.stat("/pnfs/des/persistent/smp/v4/"+filename).st_size > 0.:
+    if os.path.isfile("/pnfs/des/persistent/smp/v2/"+filename):
+        if os.stat("/pnfs/des/persistent/smp/v2/"+filename).st_size > 0.:
             print filename,'already exists'
             continue
     print 'globus copying',filename
