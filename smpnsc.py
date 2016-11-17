@@ -70,7 +70,7 @@ snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', '
                   'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
                   'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string'}
 
-paramkeywordlist = {'STAMPSIZE':'float','RADIUS1':'float',
+paramkeywordlist = {'STAMPSIZE':'float ','RADIUS1':'float',
                     'RADIUS2':'float','SUBSTAMP':'float',
                     'MAX_MASKNUM':'float','RDNOISE_NAME':'string',
                     'GAIN_NAME':'string','FWHM_MAX':'float',
