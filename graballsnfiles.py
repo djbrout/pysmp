@@ -18,7 +18,7 @@ for filename in files:
     #filename = filename.replace('v4','v5')
     if '.idx' in filename: continue
     cntr += 1
-    if not '-C' in filename: continue
+    if not '-E1' in filename: continue
     #if not '-S2' in filename: continue
 
     #if cntr < 30: continue
