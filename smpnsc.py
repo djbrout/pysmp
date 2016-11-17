@@ -46,13 +46,23 @@ import chkpsf
 
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
+                 'ZPFLUX':'float','RA':'string',
+                 'DECL':'string','PEAKMJD':'float','WEIGHT_BADPIXEL':'string',
+                 'HOSTGAL_SB_FLUXCAL':[],
+                 'STARCAT':'string', 'PSF_UNIT':'string', 'NOBS':'float'}
+snkeywordlist_fake = {'SURVEY':'string','SNID':'string','FILTERS':'string',
+                 'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
                  'ZPFLUX':'float','RA':'string', 'FAKE_RA':'string','FAKE_DEC':'string',
                  'DECL':'string','PEAKMJD':'float','WEIGHT_BADPIXEL':'string',
                  'HOSTGAL_SB_FLUXCAL':[],
                  'STARCAT':'string', 'PSF_UNIT':'string', 'NOBS':'float'}
-snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'string',
+snvarnameslist_fake = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'string',
                   'IMAGE_NAME_SEARCH':'string','IMAGE_NAME_WEIGHT':'string',
                   'FILE_NAME_PSF':'string','FAKE_TRUEMAG':'float','ZP':'float',
+                  'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
+snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'string',
+                  'IMAGE_NAME_SEARCH':'string','IMAGE_NAME_WEIGHT':'string',
+                  'FILE_NAME_PSF':'string','ZP':'float',
                   'FLUX':'float','FLUXERR':'float','PHOTFLAG':'string','SKYSIG':'float'}
 
 snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
