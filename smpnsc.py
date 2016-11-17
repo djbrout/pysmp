@@ -725,8 +725,8 @@ class smp:
         #print self.starcat.ra
         #sys.exit()
         badindices = []
-        for imfile,noisefile,psffile,band,faketruemag, j in \
-                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
+        for imfile,noisefile,psffile,band, j in \
+                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             #print doglobalstar, snparams.mjd[j], nozpt
             if not doglobalstar:
                 continue
@@ -1247,8 +1247,8 @@ class smp:
         print nozpt
         #raw_input()
         cccc = 0
-        for imfile,noisefile,psffile,band,faketruemag, j in \
-                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
+        for imfile,noisefile,psffile,band, j in \
+                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             #smp_dict['mjd'][j] = float(snparams.mjd[j])
             #smp_dict['mjd'][i] = float(snparams.mjd[j])
             print imfile
