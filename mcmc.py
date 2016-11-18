@@ -996,8 +996,8 @@ class metropolis_hastings():
         if dosave:
 
             for i in np.arange(self.Nimage):
-                #if float(self.mjd[i]) == 0:
-                #    continue
+                if float(self.mjd[i]) == 0:
+                    continue
                 #print self.sims[i,:,:]
                 #print self.mjd[i]
                 #print self.model_uncertainty[self.substamp**2+i]
