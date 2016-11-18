@@ -741,8 +741,8 @@ class smp:
             if not band == filt:
                 continue
             skysig=np.nan
-            #if cntrs > 1:
-            #   continue
+            if cntrs > 1:
+               continue
             #if snparams.mjd[j] != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
