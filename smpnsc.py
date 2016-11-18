@@ -4651,11 +4651,11 @@ class smp:
             #print 'xstar',xstar
             #raw_input()
             #y -= 2.
-            if i < float(params.numcheckstars):
-                isnotcheckstars[i] = 0
+            #if i < float(params.numcheckstars):
+            #    isnotcheckstars[i] = 0
 
             if mc > 21:
-                #print mc,'star too dim'
+                print mc,'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
