@@ -752,6 +752,8 @@ class smp:
             if self.usefake:
                 imfile = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
                 #noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
+            else:
+                imfile = imfile.replace('Y1','p1')
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
