@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# source /grid/fermiapp/products/common/etc/setups.sh
-# setup mu2e
-# setup ifdhc
 echo 'importing setups for smp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
 source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
@@ -20,7 +17,6 @@ voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis
 
 echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 source /grid/fermiapp/products/common/etc/setups.sh
-setup mu2e
 setup ifdhc
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 ifdh cp /pnfs/des/persistent/desdm/djbrout/pysmp.zip .

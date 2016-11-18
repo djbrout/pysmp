@@ -2854,8 +2854,8 @@ class smp:
         #sys.exit()
         if self.fermilog:
             self.tmpwriter.appendfile('saving mcmc input\n', self.fermilogfile)
-        #print 'exiting succseffuly'
-        #sys.exit()
+        print 'exiting succseffuly'
+        sys.exit()
         self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
                 , modelvec = modelvec*0.
@@ -4228,7 +4228,7 @@ class smp:
                 for i in np.arange(-1000, 1000000, 1000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
-                    weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
+                    weight = 1./(skyerr**2 + psf*abs(float(i))/3.8 + 1.) #holtzman
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
                     #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
@@ -4250,7 +4250,7 @@ class smp:
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1./(sky/3.8 + psf*abs(float(i))/3.8 + 1.) #holtzman
+                    weight = 1./(skyerr**2 + psf*abs(float(i))/3.8 + 1.) #holtzman
                     #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
@@ -4668,6 +4668,7 @@ class smp:
             if mc > 21:
                 #print mc,'star too dim'
                 continue
+            print x,y,mc,s,se
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
             #print x,y
@@ -4768,7 +4769,7 @@ class smp:
                         totalarea = len(fitrad[fitrad>0])
                         #print se**2, s/3.8,
                         #raw_input()
-                        gnoise_stamp = np.ones(image_stamp.shape)/(se**2)
+                        gnoise_stamp = np.ones(image_stamp.shape)*(se**2)
                         #print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
@@ -5416,7 +5417,7 @@ class smp:
                                      , mjdslopeinteroff=mjdslopeinteroff
                                      )
             bad = False
-            #raw_input('ZEROPOINTING WAS GOOD')
+            raw_input('ZEROPOINTING WAS GOOD')
         else:
             print len(goodstarcols)
             print len(checkstarcols)
