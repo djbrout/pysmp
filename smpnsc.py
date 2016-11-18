@@ -755,7 +755,7 @@ class smp:
             else:
                 imfile = imfile.replace('p1','Y1')
                 noisefile = noisefile.replace('p1','Y1')
-                psffile = psfile.replace('p1', 'Y1')
+                psffile = psffile.replace('p1', 'Y1')
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
@@ -980,6 +980,7 @@ class smp:
             else:
                 noise = pyfits.getdata(noisefile)
                 mask = pyfits.getdata(maskfile)
+
 
             psf = pyfits.getdata(psffile)
 
