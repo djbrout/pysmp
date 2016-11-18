@@ -4650,7 +4650,7 @@ class smp:
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
             #print x,y,mc
-            print self.snparams.nxpix, self.snparams.nypix
+            #print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,5) == round(ra,5):
                 #print 'same star, so skipping'
                 continue
