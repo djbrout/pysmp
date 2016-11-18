@@ -36,8 +36,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v2/","/pnfs/des/persistent/smp/v2/stardata2.npz")
-        #sys.exit()
+        grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
+        sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
