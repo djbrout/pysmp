@@ -4639,7 +4639,7 @@ class smp:
         #     mag_cat *= -1.
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
-            print x,y,mc
+            #print x,y,mc
             print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,5) == round(ra,5):
                 #print 'same star, so skipping'
@@ -4656,7 +4656,7 @@ class smp:
             #    isnotcheckstars[i] = 0
 
             if mc > 21:
-                print mc,'star too dim'
+                #print mc,'star too dim'
                 continue
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
@@ -4715,7 +4715,7 @@ class smp:
                         #print 'star not in fcmp... still including in fit.'
                         #bad = True
                 else:
-                    print 'here1'
+                    #print 'here1'
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                     #                                      noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
