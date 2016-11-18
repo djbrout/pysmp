@@ -312,7 +312,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.hist(fluxerr/ff,bins=20,normed=True)
     plt.savefig('holtzmannerrs.png')
     plt.clf()
-    np.savez('holtzmann.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 - abs(flux)/3.8))
+    np.savez('holtzmann.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2))
 
     d = (flux - fakeflux) / ((fluxerr**2 - abs(flux)/3.8 + frms**2)**.5*1.08)
 
