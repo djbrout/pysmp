@@ -4639,7 +4639,7 @@ class smp:
         #     mag_cat *= -1.
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
-            print x,y
+            print x,y,m
             if round(prevra,5) == round(ra,5):
                 #print 'same star, so skipping'
                 continue
@@ -4714,7 +4714,7 @@ class smp:
                         #print 'star not in fcmp... still including in fit.'
                         #bad = True
                 else:
-                    #print 'here1'
+                    print 'here1'
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
                     #                                      noise*0.+1., mask)
                     #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
@@ -4833,7 +4833,7 @@ class smp:
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, s, gnoise_stamp,
                                                                              fitrad, gal, mjd, se)
-
+                            print scale
                         # except:
                         #
                         #     print 'could not scale'
@@ -4975,7 +4975,7 @@ class smp:
                 flux_chisq[i] = chi
                 starsky[i] = s
                 starskyerr[i] = se
-                print scale
+                #print scale
                 if not bad:
                     psfs[i,:,:] = psf
                     print 'Fit star',i,scale,errmag
