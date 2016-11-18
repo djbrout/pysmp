@@ -754,6 +754,8 @@ class smp:
                 #noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
             else:
                 imfile = imfile.replace('p1','Y1')
+                noisefile = noisefile.replace('p1','Y1')
+                psffile = psfile.replace('p1', 'Y1')
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
@@ -1302,6 +1304,8 @@ class smp:
                 imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
             else:
                 imfile = imfile.replace('p1', 'Y1')
+                noisefile = noisefile.replace('p1', 'Y1')
+                psffile = psffile.replace('p1', 'Y1')
                 # noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
 
             imfile = os.path.join(rootdir, imfile)
