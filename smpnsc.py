@@ -751,11 +751,16 @@ class smp:
 
             if self.usefake:
                 imfile = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
+                if not self.snparams.survey == 'PS1':
+                    imfile = imfile.replace('p1', 'Y1')
+                    noisefile = noisefile.replace('p1', 'Y1')
+                    psffile = psffile.replace('p1', 'Y1')
                 #noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
             else:
-                imfile = imfile.replace('p1','Y1')
-                noisefile = noisefile.replace('p1','Y1')
-                psffile = psffile.replace('p1', 'Y1')
+                if not self.snparams.survey == 'PS1':
+                    imfile = imfile.replace('p1','Y1')
+                    noisefile = noisefile.replace('p1','Y1')
+                    psffile = psffile.replace('p1', 'Y1')
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
@@ -1303,10 +1308,15 @@ class smp:
             ########NEWWWWWWWWWWWWWWWW#######################
             if self.usefake:
                 imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                if not self.snparams.survey == 'PS1':
+                    imfile = imfile.replace('p1', 'Y1')
+                    noisefile = noisefile.replace('p1', 'Y1')
+                    psffile = psffile.replace('p1', 'Y1')
             else:
-                imfile = imfile.replace('p1', 'Y1')
-                noisefile = noisefile.replace('p1', 'Y1')
-                psffile = psffile.replace('p1', 'Y1')
+                if not self.snparams.survey == 'PS1':
+                    imfile = imfile.replace('p1', 'Y1')
+                    noisefile = noisefile.replace('p1', 'Y1')
+                    psffile = psffile.replace('p1', 'Y1')
                 # noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
 
             imfile = os.path.join(rootdir, imfile)
