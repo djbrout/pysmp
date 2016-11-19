@@ -1272,8 +1272,8 @@ class smp:
             #if round(snparams.mjd[j]) != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
-            if round(snparams.mjd[j],2) != 56030.33:
-                continue
+            #if round(snparams.mjd[j],2) != 56030.33:
+            #    continue
             #raw_input('passed')
             #if cccc < 5:
             #    cccc+= 1
@@ -5419,7 +5419,7 @@ class smp:
                                      , mjdslopeinteroff=mjdslopeinteroff
                                      )
             bad = False
-            raw_input('ZEROPOINTING WAS GOOD')
+            #raw_input('ZEROPOINTING WAS GOOD')
         else:
             print len(goodstarcols)
             print len(checkstarcols)
