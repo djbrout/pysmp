@@ -34,7 +34,7 @@ def fit(
     # xpos = xpos +1
     # ypos = ypos +1
     # from matplotlib.backends.backend_pdf import PdfPages
-    # pdf_pages = PdfPages('daophot_resid.pdf')
+    #pdf_pages = PdfPages('daophot_resid.pdf')
     dofcmp = False
     good = False
 
@@ -182,6 +182,7 @@ def fit(
     dontplot = False
     if not pdf_pages is None:
         if not dontplot:
+            print 'plottingggg'
             fig = plt.figure()
             plt.clf()
             axim = plt.subplot(131)
@@ -216,7 +217,7 @@ def fit(
             pdf_pages.savefig(fig)
 
             #pdf_pages.close()
-            #plt.savefig('')
+    #plt.savefig('')
 
 
 
