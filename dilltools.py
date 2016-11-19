@@ -371,6 +371,9 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + src + ' ' + dst)
         elif self.useifdh:
+            ls = os.popen('ifdh ls '+dst).read()
+            if len(ls) > 0:
+                print os.popen('ifdh rm ' + dst).read()
             print os.popen('ifdh cp ' + src + ' ' + dst).read()
         else:
             os.system('mv ' + src + ' ' + dst)
