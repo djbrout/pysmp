@@ -39,6 +39,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
+        plotzpt(data['fitZPT'], data['fakeZPT'], resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -65,7 +66,7 @@ def lookup_rms_addin(smpfile,obsid):
     pass
 
 def grabstardata(imagedir,outfile):
-    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
+    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
                'sky':[], 'skyerr': [],'psf':[],'poisson':[]}
     zptfiles = []
     cntr = 0
@@ -241,7 +242,13 @@ def grabdata(tmpwriter,resultsdir,cd):
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
 
+def plotzpt(fitzpt,fakezpt,outdir):
 
+    plt.clf()
+    plt.scatter(fakezpt,fitzpt,alpha=.5)
+    plt.plot([29,33],[29,33])
+    plt.savefit(outdir+'/zptcomparo.png')
+    print 'saved ',outdir+'/zptcomparo.png'
 def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
