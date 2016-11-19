@@ -6,7 +6,7 @@ maxlightcurves = 419
 isdonedir = '/home/dscolnic/testdir/isdone'
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
 logdir = '/home/dscolnic/testdir/smplogs'
-smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1'
+smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST2'
 
 
 runninglist = np.chararray(24,itemsize=300)
