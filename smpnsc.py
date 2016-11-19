@@ -5023,6 +5023,7 @@ class smp:
             print 'star fit stamps saved in ', self.zptstamps
             pdf_pagesc.close()
             if not self.snparams.survey == 'PS1':
+                os.system('ifdh rm '+'/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
                 self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',
                                   '/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
                 self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',self.zptstamps)
