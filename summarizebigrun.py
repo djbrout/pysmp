@@ -152,7 +152,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
-        sn = f.split('/')[-1][0:17]+'.dat'
+        #sn = f.split('/')[-1][0:17]+'.dat'
         #snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
         #snd = open('/home/dscolnic/testdir/' + sn, 'r').read()
         #if not '-S1' in snd:
