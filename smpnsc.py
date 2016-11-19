@@ -1272,12 +1272,12 @@ class smp:
             #if round(snparams.mjd[j]) != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
-            #if round(snparams.mjd[j]) != 56559:
-            #    continue
-            #raw_input('passed')
-            if cccc < 5:
-                cccc+= 1
+            if round(snparams.mjd[j],2) != 56030.33:
                 continue
+            #raw_input('passed')
+            #if cccc < 5:
+            #    cccc+= 1
+            #    continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
