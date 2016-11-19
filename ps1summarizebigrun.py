@@ -243,7 +243,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     return bigdata
 
 def plotzpt(fitzpt,fakezpt,outdir):
-
+    print fitzpt
     plt.clf()
     plt.scatter(fakezpt,fitzpt,alpha=.5)
     plt.plot([29,33],[29,33])
