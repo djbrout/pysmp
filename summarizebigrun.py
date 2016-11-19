@@ -36,9 +36,10 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
-        sys.exit()
+        #grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
+        #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
+        sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
@@ -64,7 +65,7 @@ def lookup_rms_addin(smpfile,obsid):
     pass
 
 def grabstardata(imagedir,outfile):
-    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'catmag': [], 'chisq': [], 'rmsaddin': [],
+    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
                'sky':[], 'skyerr': [],'psf':[],'poisson':[]}
     zptfiles = []
     cntr = 0
@@ -96,6 +97,7 @@ def grabstardata(imagedir,outfile):
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
+                        bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
@@ -151,7 +153,8 @@ def grabdata(tmpwriter,resultsdir,cd):
         deep = 0
         data = dt.readcol(f)
         sn = f.split('/')[-1][0:17]+'.dat'
-        snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
+        #snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
+        snd = open('/home/dscolnic/testdir/' + sn, 'r').read()
         if not '-S1' in snd:
             if not '-S2' in snd:
                 deep = 1
@@ -174,7 +177,14 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
-            # try:
+
+            for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
+                if abs(faz - fiz) > 1:
+                    print f
+                    print m
+                    raw_input('STOPPED')
+
+                    # try:
             #bigdata['rmsaddin'].extend(data['RMSADDIN'])
             #     #print data['RMSADDIN']
             #     #print np.mean(data['RMSADDIN'])
@@ -1132,6 +1142,7 @@ if __name__ == "__main__":
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     resultsdir= './working/'
+    resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
