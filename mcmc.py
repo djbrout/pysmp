@@ -515,7 +515,7 @@ class metropolis_hastings():
         #print self.csv
         #print csv
         #raw_input()
-        self.thischisq = np.sum(self.csv)
+        self.thischisq = np.sum( self.csv )
         #print self.thischisq
 
         #print self.thischisq
