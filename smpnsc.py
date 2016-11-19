@@ -6272,6 +6272,6 @@ if __name__ == "__main__":
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog)
-        scenemodel.afterfit(snparams,params,donesn=True)
+        #scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
