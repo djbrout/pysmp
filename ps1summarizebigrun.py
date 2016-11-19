@@ -247,7 +247,7 @@ def plotzpt(fitzpt,fakezpt,outdir):
     plt.clf()
     plt.scatter(fakezpt,fitzpt,alpha=.5)
     plt.plot([29,33],[29,33])
-    plt.savefit(outdir+'/zptcomparo.png')
+    plt.savefig(outdir+'/zptcomparo.png')
     print 'saved ',outdir+'/zptcomparo.png'
 def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     flux = np.asarray(flux)
