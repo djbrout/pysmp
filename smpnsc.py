@@ -2386,12 +2386,18 @@ class smp:
                             #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum
                                 if np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:]):
                                     #i = j
+
+                                    '''
                                     noise_stamp[noise_stamp > 0.] = 1
                                     noise_stamp[noise_stamp <= 0.] = 0
+                                    '''
                                     #print 'image-stamp',image_stamp.shape
                                     #print 'smp_im',smp_im[i,:,:].shape,i
                                     smp_im[i,:,:] = image_stamp
+                                    '''
                                     smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
+                                    '''
+                                    smp_noise[i, :, :] = noise_stamp #using noise stamp for v5
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
