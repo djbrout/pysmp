@@ -152,14 +152,15 @@ def grabdata(tmpwriter,resultsdir,cd):
         print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
-        #sn = f.split('/')[-1][0:17]+'.dat'
-        #snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
-        #snd = open('/home/dscolnic/testdir/' + sn, 'r').read()
-        #if not '-S1' in snd:
-        #    if not '-S2' in snd:
-        #        deep = 1
-        #        print 'deep'
-        #        continue
+        '''
+        sn = f.split('/')[-1][0:17]+'.dat'
+        snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
+        if not '-S1' in snd:
+            if not '-S2' in snd:
+                deep = 1
+                print 'deep'
+                continue
+        '''
                 #raw_input()
         #print data.keys()
         #raw_input()
@@ -212,6 +213,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         #             zptfiles.append(sf)
         #         except:
         #             print 'Missing flux_star_std'
+        '''
         fakef = f.split('/')[-1][:17]
         filt = f.split('/')[-1][18]
         fakefile = os.path.join(fakedir,fakef+'.dat')
@@ -230,6 +232,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                     hostmag = 27.5 - 2.5 * np.log10(hgf)
         print 'hostmag',hostmag
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
+        '''
         #raw_input()
     print 'saving to cachfile'
     #np.savez(outfile,**bigdata)
