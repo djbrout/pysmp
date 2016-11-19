@@ -3396,7 +3396,7 @@ class smp:
                                 smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
-                                galmodel_stampf,
+                                galmodel_stampf[i],
                                 image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
         fout.close()
         if self.fermigrid and self.worker:
