@@ -39,7 +39,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
-        plotzpt(data['fitZPT'], data['fakeZPT'], resultsdir)
+        plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
