@@ -171,9 +171,9 @@ def grabdata(tmpwriter,resultsdir,cd):
             #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
 
-            data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
-            rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
-            bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
+            #data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
+            #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
+            #bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
@@ -182,7 +182,7 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
             bigdata['FitZPT']
-            raw_input()
+            #raw_input()
 
             for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
                 print faz-fiz
