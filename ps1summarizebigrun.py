@@ -184,12 +184,12 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FitZPT']
             #raw_input()
 
-            for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
-                print faz-fiz
-                if abs(faz - fiz) > .9:
-                    print f
-                    print m
-                    raw_input('STOPPED')
+            # for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
+            #     print faz-fiz
+            #     if abs(faz - fiz) > .9:
+            #         print f
+            #         print m
+            #         raw_input('STOPPED')
 
                     # try:
             #bigdata['rmsaddin'].extend(data['RMSADDIN'])
