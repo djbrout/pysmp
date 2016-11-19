@@ -2387,17 +2387,17 @@ class smp:
                                 if np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:]):
                                     #i = j
 
-                                    '''
-                                    noise_stamp[noise_stamp > 0.] = 1
-                                    noise_stamp[noise_stamp <= 0.] = 0
-                                    '''
+                                    if self.snparams.survey == 'PS1':
+                                        noise_stamp[noise_stamp > 0.] = 1
+                                        noise_stamp[noise_stamp <= 0.] = 0
+                                        smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
+                                    else:
+                                        smp_noise[i, :, :] = noise_stamp  # using noise stamp for v5
+
                                     #print 'image-stamp',image_stamp.shape
                                     #print 'smp_im',smp_im[i,:,:].shape,i
                                     smp_im[i,:,:] = image_stamp
-                                    '''
-                                    smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
-                                    '''
-                                    smp_noise[i, :, :] = noise_stamp #using noise stamp for v5
+
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
                                     smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
@@ -2605,14 +2605,17 @@ class smp:
         '''
 
         badnoisecols = np.where(smp_noise < 1e-5)
-        smp_noise[badnoisecols] = 0.
+        if self.snparams.survey == 'PS1':
+            smp_noise[badnoisecols] = 0.
         badpsfcols = np.where(smp_psf < 0)
-        smp_noise[badpsfcols] = 0.0
+        if self.snparams.survey == 'PS1':
+            smp_noise[badpsfcols] = 0.0
         smp_psf[badpsfcols] = 0.0
 
 
         infinitecols = np.where((smp_im == 0) | (np.isfinite(smp_im) == 0) | (np.isfinite(smp_noise) == 0))
-        smp_noise[infinitecols] = 0.0
+        if self.snparams.survey == 'PS1':
+            smp_noise[infinitecols] = 0.0
         smp_im[infinitecols] = 0
         mpparams = np.concatenate((np.zeros(float(params.substamp)**2.),smp_dict['scale'],smp_dict['sky']))
 
