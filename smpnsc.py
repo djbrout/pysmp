@@ -1310,6 +1310,8 @@ class smp:
             if self.usefake:
                 imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
                 if not self.snparams.survey == 'PS1':
+                    print imfile
+                    raw_input('hhhh')
                     imfile = imfile.replace('p1', 'Y1')
                     noisefile = noisefile.replace('p1', 'Y1')
                     psffile = psffile.replace('p1', 'Y1')
