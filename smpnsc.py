@@ -2392,6 +2392,9 @@ class smp:
                                         noise_stamp[noise_stamp <= 0.] = 0
                                         smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
                                     else:
+
+                                        print noise_stamp
+                                        raw_input()
                                         smp_noise[i, :, :] = noise_stamp  # using noise stamp for v5
 
                                     #print 'image-stamp',image_stamp.shape
