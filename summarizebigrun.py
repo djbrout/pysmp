@@ -154,12 +154,12 @@ def grabdata(tmpwriter,resultsdir,cd):
         data = dt.readcol(f)
         sn = f.split('/')[-1][0:17]+'.dat'
         #snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
-        snd = open('/home/dscolnic/testdir/' + sn, 'r').read()
-        if not '-S1' in snd:
-            if not '-S2' in snd:
-                deep = 1
-                print 'deep'
-                continue
+        #snd = open('/home/dscolnic/testdir/' + sn, 'r').read()
+        #if not '-S1' in snd:
+        #    if not '-S2' in snd:
+        #        deep = 1
+        #        print 'deep'
+        #        continue
                 #raw_input()
         #print data.keys()
         #raw_input()
