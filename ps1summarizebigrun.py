@@ -169,7 +169,7 @@ def grabdata(tmpwriter,resultsdir,cd):
             #print data['ID_OBS']
             #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
-            print data.keys()
+            print data['ZPT']
             raw_input()
             data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
             rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
