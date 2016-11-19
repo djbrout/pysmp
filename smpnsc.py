@@ -3419,6 +3419,9 @@ class smp:
                                 image_stampf[i],psf_stampf[i],weight_stampf[i],sim_stampf[i],chisq_stampf[i])
         fout.close()
         if self.fermigrid and self.worker:
+            ls = os.popen('ifdh ls ' + smplightcurvefile).read()
+            if len(ls) > 0:
+                os.popen('ifdh rm ' + smplightcurvefile)
             os.popen('ifdh cp lc.txt '+smplightcurvefile)
         if self.fermilog:
             self.tmpwriter.appendfile('SMP Successful\n', self.fermilogfile)
