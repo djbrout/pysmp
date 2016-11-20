@@ -786,11 +786,11 @@ class smp:
                 #sys.exit()
                 #print 'ifdh cp '+imfile+' .'
 
-                ifdhls = os.popen('ifdh ls '+imfile).read()
+                ifdhls = os.popen('ifdh lss '+imfile).read()
                 #print ifdhls
                 #print 'line 576'
                 #raw_input()
-                if len(ifdhls) > 0:
+                if (len(ifdhls) > 0) & (int(ifdhls.split()[-1]) > 0) :
                     print 'Copying over',imfile
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp -D '+imfile+' .').read()
                     #imfilel = copy(imfilel)
