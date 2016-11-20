@@ -40,7 +40,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
-        pltresid(data['Flux'],data['DIFFIM_Flux'],data['FakeZPT'],resultsdir)
+        pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
