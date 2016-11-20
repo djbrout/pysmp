@@ -2780,6 +2780,10 @@ class smp:
         scaled_diffim_flux = smp_dict['diffim_flux']*10.**(.4*(31.-27.5))
         scaled_diffim_fluxerr = smp_dict['diffim_fluxerr']*10.**(.4*(31.-27.5))
 
+        if self.snparams.survey == 'PS1':
+            scaled_diffim_flux = smp_dict['diffim_flux'] * 10. ** (.4 * (31. - smp_dict['fakezpt']))
+            scaled_diffim_fluxerr = smp_dict['diffim_fluxerr'] * 10. ** (.4 * (31. - smp_dict['fakezpt']))
+
         self.scaled_diffim_flux = scaled_diffim_flux
         self.scaled_diffim_fluxerr = scaled_diffim_fluxerr
 
