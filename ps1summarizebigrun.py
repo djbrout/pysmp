@@ -256,6 +256,7 @@ def plotzpt(fitzpt,fakezpt,outdir):
     plt.savefig(outdir+'/zptcomparo.png')
     print 'saved ',outdir+'/zptcomparo.png'
 def pltresid(fitflux,diffimflux,fakezpt,outdir):
+    print fitflux.shape,diffimflux.shape,fakezpt.shape
     plt.clf()
     plt.scatter(np.array(diffimflux)*10**(.4(31-np.array(fakezpt))), fitflux, alpha=.5)
     plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
