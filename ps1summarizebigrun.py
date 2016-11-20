@@ -40,7 +40,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
-        pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],resultsdir)
+        pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],data['FitZPT'],resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -255,16 +255,18 @@ def plotzpt(fitzpt,fakezpt,outdir):
     plt.plot([29,33],[29,33])
     plt.savefig(outdir+'/zptcomparo.png')
     print 'saved ',outdir+'/zptcomparo.png'
-def pltresid(fitflux,diffimflux,fakezpt,outdir):
+def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     fitflux = np.array(fitflux)
+    fitzpt = np.array(fitzpt)
     diffimflux = np.array(diffimflux)
     fakezpt = np.array(fakezpt)
     ww = fitflux != 0
     fitflux = fitflux[ww]
     diffimflux = diffimflux[ww]
     fakezpt = fakezpt[ww]
+    fitzpt = fitzpt[ww]
     plt.clf()
-    plt.scatter(np.array(diffimflux)*10**(.4*(31-27.5)), np.array(fitflux), alpha=.5)
+    plt.scatter(diffimflux*10**(.4*(31- fakezpt + fitzpt - fakezpt )), fitflux, alpha=.5)
     plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
     plt.xlim(-10000,50000)
     plt.ylim(-10000,50000)
