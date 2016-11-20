@@ -257,7 +257,7 @@ def plotzpt(fitzpt,fakezpt,outdir):
     print 'saved ',outdir+'/zptcomparo.png'
 def pltresid(fitflux,diffimflux,fakezpt,outdir):
     plt.clf()
-    plt.scatter(diffimflux*10**(.4(31-fakezpt)), fitflux, alpha=.5)
+    plt.scatter(np.array(diffimflux)*10**(.4(31-np.array(fakezpt))), fitflux, alpha=.5)
     plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
     plt.savefig(outdir + '/residcomparo.png')
     print 'saved ', outdir + '/zptcomparo.png'
