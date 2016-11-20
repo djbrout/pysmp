@@ -81,7 +81,7 @@ paramkeywordlist = {'STAMPSIZE':'float ','RADIUS1':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
                     'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
                     'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string',
-                    'HDR_PSF_FWHM':'string','MINZPTSTARS':'float','FLUX_STD_DIV':'float'
+                    'HDR_PSF_FWHM':'string','MINZPTSTARS':'float','FLUX_STD_DIV':'float','GALMODEL_DIV':'float'
                     }
 
 def save_fits_image(image,filename):
@@ -3105,7 +3105,7 @@ class smp:
             galmodel = galmodel_params
             print 'galmodel',galmodel
 
-            galstd = np.sqrt(abs(galmodel))
+            galstd = np.sqrt(abs(galmodel))/params.galmodeldiv
             print 'galstd',galstd
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             tstart = time.time()

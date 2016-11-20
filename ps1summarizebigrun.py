@@ -40,6 +40,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
+        pltresid(data['FLUX'],data['DIFFIM_FLUX'],data['FakeZPT'],resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -142,7 +143,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     os.system('rm '+cd+' -f')
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
-    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
+    bigdata = {'Flux':[],'Fluxerr':[],'DIFFIMFlux':[],'DIFFIMFluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
     zptfiles = []
     #deep = 0
@@ -181,7 +182,8 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
-            bigdata['FitZPT']
+            bigdata['DIFFIMFlux'].extend(data['DIFFIM_FLUX'])
+            bigdata['DIFFIMFluxerr'].extend(data['DIFFIM_FLUXERR'])
             #raw_input()
 
             # for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
@@ -253,6 +255,12 @@ def plotzpt(fitzpt,fakezpt,outdir):
     plt.plot([29,33],[29,33])
     plt.savefig(outdir+'/zptcomparo.png')
     print 'saved ',outdir+'/zptcomparo.png'
+def pltresid(fitflux,diffimflux,fakezpt,outdir):
+    plt.clf()
+    plt.scatter(diffimflux*10**(.4(31-fakezpt)), fitflux, alpha=.5)
+    plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
+    plt.savefig(outdir + '/residcomparo.png')
+    print 'saved ', outdir + '/zptcomparo.png'
 def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
