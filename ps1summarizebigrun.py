@@ -272,6 +272,19 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     plt.ylim(-10000,50000)
     plt.savefig(outdir + '/residcomparo.png')
     print 'saved ', outdir + '/zptcomparo.png'
+
+
+    fitmag = 31-2.5*np.log10(fitflux)
+    diffmag = fakezpt - 2.5*np.log10(diffimflux)
+    plt.clf()
+    plt.scatter(fitzpt-fakezpt, fitmag-diffmag, alpha=.5)
+    #plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
+    #plt.xlim(-10000, 50000)
+    #plt.ylim(-10000, 50000)
+    plt.savefig(outdir + '/residzptcomparo.png')
+    print 'saved ', outdir + '/zptcomparo.png'
+
+
 def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
