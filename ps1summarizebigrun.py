@@ -256,9 +256,15 @@ def plotzpt(fitzpt,fakezpt,outdir):
     plt.savefig(outdir+'/zptcomparo.png')
     print 'saved ',outdir+'/zptcomparo.png'
 def pltresid(fitflux,diffimflux,fakezpt,outdir):
-    print np.array(fitflux).shape,np.array(diffimflux).shape,np.array(fakezpt).shape
+    fitflux = np.array(fitflux)
+    diffimflux = np.array(diffimflux)
+    fakezpt = np.array(fakezpt)
+    ww = fitflux != 0
+    fitflux = fitflux[ww]
+    diffimflux = diffimflux[ww]
+    fakezpt = fakezpt[ww]
     plt.clf()
-    plt.scatter(np.array(diffimflux)*10**(.4*(31-np.array(fakezpt))), np.array(fitflux), alpha=.5)
+    plt.scatter(np.array(diffimflux)*10**(.4*(31-27.5)), np.array(fitflux), alpha=.5)
     plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
     plt.xlim(-10000,50000)
     plt.ylim(-10000,50000)
