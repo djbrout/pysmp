@@ -3116,9 +3116,10 @@ class smp:
             print 'galmodel',galmodel
 
             galstd = np.sqrt(abs(galmodel))/params.galmodel_div
-            galstd[galstd < 100.] =   100.
             print 'galstd',galstd
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
+            modelstd[modelstd < 100.] = 100.
+
             tstart = time.time()
             #print 'modelstd',modelstd
             #raw_input()
