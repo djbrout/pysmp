@@ -374,6 +374,13 @@ class metropolis_hastings():
 
         self.simsnosnnosky = copy(self.modelvec)*0.
 
+        newcpsf = []
+        if self.shiftpsf:
+            for c in self.centered_psfs:
+                fr2 = fft2(np.flipud(np.fliplr(c)))
+                newcpsf.append(fr2)
+            self.centered_psfs = copy(newcpsf)
+
         self.run_d_mc()
 
 
@@ -626,8 +633,10 @@ class metropolis_hastings():
             [X, Y] = np.meshgrid(np.arange(32) / 10000., np.arange(32) / 10000.)
             S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
 
-            fr = fft2(self.kicked_galaxy_model)
-            fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
+            #fr = fft2(self.kicked_galaxy_model)
+            #fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
+
+            fr2=centered_psfs
 
             if kicked_modelvec == 0.:
                 delta = 0.
