@@ -77,7 +77,7 @@ def grabstardata(imagedir,outfile):
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             print fname
-            if 'globalstar.npz' in fname:
+            if 'zptstardata.npz' in fname:
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
                 #if not 'SN-S2' in fname:
