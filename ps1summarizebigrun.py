@@ -49,9 +49,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         if dostars:
             stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST5/stardata/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
-                        stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        stardata['poisson'],
-                        title='rmsaddin_')
+                        stardata['catmag'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
+                        title='')
             sys.exit()
     # print data.keys()
     # print len(data['Flux'])
@@ -808,7 +807,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title=''):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
@@ -821,7 +820,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     skyerr= skyerr[ww]
     sky = sky[ww]
     rmsaddin = rmsaddin[ww]
-    poisson = poisson[ww]
+    #poisson = poisson[ww]
     #print -2.5*np.log10(skyerr)+zpt
     #raw_input('skyerr in mags')
     #starmagerr = np.sqrt((-2.5*np.log10(sky)+2.5*np.log10(skyerr))**2+rmsaddin**2)
@@ -829,7 +828,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(zpt-catmag))
-    chisq = chisq[ww]
+    #chisq = chisq[ww]
     #chisq = chisq[ww]*1/np.sqrt((abs(flux) / 3.))
     # plt.clf()
     # plt.scatter(catmag,(flux-catflux)/catflux)
@@ -846,7 +845,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
 
     #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
     #raw_input()
-    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
+    #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
+    starmagerr2 = ((-2.5 * np.log10(flux) + 2.5 * np.log10(flux + fluxerr)) ** 2 + rmsaddin ** 2 + (-2.5 * np.log10(flux))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
 
@@ -862,18 +862,18 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     #raw_input('printing mags')
     d = (flux - catflux) / fluxerr
     ds = (flux - catflux) / skyerr
-    dp = (flux-catflux) / poisson
+    #dp = (flux-catflux) / poisson
 
     #chisq = (flux - catflux) ** 2 / catflux
-
-    plt.clf()
-    plt.scatter(catmag,chisq)
-    plt.ylim(0,15)
-    plt.xlim(17,21)
-    plt.axhline(1)
-    plt.xlabel('Cat Mag')
-    plt.ylabel('Chi Sq')
-    plt.savefig(title+'chivscat.png')
+    #
+    # plt.clf()
+    # plt.scatter(catmag,chisq)
+    # plt.ylim(0,15)
+    # plt.xlim(17,21)
+    # plt.axhline(1)
+    # plt.xlabel('Cat Mag')
+    # plt.ylabel('Chi Sq')
+    # plt.savefig(title+'chivscat.png')
     #chisq = np.nanmean(chisq[abs(d) < 3])
 
     plt.clf()
@@ -979,8 +979,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     # raw_input('zpt scatter err')
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.7)
 
-    ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
+    # ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
+    # ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
 
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
@@ -1026,132 +1026,132 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
 
 
 
-    plt.clf()
-
-    dc = d[abs(d) < 3]
-
-    rms = np.sqrt(np.nanmean(np.square(dc[abs(dc) < 3.])))
-
-    plt.clf()
-
-    nullfmt = NullFormatter()  # no labels
-
-    # definitions for the axes
-    left, width = 0.1, 0.65
-    bottom, height = 0.1, 0.65
-    bottom_h = left_h = left + width + 0.02
-
-    rect_scatter = [left, bottom + height / 2., width, height / 2.]
-    rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h, width, 0.2]
-    rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
-    rect_histyflux = [left_h, bottom, 0.2, height / 2.]
-
-    # start with a rectangular Figure
-    plt.figure(1, figsize=(16, 12))
-
-    ax1 = plt.axes(rect_scatter)
-    ax3 = plt.axes(rect_histx)
-    ax2 = plt.axes(rect_histy)
-    ax4 = plt.axes(rect_scatterflux)
-    ax5 = plt.axes(rect_histyflux)
-
-    # no labels
-    ax2.yaxis.set_major_formatter(nullfmt)
-    ax3.xaxis.set_major_formatter(nullfmt)
-    ax5.yaxis.set_major_formatter(nullfmt)
-
-    ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3))
-             , orientation='horizontal')
-    # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
-    #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
-
-    import matplotlib.mlab as mlab
-    import math
-    mean = 0
-    variance = 1
-    sigma = math.sqrt(variance)
-    x = np.arange(-5, 5, .1)
-    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
-
-    ax2.set_ylim(-4, 4)
-    ax2.set_xlim(0, .5)
-    # .xlabel('STDEV')
-    # plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='small')
-    # plt.savefig('stdresid.png')
-
     # plt.clf()
-
-    ax1.scatter(chisq, d, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(chisq, d, np.arange(.1, 5, .01), window=.1)
-    ax1.plot([.1, 5.], [0, 0], color='grey')
-    ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    ax1.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-
-    # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
-
-    ax1.set_xlim(.1, 5.)
-    ax1.set_ylim(-3., 3.)
-    ax1.set_xlabel('Chisq')
-    ax1.set_ylabel('STD')
-
-    # ax, ayrms= dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1),.5)
-    # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
-
-
-    ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.7)
-    ax3.legend(fontsize='small')
-
-    fresid = np.zeros(flux.shape)
-    for i, f, ff in zip(range(len(flux)), flux, catflux):
-        if f == 0.:
-            fresid[i] = np.nan
-        else:
-            fresid[i] = (f - ff) / max([abs(ff), 1.])
-    # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
-
-    ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
-
-    ax4.scatter(chisq, fresid, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(chisq, fresid,
-                               np.arange(.1, 5, .01), window=.1)
-    ax4.plot([.1, 5], [0, 0], color='grey')
-
-    ax, ayrms = dt.binrms(chisq, d, np.arange(.1, 5., .01), .1)
-    ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
-    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-
-    # ww = hostmag > 25.
-    # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
     #
-    # ww = hostmag < 23.
-    # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+    # dc = d[abs(d) < 3]
+    #
+    # rms = np.sqrt(np.nanmean(np.square(dc[abs(dc) < 3.])))
+    #
+    # plt.clf()
+    #
+    # nullfmt = NullFormatter()  # no labels
+    #
+    # # definitions for the axes
+    # left, width = 0.1, 0.65
+    # bottom, height = 0.1, 0.65
+    # bottom_h = left_h = left + width + 0.02
+    #
+    # rect_scatter = [left, bottom + height / 2., width, height / 2.]
+    # rect_scatterflux = [left, bottom, width, height / 2.]
+    # rect_histx = [left, bottom_h, width, 0.2]
+    # rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
+    # rect_histyflux = [left_h, bottom, 0.2, height / 2.]
+    #
+    # # start with a rectangular Figure
+    # plt.figure(1, figsize=(16, 12))
+    #
+    # ax1 = plt.axes(rect_scatter)
+    # ax3 = plt.axes(rect_histx)
+    # ax2 = plt.axes(rect_histy)
+    # ax4 = plt.axes(rect_scatterflux)
+    # ax5 = plt.axes(rect_histyflux)
+    #
+    # # no labels
+    # ax2.yaxis.set_major_formatter(nullfmt)
+    # ax3.xaxis.set_major_formatter(nullfmt)
+    # ax5.yaxis.set_major_formatter(nullfmt)
+    #
+    # ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3))
+    #          , orientation='horizontal')
+    # # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
+    # #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
+    #
+    # import matplotlib.mlab as mlab
+    # import math
+    # mean = 0
+    # variance = 1
+    # sigma = math.sqrt(variance)
+    # x = np.arange(-5, 5, .1)
+    # ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+    #
+    # ax2.set_ylim(-4, 4)
+    # ax2.set_xlim(0, .5)
+    # # .xlabel('STDEV')
+    # # plt.ylabel('Normalized Count')
+    # ax2.legend(fontsize='small')
+    # # plt.savefig('stdresid.png')
+    #
+    # # plt.clf()
+    #
+    # ax1.scatter(chisq, d, alpha=.3, color='blue')
+    # ax, ay, aystd = dt.bindata(chisq, d, np.arange(.1, 5, .01), window=.1)
+    # ax1.plot([.1, 5.], [0, 0], color='grey')
+    # ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    # ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    # ax1.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    #
+    # # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
+    #
+    # ax1.set_xlim(.1, 5.)
+    # ax1.set_ylim(-3., 3.)
+    # ax1.set_xlabel('Chisq')
+    # ax1.set_ylabel('STD')
+    #
+    # # ax, ayrms= dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1),.5)
+    # # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
+    #
+    #
+    # ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
+    # ax3.set_ylim(.7, 1.7)
     # ax3.legend(fontsize='small')
-
-    ax4.plot(ax, ay, linewidth=3, color='orange')
-    ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
-    ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
-    ax4.set_xlim(ax1.get_xlim())
-    ax4.set_ylim(-.025, .025)
-    ax4.set_xlabel('Chisq')
-    ax5.set_xlabel('Counts')
-    ax3.set_ylabel('RMS')
-    ax4.set_ylabel('(fitflux - catflux)/catflux')
-
-    ax3.set_xlim(ax1.get_xlim())
-    ax2.set_ylim(ax1.get_ylim())
-    ax5.set_ylim(ax4.get_ylim())
-    ax2.xaxis.set_major_formatter(nullfmt)
-    ax3.xaxis.set_major_formatter(nullfmt)
-    ax1.xaxis.set_major_formatter(nullfmt)
-
-    plt.subplots_adjust(wspace=0.001, hspace=0.001)
-    plt.savefig(title+'starchi.png')
+    #
+    # fresid = np.zeros(flux.shape)
+    # for i, f, ff in zip(range(len(flux)), flux, catflux):
+    #     if f == 0.:
+    #         fresid[i] = np.nan
+    #     else:
+    #         fresid[i] = (f - ff) / max([abs(ff), 1.])
+    # # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+    #
+    # ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
+    #
+    # ax4.scatter(chisq, fresid, alpha=.3, color='blue')
+    # ax, ay, aystd = dt.bindata(chisq, fresid,
+    #                            np.arange(.1, 5, .01), window=.1)
+    # ax4.plot([.1, 5], [0, 0], color='grey')
+    #
+    # ax, ayrms = dt.binrms(chisq, d, np.arange(.1, 5., .01), .1)
+    # ax3.plot(ax, ayrms, color='blue', label='ALL Standard Stars in r Band', linewidth=3)
+    # ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+    #
+    # # ww = hostmag > 25.
+    # # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+    # # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
+    # #
+    # # ww = hostmag < 23.
+    # # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+    # # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+    # # ax3.legend(fontsize='small')
+    #
+    # ax4.plot(ax, ay, linewidth=3, color='orange')
+    # ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
+    # ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
+    # ax4.set_xlim(ax1.get_xlim())
+    # ax4.set_ylim(-.025, .025)
+    # ax4.set_xlabel('Chisq')
+    # ax5.set_xlabel('Counts')
+    # ax3.set_ylabel('RMS')
+    # ax4.set_ylabel('(fitflux - catflux)/catflux')
+    #
+    # ax3.set_xlim(ax1.get_xlim())
+    # ax2.set_ylim(ax1.get_ylim())
+    # ax5.set_ylim(ax4.get_ylim())
+    # ax2.xaxis.set_major_formatter(nullfmt)
+    # ax3.xaxis.set_major_formatter(nullfmt)
+    # ax1.xaxis.set_major_formatter(nullfmt)
+    #
+    # plt.subplots_adjust(wspace=0.001, hspace=0.001)
+    # plt.savefig(title+'starchi.png')
 
 
 
