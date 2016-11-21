@@ -868,7 +868,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title='',outdir=''):
     #chisq = (flux - catflux) ** 2 / catflux
     #
     plt.clf()
-    plt.scatter(catmag,-2.5*np.log10(flux)+2.5*np.log10(catflux))
+    plt.scatter(catmag,-2.5*np.log10(flux)+2.5*np.log10(catflux),alpha=.1)
+    ax, ay, aystd = dt.bindata(catmag,-2.5*np.log10(flux)+2.5*np.log10(catflux), np.arange(min(catmag), max(catmag), .1), window=.5)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     #plt.ylim(0,15)
     #plt.xlim(17,21)
     plt.axhline(0)
