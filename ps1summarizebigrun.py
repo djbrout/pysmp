@@ -873,7 +873,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title='',outdir=''):
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     #plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     #plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.ylim(-.25,.25)
+    plt.ylim(-.1,.1)
     plt.xlim(min(catmag),21)
     plt.axhline(0,color='white',linestyle='--')
     plt.xlabel('Cat Mag')
