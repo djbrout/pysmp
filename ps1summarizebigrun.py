@@ -97,8 +97,8 @@ def grabstardata(imagedir,outfile):
                         #if True:
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
-                        bigdata['starflux'].extend(zptdata['flux_starh'])
-                        bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
+                        bigdata['starflux'].extend(zptdata['fitflux'])
+                        bigdata['starzpt'].extend(zptdata['fitflux']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         bigdata['diffimzpt'].extend(zptdata['fakezpt'])
@@ -106,7 +106,7 @@ def grabstardata(imagedir,outfile):
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
                             bigdata['psf'].append(psfs[i,:,:])
-                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starh'][i])))
+                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['fitflux'][i])))
                             #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
                             #raw_input()
                         cm = zptdata['cat_mag']
