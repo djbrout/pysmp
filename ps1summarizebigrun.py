@@ -50,7 +50,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
             stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST5/stardata/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        title='')
+                        title='',outdir='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST5/stardata/')
             sys.exit()
     # print data.keys()
     # print len(data['Flux'])
@@ -807,14 +807,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title='',outdir=''):
+    print fluxerr.
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
     ww = (catmag < 21.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
 
     flux = flux[ww]
-    fluxerr = fluxerr[ww]
+    #fluxerr = fluxerr[ww]
     zpt = zpt[ww]
     catmag = catmag[ww]
     skyerr= skyerr[ww]
@@ -846,7 +847,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title=''):
     #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
     #raw_input()
     #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
-    starmagerr2 = ((-2.5 * np.log10(flux) + 2.5 * np.log10(flux + fluxerr)) ** 2 + rmsaddin ** 2 + (-2.5 * np.log10(flux))**2 )**.5
+    starmagerr2 = ((-2.5 * np.log10(flux) + 2.5 * np.log10(flux + 0)) ** 2 + rmsaddin ** 2 + (-2.5 * np.log10(flux))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
 
@@ -860,22 +861,22 @@ def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title=''):
 
 
     #raw_input('printing mags')
-    d = (flux - catflux) / fluxerr
+    #d = (flux - catflux) / fluxerr
     ds = (flux - catflux) / skyerr
     #dp = (flux-catflux) / poisson
 
     #chisq = (flux - catflux) ** 2 / catflux
     #
-    # plt.clf()
-    # plt.scatter(catmag,chisq)
-    # plt.ylim(0,15)
-    # plt.xlim(17,21)
-    # plt.axhline(1)
-    # plt.xlabel('Cat Mag')
-    # plt.ylabel('Chi Sq')
-    # plt.savefig(title+'chivscat.png')
+    plt.clf()
+    plt.scatter(catmag,flux-catflux)
+    #plt.ylim(0,15)
+    #plt.xlim(17,21)
+    plt.axhline(0)
+    plt.xlabel('Cat Mag')
+    plt.ylabel('Fit-Cat Flux')
+    plt.savefig(outdir+title+'catresid.png')
     #chisq = np.nanmean(chisq[abs(d) < 3])
-
+    sys.exit()
     plt.clf()
 
     dc = dmam[abs(dmam) < 3]
