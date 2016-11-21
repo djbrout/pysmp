@@ -7,7 +7,7 @@ import sys
 
 #hello from fermilab2
 # Returns xvals, medians, mads
-def bindata(x, y, bins, returnn=False, window=0.):
+def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
     medians = np.zeros(len(bins) - 1)
     mads = np.zeros(len(bins) - 1)
     nums = np.zeros(len(bins) - 1)
@@ -22,7 +22,10 @@ def bindata(x, y, bins, returnn=False, window=0.):
         try:
             nums[i] = len(yhere[ss])
             medians[i] = np.median(yhere[ss])
-            mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i])) * 1 / np.sqrt(len(yhere[ss]))
+            if dontrootn:
+                mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i]))
+            else:
+                mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i])) * 1 / np.sqrt(len(yhere[ss]))
         except IndexError:
             print 'excepted'
             nums[i] = 0.
