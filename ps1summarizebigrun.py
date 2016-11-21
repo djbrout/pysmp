@@ -44,14 +44,15 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
-        data = np.load(cd)
-        dostars = False
+        #data = np.load(cd)
+        dostars = True
         if dostars:
             stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST5/stardata/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],
                         title='rmsaddin_')
+            sys.exit()
     print data.keys()
     print len(data['Flux'])
     print np.unique(data['field'])
