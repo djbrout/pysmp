@@ -2180,7 +2180,7 @@ class smp:
                 #sys.exit()
                 print '1854',nozpt
                 print 'exiting gracefully'
-                sys.exit()
+                #sys.exit()
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
