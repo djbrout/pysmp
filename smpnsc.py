@@ -1251,8 +1251,8 @@ class smp:
         #############################################################################################################################
         #print offsetra
         #print offsetdec
-        #print 'Done with centroiding!!'
-        #sys.exit()
+        print 'Done with centroiding!!'
+        sys.exit()
         orig_nozpt = copy(nozpt)
         print nozpt
         #raw_input()
