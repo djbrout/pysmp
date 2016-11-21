@@ -623,7 +623,7 @@ class metropolis_hastings():
     def mapkernel( self, kicked_modelvec, kicked_psfs, centered_psfs,sky, flags, fitflags, sims, galconv):
 
         if self.shiftpsf:
-            [X, Y] = np.meshgrid(np.arange(20) / 10000., np.arange(20) / 10000.)
+            [X, Y] = np.meshgrid(np.arange(32) / 10000., np.arange(32) / 10000.)
             S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
 
             fr = fft2(self.kicked_galaxy_model)
