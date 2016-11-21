@@ -808,7 +808,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title='',outdir=''):
-    print fluxerr.
+    #print fluxerr.
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
