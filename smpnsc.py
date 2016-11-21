@@ -1368,7 +1368,7 @@ class smp:
                 # raw_input()
                 print ifdhls
                 if (len(ifdhls) > 0):
-                    if (int(ifdhls.split()[-1]) == 0:
+                    if int(ifdhls.split()[-1]) == 0:
                         print 'EMTPY FILE!'*10
                         continue
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp -D ' + imfile + ' .').read()
