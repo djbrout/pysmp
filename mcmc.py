@@ -63,6 +63,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import gc
 import build_psfex
 import sys
+from scipy.fftpack import fft, ifft, fft2, ifft2
 
 
 #import pyfftw
@@ -416,6 +417,7 @@ class metropolis_hastings():
                 print 'Chisq For Each Epoch: ',chsqs
                 tps = (time.time()-self.t1)/self.counter
                 print 'Time per step:',tps
+                print 'PSF Position:',self.current_x_offset,self.current_y_offset
                 #print 'mjdoff: ',self.mjdoff
                 #sys.exit()
                 if (self.counter % 20000) == 0:
@@ -488,8 +490,8 @@ class metropolis_hastings():
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
             #map(self.mapshiftPSF,np.arange(self.Nimage))
-            self.shiftPSFall()
-            print self.x_pix_offset,self.y_pix_offset
+            #self.shiftPSFall()
+            #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
 
         # Contains the convolution
@@ -618,7 +620,24 @@ class metropolis_hastings():
 
     def mapkernel( self, kicked_modelvec, kicked_psfs, centered_psfs,sky, flags, fitflags, sims, galconv):
 
-        if self.fix_gal_model:
+        if self.shiftpsf:
+            [X, Y] = np.meshgrid(np.arange(20) / 10000., np.arange(20) / 10000.)
+            S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
+
+            fr = fft2(self.kicked_galaxy_model)
+            fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
+
+            if kicked_modelvec == 0.:
+                delta = 0.
+            else:
+                delta = np.fft.fftn(S * fr2).real
+                delta = delta / np.sum(delta.ravel())
+                delta *= kicked_modelvec
+
+            galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
+            sims = (delta + galaxy_conv + sky) * self.mask
+
+        elif self.fix_gal_model:
             star_conv = kicked_modelvec * kicked_psfs
             sims =  (star_conv + galconv + sky)*self.mask
         else:
