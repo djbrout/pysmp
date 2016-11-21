@@ -100,17 +100,17 @@ def grabstardata(imagedir,outfile):
                         bigdata['starflux'].extend(zptdata['fitflux'])
                         bigdata['starzpt'].extend(zptdata['fitflux']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
-                        bigdata['chisq'].extend(zptdata['chisqu'])
-                        bigdata['diffimzpt'].extend(zptdata['fakezpt'])
-                        bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
-                        psfs = zptdata['psfs']
-                        for i in range(len(psfs)):
-                            bigdata['psf'].append(psfs[i,:,:])
-                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['fitflux'][i])))
-                            #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
-                            #raw_input()
+                        #bigdata['chisq'].extend(zptdata['chisqu'])
+                        #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
+                        #bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+                        #psfs = zptdata['psfs']
+                        #for i in range(len(psfs)):
+                        #    bigdata['psf'].append(psfs[i,:,:])
+                        #    bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['fitflux'][i])))
+                        #    #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
+                        #    #raw_input()
                         cm = zptdata['cat_mag']
-                        fs = zptdata['flux_starh']
+                        fs = zptdata['fitflux']
                         zp = zptdata['fit_zpt']
                         ww = (cm < 18.) & (cm > 16.)
 
