@@ -295,7 +295,7 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
-            os.system('ifdh cp -D ' + tempfile + ' ' + filename)
+            os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
 
@@ -309,7 +309,7 @@ class tmpwriter():
             os.system('dccp ' + filename + ' ' + tempfile)
         elif self.useifdh:
             #print 'ifdh cp ' + filename + ' ' + tempfile
-            os.system('ifdh cp -D ' + filename + ' ' + tempfile)
+            os.system('ifdh cp ' + filename + ' ' + tempfile)
         else:
             os.system('mv ' + filename + ' ' + tempfile)
 
@@ -320,7 +320,7 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
-            os.system('ifdh cp -D ' + tempfile + ' ' + filename)
+            os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
             if os.path.isfile(filename):
                 os.remove(filename)
@@ -339,7 +339,7 @@ class tmpwriter():
         elif self.useifdh:
             print 'ifdh cp ' + tempfile + ' ' + filename
             os.system('ifdh rm '+filename)
-            os.system('ifdh cp -D ' + tempfile + ' ' + filename)
+            os.system('ifdh cp ' + tempfile + ' ' + filename)
             os.popen('rm '+tempfile)
         else:
             os.system('mv ' + tempfile + ' ' + filename)
@@ -374,7 +374,7 @@ class tmpwriter():
             ls = os.popen('ifdh ls '+dst).read()
             if len(ls) > 0:
                 print os.popen('ifdh rm ' + dst).read()
-            print os.popen('ifdh cp -D ' + src + ' ' + dst).read()
+            print os.popen('ifdh cp ' + src + ' ' + dst).read()
         else:
             os.system('mv ' + src + ' ' + dst)
         print 'saved', dst
