@@ -1366,6 +1366,7 @@ class smp:
                 #print ifdhls
                 #print 'line 576'
                 # raw_input()
+                print ifdhls
                 if (len(ifdhls) > 0) & (int(ifdhls.split()[-1]) > 0) :
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp -D ' + imfile + ' .').read()
                     # imfilel = copy(imfilel)
