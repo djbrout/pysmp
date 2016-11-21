@@ -181,6 +181,8 @@ class metropolis_hastings():
         self.psf_shift_std = psf_shift_std
         self.current_x_offset = xoff
         self.current_y_offset = yoff
+        self.x_pix_offset = xoff
+        self.y_pix_offset = yoff
         self.compressioncounter = 0
         self.shiftpsf = shiftpsf
         self.stop = stop
@@ -612,7 +614,7 @@ class metropolis_hastings():
     def float_sn_pos( self ):
         self.x_pix_offset = self.current_x_offset + np.random.normal( scale= self.psf_shift_std )
         self.y_pix_offset = self.current_y_offset + np.random.normal( scale= self.psf_shift_std ) 
-        self.shiftPSF(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
+        #self.shiftPSF(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
 
     def movepsfs(self,x,y):
         #tpsf = self.build_psfex()
