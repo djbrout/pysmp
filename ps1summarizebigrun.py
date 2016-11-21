@@ -53,16 +53,16 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
                         stardata['poisson'],
                         title='rmsaddin_')
             sys.exit()
-    print data.keys()
-    print len(data['Flux'])
-    print np.unique(data['field'])
-    #raw_input()
-    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'],resultsdir)
-    plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
-                   data['Chisq'],data['rmsaddin'],data['field'],resultsdir)
-    #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
-    #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
-    #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
+    # print data.keys()
+    # print len(data['Flux'])
+    # print np.unique(data['field'])
+    # #raw_input()
+    # plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'],resultsdir)
+    # plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
+    #                data['Chisq'],data['rmsaddin'],data['field'],resultsdir)
+    # #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
+    # #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
+    # #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
 
 def lookup_rms_addin(smpfile,obsid):
     pass
@@ -80,8 +80,8 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
-                if not 'SN-S2' in fname:
-                    if not 'SN-S1' in fname: continue
+                #if not 'SN-S2' in fname:
+                #    if not 'SN-S1' in fname: continue
                 try:
                     zptdata = np.load(os.path.join(imagedir,dirName,fname))
                 except:
