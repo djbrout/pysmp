@@ -1367,7 +1367,10 @@ class smp:
                 #print 'line 576'
                 # raw_input()
                 print ifdhls
-                if (len(ifdhls) > 0) & (int(ifdhls.split()[-1]) > 0) :
+                if (len(ifdhls) > 0):
+                    if (int(ifdhls.split()[-1]) == 0:
+                        print 'EMTPY FILE!'*10
+                        continue
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp -D ' + imfile + ' .').read()
                     # imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
@@ -1401,7 +1404,10 @@ class smp:
                     #print ifdhls
                     #print 'line 610'
                     # raw_input()
-                    if (len(ifdhls) > 0) & (int(ifdhls.split()[-1]) > 0) :
+                    if (len(ifdhls) > 0) :
+                        if int(ifdhls.split()[-1] == 0) :
+                            print 'EMPTY FILE!'*10
+                            continue
                         a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp -D ' + imfile + '.fz .').read()
                         print a
                         a = os.popen('funpack ' + imfile.split('/')[-1] + '.fz').read()
