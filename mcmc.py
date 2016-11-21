@@ -630,23 +630,25 @@ class metropolis_hastings():
     def mapkernel( self, kicked_modelvec, kicked_psfs, centered_psfs,sky, flags, fitflags, sims, galconv):
 
         if self.shiftpsf:
-            [X, Y] = np.meshgrid(np.arange(32) / 10000., np.arange(32) / 10000.)
-            S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
+            if flags == 0:
+                if fitflags == 0.:
+                    [X, Y] = np.meshgrid(np.arange(32) / 10000., np.arange(32) / 10000.)
+                    S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
 
-            #fr = fft2(self.kicked_galaxy_model)
-            #fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
+                    #fr = fft2(self.kicked_galaxy_model)
+                    #fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
 
-            fr2=centered_psfs
+                    fr2=centered_psfs
 
-            if kicked_modelvec == 0.:
-                delta = 0.
-            else:
-                delta = np.fft.fftn(S * fr2).real
-                delta = delta / np.sum(delta.ravel())
-                delta *= kicked_modelvec
+                    if kicked_modelvec == 0.:
+                        delta = 0.
+                    else:
+                        delta = np.fft.fftn(S * fr2).real
+                        delta = delta / np.sum(delta.ravel())
+                        delta *= kicked_modelvec
 
-            galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
-            sims = (delta + galaxy_conv + sky) * self.mask
+                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
+                    sims = (delta + galaxy_conv + sky) * self.mask
 
         elif self.fix_gal_model:
             star_conv = kicked_modelvec * kicked_psfs

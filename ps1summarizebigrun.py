@@ -36,8 +36,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
-        #sys.exit()
+        grabstardata("/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/workspace/","/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/workspace/stardata.npz")
+        sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
         pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],data['FitZPT'],resultsdir)
