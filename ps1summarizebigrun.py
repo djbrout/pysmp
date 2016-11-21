@@ -868,12 +868,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,rmsaddin,sky,skyerr,title='',outdir=''):
     #chisq = (flux - catflux) ** 2 / catflux
     #
     plt.clf()
-    plt.scatter(catmag,flux-catflux)
+    plt.scatter(catmag,-2.5*np.log10(flux)+2.5*np.log10(catflux))
     #plt.ylim(0,15)
     #plt.xlim(17,21)
     plt.axhline(0)
     plt.xlabel('Cat Mag')
-    plt.ylabel('Fit-Cat Flux')
+    plt.ylabel('-2.5log(Fit)+2.5log(Cat) Flux')
     plt.savefig(outdir+title+'catresid.png')
     #chisq = np.nanmean(chisq[abs(d) < 3])
     sys.exit()
