@@ -1730,6 +1730,9 @@ class smp:
 
             xsn = xsn[0]
             ysn = ysn[0]
+            if self.params.survey == 'PS1':
+                xsn += 1
+                ysn += 1
             #print xsn,ysn
             #raw_input('stopppppppppp')
 
