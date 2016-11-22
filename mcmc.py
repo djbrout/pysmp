@@ -375,11 +375,11 @@ class metropolis_hastings():
         self.simsnosnnosky = copy(self.modelvec)*0.
 
         newcpsf = []
-        if self.shiftpsf:
-            for c in self.centered_psfs:
-                fr2 = fft2(np.flipud(np.fliplr(c)))
-                newcpsf.append(fr2)
-            self.centered_psfs = copy(newcpsf)
+        # if self.shiftpsf:
+        #     for c in self.centered_psfs:
+        #         fr2 = fft2(np.flipud(np.fliplr(c)))
+        #         newcpsf.append(fr2)
+        #     self.centered_psfs = copy(newcpsf)
 
         self.run_d_mc()
 
