@@ -3127,16 +3127,19 @@ class smp:
 
             galstd = np.sqrt(abs(galmodel))/params.galmodel_div
             print 'galstd',galstd
+
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
-            modelstd[(modelstd < 100.) & (modelstd != 0.)] = 100.
+            print 'modelstd before',modelstd
+
+            modelstd[(modelstd < 100.) & (modelstd > 0.)] = 100.
 
             tstart = time.time()
             #print 'modelstd',modelstd
             #raw_input()
-            if not self.floatallepochs:
-                #raw_input('shouldnt be here floating all epochs')
-                modelvec[smp_dict['mjd_flag'] == 1] = 0
-                modelstd[smp_dict['mjd_flag'] == 1] = 0
+            # if not self.floatallepochs:
+            #     #raw_input('shouldnt be here floating all epochs')
+            #     modelvec[smp_dict['mjd_flag'] == 1] = 0
+            #     modelstd[smp_dict['mjd_flag'] == 1] = 0
             print 'modelstd after',modelstd
             #raw_input()
             if self.fixgalzero:
