@@ -636,9 +636,9 @@ class metropolis_hastings():
                     S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
 
                     #fr = fft2(self.kicked_galaxy_model)
-                    #fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
+                    fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
 
-                    fr2=centered_psfs
+                    #fr2=centered_psfs
 
                     if kicked_modelvec == 0.:
                         delta = 0.
