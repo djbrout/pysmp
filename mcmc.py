@@ -645,7 +645,7 @@ class metropolis_hastings():
                         delta = 0.
                     else:
                         delta = np.fft.fftn(S * fr2).real
-                        print delta[:100]
+                        #print delta[:100]
                         delta = delta / np.sum(delta.ravel())
                         delta *= kicked_modelvec
 
@@ -735,7 +735,7 @@ class metropolis_hastings():
                     wmask = copy(weights)
                     wmask[wmask > 0] = 1
                     v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/1. + 1.)).ravel()#hardcoded gain, hardcoded readnoise
-                    v = np.real(v)
+                    #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
                 else:
                     if self.comboerr:
