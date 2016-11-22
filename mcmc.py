@@ -633,7 +633,7 @@ class metropolis_hastings():
             if flags == 0:
                 if fitflags == 0.:
                     print centered_psfs.shape
-                    [X, Y] = np.meshgrid(np.arange(34) / 10000., np.arange(34) / 10000.)
+                    [X, Y] = np.meshgrid(np.arange(32) / 10000., np.arange(32) / 10000.)
                     S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
 
                     #fr = fft2(self.kicked_galaxy_model)
@@ -645,6 +645,7 @@ class metropolis_hastings():
                         delta = 0.
                     else:
                         delta = np.fft.fftn(S * fr2).real
+                        print delta[:100]
                         delta = delta / np.sum(delta.ravel())
                         delta *= kicked_modelvec
 
