@@ -899,6 +899,15 @@ class metropolis_hastings():
             self.galmodel_params = self.kicked_galmodel
             self.galmodel_uncertainty = self.kicked_galmodel*0. + 1.
 
+        if self.shiftpsf:
+            self.x_pix_offset = np.mean(self.xhistory[burn_in:])
+            self.y_pix_offset = np.mean(self.yhistory[burn_in:])
+            #self.shiftPSF(x_off=self.xo, y_off=self.yo)
+            self.kicked_galaxy_model = self.galmodel_params
+
+        self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
+                        self.flags, self.fitflags, self.sims, self.gal_conv)
+
     def autocorr( self, x ):
         result = np.correlate( x, x, mode='full' )
         return result[ result.size / 2 : ]
@@ -1126,6 +1135,8 @@ class metropolis_hastings():
             self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
             for i in np.arange(num_iter):
                 self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
+
+
 
     #DIAGNOSTICS
     def check_geweke( self, zscore_mean_crit=1, zscore_std_crit=1.0 ):
