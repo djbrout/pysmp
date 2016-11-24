@@ -2349,6 +2349,7 @@ class smp:
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
                                        returnstamps=True, maskfile=maskfile)
                         print time.time() - tti
+                        raw_input('done')
                         print 'psfmag', psfmag
                         print 'modelshape',image_stamp.shape
 
