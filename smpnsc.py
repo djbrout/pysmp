@@ -491,7 +491,10 @@ class smp:
                     'id_coadd':np.zeros(snparams.nvalid),
                     'snra':np.zeros(snparams.nvalid),
                     'sndec':np.zeros(snparams.nvalid),
-                    'notbrightflag':np.ones(snparams.nvalid)
+                    'notbrightflag':np.ones(snparams.nvalid),
+                    'fullims':[],
+                    'impsfs':[],
+                    'hpsfs':[],
 
                     }
         smp_scale = np.zeros(snparams.nvalid)
@@ -2345,33 +2348,11 @@ class smp:
                         #from time import time
 
                         #for i in range(1000):
-                        #scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                        #    chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
-                        #               returnstamps=True, maskfile=maskfile, fast=True )
+                        scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
+                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
+                                       returnstamps=True, maskfile=maskfile, fast=True )
 
-                        fileroot = imfile.split('.fits')[0]
-                        im = pyfits.getdata('%s.fits' % fileroot)
-                        mask = pyfits.getdata(maskfile)
-                        impsf = pyfits.getdata('%s.dao.psf.fits' % fileroot)
-                        fullpsf, hpsf = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
-                        imhdr = pyfits.getheader('%s.fits' % fileroot)
-                        import chkpsf_fast
 
-                        tfitrad = np.zeros([params.substamp, params.substamp])
-                        tradius = 4
-                        for x in np.arange(params.substamp):
-                            for y in np.arange(params.substamp):
-                                if np.sqrt((params.substamp/ 2. - x) ** 2 + (params.substamp / 2. - y) ** 2) < tradius:
-                                    tfitrad[int(x), int(y)] = 1.
-
-                        tti = time.time()
-                        print 'getting multiple image stamps'
-                        for i in range(1000):
-                            model = \
-                                   chkpsf_fast.fit(imfile.split('.fits')[0],im,mask, impsf,fullpsf,imhdr,hpsf,tfitrad, xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
-                                          returnstamps=True, maskfile=maskfile )
-                        print time.time() - tti
-                        raw_input('done')
                         #print 'psfmag', psfmag
                         print 'modelshape',image_stamp.shape
 
@@ -2503,6 +2484,17 @@ class smp:
                                     #    smp_dict['scale_err'][i] = np.nan
                                     #    #raw_input('photometry flag')
                                     #raw_input('flags above')
+
+
+
+                                    fileroot = imfile.split('.fits')[0]
+
+                                    if self.snaparams.survey == 'PS1':
+                                        smp_dict['fullims'].append(pyfits.getdata('%s.fits' % fileroot))
+                                        smp_dict['impsfs'].append(pyfits.getdata('%s.dao.psf.fits' % fileroot))
+                                        tmpp, hp = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
+                                        smp_dict['hpsfs'].append(hp)
+
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
@@ -3244,6 +3236,9 @@ class smp:
                     , psfcenter=smp_dict['psfcenter']
                     , model_errors=True
                     , survey = self.snparams.survey
+                    , fullims = smp_dict['fullims']
+                    , impsfs = smp_dict['impsfs']
+                    , hpsfs = smp_dict['hpsfs']
 
                     )
             modelveco = copy(modelvec)
