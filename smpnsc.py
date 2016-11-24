@@ -2489,7 +2489,7 @@ class smp:
 
                                     fileroot = imfile.split('.fits')[0]
 
-                                    if self.snaparams.survey == 'PS1':
+                                    if self.snparams.survey == 'PS1':
                                         smp_dict['fullims'].append(pyfits.getdata('%s.fits' % fileroot))
                                         smp_dict['impsfs'].append(pyfits.getdata('%s.dao.psf.fits' % fileroot))
                                         tmpp, hp = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
