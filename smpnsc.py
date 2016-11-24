@@ -2342,7 +2342,7 @@ class smp:
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
                         print 'getting multiple image stamps'
-                        from time import time
+                        #from time import time
                         tti = time.time()
                         for i in range(1000):
                             scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
