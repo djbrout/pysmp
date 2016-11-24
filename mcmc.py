@@ -129,6 +129,7 @@ class metropolis_hastings():
                 , y = None
                 , psffile = None
                 , psfcenter = None
+                , survey = None
                 ):
         '''
         if model is None:

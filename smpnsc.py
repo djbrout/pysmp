@@ -2341,9 +2341,14 @@ class smp:
                         # save_fits_image(mask,'test/fullmask.fits')
                         # print 'maskfile',maskfile
                         # raw_input('printed maskfile')
-                        scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
+                        print 'getting multiple image stamps'
+                        from time import time
+                        tti = time.time()
+                        for i in range(1000):
+                            scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
                                        returnstamps=True, maskfile=maskfile)
+                        print time.time() - tti
                         print 'psfmag', psfmag
                         print 'modelshape',image_stamp.shape
 
@@ -3215,6 +3220,7 @@ class smp:
                     , psffile=smp_dict['psf_filename']
                     , psfcenter=smp_dict['psfcenter']
                     , model_errors=True
+                    , survey = self.snparams.survey
 
                     )
             modelveco = copy(modelvec)
