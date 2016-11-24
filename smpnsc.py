@@ -2361,7 +2361,7 @@ class smp:
                         tradius = 4
                         for x in np.arange(params.substamp):
                             for y in np.arange(params.substamp):
-                                if np.sqrt((params.substamp/ / 2. - x) ** 2 + (params.substamp / 2. - y) ** 2) < tradius:
+                                if np.sqrt((params.substamp/ 2. - x) ** 2 + (params.substamp / 2. - y) ** 2) < tradius:
                                     tfitrad[int(x), int(y)] = 1.
 
                         tti = time.time()
@@ -2372,7 +2372,7 @@ class smp:
                                           returnstamps=True, maskfile=maskfile )
                         print time.time() - tti
                         raw_input('done')
-                        print 'psfmag', psfmag
+                        #print 'psfmag', psfmag
                         print 'modelshape',image_stamp.shape
 
                         #save_fits_image(psf_stamp,'test/psf.fits')
