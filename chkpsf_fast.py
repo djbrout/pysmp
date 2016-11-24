@@ -5,7 +5,7 @@ import numpy as np
 import dao_value
 import rebin
 
-def fit(im, impsf,hpsf,xpos=None, ypos=None, radius=4):
+def fit(im, impsf,hpsf,xpos=None, ypos=None, radius=32):
 
     x = xpos
     y = ypos
