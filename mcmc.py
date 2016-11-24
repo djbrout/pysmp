@@ -910,6 +910,7 @@ class metropolis_hastings():
             self.galmodel_params = self.kicked_galmodel
             self.galmodel_uncertainty = self.kicked_galmodel*0. + 1.
 
+
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
