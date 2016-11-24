@@ -2343,11 +2343,33 @@ class smp:
                         # raw_input('printed maskfile')
                         print 'getting multiple image stamps'
                         #from time import time
+
+                        #for i in range(1000):
+                        #scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
+                        #    chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
+                        #               returnstamps=True, maskfile=maskfile, fast=True )
+
+                        fileroot = imfile.split('.fits')[0]
+                        im = pyfits.getdata('%s.fits' % fileroot)
+                        mask = pyfits.getdata(maskfile)
+                        impsf = pyfits.getdata('%s.dao.psf.fits' % fileroot)
+                        fullpsf, hpsf = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
+                        imhdr = pyfits.getheader('%s.fits' % fileroot)
+                        import chkpsf_fast
+
+                        tfitrad = np.zeros([params.substamp, params.substamp])
+                        tradius = 4
+                        for x in np.arange(params.substamp):
+                            for y in np.arange(params.substamp):
+                                if np.sqrt((params.substamp/ / 2. - x) ** 2 + (params.substamp / 2. - y) ** 2) < tradius:
+                                    tfitrad[int(x), int(y)] = 1.
+
                         tti = time.time()
+                        print 'getting multiple image stamps'
                         for i in range(1000):
-                            scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
-                                       returnstamps=True, maskfile=maskfile)
+                            model = \
+                                   chkpsf_fast.fit(imfile.split('.fits')[0],im,mask, impsf,fullpsf,imhdr,hpsf,tfitrad, xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
+                                          returnstamps=True, maskfile=maskfile )
                         print time.time() - tti
                         raw_input('done')
                         print 'psfmag', psfmag
