@@ -33,5 +33,6 @@ def fit(im, impsf,hpsf,xpos=None, ypos=None, radius=32):
     except:
         return 1, 1, 0, 0, False, 0, 0, 0
 
+    subim = im[iylo - 1:iyhi, ixlo - 1:ixhi]
 
-    return model
+    return model,subim
