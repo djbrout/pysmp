@@ -1364,7 +1364,7 @@ class metropolis_hastings():
                                          round(self.y[epoch] + self.y_pix_offset)]
 
                         self.kicked_psfs[epoch, :, :] = thispsf
-                        self.data[epoch,:,:] = thisim[::-1,::-1] * self.scalefactor[epoch]
+                        self.data[epoch,:,:] = thisim * self.scalefactor[epoch]
 
                     elif self.survey == 'DES':
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,

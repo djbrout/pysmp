@@ -1735,8 +1735,8 @@ class smp:
             xsn = xsn[0]
             ysn = ysn[0]
             if self.snparams.survey == 'PS1':
-                xsn += 1
-                ysn -= 1
+                xsn += 0
+                ysn -= 0
             #print xsn,ysn
             #raw_input('stopppppppppp')
 
@@ -2350,7 +2350,7 @@ class smp:
 
                         #for i in range(1000):
                         scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
-                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn+2, ypos=ysn+2, radius=params.substamp/2.-1.,
+                            chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, radius=params.substamp/2.-1.,
                                        returnstamps=True, maskfile=maskfile)
 
 
