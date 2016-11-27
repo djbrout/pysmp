@@ -163,10 +163,10 @@ def save_fits_image(image,filename):
         os.remove(filename)
     except:
         pass
-    hdu = pf.PrimaryHDU(image)
-    if os.path.exists(filename):
-        os.remove(filename)
-    hdu.writeto(filename)
+    # hdu = pf.PrimaryHDU(image)
+    # if os.path.exists(filename):
+    #     os.remove(filename)
+    # hdu.writeto(filename)
 
     return
 
@@ -352,7 +352,8 @@ class tmpwriter():
     def savefits(self,data,filename):
 
         tempfile = 'tmp.fits'
-        #print 'saving to temporary file',tempfile
+        print 'saving to temporary file',tempfile
+        return
         if os.path.isfile(tempfile):
             os.remove(tempfile)
         if os.path.isfile(filename):
