@@ -1735,8 +1735,8 @@ class smp:
             xsn = xsn[0]
             ysn = ysn[0]
             if self.snparams.survey == 'PS1':
-                xsn += 0
-                ysn -= 0
+                xsn += 2
+                ysn += 2
             #print xsn,ysn
             #raw_input('stopppppppppp')
 
