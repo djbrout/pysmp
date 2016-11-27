@@ -134,6 +134,7 @@ class metropolis_hastings():
                 , fullims = None
                 , hpsfs = None
                 , impsfs = None
+                , scalefactor = None
                 ):
         '''
         if model is None:
@@ -225,6 +226,7 @@ class metropolis_hastings():
         self.impsfs = impsfs
         self.hpsfs = hpsfs
         self.survey = survey
+        self.scalefactor = scalefactor
 
 
         if self.isfermigrid and self.isworker:
@@ -1362,7 +1364,7 @@ class metropolis_hastings():
                                          round(self.y[epoch] + self.y_pix_offset)]
 
                         self.kicked_psfs[epoch, :, :] = thispsf
-                        self.data[epoch,:,:] = thisim
+                        self.data[epoch,:,:] = thisim * self.scalefactor[epoch]
 
                     elif self.survey == 'DES':
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,

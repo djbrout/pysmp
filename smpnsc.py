@@ -455,6 +455,7 @@ class smp:
                     'image_scalefactor':np.zeros(snparams.nvalid),
                     'snx':np.zeros(snparams.nvalid),
                     'sny':np.zeros(snparams.nvalid),
+                    'scalefactor':np.zeros(snparams.nvalid),
                     'fwhm_arcsec':np.zeros(snparams.nvalid),
                     'sky':np.zeros(snparams.nvalid),
                     'skyerr':np.zeros(snparams.nvalid),
@@ -2503,6 +2504,7 @@ class smp:
                                     smp_dict['image_scalefactor'][i] = scalefactor
                                     smp_dict['snx'][i] = xsn
                                     smp_dict['sny'][i] = ysn
+                                    smp_dict['scalefactor'][i] = scalefactor
                                     smp_dict['snra'][i] = snparams.RA
                                     smp_dict['sndec'][i] = snparams.DECL
                                     smp_dict['skysig'][i] = skysig
@@ -3241,6 +3243,7 @@ class smp:
                     , fullims = smp_dict['fullims']
                     , impsfs = smp_dict['impsfs']
                     , hpsfs = smp_dict['hpsfs']
+                    , scalefactor = smp_dict['scalefactor']
 
                     )
             modelveco = copy(modelvec)
