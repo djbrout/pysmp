@@ -135,6 +135,7 @@ class metropolis_hastings():
                 , hpsfs = None
                 , impsfs = None
                 , scalefactor = None
+                , dontplotstamps = False
                 ):
         '''
         if model is None:
@@ -227,6 +228,7 @@ class metropolis_hastings():
         self.hpsfs = hpsfs
         self.survey = survey
         self.scalefactor = scalefactor
+        self.dontplotstamps = dontplotstamps
 
 
         if self.isfermigrid and self.isworker:
@@ -493,7 +495,8 @@ class metropolis_hastings():
         self.plotchains()
         self.savechains()
         print 'plotting stamps... this may take a minute...'
-        self.plotstamps()
+        if not self.dontplotstamps:
+            self.plotstamps()
         #np.savez(self.results_npz, pixel_history = self.pixel_history
         #                        , simulated_stamps = self.simulated_images
         #                        , data_stamps = self.real_data_stamps_trimmed

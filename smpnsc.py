@@ -3040,6 +3040,7 @@ class smp:
                     , burnin = .75
                     , lcout = os.path.join(self.lcfilepath+'/'+filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_nosn.npz')
+                    , dontplotstamps = True
                     )
 
 
