@@ -934,8 +934,9 @@ class metropolis_hastings():
         pdf_pages = PdfPages('stamps.pdf')
         fig = plt.figure(figsize=(25, 10))
         for i in range(self.Nimage):
-            self.x_pix_offset = -0.49250885143
-            self.y_pix_offset = .627071191203
+            #self.x_pix_offset = -0.49250885143
+            #self.y_pix_offset = .627071191203
+            self.model_params()
             map(self.mapshiftPSF, np.arange(self.Nimage))
             self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
                         self.flags, self.fitflags, self.sims, self.gal_conv)
