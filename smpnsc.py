@@ -3151,6 +3151,9 @@ class smp:
                     yoff = 0.
                     modelvec = scaled_diffim_flux
                     #modelstd = scaled_diffim_fluxerr/7.
+
+
+
             galmodel = galmodel_params
             print 'galmodel',galmodel
 
@@ -3196,6 +3199,10 @@ class smp:
             print "Garbage collector: collected %d objects." % (collected)
             if self.fermilog:
                 self.tmpwriter.appendfile("Garbage collector: collected %d objects." % (collected), self.fermilogfile)
+
+
+            print modelvec
+            raw_input('mmmmmmm')
 
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
