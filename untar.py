@@ -7,7 +7,7 @@ afiles = f.read().split()
 f.close()
 tarfiles = os.listdir('/pnfs/des/persistent/smp/v6')
 
-for tfile in tarfiles:
+for tfile in tarfiles[::-1]:
     if not tfile.split('.')[-1] == 'tar':
         continue
     if tfile.split('/')[-1] in afiles:
