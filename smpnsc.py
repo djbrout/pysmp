@@ -496,6 +496,7 @@ class smp:
                     'fullims':[],
                     'impsfs':[],
                     'hpsfs':[],
+                    'fileroots':np.chararray(snparams.nvalid,itemsize=200),
 
                     }
         smp_scale = np.zeros(snparams.nvalid)
@@ -2489,18 +2490,18 @@ class smp:
 
 
                                     fileroot = imfile.split('.fits')[0]
-
-                                    if self.snparams.survey == 'PS1':
-                                        smp_dict['fullims'].append(pyfits.getdata('%s.fits' % fileroot))
-                                        smp_dict['impsfs'].append(pyfits.getdata('%s.dao.psf.fits' % fileroot))
-                                        tmpp, hp = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
-                                        smp_dict['hpsfs'].append(hp)
+                                    smp_dict['fileroots'][i] = fileroot
+                                    #if self.snparams.survey == 'PS1':
+                                    #    smp_dict['fullims'].append('%s.fits' % fileroot)
+                                    #    smp_dict['impsfs'].append('%s.dao.psf.fits' % fileroot)
+                                    #    tmpp, hp = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
+                                    #    smp_dict['hpsfs'][i] =
 
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
-                                    smp_dict['mjdoff'].append( mjdoff )
-                                    smp_dict['mjdslopeinteroff'].append(mjdslopeinteroff)
+                                    #smp_dict['mjdoff'].append( mjdoff )
+                                    #smp_dict['mjdslopeinteroff'].append(mjdslopeinteroff)
                                     smp_dict['image_scalefactor'][i] = scalefactor
                                     smp_dict['snx'][i] = xsn
                                     smp_dict['sny'][i] = ysn
@@ -2511,7 +2512,7 @@ class smp:
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
-                                    smp_dict['mask'].append(msk)
+                                    smp_dict['mask'][i] = msk
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['image_filename'][i] = imfile
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
@@ -3254,9 +3255,10 @@ class smp:
                     , psfcenter=smp_dict['psfcenter']
                     , model_errors=True
                     , survey = self.snparams.survey
-                    , fullims = smp_dict['fullims']
-                    , impsfs = smp_dict['impsfs']
-                    , hpsfs = smp_dict['hpsfs']
+                    #, fullims = smp_dict['fullims']
+                    #, impsfs = smp_dict['impsfs']
+                    #, hpsfs = smp_dict['hpsfs']
+                    , fileroots = smp_dict['fileroots']
                     , scalefactor = smp_dict['scalefactor']
                     , gain=smp_dict['gain']
 

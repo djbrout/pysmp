@@ -63,6 +63,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import gc
 import chkpsf_fast
 import build_psfex
+import rdpsf
 import sys
 from scipy.fftpack import fft, ifft, fft2, ifft2
 
@@ -83,7 +84,7 @@ class metropolis_hastings():
                 , substamp = 0
                 , Nimage = 1
                 , maxiter = 100000
-                , gain = 4.0
+                , gain = [1.]
                 , model_errors = False
                 , readnoise = 0.
                 , analytical = 'No'
@@ -136,6 +137,7 @@ class metropolis_hastings():
                 , impsfs = None
                 , scalefactor = None
                 , dontplotstamps = False
+                , fileroots = None
                 ):
         '''
         if model is None:
@@ -229,6 +231,25 @@ class metropolis_hastings():
         self.survey = survey
         self.scalefactor = scalefactor
         self.dontplotstamps = dontplotstamps
+
+
+        self.impsfs = []
+        self.fullims = []
+        self.hpsfs = []
+        if self.survey == 'PS1':
+            for fileroot in fileroots:
+                try:
+                    fim = pf.getdata('%s.fits' % fileroot)
+                    ipf = pf.getdata('%s.dao.psf.fits' % fileroot)
+                    tmpp, hp = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
+
+                    self.fullims.append(fim)
+                    self.impsfs.append(ipf)
+                    self.hpsfs.append(hp)
+                except:
+                    self.fullims.append(0)
+                    self.impsfs.append(0)
+                    self.hpsfs.append(0)
 
 
         if self.isfermigrid and self.isworker:
