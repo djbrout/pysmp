@@ -934,7 +934,15 @@ class metropolis_hastings():
         pdf_pages = PdfPages('stamps.pdf')
         fig = plt.figure(figsize=(25, 10))
         for i in range(self.Nimage):
-            tchi = np.sum((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask)/len(self.mask[self.mask>0.].ravel())
+            self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
+                        self.flags, self.fitflags, self.sims, self.gal_conv)
+            wmask = copy(self.weights[i,:,:])
+            wmask[wmask > 0] = 1
+            v = ((self.sims[i,:,:] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i,:,:] - self.sky[i]) / 1. + 1.)).ravel()  # hardcoded gain, hardcoded readnoise
+            # v = np.real(v)
+            chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
+            tchi = chisq/len(self.mask[self.mask>0.].ravel())
+            #tchi = np.sum((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask)/len(self.mask[self.mask>0.].ravel())
             if not tchi > -1.:
                 continue
             if self.flags[i] == 1:
