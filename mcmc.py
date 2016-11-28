@@ -1361,8 +1361,8 @@ class metropolis_hastings():
                                                           xpos=self.x[epoch] + self.x_pix_offset,
                                                           ypos=self.y[epoch] + self.y_pix_offset,
                                                           radius=15)
-                        thispsfcenter = [np.floor(self.x[epoch] + self.x_pix_offset)+1,
-                                         np.floor(self.y[epoch] + self.y_pix_offset)+1]
+                        thispsfcenter = [np.floor(self.x[epoch] + self.x_pix_offset),
+                                         np.floor(self.y[epoch] + self.y_pix_offset)]
 
                         #self.kicked_psfs[epoch, :, :] = thispsf
                         #self.data[epoch,:,:] = thisim * self.scalefactor[epoch]

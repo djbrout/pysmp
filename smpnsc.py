@@ -2517,7 +2517,7 @@ class smp:
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = psffile
                                     if self.snparams.survey == 'PS1':
-                                        self.psfcenter = [round(xsn),round(ysn)]
+                                        self.psfcenter = [floor(xsn),floor(ysn)]
                                     smp_dict['psfcenter'].append(self.psfcenter)
                                     #print xsn,ysn,psffile,self.psfcenter
                                     #raw_input('testing new dict params')
