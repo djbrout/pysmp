@@ -671,9 +671,10 @@ class metropolis_hastings():
         else:
             if flags == 0:
                 if fitflags == 0.:
-                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
-                    star_conv = kicked_modelvec * kicked_psfs#/np.sum(kicked_psfs.ravel())
-                    sims = (star_conv + galaxy_conv + sky)*self.mask
+                    if not kicked_psfs is None:
+                        galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
+                        star_conv = kicked_modelvec * kicked_psfs#/np.sum(kicked_psfs.ravel())
+                        sims = (star_conv + galaxy_conv + sky)*self.mask
                     
         return sims
 
