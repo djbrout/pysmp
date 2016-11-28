@@ -3163,7 +3163,7 @@ class smp:
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             print 'modelstd before',modelstd
 
-            modelstd[(modelstd < 100.) & (modelstd > 0.)] = 100.
+            modelstd[(modelstd < 50.) & (modelstd > 0.)] = 50.
 
             tstart = time.time()
             #print 'modelstd',modelstd
