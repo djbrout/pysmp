@@ -879,8 +879,8 @@ class metropolis_hastings():
                 self.galhistory.append( self.kicked_galmodel )
             self.modelvechistory.append(self.kicked_modelvec)
             if self.shiftpsf:
-                self.xhistory.append(self.current_x_offset*self.platescale)
-                self.yhistory.append(self.current_y_offset*self.platescale)
+                self.xhistory.append(self.current_x_offset)
+                self.yhistory.append(self.current_y_offset)
         return
 
     def update_unaccepted_history( self ):
@@ -890,8 +890,8 @@ class metropolis_hastings():
                 self.galhistory.append( self.galaxy_model )
             self.modelvechistory.append( self.modelvec )
             if self.shiftpsf:
-                self.xhistory.append(self.current_x_offset*self.platescale)
-                self.yhistory.append(self.current_y_offset*self.platescale)
+                self.xhistory.append(self.current_x_offset)
+                self.yhistory.append(self.current_y_offset)
         return
 
     def model_params( self ):
@@ -919,8 +919,8 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
-            for i in self.xhistory:
-                print i
+            #for i in self.xhistory:
+            #    print i
             raw_input()
             map(self.mapshiftPSF, np.arange(self.Nimage))
             #self.shiftPSF(x_off=self.xo, y_off=self.yo)
