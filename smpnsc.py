@@ -3226,8 +3226,8 @@ class smp:
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
                     , psf_shift_std = self.params.sn_shift_std
-                    , xoff = 0.#0.490378806544
-                    , yoff = 0.#-0.357611929446
+                    , xoff = -0.490378806544
+                    , yoff = .627071191203
                     , shiftpsf = self.params.sn_shift_std > 0.
                     , fileappend = ''
                     , stop = False
