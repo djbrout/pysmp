@@ -1373,8 +1373,8 @@ class metropolis_hastings():
 
                         #self.kicked_psfs[epoch, :, :] = thispsf
                         #self.data[epoch,:,:] = thisim * self.scalefactor[epoch]
-                        xdiff = self.x[epoch] + self.x_pix_offset - np.floor(self.x[epoch])
-                        ydiff = self.y[epoch] + self.y_pix_offset - np.floor(self.y[epoch])
+                        ydiff = self.x[epoch] + self.x_pix_offset - np.floor(self.x[epoch])
+                        xdiff = self.y[epoch] + self.y_pix_offset - np.floor(self.y[epoch])
                         if xdiff > 1. or ydiff > 1. or xdiff < 0 or ydiff < 0:
                             newpsf = thispsf
                             print xdiff,ydiff
@@ -1403,17 +1403,17 @@ class metropolis_hastings():
                             if ydiff < 1. and xdiff > 0.:
                                 pass
                             elif ydiff < 0. and ydiff > -1.:
-                                newpsf[:, :-1] = copy(thispsf[:, 1:])
-                            elif ydiff > 1. and ydiff < 2.:
                                 newpsf[:, 1:] = copy(thispsf[:, :-1])
+                            elif ydiff > 1. and ydiff < 2.:
+                                newpsf[:, :-1] = copy(thispsf[:, 1:])
                             elif ydiff < -1 and ydiff > -2:
-                                newpsf[:, :-2] = copy(thispsf[:, 2:])
-                            elif ydiff > 2. and ydiff < 3:
                                 newpsf[:, 2:] = copy(thispsf[:, :-2])
+                            elif ydiff > 2. and ydiff < 3:
+                                newpsf[:, :-2] = copy(thispsf[:, 2:])
                             elif ydiff < -2. and ydiff > -3.:
-                                newpsf[:, :-3] = copy(thispsf[:, 3:])
-                            elif ydiff > 3. and ydiff < 4.:
                                 newpsf[:, 3:] = copy(thispsf[:, :-3])
+                            elif ydiff > 3. and ydiff < 4.:
+                                newpsf[:, :-3] = copy(thispsf[:, 3:])
                             else:
                                 print 'MCMC is attempting to offset the psf by more than three pixels! 1'
                                 raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
