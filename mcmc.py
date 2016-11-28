@@ -938,7 +938,7 @@ class metropolis_hastings():
                         self.flags, self.fitflags, self.sims, self.gal_conv)
             wmask = copy(self.weights[i,:,:])
             wmask[wmask > 0] = 1
-            v = ((self.sims[i,:,:] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i,:,:] - self.sky[i]) / 1. + 1.)).ravel()  # hardcoded gain, hardcoded readnoise
+            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / 1. + 1.)).ravel()  # hardcoded gain, hardcoded readnoise
             # v = np.real(v)
             chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
             tchi = chisq/len(self.mask[self.mask>0.].ravel())
