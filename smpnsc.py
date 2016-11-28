@@ -3003,7 +3003,7 @@ class smp:
         try:
             self.tmpwriter.savez(os.path.join(npoutdir,filename+'_smpDict.npz'),**smp_dict)
         except:
-            print 'could not save ',os.path.join(npoutdir,filename+'_smpDict.npz'
+            print 'could not save ',os.path.join(npoutdir,filename+'_smpDict.npz')
 
         if self.fermilog:
             self.tmpwriter.appendfile('starting galaxy mcmc\n', self.fermilogfile)
