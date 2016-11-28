@@ -1380,7 +1380,7 @@ class metropolis_hastings():
                         xdiff = self.y[epoch] + self.y_pix_offset - np.floor(self.y[epoch])
                         if xdiff > 1. or ydiff > 1. or xdiff < 0 or ydiff < 0:
                             newpsf = thispsf
-                            print xdiff,ydiff
+                            #print xdiff,ydiff
                             # print thispsfcenter[1] ,self.psfcenter[epoch][1]
 
                             if xdiff < 1. and xdiff > 0.:

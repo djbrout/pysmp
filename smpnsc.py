@@ -3236,7 +3236,7 @@ class smp:
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
                     , pixelate_model = 1.
-                    , burnin = .3
+                    , burnin = .7
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
                     , mjdoff = smp_dict['mjdoff']
