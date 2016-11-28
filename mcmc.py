@@ -511,7 +511,7 @@ class metropolis_hastings():
             #print 'shifting'
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
-            self.kicked_psfs = map(self.mapshiftPSF,np.arange(self.Nimage))
+            map(self.mapshiftPSF,np.arange(self.Nimage))
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
@@ -671,10 +671,9 @@ class metropolis_hastings():
         else:
             if flags == 0:
                 if fitflags == 0.:
-                    if not kicked_psfs is None:
-                        galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
-                        star_conv = kicked_modelvec * kicked_psfs#/np.sum(kicked_psfs.ravel())
-                        sims = (star_conv + galaxy_conv + sky)*self.mask
+                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
+                    star_conv = kicked_modelvec * kicked_psfs#/np.sum(kicked_psfs.ravel())
+                    sims = (star_conv + galaxy_conv + sky)*self.mask
                     
         return sims
 
@@ -917,7 +916,7 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
-            self.kicked_psfs = map(self.mapshiftPSF, np.arange(self.Nimage))
+            map(self.mapshiftPSF, np.arange(self.Nimage))
             #self.shiftPSF(x_off=self.xo, y_off=self.yo)
             self.kicked_galaxy_model = self.galmodel_params
 
@@ -1416,7 +1415,7 @@ class metropolis_hastings():
                             raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
 
                         thispsf = newpsf
-                    return thispsf
+                    self.kicked_psfs[epoch, :, :] = thispsf
 
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
