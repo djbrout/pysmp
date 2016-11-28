@@ -3201,8 +3201,8 @@ class smp:
                 self.tmpwriter.appendfile("Garbage collector: collected %d objects." % (collected), self.fermilogfile)
 
 
-            print modelvec
-            raw_input('mmmmmmm')
+            #print modelvec
+            #raw_input('mmmmmmm')
 
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
