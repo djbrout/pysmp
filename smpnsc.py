@@ -1735,8 +1735,8 @@ class smp:
             xsn = xsn[0]
             ysn = ysn[0]
             if self.snparams.survey == 'PS1':
-                xsn += 3
-                ysn += 2
+                xsn += 4
+                ysn += 1
             #print xsn,ysn
             #raw_input('stopppppppppp')
 
@@ -3226,8 +3226,8 @@ class smp:
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
                     , psf_shift_std = self.params.sn_shift_std
-                    , xoff = 0.490378806544
-                    , yoff = -0.357611929446
+                    , xoff = 0.#0.490378806544
+                    , yoff = 0.#-0.357611929446
                     , shiftpsf = self.params.sn_shift_std > 0.
                     , fileappend = ''
                     , stop = False
