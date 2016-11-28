@@ -2534,7 +2534,11 @@ class smp:
                                     smp_dict['diffim_fluxerr'][i] = snparams.fluxerr[j]
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
+
                                     smp_dict['gain'][i] = self.gain
+                                    if self.snparams.survey == 'PS1':
+                                        smp_dict['gain'][i] = 1.
+
                                     smp_dict['rmsaddin'][i] = rmsaddin
                                     fs = snparams.flux
                                     brightlimit = fs[np.argsort(fs)][::-1][:15]
@@ -3254,6 +3258,7 @@ class smp:
                     , impsfs = smp_dict['impsfs']
                     , hpsfs = smp_dict['hpsfs']
                     , scalefactor = smp_dict['scalefactor']
+                    , gain=smp_dict['gain']
 
                     )
             modelveco = copy(modelvec)

@@ -85,7 +85,7 @@ class metropolis_hastings():
                 , maxiter = 100000
                 , gain = 4.0
                 , model_errors = False
-                , readnoise = 5.
+                , readnoise = 0.
                 , analytical = 'No'
                 , mask = None
                 , fix = None
@@ -538,7 +538,7 @@ class metropolis_hastings():
         #print np.median(1./(self.simsnosn[aa][self.simsnosn[aa] > 0.]/self.gain))
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
-        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights))
+        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain))
         #print self.csv
         #print csv
         #raw_input()
@@ -750,7 +750,7 @@ class metropolis_hastings():
                     #v = ( (sims - data)**2 / (sims/self.gain + (self.readnoise/self.gain)**2) ).ravel()
                     wmask = copy(weights)
                     wmask[wmask > 0] = 1
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/1. + 1.)).ravel()#hardcoded gain, hardcoded readnoise
+                    v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/self.gain + self.readnoise/self.gain)).ravel()#hardcoded gain, hardcoded readnoise
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
                 else:
@@ -948,7 +948,7 @@ class metropolis_hastings():
                         self.flags, self.fitflags, self.sims, self.gal_conv)
             wmask = copy(self.weights[i,:,:])
             wmask[wmask > 0] = 1
-            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / 1. + 1.)).ravel()  # hardcoded gain, hardcoded readnoise
+            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
             # v = np.real(v)
             chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
             tchi = chisq/len(self.mask[self.mask>0.].ravel())
