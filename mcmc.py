@@ -921,7 +921,7 @@ class metropolis_hastings():
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
             #for i in self.xhistory:
             #    print i
-            raw_input()
+            #raw_input()
             map(self.mapshiftPSF, np.arange(self.Nimage))
             #self.shiftPSF(x_off=self.xo, y_off=self.yo)
             self.kicked_galaxy_model = self.galmodel_params
@@ -941,8 +941,8 @@ class metropolis_hastings():
             #self.y_pix_offset = .627071191203
 
             self.model_params()
-            print self.x_pix_offset,self.y_pix_offset
-            raw_input('sssss')
+            #print self.x_pix_offset,self.y_pix_offset
+            #raw_input('sssss')
             map(self.mapshiftPSF, np.arange(self.Nimage))
             self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
                         self.flags, self.fitflags, self.sims, self.gal_conv)
