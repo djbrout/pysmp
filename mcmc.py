@@ -1386,17 +1386,17 @@ class metropolis_hastings():
                             if xdiff < 1. and xdiff > 0.:
                                 pass
                             elif xdiff < 0. and xdiff > -1.:
-                                newpsf[1:, :] = thispsf[:-1, :]
-                            elif xdiff > 1. and xdiff < 2.:
                                 newpsf[:-1, :] = thispsf[1:, :]
+                            elif xdiff > 1. and xdiff < 2.:
+                                newpsf[1:, :] = thispsf[:-1, :]
                             elif xdiff < -1 and xdiff > -2:
-                                newpsf[2:, :] = thispsf[:-2, :]
-                            elif xdiff > 2. and xdiff < 3:
                                 newpsf[:-2, :] = thispsf[2:, :]
+                            elif xdiff > 2. and xdiff < 3:
+                                newpsf[2:, :] = thispsf[:-2, :]
                             elif xdiff < -2. and xdiff > -3.:
-                                newpsf[3:, :] = thispsf[:-3, :]
-                            elif xdiff > 3. and xdiff < 4.:
                                 newpsf[:-3, :] = thispsf[3:, :]
+                            elif xdiff > 3. and xdiff < 4.:
+                                newpsf[3:, :] = thispsf[:-3, :]
                             else:
                                 print 'MCMC is attempting to offset the psf by more than three pixels! 0'
                                 raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 0')
@@ -1406,17 +1406,17 @@ class metropolis_hastings():
                             if ydiff < 1. and xdiff > 0.:
                                 pass
                             elif ydiff < 0. and ydiff > -1.:
-                                newpsf[:, 1:] = copy(thispsf[:, :-1])
-                            elif ydiff > 1. and ydiff < 2.:
                                 newpsf[:, :-1] = copy(thispsf[:, 1:])
+                            elif ydiff > 1. and ydiff < 2.:
+                                newpsf[:, 1:] = copy(thispsf[:, :-1])
                             elif ydiff < -1 and ydiff > -2:
-                                newpsf[:, 2:] = copy(thispsf[:, :-2])
-                            elif ydiff > 2. and ydiff < 3:
                                 newpsf[:, :-2] = copy(thispsf[:, 2:])
+                            elif ydiff > 2. and ydiff < 3:
+                                newpsf[:, 2:] = copy(thispsf[:, :-2])
                             elif ydiff < -2. and ydiff > -3.:
-                                newpsf[:, 3:] = copy(thispsf[:, :-3])
-                            elif ydiff > 3. and ydiff < 4.:
                                 newpsf[:, :-3] = copy(thispsf[:, 3:])
+                            elif ydiff > 3. and ydiff < 4.:
+                                newpsf[:, 3:] = copy(thispsf[:, :-3])
                             else:
                                 print 'MCMC is attempting to offset the psf by more than three pixels! 1'
                                 raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
