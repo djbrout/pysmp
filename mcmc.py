@@ -919,6 +919,9 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
+            for i in self.xhistory:
+                print i
+            raw_input()
             map(self.mapshiftPSF, np.arange(self.Nimage))
             #self.shiftPSF(x_off=self.xo, y_off=self.yo)
             self.kicked_galaxy_model = self.galmodel_params
