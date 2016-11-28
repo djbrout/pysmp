@@ -1381,7 +1381,7 @@ class metropolis_hastings():
 
                     if thispsfcenter[0] != self.psfcenter[epoch][0] or thispsfcenter[1] != self.psfcenter[epoch][1]:
                         newpsf = thispsf
-                        #print thispsfcenter ,self.psfcenter[epoch],self.x[epoch],self.x[epoch] + self.x_pix_offset, self.y[epoch],self.y[epoch] + self.y_pix_offset
+                        print thispsfcenter ,self.psfcenter[epoch],self.x[epoch],self.x[epoch] + self.x_pix_offset, self.y[epoch],self.y[epoch] + self.y_pix_offset
                         # print thispsfcenter[1] ,self.psfcenter[epoch][1]
 
                         if thispsfcenter[1] == self.psfcenter[epoch][1]:
