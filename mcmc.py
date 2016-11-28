@@ -1419,7 +1419,7 @@ class metropolis_hastings():
                                 raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
 
                             thispsf = newpsf
-                        self.kicked_psfs[epoch, :, :] = thispsf
+                        self.kicked_psfs[epoch, :, :] = thispsf/np.sum(thispsf)
 
                     elif self.survey == 'DES':
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,
