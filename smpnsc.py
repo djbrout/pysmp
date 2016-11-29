@@ -2366,8 +2366,8 @@ class smp:
                             badflag = 1
                             #raw_input('badflagggggooood')
                         #save_fits_image(msk,'test/mask.fits')
-                        print scalefactor
-                        raw_input('scallllllllll')
+                        #print scalefactor
+                        #raw_input('scallllllllll')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
                         skysn *= scalefactor
