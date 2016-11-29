@@ -3185,12 +3185,13 @@ class smp:
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
             print 'modelstd after',modelstd
             #raw_input()
-            fixgalzero = False
+            fixgalzero = True
             if self.fixgalzero:
                 print 'fixing galmodel to zero'
                 galmodel = galmodel*0.
                 galstd = galstd*0.
                 fixgal = True
+                modelstd[(modelstd < 100.) & (modelstd > 0.)] = 500
             else:
                 fixgal = False
 
