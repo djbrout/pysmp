@@ -2257,6 +2257,8 @@ class smp:
 
             badflagd = 0
             if dailyoff:
+                print 'dailyoff'
+                raw_input()
                 if mjdoff[0] > .5:
                     raw_input('mjdoff badflag')
                     badflagd = 1
