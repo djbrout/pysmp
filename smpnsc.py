@@ -1728,8 +1728,8 @@ class smp:
 
 
             if params.forceradec.lower() == 'true':
-                print 'forcingggg'
-                raw_input()
+                #print 'forcingggg'
+                #raw_input()
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[float(params.fra),float(params.fdec)]]), 0))
             else:
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA,snparams.DECL]]), 0))
@@ -3192,6 +3192,8 @@ class smp:
                 galstd = galstd*0.
                 fixgal = True
                 modelstd[(modelstd < 100.) & (modelstd > 0.)] = 500
+                modelvec[:8] = 0
+                modelstd[:8] = 0
             else:
                 fixgal = False
 
