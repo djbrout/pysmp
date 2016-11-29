@@ -352,7 +352,7 @@ class tmpwriter():
     def savefits(self,data,filename):
 
         tempfile = 'tmp.fits'
-        print 'saving to temporary file',tempfile
+        #print 'saving to temporary file',tempfile
         return
         if os.path.isfile(tempfile):
             os.remove(tempfile)
