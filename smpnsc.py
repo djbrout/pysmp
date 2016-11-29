@@ -2465,6 +2465,8 @@ class smp:
                                     #raw_input('savedpsf')
                                     if not self.snparams.survey == 'PS1':
                                         smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
+                                    else:
+                                        smp_psf[i, :, :] = psf_stamp
 
                                     c = 20
                                     psa = self.snparams.platescale

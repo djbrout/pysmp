@@ -305,6 +305,7 @@ class metropolis_hastings():
         self.gal_conv = []
         #self.fix_gal_model = True
         if self.fix_gal_model:
+            print 'inside fix gal model'
             #self.galaxy_model = copy(self.fix_gal_model)
             self.galaxy_model = self.galstd*0.
             self.galstd = self.galstd*0.
