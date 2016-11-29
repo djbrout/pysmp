@@ -446,8 +446,7 @@ class smp:
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_psf = np.zeros([snparams.nvalid,params.substamp,params.substamp])
-
-
+        smp_mask = np.zeros([snparams.nvalid, params.substamp, params.substamp])
         smp_dict = {'scale':np.zeros(snparams.nvalid),
                     'scale_err':np.zeros(snparams.nvalid),
                     'mcmc_scale':np.zeros(snparams.nvalid),
@@ -2512,7 +2511,8 @@ class smp:
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
-                                    smp_dict['mask'][i] = msk
+                                    smp_mask[i,:,:] = msk
+                                    #smp_dict['mask'][i] = msk
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['image_filename'][i] = imfile
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
