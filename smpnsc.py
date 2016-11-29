@@ -3176,6 +3176,7 @@ class smp:
             tstart = time.time()
             #print 'modelstd',modelstd
             #raw_input()
+            self.floatallepochs = True
             if not self.floatallepochs:
             #     #raw_input('shouldnt be here floating all epochs')
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
