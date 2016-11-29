@@ -268,6 +268,8 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     fitzpt = fitzpt[ww]
     plt.clf()
     plt.scatter(diffimflux*10**(.4*(31- fakezpt )), fitflux, alpha=.5)
+    plt.xlabel('Diffim')
+    plt.ylabel('')
     plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
     plt.xlim(-10000,50000)
     plt.ylim(-10000,50000)
