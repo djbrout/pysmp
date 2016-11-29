@@ -303,7 +303,7 @@ class metropolis_hastings():
 
         #IF YOU ARE DEALING WITH FIXED GALAXY MODEL IE PREVIOUSLY FIT...
         self.gal_conv = []
-        self.fix_gal_model = True
+        #self.fix_gal_model = True
         if self.fix_gal_model:
             #self.galaxy_model = copy(self.fix_gal_model)
             self.galaxy_model = self.galstd*0.

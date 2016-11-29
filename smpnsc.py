@@ -3191,7 +3191,7 @@ class smp:
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
             print 'modelstd after',modelstd
             #raw_input()
-            fixgalzero = True
+            #fixgalzero = True
             if self.fixgalzero:
                 print 'fixing galmodel to zero'
                 galmodel = galmodel*0.
@@ -3249,8 +3249,8 @@ class smp:
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
                     , psf_shift_std = self.params.sn_shift_std
-                    , xoff = .5
-                    , yoff = -0.12#.06
+                    , xoff = 0.
+                    , yoff = 0.#.06
                     , shiftpsf = self.params.sn_shift_std > 0.
                     , fileappend = ''
                     , stop = False
