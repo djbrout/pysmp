@@ -303,6 +303,7 @@ class metropolis_hastings():
 
         #IF YOU ARE DEALING WITH FIXED GALAXY MODEL IE PREVIOUSLY FIT...
         self.gal_conv = []
+        self.fix_gal_model = True
         if self.fix_gal_model:
             #self.galaxy_model = copy(self.fix_gal_model)
             self.galaxy_model = self.galstd*0.
@@ -692,7 +693,8 @@ class metropolis_hastings():
 
         if self.fix_gal_model:
             star_conv = kicked_modelvec * kicked_psfs
-            sims =  (star_conv + galconv + sky)*self.mask
+            sims = (star_conv + sky) * self.mask
+            #sims =  (star_conv + galconv + sky)*self.mask
         else:
             if flags == 0:
                 if fitflags == 0.:
