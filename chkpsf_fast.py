@@ -35,4 +35,6 @@ def fit(im, impsf,hpsf,xpos=None, ypos=None, radius=32):
 
     subim = im[iylo - 1:iyhi, ixlo - 1:ixhi]
 
+    model = model/ 10 ** (-0.4 * (hpsf['PSFMAG'] - 25))
+
     return model,subim

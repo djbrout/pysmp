@@ -1470,7 +1470,7 @@ class metropolis_hastings():
 
                             thispsf = newpsf
                         #print np.sum(thispsf)
-                        self.kicked_psfs[epoch, :, :] = thispsf/np.sum(thispsf)
+                        self.kicked_psfs[epoch, :, :] = thispsf#/np.sum(thispsf)
 
                     elif self.survey == 'DES':
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,

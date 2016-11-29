@@ -2463,7 +2463,8 @@ class smp:
 
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
-                                    smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
+                                    if not self.snparams.survey == 'PS1':
+                                        smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
 
                                     c = 20
                                     psa = self.snparams.platescale
