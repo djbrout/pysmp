@@ -1010,11 +1010,11 @@ class metropolis_hastings():
         pdf_pages.close()
         plt.close()
         gc.collect()
-        print 'Saved',self.lcout + '_stamps.pdf'
         if self.isfermigrid and self.isworker:
             print os.popen('ifdh rm ' + self.lcout + '_stamps.pdf').read()
             print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
-        #else:
+        print 'Saved', self.lcout + '_stamps.pdf'
+            #else:
         #    print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
         #    #print 'copied using ifdh'
         #    #raw_input()
