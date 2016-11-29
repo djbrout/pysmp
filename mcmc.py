@@ -762,7 +762,7 @@ class metropolis_hastings():
                 self.sims[ epoch,:,:] =  (star_conv + galaxy_conv)*self.mask
     '''
 
-    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights):
+    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain):
         chisq  = 0
 
         if flags == 0:
@@ -771,7 +771,7 @@ class metropolis_hastings():
                     #v = ( (sims - data)**2 / (sims/self.gain + (self.readnoise/self.gain)**2) ).ravel()
                     wmask = copy(weights)
                     wmask[wmask > 0] = 1
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/self.gain + self.readnoise/self.gain)).ravel()#hardcoded gain, hardcoded readnoise
+                    v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
                 else:
