@@ -3196,7 +3196,7 @@ class smp:
                 galmodel = galmodel*0.
                 galstd = galstd*0.
                 fixgal = True
-                modelvec[modelvec>0] = 250000
+                modelvec[modelvec>0] = 250000.
                 modelstd[(modelstd > 0.)] = 500
                 modelvec[:8] = 0
                 modelstd[:8] = 0

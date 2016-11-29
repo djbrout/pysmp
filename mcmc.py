@@ -308,6 +308,7 @@ class metropolis_hastings():
             #self.galaxy_model = copy(self.fix_gal_model)
             self.galaxy_model = self.galstd*0.
             self.galstd = self.galstd*0.
+            self.modelvec[self.modelvec>0]=250000.
             #self.gal_conv = []
             for i in np.arange(len(self.psfs)):
                 #print self.galaxy_model.shape
