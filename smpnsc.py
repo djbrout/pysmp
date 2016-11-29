@@ -1728,8 +1728,9 @@ class smp:
 
 
             if params.forceradec.lower() == 'true':
-                print 'forcingggg'
-                raw_input()
+                #print 'forcingggg'
+                #raw_input()
+                print float(params.fra),float(params.fdec)
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[float(params.fra),float(params.fdec)]]), 0))
             else:
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA,snparams.DECL]]), 0))
