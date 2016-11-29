@@ -265,7 +265,7 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     fitflux = fitflux[ww]
     fakezpt = fakezpt[ww]
     fitzpt = fitzpt[ww]
-    diffimflux = diffimflux[ww]*10**(.4*(31- 27.5+fitzpt-fakezpt ))
+    diffimflux = diffimflux[ww]*10**(.4*(31- 29.5+fitzpt-fakezpt ))
 
     plt.clf()
     plt.scatter(diffimflux, fitflux, alpha=.5)
