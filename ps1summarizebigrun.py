@@ -263,11 +263,12 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     fakezpt = np.array(fakezpt)
     ww = fitflux != 0
     fitflux = fitflux[ww]
-    diffimflux = diffimflux[ww]
     fakezpt = fakezpt[ww]
     fitzpt = fitzpt[ww]
+    diffimflux = diffimflux[ww]*10**(.4*(31- 30.+fitzpt-fakezpt ))
+
     plt.clf()
-    plt.scatter(diffimflux*10**(.4*(31- 30. )), fitflux, alpha=.5)
+    plt.scatter(diffimflux, fitflux, alpha=.5)
     plt.xlabel('Diffim')
     plt.ylabel('')
     plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
