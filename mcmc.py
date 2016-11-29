@@ -955,7 +955,10 @@ class metropolis_hastings():
         return result[ result.size / 2 : ]
 
     def plotstamps(self):
-        pdf_pages = PdfPages('stamps.pdf')
+        if self.isfermigrid and self.isworker:
+            pdf_pages = PdfPages('stamps.pdf')
+        else:
+            pdf_pages = PdfPages(self.lcout + '_stamps.pdf')
         fig = plt.figure(figsize=(25, 10))
         for i in range(self.Nimage):
             #self.x_pix_offset = -0.49250885143
@@ -1007,13 +1010,14 @@ class metropolis_hastings():
         pdf_pages.close()
         plt.close()
         gc.collect()
+        print 'Saved',self.lcout + '_stamps.pdf'
         if self.isfermigrid and self.isworker:
             print os.popen('ifdh rm ' + self.lcout + '_stamps.pdf').read()
             print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
-        else:
-            print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
-            #print 'copied using ifdh'
-            #raw_input()
+        #else:
+        #    print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
+        #    #print 'copied using ifdh'
+        #    #raw_input()
     def plotchains( self ):
         self.model_params()
         numepochs = self.modelvec_nphistory.shape[1]
