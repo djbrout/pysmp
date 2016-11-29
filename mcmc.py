@@ -1465,6 +1465,7 @@ class metropolis_hastings():
                                 raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
 
                             thispsf = newpsf
+                        print np.sum(thispsf)
                         self.kicked_psfs[epoch, :, :] = thispsf/np.sum(thispsf)
 
                     elif self.survey == 'DES':
