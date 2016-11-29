@@ -1042,7 +1042,7 @@ class metropolis_hastings():
         plt.plot(np.arange(0,len(self.xhistory)*self.compressionfactor,self.compressionfactor),np.array(self.xhistory)[::1])
         plt.plot(np.arange(0,len(self.yhistory)*self.compressionfactor,self.compressionfactor),np.array(self.yhistory)[::1])
         plt.xlabel('Step')
-        plt.ylabel('Offset (arcsec)')
+        plt.ylabel('Offset (pixels)')
         if self.shiftpsf:
             self.savefig('SNoffset.png')
             self.tmpwriter.cp('SNoffset.png',str(self.lcout)+'_SNoffset.png')
