@@ -14,9 +14,12 @@ for tfile in tarfiles[::-1]:
         print 'already untarred',tfile
     else:
         print 'untarring ',tfile
+        f = open('alreadyuntarredv6.txt', 'a')
+        f.write(tfile.split('/')[-1] + ' ')
+        f.close()
         out = os.popen('tar -xvf /pnfs/des/persistent/smp/v6/'+tfile.split('/')[-1]+' -C /pnfs/des/persistent/smp/v6/').read()
-        print out
-        if not 'Exiting' in out:
-            f = open('alreadyuntarredv6.txt','a')
-            f.write(tfile.split('/')[-1]+' ')
-            f.close()
+        #print out
+        #if not 'Exiting' in out:
+        #    f = open('alreadyuntarredv6.txt','a')
+        #    f.write(tfile.split('/')[-1]+' ')
+        #    f.close()
