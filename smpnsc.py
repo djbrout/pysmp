@@ -3182,6 +3182,7 @@ class smp:
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
             print 'modelstd after',modelstd
             #raw_input()
+            fixgalzero = False
             if self.fixgalzero:
                 print 'fixing galmodel to zero'
                 galmodel = galmodel*0.
