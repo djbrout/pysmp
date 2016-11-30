@@ -329,7 +329,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     chisq=np.array(chisq)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > 70.) and (flux != 0.) and (fluxerr != 0.) and (chisq < 3.)
+    ww = (deltapmjd > 70.) & (flux != 0.) & (fluxerr != 0.) & (chisq < 3.)
     dww = (deltapmjd > 70.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
@@ -347,8 +347,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.savefig(outdir + '/dpmjd.png')
 
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',normed=True,alpha=.4)
-    plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', normed=True,alpha=.4)
+    plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4)
+    plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4)
     plt.xlim(-4,4)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 100')
     plt.legend()
