@@ -331,6 +331,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
     ww = deltapmjd > 50.
     print max(deltapmjd)
     #print len(flux[ww])
+    print flux[ww]
     raw_input('sss')
     flux = flux[ww]
     fluxerr = fluxerr[ww]
