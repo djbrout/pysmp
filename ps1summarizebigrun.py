@@ -326,13 +326,17 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
     raw_input('lf')
     ww = deltapmjd > 50.
     print max(deltapmjd)
-    print len(flux[ww])
+    #print len(flux[ww])
     raw_input('sss')
     flux = flux[ww]
     fluxerr = fluxerr[ww]
     dflux=dflux[ww]
     dfluxerr=dfluxerr[ww]
-    deltapmjd=deltapmjd[ww]
+    #deltapmjd=deltapmjd[ww]
+
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(deltapmjd)
+    plt.savefig(outdir + '/dpmjd.png')
 
     fig = plt.figure(figsize=(15, 10))
     plt.hist([flux/fluxerr,dflux/dfluxerr],bins=np.arange(-4,4,.2),label=['SMP','DIFFIMG'],normed=True)
