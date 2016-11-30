@@ -327,16 +327,18 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
     dflux = np.array(dflux)
     dfluxerr = np.array(dfluxerr)
     print len(flux)
-    raw_input('lf')
+    #raw_input('lf')
     ww = (deltapmjd > 150.) & (flux != 0.) & (fluxerr != 0.)
+    dww = (deltapmjd > 150.) & (dflux != 0.) & (dfluxerr != 0.)
+
     print max(deltapmjd)
     #print len(flux[ww])
     print flux[ww]
-    raw_input('sss')
+    #raw_input('sss')
     flux = flux[ww]
     fluxerr = fluxerr[ww]
-    dflux=dflux[ww]
-    dfluxerr=dfluxerr[ww]
+    dflux=dflux[dww]
+    dfluxerr=dfluxerr[dww]
     #deltapmjd=deltapmjd[ww]
 
     fig = plt.figure(figsize=(15, 10))
