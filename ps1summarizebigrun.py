@@ -322,6 +322,10 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
 
 
 def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
+    flux = np.array(flux)
+    fluxerr = np.array(fluxerr)
+    dflux = np.array(dflux)
+    dfluxerr = np.array(dfluxerr)
     print len(flux)
     raw_input('lf')
     ww = deltapmjd > 50.
