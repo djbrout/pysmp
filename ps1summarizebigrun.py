@@ -41,7 +41,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
         pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],data['FitZPT'],resultsdir)
-        plotsigma(data['Flux'], data['Fluxerr'], data['DIFFIMFlux'], data['DIFFIMFluxerr'],data['deltapmjd'],resultsdir)
+        plotsigma(data['Flux'], data['Fluxerr'], data['DIFFIMFlux'], data['DIFFIMFluxerr'],data['deltapmjd'],data['Chisq'],resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -321,14 +321,15 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     print 'saved png'
 
 
-def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
+def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     flux = np.array(flux)
     fluxerr = np.array(fluxerr)
     dflux = np.array(dflux)
     dfluxerr = np.array(dfluxerr)
+    chisq=np.array(chisq)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > 250.) & (flux != 0.) & (fluxerr != 0.)
+    ww = (deltapmjd > 250.) & (flux != 0.) & (fluxerr != 0.) & (chisq < 2.)
     dww = (deltapmjd > 250.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
