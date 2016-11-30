@@ -328,7 +328,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
     dfluxerr = np.array(dfluxerr)
     print len(flux)
     raw_input('lf')
-    ww = (deltapmjd > 50.) & (flux != 0.) & (fluxerr != 0.)
+    ww = (deltapmjd > 150.) & (flux != 0.) & (fluxerr != 0.)
     print max(deltapmjd)
     #print len(flux[ww])
     print flux[ww]
@@ -344,10 +344,11 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
     plt.savefig(outdir + '/dpmjd.png')
 
     fig = plt.figure(figsize=(15, 10))
-    plt.hist([flux/fluxerr,dflux/dfluxerr],bins=np.arange(-4,4,.2),label=['SMP','DIFFIMG'],normed=True)
-
+    plt.hist(flux/fluxerr,bins=np.arange(-4,4,.4),label='SMP',normed=True,alpha=.4)
+    plt.hist(dflux / dfluxerr, bins=np.arange(-4, 4, .4), label='DIFFIMG', normed=True,alpha=.4)
     plt.xlim(-4,4)
-    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 80')
+    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 150')
+    plt.legend()
     plt.savefig(outdir + '/std.png')
     print outdir + '/std.png'
 
