@@ -329,8 +329,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     chisq=np.array(chisq)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > 350.) & (flux != 0.) & (fluxerr != 0.) & (chisq < 3.)
-    dww = (deltapmjd > 350.) & (dflux != 0.) & (dfluxerr != 0.)
+    ww = (deltapmjd > 100.) & (flux != 0.) & (fluxerr != 0.) & (chisq < 3.)
+    dww = (deltapmjd > 100.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
     #print len(flux[ww])
@@ -350,7 +350,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',normed=True,alpha=.4)
     plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', normed=True,alpha=.4)
     plt.xlim(-4,4)
-    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 350')
+    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 100')
     plt.legend()
     plt.savefig(outdir + '/std.png')
 
@@ -359,7 +359,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.hist(flux,bins=np.arange(-5250,5000,500),label='SMP',normed=True,alpha=.4)
     plt.hist(dflux, bins=np.arange(-5250,5000,500), label='DIFFIMG', normed=True,alpha=.4)
     plt.xlim(-5000,5000)
-    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 350')
+    plt.xlabel('Flux for MJD > PeakMJD + 100')
     plt.legend()
     plt.savefig(outdir + '/flux.png')
     print outdir + '/std.png'
