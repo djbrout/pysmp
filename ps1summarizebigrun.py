@@ -322,7 +322,9 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
 
 
 def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
-    ww = deltapmjd > 120.
+    print len(flux)
+    raw_input('lf')
+    ww = deltapmjd > 80.
 
     flux = flux[ww]
     fluxerr = fluxerr[ww]
@@ -334,7 +336,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
     plt.hist([flux/fluxerr,dflux/dfluxerr],bins=np.arange(-4,4,.2),label=['SMP','DIFFIMG'],normed=True)
 
     plt.xlim(-4,4)
-    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 120')
+    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 80')
     plt.savefig(outdir + '/std.png')
     print outdir + '/std.png'
 
