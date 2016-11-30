@@ -354,10 +354,11 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.legend()
     plt.savefig(outdir + '/std.png')
 
+    plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.hist(flux,bins=np.arange(-10050,10000,100),label='SMP',normed=True,alpha=.4)
     plt.hist(dflux, bins=np.arange(-10050,10000,100), label='DIFFIMG', normed=True,alpha=.4)
-    plt.xlim(-4,4)
+    plt.xlim(-10000,10000)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 150')
     plt.legend()
     plt.savefig(outdir + '/flux.png')
