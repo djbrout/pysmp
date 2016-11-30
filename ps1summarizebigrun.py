@@ -40,7 +40,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
-        pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],data['FitZPT'],resultsdir)
+        pltresid(data['Flux'],data['DIFFIMFlux'],data['FakeZPT'],data['FitZPT'],data['deltapmjd'],resultsdir)
+        plotsigma(data['Flux'], data['Fluxerr'], data['DIFFIMFlux'], data['DIFFIMFluxerr'],resultsdir)
         sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -145,7 +146,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'DIFFIMFlux':[],'DIFFIMFluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
-               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
+               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'deltapmjd':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
@@ -185,6 +186,7 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['Chisq'].extend(data['CHI2'])
             bigdata['DIFFIMFlux'].extend(data['DIFFIM_FLUX'])
             bigdata['DIFFIMFluxerr'].extend(data['DIFFIM_FLUXERR'])
+            bigdata['deltapmjd'].extend(data['DPMJD'])
             #raw_input()
 
             # for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
@@ -318,7 +320,26 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     plt.savefig(outdir+'/percentagefluxdiff.png')
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir):
+
+def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,outdir):
+    ww = deltapmjd > 120.
+
+    flux = flux[ww]
+    fluxerr = fluxerr[ww]
+    dflux=dflux[ww]
+    dfluxerr=dfluxerr[ww]
+    deltapmjd=deltapmjd[ww]
+
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist([flux/fluxerr,dflux/dfluxerr],bins=np.arange(-4,4,.2),label=['SMP','DIFFIMG'],normed=True)
+
+    plt.xlim(-4,4)
+    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 120')
+    plt.savefig(outdir + '/std.png')
+    print outdir + '/std.png'
+
+
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
