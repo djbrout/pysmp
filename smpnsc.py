@@ -2036,8 +2036,8 @@ class smp:
                         else:
                             self.gain = gainb
 
-            print self.gain
-            raw_input('gain')
+            #print self.gain
+            #raw_input('gain')
             mjdoff = 0.
             mjdslopeinteroff = 0.
             gogo = True
