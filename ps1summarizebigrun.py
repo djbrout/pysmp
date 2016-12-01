@@ -209,9 +209,10 @@ def grabdata(tmpwriter,resultsdir,cd):
             #     bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
+            raw_input()
         except:
             print 'Columns missing in file '+f
-
+            raw_input()
         # for sf in data['ZPTFILE']:
         #     zptdata = np.load(sf)
         #     if not sf in zptfiles:
