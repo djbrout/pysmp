@@ -121,7 +121,7 @@ def iterstat(d, startMedian=False, sigmaclip=3.0,iter=6):
     return (md, std, num)
 
 
-def savefits(self, data, filename):
+def savefits(data, filename):
     tempfile = 'tmp.fits'
     # print 'saving to temporary file',tempfile
     return
@@ -129,14 +129,10 @@ def savefits(self, data, filename):
         os.remove(tempfile)
     if os.path.isfile(filename):
         os.remove(filename)
-    save_fits_image(data, tempfile)
+    save_fits_image(data, tempfile,go=True)
     # print 'ifdh cp to ',filename
-    if self.usedccp:
-        os.system('dccp ' + tempfile + ' ' + filename)
-    elif self.useifdh:
-        os.system('ifdh cp ' + tempfile + ' ' + filename)
-    else:
-        os.system('mv ' + tempfile + ' ' + filename)
+
+    os.system('mv ' + tempfile + ' ' + filename)
     print 'saved', filename
 
 # Takes in Filename, reads file columnwise, and returns dictionary such that:
@@ -177,15 +173,16 @@ def read(filename, headline, startline, delim=' '):
     return return_cols
 
 
-def save_fits_image(image,filename):
+def save_fits_image(image,filename,go=False):
     try:
         os.remove(filename)
     except:
         pass
-    # hdu = pf.PrimaryHDU(image)
-    # if os.path.exists(filename):
-    #     os.remove(filename)
-    # hdu.writeto(filename)
+    if go:
+        hdu = pf.PrimaryHDU(image)
+        if os.path.exists(filename):
+            os.remove(filename)
+        hdu.writeto(filename)
 
     return
 
