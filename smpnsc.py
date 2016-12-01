@@ -2491,6 +2491,8 @@ class smp:
                                 if np.max(psf_stamp[params.substamp/2+1-3:params.substamp/2+1+4,params.substamp/2+1-3:params.substamp/2+1+4]) == np.max(psf_stamp[:,:]):
                                     #i = j
 
+
+                                    noise_stamp[image_stamp > 500000.] = 0.
                                     if self.snparams.survey == 'PS1':
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
@@ -2506,6 +2508,7 @@ class smp:
 
                                     #print 'image-stamp',image_stamp.shape
                                     #print 'smp_im',smp_im[i,:,:].shape,i
+
                                     smp_im[i,:,:] = image_stamp
 
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
