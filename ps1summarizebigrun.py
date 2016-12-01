@@ -209,10 +209,10 @@ def grabdata(tmpwriter,resultsdir,cd):
             #     bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
-            raw_input()
+            #raw_input()
         except:
             print 'Columns missing in file '+f
-            raw_input()
+            #raw_input()
         # for sf in data['ZPTFILE']:
         #     zptdata = np.load(sf)
         #     if not sf in zptfiles:
@@ -330,12 +330,14 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     chisq=np.array(chisq)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > 70.) & (flux != 0.) & (fluxerr != 0.) & (chisq < 3.)
+    ww = (deltapmjd > 70.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
     dww = (deltapmjd > 70.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
     #print len(flux[ww])
     print flux[ww]
+    print len(flux[ww]),len(dflux[dww])
+    raw_input()
     #raw_input('sss')
     flux = flux[ww]
     fluxerr = fluxerr[ww]
