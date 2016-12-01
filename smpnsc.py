@@ -1449,8 +1449,8 @@ class smp:
                         # print 'grabbed sn files'
                         # sys.exit()
             try:
-                self.ccdnum = imfile.split('/')[1].split('_')[1]
-                self.field = imfile.split('/')[0].split('-')[1]
+                self.ccdnum = imfile.split('/')[-1].split('_')[5].split('+')[0]
+                self.field = imfile.split('/')[-1].split('_')[2].split('-')[1]
             except:
                 self.ccdnum = np.nan
                 self.field = np.nan
