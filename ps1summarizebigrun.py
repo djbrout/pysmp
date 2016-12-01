@@ -330,8 +330,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     chisq=np.array(chisq)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > 70.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
-    dww = (deltapmjd > 70.) & (dflux != 0.) & (dfluxerr != 0.)
+    ww = (deltapmjd > 50.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
+    dww = (deltapmjd > 50.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
     #print len(flux[ww])
