@@ -2394,6 +2394,8 @@ class smp:
 
                             image_stamp = im[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
                                           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
+                            noise_stamp = weights[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
 
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
