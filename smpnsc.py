@@ -1994,6 +1994,48 @@ class smp:
 
             self.rdnoise = hdr[params.rdnoise_name]
             self.gain = hdr[params.gain_name]
+            print hdr.keys()
+            #raw_input()
+            if self.snparams.survey == 'DES':
+                gaina = hdr['GAINA']
+                gainb = hdr['GAINB']
+                q1 = [1,4,5,8,9,13,14,15,19,20,21,25,26,27]
+                q2 = [32,33,34,39,40,41,45,46,47,51,52,56,57,60]
+                q3 = [3,6,7,11,12,16,17,18,22,23,24,29,30,31]
+                q4 = [36,37,38,42,43,44,48,49,50,54,55,58,59,62]
+                if int(self.ccdnum) in q1:
+                    if ysn<1025:
+                        self.gain = gaina
+                    else:
+                        self.gain = gainb
+                elif int(self.ccdnum) in q2:
+                    if ysn>1024:
+                        self.gain = gaina
+                    else:
+                        self.gain = gainb
+                elif int(self.ccdnum) in q3:
+                    if ysn < 1025:
+                        self.gain = gaina
+                    else:
+                        self.gain = gainb
+                elif int(self.ccdnum) in q4:
+                    if ysn > 1024:
+                        self.gain = gaina
+                    else:
+                        self.gain = gainb
+                else:
+                    if self.xsn < 2049:
+                        if ysn > 1024:
+                            self.gain = gaina
+                        else:
+                            self.gain = gainb
+                    else:
+                        if ysn < 1025:
+                            self.gain = gaina
+                        else:
+                            self.gain = gainb
+
+
             mjdoff = 0.
             mjdslopeinteroff = 0.
             gogo = True
@@ -2047,8 +2089,8 @@ class smp:
                 #     nozpt = True
                 #sys.exit()
             if nozpt:
-                self.rdnoise = hdr[params.rdnoise_name]
-                self.gain =  hdr[params.gain_name]
+                #self.rdnoise = hdr[params.rdnoise_name]
+                #self.gain =  hdr[params.gain_name]
 
                 # cols = np.where((starcat.bigra > ra_low) &
                 #                 (starcat.bigra < ra_high) &
