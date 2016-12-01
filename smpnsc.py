@@ -1127,8 +1127,8 @@ class smp:
 
             if nozpt:
 
-                self.rdnoise = hdr[params.rdnoise_name]
-                self.gain = hdr[params.gain_name]
+                #self.rdnoise = hdr[params.rdnoise_name]
+                #self.gain = hdr[params.gain_name]
                 # print params.gain_name
                 # print 'self.gain',self.gain
                 # raw_input()
@@ -1885,8 +1885,8 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
                 self.psfcenter = None
                 if params.build_psf == 'yes':
-                    self.rdnoise = hdr[params.rdnoise_name]
-                    self.gain = hdr[params.gain_name]  # 1
+                    #self.rdnoise = hdr[params.rdnoise_name]
+                    #self.gain = hdr[params.gain_name]  # 1
                     #cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (
                     #starglobaldecs < dec_high)
 
@@ -1927,8 +1927,8 @@ class smp:
 
                 elif nozpt:
                     print 'getting stars'
-                    self.rdnoise = hdr[params.rdnoise_name]
-                    self.gain = hdr[params.gain_name] #1
+                    #self.rdnoise = hdr[params.rdnoise_name]
+                    #self.gain = hdr[params.gain_name] #1
                     cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
 
                     #print starglobalras[cols]
@@ -1964,8 +1964,8 @@ class smp:
                     hpsf = pyfits.getheader(psffile)
                     magzpt = hpsf['PSFMAG']
 
-                    self.rdnoise = hdr[params.rdnoise_name]
-                    self.gain = hdr[params.gain_name]
+                    #self.rdnoise = hdr[params.rdnoise_name]
+                    #self.gain = hdr[params.gain_name]
 
 
 
@@ -1996,6 +1996,7 @@ class smp:
             self.gain = hdr[params.gain_name]
             print hdr.keys()
             #raw_input()
+
             if self.snparams.survey == 'DES':
                 gaina = hdr['GAINA']
                 gainb = hdr['GAINB']
@@ -4377,7 +4378,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
+    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,gain,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
         #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -4405,7 +4406,7 @@ class smp:
                 for i in np.arange(-1000, 1000000, 1000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
-                    weight = 1./(skyerr**2 + psf*abs(float(i))/3.8 + 1.) #holtzman
+                    weight = 1./(skyerr**2 + psf*abs(float(i))/gain+ 1.) #holtzman
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
                     #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
@@ -4427,7 +4428,7 @@ class smp:
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1./(skyerr**2 + psf*abs(float(i))/3.8 + 1.) #holtzman
+                    weight = 1./(skyerr**2 + psf*abs(float(i))/gain + 1.) #holtzman
                     #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
@@ -5021,7 +5022,7 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, s, gnoise_stamp,
-                                                                             fitrad, gal, mjd, se)
+                                                                             fitrad, gal, mjd, se,self.gain)
                             print scale
                         # except:
                         #
