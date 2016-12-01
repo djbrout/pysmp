@@ -124,7 +124,7 @@ def iterstat(d, startMedian=False, sigmaclip=3.0,iter=6):
 def savefits(data, filename):
     tempfile = 'tmp.fits'
     # print 'saving to temporary file',tempfile
-    return
+    #return
     if os.path.isfile(tempfile):
         os.remove(tempfile)
     if os.path.isfile(filename):
