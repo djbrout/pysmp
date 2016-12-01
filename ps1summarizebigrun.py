@@ -351,10 +351,20 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.savefig(outdir + '/dpmjd.png')
 
     fig = plt.figure(figsize=(15, 10))
+
+    import matplotlib.mlab as mlab
+    import math
+    mean = 0
+    variance = 1
+    sigma = math.sqrt(variance)
+    x = np.arange(-5, 5, .1)
+
+
     plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4)
     plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4)
     plt.xlim(-4,4)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 100')
+    plt.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
     plt.legend()
     plt.savefig(outdir + '/std.png')
 
