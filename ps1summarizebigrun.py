@@ -353,6 +353,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.clf()
     deltapmjd = deltapmjd[ww]
     plt.scatter(deltapmjd,flux)
+    plt.axhline(0)
     plt.savefig(outdir + 'vs.png')
 
     plt.clf()
