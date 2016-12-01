@@ -2449,9 +2449,9 @@ class smp:
                                         noise_stamp[noise_stamp <= 0.] = 0
                                         smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
                                     else:
-                                        noise_stamp[noise_stamp > 0.] = 1
-                                        noise_stamp[noise_stamp <= 0.] = 0
-                                        smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
+                                        #noise_stamp[noise_stamp > 0.] = 1
+                                        #noise_stamp[noise_stamp <= 0.] = 0
+                                        smp_noise[i,:,:] = noise_stamp#*1/(skysig**2)
 
                                         #print noise_stamp
                                         #raw_input()
