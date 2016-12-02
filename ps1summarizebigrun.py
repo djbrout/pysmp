@@ -373,11 +373,11 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     x = np.arange(-5, 5, .1)
 
 
-    plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4)
-    plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4)
+    plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4,normed=True)
+    plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4,normed=True)
     plt.xlim(-4,4)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 100')
-    plt.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+    plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
     plt.legend()
     plt.savefig(outdir + '/std.png')
 
