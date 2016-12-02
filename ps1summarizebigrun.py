@@ -361,6 +361,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.legend()
     plt.axhline(0)
     plt.ylim(-1500,20000)
+    plt.xlim(min(deltampmjd),550)
     plt.savefig(outdir + 'vs.png')
 
     plt.clf()
