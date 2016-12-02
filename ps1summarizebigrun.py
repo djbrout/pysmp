@@ -281,12 +281,14 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     print 'saved ', outdir + '/zptcomparo.png'
 
 
-    fitmag = 31-2.5*np.log10(fitflux)
+    fitmag = 31 - 2.5*np.log10(fitflux)
     diffmag = 31 - 2.5*np.log10(diffimflux)
     plt.clf()
-    plt.scatter(fitzpt-fakezpt, fitmag-diffmag, alpha=.5)
+    plt.scatter(fitzpt-fakezpt, (fitflux-diffimflux)/diffimflux, alpha=.5)
     #plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
     #plt.xlim(-10000, 50000)
+    plt.xlabel('SMP ZPT - Diffimg ZPT')
+    plt.ylabel('(SMP Flux - Diffimg Flux) / Diffimg Flux')
     #plt.ylim(-10000, 50000)
     plt.savefig(outdir + '/residzptcomparo.png')
     print 'saved ', outdir + '/zptcomparo.png'
