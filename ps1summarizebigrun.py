@@ -344,6 +344,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     fluxerr = fluxerr[ww]
     dflux=dflux[dww]
     dfluxerr=dfluxerr[dww]
+    ddeltapmjd=deltapmjd[dww]
     #deltapmjd=deltapmjd[ww]
 
     fig = plt.figure(figsize=(15, 10))
@@ -353,6 +354,11 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.clf()
     deltapmjd = deltapmjd[ww]
     plt.scatter(deltapmjd,flux)
+    plt.errorbar(deltapmjd,flux,yerr=fluxerr,fmt='o',label='SMP')
+    plt.errorbar(ddeltapmjd,dflux,yerr=dfluxerr,fmt='o',label='Diffimg')
+    plt.xlabel('Days after Peak MJD')
+    plt.ylabel('Flux')
+    plt.legend()
     plt.axhline(0)
     plt.savefig(outdir + 'vs.png')
 
