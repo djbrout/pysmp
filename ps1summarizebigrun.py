@@ -331,14 +331,14 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     deltapmjd = np.array(deltapmjd)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > 70.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
-    dww = (deltapmjd > 70.) & (dflux != 0.) & (dfluxerr != 0.)
+    ww = (deltapmjd > -700.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
+    dww = (deltapmjd > -700.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
     #print len(flux[ww])
     print flux[ww]
     print len(flux[ww]),len(dflux[dww])
-    raw_input()
+    #raw_input()
     #raw_input('sss')
     flux = flux[ww]
     fluxerr = fluxerr[ww]
@@ -360,7 +360,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.ylabel('Flux')
     plt.legend()
     plt.axhline(0)
-    plt.ylim(-3000,3000)
+    plt.ylim(-1500,20000)
     plt.savefig(outdir + 'vs.png')
 
     plt.clf()
