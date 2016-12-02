@@ -325,7 +325,8 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
 def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     flux = np.array(flux)
     fluxerr = np.array(fluxerr)
-    dflux = np.array(dflux)
+
+    dflux = np.array(dflux) * 10 ** (.4 * (31 - 30.))
     dfluxerr = np.array(dfluxerr)
     chisq=np.array(chisq)
     deltapmjd = np.array(deltapmjd)
