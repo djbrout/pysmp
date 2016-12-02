@@ -327,6 +327,10 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     fluxerr = np.array(fluxerr)
 
     dflux = np.array(dflux) * 10 ** (.4 * (31 - 30.))
+
+    oflux = copy(flux)
+    odflux = copy(dflux)
+
     dfluxerr = np.array(dfluxerr)
     chisq=np.array(chisq)
     deltapmjd = np.array(deltapmjd)
@@ -384,7 +388,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.hist(flux[wwn]/fluxerr[wwn],bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4,normed=True)
     plt.hist(dflux[dwwn] / dfluxerr[dwwn], bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4,normed=True)
     plt.xlim(-4,4)
-    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 100')
+    plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 300')
     plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
     plt.legend()
     plt.savefig(outdir + '/std.png')
@@ -399,6 +403,13 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.savefig(outdir + '/flux.png')
     print outdir + '/std.png'
 
+    plt.clf()
+    plt.scatter(31-2.5*np.log10(odflux),(oflux-odflux)/odflux)
+    plt.xlabel('SN Mag (diffim)')
+    plt.ylabel('(SMP - Diffimg)/Diffimg')
+    plt.xlim(17,25)
+    plt.savefig(outdir + '/cc.png')
+    print outdir + '/cc.png'
 
 def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,outdir):
     flux = np.asarray(flux)
