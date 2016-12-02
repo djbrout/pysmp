@@ -404,7 +404,15 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     print outdir + '/std.png'
 
     plt.clf()
-    plt.scatter(31-2.5*np.log10(odflux),(oflux-odflux)/odflux)
+    plt.scatter(31-2.5*np.log10(odflux),(oflux-odflux)/odflux,alpha=.3)
+
+    #ax, ay, aystd = dt.bindata(31-2.5*np.log10(odflux),(oflux-odflux)/odflux, np.arange(19., 26, .1), window=.5)
+    plt.axhline(0,color='grey')
+
+    #plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    #plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    #plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
     plt.xlabel('SN Mag (diffim)')
     plt.ylabel('(SMP - Diffimg)/Diffimg')
     plt.xlim(19,26)
