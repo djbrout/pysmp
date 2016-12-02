@@ -1992,8 +1992,16 @@ class smp:
             else:
                 raise exceptions.RuntimeError("Error : PSF_MODEL not recognized!")
 
-            self.rdnoise = hdr[params.rdnoise_name]
-            self.gain = hdr[params.gain_name]
+            try:
+                self.rdnoise = hdr[params.rdnoise_name]
+                self.gain = hdr[params.gain_name]
+            except:
+                print 'could not find readnoise or gain in header setting to default 1'
+                self.rdnoise = 1.
+                self.gain = 1.
+            if self.snparams.survey == 'PS1':
+                self.gain = 1.
+
             print hdr.keys()
             #raw_input()
 
