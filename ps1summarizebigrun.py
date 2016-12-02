@@ -415,7 +415,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
 
     plt.xlabel('SN Mag (diffim)')
     plt.ylabel('(SMP - Diffimg)/Diffimg')
-    plt.xlim(19,26)
+    plt.xlim(19,29)
     plt.ylim(-.5,.5)
     plt.savefig(outdir + '/cc.png')
     print outdir + '/cc.png'
