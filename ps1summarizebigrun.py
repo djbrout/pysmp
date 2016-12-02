@@ -407,7 +407,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.scatter(31-2.5*np.log10(odflux),(oflux-odflux)/odflux)
     plt.xlabel('SN Mag (diffim)')
     plt.ylabel('(SMP - Diffimg)/Diffimg')
-    plt.xlim(17,25)
+    plt.xlim(19,26)
+    plt.ylim(-.2,.2)
     plt.savefig(outdir + '/cc.png')
     print outdir + '/cc.png'
 
