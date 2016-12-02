@@ -282,7 +282,7 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
 
 
     fitmag = 31-2.5*np.log10(fitflux)
-    diffmag = fakezpt - 2.5*np.log10(diffimflux)
+    diffmag = 31 - 2.5*np.log10(diffimflux)
     plt.clf()
     plt.scatter(fitzpt-fakezpt, fitmag-diffmag, alpha=.5)
     #plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
