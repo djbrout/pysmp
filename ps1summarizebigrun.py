@@ -288,7 +288,7 @@ def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
     plt.axhline(0)
     plt.axvline(0)
     plt.xlim(-.04,.04)
-    plt.ylim(-.5,.5)
+    plt.ylim(-1.,1.)
     #plt.plot([min(fitflux), max(fitflux)], [min(fitflux), max(fitflux)])
     #plt.xlim(-10000, 50000)
     plt.xlabel('SMP ZPT - Diffimg ZPT')
