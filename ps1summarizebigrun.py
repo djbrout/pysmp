@@ -360,6 +360,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.ylabel('Flux')
     plt.legend()
     plt.axhline(0)
+    plt.ylim(-3000,3000)
     plt.savefig(outdir + 'vs.png')
 
     plt.clf()
