@@ -354,7 +354,12 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
 
     plt.clf()
     deltapmjd = deltapmjd[ww]
-    plt.scatter(deltapmjd,flux)
+
+    wwn = (deltapmjd > 300.)
+    dwwn = (ddeltapmjd > 300.)
+
+
+    #plt.scatter(deltapmjd[wwn],flux[wwn])
     plt.errorbar(deltapmjd,flux,yerr=fluxerr,fmt='o',label='SMP')
     plt.errorbar(ddeltapmjd,dflux,yerr=dfluxerr,fmt='o',label='Diffimg')
     plt.xlabel('Days after Peak MJD')
@@ -376,8 +381,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     x = np.arange(-5, 5, .1)
 
 
-    plt.hist(flux/fluxerr,bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4,normed=True)
-    plt.hist(dflux / dfluxerr, bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4,normed=True)
+    plt.hist(flux[wwn]/fluxerr[wwn],bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4,normed=True)
+    plt.hist(dflux[dwwn] / dfluxerr[dwwn], bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4,normed=True)
     plt.xlim(-4,4)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 100')
     plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
