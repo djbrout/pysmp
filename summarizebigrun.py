@@ -309,7 +309,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #raw_input()
 
     fitmag = 31-2.5*np.log10(flux)
-    fitmagerr = ((-2.5*np.log10(flux)+2.5*np.log10(flux+fluxerr))**2+(rmsaddin)**2)**.5
+    fitmagerr = ((-2.5*np.log10(flux)+2.5*np.log10(flux+fluxerr))**2)**.5
     fakemag = fakemag + fakezpt - fitzpt
 
     hostmag = np.array(hostmag)
