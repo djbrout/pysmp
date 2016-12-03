@@ -6239,7 +6239,7 @@ if __name__ == "__main__":
 
     hostname = os.popen('hostname').read()
     if 'dsp053' in hostname:
-        snfilelist = ''
+        snfilelist = '/home/dscolnic/testdir/runfile_53.txt'
     if snfilelist is None:
         raise NameError("Must provide " +
                         "--snfilelist=/location/to/a/list/of/snfiles in default.config \n Exiting now...")
