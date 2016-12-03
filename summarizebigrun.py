@@ -45,7 +45,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         data = np.load(cd)
         dostars = False
         if dostars:
-            stardata = np.load('/pnfs/des/persistent/smp/v2/stardata2.npz')
+            stardata = np.load('/pnfs/des/persistent/smp/v6/stardatav6.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],
@@ -99,7 +99,7 @@ def grabstardata(imagedir,outfile):
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_mag'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
-                        bigdata['diffimzpt'].extend(zptdata['fakezpt'])
+                        #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
