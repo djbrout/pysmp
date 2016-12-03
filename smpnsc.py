@@ -3013,6 +3013,16 @@ class smp:
             self.tmpwriter.appendfile('saving mcmc input\n', self.fermilogfile)
         #print 'exiting succseffuly'
         #sys.exit()
+
+        try:
+            print snparams.RA
+        except:
+            print sys.exc_info()
+            if not os.path.exists(isdonedir):
+                os.mkdirs(isdonedir)
+            os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
+            sys.exit()
+
         self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
                 , modelvec = modelvec*0.
