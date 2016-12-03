@@ -299,10 +299,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #(rmsaddin + 2.5*log(flux))/2.5 = np.log10(flux+rmsfluxerr)
     #10**(.4*(rmsaddin + 2.5*log(flux))) = flux + rmsfluxerr
 
-    fluxrmsaddin = 10 ** (.4 * (rmsaddin + 2.5 * np.log10(flux))) - flux
+    #fluxrmsaddin = 10 ** (.4 * (rmsaddin + 2.5 * np.log10(flux))) - flux
     #fluxerr = (fluxerr**2 + fluxrmsaddin**2)**.5
 
-    frms = 10**(.4*(2.5*np.log10(abs(flux))+rmsaddin)) - abs(flux)
+    #frms = 10**(.4*(2.5*np.log10(abs(flux))+rmsaddin)) - abs(flux)
 
     #print frms[0:100]
     #print flux[0:100]*rmsaddin[0:100]
@@ -329,7 +329,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
-    d = (flux - fakeflux) / ((fluxerr**2 - abs(flux)/3.8 + frms**2)**.5*1.08)
+    d = (flux - fakeflux) / ((fluxerr**2 - abs(flux) + 1. )**.5*1.08)
 
     ww = (flux != 0.) #& (deep == 0)
 
