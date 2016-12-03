@@ -36,8 +36,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
-        #sys.exit()
+        grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
+        sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
     else:
@@ -71,7 +71,7 @@ def grabstardata(imagedir,outfile):
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 200.: continue
+        if cntr > 20.: continue
         #print('Found directory: %s' % dirName)
         for fname in fileList:
 
