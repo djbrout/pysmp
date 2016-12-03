@@ -88,7 +88,8 @@ def grabstardata(imagedir,outfile):
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
                 if not fname in zptfiles:
-                    try:
+                    #try:
+                    if True:
                         if max(zptdata['cat_mag'])>21.1:
                             continue
                         #if True:
@@ -122,9 +123,9 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
                         print 'CNTR',cntr
-                    except:
-                        print 'FAILED', fname
-                        pass
+                    # except:
+                    #     print 'FAILED', fname
+                    #     pass
     np.savez(outfile, **bigdata)
 
 def grabdata(tmpwriter,resultsdir,cd):
