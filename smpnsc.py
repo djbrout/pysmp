@@ -6387,7 +6387,14 @@ if __name__ == "__main__":
     if files_split_by_filter:
         filt = snfile.split('_')[1].split('.')[0]
     print 'getting snparams'
-    snparams = get_snfile(snfile, root_dir, useweights)
+    try:
+        snparams = get_snfile(snfile, root_dir, useweights)
+    except:
+        print sys.exc_info()
+        if not os.path.exists(isdonedir):
+            os.mkdirs(isdonedir)
+        os.system('touch ' + os.path.join(isdonedir, snfile.split('/')[-1].split('.')[0] + '.done'))
+        sys.exit()
     print 'getting params'
     params = get_params(param_file)
     print 'done with params'

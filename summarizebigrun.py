@@ -164,7 +164,8 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #raw_input()
         #print data.keys()
         #raw_input()
-        try:
+        if True:
+            #try:
             #print data['ID_OBS']
             #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
@@ -198,8 +199,8 @@ def grabdata(tmpwriter,resultsdir,cd):
             #     bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             print f,'read in'
-        except:
-            print 'Columns missing in file '+f
+        # except:
+        #     print 'Columns missing in file '+f
 
         # for sf in data['ZPTFILE']:
         #     zptdata = np.load(sf)
