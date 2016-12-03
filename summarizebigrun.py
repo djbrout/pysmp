@@ -39,7 +39,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #grabstardata("/pnfs/des/persistent/smp/v5/","/pnfs/des/persistent/smp/v5/stardatav5.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
-        sys.exit()
+        #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
@@ -235,7 +235,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         '''
         #raw_input()
     print 'saving to cachfile'
-    #np.savez(outfile,**bigdata)
+    np.savez(outfile,**bigdata)
     print 'saved'
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
