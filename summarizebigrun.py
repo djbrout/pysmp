@@ -61,6 +61,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
 
+
 def lookup_rms_addin(smpfile,obsid):
     pass
 
