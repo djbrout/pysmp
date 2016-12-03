@@ -183,7 +183,7 @@ def grabdata(tmpwriter,resultsdir,cd):
                 if abs(faz - fiz) > 1:
                     print f
                     print m
-                    raw_input('STOPPED')
+                    #raw_input('STOPPED')
 
                     # try:
             #bigdata['rmsaddin'].extend(data['RMSADDIN'])
