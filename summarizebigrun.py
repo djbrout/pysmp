@@ -71,7 +71,7 @@ def grabstardata(imagedir,outfile):
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 300.: continue
+        if cntr > 30.: continue
         #print('Found directory: %s' % dirName)
         for fname in fileList:
 
@@ -126,7 +126,11 @@ def grabstardata(imagedir,outfile):
                     # except:
                     #     print 'FAILED', fname
                     #     pass
-    np.savez(outfile, **bigdata)
+
+    np.savez('dat.dat', **bigdata)
+    os.system('ifdh rm ' + outfile)
+    os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
+    os.system('rm dat.dat')
 
 def grabdata(tmpwriter,resultsdir,cd):
 
