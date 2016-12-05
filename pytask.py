@@ -35,7 +35,7 @@ while i < 23:
         print ''
         #print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
         #    ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
-        os.popen('taskset -c '+str(int(i))+' python smpnsc.py --index='+str(int(cntr))+' 1>& '+
+        os.popen('taskset -c '+str(int(i))+' python smpnsc.py --nozpt --index='+str(int(cntr))+' 1>& '+
                  os.path.join(logdir,lightcurves[cntr].split('.')[0]+'.log')+' &')
         print lightcurves[cntr].strip(),'Submitted to SMP. Core #'+str(int(i))
         print 'See log file here',os.path.join(logdir,lightcurves[cntr].split('.')[0]+'.log')
@@ -59,7 +59,7 @@ while j <= maxlightcurves:
             print 'Running SN '+str(int(j))+'/'+str(int(maxlightcurves))
             print runninglist[core],'Has finished photometry on core',int(core)
             #print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
-            os.popen('taskset -c ' + str(int(core)) + ' python smpnsc.py --index=' + str(int(j)) +' 1>& '+
+            os.popen('taskset -c ' + str(int(core)) + ' python smpnsc.py --nozpt --index=' + str(int(j)) +' 1>& '+
                 os.path.join(logdir,lightcurves[j].split('.')[0]+'.log')+' &')
             print lightcurves[j].strip(),'Submitted to SMP. Core #'+str(int(core))
             print 'See log file here', os.path.join(logdir, lightcurves[j].split('.')[0] + '.log')
