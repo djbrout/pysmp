@@ -2,12 +2,12 @@ import os
 import numpy as np
 import time
 
-maxlightcurves = 419
+maxlightcurves = 1000
 hostname = os.popen('hostname').read()
-    if 'dsp053' in hostname:
-        isdonedir = '/home/dscolnic/testdir/isdone053'
-    if 'dsp057' in hostname:
-        isdonedir = '/home/dscolnic/testdir/isdone057'
+if 'dsp053' in hostname:
+    isdonedir = '/home/dscolnic/testdir/isdone053'
+if 'dsp057' in hostname:
+    isdonedir = '/home/dscolnic/testdir/isdone057'
 
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
 logdir = '/home/dscolnic/testdir/smplogs'
