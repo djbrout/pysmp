@@ -153,9 +153,9 @@ class SEW():
         if version_match is False:
             raise RuntimeError(
                 "Could not determine SExctractor version, check the output of running '%s'" % (self.sexpath))
-        version = str(version_match.group()[8:])
-        assert len(version) != 0
-        return version
+        #version = str(version_match.group()[8:])
+        #assert len(version) != 0
+        return 'IDONTCARE'#version
 
     def __str__(self):
         """
