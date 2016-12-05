@@ -24,8 +24,10 @@ import os
 def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi,survey='DES'):
     if survey == 'DES':
         sexpath = "sex"
+        fermigrid  = True
     if survey == 'PS1':
         sexpath = "/export/scratch0/ps1sn1/pipe/v10.0gpc1/photpipe/Cfiles/bin/linux/sex"
+        fermigrid = False
 
     im = pf.getdata(imagefilename)
     #hdr = pf.getheader(imagefilename)
@@ -33,7 +35,7 @@ def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi,survey='DES'):
     if not os.path.exists('sewpy_logs/'):
         os.makedirs('sewpy_logs/')
     newfilename = 'sewpy_logs/trimmed_'+imagefilename.split('/')[-1]
-    dt.savefits(im, newfilename)
+    dt.savefits(im, newfilename,fermigrid=fermigrid)
 
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
