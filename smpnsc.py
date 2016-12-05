@@ -2084,16 +2084,20 @@ class smp:
                             nozpt = True
                             gogo = False
                     if gogo:
+                        try:
+                            zptdata = np.load(zpt_file) #load previous zpt information
 
-                        zptdata = np.load(zpt_file) #load previous zpt information
-                        print zptdata.keys()
-                        zpt = zptdata['fit_zpt']
-                        zpterr = zptdata['fit_zpt_std']
-                        #rmsaddin = zptdata['rmsaddin']
-                        rmsaddin=1
-                        mjdoff = zptdata['mjdoff']
-                        mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                        #print 'thisworked'
+                            print zptdata.keys()
+                            zpt = zptdata['fit_zpt']
+                            zpterr = zptdata['fit_zpt_std']
+                            #rmsaddin = zptdata['rmsaddin']
+                            rmsaddin=1
+                            mjdoff = zptdata['mjdoff']
+                            mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                            #print 'thisworked'
+                        except:
+                            print '2099 setting nozpt to True'
+                            nozpt = True
                 # except:
                 #     print('Warning : IMAGE_ZPT field does not exist!  Calculating')
                 #     nozpt = True
