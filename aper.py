@@ -228,14 +228,14 @@ def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
             #      the distance of each pixel to the center pixel.
 
             dxsq = ( arange( nx[i] ) - dx[i] )**2
-            if ny[i] < 0:
-                if verbose:
-                    print("WARNING : aperture extends outside the image!")
-                continue
-            if nx[i] < 0:
-                if verbose:
-                    print("WARNING : aperture extends outside the image!")
-                continue
+            # if ny[i] < 0:
+            #     if verbose:
+            #         print("WARNING : aperture extends outside the image!")
+            #     continue
+            # if nx[i] < 0:
+            #     if verbose:
+            #         print("WARNING : aperture extends outside the image!")
+            #     continue
             rsq = np.ones( [ny[i], nx[i]] )
             for ii  in range(ny[i]):
                 rsq[ii,:] = dxsq + (ii-dy[i])**2
