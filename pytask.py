@@ -6,11 +6,13 @@ maxlightcurves = 1000
 hostname = os.popen('hostname').read()
 if 'dsp053' in hostname:
     isdonedir = '/home/dscolnic/testdir/isdone053'
+    logdir = '/home/dscolnic/testdir/smplogs053'
+
 if 'dsp057' in hostname:
     isdonedir = '/home/dscolnic/testdir/isdone057'
+    logdir = '/home/dscolnic/testdir/smplogs057'
 
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
-logdir = '/home/dscolnic/testdir/smplogs'
 smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST6'
 
 
