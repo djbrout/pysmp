@@ -3,7 +3,12 @@ import numpy as np
 import time
 
 maxlightcurves = 419
-isdonedir = '/home/dscolnic/testdir/isdone'
+hostname = os.popen('hostname').read()
+    if 'dsp053' in hostname:
+        isdonedir = '/home/dscolnic/testdir/isdone053'
+    if 'dsp057' in hostname:
+        isdonedir = '/home/dscolnic/testdir/isdone057'
+
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
 logdir = '/home/dscolnic/testdir/smplogs'
 smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST6'
