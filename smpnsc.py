@@ -4926,6 +4926,7 @@ class smp:
                             sexsky = 1000.
                             sexrms = 10.
                         else:
+                            print imfile
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
                                                                          snparams.survey)
                         #print s, sexsky
