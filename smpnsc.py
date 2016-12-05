@@ -6299,6 +6299,12 @@ if __name__ == "__main__":
     if isdonedir is None:
         isdonedir = os.path.join(out_dir,'isdone')
 
+    if 'dsp053' in hostname:
+        isdonedir = '/home/dscolnic/testdir/isdone053'
+
+    if 'dsp057' in hostname:
+        isdonedir = '/home/dscolnic/testdir/isdone057'
+
     if not index is None:
         if index == 'all':
             for iii in np.arange(0,5000):
