@@ -2399,6 +2399,8 @@ class smp:
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
                         sexsky *= scalefactor
                         sexrms *= scalefactor
+                        print sexsky, sexrms
+                        raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
@@ -4930,7 +4932,7 @@ class smp:
                     scale,errmag,chi,dms,good,image_stamp,simstamp,psf = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,radius=params.substamp/2.-1.,
                                                                  title=str(ra)+' '+str(dec)+' '+str(i),
-                                                                 maskfile=maskfile)
+                                                                 maskfile=maskfile,mysky=s,mysig=se)
 
                     if scale == 1:
                         badflag[i] = 1
