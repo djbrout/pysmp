@@ -5005,6 +5005,9 @@ class smp:
                         self.dosextractor = True
                         if self.dosextractor:
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ix-100, ix+100, iy-100, iy+100,snparams.survey)
+                            print s,sexsky
+                            print se,sexrms
+                            raw_input('comparison')
                             s = sexsky
                             se = sexrms
                         else:
