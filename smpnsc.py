@@ -4927,8 +4927,16 @@ class smp:
                             sexrms = 10.
                         else:
                             print imfile
-                            sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
+                            try:
+                                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
                                                                          snparams.survey)
+                            except IOError:
+                                print 'could not run sextractor'
+                                badflag[i] = 1
+                                mag_cat[i] = 99
+                                bad = True
+                                sexsky = 1000.
+                                sexrms = 10.
                         #print s, sexsky
                         #print se, sexrms
                         #raw_input('comparison')
