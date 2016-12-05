@@ -1053,9 +1053,12 @@ class metropolis_hastings():
         plt.xlabel('Step')
         plt.ylabel('Offset (pixels)')
         if self.shiftpsf:
-            self.savefig('SNoffset.png')
-            self.tmpwriter.cp('SNoffset.png',str(self.lcout)+'_SNoffset.png')
-            os.popen('rm SNoffset.png').read()
+            if self.isfermigrid:
+                self.savefig('SNoffset.png')
+                self.tmpwriter.cp('SNoffset.png',str(self.lcout)+'_SNoffset.png')
+                os.popen('rm SNoffset.png').read()
+            else:
+                self.savefig(str(self.lcout)+'_SNoffset.png')
             #print str(self.lcout)+'_SNoffset1.png'
         #else:
         #    self.savefig('SNoffset2.png')

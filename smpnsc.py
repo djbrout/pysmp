@@ -2389,8 +2389,10 @@ class smp:
                     mygainsn =  (np.sqrt(skysn)/(skyerrsn))**2
                     #print mygain,mygainsn,hdr['GAINA'],hdr['GAINB']
                     print imfile
+                    dosextractor = True
                     if dosextractor:
-                        sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow,xhi,ylow,yhi)
+                        sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow-100+stampsize,xhi+100-stampsize,
+                                                                        ylow-100+stampsize,yhi+100-stampsize)
                         sexsky *= scalefactor
                         sexrms *= scalefactor
 
