@@ -4919,7 +4919,14 @@ class smp:
 
                     self.dosextractor = True
                     if self.dosextractor:
-                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
+                        if imfile == '':
+                            badflag[i] = 1
+                            mag_cat[i] = 99
+                            bad = True
+                            sexsky = 1000.
+                            sexrms = 10.
+                        else:
+                            sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
                                                                          snparams.survey)
                         #print s, sexsky
                         #print se, sexrms
