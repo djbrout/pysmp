@@ -371,7 +371,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
 
     #plt.scatter(deltapmjd[wwn],flux[wwn])
     plt.errorbar(deltapmjd,flux,yerr=fluxerr,fmt='o',label='SMP',alpha=.4)
-    plt.errorbar(ddeltapmjd,dflux,yerr=dfluxerr,fmt='o',label='Diffimg',alpha=.4)
+    plt.errorbar(ddeltapmjd,dflux,yerr=dfluxerr,fmt='o',label='Diffimg',alpha=.4 )
     plt.xlabel('Days after Peak MJD')
     plt.ylabel('Flux')
     plt.legend()
