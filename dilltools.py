@@ -121,18 +121,26 @@ def iterstat(d, startMedian=False, sigmaclip=3.0,iter=6):
     return (md, std, num)
 
 
-def savefits(data, filename):
-    tempfile = 'tmp.fits'
-    # print 'saving to temporary file',tempfile
-    #return
-    if os.path.isfile(tempfile):
-        os.remove(tempfile)
+def savefits(data, filename, fermigrid=True):
     if os.path.isfile(filename):
         os.remove(filename)
-    save_fits_image(data, tempfile,go=True)
-    # print 'ifdh cp to ',filename
+    if fermigrid:
+        tempfile = 'tmp.fits'
+        # print 'saving to temporary file',tempfile
+        #return
+        if os.path.isfile(tempfile):
+            try:
+                os.remove(tempfile)
+            except:
+                pass
+        #if os.path.isfile(filename):
+        #    os.remove(filename)
+        save_fits_image(data, tempfile,go=True)
+        # print 'ifdh cp to ',filename
 
-    os.system('mv ' + tempfile + ' ' + filename)
+        os.system('mv ' + tempfile + ' ' + filename)
+    else:
+        save_fits_image(data, filename, go=True)
     print 'saved', filename
 
 # Takes in Filename, reads file columnwise, and returns dictionary such that:
