@@ -2400,7 +2400,7 @@ class smp:
                         sexsky *= scalefactor
                         sexrms *= scalefactor
                         print sexsky, sexrms
-                        raw_input('youyo')
+                        #raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
@@ -4921,9 +4921,9 @@ class smp:
                     if self.dosextractor:
                         sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
                                                                          snparams.survey)
-                        print s, sexsky
-                        print se, sexrms
-                        raw_input('comparison')
+                        #print s, sexsky
+                        #print se, sexrms
+                        #raw_input('comparison')
                         s = sexsky
                         se = sexrms
                     else:
