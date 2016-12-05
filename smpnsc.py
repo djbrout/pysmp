@@ -2419,7 +2419,7 @@ class smp:
                         #for i in range(1000):
                         scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, radius=params.substamp/2.-1.,
-                                       returnstamps=True, maskfile=maskfile)
+                                       returnstamps=True, maskfile=maskfile,mysky=sexsky/scalefactor,mysig=sexrms/scalefactor)
 
 
                         #print 'psfmag', psfmag
