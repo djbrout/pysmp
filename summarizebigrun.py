@@ -101,7 +101,7 @@ def grabstardata(imagedir,outfile):
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_starh'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
-                        bigdata['catmag'].extend(zptdata['cat_mag'])
+                        bigdata['catmag'].extend(zptdata['cat_magv'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
