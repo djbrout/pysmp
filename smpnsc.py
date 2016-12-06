@@ -1283,8 +1283,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 2:
-            #    cccc+= 1
+            if cccc > 10:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -5035,22 +5034,7 @@ class smp:
                         pm = 100
                         mean, st, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
                                                              clipsig=4, maxiter=18)
-                        # print pm,mean,st
-                        # pm = 200
-                        # mean, st, vals = sigma_clip.meanclip(
-                        #     im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
-                        #     clipsig=4, maxiter=18)
-                        # print pm, mean, st
-                        # pm = 100
-                        # mean, st, vals = sigma_clip.meanclip(
-                        #     im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
-                        #     clipsig=2.5, maxiter=18)
-                        # print pm, mean, st
-                        # pm = 200
-                        # mean, st, vals = sigma_clip.meanclip(
-                        #     im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
-                        #     clipsig=2.5, maxiter=18)
-                        # print pm, mean, st
+                        # cccc
                         #raw_input()
                         totalarea = len(fitrad[fitrad>0])
                         #print se**2, s/3.8,
