@@ -4919,7 +4919,7 @@ class smp:
                 #    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
                 if self.snparams.survey == 'PS1':
 
-                    self.dosextractor = True
+                    self.dosextractor = False
                     if self.dosextractor:
                         if imfile == '':
                             badflag[i] = 1
@@ -5035,12 +5035,12 @@ class smp:
                         #    sys.exit()
                         # noise_stamp[noise_stamp > 0.] = 1
                         # noise_stamp[noise_stamp <= 0.] = 0
-                        self.dosextractor = True
+                        self.dosextractor = False
                         if self.dosextractor:
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
                             print s,sexsky
                             print se,sexrms
-                            raw_input('comparison')
+                            #raw_input('comparison')
                             s = sexsky
                             se = sexrms
                         else:
