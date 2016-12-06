@@ -50,7 +50,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],
                         title='rmsaddin_')
-            sys.exit()
+            #sys.exit()
     print data.keys()
     print len(data['Flux'])
     print np.unique(data['field'])
