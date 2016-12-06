@@ -266,7 +266,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
     ww = fakemag < 24.5
-
+    plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
