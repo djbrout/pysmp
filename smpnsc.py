@@ -3577,7 +3577,7 @@ class smp:
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.2f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %i ' \
+            print >> fout, '%.2f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
                            '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i],float(smp_dict['mjd'][i])-snparams.peakmjd, smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
                                 smp_dict['zpt'][i], smp_dict['zpterr'][i],
@@ -5012,6 +5012,27 @@ class smp:
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
+
+                        pm = 100
+                        mean, st, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
+                                                             clipsig=4, maxiter=18)
+                        print pm,mean,st
+                        pm = 200
+                        mean, st, vals = sigma_clip.meanclip(
+                            im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
+                            clipsig=4, maxiter=18)
+                        print pm, mean, st
+                        pm = 100
+                        mean, st, vals = sigma_clip.meanclip(
+                            im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
+                            clipsig=2.5, maxiter=18)
+                        print pm, mean, st
+                        pm = 200
+                        mean, st, vals = sigma_clip.meanclip(
+                            im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
+                            clipsig=2.5, maxiter=18)
+                        print pm, mean, st
+                        raw_input()
                         totalarea = len(fitrad[fitrad>0])
                         #print se**2, s/3.8,
                         #raw_input()
