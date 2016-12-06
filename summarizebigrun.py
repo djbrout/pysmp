@@ -945,12 +945,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.7)
 
     ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
+    #ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
 
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='orange', label='ZPT Scat + Shot + ChisMin', linewidth=3,alpha=.95)
+    ax3.plot(ax, ayrms, color='orange', label='ZPT Scat + ChisMin', linewidth=3,alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
     # ww = hostmag > 25.

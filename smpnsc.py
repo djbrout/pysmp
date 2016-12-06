@@ -43,6 +43,8 @@ import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
+import scipy.optimize as opti
+
 
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
@@ -4410,7 +4412,7 @@ class smp:
         os.system('mv '+tempfile+' '+fname)
         print 'saved',fname
 
-    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,gain,guess_scale=None,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
+    def getfluxsmp(self,im,psf,sky,weight,fitrad,gal,mjd,skyerr,gain,guess_scale=100000,index='',mypsf=None,imfile=None,x=None,y=None,pdf_pages=None,dosimultaneous=True):
         #print 'inside getfluxsmp'
         chisqvec = []
         fluxvec = []
@@ -4420,105 +4422,109 @@ class smp:
         substamp = galconv.shape[0]
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
+        psf = psf/np.sum(psf.ravel())
+        fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
+                                   full_output=False)
+        sim =  sky + fluxls * psf
+        weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
+        mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
+        ndof = len(fitrad[fitrad==1].ravel())
+        # if dosimultaneous:
+        #     # totalarea = 0
+        #     # for x in np.arange(substamp):
+        #     #     for y in np.arange(substamp):
+        #     #         #print np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2)
+        #     #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= 13:
+        #     #             totalarea+=1
+        #     totalarea = len(fitrad[fitrad > 0])
+        #     #print 'totalarea',totalarea
+        #     #print 'skyerr2',skyerr**2
+        #     guessrange = None
+        #     if guess_scale is None:
+        #         for i in np.arange(-1000, 10000000, 1000):
+        #             sim = galconv + sky + i * psf
+        #             #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
+        #             weight = 1./(skyerr**2 + psf*abs(float(i))/gain+ 1.) #holtzman
+        #             chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+        #             fluxvec.append(i)
+        #             #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
+        #
+        #         fluxvec = np.array(fluxvec)
+        #         chisqvec = np.array(chisqvec)
+        #         #print 'argmin guesscale',np.argmin(chisqvec)
+        #         guess_scale = fluxvec[np.argmin(chisqvec)]
+        #         guessrange = 1000
+        #
+        #     #print guess_scale
+        #     #raw_input()
+        #     chisqvec = []
+        #     fluxvec = []
+        #     if guessrange is None:
+        #         guessrange = .2 * abs(guess_scale)
+        #     try:
+        #         guess_scale_step = min([abs(guess_scale) / 1000., 1.])
+        #         for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
+        #             sim = galconv + sky + i * psf
+        #             #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
+        #             weight = 1./(skyerr**2 + psf*abs(float(i))/gain + 1.) #holtzman
+        #             #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
+        #             chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
+        #             fluxvec.append(i)
+        #     except:
+        #         bad=True
+        #
+        # else:
+        #
+        #     guessrange = None
+        #     if guess_scale is None:
+        #         for i in np.arange(-100000,2000000,5000):
+        #             sim = galconv + sky + i*psf
+        #             chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
+        #             #print i,weight,chisqvec[-1]
+        #
+        #             fluxvec.append(i)
+        #         fluxvec = np.array(fluxvec)
+        #         chisqvec = np.array(chisqvec)
+        #         guess_scale = fluxvec[np.argmin(chisqvec)]
+        #         guessrange = 5000
+        #
+        #     chisqvec = []
+        #     fluxvec = []
+        #     if guessrange is None:
+        #         guessrange = .2*guess_scale
+        #     guess_scale_step = min([guess_scale/5000.,1.])
+        #     try:
+        #         for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
+        #             sim = galconv + sky + i*psf
+        #             chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
+        #             fluxvec.append(i)
+        #
+        #     except:
+        #         bad = True
 
-
-
-        if dosimultaneous:
-            # totalarea = 0
-            # for x in np.arange(substamp):
-            #     for y in np.arange(substamp):
-            #         #print np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2)
-            #         if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) <= 13:
-            #             totalarea+=1
-            totalarea = len(fitrad[fitrad > 0])
-            #print 'totalarea',totalarea
-            #print 'skyerr2',skyerr**2
-            guessrange = None
-            if guess_scale is None:
-                for i in np.arange(-1000, 1000000, 1000):
-                    sim = galconv + sky + i * psf
-                    #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
-                    weight = 1./(skyerr**2 + psf*abs(float(i))/gain+ 1.) #holtzman
-                    chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
-                    fluxvec.append(i)
-                    #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
-
-                fluxvec = np.array(fluxvec)
-                chisqvec = np.array(chisqvec)
-                #print 'argmin guesscale',np.argmin(chisqvec)
-                guess_scale = fluxvec[np.argmin(chisqvec)]
-                guessrange = 1000
-
-            #print guess_scale
-            #raw_input()
-            chisqvec = []
-            fluxvec = []
-            if guessrange is None:
-                guessrange = .2 * abs(guess_scale)
-            try:
-                guess_scale_step = min([abs(guess_scale) / 1000., 1.])
-                for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
-                    sim = galconv + sky + i * psf
-                    #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1./(skyerr**2 + psf*abs(float(i))/gain + 1.) #holtzman
-                    #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
-                    chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
-                    fluxvec.append(i)
-            except:
-                bad=True
-
-        else:
-
-            guessrange = None
-            if guess_scale is None:
-                for i in np.arange(-100000,2000000,5000):
-                    sim = galconv + sky + i*psf
-                    chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-                    #print i,weight,chisqvec[-1]
-
-                    fluxvec.append(i)
-                fluxvec = np.array(fluxvec)
-                chisqvec = np.array(chisqvec)
-                guess_scale = fluxvec[np.argmin(chisqvec)]
-                guessrange = 5000
-
-            chisqvec = []
-            fluxvec = []
-            if guessrange is None:
-                guessrange = .2*guess_scale
-            guess_scale_step = min([guess_scale/5000.,1.])
-            try:
-                for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
-                    sim = galconv + sky + i*psf
-                    chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-                    fluxvec.append(i)
-
-            except:
-                bad = True
-
-        if not bad:
-            ii = fitrad.ravel()
-            i = ii[ii != 0]
-
-            ndof = len(i)
-
-            fluxvec = np.array(fluxvec)
-            chisqvec = np.array(chisqvec)
-            try:
-                hh = chisqvec*0 + min(chisqvec)
-            except:
-                bad = True
-
-        if not bad:
-            mchisq = min(chisqvec)
-            idx = np.isclose(chisqvec, hh, atol=1.)
-
-            argm = chisqvec == min(chisqvec)
-
-            try:
-                sim = galconv + sky + fluxvec[argm]*psf
-            except:
-                bad = True
+        # if not bad:
+        #     ii = fitrad.ravel()
+        #     i = ii[ii != 0]
+        #
+        #     ndof = len(i)
+        #
+        #     fluxvec = np.array(fluxvec)
+        #     chisqvec = np.array(chisqvec)
+        #     try:
+        #         hh = chisqvec*0 + min(chisqvec)
+        #     except:
+        #         bad = True
+        #
+        # if not bad:
+        #     mchisq = min(chisqvec)
+        #     idx = np.isclose(chisqvec, hh, atol=1.)
+        #
+        #     argm = chisqvec == min(chisqvec)
+        #
+        #     try:
+        #         sim = galconv + sky + fluxvec[argm]*psf
+        #     except:
+        #         bad = True
         if not bad:
             if not pdf_pages is None:
                 fig = plt.figure(figsize=(20,10))
@@ -4552,18 +4558,19 @@ class smp:
             #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
             #     imstamp = imstamp / np.sum(imstamp)
             sum_data_minus_sim = np.sum(im-sim)
-            sim = galconv + sky + fluxvec[argm]*psf
+            #sim = galconv + sky + fluxvec[argm]*psf
             #mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2+(psf*fluxvec[argm])/3.)**.5 * fitrad)
 
+        # if not bad:
+        #     if fluxvec[argm] > 8000000:
+        #         bad = True
+        #         print 'star too bright...'
+        #     elif fluxvec[argm] < 100.:
+        #         bad = True
+        #         print 'star too dim...'
         if not bad:
-            if fluxvec[argm] > 800000:
-                bad = True
-                print 'star too bright...'
-            elif fluxvec[argm] < 100.:
-                bad = True
-                print 'star too dim...'
-        if not bad:
-            return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+            #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+            return fluxls, 100, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
             return 1,1,1,1,1,True
 
@@ -5088,8 +5095,9 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, s, gnoise_stamp,
-                                                                             fitrad, gal, mjd, se,self.gain)
+                                                                             fitrad, gal, mjd, se,self.gain,guess_scale=10**(.4*(31.-m)))
                             print scale
+                            raw_input('ls fit')
                         # except:
                         #
                         #     print 'could not scale'
@@ -5955,6 +5963,13 @@ def resid(param, psf, im, sigma, fitrad, sky, psfmag):
     model = psf * param / 10 ** (-0.4 * (psfmag - 25)) + sky
     residsig = (im - model) / sigma
     return np.array(residsig.ravel())
+
+def starresid(param, psf, im, se, fitrad, sky, gain):
+    weight = 1. / (se**2 + psf * np.max([0, float(param)]) / gain + 1.)
+    model = psf * param  + sky
+    residsig = (im - model) * weight * fitrad
+    return np.array(residsig.ravel())
+
 
 def simstamp(param, psf, im, sigma, fitrad, sky, psfmag):
     model = psf * param / 10 ** (-0.4 * (psfmag - 25)) + sky
