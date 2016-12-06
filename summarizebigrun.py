@@ -88,11 +88,14 @@ def grabstardata(imagedir,outfile):
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
-                        if max(zptdata['cat_mag'])>21.1:
-                            continue
+                    try:
                         #if True:
+                        #if max(zptdata['cat_mag'])>21.1:
+                        #    continue
+                        #if True:
+
+                        cm = zptdata['cat_magv']
+
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_starh'])
@@ -107,7 +110,7 @@ def grabstardata(imagedir,outfile):
                             bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starh'][i])))
                             #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
                             #raw_input()
-                        cm = zptdata['cat_mag']
+
                         fs = zptdata['flux_starh']
                         zp = zptdata['fit_zpt']
                         ww = (cm < 18.) & (cm > 16.)
@@ -123,9 +126,9 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
                         print 'CNTR',cntr
-                    # except:
-                    #     print 'FAILED', fname
-                    #     pass
+                    except:
+                        print 'FAILED', fname
+                        pass
 
     np.savez('dat.dat', **bigdata)
     os.system('ifdh rm ' + outfile)
