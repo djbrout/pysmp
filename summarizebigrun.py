@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
+        #grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -152,13 +152,14 @@ def grabdata(tmpwriter,resultsdir,cd):
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
-               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[]}
+               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
+        if cntr > 100: continue
         print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
@@ -189,6 +190,7 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
+            bigdata['sky'].extend(data['SKY'])
 
             for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
                 if abs(faz - fiz) > 1:
@@ -252,9 +254,10 @@ def grabdata(tmpwriter,resultsdir,cd):
     return bigdata
 
 
-def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
+def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
+    sky = np.asarray(sky)
     print fakemag.shape
     print flux.shape
     #print fakemag[0].shape
@@ -279,6 +282,14 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,outdir):
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir+'/percentagefluxdiff.png')
+
+
+    plt.clf()
+    plt.scatter(sky[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww])
+    plt.axhline(0)
+    plt.xlabel('sky')
+    plt.ylabel('Percentage Flux Difference')
+    plt.savefig(outdir + '/skypercentagefluxdiff.png')
     print 'saved png'
 
 def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir):
