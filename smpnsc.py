@@ -444,6 +444,7 @@ class smp:
             else:
                 os.makedirs(self.zptstamps)
 
+        smp_bkg = np.zeros([snparams.nvalid,params.substamp,params.substamp])
 
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
@@ -2462,6 +2463,12 @@ class smp:
                             noise_stamp = weights[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
                                           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
 
+                            self.dobackgroundstamp = True
+                            if self.dobackgroundstamp:
+                                bkgrnd = pf.getdata(imfile+'.background')
+                                bkg_stamp = bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
+
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
 
@@ -2521,6 +2528,9 @@ class smp:
                                         #noise_stamp[noise_stamp > 0.] = 1
                                         #noise_stamp[noise_stamp <= 0.] = 0
                                         smp_noise[i,:,:] = noise_stamp#*1/(skysig**2)
+
+                                    if self.dobackgroundstamp:
+                                        smp_bkg[i,:,:] = bkg_stamp
 
                                         #print noise_stamp
                                         #raw_input()
@@ -3361,6 +3371,8 @@ class smp:
                     , fileroots = smp_dict['fileroots']
                     , scalefactor = smp_dict['scalefactor']
                     , gain=smp_dict['gain']
+                    , dobkg = self.dobackgroundstamp
+                    , bkg = smp_bkg
 
                     )
             modelveco = copy(modelvec)

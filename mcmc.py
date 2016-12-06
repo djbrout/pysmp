@@ -138,6 +138,8 @@ class metropolis_hastings():
                 , scalefactor = None
                 , dontplotstamps = False
                 , fileroots = None
+                 , dobkg = False
+                 , bkg = None
                 ):
         '''
         if model is None:
@@ -232,6 +234,11 @@ class metropolis_hastings():
         self.scalefactor = scalefactor
         self.dontplotstamps = dontplotstamps
 
+
+        if dobkg :
+            self.sky = []
+            for i in range(Nimage):
+                self.sky.append(bkg[i,:,:])
 
         self.impsfs = []
         self.fullims = []
