@@ -935,14 +935,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
                                np.arange(16., max(catmag), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
-    ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
-    ax3.plot(ax, ayrms, color='blue', label='Chisq Min Err', linewidth=3,alpha=.7)
+    #ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
+    #ax3.plot(ax, ayrms, color='blue', label='Chisq Min Err', linewidth=3,alpha=.7)
     # ax, ayrms = dt.binrms(catmag, dsss, np.arange(16., max(catmag), .1), .5)
     # ax3.plot(ax, ayrms, color='green', label='Skyerr', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
+    #ax, ayrms = dt.binrms(catmag, dmz, np.arange(16., max(catmag), .1), .5)
     # print ayrms
     # raw_input('zpt scatter err')
-    ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.7)
+    #ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.7)
 
     ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
     #ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
