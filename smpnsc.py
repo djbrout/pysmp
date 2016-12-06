@@ -4852,6 +4852,13 @@ class smp:
             pdf_pagesc = PdfPages('starfits_'+str(thismjd)+'.pdf')
         else:
             pdf_pagesc = None
+
+        self.dosextractor = True
+        if self.dosextractor:
+            runsextractor.getsky_and_skyerr(imfile, im, 0, 100,  100, 100, snparams.survey)
+            bkgrnd = pf.getdata(imfile+'.background')
+
+
         #print imfile
         #print thismjd
         #print 'mjdabove'
@@ -5063,7 +5070,7 @@ class smp:
                         #    sys.exit()
                         # noise_stamp[noise_stamp > 0.] = 1
                         # noise_stamp[noise_stamp <= 0.] = 0
-                        self.dosextractor = True
+                        self.dosextractor = False
                         if self.dosextractor:
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
                             print s,sexsky
@@ -5071,9 +5078,16 @@ class smp:
                             #raw_input('comparison')
                             s = sexsky
                             se = sexrms
-                            raw_input()
+                            raw_input(  )
                         else:
                             sexsky, sexrms = s,se
+
+                        #usesextractorim = True
+                        #if usesextractorim:
+                        if self.dosextractor:
+                            bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        else:
+                            bkgrndstamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + s
                         # noise_stamp = noise_stamp*1/(se**2)
                         # noise_stamp = noise_stamp * 1 / (sexrms ** 2)
                         gal = np.zeros(image_stamp.shape)
@@ -5116,7 +5130,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
-                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, s, gnoise_stamp,
+                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
                                                                              fitrad, gal, mjd, se,self.gain,guess_scale=10**(.4*(31.-m)))
                             #print scale
                             #raw_input('ls fit')
