@@ -5096,8 +5096,8 @@ class smp:
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, s, gnoise_stamp,
                                                                              fitrad, gal, mjd, se,self.gain,guess_scale=10**(.4*(31.-m)))
-                            print scale
-                            raw_input('ls fit')
+                            #print scale
+                            #raw_input('ls fit')
                         # except:
                         #
                         #     print 'could not scale'
