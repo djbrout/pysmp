@@ -55,7 +55,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     print len(data['Flux'])
     print np.unique(data['field'])
     #raw_input()
-    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'],data['sky'],'.')#resultsdir)
+    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],'.')#resultsdir)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],'.')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
@@ -285,7 +285,10 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,outdir):
 
 
     plt.clf()
-    plt.scatter(sky[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww])
+    plt.scatter(sky[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.1)
+    ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
+                            np.arange(-10,10, .1),,window=.5)
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
     plt.axhline(0)
     plt.xlabel('sky')
     plt.ylabel('Percentage Flux Difference')
