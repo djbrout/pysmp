@@ -45,7 +45,7 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
             , loglevel="CRITICAL"
 
         )
-    out = sew(newfilename)
+    out = sew(imagefilename)
     path = out['logfilepath']
     log = open(path, 'r')
     background = -9
