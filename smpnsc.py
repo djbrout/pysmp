@@ -508,7 +508,7 @@ class smp:
 
         """
         band = 'r'
-        if os.path.exists(snparams.starcat[band]):                                                                                                                                                                                   
+        if os.path.exists(snparams.starcat[band]):
             starcat = txtobj(snparams.starcat[band],useloadtxt=True, des=True)                                                                                                                                                       
             if not starcat.__dict__.has_key('mag_%s'%band):                                                                                                                                                                          
                 try:                                                                                                                                                                                                                 
@@ -4878,7 +4878,7 @@ class smp:
             if mc > 21:
                 #print mc,'star too dim'
                 continue
-            print x,y,mc,s,se
+            print i,x,y,mc,s,se
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
             #print x,y
@@ -5234,7 +5234,7 @@ class smp:
                 #print scale
                 if not bad:
                     psfs[i,:,:] = psf
-                    print 'Fit star',i,scale,errmag
+                    print 'Fit star',i,scale,errmag,s,se
                 #raw_input()
                 #print flux_chisq[i]
                 #raw_input()
