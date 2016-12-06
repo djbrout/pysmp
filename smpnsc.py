@@ -2395,7 +2395,7 @@ class smp:
                     print imfile
                     dosextractor = True
                     if dosextractor:
-                        sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,xlow-100+stampsize,xhi+100-stampsize,
+                        sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
                         sexsky *= scalefactor
                         sexrms *= scalefactor
@@ -4930,7 +4930,7 @@ class smp:
                         else:
                             print imfile
                             try:
-                                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, x - 100, x + 100, y - 100, y + 100,
+                                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, x - 100, x + 100, y - 100, y + 100,
                                                                          snparams.survey)
                             except IOError:
                                 print 'could not run sextractor'
@@ -5037,7 +5037,7 @@ class smp:
                         # noise_stamp[noise_stamp <= 0.] = 0
                         self.dosextractor = True
                         if self.dosextractor:
-                            sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, ix-100, ix+100, iy-100, iy+100,snparams.survey)
+                            sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
                             print s,sexsky
                             print se,sexrms
                             raw_input('comparison')

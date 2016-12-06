@@ -21,7 +21,7 @@ import pyfits as pf
 import dilltools as dt
 import os
 
-def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi,survey='DES'):
+def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
     if survey == 'DES':
         sexpath = "sex"
         fermigrid  = True
@@ -29,7 +29,7 @@ def getsky_and_skyerr(imagefilename,xlow,xhi,ylow,yhi,survey='DES'):
         sexpath = "/export/scratch0/ps1sn1/pipe/v10.0gpc1/photpipe/Cfiles/bin/linux/sex"
         fermigrid = False
 
-    im = pf.getdata(imagefilename)
+    #im = pf.getdata(imagefilename)
     #hdr = pf.getheader(imagefilename)
     im = im[ylow:yhi,xlow:xhi]
     if not os.path.exists('sewpy_logs/'):
