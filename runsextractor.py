@@ -43,7 +43,7 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
             workdir='sewpy_logs/'
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , config={"checkimage_type":"BACKGROUND","checkimage_name":imagefilename+'.background'}
+            , config={"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":imagefilename+'.background, '+imagefilename+'.background_rms'}
 
         )
     out = sew(imagefilename)
