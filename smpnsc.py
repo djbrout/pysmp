@@ -5032,7 +5032,7 @@ class smp:
                             im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
                             clipsig=2.5, maxiter=18)
                         print pm, mean, st
-                        raw_input()
+                        #raw_input()
                         totalarea = len(fitrad[fitrad>0])
                         #print se**2, s/3.8,
                         #raw_input()
