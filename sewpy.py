@@ -495,7 +495,7 @@ class SEW():
         if returncat:
             if assoc_cat is None:
                 sextable = astropy.table.Table.read(self._get_cat_filepath(imgname),
-                                                    format="ascii.sextractor")
+                                                    format="ascii.sextractor",guess=False)
                 logger.info("Read %i objects from the SExtractor output catalog" % (len(sextable)))
                 self._add_prefix(sextable, prefix)
                 output["table"] = sextable
