@@ -5035,22 +5035,22 @@ class smp:
                         pm = 100
                         mean, st, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
                                                              clipsig=4, maxiter=18)
-                        print pm,mean,st
-                        pm = 200
-                        mean, st, vals = sigma_clip.meanclip(
-                            im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
-                            clipsig=4, maxiter=18)
-                        print pm, mean, st
-                        pm = 100
-                        mean, st, vals = sigma_clip.meanclip(
-                            im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
-                            clipsig=2.5, maxiter=18)
-                        print pm, mean, st
-                        pm = 200
-                        mean, st, vals = sigma_clip.meanclip(
-                            im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
-                            clipsig=2.5, maxiter=18)
-                        print pm, mean, st
+                        # print pm,mean,st
+                        # pm = 200
+                        # mean, st, vals = sigma_clip.meanclip(
+                        #     im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
+                        #     clipsig=4, maxiter=18)
+                        # print pm, mean, st
+                        # pm = 100
+                        # mean, st, vals = sigma_clip.meanclip(
+                        #     im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
+                        #     clipsig=2.5, maxiter=18)
+                        # print pm, mean, st
+                        # pm = 200
+                        # mean, st, vals = sigma_clip.meanclip(
+                        #     im[psfcenter[1] - pm:psfcenter[1] + pm, psfcenter[0] - pm:psfcenter[0] + pm],
+                        #     clipsig=2.5, maxiter=18)
+                        # print pm, mean, st
                         #raw_input()
                         totalarea = len(fitrad[fitrad>0])
                         #print se**2, s/3.8,
@@ -5082,17 +5082,17 @@ class smp:
                         #    sys.exit()
                         # noise_stamp[noise_stamp > 0.] = 1
                         # noise_stamp[noise_stamp <= 0.] = 0
-                        self.dosextractor = False
-                        if self.dosextractor:
-                            sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
-                            print s,sexsky
-                            print se,sexrms
-                            #raw_input('comparison')
-                            s = sexsky
-                            se = sexrms
-                            raw_input(  )
-                        else:
-                            sexsky, sexrms = s,se
+                        # self.dosextractor = False
+                        # if self.dosextractor:
+                        #     sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
+                        #     print s,sexsky
+                        #     print se,sexrms
+                        #     #raw_input('comparison')
+                        #     s = sexsky
+                        #     se = sexrms
+                        #     raw_input(  )
+                        # else:
+                        #     sexsky, sexrms = s,se
 
                         #usesextractorim = True
                         #if usesextractorim:
