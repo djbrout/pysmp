@@ -5596,7 +5596,7 @@ class smp:
                 np.savez( ff
                     #,ra = ras[goodstarcols]
                     #,dec = decs[goodstarcols]
-                    ,cat_magv = mag_cat[goodstarcols]
+                    ,cat_magvv = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
                     ,flux_starh = fluxcol[goodstarcols]
