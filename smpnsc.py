@@ -5063,7 +5063,7 @@ class smp:
                         #    sys.exit()
                         # noise_stamp[noise_stamp > 0.] = 1
                         # noise_stamp[noise_stamp <= 0.] = 0
-                        self.dosextractor = False
+                        self.dosextractor = True
                         if self.dosextractor:
                             sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
                             print s,sexsky
@@ -5071,6 +5071,7 @@ class smp:
                             #raw_input('comparison')
                             s = sexsky
                             se = sexrms
+                            raw_input()
                         else:
                             sexsky, sexrms = s,se
                         # noise_stamp = noise_stamp*1/(se**2)
