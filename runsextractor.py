@@ -35,7 +35,8 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
     if not os.path.exists('sewpy_logs/'):
         os.makedirs('sewpy_logs/')
     newfilename = 'sewpy_logs/trimmed_'+imagefilename.split('/')[-1]
-    dt.savefits(im, newfilename,fermigrid=fermigrid)
+    #dt.savefits(im, newfilename,fermigrid=fermigrid)
+    dt.save_fits_image(im, newfilename)
 
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
