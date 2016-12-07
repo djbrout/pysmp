@@ -299,7 +299,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,outdir):
 
     ww = dpmjd > 300.
     plt.clf()
-    plt.hist(flux[ww])
+    plt.hist(flux[ww],bins=np.arange(-1000,1000,50))
     plt.savefig(outdir + '/emptyflux.png')
 
     print 'saved png'
