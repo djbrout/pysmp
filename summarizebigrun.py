@@ -1179,7 +1179,7 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/pnfs/des/scratch/pysmp/smp_v6'
+    resultsdir = '/pnfs/des/scratch/pysmp/smp_v6_st'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
