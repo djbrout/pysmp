@@ -152,14 +152,15 @@ def grabdata(tmpwriter,resultsdir,cd):
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
-               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imstamps':[]}
+               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
+               'mjd':[],'fakefile':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
-        if cntr > 500: continue
+        if cntr > 100: continue
         print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
@@ -192,11 +193,12 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['Chisq'].extend(data['CHI2'])
             bigdata['sky'].extend(data['SKY'])
             bigdata['DPMJD'].extend(data['DPMJD'])
+            bigdata['mjd'].extend(data['MJD'])
 
-            for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
-                if abs(faz - fiz) > 1:
-                    print f
-                    print m
+            #for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
+            #    if abs(faz - fiz) > 1:
+                    #print f
+                    #print m
                     #raw_input('STOPPED')
 
                     # try:
