@@ -483,7 +483,7 @@ class metropolis_hastings():
                         self.gal_conv.append(scipy.signal.convolve2d(self.galaxy_model, self.psfs[i], mode='same'))
 
                     self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
-                                             self.sky * 0., self.flags, self.fitflags, self.sims, self.gal_conv)
+                                             self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
 
                 if (self.counter % 1000) == 0:
                     self.plotchains()
