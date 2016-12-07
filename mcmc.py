@@ -417,7 +417,7 @@ class metropolis_hastings():
         
         self.kicked_galaxy_model = copy(self.galaxy_model)
         self.simsnosn = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
-        self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky*0.,self.flags,self.fitflags,self.sims,self.gal_conv)
+        self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky.,self.flags,self.fitflags,self.sims,self.gal_conv)
 
         self.simsnosnnosky = copy(self.modelvec)*0.
 
