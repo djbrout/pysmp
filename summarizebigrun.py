@@ -160,7 +160,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
-        if cntr > 100: continue
+        if cntr > 1000: continue
         print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
