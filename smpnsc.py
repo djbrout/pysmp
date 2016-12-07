@@ -551,7 +551,7 @@ class smp:
                 print dat['modelvec_nphistory'].shape[0]
                 if dat['modelvec_nphistory'].shape[0] == 1000:
                     print 'already fitted. Exiting gracefully'
-                    sys.exit()
+                    #sys.exit()
             #raw_input()
         # staroutdir = os.path.join(stardeltasfolder,filt)
         #
