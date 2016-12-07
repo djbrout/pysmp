@@ -299,9 +299,9 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,outdir):
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir + '/skypercentagefluxdiff.png')
 
-    ww = (dpmjd > 250.) & (flux != 0)
+    ww = (dpmjd > 200.) & (flux != 0)
     plt.clf()
-    plt.hist(flux[ww],bins=np.arange(-1000,1000,10))
+    plt.hist(flux[ww],bins=np.arange(-1000,1000,100))
     plt.xlim(-1000,1000)
     plt.savefig(outdir + '/emptyflux.png')
 
