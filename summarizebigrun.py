@@ -271,7 +271,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,outdir):
     fakeflux = 10**(.4*(31. - fakemag))
     #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
-    ww = fakemag < 24.5
+    ww = (fakemag < 24.5) & (flux != 0.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
