@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
+        #grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -152,7 +152,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
-               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[]}
+               'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imstamps':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
