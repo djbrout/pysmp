@@ -2554,7 +2554,7 @@ class smp:
 
                                     smp_dict['scale'][i] = scale
                                     smp_dict['scale_err'][i] = errmag
-
+                                    smp_dict['sky'][i] = skysn
                                     if dosextractor:
                                         smp_dict['sky'][i] = sexsky
                                         smp_dict['skyerr'][i] = sexrms
