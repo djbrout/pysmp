@@ -151,7 +151,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     os.system('rm '+cd+' -f')
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
-    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[]
+    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imstamps':[]}
     zptfiles = []
     #deep = 0
