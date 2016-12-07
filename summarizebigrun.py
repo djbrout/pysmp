@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
+        grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -95,13 +95,13 @@ def grabstardata(imagedir,outfile):
                         #    continue
                         #if True:
 
-                        cm = zptdata['cat_magvv']
+                        cm = zptdata['cat_magvvv']
 
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_starh'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
-                        bigdata['catmag'].extend(zptdata['cat_magvv'])
+                        bigdata['catmag'].extend(zptdata['cat_magvvv'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
