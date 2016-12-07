@@ -2555,7 +2555,7 @@ class smp:
                                     smp_dict['scale'][i] = scale
                                     smp_dict['scale_err'][i] = errmag
                                     smp_dict['sky'][i] = skysn
-                                    raw_input('sssssss')
+                                    #raw_input('sssssss')
                                     if dosextractor:
                                         smp_dict['sky'][i] = sexsky
                                         smp_dict['skyerr'][i] = sexrms
@@ -3239,8 +3239,8 @@ class smp:
                     galmodel_uncertainty = chains['galmodel_uncertainty']
                 except:
                     print 'could not find galaxy chains, setting to image'
-                    minsky = np.argmin(smp_dict['sky'][smp_dict['sky']>0.])
-                    galmodel_params = smp_im[smp_dict['sky']>0.][minsky]-smp_dict['sky'][smp_dict['sky']>0.][minsky]
+                    minsky = np.argmin(smp_dict['sky'])
+                    galmodel_params = smp_im[minsky]-smp_dict['sky'][minsky]
                     modelvec = scaled_diffim_flux
             if not self.dosnradecfit:
                 try:
