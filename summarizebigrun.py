@@ -55,7 +55,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     print len(data['Flux'])
     print np.unique(data['field'])
     #raw_input()
-    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],'.')#resultsdir)
+    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],data['DPMJD'],'.')#resultsdir)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],'.')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
@@ -255,7 +255,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     return bigdata
 
 
-def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,outdir):
+def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     sky = np.asarray(sky)
@@ -296,6 +296,12 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,outdir):
     plt.xlabel('sky')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir + '/skypercentagefluxdiff.png')
+
+    ww = dpmjd > 300.
+    plt.clf()
+    plt.hist(flux[ww])
+    plt.savefig(outdir + '/emptyflux.png')
+
     print 'saved png'
 
 def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir):
