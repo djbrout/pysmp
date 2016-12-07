@@ -295,8 +295,8 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,outdir):
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
-    plt.xlim(0, 10)
-    plt.ylim(-10.5, 10.5)
+    plt.xlim(0, 1)
+    plt.ylim(-1.5, 1.5)
     plt.xlabel('Chi Sq')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir + '/percentagefluxdiffchi.png')
