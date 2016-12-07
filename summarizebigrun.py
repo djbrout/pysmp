@@ -285,21 +285,21 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,outdir):
     plt.ylim(-10.5,10.5)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
-    plt.savefig(outdir+'/percentagefluxdiffvschi.png')
+    plt.savefig(outdir+'/percentagefluxdiff.png')
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(chisq[ww], (flux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.5)
     ax, ay, aystd = bindata(chisq[ww], (flux[ww] - fakeflux[ww]) / fakeflux[ww],
-                            np.arange(0, 10, .05))
+                            np.arange(0,10, .05))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
-    plt.xlim(19, 25)
+    plt.xlim(0, 10)
     plt.ylim(-10.5, 10.5)
-    plt.xlabel('Fake Mag')
+    plt.xlabel('Chi Sq')
     plt.ylabel('Percentage Flux Difference')
-    plt.savefig(outdir + '/percentagefluxdiff.png')
+    plt.savefig(outdir + '/percentagefluxdiffchi.png')
 
     plt.clf()
     plt.scatter(sky[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.1)
