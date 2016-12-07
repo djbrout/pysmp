@@ -151,7 +151,7 @@ def grabdata(tmpwriter,resultsdir,cd):
     os.system('rm '+cd+' -f')
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
-    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],
+    bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[]
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imstamps':[]}
     zptfiles = []
     #deep = 0
@@ -191,6 +191,7 @@ def grabdata(tmpwriter,resultsdir,cd):
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
             bigdata['sky'].extend(data['SKY'])
+            bigdata['DPMJD'].extend(data['DPMJD'])
 
             for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
                 if abs(faz - fiz) > 1:
