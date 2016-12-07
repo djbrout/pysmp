@@ -2824,10 +2824,10 @@ class smp:
                             if np.any(smp_im[arg,:,:]):
                                 mn = sky
                                 usearg = arg
-                        else:
-                            print 'herehhere neggggggg'
-                            #raw_input()
-                            smp_dict['flag'][arg] = 1
+                        #else:
+                        #    print 'herehhere neggggggg'
+                        #    #raw_input()
+                        #    smp_dict['flag'][arg] = 1
 
         #Make sure the psf is not zero
         for i in np.arange(len(smp_dict['sky'])):
