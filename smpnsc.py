@@ -2529,7 +2529,8 @@ class smp:
                                     else:
                                         #noise_stamp[noise_stamp > 0.] = 1
                                         #noise_stamp[noise_stamp <= 0.] = 0
-                                        smp_noise[i,:,:] = noise_stamp#*1/(skysig**2)
+                                        smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
+
 
                                     if self.dobackgroundstamp:
                                         smp_bkg[i,:,:] = bkg_stamp
