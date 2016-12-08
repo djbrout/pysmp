@@ -2459,17 +2459,17 @@ class smp:
 
                             image_stamp = im[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
                                           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
-                            noise_stamp = weights[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]*scalefactor
+                            noise_stamp = (np.sqrt(weights[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.])*scalefactor)**2
 
                             self.dobackgroundstamp = True
                             if self.dobackgroundstamp:
                                 bkgrnd = pf.getdata(imfile+'.background')
                                 bkg_stamp = bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
                                           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]*scalefactor
-                                bkgrnd = pf.getdata(imfile + '.background_rms')*scalefactor
-                                noise_stamp = 1/bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]**2.
+                                # bkgrnd = pf.getdata(imfile + '.background_rms')*scalefactor
+                                # noise_stamp = 1/bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                                #           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]**2.
 
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
