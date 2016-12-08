@@ -6457,7 +6457,7 @@ if __name__ == "__main__":
             print 'not stopping here because dont know what happens after'
             if fermigrid & worker:
                 print 'ifdh 4366'
-                os.system('ifdh cp '+snfile+' .')
+                os.system('ifdh cp --force=cpn '+snfile+' .')
                 snfile = osnfile
 
     '''if ismultiple:
