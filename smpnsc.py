@@ -2469,7 +2469,7 @@ class smp:
                                           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
                                 bkgrnd = pf.getdata(imfile + '.background_rms')
                                 noise_stamp = 1/bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]**2
+                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
 
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
