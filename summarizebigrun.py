@@ -55,7 +55,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     print len(data['Flux'])
     print np.unique(data['field'])
     #raw_input()
-    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],'.')#resultsdir)
+    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],'.')#resultsdir)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],'.')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
@@ -260,12 +260,14 @@ def grabdata(tmpwriter,resultsdir,cd):
     return bigdata
 
 
-def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,outdir):
+def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,dec,outdir):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     sky = np.asarray(sky)
     chisq = np.asarray(chisq)
     imfiles = np.asarray(imfiles,dtype='str')
+    ra = np.asarray(ra)
+    dec = np.asarray(dec)
     print fakemag.shape
     print flux.shape
     #print fakemag[0].shape
@@ -292,6 +294,9 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,outd
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
     print imfiles[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+    print ra[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+    print dec[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+
     raw_input('imfiles bad')
 
     plt.clf()
