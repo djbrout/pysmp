@@ -296,7 +296,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     print imfiles[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
     print ra[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
     print dec[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
-
+    print np.arange(len(imfiles))[ww][(fakemag[ww]<20) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
     raw_input('imfiles bad')
 
     plt.clf()
