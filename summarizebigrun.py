@@ -136,8 +136,11 @@ def grabstardata(imagedir,outfile):
     os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     os.system('rm dat.dat')
 
-def grabdata(tmpwriter,resultsdir,cd):
+def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
 
+    dofakefilt,dofakemjd,dofakemag = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10), unpack=True, dtype=('string','float','float'), skiprows=0)
+    print dofakemjd
+    raw_input('dofakemjd')
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
     smpfiles = []
     for f in files:
