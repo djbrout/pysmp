@@ -174,7 +174,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
         if cntr > 100: continue
         print cntr, 'of',tot
         deep = 0
-        data = dt.readcol(f)
+        os.system('cp '+f+' test.npz')
+        data = dt.readcol('test.npz')
         tra = data['RA']
 
         print tra[0]
