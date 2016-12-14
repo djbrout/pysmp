@@ -3281,6 +3281,12 @@ class smp:
             #print 'modelstd',modelstd
             #raw_input()
             #self.floatallepochs = True
+            brighttest = True
+            if brighttest:
+                modelvec[:15]=0
+                modelstd[:15]=0
+                smp_dict['flag'][15:]=1
+
             if not self.floatallepochs:
             #     #raw_input('shouldnt be here floating all epochs')
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
