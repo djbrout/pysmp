@@ -2458,9 +2458,9 @@ class smp:
                             print 'about to pkfit'
                             #sys.exit()
                             psf_stamp = self.psf
-                            errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
+                            '''errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                            # image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
+                            '''# image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
                             #                                                                            params.substamp - 1) / 2 + 1,
                             #               np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
                             #                                                                         params.substamp - 1) / 2 + 1]
