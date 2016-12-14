@@ -138,9 +138,17 @@ def grabstardata(imagedir,outfile):
 
 def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
 
-    dofakefilt,dofakemjd,dofakemag = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10), unpack=True, dtype='string', skiprows=0)
-    print dofakemjd
-    raw_input('dofakemjd')
+    dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
+    dofakemjd = np.array(dofakemjd,dtype='float')
+    dofakemag = np.array(dofakemag,dtype='float')
+    dofakera = np.array(dofakera,dtype='float')
+    dofakedec = np.array(dofakedec,dtype='float')
+
+
+
+    #print dofakemjd
+
+    #raw_input('dofakemjd')
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
     smpfiles = []
     for f in files:
@@ -163,10 +171,14 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
-        if cntr > 1000: continue
+        if cntr > 100: continue
         print cntr, 'of',tot
         deep = 0
         data = dt.readcol(f)
+        tra = data['RA']
+
+        print tra
+        sys.exit()
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
         snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
