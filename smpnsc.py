@@ -2472,6 +2472,10 @@ class smp:
                                 # noise_stamp = 1/bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
                                 #           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]**2.
 
+                                bkg_stamp = bkg_stamp * 0. + skysn*scalefactor
+
+
+
                         except ValueError:
                             raise ValueError('SN too close to edge of CCD!')
 
@@ -2530,8 +2534,8 @@ class smp:
                                     else:
                                         #noise_stamp[noise_stamp > 0.] = 1
                                         #noise_stamp[noise_stamp <= 0.] = 0
-                                        smp_noise[i,:,:] = noise_stamp#*0.+1/(skysig**2)
-
+                                        #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
+                                        smp_noise[i,:,:] = noise_stamp*0.+1/(skyerrsn*scalefactor)**2
 
                                     if self.dobackgroundstamp:
                                         smp_bkg[i,:,:] = bkg_stamp
