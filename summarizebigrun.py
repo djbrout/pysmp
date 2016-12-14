@@ -184,8 +184,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
 
-        print dofakemjd[ cra & cdec ]
-        sys.exit()
+        if not len(dofakemjd[ cra & cdec ]) > 0:
+            continue
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
         snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
