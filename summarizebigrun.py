@@ -177,7 +177,14 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
         data = dt.readcol(f)
         tra = data['RA']
 
-        print tra
+        print tra[0]
+        dra = np.zeros(len(dofakera))+tra[0]
+        cra = np.isclose(dra,dofakera,atol=1.e-4)
+        tdec = data['DEC']
+        ddec = np.zeros(len(dofakedec))+tdec[0]
+        cdec = np.isclose(ddec,dofakedec,atol=1.e-4)
+
+        print dra[ cra & cdec ]
         sys.exit()
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
