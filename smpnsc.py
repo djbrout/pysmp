@@ -1983,6 +1983,7 @@ class smp:
                 except:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
+                print snparams.RA,xsn
                 self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
