@@ -184,7 +184,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
 
-        print dra[ cra & cdec ]
+        print dofakemjd[ cra & cdec ]
         sys.exit()
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
