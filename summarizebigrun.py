@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
+        grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -82,7 +82,8 @@ def grabstardata(imagedir,outfile):
                 if not 'SN-S2' in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
-                    zptdata = np.load(os.path.join(imagedir,dirName,fname))
+                    os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
+                    zptdata = np.load('test.npz')
                 except:
                     print 'could not load'
                     continue
