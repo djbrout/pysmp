@@ -2453,7 +2453,8 @@ class smp:
                         #raw_input('saved mask')
 
                     else:
-                        try:
+                        #try:
+                        if True:
                             print 'about to pkfit'
                             #sys.exit()
                             psf_stamp = self.psf
@@ -2482,9 +2483,9 @@ class smp:
 
 
 
-                        except ValueError:
-                            print params.fra,params.fdec,xsn,ysn
-                            raise ValueError('SN too close to edge of CCD!')
+                        # except ValueError:
+                        #     print params.fra,params.fdec,xsn,ysn
+                        #     raise ValueError('SN too close to edge of CCD!')
 
 
                         msk = copy(image_stamp)
