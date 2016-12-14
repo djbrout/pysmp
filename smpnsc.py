@@ -2076,16 +2076,22 @@ class smp:
                         else:
                             zpt_file = os.path.join(longimfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz')
                     print zpt_file
+                    self.ishead = True
                     if self.fermigrid and self.worker:
-                        ls = os.popen('ifdh ls ' + zpt_file).read()
-                        print ls
-                        if len(ls) > 0:
-                            os.popen('ifdh cp '+zpt_file+' .')
+                        if self.ishead:
+                            os.popen('cp '+zpt_file+' .')
                             zpt_file = zpt_file.split('/')[-1]
                         else:
-                            print '1812 setting nozpt to True'
-                            nozpt = True
-                            gogo = False
+                            ls = os.popen('ifdh ls ' + zpt_file).read()
+                            print ls
+                            if len(ls) > 0:
+                                os.popen('ifdh cp '+zpt_file+' .')
+                                zpt_file = zpt_file.split('/')[-1]
+                            else:
+                                print '1812 setting nozpt to True'
+                                nozpt = True
+                                gogo = False
+
                     if gogo:
                         try:
                             zptdata = np.load(zpt_file) #load previous zpt information
