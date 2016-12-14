@@ -2483,7 +2483,7 @@ class smp:
 
 
                         except ValueError:
-                            print snparams.fra,snparams.fdec,xsn,ysn
+                            print params.fra,params.fdec,xsn,ysn
                             raise ValueError('SN too close to edge of CCD!')
 
 
