@@ -1733,8 +1733,8 @@ class smp:
             if params.forceradec.lower() == 'true':
                 #print 'forcingggg'
                 #raw_input()
-                params.fra = 161.1183929
-                params.fdec = 57.8055115
+                #params.fra = 161.1183929
+                #params.fdec = 57.8055115
                 print float(params.fra),float(params.fdec)
                 xsn,ysn = zip(*w.wcs_world2pix(np.array([[float(params.fra),float(params.fdec)]]), 0))
             else:
@@ -1983,7 +1983,7 @@ class smp:
                 except:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
-                print snparams.RA,xsn
+                print snparams.RA,xsn,snparams
                 self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile)
                 self.psf = self.psf/np.sum(self.psf)
 
