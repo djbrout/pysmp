@@ -2458,9 +2458,9 @@ class smp:
                             print 'about to pkfit'
                             #sys.exit()
                             psf_stamp = self.psf
-                            '''errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
+                            errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                                 pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
-                                '''
+
                             # image_stamp = im[np.floor(ysn) - (params.substamp - 1) / 2:np.floor(ysn) + (
                             #                                                                            params.substamp - 1) / 2 + 1,
                             #               np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
@@ -2471,7 +2471,7 @@ class smp:
                             noise_stamp = (np.sqrt(weights[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
                                           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.])*scalefactor)**2
 
-                            errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, pkpsf_stamp = 1,1,1,0,100,200,100,200,image_stamp,noise_stamp,image_stamp*0+1,image_stamp*0 + 1
+                            #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, pkpsf_stamp = 1,1,1,0,100,200,100,200,image_stamp,noise_stamp,image_stamp*0+1,image_stamp*0 + 1
 
 
                             self.dobackgroundstamp = True
