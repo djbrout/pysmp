@@ -1,7 +1,7 @@
 import os
 import sys
 
-f = open('data/snfilesv4.txt','r').read()
+f = open('data/snfilesv6.txt','r').read()
 files = f.split()
 
 #sys.exit()
