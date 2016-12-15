@@ -406,6 +406,8 @@ class metropolis_hastings():
         for i in np.arange( self.galdeltas.shape[0]  ):
             for j in np.arange( self.galdeltas.shape[1] ):
                 if self.galstd[i,j] > 0.:
+                    print self.galstd.shape
+                    print self.galdeltas.shape
                     self.galdeltas[i,j] = np.random.normal( scale= self.galstd[ i, j ] )
                     '''if i == 10:
                         if j == 10:
