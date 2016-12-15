@@ -1283,7 +1283,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 5:
+            if cccc > 20:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3466,7 +3466,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 1000
+                    , maxiter = 100000
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
