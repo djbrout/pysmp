@@ -3475,7 +3475,7 @@ class smp:
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
                     , psf_shift_std = .0
-                    , shiftpsf = True
+                    , shiftpsf = False
                     , fileappend = ''
                     , stop = False
                     , skysig = smp_dict['skysig']
