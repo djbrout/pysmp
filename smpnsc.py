@@ -2577,6 +2577,7 @@ class smp:
                                     smp_dict['scale_err'][i] = errmag
                                     smp_dict['sky'][i] = skysn
                                     #raw_input('sssssss')
+                                    dosextractor=False
                                     if dosextractor:
                                         smp_dict['sky'][i] = sexsky
                                         smp_dict['skyerr'][i] = sexrms

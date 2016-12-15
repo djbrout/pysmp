@@ -410,8 +410,8 @@ class metropolis_hastings():
         for i in np.arange( self.galdeltas.shape[0]  ):
             for j in np.arange( self.galdeltas.shape[1] ):
                 if self.galstd[i,j] > 0.:
-                    print self.galstd.shape
-                    print self.galdeltas.shape
+                    #print self.galstd.shape
+                    #print self.galdeltas.shape
                     self.galdeltas[i,j] = np.random.normal( scale= self.galstd[ i, j ] )
                     '''if i == 10:
                         if j == 10:
@@ -551,9 +551,13 @@ class metropolis_hastings():
             #print chisq
             if self.flags[epoch] == 0:
                 if self.fitflags[epoch] == 0:
+                    self.model_errors = True
+                    self.readnoise = 1
+                    self.gain = 1
                     if self.model_errors:
-                        chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.sims[ epoch,:,:]/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
-                        
+                        #chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.sims[ epoch,:,:]/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
+                        chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.skyerr[epoch,:,:]**2 + (self.sims[ epoch,:,:]-self.sky[epoch])/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
+
                     else:
                         if self.useskyerr:
                             a = np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, :,: ])**2 / self.skyerr[epoch]**2 * self.mask).ravel() )
