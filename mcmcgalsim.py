@@ -334,7 +334,7 @@ class metropolis_hastings():
         #                        , data_stamps = self.real_data_stamps_trimmed
         #                        , sn_flux_history  = self.sn_flux_history
         #                        )
-
+        self.plotstamps()
 
     def mcmc_func( self ):
 
@@ -685,6 +685,68 @@ class metropolis_hastings():
     def autocorr( self, x ):
         result = np.correlate( x, x, mode='full' )
         return result[ result.size / 2 : ]
+
+    def plotstamps(self):
+        from matplotlib.backends.backend_pdf import PdfPages
+        if self.isfermigrid and self.isworker:
+            pdf_pages = PdfPages('stamps.pdf')
+        else:
+            pdf_pages = PdfPages(self.lcout + '_stamps.pdf')
+        fig = plt.figure(figsize=(25, 10))
+        for i in range(self.Nimage):
+            #self.x_pix_offset = -0.49250885143
+            #self.y_pix_offset = .627071191203
+
+            self.model_params()
+            #print self.x_pix_offset,self.y_pix_offset
+            #raw_input('sssss')
+            map(self.mapshiftPSF, np.arange(self.Nimage))
+            self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
+                        self.flags, self.fitflags, self.sims, self.gal_conv)
+            wmask = copy(self.weights[i,:,:])
+            wmask[wmask > 0] = 1
+            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
+            # v = np.real(v)
+            chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
+            tchi = chisq/len(self.mask[self.mask>0.].ravel())
+            #tchi = np.sum((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask)/len(self.mask[self.mask>0.].ravel())
+            if not tchi > -1.:
+                continue
+            if self.flags[i] == 1:
+                continue
+            #fig = plt.figure(figsize=(20, 10))
+            plt.clf()
+            axgm = plt.subplot(151)
+            axim = plt.subplot(152)
+            axpsf = plt.subplot(153)
+            axdiff = plt.subplot(154)
+            axchi = plt.subplot(155)
+            for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
+                ax.set_title(title)
+            axs = axgm.imshow(self.galaxy_model * self.mask,cmap='gray',interpolation='nearest')
+            cbar = fig.colorbar(axs, ax=axgm)
+            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            cbar = fig.colorbar(axs, ax=axim)
+            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            cbar = fig.colorbar(axs, ax=axpsf)
+            resid = (self.data[i,:,:] - self.sims[i])*self.mask
+            md = np.median(resid[resid!=0.].ravel())
+            std = np.std(resid[resid!=0.].ravel())
+            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=-4*std,vmax=4*std)
+            cbar = fig.colorbar(axs, ax=axdiff)
+            axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
+            cbar = fig.colorbar(axs, ax=axchi)
+            # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
+            # plt.colorbar()
+            plt.title(title)
+            pdf_pages.savefig(fig)
+        pdf_pages.close()
+        plt.close()
+        gc.collect()
+        if self.isfermigrid and self.isworker:
+            print os.popen('ifdh rm ' + self.lcout + '_stamps.pdf').read()
+            print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
+        print 'Saved', self.lcout + '_stamps.pdf'
 
     def get_params( self ):
         #save_fits_image(self.data[ 0, :,:],'./data.fits')

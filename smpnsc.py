@@ -3252,6 +3252,7 @@ class smp:
 
         if self.fermilog:
             self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
+        #self.dosnfit = False
         if self.dosnfit:
             if not self.dogalfit:
                 try:
@@ -3303,6 +3304,7 @@ class smp:
                 modelvec[:15]=0
                 modelstd[:15]=0
                 smp_dict['flag'][15:]=1
+                smp_dict['flag'][np.array(smp_dict['mjd'],dtype='int') == 56547] = 1
 
             if not self.floatallepochs:
             #     #raw_input('shouldnt be here floating all epochs')
@@ -3410,16 +3412,28 @@ class smp:
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(npoutdir,filename+'_withSn.npz')
 
-
+        self.dogalsimfit = True
         if self.dogalsimfit:
 
-            if not self.dogalfit:
-                chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
-                galmodel_params = chains['galmodel_params']
-                galmodel_uncertainty = chains['galmodel_uncertainty']
-                
-            galmodel = galmodel_params
-            galstd = np.sqrt(abs(galmodel))/5.
+            # if not self.dogalfit:
+            #     chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
+            #     galmodel_params = chains['galmodel_params']
+            #     galmodel_uncertainty = chains['galmodel_uncertainty']
+            #
+
+            brighttest = True
+            if brighttest:
+                modelvec[:15] = 0
+                modelstd[:15] = 0
+                smp_dict['flag'][15:] = 1
+                smp_dict['flag'][np.array(smp_dict['mjd'], dtype='int') == 56547] = 1
+
+            # minsky = np.argmin(smp_dict['sky'])
+            # galmodel_params = smp_im[minsky] - smp_dict['sky'][minsky]
+            # modelvec = scaled_diffim_flux
+            #
+            # galmodel = galmodel_params
+            # galstd = np.sqrt(abs(galmodel))/5.
 
             tstart = time.time()
 
@@ -3439,9 +3453,10 @@ class smp:
 
             print modelstd
             print 'galmodelshape', galmodel.shape
-            aaa = mcmc3galsim.metropolis_hastings( 
+            import mcmcgalsim
+            aaa = mcmcgalsim.metropolis_hastings(
                     galmodel = galmodel
-                    , modelvec = fixmodelvec
+                    , modelvec = modelvec
                     , galstd = galstd
                     , modelstd = modelstd
                     , data = smp_im
@@ -3458,7 +3473,7 @@ class smp:
                     , useskyerr = True
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
-                    , psf_shift_std = .0005
+                    , psf_shift_std = .0
                     , shiftpsf = True
                     , fileappend = ''
                     , stop = False
@@ -3475,8 +3490,8 @@ class smp:
                     , sndec = snparams.DECL
                     , burnin = 100
                     , model_pixel_scale = .27
-                    , lcout = lightcurves+filename
-                    , chainsnpz = os.path.join(outdir,filename+'_withSnAndGalsim.npz') 
+                    , lcout = os.path.join(self.lcfilepath,filename)
+                    , chainsnpz = os.path.join(npoutdir, filename + '_galsim.npz')
                     )
 
             modelveco = copy(modelvec)
