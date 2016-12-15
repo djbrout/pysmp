@@ -1283,8 +1283,8 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 20:
-                continue
+            #if cccc > 20:
+            #    continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -3301,7 +3301,7 @@ class smp:
             #print 'modelstd',modelstd
             #raw_input()
             #self.floatallepochs = True
-            brighttest = True
+            brighttest = False
             if brighttest:
                 modelvec[:15]=0
                 modelstd[:15]=0
@@ -3414,7 +3414,7 @@ class smp:
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(npoutdir,filename+'_withSn.npz')
 
-        self.dogalsimfit = True
+        self.dogalsimfit = False
         if self.dogalsimfit:
 
             # if not self.dogalfit:
