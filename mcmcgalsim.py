@@ -55,6 +55,8 @@ import math
 import galsim
 import matplotlib as m
 m.use('Agg')
+import gc
+
 import matplotlib.pyplot as plt
 #import pyfftw
 
@@ -559,7 +561,7 @@ class metropolis_hastings():
                     self.gain = self.sky*0+1.
                     if self.model_errors:
                         #chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.sims[ epoch,:,:]/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
-                        chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.skyerr[epoch,:,:]**2 + (self.sims[ epoch,:,:]-self.sky[epoch])/self.gain[epoch] + (self.readnoise[epoch]/self.gain[epoch])**2) ).ravel() )
+                        chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 *self.mask / (self.skyerr[epoch,:,:]**2 + (self.sims[ epoch,:,:]-self.sky[epoch])/self.gain[epoch] + (self.readnoise[epoch]/self.gain[epoch])**2) ).ravel() )
 
                     else:
                         if self.useskyerr:
@@ -723,7 +725,7 @@ class metropolis_hastings():
             #self.kernel()
             wmask = copy(self.weights[i,:,:])
             wmask[wmask > 0] = 1
-            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (self.skyerr[i,:,:]**2 + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise[i]/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
+            v = ((self.sims[i] - self.data[i,:,:]) ** 2 *self.mask / (self.skyerr[i,:,:]**2 + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise[i]/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
             # v = np.real(v)
             chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
             tchi = chisq/len(self.mask[self.mask>0.].ravel())
