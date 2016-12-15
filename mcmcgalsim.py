@@ -555,11 +555,11 @@ class metropolis_hastings():
             if self.flags[epoch] == 0:
                 if self.fitflags[epoch] == 0:
                     self.model_errors = True
-                    self.readnoise = 1
-                    self.gain = 1
+                    self.readnoise = self.sky*0. + 1
+                    self.gain = self.sky*0+1.
                     if self.model_errors:
                         #chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.sims[ epoch,:,:]/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
-                        chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.skyerr[epoch,:,:]**2 + (self.sims[ epoch,:,:]-self.sky[epoch])/self.gain + (self.readnoise/self.gain)**2) ).ravel() )
+                        chisq += np.sum( ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 / (self.skyerr[epoch,:,:]**2 + (self.sims[ epoch,:,:]-self.sky[epoch])/self.gain[epoch] + (self.readnoise[epoch]/self.gain[epoch])**2) ).ravel() )
 
                     else:
                         if self.useskyerr:
