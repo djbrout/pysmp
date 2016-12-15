@@ -107,6 +107,7 @@ class metropolis_hastings():
                 , snraoff = 0.
                 , sndecoff = 0.
                 , fitradius = 15
+                , isfermigrid = False
                 ):
 
 
@@ -115,6 +116,7 @@ class metropolis_hastings():
         self.modelvec = modelvec
         self.galstd = galstd
         self.modelstd = modelstd
+        self.isfermigrid=isfermigrid
         #self.galdeltas = copy(self.galstd)
         self.modeldeltas = copy(self.modelstd)
 
@@ -703,7 +705,7 @@ class metropolis_hastings():
 
     def plotstamps(self):
         from matplotlib.backends.backend_pdf import PdfPages
-        if self.isfermigrid and self.isworker:
+        if self.isfermigrid:
             pdf_pages = PdfPages('stamps.pdf')
         else:
             pdf_pages = PdfPages(self.lcout + '_stamps.pdf')

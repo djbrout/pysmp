@@ -3494,6 +3494,7 @@ class smp:
                     , model_pixel_scale = .27
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir, filename + '_galsim.npz')
+                    , isfermigrid = self.fermigrid
                     )
 
             modelveco = copy(modelvec)
