@@ -106,7 +106,7 @@ class metropolis_hastings():
                 , platescale = .27
                 , snraoff = 0.
                 , sndecoff = 0.
-                , fitradius = 19
+                , fitradius = 15
                 ):
 
 
