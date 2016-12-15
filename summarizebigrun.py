@@ -304,7 +304,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     fakeflux = 10**(.4*(31. - fakemag))
     #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
-    ww = (fakemag < 24.5) & (flux != 0.)
+    ww = (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
@@ -319,6 +319,21 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir+'/percentagefluxdiff.png')
+
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.scatter(fakemag[ww], flux[ww], alpha=.5)
+    ax, ay, aystd = bindata(fakemag[ww], flux[ww] ,
+                            np.arange(min(fakemag[ww]), max(fakemag[ww]), .5))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    plt.axhline(0)
+    plt.xlim(19, 25)
+    # plt.ylim(-.1,.1)
+    plt.ylim(-2000, 2000)
+    plt.xlabel('Fake Mag')
+    plt.ylabel('Fit Flux')
+    plt.savefig(outdir + '/fvf.png')
 
     print imfiles[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
     print ra[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
