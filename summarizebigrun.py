@@ -313,7 +313,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
-    plt.xlim(19,2)
+    plt.xlim(19,29)
     #plt.ylim(-.1,.1)
     plt.ylim(-500,500)
     plt.xlabel('Fake Mag')
