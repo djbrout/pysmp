@@ -211,8 +211,8 @@ class metropolis_hastings():
                 bigim_pix_center = galsim.PositionD(cx,cy)
                 des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
                 thispsf = des_psfex.getPSF(stamp_center)
-                im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius,
-                                                      cy-self.fitradius,cy+self.fitradius ) ]
+                im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
+                                                      cy-self.fitradius,cy+self.fitradius-1 ) ]
                 
                 self.psfs.append(im.wcs.toWorld(thispsf,image_pos=stamp_center))
                 #self.imagestamps.append(im)
@@ -221,15 +221,15 @@ class metropolis_hastings():
                 #     modelim = full_data_image[galsim.BoundsI( cx-self.model_radius,cx+self.model_radius-1,
                 #                                               cy-self.model_radius,cy+self.model_radius-1 )]
                 # else:
-                self.modelim = full_data_image[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius,
-                                                                cy-self.fitradius,cy+self.fitradius ) ]*0.
+                self.modelim = full_data_image[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
+                                                                cy-self.fitradius,cy+self.fitradius-1 ) ]*0.
                 #self.imagestampsformodel.append(modelim)
 
                 #print self.modelvec
                 #print i
                 #raw_input()
-                self.simstamps.append(full_data_image[ galsim.BoundsI( cx-fitradius,cx+fitradius,
-                                                                       cy-fitradius,cy+fitradius ) ] * 0.0)
+                self.simstamps.append(full_data_image[ galsim.BoundsI( cx-fitradius,cx+fitradius-1,
+                                                                       cy-fitradius,cy+fitradius-1 ) ] * 0.0)
                 self.snobjs.append(galsim.Gaussian(sigma = 1.e-8, flux = self.modelvec[i]))
                 self.snoffsets.append(im.wcs.toWorld(im.trueCenter()).project(self.fiducial_coord))
                 #self.snras.append(0.)
