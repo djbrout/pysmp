@@ -330,9 +330,9 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.scatter(fakemag[ww],fakeflux[ww],alpha=.5,color='red')
 
     plt.axhline(0)
-    plt.xlim(24, 29)
+    plt.xlim(22, 29)
     # plt.ylim(-.1,.1)
-    plt.ylim(-500, 500)
+    plt.ylim(-500, 5000)
     plt.xlabel('Fake Mag')
     plt.ylabel('Fit Flux')
     plt.savefig(outdir + '/fvf.png')
