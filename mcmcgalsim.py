@@ -438,8 +438,12 @@ class metropolis_hastings():
         
         if not self.psf_shift_std is None:
             #for i in np.arange(self.Nimage):
-            self.xshift = np.random.normal(scale=self.psf_shift_std)
-            self.yshift = np.random.normal(scale=self.psf_shift_std)
+            if self.psf_shift_std > 0:
+                self.xshift = np.random.normal(scale=self.psf_shift_std)
+                self.yshift = np.random.normal(scale=self.psf_shift_std)
+            else:
+                self.xshift = 0.
+                self.yshift = 0.
             self.kicked_snraoff = self.snraoff + self.xshift
             self.kicked_sndecoff = self.sndecoff + self.yshift
                 
