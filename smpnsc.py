@@ -1283,7 +1283,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 20:
+            if cccc > 5:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3488,7 +3488,7 @@ class smp:
                     , weightfiles = smp_dict['weight_filename']
                     , snra = snparams.RA
                     , sndec = snparams.DECL
-                    , burnin = 100
+                    #, burnin = 100
                     , model_pixel_scale = .27
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir, filename + '_galsim.npz')
