@@ -2735,9 +2735,10 @@ class smp:
                                     #sys.exit()
                                     if self.fermigrid and self.worker:
                                         #print 'cleaning up copied files'
-                                        os.popen('rm '+imfile).read()
+                                        '''os.popen('rm '+imfile).read()
                                         os.popen('rm '+imfile+'.fz').read()
                                         os.popen('rm '+noisefile).read()
+                                        '''
                                         #os.popen('rm '+psffile).read()
 
 
