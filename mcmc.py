@@ -459,7 +459,7 @@ class metropolis_hastings():
             #print self.counter
             self.accepted_int += 1
             self.mcmc_func()
-            
+            print 'PSF Position:', self.current_x_offset, self.current_y_offset
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
@@ -487,7 +487,7 @@ class metropolis_hastings():
 
                     print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
-                if (self.counter % 10000) == 0:
+                if (self.counter % 20000) == 0:
                     self.plotchains()
                     self.savechains()
                 #sys.exit()
