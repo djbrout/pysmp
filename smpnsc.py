@@ -3406,7 +3406,7 @@ class smp:
             #     galmodel_uncertainty = chains['galmodel_uncertainty']
             #
 
-            brighttest = True
+            brighttest = False
             if brighttest:
                 modelvec[:15] = 0
                 modelstd[:15] = 0
@@ -3449,7 +3449,7 @@ class smp:
                     , weights = smp_noise
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
-                    , maxiter = 100000
+                    , maxiter = self.params.sn_plus_galmodel_steps_galsim
                     , mask = None
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
@@ -3459,7 +3459,7 @@ class smp:
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
                     , psf_shift_std = .0
-                    , shiftpsf = False
+                    , shiftpsf = True
                     , fileappend = ''
                     , stop = False
                     , skysig = smp_dict['skysig']

@@ -110,6 +110,8 @@ class metropolis_hastings():
                 , sndecoff = 0.
                 , fitradius = 15
                 , isfermigrid = False
+                 , psfcenterx = None
+                 ,psfcentery = None
                 ):
 
 
@@ -158,6 +160,8 @@ class metropolis_hastings():
         self.chainsnpz = chainsnpz
 
         self.useskyerr = useskyerr
+        self.psfcenterx = psfcenterx
+        self.psfcentery = psfcentery
 
         self.didtimeout = False
         #self.comboerr = True
@@ -221,8 +225,12 @@ class metropolis_hastings():
                 bigim_pix_center = galsim.PositionD(cx,cy)
                 des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
                 thispsf = des_psfex.getPSF(stamp_center)
-                im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
-                                                      cy-self.fitradius,cy+self.fitradius-1 ) ]
+
+                im = full_data_image[self.psfcenterx - substamp / 2.:self.psfcenterx + substamp / 2.,
+                                                          self.psfcentery - substamp / 2.:self.psfcentery + substamp / 2.]
+
+                #im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
+                #                                      cy-self.fitradius,cy+self.fitradius-1 ) ]
                 
                 self.psfs.append(im.wcs.toWorld(thispsf,image_pos=stamp_center))
                 #self.imagestamps.append(im)
