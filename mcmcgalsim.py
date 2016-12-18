@@ -207,6 +207,12 @@ class metropolis_hastings():
                 #self.snras.append(np.nan)
                 #self.sndecs.append(np.nan)
             else:
+
+
+
+                #addd astrometric fit for each night just for the galaxy model
+
+
                 full_data_image = galsim.fits.read(self.imagefiles[i])
                 #full_weights_image = galsim.fits.read(self.weightfiles[i])
                 stamp_center = full_data_image.wcs.posToImage(self.fiducial_coord)
@@ -708,9 +714,9 @@ class metropolis_hastings():
     def plotstamps(self):
         from matplotlib.backends.backend_pdf import PdfPages
         if self.isfermigrid:
-            pdf_pages = PdfPages('stamps.pdf')
+            pdf_pages = PdfPages('galsimstamps.pdf')
         else:
-            pdf_pages = PdfPages(self.lcout + '_stamps.pdf')
+            pdf_pages = PdfPages(self.lcout + '_galsimstamps.pdf')
         fig = plt.figure(figsize=(25, 10))
         for i in range(self.Nimage):
             #self.x_pix_offset = -0.49250885143
@@ -764,9 +770,9 @@ class metropolis_hastings():
         plt.close()
         gc.collect()
         if self.isfermigrid:
-            print os.popen('ifdh rm ' + self.lcout + '_stamps.pdf').read()
-            print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
-        print 'Saved', self.lcout + '_stamps.pdf'
+            print os.popen('ifdh rm ' + self.lcout + '_galsimstamps.pdf').read()
+            print os.popen('ifdh cp galsimstamps.pdf '+self.lcout+'_galsimstamps.pdf').read()
+        print 'Saved', self.lcout + '_galsimstamps.pdf'
 
     def get_params( self ):
         #save_fits_image(self.data[ 0, :,:],'./data.fits')

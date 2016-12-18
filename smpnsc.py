@@ -82,6 +82,7 @@ paramkeywordlist = {'STAMPSIZE':'float ','RADIUS1':'float',
                     'FORCERADEC':'string','FRA':'float','FDEC':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
                     'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
+                    'SN_PLUS_GALMODEL_STEPS_GALSIM':'float',
                     'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string',
                     'HDR_PSF_FWHM':'string','MINZPTSTARS':'float','FLUX_STD_DIV':'float','GALMODEL_DIV':'float'
                     }
@@ -393,15 +394,6 @@ class smp:
             self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snparams.image_name_mask)
 
 
-        # self.dobigstarcat = dobigstarcat
-        # #print self.dobigstarcat
-        # #sys.exit()
-        # if self.dobigstarcat:
-        #     self.bigcatalog = pf.open(bigstarcatalog)[2].data
-        #     self.bigcatalogmags = self.bigcatalog['mag']
-        #     self.bigcatalogras = self.bigcatalog['x_world']
-        #     self.bigcatalogdecs = self.bigcatalog['y_world']
-
         self.exactpos = exactpos
 
         self.ras = []
@@ -499,7 +491,8 @@ class smp:
                     'impsfs':[],
                     'hpsfs':[],
                     'fileroots':np.chararray(snparams.nvalid,itemsize=200),
-
+                    'psf_centerx':np.zeros(snparams.nvalid),
+                    'psf_centery':np.zeros(snparams.nvalid),
                     }
         smp_scale = np.zeros(snparams.nvalid)
         smp_sky = np.zeros(snparams.nvalid)
@@ -507,7 +500,6 @@ class smp:
         for i in np.arange(snparams.nvalid):
             smp_dict['image_filename'][i] = 'na'
 
-        #snparams.cat_zpts = {}
 
         """
         band = 'r'
@@ -535,8 +527,7 @@ class smp:
         cols = None
 
         filename = snparams.snfile.split('/')[-1].split('.')[0] +'_'+ filt
-        #print 'TESTING EMAIL'
-        #sys.exit()
+
         if not nozpt:
             npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
             datf = os.path.join(npoutdir, filename + '_withSn.npz')
@@ -551,24 +542,7 @@ class smp:
                 print dat['modelvec_nphistory'].shape[0]
                 if dat['modelvec_nphistory'].shape[0] == 1000:
                     print 'already fitted. Exiting gracefully'
-                    #sys.exit()
-            #raw_input()
-        # staroutdir = os.path.join(stardeltasfolder,filt)
-        #
-        # print staroutdir
-        # if fermigrid and worker:
-        #     if not os.path.exists(stardeltasfolder):
-        #         print os.popen('ifdh mkdir ' + stardeltasfolder).read()
-        #     if not os.path.exists(staroutdir):
-        #         print os.popen('ifdh mkdir '+staroutdir).read()
-        # else:
-        #     if not os.path.exists(stardeltasfolder):
-        #         os.makedirs(stardeltasfolder)
-        #     if not os.path.exists(staroutdir):
-        #         os.makedirs(staroutdir)
-        # #raw_input('makedir')
-        # print filename
-        #print staroutdir
+
         staroutdir = os.path.join(oldoutdir,'staroffsets',filt)
         if self.fermigrid and self.worker:
             print os.popen('ifdh mkdir '+os.path.join(oldoutdir,'staroffsets')).read()
@@ -612,9 +586,7 @@ class smp:
                     else:
                         print 'Could not find star offset file. Calculating...'
                         nozpt = True
-        #sys.exit()
-        #print 'ABOUT TO GLOBALSTAR'*10
-        #sys.exit()
+
         
         #############################################################################################################################
         ################################################# GET STAR GLOBAL OFFSETS ###################################################
@@ -1283,8 +1255,8 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            #if cccc > 20:
-            #    continue
+            if cccc > 20:
+                continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
@@ -1318,7 +1290,7 @@ class smp:
                 imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
                 if not self.snparams.survey == 'PS1':
                     print imfile
-                    changename = False
+                    changename = True
                     if changename:
                         if int(imfile[:8]) < 20140601:
                             imfile = imfile.replace('p1', 'Y1')
@@ -1647,6 +1619,9 @@ class smp:
             if self.useweights:
                 weights = pyfits.getdata(weightsfile)
                 maskfile = weightsfile
+                mask = weights
+                mask[mask<.0001] = 0
+                mask[mask>= .0001] = 1
             else:
                 noise = pyfits.getdata(noisefile)
                 mask = pyfits.getdata(maskfile)
@@ -2541,15 +2516,17 @@ class smp:
 
 
                                     noise_stamp[image_stamp > 500000.] = 0.
+
                                     if self.snparams.survey == 'PS1':
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
-                                        smp_noise[i,:,:] = noise_stamp*1/(skysig**2)
+                                        smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
                                     else:
-                                        #noise_stamp[noise_stamp > 0.] = 1
-                                        #noise_stamp[noise_stamp <= 0.] = 0
+                                        noise_stamp[noise_stamp > 0.] = 1
+                                        noise_stamp[noise_stamp <= 0.] = 0
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
-                                        smp_noise[i,:,:] = noise_stamp*0.+1/(skyerrsn*scalefactor)**2
+                                        smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
+
 
                                     if self.dobackgroundstamp:
                                         smp_bkg[i,:,:] = bkg_stamp
@@ -2577,18 +2554,18 @@ class smp:
 
                                     smp_dict['scale'][i] = scale
                                     smp_dict['scale_err'][i] = errmag
-                                    smp_dict['sky'][i] = skysn
-                                    #raw_input('sssssss')
-                                    dosextractor=False
-                                    if dosextractor:
-                                        smp_dict['sky'][i] = sexsky
-                                        smp_dict['skyerr'][i] = sexrms
-                                    else:
-                                        print 'skysn',skysn
-                                        print 'mysky',mysky
-                                        #raw_input()
-                                        smp_dict['sky'][i] = skysn
-                                        smp_dict['skyerr'][i] = skyerrsn
+                                    # smp_dict['sky'][i] = skysn
+                                    # #raw_input('sssssss')
+                                    # dosextractor=False
+                                    # if dosextractor:
+                                    #     smp_dict['sky'][i] = sexsky
+                                    #     smp_dict['skyerr'][i] = sexrms
+                                    # else:
+                                    #     print 'skysn',skysn
+                                    #     print 'mysky',mysky
+                                    #     #raw_input()
+                                    smp_dict['sky'][i] = skysn*scalefactor
+                                    smp_dict['skyerr'][i] = skyerrsn*scalefactor
 
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
@@ -2651,6 +2628,10 @@ class smp:
                                     smp_dict['diffim_fluxerr'][i] = snparams.fluxerr[j]
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
+
+                                    if self.params.survey == 'DES':
+                                        smp_dict['psf_centerx'][i] = self.psfcenter[1]
+                                        smp_dict['psf_centery'][i] = self.psfcenter[0]
 
                                     smp_dict['gain'][i] = self.gain
                                     if self.snparams.survey == 'PS1':
@@ -4912,10 +4893,10 @@ class smp:
         else:
             pdf_pagesc = None
 
-        self.dosextractor = True
-        if self.dosextractor:
-            runsextractor.getsky_and_skyerr(imfile, im, 0, 100,  100, 100, snparams.survey)
-            bkgrnd = pf.getdata(imfile+'.background')
+        # self.dosextractor = True
+        # if self.dosextractor:
+        #     runsextractor.getsky_and_skyerr(imfile, im, 0, 100,  100, 100, snparams.survey)
+        #     bkgrnd = pf.getdata(imfile+'.background')
 
 
         #print imfile
@@ -5128,6 +5109,7 @@ class smp:
 
                         #usesextractorim = True
                         #if usesextractorim:
+                        self.dosextractor = False
                         if self.dosextractor:
                             bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         else:
