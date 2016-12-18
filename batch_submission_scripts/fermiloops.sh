@@ -7,5 +7,5 @@ setup jobsub_client
 
 
 jobsub_submit -G des --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC --expected-lifetime=18h -M --verbose --OS=SL6\
- --email-to=djbrout@gmail.com -N 5 file://runfermirun.csh
+ --email-to=djbrout@gmail.com -N 50 file://runfermirun.csh
 echo done
