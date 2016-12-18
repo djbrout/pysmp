@@ -2633,7 +2633,7 @@ class smp:
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
-                                    if self.params.survey == 'DES':
+                                    if self.snparams.survey == 'DES':
                                         smp_dict['psf_centerx'][i] = self.psfcenter[1]
                                         smp_dict['psf_centery'][i] = self.psfcenter[0]
 
