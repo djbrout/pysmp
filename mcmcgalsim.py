@@ -322,7 +322,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            if (self.counter % 1000) ==0:
+            if (self.counter % 10) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
                 print 'Num Iterations: ' + str( self.counter )
@@ -331,9 +331,10 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 print 'Chisqvec',self.chisqvec
-                '''self.plotchains()
+                print 'psf position',self.
+                self.plotchains()
                 self.savechains()
-                '''
+
                 #raw_input()
             if self.counter > self.maxiter:
                 self.z_scores_say_keep_going = False#GETOUT
