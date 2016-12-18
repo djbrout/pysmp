@@ -331,7 +331,7 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 print 'Chisqvec',self.chisqvec
-                print 'psf position',self.
+                print 'psf position',self.x_pix_offset,self.y_pix_offset
                 self.plotchains()
                 self.savechains()
 
