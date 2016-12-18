@@ -476,7 +476,7 @@ class metropolis_hastings():
                 print 'PSF Position:',self.current_x_offset,self.current_y_offset
                 #print 'mjdoff: ',self.mjdoff
                 #sys.exit()
-                if (self.counter % 20000) == 0:
+                if (self.counter % 1000) == 0:
 
                     self.gal_conv = []
                     for i in np.arange(len(self.psfs)):#NEED TO MAKE THE GALAXY MODEL AN AVERAGE AND NOT JUST LAST MCMC STEP
@@ -485,7 +485,9 @@ class metropolis_hastings():
                     self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
                                              self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
 
-                if (self.counter % 1000) == 0:
+                    print 'fitting position:', self.x_pix_offset, self.y_pix_offset
+
+                if (self.counter % 10000) == 0:
                     self.plotchains()
                     self.savechains()
                 #sys.exit()
@@ -1410,7 +1412,7 @@ class metropolis_hastings():
             self.kicked_psfs[epoch, :, :] = thispsf
 
     def mapshiftPSF(self, epoch):
-        print 'fitting position:', self.x_pix_offset, self.y_pix_offset
+        #print 'fitting position:', self.x_pix_offset, self.y_pix_offset
         #print 'modelstd',epoch,self.modelstd[epoch]
         if self.modelstd[epoch] > 0.:
             if self.flags[epoch] == 0:
