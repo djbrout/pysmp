@@ -3212,10 +3212,10 @@ class smp:
                 , usesimerr = False
                 , flags = smp_dict['flag']+smp_dict['mjd_flag']
                 , fitflags = smp_dict['fitflag']*0.
-                , psf_shift_std = .001
+                , psf_shift_std = self.params.sn_shift_std
                 , xoff = 0.
                 , yoff = 0.
-                , shiftpsf = True
+                , shiftpsf = self.params.sn_shift_std > 0.
                 , fileappend = ''
                 , stop = False
                 , skyerr_radius = 16.
@@ -3397,7 +3397,7 @@ class smp:
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(npoutdir,filename+'_withSn.npz')
 
-        self.dogalsimfit = False
+        self.dogalsimfit = True
         if self.dogalsimfit:
 
             # if not self.dogalfit:
