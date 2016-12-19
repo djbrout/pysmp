@@ -226,8 +226,8 @@ class metropolis_hastings():
                 des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
                 thispsf = des_psfex.getPSF(stamp_center)
 
-                im = full_data_image[self.psfcenterx - substamp / 2.:self.psfcenterx + substamp / 2.,
-                                                          self.psfcentery - substamp / 2.:self.psfcentery + substamp / 2.]
+                im = full_data_image[galsim.BoundsI( self.psfcenterx - substamp / 2.,self.psfcenterx + substamp / 2.,
+                                                          self.psfcentery - substamp / 2.,self.psfcentery + substamp / 2.]
 
                 #im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
                 #                                      cy-self.fitradius,cy+self.fitradius-1 ) ]
