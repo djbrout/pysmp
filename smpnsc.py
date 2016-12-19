@@ -3412,6 +3412,10 @@ class smp:
             #     galmodel_uncertainty = chains['galmodel_uncertainty']
             #
 
+
+            galstd = np.sqrt(abs(galmodel)) / params.galmodel_div
+
+
             brighttest = False
             if brighttest:
                 modelvec[:15] = 0
