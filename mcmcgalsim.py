@@ -110,7 +110,7 @@ class metropolis_hastings():
                 , sndecoff = 0.
                 , fitradius = 15
                 , isfermigrid = False
-                 , psfcenterx = None
+                , psfcenterx = None
                  ,psfcentery = None
                 ):
 

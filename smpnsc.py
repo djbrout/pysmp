@@ -3488,8 +3488,8 @@ class smp:
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir, filename + '_galsim.npz')
                     , isfermigrid = self.fermigrid
-                    , psfcenterx = smp_dict['psfcenterx']
-                    , psfcentery = smp_dict['psfcentery']
+                    , psfcenterx = smp_dict['psf_centerx']
+                    , psfcentery = smp_dict['psf_centery']
                     )
 
             modelveco = copy(modelvec)
