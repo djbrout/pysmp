@@ -3243,7 +3243,7 @@ class smp:
 
         if self.fermilog:
             self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
-        #self.dosnfit = False
+        self.dosnfit = False
         if self.dosnfit:
             if not self.dogalfit:
                 try:
