@@ -1511,7 +1511,7 @@ class metropolis_hastings():
                                 newpsf[3:, :] = thispsf[:-3, :]
                             else:
                                 print 'MCMC is attempting to offset the psf by more than three pixels! 0'
-                                raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 0')
+                                #raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 0')
                             thispsf = copy(newpsf)
 
                             newpsf = copy(thispsf)
@@ -1531,7 +1531,7 @@ class metropolis_hastings():
                                 newpsf[:, 3:] = copy(thispsf[:, :-3])
                             else:
                                 print 'MCMC is attempting to offset the psf by more than three pixels! 1'
-                                raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
+                                #raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
 
                             thispsf = newpsf
                         self.kicked_psfs[epoch, :, :] = thispsf
