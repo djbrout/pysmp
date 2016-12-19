@@ -1255,7 +1255,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 50:
+            if cccc > 10:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3488,6 +3488,8 @@ class smp:
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir, filename + '_galsim.npz')
                     , isfermigrid = self.fermigrid
+                    , psfcenterx = smp_dict['psfcenterx']
+                    , psfcentery = smp_dict['psfcentery']
                     )
 
             modelveco = copy(modelvec)
