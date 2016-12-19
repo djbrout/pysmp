@@ -872,6 +872,17 @@ class metropolis_hastings():
             self.galmodel_nphistory[ i , : , : ] = self.galhistory[ i ]
             self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
 
+    def savefig(self, fname):
+        if self.isfermigrid:
+            plt.savefig('tmp.png')
+            os.popen('ifdh rm ' + fname).read()
+            print os.popen('ifdh cp tmp.png '+fname).read()
+            os.popen('rm tmp.png')
+        else:
+            plt.savefig(fname)
+
+        print 'saved',fname
+
     def plotchains( self ):
         self.model_params()
         numepochs = self.modelvec_nphistory.shape[1]
@@ -883,7 +894,7 @@ class metropolis_hastings():
             plt.plot(np.arange(0,len(self.modelvec_nphistory[:,e])*self.compressionfactor,self.compressionfactor),self.modelvec_nphistory[::1,e])
             plt.xlabel('Step')
             plt.ylabel('SN Flux')
-        plt.savefig(str(self.lcout)+'_SNchainsg.png')
+        self.savefig(str(self.lcout)+'_SNchainsg.png')
         print str(self.lcout)+'_SNchainsg.png'
 
         plt.clf()
@@ -896,8 +907,8 @@ class metropolis_hastings():
         plt.legend()
         plt.xlabel('Step')
         plt.ylabel('SN Shift (arcsec)')
-        plt.savefig(str(self.lcout)+'_SNradechistory.png')
-        print str(self.lcout)+'_SNradechistory.png'
+        self.savefig(str(self.lcout)+'_SNradechistoryg.png')
+        print str(self.lcout)+'_SNradechistoryg.png'
 
         plt.clf()
         plt.close(1)
