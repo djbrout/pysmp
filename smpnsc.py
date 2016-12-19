@@ -3468,8 +3468,8 @@ class smp:
                     , useskyerr = True
                     , flags = smp_dict['flag']
                     , fitflags = smp_dict['fitflag']*0.
-                    , psf_shift_std = .0
-                    , shiftpsf = True
+                    , psf_shift_std = self.params.sn_shift_std
+                    , shiftpsf = self.params.sn_shift_std > 0.
                     , fileappend = ''
                     , stop = False
                     , skysig = smp_dict['skysig']
