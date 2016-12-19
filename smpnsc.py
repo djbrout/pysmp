@@ -2636,8 +2636,8 @@ class smp:
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
                                     if self.snparams.survey == 'DES':
-                                        smp_dict['psf_centerx'][i] = self.psfcenter[1]
-                                        smp_dict['psf_centery'][i] = self.psfcenter[0]
+                                        smp_dict['psf_centerx'][i] = round(ysn)
+                                        smp_dict['psf_centery'][i] = round(xsn)
 
                                     smp_dict['gain'][i] = self.gain
                                     if self.snparams.survey == 'PS1':
