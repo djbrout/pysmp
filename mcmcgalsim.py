@@ -337,7 +337,7 @@ class metropolis_hastings():
                 print 'Chisqvec',self.chisqvec
 
                 self.plotchains()
-                self.savechains()
+                #self.savechains()
 
                 #raw_input()
             if self.counter > self.maxiter:
