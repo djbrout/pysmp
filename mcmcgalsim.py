@@ -325,7 +325,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            print 'psf position', self.kicked_snraoff, self.kicked_sndecoff
+            print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,self.chisqvec
             if (self.counter % 100) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
