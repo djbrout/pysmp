@@ -325,7 +325,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,self.chisqvec
+            print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3)
             if (self.counter % 100) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
@@ -334,7 +334,7 @@ class metropolis_hastings():
                 print 'Seconds per iteration: '+str(float(( self.t2 - self.t1 )/self.counter))
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
-                print 'Chisqvec',self.chisqvec
+                #print 'Chisqvec',self.chisqvec
 
                 self.plotchains()
                 #self.savechains()
