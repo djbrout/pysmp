@@ -322,7 +322,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            if (self.counter % 10) ==0:
+            if (self.counter % 10000) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
                 print 'Num Iterations: ' + str( self.counter )
