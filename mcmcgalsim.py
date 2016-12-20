@@ -884,23 +884,23 @@ class metropolis_hastings():
         for i in np.arange(self.Nimage): 
             #try:
             if True:
-                self.tmpwriter.save_fits_image(self.data[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxdata.fits'))
+                self.tmpwriter.savefits(self.data[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxdata.fits'))
                 datastamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxdata.fits'))
-                self.tmpwriter.save_fits_image(self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxsim.fits'))
+                self.tmpwriter.savefits(self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxsim.fits'))
                 simstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxsim.fits'))
-                self.tmpwriter.save_fits_image(self.data[i]-self.sky[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxdataminussky.fits'))
-                self.tmpwriter.save_fits_image(self.galaxy_model,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixgalmodel.fits'))
+                self.tmpwriter.savefits(self.data[i]-self.sky[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxdataminussky.fits'))
+                self.tmpwriter.savefits(self.galaxy_model,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixgalmodel.fits'))
                 galmodelstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixgalmodel.fits'))
-                self.tmpwriter.save_fits_image(self.weights[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxnoise.fits'))
+                self.tmpwriter.savefits(self.weights[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxnoise.fits'))
                 weightstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixfluxnoise.fits'))
-                self.tmpwriter.save_fits_image(self.data[i]-self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixdataminussim.fits'))
+                self.tmpwriter.savefits(self.data[i]-self.sims[i],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixdataminussim.fits'))
 
                 #save_fits_image(self.original_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
-                self.tmpwriter.save_fits_image(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixskyerr.fits'))
+                self.tmpwriter.savefits(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixskyerr.fits'))
                 psfstamps.append('nan')
                 epoch = i
                 chisqst = ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 *self.mask / (self.skyerr[epoch,:,:]**2 + ((self.sims[ epoch,:,:]-self.sky[epoch])**2)**.5/self.gain[epoch] + (self.readnoise/self.gain[epoch])**2) )
-                self.tmpwriter.save_fits_image(chisqst,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
+                self.tmpwriter.savefits(chisqst,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
                 chisqstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
                 # a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixskyval.txt'),'w')
                 # a.write(str(self.sky[i]))
