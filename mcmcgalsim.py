@@ -398,6 +398,8 @@ class metropolis_hastings():
         #t4 = time.time()
         #self.thischisq = self.chisq_sim_and_real()
         self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.readnoise)
+        chsqs = self.csv / len(self.mask[self.mask > 0.].ravel())
+        self.thischisq = np.sum(self.csv/len(self.mask[self.mask > 0.].ravel()))
         #t5 = time.time()
 
         #print self.thischisq
