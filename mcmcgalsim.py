@@ -388,7 +388,7 @@ class metropolis_hastings():
 
         #self.mapkernel()
         #self.kernel()
-        self.mapkernel()
+        #self.mapkernel()
         self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
         #t3 = time.time()
