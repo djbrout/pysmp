@@ -340,8 +340,8 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 #print 'Chisqvec',self.chisqvec
-
-                self.plotchains()
+                if (self.counter % 10000) == 0:
+                    self.plotchains()
                 #self.savechains()
 
                 #raw_input()
