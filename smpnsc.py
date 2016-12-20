@@ -3490,6 +3490,7 @@ class smp:
                     , isfermigrid = self.fermigrid
                     , psfcenterx = smp_dict['psf_centerx']
                     , psfcentery = smp_dict['psf_centery']
+                    , gain = smp_dict['gain']
                     )
 
             modelveco = copy(modelvec)
