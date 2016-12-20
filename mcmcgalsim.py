@@ -518,24 +518,20 @@ class metropolis_hastings():
             if fitflags == 0.:
                 sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec)
                 sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
-                    if not self.psf_shift_std is None:
-                        sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
-                    # t7 = time.time()
-                    # totshiftime += t7-t6
+                if not self.psf_shift_std is None:
+                    sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
 
-                    total_model = self.gs_model_interp + sn
 
-                    # print 'convolving'
-                    # t4 = time.time()
-                    conv = galsim.Convolve(total_model, psfs, gsparams=self.big_fft_params)
+                total_model = self.gs_model_interp + sn
 
-                    # print 'drawing'
-                    # t5 = time.time()
-                    conv.drawImage(image=simstamps,
-                                   method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
-                    # t6 = time.time()
-                    sims = simstamps.array + sky
-                return sims
+
+                conv = galsim.Convolve(total_model, psfs, gsparams=self.big_fft_params)
+
+
+                conv.drawImage(image=simstamps,
+                                method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
+
+                sims = simstamps.array + sky
         return sims
 
 
