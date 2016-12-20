@@ -682,20 +682,23 @@ class smp:
             newdec = starcat.bigdec
         elif self.snparams.survey == 'DES':
             print 'reading in starcaftile'
+            wehavestarcat = False
             self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
-            starcat = txtobj(self.starcatfile, useloadtxt=True)
-            print 'done reading in starcatfile'
-            #print self.starcat.__dict__
-            #print self.starcat.__dict__['RA']
-            #print self.starcat.__dict__['DEC']
-            #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+            if nozpt:
+                starcat = txtobj(self.starcatfile, useloadtxt=True)
+                print 'done reading in starcatfile'
+                wehavestarcat = True
+                #print self.starcat.__dict__
+                #print self.starcat.__dict__['RA']
+                #print self.starcat.__dict__['DEC']
+                #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
 
-            starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
-            starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
-            starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
-            starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
-            starcat.ra = starcat.bigra
-            starcat.dec = starcat.bigdec
+                starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
+                starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
+                starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
+                starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+                starcat.ra = starcat.bigra
+                starcat.dec = starcat.bigdec
 
 
 
@@ -719,6 +722,14 @@ class smp:
                 continue
             if not band == filt:
                 continue
+
+            if nozpt:
+                if not wehavestarcat:
+                    starcat = txtobj(self.starcatfile, useloadtxt=True)
+                    print 'done reading in starcatfile'
+                    wehavestarcat = True
+
+
             skysig=np.nan
             #if cntrs > 1:
             #   continue
