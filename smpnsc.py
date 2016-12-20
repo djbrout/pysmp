@@ -3243,7 +3243,7 @@ class smp:
 
         if self.fermilog:
             self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
-        self.dosnfit = False
+        #self.dosnfit = False
         if self.dosnfit:
             if not self.dogalfit:
                 try:
@@ -3284,7 +3284,7 @@ class smp:
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             print 'modelstd before',modelstd
 
-            modelstd[(modelstd < 50.) & (modelstd > 0.)] = 50.
+            modelstd[(modelstd < 10.) & (modelstd > 0.)] = 10.
 
             tstart = time.time()
             #print 'modelstd',modelstd
