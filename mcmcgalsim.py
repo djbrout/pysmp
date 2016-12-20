@@ -259,7 +259,7 @@ class metropolis_hastings():
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
-        self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-2)
+        self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-5)
 
         self.kicked_snraoff = copy(self.snraoff)
         self.kicked_sndecoff = copy(self.sndecoff)
