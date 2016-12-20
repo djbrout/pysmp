@@ -400,7 +400,7 @@ class metropolis_hastings():
         #self.thischisq = self.chisq_sim_and_real()
         self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain)
         #chsqs = self.csv
-        self.thischisq = np.sum(self.csv)/float(len(self.mask[self.mask > 0.].ravel()))
+        self.thischisq = np.sum(self.csv)
         print self.thischisq
         #t5 = time.time()
 
