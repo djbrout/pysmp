@@ -259,6 +259,7 @@ class metropolis_hastings():
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000)
+        #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=)
 
         self.kicked_snraoff = copy(self.snraoff)
         self.kicked_sndecoff = copy(self.sndecoff)
@@ -607,7 +608,7 @@ class metropolis_hastings():
         chisq = 0
         if flags == 0:
             if fitflags == 0:
-                self.readnoise = self.sky * 0. + 1
+                #self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
                 chisq += np.sum(((sims - data) ** 2 * self.mask / (
                 skyerr ** 2 + ((sims - sky) ** 2) ** .5 / gain +
