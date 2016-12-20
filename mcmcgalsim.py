@@ -414,6 +414,8 @@ class metropolis_hastings():
         #raw_input()
         #t4 = time.time()
         accept_bool = self.accept(self.lastchisq,self.thischisq)
+        if self.counter == 1:
+            accept_bool = False
         print self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]), accept_bool
 
         #t5 = time.time()
