@@ -898,8 +898,8 @@ class metropolis_hastings():
                 #save_fits_image(self.original_psfs[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_psf.fits'))
                 self.tmpwriter.savefits(self.skyerr[i,:,:],os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixskyerr.fits'))
                 psfstamps.append('nan')
-                epoch = i
-                chisqst = ( (self.sims[ epoch, :,:] - self.data[ epoch, : ,: ])**2 *self.mask / (self.skyerr[epoch,:,:]**2 + ((self.sims[ epoch,:,:]-self.sky[epoch])**2)**.5/self.gain[epoch] + (self.readnoise/self.gain[epoch])**2) )
+                epoch = int(i)
+                chisqst = ( (self.sims[ epoch] - self.data[ epoch])**2 *self.mask / (self.skyerr[epoch]**2 + ((self.sims[ epoch]-self.sky[epoch])**2)**.5/self.gain[epoch] + (self.readnoise/self.gain[epoch])**2) )
                 self.tmpwriter.savefits(chisqst,os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
                 chisqstamps.append(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_chisq.fits'))
                 # a = open(os.path.join(self.outpath,'MDJ'+str(self.mjd[i])+'_pixskyval.txt'),'w')
