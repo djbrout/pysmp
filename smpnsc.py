@@ -3403,7 +3403,7 @@ class smp:
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(npoutdir,filename+'_withSn.npz')
 
-        self.dogalsimfit = True
+        #self.dogalsimfit = True
         if self.dogalsimfit:
 
             # if not self.dogalfit:
