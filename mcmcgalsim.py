@@ -607,8 +607,8 @@ class metropolis_hastings():
             if fitflags == 0:
                 self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
-                    chisq += np.sum(((sims - data) ** 2 * self.mask / (
-                    skyerr ** 2 + ((sims - sky) ** 2) ** .5 / gain +
+                chisq += np.sum(((sims - data) ** 2 * self.mask / (
+                skyerr ** 2 + ((sims - sky) ** 2) ** .5 / gain +
                     (readnoise / gain) ** 2)).ravel())
         return chisq
 
