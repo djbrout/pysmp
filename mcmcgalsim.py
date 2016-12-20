@@ -400,8 +400,8 @@ class metropolis_hastings():
         #self.thischisq = self.chisq_sim_and_real()
         self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain)
         #chsqs = self.csv
-        self.thischisq = np.sum(self.csv)/(len(self.mask[self.mask>0.].ravel())+len(self.csv[self.csv > 0.]))
-        print self.thischisq, accept_bool
+
+        self.thischisq = np.sum(self.csv)
         #t5 = time.time()
 
         #print self.thischisq
@@ -414,6 +414,8 @@ class metropolis_hastings():
         #raw_input()
         #t4 = time.time()
         accept_bool = self.accept(self.lastchisq,self.thischisq)
+        print self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]), accept_bool
+
         #t5 = time.time()
         #print 'accept',t5-t4
         '''
