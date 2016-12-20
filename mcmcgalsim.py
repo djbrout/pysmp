@@ -612,7 +612,7 @@ class metropolis_hastings():
                     (readnoise / gain) ** 2)).ravel())
         return chisq
 
-def chisq_sim_and_real( self, model_errors = False ):
+    def chisq_sim_and_real( self, model_errors = False ):
         chisq = np.float64(0.0)
         dms = np.float64(0.0)
         chisq_pixels = []
