@@ -319,7 +319,11 @@ class metropolis_hastings():
             #print self.counter
             self.accepted_int += 1
             self.mcmc_func()
-            
+
+            if (self.counter % 100) == 0:#every 100 iterations
+                collected = gc.collect()
+                print "Garbage collector: collected %d objects." % (collected)
+
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
@@ -374,13 +378,26 @@ class metropolis_hastings():
         #    self.float_sn_pos()
 
         # Contains the convolution
-        self.kernel()
+
+        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
+        gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
+        new_gal_model.drawImage(image=gs_model, method='no_pixel')
+
+        self.gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',
+                                                   calculate_stepk=False, calculate_maxk=False)
+
+        #self.mapkernel()
+        #self.kernel()
+        self.mapkernel()
+        self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
+
         #t3 = time.time()
         #print 'kernel',t3-t2
 
         #Calculate Chisq over all epochs
         #t4 = time.time()
-        self.thischisq = self.chisq_sim_and_real()
+        #self.thischisq = self.chisq_sim_and_real()
+        self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.readnoise)
         #t5 = time.time()
 
         #print self.thischisq
@@ -495,14 +512,46 @@ class metropolis_hastings():
         self.y_pix_offset = np.random.normal( scale= self.psf_shift_std ) 
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
-    def kernel( self ):
+    def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
+        sims = simstamps
+        if flags == 0:
+            if fitflags == 0.:
+                sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec)
+                sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
+                    if not self.psf_shift_std is None:
+                        sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
+                    # t7 = time.time()
+                    # totshiftime += t7-t6
+
+                    total_model = self.gs_model_interp + sn
+
+                    # print 'convolving'
+                    # t4 = time.time()
+                    conv = galsim.Convolve(total_model, psfs, gsparams=self.big_fft_params)
+
+                    # print 'drawing'
+                    # t5 = time.time()
+                    conv.drawImage(image=simstamps,
+                                   method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
+                    # t6 = time.time()
+                    sims = simstamps.array + sky
+                return sims
+        return sims
+
+
+    def kernel( self,  ):
         #t1 = time.time()
+
+
         new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
         gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
         new_gal_model.drawImage(image=gs_model,method='no_pixel')
 
-        gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3', 
+        gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',
                                                                calculate_stepk=False, calculate_maxk=False)
+
+
+
         #t2 = time.time()
         #print 'setting up galmodel',t2-t1
         a = []
@@ -529,7 +578,7 @@ class metropolis_hastings():
                     #t7 = time.time()
                     #totshiftime += t7-t6
 
-                    total_model = gs_model_interp + sn 
+                    total_model = gs_model_interp + sn
 
                     #print 'convolving'
                     #t4 = time.time()
@@ -554,7 +603,20 @@ class metropolis_hastings():
         #print 'tot shift time',totshiftime
         #print 'tot conv time ',totconvtime
         #print 'tot draw time',totdrawtime
-    def chisq_sim_and_real( self, model_errors = False ):
+
+
+    def mapchis(self, sims, data, flags, fitflags, skyerr, sky, gain,readnoise):
+        chisq = 0
+        if flags == 0:
+            if fitflags == 0:
+                self.readnoise = self.sky * 0. + 1
+                self.gain = self.sky * 0 + 1.
+                    chisq += np.sum(((sims - data) ** 2 * self.mask / (
+                    skyerr ** 2 + ((sims - sky) ** 2) ** .5 / gain +
+                    (readnoise / gain) ** 2)).ravel())
+        return chisq
+
+def chisq_sim_and_real( self, model_errors = False ):
         chisq = np.float64(0.0)
         dms = np.float64(0.0)
         chisq_pixels = []
