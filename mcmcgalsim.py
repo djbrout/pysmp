@@ -209,6 +209,37 @@ class metropolis_hastings():
 
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
+
+            if self.fermigrid :
+                imfile = self.imagefiles[i]
+                psffile = self.psffiles[i]
+                noisefile = self.weightfiles[i]
+                ifdhls = os.popen('ifdh lss '+imfile).read()
+                if (len(ifdhls) > 1):
+                    if (int(ifdhls.split()[-1]) > 0) :
+                        print 'Copying over',imfile
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
+                        #imfilel = copy(imfilel)
+                        self.imagefiles[i] = imfile.split('/')[-1]
+                        print 'imfile',imfile
+                        # if self.usefake:
+                        #     #if '.gz' in imfile:
+                        #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
+                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
+                        #     #imfile = imfilel.split('/')[-1]
+                        #     #else:
+                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
+                        #         0] + '+fakeSN.fits' + ' .').read()
+                        #     imfile = imfilel.split('/')[-1]
+                        #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
+                        self.weightfiles[i] = noisefile.split('/')[-1]
+                        weightsfile = noisefile
+                        #print 'ifdh cp ' + psffile + ' .'
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        self.psffiles[i] = psffile.split('/')[-1]
+                else:
+                    self.imagefiles[i] = 'na'
             if self.imagefiles[i] == 'na':
                 self.psfs.append(np.nan)
                 #self.imagestamps.append(np.nan)
@@ -261,6 +292,13 @@ class metropolis_hastings():
                                                                        cy-fitradius,cy+fitradius-1 ) ] * 0.0)
                 self.snobjs.append(galsim.Gaussian(sigma = 1.e-8, flux = self.modelvec[i]))
                 self.snoffsets.append(im.wcs.toWorld(im.trueCenter()).project(self.fiducial_coord))
+
+                if self.fermigrid:
+                    # print 'cleaning up copied files'
+                    os.popen('rm '+self.imagefiles[i]).read()
+                    os.popen('rm '+self.psffiles[i]).read()
+                    os.popen('rm '+self.weightfiles[i]).read()
+
                 #self.snras.append(0.)
                 #self.sndecs.append(0.)
 

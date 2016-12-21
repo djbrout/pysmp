@@ -491,6 +491,7 @@ class smp:
                     'impsfs':[],
                     'hpsfs':[],
                     'fileroots':np.chararray(snparams.nvalid,itemsize=200),
+
                     'psf_centerx':np.zeros(snparams.nvalid),
                     'psf_centery':np.zeros(snparams.nvalid),
                     }
@@ -754,6 +755,8 @@ class smp:
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
+            longpsffile = copy(psffile)
+            longnoisefile = copy(noisefile)
             #print longimfile
             #raw_input()
             self.impath = '/'.join(imfile.split('/')[:-1])
@@ -2624,9 +2627,9 @@ class smp:
                                     smp_mask[i,:,:] = msk
                                     #smp_dict['mask'][i] = msk
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                                    smp_dict['image_filename'][i] = imfile
+                                    smp_dict['image_filename'][i] = longimfile
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                                    smp_dict['psf_filename'][i] = psffile
+                                    smp_dict['psf_filename'][i] = longpsffile
                                     if self.snparams.survey == 'PS1':
                                         self.psfcenter = [round(xsn),round(ysn)]
                                     smp_dict['psfcenter'].append(self.psfcenter)
@@ -2635,9 +2638,9 @@ class smp:
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
                                     smp_dict['fakepsf'][i] = snparams.psf[j]
                                     if self.useweights:
-                                        smp_dict['weight_filename'][i] = weightsfile
+                                        smp_dict['weight_filename'][i] = longnoisefile
                                     else:
-                                        smp_dict['weight_filename'][i] = noisefile+','+maskfile
+                                        smp_dict['weight_filename'][i] = longnoisefile+','+maskfile
 
                                     smp_dict['fakemag'][i] = snparams.fake_truemag[j]
                                     smp_dict['fakezpt'][i] = snparams.zp[j]
