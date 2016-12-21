@@ -61,6 +61,7 @@ import matplotlib.pyplot as plt
 #import pyfftw
 import dilltools as dt
 
+from pympler.tracker import SummaryTracker
 
 class metropolis_hastings():
 
@@ -320,6 +321,7 @@ class metropolis_hastings():
         #plt.imshow(self.data)
         #plt.show()
         #self.t2 = time.time()
+        tracker = SummaryTracker()
 
         while self.z_scores_say_keep_going:
             #self.t2 = time.time()
@@ -328,9 +330,10 @@ class metropolis_hastings():
             self.accepted_int += 1
             self.mcmc_func()
 
-            if (self.counter % 100) == 0:#every 100 iterations
+            if (self.counter % 10) == 0:#every 100 iterations
                 collected = gc.collect()
                 print "Garbage collector: collected %d objects." % (collected)
+                tracker.print_diff()
 
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
