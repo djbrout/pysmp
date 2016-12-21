@@ -756,7 +756,8 @@ class smp:
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
             longpsffile = copy(psffile)
-            longnoisefile = copy(noisefile)
+
+
             #print longimfile
             #raw_input()
             self.impath = '/'.join(imfile.split('/')[:-1])
@@ -764,6 +765,14 @@ class smp:
                 noisefile = os.path.join(rootdir,noisefile)
             except:
                 noisefile = [os.path.join(rootdir,noisefile[0]),os.path.join(rootdir,noisefile[1])]
+
+            if self.snparams.survey == 'DES':
+                if self.usefake:
+                    longnoisefile = copy(imfile.replace('+fakeSN.fits','.weight.fits'))
+                else:
+                    longnoisefile = copy(imfile.replace('.fits','.weight.fits'))
+            else:
+                longnoisefile = copy(noisefile)
 
             if self.fermilog:
                 self.tmpwriter.appendfile('running globalstar on '+longimfile+'\n', self.fermilogfile)
@@ -2739,11 +2748,10 @@ class smp:
                                     #sys.exit()
                                     if self.fermigrid and self.worker:
                                         #print 'cleaning up copied files'
-                                        '''os.popen('rm '+imfile).read()
+                                        os.popen('rm '+imfile).read()
                                         os.popen('rm '+imfile+'.fz').read()
                                         os.popen('rm '+noisefile).read()
-                                        '''
-                                        #os.popen('rm '+psffile).read()
+                                        os.popen('rm '+psffile).read()
 
 
                                     i += 1
