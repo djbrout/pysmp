@@ -302,7 +302,7 @@ class metropolis_hastings():
         self.galdeltas = np.sqrt(self.galaxy_model)/2.#copy(self.galstd)
         self.run_d_mc()
 
-    @profile
+    #@profile
     def run_d_mc( self ):
         self.lastchisq = 9999999999.9
         self.chisq = []
@@ -376,7 +376,7 @@ class metropolis_hastings():
         #                        )
         self.plotstamps()
 
-    @profile
+    #@profile
     def mcmc_func( self ):
 
         #t1 = time.time()
@@ -389,11 +389,11 @@ class metropolis_hastings():
         # Contains the convolution
 
         new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
-        gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
+        gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs, gsparams=self.psfparams)
         new_gal_model.drawImage(image=gs_model, method='no_pixel')
 
         self.gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',
-                                                   calculate_stepk=False, calculate_maxk=False)
+                                                   calculate_stepk=False, calculate_maxk=False, gsparams=self.psfparams )
 
         #self.mapkernel()
         #self.kernel()
@@ -528,16 +528,16 @@ class metropolis_hastings():
         self.y_pix_offset = np.random.normal( scale= self.psf_shift_std ) 
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
-    @profile
+    #@profile
     def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
 
-        self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
+        #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
 
         sims = simstamps
         if flags == 0:
             if fitflags == 0.:
-                sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec)
+                sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec, gsparams=self.psfparams )
                 sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
                 if not self.psf_shift_std is None:
                     sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
