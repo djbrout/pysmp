@@ -302,7 +302,7 @@ class metropolis_hastings():
         self.galdeltas = np.sqrt(self.galaxy_model)/2.#copy(self.galstd)
         self.run_d_mc()
 
-
+    @profile
     def run_d_mc( self ):
         self.lastchisq = 9999999999.9
         self.chisq = []
@@ -376,6 +376,7 @@ class metropolis_hastings():
         #                        )
         self.plotstamps()
 
+    @profile
     def mcmc_func( self ):
 
         #t1 = time.time()
@@ -527,7 +528,12 @@ class metropolis_hastings():
         self.y_pix_offset = np.random.normal( scale= self.psf_shift_std ) 
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
+    @profile
     def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
+
+        self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
+
+
         sims = simstamps
         if flags == 0:
             if fitflags == 0.:
