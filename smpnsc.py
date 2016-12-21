@@ -1352,6 +1352,15 @@ class smp:
                 noisefile = [os.path.join(rootdir, noisefile[0]), os.path.join(rootdir, noisefile[1])]
 
             psffile = os.path.join(rootdir, psffile)
+            longpsffile = copy(psffile)
+            if self.snparams.survey == 'DES':
+                if self.usefake:
+                    longnoisefile = copy(imfile.replace('+fakeSN.fits','.weight.fits'))
+                else:
+                    longnoisefile = copy(imfile.replace('.fits','.weight.fits'))
+            else:
+                longnoisefile = copy(noisefile)
+
             # print imfile
             # raw_input()
             print 'running zeropoints on ' + longimfile
