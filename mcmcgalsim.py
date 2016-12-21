@@ -123,6 +123,7 @@ class metropolis_hastings():
         self.galstd = galstd
         self.modelstd = modelstd
         self.isfermigrid=isfermigrid
+        self.fermigrid = self.isfermigrid
         #self.galdeltas = copy(self.galstd)
         self.modeldeltas = copy(self.modelstd)
 
