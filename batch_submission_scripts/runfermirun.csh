@@ -10,6 +10,7 @@ setup ftools v6.17
 setup autoscan v3.1+0
 setup easyaccess
 setup extralibs 1.0
+setup galsim
 
 echo "source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh"
 echo "kx509"
