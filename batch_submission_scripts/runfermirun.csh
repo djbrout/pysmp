@@ -21,7 +21,7 @@ echo "setup ifdhc"
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 ifdh cp -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
 echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-unzip pysmp.zip -q
+unzip pysmp.zip
 cd pysmp
 pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
