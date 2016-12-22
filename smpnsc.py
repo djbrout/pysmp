@@ -725,10 +725,11 @@ class smp:
                 continue
 
             if nozpt:
-                if not wehavestarcat:
-                    starcat = txtobj(self.starcatfile, useloadtxt=True)
-                    print 'done reading in starcatfile'
-                    wehavestarcat = True
+                if self.snparams.survey == 'DES':
+                    if not wehavestarcat:
+                        starcat = txtobj(self.starcatfile, useloadtxt=True)
+                        print 'done reading in starcatfile'
+                        wehavestarcat = True
 
 
             skysig=np.nan
