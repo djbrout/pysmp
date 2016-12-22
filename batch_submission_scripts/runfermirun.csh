@@ -19,9 +19,9 @@ echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 source /grid/fermiapp/products/common/etc/setups.sh
 setup ifdhc
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-ifdh cp /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
+ifdh cp -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
 echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-unzip pysmp.zip
+unzip pysmp.zip -q
 cd pysmp
 pwd
 echo 'running smp.py!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'

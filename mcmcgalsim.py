@@ -219,7 +219,7 @@ class metropolis_hastings():
                 if (len(ifdhls) > 1):
                     if (int(ifdhls.split()[-1]) > 0) :
                         print 'Copying over',imfile
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
+                        #####os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
                         #imfilel = copy(imfilel)
                         self.imagefiles[i] = imfile.split('/')[-1]
                         print 'imfile',imfile
@@ -233,11 +233,11 @@ class metropolis_hastings():
                         #         0] + '+fakeSN.fits' + ' .').read()
                         #     imfile = imfilel.split('/')[-1]
                         #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
+                        #####os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
                         self.weightfiles[i] = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         #print 'ifdh cp ' + psffile + ' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        #####os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                         self.psffiles[i] = psffile.split('/')[-1]
                 else:
                     self.imagefiles[i] = 'na'

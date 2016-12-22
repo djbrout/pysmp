@@ -2755,12 +2755,12 @@ class smp:
                                             smp_dict['fitflag'][i] = 0
 
                                     #sys.exit()
-                                    if self.fermigrid and self.worker:
-                                        #print 'cleaning up copied files'
-                                        os.popen('rm '+imfile).read()
-                                        os.popen('rm '+imfile+'.fz').read()
-                                        os.popen('rm '+noisefile).read()
-                                        os.popen('rm '+psffile).read()
+                                    # if self.fermigrid and self.worker:
+                                    #     #print 'cleaning up copied files'
+                                    #     os.popen('rm '+imfile).read()
+                                    #     os.popen('rm '+imfile+'.fz').read()
+                                    #     os.popen('rm '+noisefile).read()
+                                    #     os.popen('rm '+psffile).read()
 
 
                                     i += 1

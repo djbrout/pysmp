@@ -6,6 +6,6 @@ source /cvmfs/fermilab.opensciencegrid.org/products/common/etc/setups
 setup jobsub_client
 
 
-jobsub_submit -G des --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC --expected-lifetime=18h -M --verbose --OS=SL6\
- --email-to=djbrout@gmail.com -N 100 file://runfermirun.csh
+jobsub_submit -G des --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC --expected-lifetime=10h -M --verbose --OS=SL6\
+ --email-to=djbrout@gmail.com -N 100 file://runfermirun.csh --memory=1500MB --disk=120GB
 echo done
