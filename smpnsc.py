@@ -2659,7 +2659,7 @@ class smp:
                                     if self.useweights:
                                         smp_dict['weight_filename'][i] = longnoisefile
                                     else:
-                                        smp_dict['weight_filename'][i] = longnoisefile+','+maskfile
+                                        smp_dict['weight_filename'][i] = longnoisefile
 
                                     smp_dict['fakemag'][i] = snparams.fake_truemag[j]
                                     smp_dict['fakezpt'][i] = snparams.zp[j]
