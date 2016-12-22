@@ -6569,7 +6569,7 @@ if __name__ == "__main__":
     except:
         print sys.exc_info()
         if not os.path.exists(isdonedir):
-            os.mkdirs(isdonedir)
+            os.mkdir(isdonedir)
         os.system('touch ' + os.path.join(isdonedir, snfile.split('/')[-1].split('.')[0] + '.done'))
         sys.exit()
     print 'getting params'
