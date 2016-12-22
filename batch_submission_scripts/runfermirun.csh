@@ -11,13 +11,13 @@ setup autoscan v3.1+0
 setup easyaccess
 setup extralibs 1.0
 
-source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh
-kx509
-voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis
+echo "source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh"
+echo "kx509"
+echo "voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis"
 
 echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-source /grid/fermiapp/products/common/etc/setups.sh
-setup ifdhc
+echo "source /grid/fermiapp/products/common/etc/setups.sh"
+echo "setup ifdhc"
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 ifdh cp -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
 echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
