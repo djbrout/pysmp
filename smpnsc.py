@@ -2567,8 +2567,8 @@ class smp:
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
 
 
-                                    if self.dobackgroundstamp:
-                                        smp_bkg[i,:,:] = bkg_stamp
+                                    #if self.dobackgroundstamp:
+                                    #    smp_bkg[i,:,:] = bkg_stamp
 
                                         #print noise_stamp
                                         #raw_input()
@@ -3423,7 +3423,7 @@ class smp:
                     , fileroots = smp_dict['fileroots']
                     , scalefactor = smp_dict['scalefactor']
                     , gain=smp_dict['gain']
-                    , dobkg = self.dobackgroundstamp
+                    , dobkg = False
                     , bkg = smp_bkg
 
                     )
