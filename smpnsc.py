@@ -2283,7 +2283,7 @@ class smp:
 
                     zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                         longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
+                                         longimfile,catra,catdec,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
                     if zpt == 0:
                         badflag = 1
@@ -2556,9 +2556,9 @@ class smp:
 
                                     noise_stamp[image_stamp > 500000.] = 0.
 
-                                    for iiii in noise_stamp.ravel():
-                                        print iiii
-                                    print 1/(skyerrsn*scalefactor)**2
+                                    #for iiii in noise_stamp.ravel():
+                                    #    print iiii
+                                    #print 1/(skyerrsn*scalefactor)**2
 
                                     if self.snparams.survey == 'PS1':
                                         noise_stamp[noise_stamp > 0.] = 1
@@ -2569,9 +2569,10 @@ class smp:
                                         noise_stamp[noise_stamp <= 0.] = 0
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
+                                        #mask *= noise_stamp
 
-                                    if round(float(snparams.mjd[j])) == 57011:
-                                        raw_input()
+                                    #if round(float(snparams.mjd[j])) == 57011:
+                                    #    raw_input()
 
                                         #if self.dobackgroundstamp:
                                     #    smp_bkg[i,:,:] = bkg_stamp
@@ -3480,7 +3481,7 @@ class smp:
 
 
             modelvec = scaled_diffim_flux
-            modelstd = abs(scaled_diffim_fluxerr)/5.
+            modelstd = abs(scaled_diffim_fluxerr)/params.flux_std_div
             modelvec[smp_dict['mjd_flag'] == 1] = 0
             modelstd[smp_dict['mjd_flag'] == 1] = 0
 
@@ -3490,7 +3491,7 @@ class smp:
             aaa = mcmcgalsim.metropolis_hastings(
                     galmodel = galmodel*0 + 1.
                     , modelvec = modelvec
-                    , galstd = galstd*0+5.
+                    , galstd = galstd*0+2.
                     , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
@@ -4897,7 +4898,7 @@ class smp:
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
-                mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
+                mjdoff,mjdslopeinteroff,j,longimfile,catra,catdec,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
         print 'Computing zeropoint for',imfile
