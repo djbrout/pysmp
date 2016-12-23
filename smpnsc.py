@@ -1923,9 +1923,16 @@ class smp:
 
                     x_star, y_star = np.array(x_star), np.array(y_star)
                     print x_star
-                    mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                        aper.aper(im,x_star,y_star,apr = params.fitrad,verbose=False)
-
+                    try:
+                        mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
+                            aper.aper(im,x_star,y_star,apr = params.fitrad,verbose=False)
+                    except:
+                        print sys.exc_info()
+                        if not os.path.exists(self.isdonedir):
+                            os.mkdirs(self.isdonedir)
+                        os.system(
+                            'touch ' + os.path.join(self.isdonedir, self.snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
+                        sys.exit()
 
                     # self.rdnoise = hdr[params.rdnoise_name]
                     # self.gain = hdr[params.gain_name]
