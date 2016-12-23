@@ -578,7 +578,7 @@ class metropolis_hastings():
         #print self.csv
         #print csv
         #raw_input()
-        self.thischisq = np.sum( self.csv )
+        self.thischisq = np.sum(self.csv/(len(self.mask[self.mask > 0.].ravel())*len(self.flags[self.flags==0])))
         #print self.thischisq
 
         #print self.thischisq
