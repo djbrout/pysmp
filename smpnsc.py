@@ -4907,7 +4907,7 @@ class smp:
 
     def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
-                mjdoff,mjdslopeinteroff,j,longimfile,catra,catdec,psf='',mjd=None,
+                mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
         print 'Computing zeropoint for',imfile
