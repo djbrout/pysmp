@@ -733,7 +733,7 @@ class smp:
 
 
             skysig=np.nan
-            if cntrs > 10:
+            if cntrs > 10000:
                continue
             #if snparams.mjd[j] != 56636.:
             #    if snparams.mjd[j] < 57000.:
@@ -1284,7 +1284,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 10:
+            if cccc > 10000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3508,9 +3508,9 @@ class smp:
             import mcmcgalsim
             aaa = mcmcgalsim.metropolis_hastings(
                     galmodel = galmodel*0 + 1.
-                    , modelvec = modelvec * 0
+                    , modelvec = modelvec
                     , galstd = galstd*0+1.
-                    , modelstd = modelstd * 0
+                    , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
