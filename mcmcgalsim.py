@@ -374,6 +374,12 @@ class metropolis_hastings():
                 print "Garbage collector: collected %d objects." % (collected)
                 #tracker.print_diff()
 
+
+            if self.counter == 5000:
+                self.flags[self.csv / len(self.mask[self.mask>0.].ravel()) > 50.] = 1
+                self.modelvec[self.csv / len(self.mask[self.mask > 0.].ravel()) > 50.]=0.
+                self.modelstd[self.csv / len(self.mask[self.mask > 0.].ravel()) > 50.]=0.
+
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
