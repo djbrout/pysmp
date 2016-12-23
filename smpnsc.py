@@ -2570,7 +2570,8 @@ class smp:
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
 
-                                    raw_input()
+                                    if round(float(snparams.mjd[j])) == 57011:
+                                        raw_input()
 
                                         #if self.dobackgroundstamp:
                                     #    smp_bkg[i,:,:] = bkg_stamp
