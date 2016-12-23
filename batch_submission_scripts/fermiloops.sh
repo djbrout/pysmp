@@ -7,5 +7,5 @@ setup jobsub_client
 
 
 jobsub_submit -G des --memory=2000MB --disk=100GB --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC --expected-lifetime=24h -M --verbose --OS=SL6\
- --email-to=djbrout@gmail.com -N 1000 file://runfermirun.csh
+ --email-to=djbrout@gmail.com -N 250 file://runfermirun.csh
 echo done
