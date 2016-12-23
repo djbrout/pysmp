@@ -380,12 +380,12 @@ class metropolis_hastings():
                 mn = np.mean(np.array(self.csv) / len(self.mask[self.mask>0.].ravel()))
                 st = np.std(np.array(self.csv) / len(self.mask[self.mask>0.].ravel()))
 
-                print np.array(self.csv) - mn
-                print st
-                raw_input()
-                self.flags[np.array(self.csv)-mn > 4*st ] = 1
-                self.modelvec[np.array(self.csv)-mn > 4*st]=0.
-                self.modelstd[np.array(self.csv)-mn > 4*st]=0.
+                #print np.array(self.csv) - mn
+                #print st
+                #raw_input()
+                self.flags[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 4*st ] = 1
+                self.modelvec[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 4*st]=0.
+                self.modelstd[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 4*st]=0.
 
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
