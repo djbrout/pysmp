@@ -376,7 +376,7 @@ class metropolis_hastings():
                 #tracker.print_diff()
 
 
-            if self.counter == 2000:
+            if self.counter == 1000:
                 mn = np.mean(np.arrayy(self.csv) / len(self.mask[self.mask>0.].ravel()))
                 st = np.std(np.arrayy(self.csv) / len(self.mask[self.mask>0.].ravel()))
                 self.flags[np.array(self.csv)-mn > 4*st ] = 1
