@@ -370,13 +370,13 @@ class metropolis_hastings():
             self.mcmc_func()
 
             if (self.counter % 10) == 0:#every 100 iterations
-                print self.csv / len(self.mask[self.mask>0.].ravel())
+                print np.array(self.csv) / len(self.mask[self.mask>0.].ravel())
                 collected = gc.collect()
                 print "Garbage collector: collected %d objects." % (collected)
                 #tracker.print_diff()
 
 
-            if self.counter == 500:
+            if self.counter == 2000:
                 self.flags[self.csv / len(self.mask[self.mask>0.].ravel()) > 50.] = 1
                 self.modelvec[self.csv / len(self.mask[self.mask > 0.].ravel()) > 50.]=0.
                 self.modelstd[self.csv / len(self.mask[self.mask > 0.].ravel()) > 50.]=0.
