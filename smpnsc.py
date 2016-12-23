@@ -2269,6 +2269,10 @@ class smp:
                 print '1854',nozpt
                 print 'exiting gracefully'
                 #sys.exit()
+
+                print 'comparo',len(starglobalras),len(tras),len(starcat.ra)
+                raw_input()
+
                 if not nozpt:
                     skipactualzeropoint = True
                 if not skipactualzeropoint:
@@ -2283,7 +2287,7 @@ class smp:
 
                     zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                         longimfile,catra,catdec,psf=self.psf,mjd=str(float(snparams.mjd[j])))
+                                         longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
                     if zpt == 0:
                         badflag = 1
