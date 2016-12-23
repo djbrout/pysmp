@@ -2558,7 +2558,7 @@ class smp:
 
                                     for iiii in noise_stamp.ravel():
                                         print iiii
-                                    raw_input()
+                                    print 1/(skyerrsn*scalefactor)**2
 
                                     if self.snparams.survey == 'PS1':
                                         noise_stamp[noise_stamp > 0.] = 1
@@ -2570,8 +2570,9 @@ class smp:
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
 
+                                    raw_input()
 
-                                    #if self.dobackgroundstamp:
+                                        #if self.dobackgroundstamp:
                                     #    smp_bkg[i,:,:] = bkg_stamp
 
                                         #print noise_stamp
