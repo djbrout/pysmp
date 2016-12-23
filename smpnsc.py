@@ -2556,7 +2556,8 @@ class smp:
 
                                     noise_stamp[image_stamp > 500000.] = 0.
 
-                                    [print i for i in noise_stamp.ravel()]
+                                    for iiii in noise_stamp.ravel():
+                                        print iiii
                                     raw_input()
 
                                     if self.snparams.survey == 'PS1':
