@@ -1149,6 +1149,11 @@ class smp:
                     starcat.dec = starcat.bigdec[cols]
                     starcat.mag = starcat.bigmag[cols]
                     starcat.objid = starcat.bigid[cols]
+
+
+                    self.tmpwriter.savez(self.zptoutpath+'/'+self.field+'_CCD'+str(self.ccdnum)+'_'+snparams.band+'_standards.npz',
+                             ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
+
                     if not len(cols):
                         # print "Error : No stars in image!!"
                         # badindices.append(j)
@@ -2270,8 +2275,8 @@ class smp:
                 print 'exiting gracefully'
                 #sys.exit()
 
-                print 'comparo',len(starglobalras),len(tras),len(starcat.ra)
-                raw_input()
+                #print 'comparo',len(starglobalras),len(tras),len(starcat.ra)
+                #raw_input()
 
                 if not nozpt:
                     skipactualzeropoint = True
