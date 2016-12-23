@@ -2572,6 +2572,8 @@ class smp:
                                     if self.snparams.survey == 'PS1':
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.001] = 0
+                                        print skyerrsn,scalefactor,1./(skyerrsn*scalefactor)**2
+                                        raw_input()
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
