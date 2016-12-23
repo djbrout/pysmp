@@ -1151,7 +1151,7 @@ class smp:
                     starcat.objid = starcat.bigid[cols]
 
 
-                    self.tmpwriter.savez(self.zptoutpath+'/'+self.field+'_CCD'+str(self.ccdnum)+'_'+snparams.band+'_standards.npz',
+                    self.tmpwriter.savez(self.zptoutpath+'/'+str(self.field)+'_CCD'+str(self.ccdnum)+'_standards.npz',
                              ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
 
                     if not len(cols):
