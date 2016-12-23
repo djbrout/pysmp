@@ -572,6 +572,11 @@ class metropolis_hastings():
         #print np.median(1./(self.simsnosn[aa][self.simsnosn[aa] > 0.]/self.gain))
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
+
+        for w in self.weights[0,:,:]:
+            print w
+
+        raw_input()
         self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain))
         #print self.csv
         #print csv
@@ -788,6 +793,7 @@ class metropolis_hastings():
                     v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
+
                 else:
                     if self.comboerr:
                         v = ((sims - data) ** 2 / (skyerr ** 2 + simnosnnosky / self.gain) * self.mask).ravel()
