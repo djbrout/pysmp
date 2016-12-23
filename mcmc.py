@@ -573,10 +573,7 @@ class metropolis_hastings():
         #print np.median(1./(self.skyerr[aa][self.skyerr[aa] < 99999.])**2)
         #raw_input()
 
-        for w in self.weights[0,:,:]:
-            print w
 
-        raw_input()
         self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain))
         #print self.csv
         #print csv
@@ -605,6 +602,8 @@ class metropolis_hastings():
         print t5 - t4
         raw_input()
         '''
+        if self.counter == 1:
+            accept_bool = False
         if accept_bool:
             #print 'accepted'
             self.lastchisq = self.thischisq
