@@ -868,12 +868,12 @@ class smp:
                     #raw_input('cpied fz filehere')
                 print 'grabbed sn files'
                 #sys.exit()
-            #try:
-            self.ccdnum = imfile.split('/')[1].split('_')[1]
-            self.field = imfile.split('/')[0].split('-')[1]
-            #except:
-            #    self.ccdnum = np.nan
-            #    self.field = np.nan
+            try:
+                self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
+                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+            except:
+                self.ccdnum = np.nan
+                self.field = np.nan
 
             if filt != 'all' and band not in filt:
                 #print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
