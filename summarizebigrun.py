@@ -187,7 +187,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
         cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
 
         if not len(dofakemjd[ cra & cdec ]) > 0:
-            continue
+            fakemag = data['FAKEMAG']*0. + 99.
+        else:
+            fakemag = data['FAKEMAG']
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
         snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
@@ -211,7 +213,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
-            bigdata['FakeMag'].extend(data['FAKEMAG'])
+            bigdata['FakeMag'].extend(fakemag)
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
