@@ -461,7 +461,7 @@ class metropolis_hastings():
         #Calculate Chisq over all epochs
         #t4 = time.time()
         #self.thischisq = self.chisq_sim_and_real()
-        self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain)
+        self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.weights)
         #chsqs = self.csv
 
         self.thischisq = np.sum(self.csv)
@@ -677,14 +677,14 @@ class metropolis_hastings():
         #print 'tot draw time',totdrawtime
 
 
-    def mapchis(self, sims, data, flags, fitflags, skyerr, sky, gain):
+    def mapchis(self, sims, data, flags, fitflags, skyerr, sky, gain,weights):
         chisq = 0
         if flags == 0:
             if fitflags == 0:
                 #self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
                 chisq += np.sum(((sims - data) ** 2 * self.mask / (
-                skyerr ** 2 + ((sims - sky) ** 2) ** .5 / gain +
+                1./weights + ((sims - sky) ** 2) ** .5 / gain +
                     (self.readnoise / gain) ** 2)).ravel())
         return chisq
 
