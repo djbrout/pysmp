@@ -2382,9 +2382,9 @@ class smp:
                 #for i in im[:,round(ysn)]:
                 #    print i
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 30.,verbose=False)#,skyrad=skyrad)
-                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn2,badflag,outstr = aper.aper(im,xsn,ysn,apr = 15.,verbose=False)#,skyrad=skyrad)
-                print skyerrsn,skyerrsn2
-                raw_input()
+                #magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn2,badflag,outstr = aper.aper(im,xsn,ysn,apr = 15.,verbose=False)#,skyrad=skyrad)
+                #print skyerrsn,skyerrsn2
+                #raw_input()
 
                 #raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
