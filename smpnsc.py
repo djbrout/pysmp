@@ -2592,7 +2592,7 @@ class smp:
 
                                         print skyerrsn,scalefactor,np.mean(image_stamp),skyerrsn*scalefactor,skysig
                                         #print np.max(smp_noise[i,:,:].ravel())
-                                        raw_input()
+                                        #raw_input()
 
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
