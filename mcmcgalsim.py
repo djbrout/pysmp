@@ -166,6 +166,8 @@ class metropolis_hastings():
         self.psfcenterx = psfcenterx
         self.psfcentery = psfcentery
 
+        self.inmask = mask
+
         self.didtimeout = False
         #self.comboerr = True
 
@@ -334,6 +336,7 @@ class metropolis_hastings():
                         self.mask[int(x),int(y)] = 1.
 
 
+
         #self.galaxy_model = copy(tempgalmodel)
 
         self.platescale = platescale
@@ -461,7 +464,7 @@ class metropolis_hastings():
         #Calculate Chisq over all epochs
         #t4 = time.time()
         #self.thischisq = self.chisq_sim_and_real()
-        self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.weights)
+        self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.weights,self.inmask)
         #chsqs = self.csv
 
         self.thischisq = np.sum(self.csv)
@@ -677,13 +680,13 @@ class metropolis_hastings():
         #print 'tot draw time',totdrawtime
 
 
-    def mapchis(self, sims, data, flags, fitflags, skyerr, sky, gain,weights):
+    def mapchis(self, sims, data, flags, fitflags, skyerr, sky, gain,weights,inmask):
         chisq = 0
         if flags == 0:
             if fitflags == 0:
                 #self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
-                chisq += np.sum(((sims - data) ** 2 * self.mask / (
+                chisq += np.sum(((sims - data) ** 2 * self.mask * inmask / (
                 skyerr**2 + ((sims - sky) ** 2) ** .5 / gain +
                     (self.readnoise / gain) ** 2)).ravel())
         return chisq

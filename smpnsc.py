@@ -1284,7 +1284,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 10000:
+            if cccc > 10:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2601,9 +2601,10 @@ class smp:
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
+                                        mask *= noise_stamp
+
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
-                                        #mask *= noise_stamp
 
                                     #if round(float(snparams.mjd[j])) == 57011:
                                     #    raw_input()
@@ -3533,7 +3534,7 @@ class smp:
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
                     , maxiter = self.params.sn_plus_galmodel_steps_galsim
-                    , mask = None
+                    , mask = smp_mask
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
                     , gewekenum=9999999
