@@ -379,7 +379,7 @@ class metropolis_hastings():
                 #tracker.print_diff()
 
 
-            if self.counter == 500:
+            if self.counter == 2000:
                 mn, st, num = dt.iterstat(np.array(self.csv)[np.array(self.csv) > 0.] / len(self.mask[self.mask>0.].ravel()),
                                           startMedian=True, sigmaclip=3, iter=3)
 
