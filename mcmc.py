@@ -507,15 +507,15 @@ class metropolis_hastings():
 
 
             if self.counter == 1000:
-                mn = np.mean(np.array(chsqs)[np.array(chsqs) > 0.] / len(self.mask[self.mask>0.].ravel()))
-                st = np.std(np.array(chsqs)[np.array(chsqs) > 0.] / len(self.mask[self.mask>0.].ravel()))
+                mn = np.mean(np.array(chsqs)[np.array(chsqs) > 0.] )
+                st = np.std(np.array(chsqs)[np.array(chsqs) > 0.] )
 
-                #print np.array(self.csv) - mn
-                #print st
+                print np.array(chsqs) - mn
+                print st
                 #raw_input()
-                self.flags[np.array(chsqs)/ len(self.mask[self.mask>0.].ravel())-mn > 4*st + 5 ] = 1
-                self.modelvec[np.array(chsqs)/ len(self.mask[self.mask>0.].ravel())-mn > 4*st + 5]=0.
-                self.modelstd[np.array(chsqs)/ len(self.mask[self.mask>0.].ravel())-mn > 4*st + 5]=0.
+                self.flags[np.array(chsqs)-mn > 4*st + 5 ] = 1
+                self.modelvec[np.array(chsqs)-mn > 4*st + 5]=0.
+                self.modelstd[np.array(chsqs)-mn > 4*st + 5]=0.
 
             if self.counter > self.maxiter:
                 self.z_scores_say_keep_going = False#GETOUT
