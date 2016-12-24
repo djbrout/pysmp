@@ -385,7 +385,7 @@ class metropolis_hastings():
 
                 print np.array(self.csv)/ len(self.mask[self.mask>0.].ravel()) - mn
                 print st
-                raw_input()
+                #raw_input()
                 self.flags[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5 ] = 1
                 self.modelvec[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
                 self.modelstd[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
