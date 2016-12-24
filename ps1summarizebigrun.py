@@ -48,10 +48,10 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #data = np.load(cd)
         dostars = True
         if dostars:
-            stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST5/stardata/stardata.npz')
+            stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/stardata/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        title='',outdir='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST5/stardata/')
+                        title='',outdir='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/stardata/')
             sys.exit()
     # print data.keys()
     # print len(data['Flux'])
@@ -1320,7 +1320,7 @@ if __name__ == "__main__":
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     resultsdir= './working/'
-    resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST6/'
+    resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
