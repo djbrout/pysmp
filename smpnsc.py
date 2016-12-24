@@ -2381,7 +2381,7 @@ class smp:
                 np.set_printoptions(threshold=50000)
                 #for i in im[:,round(ysn)]:
                 #    print i
-                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = params.fitrad,verbose=False)#,skyrad=skyrad)
+                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 20.,verbose=False)#,skyrad=skyrad)
                 #raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
 
