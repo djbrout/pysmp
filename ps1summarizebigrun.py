@@ -391,8 +391,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     x = np.arange(-5, 5, .1)
 
 
-    plt.hist(flux[wwn]/fluxerr[wwn],bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4,normed=True)
-    plt.hist(dflux[dwwn] / dfluxerr[dwwn], bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4,normed=True)
+    plt.hist(flux[wwn]/fluxerr[wwn],bins=np.arange(-4.1,4,.2),label='SMP',alpha=.4,normed=True)
+    plt.hist(dflux[dwwn] / dfluxerr[dwwn], bins=np.arange(-4.1, 4, .2), label='DIFFIMG', alpha=.4,normed=True)
     plt.xlim(-4,4)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 350')
     plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
@@ -401,10 +401,20 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[wwn],bins=np.arange(-5250,5000,500),label='SMP',normed=True,alpha=.4)
-    plt.hist(dflux[wwn], bins=np.arange(-5250,5000,500), label='DIFFIMG', normed=True,alpha=.4)
+    plt.hist(flux[wwn],bins=np.arange(-2250,2000,50),label='SMP',normed=True,alpha=.4)
+    plt.hist(dflux[wwn], bins=np.arange(-2250,2000,50), label='DIFFIMG', normed=True,alpha=.4)
     plt.xlim(-5000,5000)
-    plt.xlabel('Flux for MJD > PeakMJD + 100')
+    plt.xlabel('Flux for MJD > PeakMJD + 350')
+    plt.legend()
+    plt.savefig(outdir + '/flux.png')
+    print outdir + '/std.png'
+
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(fluxerr[wwn], bins=np.arange(0, 1000, 50), label='SMP', normed=True, alpha=.4)
+    plt.hist(dfluxerr[wwn], bins=np.arange(0, 1000, 50), label='DIFFIMG', normed=True, alpha=.4)
+    plt.xlim(0, 1000)
+    plt.xlabel('Flux for MJD > PeakMJD + 350')
     plt.legend()
     plt.savefig(outdir + '/flux.png')
     print outdir + '/std.png'
