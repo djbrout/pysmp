@@ -1284,7 +1284,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 25:
+            if cccc > 2500:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2585,8 +2585,8 @@ class smp:
 
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
 
-                                        print np.max(smp_noise[i,:,:].ravel())
-                                        raw_input()
+                                        #print np.max(smp_noise[i,:,:].ravel())
+                                        #raw_input()
 
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1

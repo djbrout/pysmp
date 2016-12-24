@@ -464,7 +464,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 10) == 0:
+            if (self.counter % 100) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
@@ -804,7 +804,7 @@ class metropolis_hastings():
                     v = ((sims - data) ** 2  * self.mask  * wmask / (1. / weights + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
-                    print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
+                    #print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
                 else:
                     if self.comboerr:
                         v = ((sims - data) ** 2 / (skyerr ** 2 + simnosnnosky / self.gain) * self.mask).ravel()
