@@ -13,7 +13,7 @@ if 'dsp057' in hostname:
     logdir = '/home/dscolnic/testdir/smplogs057'
 
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
-smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST12'
+smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13'
 
 
 runninglist = np.chararray(24,itemsize=300)
