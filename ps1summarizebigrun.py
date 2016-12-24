@@ -416,7 +416,7 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.xlim(0, 1000)
     plt.xlabel('Flux for MJD > PeakMJD + 350')
     plt.legend()
-    plt.savefig(outdir + '/flux.png')
+    plt.savefig(outdir + '/err.png')
     print outdir + '/std.png'
 
     plt.clf()
