@@ -2580,7 +2580,9 @@ class smp:
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp == 0.] = 0
                                         #print skyerrsn,skysig
-                                        #raw_input()
+                                        print np.max(noise_stamp.ravel())
+                                        raw_input()
+
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
