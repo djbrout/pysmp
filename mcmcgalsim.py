@@ -684,7 +684,7 @@ class metropolis_hastings():
                 #self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
                 chisq += np.sum(((sims - data) ** 2 * self.mask / (
-                1./weights + ((sims - sky) ** 2) ** .5 / gain +
+                skyerr**2 + ((sims - sky) ** 2) ** .5 / gain +
                     (self.readnoise / gain) ** 2)).ravel())
         return chisq
 
