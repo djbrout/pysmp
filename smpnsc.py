@@ -2584,6 +2584,10 @@ class smp:
                                         #raw_input()
 
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
+
+                                        print np.max(mask.ravel())
+                                        raw_input()
+
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
