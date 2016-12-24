@@ -2389,6 +2389,7 @@ class smp:
                 #raw_input('skysn'+str(skysn))
                 mygain = ((1/skyerrsn**2)*skysn)
 
+
                 if badflagd == 1:
                     #raw_input('badflagd')
                     badflag = 1
@@ -2479,8 +2480,7 @@ class smp:
                         #raw_input('scallllllllll')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
-                        skysn *= scalefactor
-                        skyerrsn *= scalefactor
+
                         mask = msk
                         #raw_input('saved mask')
 
@@ -2577,6 +2577,9 @@ class smp:
 
                                     noise_stamp[image_stamp > 500000.] = 0.
 
+                                    skysn *= scalefactor
+                                    skyerrsn *= scalefactor
+
                                     #for iiii in noise_stamp.ravel():
                                     #    print iiii
                                     #print 1/(skyerrsn*scalefactor)**2
@@ -2588,7 +2591,7 @@ class smp:
                                         #print np.max(noise_stamp.ravel())
                                         #raw_input()
 
-                                        smp_noise[i,:,:] = noise_stamp*1/(skyerrsn)**2 * mask
+                                        smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         dt.save_fits_image(image_stamp,'im.fits',go=True)
 
                                         print skysn,skyerrsn
@@ -2599,7 +2602,7 @@ class smp:
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
-                                        smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
+                                        smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         #mask *= noise_stamp
 
                                     #if round(float(snparams.mjd[j])) == 57011:
