@@ -2586,7 +2586,7 @@ class smp:
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
 
 
-                                        print skyerrsn,scalefactor,np.mean(image_stamp)
+                                        print skyerrsn,scalefactor,np.mean(image_stamp),skyerrsn*scalefactor,skysig
                                         #print np.max(smp_noise[i,:,:].ravel())
                                         raw_input()
 
