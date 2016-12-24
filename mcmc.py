@@ -507,8 +507,9 @@ class metropolis_hastings():
 
 
             if self.counter == 1000:
-                mn = np.mean(np.array(chsqs)[np.array(chsqs) > 0.] )
-                st = np.std(np.array(chsqs)[np.array(chsqs) > 0.] )
+                mn, st, num = dt.iterstat(np.array(chsqs)[np.array(chsqs) > 0.] ,
+                                             startMedian=True, sigmaclip=3, iter=3)
+
 
                 print np.array(chsqs) - mn
                 print st
