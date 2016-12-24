@@ -2588,11 +2588,11 @@ class smp:
                                         #raw_input()
 
                                         smp_noise[i,:,:] = noise_stamp*1/(skyerrsn*scalefactor)**2 * mask
+                                        dt.save_fits_image(image_stamp,'im.fits',go=True)
 
-
-                                        print skyerrsn,scalefactor,np.mean(image_stamp),skyerrsn*scalefactor,skysig
+                                        print skysn,skyerrsn
                                         #print np.max(smp_noise[i,:,:].ravel())
-                                        #raw_input()
+                                        raw_input()
 
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
