@@ -377,8 +377,8 @@ class metropolis_hastings():
 
 
             if self.counter == 500:
-                mn = np.mean(np.array(self.csv) / len(self.mask[self.mask>0.].ravel()))
-                st = np.std(np.array(self.csv) / len(self.mask[self.mask>0.].ravel()))
+                mn = np.mean(np.array(self.csv)[np.array(self.csv) > 0.] / len(self.mask[self.mask>0.].ravel()))
+                st = np.std(np.array(self.csv)[np.array(self.csv) > 0.] / len(self.mask[self.mask>0.].ravel()))
 
                 #print np.array(self.csv) - mn
                 #print st
