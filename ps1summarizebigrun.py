@@ -257,6 +257,8 @@ def plotzpt(fitzpt,fakezpt,outdir):
     plt.clf()
     plt.scatter(fakezpt,fitzpt,alpha=.5)
     plt.plot([29,33],[29,33])
+    plt.xlabel('Diffimg ZPT')
+    plt.ylabel('SMP ZPT')
     plt.savefig(outdir+'/zptcomparo.png')
     print 'saved ',outdir+'/zptcomparo.png'
 def pltresid(fitflux,diffimflux,fakezpt,fitzpt,outdir):
