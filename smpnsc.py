@@ -2844,7 +2844,7 @@ class smp:
                 mergectr+=1
         '''
 
-        badnoisecols = np.where(smp_noise < 1e-5)
+        badnoisecols = np.where(smp_noise < 1e-9)
         if self.snparams.survey == 'PS1':
             smp_noise[badnoisecols] = 0.
         badpsfcols = np.where(smp_psf < 0)
