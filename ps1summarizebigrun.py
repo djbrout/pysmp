@@ -370,8 +370,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.clf()
     deltapmjd = deltapmjd[ww]
 
-    wwn =(deltapmjd < -20.) | (deltapmjd > 450.)
-    dwwn =(ddeltapmjd < -20.) | (ddeltapmjd > 450.)
+    wwn =(deltapmjd < -20.) | (deltapmjd > 420.)
+    dwwn =(ddeltapmjd < -20.) | (ddeltapmjd > 420.)
 
 
     #plt.scatter(deltapmjd[wwn],flux[wwn])
