@@ -337,6 +337,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     flux = np.array(flux)
     fluxerr = np.array(fluxerr)
 
+    fluxerr =  ((fluxerr ** 2 - abs(flux) + 1.) ** .5 * 1.08)
+
     dflux = np.array(dflux) * 10 ** (.4 * (31 - 30.))
 
     oflux = copy(flux)
