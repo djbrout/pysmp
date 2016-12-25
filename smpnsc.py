@@ -1284,7 +1284,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 2000:
+            if cccc > 2:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2792,8 +2792,8 @@ class smp:
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
 
-                                    print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
-                                    raw_input()
+                                    #print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
+                                    #raw_input()
 
                                     if self.dogalfit:
                                         if smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
