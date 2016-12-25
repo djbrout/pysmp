@@ -113,7 +113,7 @@ def grabstardata(imagedir,outfile):
                         fs = zptdata['fitflux']
                         zp = zptdata['fit_zpt']
                         if zp < 24:
-                            print fname
+                            print dirName, subdirList,fname
                             raw_input()
                         ww = (cm < 18.) & (cm > 16.)
 
