@@ -2791,6 +2791,10 @@ class smp:
                                     if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
+
+                                    print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
+                                    raw_input()
+
                                     if self.dogalfit:
                                         if smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                             smp_dict['fitflag'][i] = 0
