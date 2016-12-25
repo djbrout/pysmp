@@ -5849,12 +5849,12 @@ class smp:
 
             print 'Error : not enough good stars to compute zeropoint!!!'*20
 
-
-        if rmsaddin > 0.1:
-            bad = True
-            md = 0
-            std = 0
-            mag_compare_out = 0
+        if not bad:
+            if rmsaddin > 0.1:
+                bad = True
+                md = 0
+                std = 0
+                mag_compare_out = 0
 
         if not bad:
             if self.fermilog:
