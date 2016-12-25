@@ -506,7 +506,7 @@ class metropolis_hastings():
                 #    print i,self.mjd[i], self.chisqvec[i]/len(self.mask[self.mask>0.].ravel()),self.mjdoff[i][0],self.mjdoff[i][1],np.mean(self.modelvec_nphistory[:,i])
 
 
-            if self.counter == 1000:
+            if self.counter == 10000:
                 mn, st, num = dt.iterstat(np.array(chsqs)[np.array(chsqs) > 0.] ,
                                              startMedian=True, sigmaclip=3, iter=3)
 
@@ -514,9 +514,13 @@ class metropolis_hastings():
                 print np.array(chsqs) - mn
                 print st
                 #raw_input()
-                self.flags[np.array(chsqs)-mn > 4*st + 5 ] = 1
-                self.modelvec[np.array(chsqs)-mn > 4*st + 5]=0.
-                self.modelstd[np.array(chsqs)-mn > 4*st + 5]=0.
+                self.flags[np.array(chsqs)-mn > 3*st + 5 ] = 1
+                self.modelvec[np.array(chsqs)-mn > 3*st + 5]=0.
+                self.modelstd[np.array(chsqs)-mn > 3*st + 5]=0.
+
+                self.modelvec[np.array(self.kicked_modelvec) < -10000] = 0.
+                self.modelstd[np.array(self.kicked_modelvec) < -10000] = 0.
+                self.flags[np.array(self.kicked_modelvec) < -10000] = 1.
 
             if self.counter > self.maxiter:
                 self.z_scores_say_keep_going = False#GETOUT

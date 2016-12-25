@@ -390,9 +390,9 @@ class metropolis_hastings():
                 self.modelvec[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
                 self.modelstd[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
 
-                self.modelvec[self.kicked_modelvec < -10000] = 0.
-                self.modelstd[self.kicked_modelvec < -10000] = 0.
-                self.flags[self.kicked_modelvec < -10000] = 1.
+                self.modelvec[np.array(self.kicked_modelvec) < -10000] = 0.
+                self.modelstd[np.array(self.kicked_modelvec) < -10000] = 0.
+                self.flags[np.array(self.kicked_modelvec) < -10000] = 1.
 
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
