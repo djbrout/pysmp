@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/stardata/","/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/stardata/stardata.npz")
+        grabstardata("/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/stardata/","/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/stardata/stardata.npz")
         #sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         plotzpt(data['FitZPT'], data['FakeZPT'], resultsdir)
@@ -48,10 +48,10 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #data = np.load(cd)
         dostars = True
         if dostars:
-            stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/stardata/stardata.npz')
+            stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/stardata/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        title='',outdir='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/stardata/')
+                        title='',outdir='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/stardata/')
             sys.exit()
     # print data.keys()
     # print len(data['Flux'])
@@ -1335,7 +1335,7 @@ if __name__ == "__main__":
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
     resultsdir= './working/'
-    resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST13/'
+    resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
