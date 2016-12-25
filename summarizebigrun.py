@@ -190,6 +190,12 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
             fakemag = data['FAKEMAG']*0. + 99.
         else:
             fakemag = data['FAKEMAG']
+
+        if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
+            continue
+        if np.min(data['FLUX']) < -10000:
+            continue
+
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
         snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()

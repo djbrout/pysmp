@@ -112,6 +112,8 @@ def grabstardata(imagedir,outfile):
                         cm = zptdata['cat_mag']
                         fs = zptdata['fitflux']
                         zp = zptdata['fit_zpt']
+                        if zp < 24:
+                            print fname
                         ww = (cm < 18.) & (cm > 16.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
