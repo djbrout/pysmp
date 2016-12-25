@@ -372,8 +372,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.clf()
     deltapmjd = deltapmjd[ww]
 
-    wwn =(deltapmjd < -20.) | (deltapmjd > 420.)
-    dwwn =(ddeltapmjd < -20.) | (ddeltapmjd > 420.)
+    wwn =(deltapmjd < -20.) | (deltapmjd > 440.)
+    dwwn =(ddeltapmjd < -20.) | (ddeltapmjd > 440.)
 
 
     #plt.scatter(deltapmjd[wwn],flux[wwn])
@@ -398,8 +398,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     x = np.arange(-5, 5, .1)
 
 
-    plt.hist(flux[wwn]/fluxerr[wwn],bins=np.arange(-4.2,4,.4),label='SMP',alpha=.4,normed=True)
-    plt.hist(dflux[dwwn] / dfluxerr[dwwn], bins=np.arange(-4.2, 4, .4), label='DIFFIMG', alpha=.4,normed=True)
+    plt.hist(flux[wwn]/fluxerr[wwn],bins=np.arange(-4.25,4,.5),label='SMP',alpha=.4,normed=True)
+    plt.hist(dflux[dwwn] / dfluxerr[dwwn], bins=np.arange(-4.25, 4, .5), label='DIFFIMG', alpha=.4,normed=True)
     plt.xlim(-4,4)
     plt.xlabel('Flux/Fluxerr for MJD > PeakMJD + 350')
     plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
