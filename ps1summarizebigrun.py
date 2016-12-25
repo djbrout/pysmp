@@ -347,8 +347,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     deltapmjd = np.array(deltapmjd)
     print len(flux)
     #raw_input('lf')
-    ww = (deltapmjd > -700.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
-    dww = (deltapmjd > -700.) & (dflux != 0.) & (dfluxerr != 0.)
+    ww = (deltapmjd > -1000.) & (flux != 0.) & (fluxerr != 0.)# & (chisq < 3.)
+    dww = (deltapmjd > -1000.) & (dflux != 0.) & (dfluxerr != 0.)
 
     print max(deltapmjd)
     #print len(flux[ww])
@@ -370,8 +370,8 @@ def plotsigma(flux,fluxerr,dflux,dfluxerr,deltapmjd,chisq,outdir):
     plt.clf()
     deltapmjd = deltapmjd[ww]
 
-    wwn = (deltapmjd > 220.)
-    dwwn = (ddeltapmjd > 220.)
+    wwn = (deltapmjd > 220.) or (deltapmjd < -100.)
+    dwwn = (ddeltapmjd > 220.) or (ddeltapmjd < -100.)
 
 
     #plt.scatter(deltapmjd[wwn],flux[wwn])
