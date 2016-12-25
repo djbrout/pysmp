@@ -4936,6 +4936,9 @@ class smp:
                 mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
+
+        xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
+
         print 'Computing zeropoint for',imfile
         print '\n'
         import pkfit_norecent_noise_smp
@@ -5838,6 +5841,13 @@ class smp:
             #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
             print 'Error : not enough good stars to compute zeropoint!!!'*20
+
+
+        if rmsaddin > 0.1:
+            bad = True
+            md = 0
+            std = 0
+            mag_compare_out = 0
 
         if not bad:
             if self.fermilog:
