@@ -615,7 +615,7 @@ class metropolis_hastings():
                 conv.drawImage(image=simstamps,
                                 method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
 
-                sims = simstamps.array + sky
+                sims = simstamps.array.T + sky
         return sims
 
 

@@ -175,9 +175,9 @@ def grabdata(tmpwriter,resultsdir,cd):
         dd = data['FLUX'] - data['DIFFIM_FLUX'] * 10 ** (.4*(31 - 30))
         if len(dd[dd > 10000.]) > 0:
             print f
-            raw_input()
-        if f != '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/lightcurves/PSc300179_z_z.smp':
-            continue
+            #raw_input()
+        #if f != '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/lightcurves/PSc300179_z_z.smp':
+        #    continue
 
         try:
             #if True:
