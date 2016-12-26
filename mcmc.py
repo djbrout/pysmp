@@ -812,7 +812,7 @@ class metropolis_hastings():
 
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
-                    print np.max(sims),np.max(data),np.mean(sims-data),np.max(weights),np.max(self.mask)
+                    #print np.max(sims),np.max(data),np.mean(sims-data),np.max(weights),np.max(self.mask)
                     #print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
                 else:
                     if self.comboerr:
