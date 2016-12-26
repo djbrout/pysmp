@@ -810,6 +810,7 @@ class metropolis_hastings():
                     v = ((sims - data) ** 2  * self.mask  * wmask / (1./weights + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
+                    print np.max(sims),np.max(data),np.mean(sims-data)
                     #print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
                 else:
                     if self.comboerr:
