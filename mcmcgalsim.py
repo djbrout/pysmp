@@ -615,7 +615,7 @@ class metropolis_hastings():
                 conv.drawImage(image=simstamps,
                                 method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
 
-                sims = simstamps.array.T + sky
+                sims = simstamps.array + sky
         return sims
 
 
@@ -691,7 +691,7 @@ class metropolis_hastings():
             if fitflags == 0:
                 #self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
-                chisq += np.sum(((sims - data) ** 2 * self.mask * inmask / (
+                chisq += np.sum(((sims - data.T) ** 2 * self.mask.T * inmask.T / (
                 skyerr**2 + ((sims - sky) ** 2) ** .5 / gain +
                     (self.readnoise / gain) ** 2)).ravel())
         return chisq
