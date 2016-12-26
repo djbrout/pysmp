@@ -173,7 +173,7 @@ def grabdata(tmpwriter,resultsdir,cd):
         #raw_input()
 
         dd = data['FLUX'] - data['DIFFIM_FLUX'] * 10 ** (.4*(31 - 30))
-        if len(dd[dd > 20000.]) > 0:
+        if len(dd[dd > 10000.]) > 0:
             print f
             raw_input()
 
