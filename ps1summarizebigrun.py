@@ -114,7 +114,7 @@ def grabstardata(imagedir,outfile):
                         zp = zptdata['fit_zpt']
                         if zp < 24:
                             print dirName, subdirList,fname
-                            raw_input()
+                            #raw_input()
                         ww = (cm < 18.) & (cm > 16.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
@@ -176,6 +176,12 @@ def grabdata(tmpwriter,resultsdir,cd):
             #print data['ID_OBS']
             #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
+
+            dd = data['FLUX'] - data['DIFFIM_FLUX'] * 10**(.4(31-30))
+            if len(dd[dd>20000]) > 0:
+                print f
+                raw_input()
+
 
             #data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
             #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
