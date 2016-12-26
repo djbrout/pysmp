@@ -25,22 +25,23 @@ corelist = np.arange(24)
 
 cntr = -1
 i = -1
+offset = 125
 while i < 23:
     cntr += 1
-    if lightcurves[cntr][:11]+lightcurves[cntr][9:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
-        print lightcurves[cntr].split('.')[0]+'.smp', 'already exists'
+    if lightcurves[cntr+offset][:11]+lightcurves[cntr+offset][9:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
+        print lightcurves[cntr+offset].split('.')[0]+'.smp', 'already exists'
         cntr += 1
     else:
         i += 1
         print ''
         #print 'taskset -c '+str(int(i))+' python smp.py --nozpt --dontglobalstar --index='+str(int(i))+' > ' \
         #    ''+ os.path.join(logdir,lightcurves[i].split('.')[0]+'.log')+' &'
-        os.popen('taskset -c '+str(int(i))+' python smpnsc.py --nozpt --index='+str(int(cntr))+' 1>& '+
-                 os.path.join(logdir,lightcurves[cntr].split('.')[0]+'.log')+' &')
-        print lightcurves[cntr].strip(),'Submitted to SMP. Core #'+str(int(i))
-        print 'See log file here',os.path.join(logdir,lightcurves[cntr].split('.')[0]+'.log')
+        os.popen('taskset -c '+str(int(i))+' python smpnsc.py --nozpt --index='+str(int(cntr+offset))+' 1>& '+
+                 os.path.join(logdir,lightcurves[cntr+offset].split('.')[0]+'.log')+' &')
+        print lightcurves[cntr+offset].strip(),'Submitted to SMP. Core #'+str(int(i))
+        print 'See log file here',os.path.join(logdir,lightcurves[cntr+offset].split('.')[0]+'.log')
         print ''
-        runninglist[i] = lightcurves[cntr]
+        runninglist[i] = lightcurves[cntr+offset]
 
 
 j=cntr+1
@@ -50,21 +51,21 @@ while j <= maxlightcurves:
         if runninglist[core].split('.')[0]+'.done' in donefiles:
             kg = True
             while kg:
-                if lightcurves[j][:11]+lightcurves[j][9:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir, 'lightcurves')):
-                    print lightcurves[j].split('.')[0] + '.smp','already exists'
+                if lightcurves[j+offset][:11]+lightcurves[j+offset][9:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir, 'lightcurves')):
+                    print lightcurves[j+offset].split('.')[0] + '.smp','already exists'
                     j += 1
                 else:
                     kg = False
             print ''
-            print 'Running SN '+str(int(j))+'/'+str(int(maxlightcurves))
+            print 'Running SN '+str(int(j+offset))+'/'+str(int(maxlightcurves))
             print runninglist[core],'Has finished photometry on core',int(core)
             #print 'taskset -c ' + str(int(core)) + ' python smp.py --nozpt --dontglobalstar --index=' + str(int(j)) + ' &'
-            os.popen('taskset -c ' + str(int(core)) + ' python smpnsc.py --nozpt --index=' + str(int(j)) +' 1>& '+
-                os.path.join(logdir,lightcurves[j].split('.')[0]+'.log')+' &')
-            print lightcurves[j].strip(),'Submitted to SMP. Core #'+str(int(core))
-            print 'See log file here', os.path.join(logdir, lightcurves[j].split('.')[0] + '.log')
+            os.popen('taskset -c ' + str(int(core)) + ' python smpnsc.py --nozpt --index=' + str(int(j+offset)) +' 1>& '+
+                os.path.join(logdir,lightcurves[j+offset].split('.')[0]+'.log')+' &')
+            print lightcurves[j+offset].strip(),'Submitted to SMP. Core #'+str(int(core))
+            print 'See log file here', os.path.join(logdir, lightcurves[j+offset].split('.')[0] + '.log')
 
-            runninglist[core] = lightcurves[j]
+            runninglist[core] = lightcurves[j+offset]
             j += 1
             print ''
 
