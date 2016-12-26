@@ -3531,9 +3531,9 @@ class smp:
             print 'galmodelshape', galmodel.shape
             import mcmcgalsim
             aaa = mcmcgalsim.metropolis_hastings(
-                    galmodel = galmodel
+                    galmodel = galmodel*0 + 1.
                     , modelvec = modelvec*0.
-                    , galstd = galstd
+                    , galstd = galstd*0+3.
                     , modelstd = modelstd*0.
                     , data = smp_im
                     , psfs = smp_psf
