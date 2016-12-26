@@ -171,16 +171,19 @@ def grabdata(tmpwriter,resultsdir,cd):
                 #raw_input()
         #print data.keys()
         #raw_input()
+
+        dd = data['FLUX'] - data['DIFFIM_FLUX'] * 10 ** (.4(31 - 30))
+        if len(dd[dd > 20000.]) > 0:
+            print f
+            raw_input()
+
         try:
             #if True:
             #print data['ID_OBS']
             #raw_input()
             print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
 
-            dd = data['FLUX'] - data['DIFFIM_FLUX'] * 10**(.4(31-30))
-            if len(dd[dd>20000]) > 0:
-                print f
-                raw_input()
+
 
 
             #data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
