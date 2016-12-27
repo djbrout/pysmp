@@ -647,7 +647,7 @@ class metropolis_hastings():
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
     def poolkernel(self,input,output):
-        for (args, info) in iter(input.get, 'STOP'):
+        for args in iter(input.get):
             index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = args
 
             sims = simstamps
