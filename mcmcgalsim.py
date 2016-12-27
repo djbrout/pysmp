@@ -648,7 +648,7 @@ class metropolis_hastings():
 
     def poolkernel(self,input,output):
         for (args, info) in iter(input.get, 'STOP'):
-            index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = *args
+            index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = args
 
             sims = simstamps
             if flags == 0:
