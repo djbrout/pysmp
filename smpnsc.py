@@ -2455,8 +2455,17 @@ class smp:
                     if dosextractor:
                         sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
-                        sexsky *= scalefactor
-                        sexrms *= scalefactor
+
+                        bkgrnd = pf.getdata(imfile + '.background')
+                        sexsky = np.mean(bkgrnd[self.psfcenter[1] - params.substamp / 2.:self.psfcenter[1] + params.substamp / 2.,
+                                                self.psfcenter[0] - params.substamp / 2.:self.psfcenter[0] + params.substamp / 2.].ravel()) * scalefactor
+                        bkgrndrms = pf.getdata(imfile + '.background_rms')
+                        sexrms = np.mean(
+                            bkgrndrms[self.psfcenter[1] - params.substamp / 2.:self.psfcenter[1] + params.substamp / 2.,
+                            self.psfcenter[0] - params.substamp / 2.:self.psfcenter[
+                                                                         0] + params.substamp / 2.].ravel() )* scalefactor
+                        #sexsky *= scalefactor
+                        #sexrms *= scalefactor
                         print sexsky, sexrms
                         #raw_input('youyo')
 
@@ -2667,7 +2676,7 @@ class smp:
 
                                     if self.snparams.survey == 'PS1':
                                         smp_dict['sky'][i] = skysn
-                                        smp_dict['skyerr'][i] = skysig
+                                        smp_dict['skyerr'][i] = sexrms
                                         print skysig,skyerrsn,sexrms
                                         print skyysn,skysn,sexsky
                                         print 'sky'*1000
