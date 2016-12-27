@@ -123,8 +123,13 @@ def cntrd(img, x, y,
                     xcen[i] = -1   ; ycen[i] = -1
                     continue
             
-            bigbox = img[int(iy[i]-nhalfbig) : int(iy[i]+nhalfbig+1), int(ix[i]-nhalfbig) : int(ix[i]+nhalfbig+1)]
-
+            try:
+                bigbox = img[int(iy[i]-nhalfbig) : int(iy[i]+nhalfbig+1), int(ix[i]-nhalfbig) : int(ix[i]+nhalfbig+1)]
+            except:
+                if verbose: print ('Position nan ')
+                xcen[i] = -1
+                ycen[i] = -1
+                continue
             #  Locate maximum pixel in 'NBIG' sized subimage 
             goodrow = np.where(bigbox == bigbox)
             mx = np.max( bigbox[goodrow])     #Maximum pixel value in BIGBOX
