@@ -647,27 +647,25 @@ class metropolis_hastings():
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
     def poolkernel(self,input,output):
-        for args in iter(input.get):
-            index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = args
+        args = input.get
+        index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = args
 
-            sims = simstamps
-            if flags == 0:
-                if fitflags == 0.:
-                    sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec, gsparams=self.psfparams)
-                    sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
-                    if not self.psf_shift_std is None:
-                        sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
+        sims = simstamps
+        if flags == 0:
+            if fitflags == 0.:
+                sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec, gsparams=self.psfparams)
+                sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
+                if not self.psf_shift_std is None:
+                    sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
+                total_model = self.gs_model_interp + sn
+                conv = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
 
-                    total_model = self.gs_model_interp + sn
+                conv.drawImage(image=simstamps,
+                               method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
 
-                    conv = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
+                sims = simstamps.array + sky
 
-                    conv.drawImage(image=simstamps,
-                                   method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
-
-                    sims = simstamps.array + sky
-
-            output.put((sims, index))
+        output.put((sims, index))
 
     #@profile
     def mapkernel(self,index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky, output ):
