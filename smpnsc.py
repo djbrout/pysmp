@@ -2672,7 +2672,7 @@ class smp:
                                     #     #raw_input()
 
                                     if self.snparams.survey == 'PS1':
-                                        smp_dict['sky'][i] = skysn
+                                        smp_dict['sky'][i] = sexsky
                                         smp_dict['skyerr'][i] = sexrms
                                         print skysig,skyerrsn,sexrms
                                         print skyysn,skysn,sexsky
