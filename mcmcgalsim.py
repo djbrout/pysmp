@@ -642,7 +642,7 @@ class metropolis_hastings():
                                 method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
 
                 sims = simstamps.array + sky
-        self.sims[i,:,:] = sims
+        self.sims[index,:,:] = sims
         #return sims
 
 
