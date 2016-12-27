@@ -480,6 +480,7 @@ class metropolis_hastings():
         #Calculate Chisq over all epochs
         #t4 = time.time()
         #self.thischisq = self.chisq_sim_and_real()
+        print 'chisqing'
         self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.weights,self.inmask)
         #chsqs = self.csv
 
@@ -607,7 +608,7 @@ class metropolis_hastings():
 
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
-
+        print sky
         sims = simstamps
         if flags == 0:
             if fitflags == 0.:
