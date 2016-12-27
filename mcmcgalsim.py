@@ -60,6 +60,7 @@ import gc
 import matplotlib.pyplot as plt
 #import pyfftw
 import dilltools as dt
+import multiprocessing
 
 #from pympler.tracker import SummaryTracker
 
@@ -472,7 +473,20 @@ class metropolis_hastings():
         #self.kernel()
         #self.mapkernel()
         print 'simming'
-        self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
+
+        jobs = []
+        for i in range(len(self.sky)):
+            p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
+                                                                     self.kicked_modelvec[i], self.snoffsets[i],
+                                                                     self.psfs[i], self.simstamps[i], self.sky[i],))
+            jobs.append(p)
+            p.start()
+
+        for j in jobs:
+            j.join()
+            print '%s.exitcode = %s' % (j.name, j.exitcode)
+
+        #self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
         #t3 = time.time()
         #print 'kernel',t3-t2
@@ -604,7 +618,7 @@ class metropolis_hastings():
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
     #@profile
-    def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
+    def mapkernel(self,index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
 
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
@@ -628,7 +642,8 @@ class metropolis_hastings():
                                 method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
 
                 sims = simstamps.array + sky
-        return sims
+        self.sims[i,:,:] = sims
+        #return sims
 
 
     def kernel( self,  ):
