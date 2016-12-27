@@ -194,6 +194,8 @@ class metropolis_hastings():
             self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
 
         self.data = data
+        for d in len(Nimage):
+            self.data[d,:,:] = self.data[d,:,:].T
         #self.psfs = psfs
         #self.original_psfs = copy(psfs)
         self.weights = weights
@@ -691,7 +693,7 @@ class metropolis_hastings():
             if fitflags == 0:
                 #self.readnoise = self.sky * 0. + 1
                 self.gain = self.sky * 0 + 1.
-                chisq += np.sum(((sims - data.T) ** 2 * self.mask.T * inmask.T / (
+                chisq += np.sum(((sims - data) ** 2 * self.mask.T * inmask.T / (
                 skyerr**2 + ((sims - sky) ** 2) ** .5 / gain +
                     (self.readnoise / gain) ** 2)).ravel())
         return chisq
