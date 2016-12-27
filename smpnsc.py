@@ -1921,6 +1921,7 @@ class smp:
                     x_star, y_star = [], []
 
                     for xval, yval in zip(*coords):
+                        print xval,yval
                         x_star += [xval]
                         y_star += [yval]
 
