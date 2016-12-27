@@ -5,15 +5,15 @@ import time
 maxlightcurves = 1000
 hostname = os.popen('hostname').read()
 if 'dsp053' in hostname:
-    isdonedir = '/home/dscolnic/testdir/isdone053'
-    logdir = '/home/dscolnic/testdir/smplogs053'
+    isdonedir = '/home/dscolnic/testdir/isdone'
+    logdir = '/home/dscolnic/testdir/smplogs'
 
 if 'dsp057' in hostname:
-    isdonedir = '/home/dscolnic/testdir/isdone057'
-    logdir = '/home/dscolnic/testdir/smplogs057'
+    isdonedir = '/home/dscolnic/testdir/isdone'
+    logdir = '/home/dscolnic/testdir/smplogs'
 
 lcf = open('/home/dscolnic/testdir/runfile.txt','r')
-smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST15'
+smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST16'
 
 
 runninglist = np.chararray(24,itemsize=300)
