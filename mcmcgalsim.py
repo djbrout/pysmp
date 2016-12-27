@@ -479,7 +479,8 @@ class metropolis_hastings():
         jobs = []
         for i in range(len(self.sky)):
             if self.flags[i] == 0:
-                p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
+                q = Queue()
+                p = multiprocessing.Process(target=self.mapkernel, args=(q, i,self.flags[i],self.fitflags[i],
                                                                          self.kicked_modelvec[i], self.snoffsets[i],
                                                                          self.psfs[i], self.simstamps[i], self.sky[i],))
                 jobs.append(p)
@@ -679,7 +680,7 @@ class metropolis_hastings():
             output.put((sims, index))
 
     #@profile
-    def mapkernel(self, index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
+    def mapkernel(self, q, index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
 
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
@@ -707,7 +708,8 @@ class metropolis_hastings():
 
         #output.put((sims, index))
 
-        return sims
+        q.put(sims)
+        #return sims
 
 
     def kernel( self,  ):
