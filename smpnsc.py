@@ -2652,6 +2652,8 @@ class smp:
                                     if self.snparams.survey == 'PS1':
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skysig
+                                        print skysig,skyerrsn
+                                        raw_input('sig comparo')
                                     else:
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skyerrsn
