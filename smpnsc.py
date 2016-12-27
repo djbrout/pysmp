@@ -2648,8 +2648,13 @@ class smp:
                                     #     print 'skysn',skysn
                                     #     print 'mysky',mysky
                                     #     #raw_input()
-                                    smp_dict['sky'][i] = skysn
-                                    smp_dict['skyerr'][i] = skyerrsn
+
+                                    if self.snparams.survey == 'PS1':
+                                        smp_dict['sky'][i] = skysn
+                                        smp_dict['skyerr'][i] = skysig
+                                    else:
+                                        smp_dict['sky'][i] = skysn
+                                        smp_dict['skyerr'][i] = skyerrsn
 
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
