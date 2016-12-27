@@ -2457,6 +2457,7 @@ class smp:
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
 
                         bkgrnd = pf.getdata(imfile + '.background')
+                        print bkgrnd.shape
                         sexsky = np.mean(bkgrnd[self.psfcenter[1] - params.substamp / 2.:self.psfcenter[1] + params.substamp / 2.,
                                                 self.psfcenter[0] - params.substamp / 2.:self.psfcenter[0] + params.substamp / 2.].ravel()) * scalefactor
                         bkgrndrms = pf.getdata(imfile + '.background_rms')
