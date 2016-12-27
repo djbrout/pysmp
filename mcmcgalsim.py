@@ -453,7 +453,7 @@ class metropolis_hastings():
     def mcmc_func( self ):
 
         #t1 = time.time()
-        print 'adjusting'
+        #print 'adjusting'
         self.adjust_model()
         #t2 = time.time()
 
@@ -461,7 +461,7 @@ class metropolis_hastings():
         #    self.float_sn_pos()
 
         # Contains the convolution
-        print 'interpolating'
+        #print 'interpolating'
         new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
         gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
         new_gal_model.drawImage(image=gs_model, method='no_pixel')
@@ -472,20 +472,24 @@ class metropolis_hastings():
         #self.mapkernel()
         #self.kernel()
         #self.mapkernel()
-        print 'simming'
+        #print 'simming'
 
-        jobs = []
-        for i in range(len(self.sky)):
-            if self.flags[i] == 0:
-                p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
-                                                                         self.kicked_modelvec[i], self.snoffsets[i],
-                                                                         self.psfs[i], self.simstamps[i], self.sky[i],))
-                jobs.append(p)
-                p.start()
+        # jobs = []
+        # for i in range(len(self.sky)):
+        #     if self.flags[i] == 0:
+        #         p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
+        #                                                                  self.kicked_modelvec[i], self.snoffsets[i],
+        #                                                                  self.psfs[i], self.simstamps[i], self.sky[i],))
+        #         jobs.append(p)
+        #         p.start()
+        #
+        # for j in jobs:
+        #     j.join()
+        #     #print '%s.exitcode = %s' % (j.name, j.exitcode)
 
-        for j in jobs:
-            j.join()
-            #print '%s.exitcode = %s' % (j.name, j.exitcode)
+        pool = multiprocessing.Pool(processes=32)
+        pool.map(self.mapkernel, range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
+                 self.psfs, self.simstamps, self.sky)
 
         #self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
@@ -495,7 +499,7 @@ class metropolis_hastings():
         #Calculate Chisq over all epochs
         #t4 = time.time()
         #self.thischisq = self.chisq_sim_and_real()
-        print 'chisqing'
+        #print 'chisqing'
         self.csv = map(self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr, self.sky, self.gain, self.weights,self.inmask)
         #chsqs = self.csv
 
@@ -514,7 +518,7 @@ class metropolis_hastings():
         accept_bool = self.accept(self.lastchisq,self.thischisq)
         if self.counter == 1:
             accept_bool = False
-        print self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]), accept_bool
+        #print self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),self.lastchisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]), accept_bool
 
         #t5 = time.time()
         #print 'accept',t5-t4
@@ -644,7 +648,7 @@ class metropolis_hastings():
 
                 sims = simstamps.array + sky
         self.sims[index,:,:] = sims
-        #return sims
+        return sims
 
 
     def kernel( self,  ):
