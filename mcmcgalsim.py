@@ -452,6 +452,7 @@ class metropolis_hastings():
     def mcmc_func( self ):
 
         #t1 = time.time()
+        print 'adjusting'
         self.adjust_model()
         #t2 = time.time()
 
@@ -459,7 +460,7 @@ class metropolis_hastings():
         #    self.float_sn_pos()
 
         # Contains the convolution
-
+        print 'interpolating'
         new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
         gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
         new_gal_model.drawImage(image=gs_model, method='no_pixel')
@@ -470,6 +471,7 @@ class metropolis_hastings():
         #self.mapkernel()
         #self.kernel()
         #self.mapkernel()
+        print 'simming'
         self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
         #t3 = time.time()
