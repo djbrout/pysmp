@@ -579,10 +579,9 @@ class metropolis_hastings():
 
 
                 for j in jobs:
-                    j.join()
-                for j in jobs:
                     psf, ind = q.get()
                     self.kicked_psfs[ind, :, :] = psf
+                    j.join()
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
