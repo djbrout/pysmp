@@ -495,7 +495,7 @@ class metropolis_hastings():
             if self.flags[i] == 0:
                 task_queue.put(((i,self.flags[i],self.fitflags[i],
                               self.kicked_modelvec[i], self.snoffsets[i],
-                              self.psfs[i], self.simstamps[i], self.sky[i],)))
+                              self.psfs[i], self.simstamps[i], self.sky[i],),))
 
         done_queue = Queue()
         for k in range(ncpu):
@@ -647,7 +647,7 @@ class metropolis_hastings():
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
     def poolkernel(self,input,output):
-        for (args, info) in iter(input.get, 'STOP'):
+        for (args) in iter(input.get):
             print 'argsshapeeeeeeeee',args.shape
             index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = args
             #= args
