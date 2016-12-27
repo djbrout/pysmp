@@ -1926,7 +1926,13 @@ class smp:
                         y_star += [yval]
 
                     x_star, y_star = np.array(x_star), np.array(y_star)
+                    cols = (x_star > 0) & (y_star > 0)
+                    x_star = xstar[cols]
+                    ystar = y_star[cols]
+                    mag_star = mag_star[cols]
+
                     print x_star
+
                     try:
                         mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                             aper.aper(im,x_star,y_star,apr = params.fitrad,verbose=False)
