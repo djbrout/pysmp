@@ -317,7 +317,7 @@ class metropolis_hastings():
         #self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
         self.model_wcs = im.wcs
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000,folding_threshold=1.e-1,maxk_threshold=1.e-1)
-        self.psfparams = galsim.GSParams(maximum_fft_size=2024000)#,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
+        self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
         self.kicked_snraoff = copy(self.snraoff)
         self.kicked_sndecoff = copy(self.sndecoff)
