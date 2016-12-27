@@ -480,8 +480,8 @@ class metropolis_hastings():
                 p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
                                                                          self.kicked_modelvec[i], self.snoffsets[i],
                                                                          self.psfs[i], self.simstamps[i], self.sky[i],))
-            jobs.append(p)
-            p.start()
+                jobs.append(p)
+                p.start()
 
         for j in jobs:
             j.join()
