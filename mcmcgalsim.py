@@ -488,8 +488,8 @@ class metropolis_hastings():
         #     #print '%s.exitcode = %s' % (j.name, j.exitcode)
 
         pool = multiprocessing.Pool(processes=32)
-        pool.map(self.mapkernel, range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
-                 self.psfs, self.simstamps, self.sky)
+        pool.map(self.mapkernel, (range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
+                 self.psfs, self.simstamps, self.sky,))
 
         #self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
