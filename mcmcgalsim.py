@@ -499,7 +499,7 @@ class metropolis_hastings():
 
         done_queue = Queue()
         for k in range(ncpu):
-            Process(target=self.mapkernel, args=(task_queue, done_queue)).start()
+            Process(target=self.poolkernel, args=(task_queue, done_queue)).start()
 
         for i in range(len(self.sky)):
             if self.flags[i] == 0:
