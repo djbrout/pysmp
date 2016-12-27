@@ -4951,6 +4951,8 @@ class smp:
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
 
+        print xstar,ystar
+        raw_input('hhh')
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
 
         print 'Computing zeropoint for',imfile
