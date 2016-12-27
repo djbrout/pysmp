@@ -6517,10 +6517,10 @@ if __name__ == "__main__":
         isdonedir = os.path.join(out_dir,'isdone')
 
     if 'dsp053' in hostname:
-        isdonedir = '/home/dscolnic/testdir/isdone053'
+        isdonedir = '/home/dscolnic/testdir/isdone'
 
     if 'dsp057' in hostname:
-        isdonedir = '/home/dscolnic/testdir/isdone057'
+        isdonedir = '/home/dscolnic/testdir/isdone'
 
     if not index is None:
         if index == 'all':
