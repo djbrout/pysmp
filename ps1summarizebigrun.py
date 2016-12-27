@@ -48,7 +48,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
         #data = np.load(cd)
         dostars = True
         if dostars:
-            stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST15/stardata/stardata.npz')
+            stardata = np.load('/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST16/stardata/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         title='',outdir='/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST14/stardata/')
