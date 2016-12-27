@@ -495,7 +495,7 @@ class metropolis_hastings():
             if self.flags[i] == 0:
                 task_queue.put(i,self.flags[i],self.fitflags[i],
                               self.kicked_modelvec[i], self.snoffsets[i],
-                              self.psfs[i], self.simstamps[i], self.sky[i],)
+                              self.psfs[i], self.simstamps[i], self.sky[i],))
 
         done_queue = Queue()
         for k in range(ncpu):
@@ -509,6 +509,8 @@ class metropolis_hastings():
         for k in range(len(self.sky)):
             if self.flags[k] == 0:
                 task_queue.put('STOP')
+
+
         # pool = multiprocessing.Pool(processes=32)
         # pool.map(self.mapkernel, (range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
         #          self.psfs, self.simstamps, self.sky,))
@@ -643,6 +645,29 @@ class metropolis_hastings():
         self.x_pix_offset = np.random.normal( scale= self.psf_shift_std )
         self.y_pix_offset = np.random.normal( scale= self.psf_shift_std ) 
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
+
+    def poolkernel(self,input,output):
+        for (args, info) in iter(input.get, 'STOP'):
+            index, flags, fitflags, kicked_modelvec, snoffsets, psfs, simstamps, sky = *args
+
+            sims = simstamps
+            if flags == 0:
+                if fitflags == 0.:
+                    sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec, gsparams=self.psfparams)
+                    sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
+                    if not self.psf_shift_std is None:
+                        sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
+
+                    total_model = self.gs_model_interp + sn
+
+                    conv = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
+
+                    conv.drawImage(image=simstamps,
+                                   method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
+
+                    sims = simstamps.array + sky
+
+            output.put((sims, index))
 
     #@profile
     def mapkernel(self,index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky, output ):
