@@ -475,17 +475,17 @@ class metropolis_hastings():
         #self.kernel()
         #self.mapkernel()
         #print 'simming'
+        q = Queue()
 
         jobs = []
         for i in range(len(self.sky)):
             if self.flags[i] == 0:
-                q = Queue()
                 p = multiprocessing.Process(target=self.mapkernel, args=(q, i,self.flags[i],self.fitflags[i],
                                                                          self.kicked_modelvec[i], self.snoffsets[i],
                                                                          self.psfs[i], self.simstamps[i], self.sky[i],))
                 jobs.append(p)
                 p.start()
-                self.sims[i,:,:] = p.get()
+                self.sims[i,:,:] = q.get()
 
         for j in jobs:
             j.join()
