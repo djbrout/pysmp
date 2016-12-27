@@ -2229,8 +2229,8 @@ class smp:
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 print x_star1,y_star1
                 badflagarr = (x_star1 < 0) | (y_star1 < 0)
-                x_star1[x_star1<0] = 0.
-                y_star1[y_star1<0] = 0.
+                x_star1[x_star1<0] = 100.
+                y_star1[y_star1<0] = 100.
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
                 badflagx[badflagarr] = 1
