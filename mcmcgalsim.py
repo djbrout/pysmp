@@ -493,9 +493,9 @@ class metropolis_hastings():
         task_queue = Queue()
         for i in range(len(self.sky)):
             if self.flags[i] == 0:
-                task_queue.put((i,self.flags[i],self.fitflags[i],
+                task_queue.put(i,self.flags[i],self.fitflags[i],
                               self.kicked_modelvec[i], self.snoffsets[i],
-                              self.psfs[i], self.simstamps[i], self.sky[i],))
+                              self.psfs[i], self.simstamps[i], self.sky[i],)
 
         done_queue = Queue()
         for k in range(ncpu):
