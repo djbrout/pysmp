@@ -2477,7 +2477,7 @@ class smp:
                         #for i in range(1000):
                         if scalefactor == 0.:
                             continue
-                        scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skysn, psfmag, msk = \
+                        scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skyysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, radius=params.substamp/2.-1.,
                                        returnstamps=True, maskfile=maskfile,mysky=sexsky/scalefactor,mysig=sexrms/scalefactor)
 
@@ -2498,6 +2498,7 @@ class smp:
                         #raw_input('scallllllllll')
                         image_stamp *= scalefactor
                         skysig *= scalefactor
+                        skyysn  *= scalefactor
 
                         mask = msk
                         #raw_input('saved mask')
@@ -2667,7 +2668,9 @@ class smp:
                                     if self.snparams.survey == 'PS1':
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skysig
-                                        print skysig,skyerrsn
+                                        print skysig,skyerrsn,sexrms
+                                        print skyysn,skysn,sexsky
+                                        print 'sky'*1000
                                         #raw_input('sig comparo')
                                     else:
                                         smp_dict['sky'][i] = skysn
