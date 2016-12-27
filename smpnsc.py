@@ -1284,7 +1284,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 20:
+            if cccc > 20000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2668,7 +2668,7 @@ class smp:
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skysig
                                         print skysig,skyerrsn
-                                        raw_input('sig comparo')
+                                        #raw_input('sig comparo')
                                     else:
                                         smp_dict['sky'][i] = skysn
                                         smp_dict['skyerr'][i] = skyerrsn
@@ -3445,9 +3445,9 @@ class smp:
 
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel*0.
-                    , modelvec = modelvec*0.
+                    , modelvec = modelvec
                     , galstd = galstd*0. + 1.
-                    , modelstd = modelstd*0.
+                    , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
