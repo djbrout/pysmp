@@ -485,7 +485,7 @@ class metropolis_hastings():
 
         for j in jobs:
             j.join()
-            print '%s.exitcode = %s' % (j.name, j.exitcode)
+            #print '%s.exitcode = %s' % (j.name, j.exitcode)
 
         #self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
