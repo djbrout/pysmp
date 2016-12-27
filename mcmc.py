@@ -566,22 +566,22 @@ class metropolis_hastings():
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
 
-            # if self.survey == 'PS1':
-            map(self.mapshiftPSF,np.arange(self.Nimage))
-            # else:
-            #     q = multiprocessing.Queue()
-            #     jobs = []
-            #     for i in range(len(self.sky)):
-            #         if self.flags[i] == 0:
-            #             p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
-            #             jobs.append(p)
-            #             p.start()
-            #
-            #
-            #     for j in jobs:
-            #         psf, ind = q.get()
-            #         self.kicked_psfs[ind, :, :] = psf
-            #         j.join()
+            if self.survey == 'PS1':
+                map(self.mapshiftPSF,np.arange(self.Nimage))
+            else:
+                q = multiprocessing.Queue()
+                jobs = []
+                for i in range(len(self.sky)):
+                    if self.flags[i] == 0:
+                        p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
+                        jobs.append(p)
+                        p.start()
+
+
+                for j in jobs:
+                    psf, ind = q.get()
+                    self.kicked_psfs[ind, :, :] = psf
+                    j.join()
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
