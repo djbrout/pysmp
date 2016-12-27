@@ -4970,9 +4970,9 @@ class smp:
         #raw_input('hhh')
 
 
-        xstar, ystar, ras, decs, mags, sky, skyerr, mag_cat = xstar[~badflag], ystar[~badflag], ras[~badflag], \
-                                                                       decs[~badflag], mags[~badflag],\
-                                                                       sky[~badflag], skyerr[~badflag], mag_cat
+        # xstar, ystar, ras, decs, mags, sky, skyerr, mag_cat = xstar[~badflag], ystar[~badflag], ras[~badflag], \
+        #                                                                decs[~badflag], mags[~badflag],\
+        #                                                                sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
 
         print 'Computing zeropoint for',imfile
