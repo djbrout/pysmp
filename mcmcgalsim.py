@@ -61,6 +61,8 @@ import matplotlib.pyplot as plt
 #import pyfftw
 import dilltools as dt
 import multiprocessing
+from multiprocessing import Process, Queue, current_process, cpu_count
+ncpu = cpu_count()
 
 #from pympler.tracker import SummaryTracker
 
@@ -487,9 +489,29 @@ class metropolis_hastings():
         #     j.join()
         #     #print '%s.exitcode = %s' % (j.name, j.exitcode)
 
-        pool = multiprocessing.Pool(processes=32)
-        pool.map(self.mapkernel, (range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
-                 self.psfs, self.simstamps, self.sky,))
+
+        task_queue = Queue()
+        for i in range(len(self.sky)):
+            if self.flags[i] == 0:
+                task_queue.put((i,self.flags[i],self.fitflags[i],
+                              self.kicked_modelvec[i], self.snoffsets[i],
+                              self.psfs[i], self.simstamps[i], self.sky[i],))
+
+        done_queue = Queue()
+        for k in range(ncpu):
+            Process(target=self.mapkernel, args=(task_queue, done_queue)).start()
+
+        for i in range(len(self.sky)):
+            if self.flags[i] == 0:
+                psim, proc = done_queue.get()
+                self.sims[proc,:,:] = psim
+
+        for k in range(len(self.sky)):
+            if self.flags[k] == 0:
+                task_queue.put('STOP')
+        # pool = multiprocessing.Pool(processes=32)
+        # pool.map(self.mapkernel, (range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
+        #          self.psfs, self.simstamps, self.sky,))
 
         #self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
@@ -623,7 +645,7 @@ class metropolis_hastings():
         self.shiftPSF(x_offset=self.x_pix_offset,y_offset=self.y_pix_offset)
 
     #@profile
-    def mapkernel(self,index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
+    def mapkernel(self,index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky, output ):
 
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
@@ -647,8 +669,11 @@ class metropolis_hastings():
                                 method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
 
                 sims = simstamps.array + sky
-        self.sims[index,:,:] = sims
-        return sims
+        #self.sims[index,:,:] = sims
+
+        output.put((sims, index))
+
+        return
 
 
     def kernel( self,  ):
