@@ -2234,12 +2234,9 @@ class smp:
 
                 #for xx in x_star1:
                 #    print xx
-                try:
-                    mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                        aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
-                except:
-                    continue
-
+                print im.shape
+                mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
+                    aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
                 #badflagx[badflagarr] = 1
                 #print sky
                 #raw_input()
