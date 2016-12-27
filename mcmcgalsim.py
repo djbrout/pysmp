@@ -485,7 +485,8 @@ class metropolis_hastings():
                                                                          self.psfs[i], self.simstamps[i], self.sky[i],))
                 jobs.append(p)
                 p.start()
-                self.sims[i,:,:] = q.get()
+                sim, ind = q.get()
+                self.sims[ind,:,:] = sim
 
         for j in jobs:
             j.join()
@@ -708,7 +709,7 @@ class metropolis_hastings():
 
         #output.put((sims, index))
 
-        q.put(sims)
+        q.put((sims,index))
         #return sims
 
 
