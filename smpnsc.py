@@ -2228,8 +2228,12 @@ class smp:
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
                 print x_star1,y_star1
+                badflagarr = (x_star1 < 0) | (y_star1 < 0)
+                x_star1[x_star1<0] = 0.
+                y_star1[y_star1<0] = 0.
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                    aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False)
+                    aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
+                badflagx[badflagarr] = 1
                 #print sky
                 #raw_input()
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
@@ -4958,8 +4962,13 @@ class smp:
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
 
-        print xstar,ystar
-        raw_input('hhh')
+        #print xstar,ystar
+        #raw_input('hhh')
+
+
+        xstar, ystar, ras, decs, mags, sky, skyerr, mag_cat = xstar[~badflag], ystar[~badflag], ras[~badflag], \
+                                                                       decs[~badflag], mags[~badflag],\
+                                                                       sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
 
         print 'Computing zeropoint for',imfile
