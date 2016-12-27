@@ -194,8 +194,8 @@ class metropolis_hastings():
             self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
 
         self.data = data
-        for d in range(Nimage):
-            self.data[d,:,:] = self.data[d,:,:].T
+        #for d in range(Nimage):
+        #    self.data[d,:,:] = self.data[d,:,:].T
         #self.psfs = psfs
         #self.original_psfs = copy(psfs)
         self.weights = weights
@@ -294,8 +294,13 @@ class metropolis_hastings():
                 #print self.modelvec
                 #print i
                 #raw_input()
-                self.simstamps.append(full_data_image[ galsim.BoundsI( cx-fitradius,cx+fitradius-1,
-                                                                       cy-fitradius,cy+fitradius-1 ) ] * 0.0)
+                # self.simstamps.append(full_data_image[ galsim.BoundsI( cx-fitradius,cx+fitradius-1,
+                #                                                        cy-fitradius,cy+fitradius-1 ) ] * 0.0)
+                #
+                self.simstamps.append(full_data_image[ galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
+                                                          self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1) ] * 0.0)
+
+
                 self.snobjs.append(galsim.Gaussian(sigma = 1.e-8, flux = self.modelvec[i]))
                 self.snoffsets.append(im.wcs.toWorld(im.trueCenter()).project(self.fiducial_coord))
 
