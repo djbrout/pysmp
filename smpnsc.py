@@ -2458,13 +2458,9 @@ class smp:
 
                         bkgrnd = pf.getdata(imfile + '.background')
                         print bkgrnd.shape
-                        sexsky = np.mean(bkgrnd[self.psfcenter[1] - params.substamp / 2.:self.psfcenter[1] + params.substamp / 2.,
-                                                self.psfcenter[0] - params.substamp / 2.:self.psfcenter[0] + params.substamp / 2.].ravel()) * scalefactor
+                        sexsky = np.mean(bkgrnd[ylow:yhi,xlow:xhi].ravel()) * scalefactor
                         bkgrndrms = pf.getdata(imfile + '.background_rms')
-                        sexrms = np.mean(
-                            bkgrndrms[self.psfcenter[1] - params.substamp / 2.:self.psfcenter[1] + params.substamp / 2.,
-                            self.psfcenter[0] - params.substamp / 2.:self.psfcenter[
-                                                                         0] + params.substamp / 2.].ravel() )* scalefactor
+                        sexrms = np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel())* scalefactor
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
                         print sexsky, sexrms
