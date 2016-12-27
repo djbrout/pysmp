@@ -1927,7 +1927,7 @@ class smp:
 
                     x_star, y_star = np.array(x_star), np.array(y_star)
                     cols = (x_star > 0) & (y_star > 0)
-                    x_star = xstar[cols]
+                    x_star = x_star[cols]
                     ystar = y_star[cols]
                     mag_star = mag_star[cols]
 
