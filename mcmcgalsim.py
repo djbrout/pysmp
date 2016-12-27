@@ -194,7 +194,7 @@ class metropolis_hastings():
             self.tmpwriter = dt.tmpwriter(tmp_subscript=self.chainsnpz.split('/')[-1].split('.')[0])
 
         self.data = data
-        for d in len(Nimage):
+        for d in range(Nimage):
             self.data[d,:,:] = self.data[d,:,:].T
         #self.psfs = psfs
         #self.original_psfs = copy(psfs)
