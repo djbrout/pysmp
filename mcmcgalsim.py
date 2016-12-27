@@ -476,9 +476,10 @@ class metropolis_hastings():
 
         jobs = []
         for i in range(len(self.sky)):
-            p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
-                                                                     self.kicked_modelvec[i], self.snoffsets[i],
-                                                                     self.psfs[i], self.simstamps[i], self.sky[i],))
+            if self.flags[i] == 0:
+                p = multiprocessing.Process(target=self.mapkernel, args=(i,self.flags[i],self.fitflags[i],
+                                                                         self.kicked_modelvec[i], self.snoffsets[i],
+                                                                         self.psfs[i], self.simstamps[i], self.sky[i],))
             jobs.append(p)
             p.start()
 
@@ -622,7 +623,7 @@ class metropolis_hastings():
 
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
-        print sky
+        #print sky
         sims = simstamps
         if flags == 0:
             if fitflags == 0.:
