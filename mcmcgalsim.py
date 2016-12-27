@@ -273,7 +273,7 @@ class metropolis_hastings():
                 im = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1)]
 
-                self.data[i,:,:] = im.array
+                #self.data[i,:,:] = im.array
                 #im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
                 #                                      cy-self.fitradius,cy+self.fitradius-1 ) ]
                 
