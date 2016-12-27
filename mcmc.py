@@ -66,7 +66,7 @@ import build_psfex
 import rdpsf
 import sys
 from scipy.fftpack import fft, ifft, fft2, ifft2
-
+import multiprocessing
 
 #import pyfftw
 
@@ -565,7 +565,22 @@ class metropolis_hastings():
             #print 'shifting'
             self.x_pix_offset = self.current_x_offset + np.random.normal(scale=self.psf_shift_std)
             self.y_pix_offset = self.current_y_offset + np.random.normal(scale=self.psf_shift_std)
-            map(self.mapshiftPSF,np.arange(self.Nimage))
+
+            if self.survey == 'PS1':
+                map(self.mapshiftPSF,np.arange(self.Nimage))
+            else:
+                q = multiprocessing.Queue()
+                jobs = []
+                for i in range(len(self.sky)):
+                    if self.flags[i] == 0:
+                        p = multiprocessing.Process(target=self.poolshiftpsf, args=(q, i,))
+                        jobs.append(p)
+                        p.start()
+                        psf, ind = q.get()
+                        self.kicked_psfs[ind, :, :] = psf
+
+                for j in jobs:
+                    j.join()
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
@@ -1562,6 +1577,132 @@ class metropolis_hastings():
                             thispsf = newpsf
                         self.kicked_psfs[epoch, :, :] = thispsf
 
+
+    def poolshiftPSF(self, q, epoch):
+        #print 'fitting position:', self.x_pix_offset, self.y_pix_offset
+        #print 'modelstd',epoch,self.modelstd[epoch]
+        if self.modelstd[epoch] > 0.:
+            if self.flags[epoch] == 0:
+                if True:
+
+                    if self.survey == 'PS1':
+                        thispsf, thisim = chkpsf_fast.fit(self.fullims[epoch], self.impsfs[epoch], self.hpsfs[epoch],
+                                                          xpos=self.x[epoch] + self.x_pix_offset,
+                                                          ypos=self.y[epoch] + self.y_pix_offset,
+                                                          radius=15)
+
+                        #ixlo, iylo = int(self.x[epoch] + self.x_pix_offset - 15), int(self.y[epoch] + self.y_pix_offset - 15)
+
+                        #ixhi = int(self.x[epoch] + self.x_pix_offset + 15) + 1
+                        #iyhi = int(self.y[epoch] + self.y_pix_offset + 15) + 1
+
+                        #thispsfcenter = [ixlo + 15, iylo+15]
+
+                        #thispsfcenter = [np.floor(self.x[epoch] + self.x_pix_offset),
+                        #                 np.floor(self.y[epoch] + self.y_pix_offset)]
+
+                        #self.kicked_psfs[epoch, :, :] = thispsf
+                        #self.data[epoch,:,:] = thisim * self.scalefactor[epoch]
+                        ydiff = self.x[epoch] + self.x_pix_offset - np.floor(self.x[epoch])
+                        xdiff = self.y[epoch] + self.y_pix_offset - np.floor(self.y[epoch])
+                        if xdiff > 1. or ydiff > 1. or xdiff < 0 or ydiff < 0:
+                            newpsf = thispsf
+                            #print xdiff,ydiff
+                            # print thispsfcenter[1] ,self.psfcenter[epoch][1]
+
+                            if xdiff < 1. and xdiff > 0.:
+                                pass
+                            elif xdiff < 0. and xdiff > -1.:
+                                newpsf[:-1, :] = thispsf[1:, :]
+                            elif xdiff > 1. and xdiff < 2.:
+                                newpsf[1:, :] = thispsf[:-1, :]
+                            elif xdiff < -1 and xdiff > -2:
+                                newpsf[:-2, :] = thispsf[2:, :]
+                            elif xdiff > 2. and xdiff < 3:
+                                newpsf[2:, :] = thispsf[:-2, :]
+                            elif xdiff < -2. and xdiff > -3.:
+                                newpsf[:-3, :] = thispsf[3:, :]
+                            elif xdiff > 3. and xdiff < 4.:
+                                newpsf[3:, :] = thispsf[:-3, :]
+                            else:
+                                print 'MCMC is attempting to offset the psf by more than three pixels! 0'
+                                raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 0')
+                            thispsf = copy(newpsf)
+
+                            newpsf = copy(thispsf)
+                            if ydiff < 1. and xdiff > 0.:
+                                pass
+                            elif ydiff < 0. and ydiff > -1.:
+                                newpsf[:, :-1] = copy(thispsf[:, 1:])
+                            elif ydiff > 1. and ydiff < 2.:
+                                newpsf[:, 1:] = copy(thispsf[:, :-1])
+                            elif ydiff < -1 and ydiff > -2:
+                                newpsf[:, :-2] = copy(thispsf[:, 2:])
+                            elif ydiff > 2. and ydiff < 3:
+                                newpsf[:, 2:] = copy(thispsf[:, :-2])
+                            elif ydiff < -2. and ydiff > -3.:
+                                newpsf[:, :-3] = copy(thispsf[:, 3:])
+                            elif ydiff > 3. and ydiff < 4.:
+                                newpsf[:, 3:] = copy(thispsf[:, :-3])
+                            else:
+                                print 'MCMC is attempting to offset the psf by more than three pixels! 1'
+                                raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
+
+                            thispsf = newpsf
+                        #print np.sum(thispsf)
+                        self.kicked_psfs[epoch, :, :] = thispsf#/np.sum(thispsf)
+
+                    elif self.survey == 'DES':
+                        thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,
+                                                                   self.y[epoch] + self.y_pix_offset + .4, self.substamp)
+
+
+                        if thispsfcenter[0] != self.psfcenter[epoch][0] or thispsfcenter[1] != self.psfcenter[epoch][1]:
+                            newpsf = thispsf
+                            #print thispsfcenter ,self.psfcenter[epoch],self.x[epoch],self.x[epoch] + self.x_pix_offset, self.y[epoch],self.y[epoch] + self.y_pix_offset
+                            # print thispsfcenter[1] ,self.psfcenter[epoch][1]
+
+                            if thispsfcenter[1] == self.psfcenter[epoch][1]:
+                                pass
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] - 1:
+                                newpsf[:-1, :] = thispsf[1:, :]
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] + 1:
+                                newpsf[1:, :] = thispsf[:-1, :]
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] - 2:
+                                newpsf[:-2, :] = thispsf[2:, :]
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] + 2:
+                                newpsf[2:, :] = thispsf[:-2, :]
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] - 3:
+                                newpsf[:-3, :] = thispsf[3:, :]
+                            elif thispsfcenter[1] == self.psfcenter[epoch][1] + 3:
+                                newpsf[3:, :] = thispsf[:-3, :]
+                            else:
+                                print 'MCMC is attempting to offset the psf by more than three pixels! 0'
+                                #raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 0')
+                            thispsf = copy(newpsf)
+
+                            newpsf = copy(thispsf)
+                            if thispsfcenter[0] == self.psfcenter[epoch][0]:
+                                pass
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] - 1:
+                                newpsf[:, :-1] = copy(thispsf[:, 1:])
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] + 1:
+                                newpsf[:, 1:] = copy(thispsf[:, :-1])
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] - 2:
+                                newpsf[:, :-2] = copy(thispsf[:, 2:])
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] + 2:
+                                newpsf[:, 2:] = copy(thispsf[:, :-2])
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] - 3:
+                                newpsf[:, :-3] = copy(thispsf[:, 3:])
+                            elif thispsfcenter[0] == self.psfcenter[epoch][0] + 3:
+                                newpsf[:, 3:] = copy(thispsf[:, :-3])
+                            else:
+                                print 'MCMC is attempting to offset the psf by more than three pixels! 1'
+                                #raise ValueError('MCMC is attempting to offset the psf by more than three pixels! 1')
+
+                            thispsf = newpsf
+                        self.kicked_psfs[epoch, :, :] = thispsf
+        q.put((self.kicked_psfs[epoch,:,:],epoch))
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
 
