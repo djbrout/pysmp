@@ -331,7 +331,7 @@ class metropolis_hastings():
 
         #tempgalmodel = copy(self.galaxy_model)*0.
 
-
+        print 'hhhhhh'
         
         self.skyerr = np.zeros([Nimage,substamp,substamp]) 
         self.mask = np.zeros([substamp,substamp]) 
@@ -356,6 +356,7 @@ class metropolis_hastings():
 
     #@profile
     def run_d_mc( self ):
+        print 'running'
         self.lastchisq = 9999999999.9
         self.chisq = []
         self.chisq.append(self.lastchisq)
@@ -380,7 +381,7 @@ class metropolis_hastings():
             #print self.counter
             self.accepted_int += 1
             self.mcmc_func()
-
+            #print self.counter
             if (self.counter % 10) == 0:#every 100 iterations
                 print np.array(self.csv) / len(self.mask[self.mask>0.].ravel())
                 collected = gc.collect()
