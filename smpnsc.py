@@ -1284,7 +1284,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 20:
+            if cccc > 20000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2679,8 +2679,8 @@ class smp:
                                         print 'sky'*1000
                                         #raw_input('sig comparo')
                                     else:
-                                        smp_dict['sky'][i] = skysn
-                                        smp_dict['skyerr'][i] = skyerrsn
+                                        smp_dict['sky'][i] = sexsky
+                                        smp_dict['skyerr'][i] = sexrms
 
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
