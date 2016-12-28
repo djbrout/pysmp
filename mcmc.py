@@ -606,7 +606,7 @@ class metropolis_hastings():
                                                                               self.centered_psfs[i,:,:],
                                                                               self.sky[i],
                                                                               self.flags[i], self.fitflags[i],
-                                                                              self.sims[i,:,:], self.gal_conv[i,:,:]))
+                                                                              self.sims[i]))
                     jobs.append(p)
                     p.start()
 
@@ -737,7 +737,7 @@ class metropolis_hastings():
         #tpsf = self.build_psfex()
         pass
 
-    def poolkernel(self,q,index, kicked_modelvec, kicked_psfs, centered_psfs, sky, flags, fitflags, sims, galconv):
+    def poolkernel(self,q,index, kicked_modelvec, kicked_psfs, centered_psfs, sky, flags, fitflags, sims):
 
         # if self.shiftpsf:
         #     if flags == 0:
