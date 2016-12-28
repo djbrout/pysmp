@@ -592,7 +592,30 @@ class metropolis_hastings():
         #raw_input('testingshape')
         #self.kernel()
         #self.gal_conv = copy(self.kicked_modelvec)
-        self.sims = map(self.mapkernel,self.kicked_modelvec,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
+
+        if self.survey == 'PS1':
+            self.sims = map(self.mapkernel, self.kicked_modelvec, self.kicked_psfs, self.centered_psfs, self.sky,
+                            self.flags, self.fitflags, self.sims, self.gal_conv)
+        else:
+            q = multiprocessing.Queue()
+            jobs = []
+            for i in range(len(self.sky)):
+                if self.flags[i] == 0:
+                    p = multiprocessing.Process(target=self.poolkernel, args=(q, i, self.kicked_modelvec[i],
+                                                                              self.kicked_psfs[i,:,:],
+                                                                              self.centered_psfs[i,:,:],
+                                                                              self.sky[i],
+                                                                              self.flags[i], self.fitflags[i],
+                                                                              self.sims[i,:,:], self.gal_conv[i,:,:]))
+                    jobs.append(p)
+                    p.start()
+
+            for j in jobs:
+                sim, ind = q.get()
+                self.sims[ind, :, :] = sim
+                j.join()
+
+
         #print self.sims.shape
         #print len(self.sims)
         #print self.sims[0].shape
@@ -713,6 +736,44 @@ class metropolis_hastings():
     def movepsfs(self,x,y):
         #tpsf = self.build_psfex()
         pass
+
+    def poolkernel(self,q,index, kicked_modelvec, kicked_psfs, centered_psfs, sky, flags, fitflags, sims, galconv):
+
+        # if self.shiftpsf:
+        #     if flags == 0:
+        #         if fitflags == 0.:
+        #             #print centered_psfs.shape
+        #             [X, Y] = np.meshgrid(np.arange(32) / 10000., np.arange(32) / 10000.)
+        #             S = np.exp(1j * (X * (1. + self.x_pix_offset) + Y * (1. + self.y_pix_offset)))
+        #
+        #             #fr = fft2(self.kicked_galaxy_model)
+        #             fr2 = fft2(np.flipud(np.fliplr(centered_psfs)))
+        #
+        #             #fr2=centered_psfs
+        #
+        #             if kicked_modelvec == 0.:
+        #                 delta = 0.
+        #             else:
+        #                 delta = np.fft.fftn(S * fr2).real
+        #                 #print delta[:100]
+        #                 delta = delta / np.sum(delta.ravel())
+        #                 delta *= kicked_modelvec
+        #
+        #             galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
+        #             sims = (delta + galaxy_conv + sky) * self.mask
+
+        if self.fix_gal_model:
+            star_conv = kicked_modelvec * kicked_psfs
+            sims = (star_conv + sky) * self.mask
+            # sims =  (star_conv + galconv + sky)*self.mask
+        else:
+            if flags == 0:
+                if fitflags == 0.:
+                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
+                    star_conv = kicked_modelvec * kicked_psfs  # /np.sum(kicked_psfs.ravel())
+                    sims = (star_conv + galaxy_conv + sky) * self.mask
+
+        q.put((sims,index))
 
     def mapkernel( self, kicked_modelvec, kicked_psfs, centered_psfs,sky, flags, fitflags, sims, galconv):
 
