@@ -593,28 +593,28 @@ class metropolis_hastings():
         #self.kernel()
         #self.gal_conv = copy(self.kicked_modelvec)
 
-        if self.survey == 'PS1':
-            self.sims = map(self.mapkernel, self.kicked_modelvec, self.kicked_psfs, self.centered_psfs, self.sky,
-                            self.flags, self.fitflags, self.sims, self.gal_conv)
-        else:
-            q = multiprocessing.Queue()
-            jobs = []
-            for i in range(len(self.sky)):
-                if self.flags[i] == 0:
-                    p = multiprocessing.Process(target=self.poolkernel, args=(q, i, self.kicked_modelvec[i],
-                                                                              self.kicked_psfs[i,:,:],
-                                                                              self.centered_psfs[i,:,:],
-                                                                              self.sky[i],
-                                                                              self.flags[i], self.fitflags[i],
-                                                                              self.sims[i]))
-                    jobs.append(p)
-                    p.start()
-
-            for j in jobs:
-                sim, ind = q.get()
-                self.sims[ind, :, :] = sim
-                j.join()
-
+        # if self.survey == 'PS1':
+        self.sims = map(self.mapkernel, self.kicked_modelvec, self.kicked_psfs, self.centered_psfs, self.sky,
+                        self.flags, self.fitflags, self.sims, self.gal_conv)
+        # else:
+        #     q = multiprocessing.Queue()
+        #     jobs = []
+        #     for i in range(len(self.sky)):
+        #         if self.flags[i] == 0:
+        #             p = multiprocessing.Process(target=self.poolkernel, args=(q, i, self.kicked_modelvec[i],
+        #                                                                       self.kicked_psfs[i,:,:],
+        #                                                                       self.centered_psfs[i,:,:],
+        #                                                                       self.sky[i],
+        #                                                                       self.flags[i], self.fitflags[i],
+        #                                                                       self.sims[i]))
+        #             jobs.append(p)
+        #             p.start()
+        #
+        #     for j in jobs:
+        #         sim, ind = q.get()
+        #         self.sims[ind, :, :] = sim
+        #         j.join()
+        #
 
         #print self.sims.shape
         #print len(self.sims)
