@@ -2672,15 +2672,15 @@ class smp:
                                     #     #raw_input()
 
                                     if self.snparams.survey == 'PS1':
-                                        smp_dict['sky'][i] = sexsky
-                                        smp_dict['skyerr'][i] = sexrms
-                                        print skysig,skyerrsn,sexrms
-                                        print skyysn,skysn,sexsky
-                                        print 'sky'*1000
+                                        smp_dict['sky'][i] = skyysn
+                                        smp_dict['skyerr'][i] = skysig
+                                        #print skysig,skyerrsn,sexrms
+                                        #print skyysn,skysn,sexsky
+                                        #print 'sky'*1000
                                         #raw_input('sig comparo')
                                     else:
-                                        smp_dict['sky'][i] = sexsky
-                                        smp_dict['skyerr'][i] = sexrms
+                                        smp_dict['sky'][i] = skysn
+                                        smp_dict['skyerr'][i] = skyerrsn
 
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
