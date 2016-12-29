@@ -16,7 +16,7 @@ lcf = open('/home/dscolnic/testdir/runfile.txt','r')
 smpdir = '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST17'
 
 
-runninglist = np.chararray(24,itemsize=300)
+runninglist = np.chararray(50,itemsize=300)
 
 lightcurves = lcf.readlines()
 lcf.close()
@@ -25,7 +25,7 @@ corelist = np.arange(24)
 
 cntr = -1
 i = -1
-offset = 150
+offset = 50
 while i < 23:
     cntr += 1
     if lightcurves[cntr+offset][:11]+lightcurves[cntr+offset][9:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
