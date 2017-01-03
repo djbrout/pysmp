@@ -464,7 +464,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 100) == 0:
+            if (self.counter % 1) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
@@ -1715,6 +1715,7 @@ class metropolis_hastings():
                         self.kicked_psfs[epoch, :, :] = thispsf#/np.sum(thispsf)
 
                     elif self.survey == 'DES':
+                        print 'epoch',epoch
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,
                                                                    self.y[epoch] + self.y_pix_offset + .4, self.substamp)
 
