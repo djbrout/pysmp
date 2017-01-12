@@ -24,15 +24,15 @@ for filename in files:
     #if cntr < 30: continue
     if 'S2_CCD36' not in filename: continue
     #if not 'SN-E1' in filename: continue
-    if os.path.isfile("/pnfs/des/persistent/smp/v4/"+filename):
+    if os.path.isfile("/pnfs/des/persistent/smp/v62/"+filename):
         #if os.stat("/pnfs/des/persistent/smp/v2/"+filename).st_size > 0.:
         print filename,'already exists'
         continue
     print 'globus copying',filename
     out = os.popen( 'globus-url-copy -nodcau -cred /tmp/x509up_u48121 '
                 '-ss "/DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=dtn03-garchive.nersc.gov"'
-                ' gsiftp://garchive.nersc.gov:2811/home/projects/dessn/diffim/FinalPhoto/v4/' +
-                filename+' gsiftp://fndca1.fnal.gov:2811/des/persistent/smp/v4/'+filename).read()
+                ' gsiftp://garchive.nersc.gov:2811/home/projects/dessn/diffim/FinalPhoto/v6/' +
+                filename+' gsiftp://fndca1.fnal.gov:2811/des/persistent/smp/v62/'+filename).read()
     print out
     print filename
 
