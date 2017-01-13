@@ -585,6 +585,8 @@ class metropolis_hastings():
                             q.task_done()
                             #print 'joining job',j
                             self.kicked_psfs[ind, :, :] = psf
+                            if j.is_alive():
+                                j.terminate()
                         except:
                             pass
                             #print j,'not ready'
