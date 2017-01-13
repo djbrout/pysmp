@@ -464,7 +464,7 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 1) == 0:
+            if (self.counter % 100) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
@@ -487,7 +487,7 @@ class metropolis_hastings():
 
                     print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
-                if (self.counter % 20000) == 0:
+                if (self.counter % 10000) == 0:
                     self.plotchains()
                     self.savechains()
                 #sys.exit()
@@ -506,7 +506,7 @@ class metropolis_hastings():
                 #    print i,self.mjd[i], self.chisqvec[i]/len(self.mask[self.mask>0.].ravel()),self.mjdoff[i][0],self.mjdoff[i][1],np.mean(self.modelvec_nphistory[:,i])
 
 
-            if self.counter == 20000:
+            if self.counter == 5000:
                 mn, st, num = dt.iterstat(np.array(chsqs)[np.array(chsqs) > 0.] ,
                                              startMedian=True, sigmaclip=3, iter=3)
 
