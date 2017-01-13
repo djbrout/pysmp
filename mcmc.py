@@ -580,6 +580,7 @@ class metropolis_hastings():
 
                 for j in jobs:
                     psf, ind = q.get()
+                    print 'joining job',j
                     self.kicked_psfs[ind, :, :] = psf
                     j.join()
             #self.shiftPSFall()
@@ -1765,6 +1766,7 @@ class metropolis_hastings():
 
                             thispsf = newpsf
                         self.kicked_psfs[epoch, :, :] = thispsf
+        print 'putting ',epoch
         q.put((self.kicked_psfs[epoch,:,:],epoch))
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
