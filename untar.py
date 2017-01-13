@@ -2,7 +2,7 @@ import os
 import sys
 
 
-f = open('alreadyuntarredv6.txt','r')
+f = open('alreadyuntarredv62.txt','r')
 afiles = f.read().split()
 f.close()
 tarfiles = os.listdir('/pnfs/des/persistent/smp/v6')
@@ -17,7 +17,7 @@ for tfile in tarfiles[::-1]:
         f = open('alreadyuntarredv6.txt', 'a')
         f.write(tfile.split('/')[-1] + ' ')
         f.close()
-        out = os.popen('tar -xvf /pnfs/des/persistent/smp/v6/'+tfile.split('/')[-1]+' -C /pnfs/des/persistent/smp/v6/').read()
+        out = os.popen('tar -xvf /pnfs/des/persistent/smp/v62/'+tfile.split('/')[-1]+' -C /pnfs/des/persistent/smp/v62/').read()
         #print out
         #if not 'Exiting' in out:
         #    f = open('alreadyuntarredv6.txt','a')
