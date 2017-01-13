@@ -583,10 +583,10 @@ class metropolis_hastings():
                         try:
                             psf, ind = q.get(block=False)
                             q.task_done()
-                            print 'joining job',j
+                            #print 'joining job',j
                             self.kicked_psfs[ind, :, :] = psf
                         except:
-                            print j,'not ready'
+                            #print j,'not ready'
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
@@ -1720,7 +1720,7 @@ class metropolis_hastings():
                         self.kicked_psfs[epoch, :, :] = thispsf#/np.sum(thispsf)
 
                     elif self.survey == 'DES':
-                        print 'epoch',epoch
+                        #print 'epoch',epoch
                         thispsf, thispsfcenter = build_psfex.build(self.psffile[epoch], self.x[epoch] + self.x_pix_offset + .4,
                                                                    self.y[epoch] + self.y_pix_offset + .4, self.substamp)
 
