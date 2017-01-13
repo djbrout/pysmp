@@ -577,12 +577,14 @@ class metropolis_hastings():
                             p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
                             jobs.append(p)
                             p.start()
-                q.join()
 
-                for j in jobs:
-                    psf, ind = q.get()
-                    print 'joining job',j
-                    self.kicked_psfs[ind, :, :] = psf
+                while not q.empty():
+                    for j in jobs:
+                        psf, ind = q.get()
+                        q.task_done()
+                        print 'joining job',j
+                        self.kicked_psfs[ind, :, :] = psf
+
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
@@ -1768,7 +1770,7 @@ class metropolis_hastings():
                         self.kicked_psfs[epoch, :, :] = thispsf
         print 'putting ',epoch
         q.put_nowait((self.kicked_psfs[epoch,:,:],epoch))
-        q.task_done()
+        #q.task_done()
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
 
