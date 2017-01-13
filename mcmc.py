@@ -573,9 +573,10 @@ class metropolis_hastings():
                 jobs = []
                 for i in range(len(self.sky)):
                     if self.flags[i] == 0:
-                        p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
-                        jobs.append(p)
-                        p.start()
+                        if self.mjdflag == 0:
+                            p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
+                            jobs.append(p)
+                            p.start()
 
 
                 for j in jobs:
@@ -1767,7 +1768,7 @@ class metropolis_hastings():
                             thispsf = newpsf
                         self.kicked_psfs[epoch, :, :] = thispsf
         print 'putting ',epoch
-        q.put((self.kicked_psfs[epoch,:,:],epoch))
+        q.put_nowait((self.kicked_psfs[epoch,:,:],epoch))
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
 
