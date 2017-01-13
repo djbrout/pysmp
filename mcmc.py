@@ -1772,7 +1772,7 @@ class metropolis_hastings():
                             thispsf = newpsf
                         self.kicked_psfs[epoch, :, :] = thispsf
         print 'putting ',epoch
-        q.put_nowait((self.kicked_psfs[epoch,:,:],epoch))
+        q.put((self.kicked_psfs[epoch,:,:],epoch))
         #q.task_done()
 
     def shiftPSF(self,y_off=0.0,x_off=0.0):
