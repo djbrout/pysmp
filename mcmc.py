@@ -586,6 +586,7 @@ class metropolis_hastings():
                             #print 'joining job',j
                             self.kicked_psfs[ind, :, :] = psf
                         except:
+                            pass
                             #print j,'not ready'
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
