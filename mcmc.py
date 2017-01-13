@@ -569,7 +569,7 @@ class metropolis_hastings():
             if self.survey == 'PS1':
                 map(self.mapshiftPSF,np.arange(self.Nimage))
             else:
-                q = multiprocessing.Queue()
+                q = multiprocessing.Queue(maxsize=10)
                 jobs = []
                 for i in range(len(self.sky)):
                     if self.flags[i] == 0:
