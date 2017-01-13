@@ -559,7 +559,7 @@ class metropolis_hastings():
 
         #t1 = time.time()
         self.adjust_model()
-        #t2 = time.time()
+        # t2 = time.time()
 
         if self.shiftpsf:
             #print 'shifting'
