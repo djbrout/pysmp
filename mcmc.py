@@ -573,7 +573,7 @@ class metropolis_hastings():
                 jobs = []
                 for i in range(len(self.sky)):
                     if self.flags[i] == 0:
-                        if self.mjdflag == 0:
+                        if self.mjdflag[i] == 0:
                             p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
                             jobs.append(p)
                             p.start()
