@@ -580,11 +580,13 @@ class metropolis_hastings():
 
                 while not q.empty():
                     for j in jobs:
-                        psf, ind = q.get()
-                        q.task_done()
-                        print 'joining job',j
-                        self.kicked_psfs[ind, :, :] = psf
-
+                        try:
+                            psf, ind = q.get(block=False)
+                            q.task_done()
+                            print 'joining job',j
+                            self.kicked_psfs[ind, :, :] = psf
+                        except:
+                            print j,'not ready'
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
             #self.float_sn_pos()
