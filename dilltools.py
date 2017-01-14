@@ -332,6 +332,7 @@ class tmpwriter():
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         if os.path.isfile(tempfile):
             os.remove(tempfile)
+
         if self.usedccp:
             os.system('dccp ' + filename + ' ' + tempfile)
         elif self.useifdh:
@@ -348,6 +349,7 @@ class tmpwriter():
         if self.usedccp:
             os.system('dccp ' + tempfile + ' ' + filename)
         elif self.useifdh:
+            os.system('ifdh rm ' + filename)
             os.system('ifdh cp ' + tempfile + ' ' + filename)
         else:
             if os.path.isfile(filename):
