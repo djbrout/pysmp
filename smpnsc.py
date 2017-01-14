@@ -1306,7 +1306,7 @@ class smp:
                     except:
                         pass
                     fout = open('tmp.txt', 'w')
-                    print >> fout, '# ID RA DEC FILTER CATMAG EXPNUM'
+                    print >> fout, '# ID\t RA\t DEC\t CATMAG\t FILTER\t EXPNUM\n'
                     fout.close()
                     startedstarcat = True
 
