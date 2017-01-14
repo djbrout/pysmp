@@ -881,7 +881,7 @@ class smp:
 
             self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
             print self.laskerstarcat
-            sys.exit()
+            #sys.exit()
 
             if filt != 'all' and band not in filt:
                 #print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
