@@ -879,8 +879,8 @@ class smp:
                 self.field = np.nan
                 self.expnum = np.nan
 
-            self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
-            print self.laskerstarcat
+            # self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
+            # print self.laskerstarcat
             #sys.exit()
 
             if filt != 'all' and band not in filt:
@@ -1273,6 +1273,7 @@ class smp:
         orig_nozpt = copy(nozpt)
         print nozpt
         #raw_input()
+        startedstarcat = False
         cccc = 0
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
@@ -1289,9 +1290,25 @@ class smp:
                 self.field = np.nan
                 self.expnum = np.nan
 
-            self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
+
+
+            self.laskerstarcat = os.path.join(self.outdir,'stardata','lasker','CCD'+self.ccdnum+'_'+filt+'band.starcat')
             print self.laskerstarcat
             sys.exit()
+            if not startedstarcat:
+                try:
+                    os.mkdir(os.path.join(self.outdir,'stardata'))
+                except:
+                    pass
+                try:
+                    os.mkdir(os.path.join(self.outdir,'stardata','lasker'))
+                except:
+                    pass
+                fout = open(self.laskerstarcat, 'a')
+                print >> fout, '# ID RA DEC FILTER CATMAG EXPNUM'
+                fout.close()
+                startedstarcat = True
+            #sys.exit()
 
 
 
@@ -5858,8 +5875,8 @@ class smp:
                 os.popen('ifdh rm '+mag_compare_out)
                 print os.popen('ifdh mv '+ff+' '+mag_compare_out).read()
 
-                fout = open(self.laskercatalog, 'a')
-                print >> fout, '# ID RA DEC FILTER CATMAG EXPNUM'
+                fout = open(self.laskerstarcat, 'a')
+
                 for i in range(len(smp_dict['snx'])):
                     print >> fout, '%.2f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
                                    '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
