@@ -5886,7 +5886,7 @@ class smp:
 
                 outtext = []
                 for i in range(len(ras[goodstarcols])):
-                    outtext.append(str(ids[goodstarcols])+'\t'+str(ras[goodstarcols][i])+'\t'+str(decs[goodstarcols][i])+'\t'+str(mag_cat[goodstarcols][i])+'\t'+filt+'\t'+self.expnum+'\n')
+                    outtext.append(str(ids[goodstarcols][i])+'\t'+str(ras[goodstarcols][i])+'\t'+str(decs[goodstarcols][i])+'\t'+str(mag_cat[goodstarcols][i])+'\t'+filt+'\t'+self.expnum+'\n')
 
                 self.tmpwriter.appendfile(outtext, self.laskerstarcat)
 
