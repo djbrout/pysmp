@@ -328,7 +328,7 @@ class tmpwriter():
 
         print 'saved', filename
 
-    def appendfile(self,text,filename):
+    def appendfile(self,texts,filename):
         tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
         if os.path.isfile(tempfile):
             os.remove(tempfile)
@@ -340,8 +340,9 @@ class tmpwriter():
         else:
             os.system('mv ' + filename + ' ' + tempfile)
 
-        a = open(tempfile,'a')
-        a.write(text)
+        a = open(tempfile, 'a')
+        for text in texts:
+            a.write(text)
         a.close()
 
         if self.usedccp:

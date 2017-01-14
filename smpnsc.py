@@ -1294,20 +1294,27 @@ class smp:
 
             self.laskerstarcat = os.path.join(self.outdir,'stardata','lasker','CCD'+self.ccdnum+'_'+filt+'band.starcat')
             print self.laskerstarcat
-            sys.exit()
-            if not startedstarcat:
-                try:
-                    os.mkdir(os.path.join(self.outdir,'stardata'))
-                except:
-                    pass
-                try:
-                    os.mkdir(os.path.join(self.outdir,'stardata','lasker'))
-                except:
-                    pass
-                fout = open(self.laskerstarcat, 'a')
-                print >> fout, '# ID RA DEC FILTER CATMAG EXPNUM'
-                fout.close()
-                startedstarcat = True
+
+            if self.fermigrid:
+                if not startedstarcat:
+                    try:
+                        os.system('ifdh mkdir '+os.path.join(self.outdir,'stardata'))
+                    except:
+                        pass
+                    try:
+                        os.system('ifdh mkdir'+os.path.join(self.outdir,'stardata','lasker'))
+                    except:
+                        pass
+                    fout = open('tmp.txt', 'w')
+                    print >> fout, '# ID RA DEC FILTER CATMAG EXPNUM'
+                    fout.close()
+                    startedstarcat = True
+
+                    ls = os.popen('ifdh ls ' + self.laskerstarcat).read()
+                    if len(ls) > 0:
+                        self.laskerstarcat = 'lsc.txt'
+                        #os.popen('ifdh rm ' + self.laskerstarcat)
+                    os.popen('ifdh cp tmp.txt ' + self.laskerstarcat)
             #sys.exit()
 
 
@@ -5875,33 +5882,13 @@ class smp:
                 os.popen('ifdh rm '+mag_compare_out)
                 print os.popen('ifdh mv '+ff+' '+mag_compare_out).read()
 
-                fout = open(self.laskerstarcat, 'a')
 
-                for i in range(len(smp_dict['snx'])):
-                    print >> fout, '%.2f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
-                                   '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
-                                       smp_dict['mjd'][i], float(smp_dict['mjd'][i]) - snparams.peakmjd,
-                                       smp_dict['id_obs'][i], smp_dict['id_coadd'][i], self.filt,
-                                       smp_dict['zpt'][i], smp_dict['zpterr'][i],
-                                       modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i],
-                                       smp_dict['fakezpt'][i],
-                                       smp_dict['diffim_flux'][i], smp_dict['diffim_fluxerr'][i],
-                                       smp_dict['snx'][i], smp_dict['sny'][i], xoff, yoff,
-                                       smp_dict['snra'][i], smp_dict['sndec'][i],
-                                       chisqs[i], smp_dict['flag'][i], smp_dict['mjd_flag'][i],
-                                       smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
-                                       smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
-                                       smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
-                                       galmodel_stampf[i],
-                                       image_stampf[i], psf_stampf[i], weight_stampf[i], sim_stampf[i], chisq_stampf[i])
-                fout.close()
+                outtext = []
+                for i in range(len(ras[goodstarcols])):
+                    outtext.append(str(ras[goodstarcols][i])+'\t'+str(decs[goodstarcols][i])+'\t'+str(mag_cat[goodstarcols][i])+'\t'+filt+'\t'+self.expnum)
 
-                np.savez( ff
-                          ,ra = ras[goodstarcols]
-                          ,dec = decs[goodstarcols]
-                          ,catmag = mag_cat[goodstarcols]
-                          #,expnum =
-                          )
+                self.tmpwriter.appendfile(outtext, self.laskerstarcat)
+
 
                 #ttt = time.time()
                 #self.tmpwriter.appendfile(
