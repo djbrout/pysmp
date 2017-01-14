@@ -1302,7 +1302,7 @@ class smp:
                     except:
                         pass
                     try:
-                        os.system('ifdh mkdir'+os.path.join(self.outdir,'stardata','lasker'))
+                        os.system('ifdh mkdir '+os.path.join(self.outdir,'stardata','lasker'))
                     except:
                         pass
                     fout = open('tmp.txt', 'w')
