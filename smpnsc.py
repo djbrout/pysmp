@@ -1276,6 +1276,25 @@ class smp:
         cccc = 0
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
+
+
+
+            try:
+                self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
+                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+                self.expnum = imfile.split('/')[-1].split('_')[1]
+
+            except:
+                self.ccdnum = np.nan
+                self.field = np.nan
+                self.expnum = np.nan
+
+            self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
+            print self.laskerstarcat
+            sys.exit()
+
+
+
             #smp_dict['mjd'][j] = float(snparams.mjd[j])
             #smp_dict['mjd'][i] = float(snparams.mjd[j])
             print imfile
