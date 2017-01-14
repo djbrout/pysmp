@@ -698,6 +698,7 @@ class smp:
                 starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
                 starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
                 starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+                starcat.id = starcat.bigid
                 starcat.ra = starcat.bigra
                 starcat.dec = starcat.bigdec
 
@@ -871,9 +872,16 @@ class smp:
             try:
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
                 self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+                self.expnum = imfile.split('/')[-1].split('_')[1]
+
             except:
                 self.ccdnum = np.nan
                 self.field = np.nan
+                self.expnum = np.nan
+
+            self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
+            print self.laskerstarcat
+            sys.exit()
 
             if filt != 'all' and band not in filt:
                 #print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2155,6 +2163,7 @@ class smp:
                 cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
                 tras = starglobalras
                 tdecs = starglobaldecs
+                tids = starglobalids
                 mag_star = starglobalmags
                 if not len(cols):
                     #print 'Error: no stars in image!'
@@ -2315,7 +2324,7 @@ class smp:
                     # print min(mag_star),np.median(mag_star),max(mag_star)
                     # raw_input()
 
-                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,tids,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
@@ -4969,7 +4978,7 @@ class smp:
 
 
 
-    def getzpt(self,xstar,ystar,ras, decs,starcat,mags,sky,skyerr,thismjd,
+    def getzpt(self,xstar,ystar,ras, decs,ids,starcat,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
@@ -5052,7 +5061,7 @@ class smp:
         #     raw_input()
         #     mag_cat *= -1.
         prevra = 0
-        for x,y,m,s,se,mc,ra,dec,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,range(len(xstar))):
+        for x,y,m,s,se,mc,ra,dec,iii,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,ids,range(len(xstar))):
             #print x,y,mc
             #print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,5) == round(ra,5):
@@ -5736,6 +5745,7 @@ class smp:
                 plt.clf()
                 ras = np.array(ras)
                 decs = np.array(decs)
+                ids = np.array(ids)
                 plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
                 zptplotoutra = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_ra.png')
                 plt.savefig(zptplotoutra)
@@ -5828,6 +5838,35 @@ class smp:
                 #print 'about to copy mag_compare_out'
                 os.popen('ifdh rm '+mag_compare_out)
                 print os.popen('ifdh mv '+ff+' '+mag_compare_out).read()
+
+                fout = open(self.laskercatalog, 'a')
+                print >> fout, '# ID RA DEC FILTER CATMAG EXPNUM'
+                for i in range(len(smp_dict['snx'])):
+                    print >> fout, '%.2f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
+                                   '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
+                                       smp_dict['mjd'][i], float(smp_dict['mjd'][i]) - snparams.peakmjd,
+                                       smp_dict['id_obs'][i], smp_dict['id_coadd'][i], self.filt,
+                                       smp_dict['zpt'][i], smp_dict['zpterr'][i],
+                                       modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i],
+                                       smp_dict['fakezpt'][i],
+                                       smp_dict['diffim_flux'][i], smp_dict['diffim_fluxerr'][i],
+                                       smp_dict['snx'][i], smp_dict['sny'][i], xoff, yoff,
+                                       smp_dict['snra'][i], smp_dict['sndec'][i],
+                                       chisqs[i], smp_dict['flag'][i], smp_dict['mjd_flag'][i],
+                                       smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
+                                       smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
+                                       smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
+                                       galmodel_stampf[i],
+                                       image_stampf[i], psf_stampf[i], weight_stampf[i], sim_stampf[i], chisq_stampf[i])
+                fout.close()
+
+                np.savez( ff
+                          ,ra = ras[goodstarcols]
+                          ,dec = decs[goodstarcols]
+                          ,catmag = mag_cat[goodstarcols]
+                          ,expnum =
+                          )
+
                 #ttt = time.time()
                 #self.tmpwriter.appendfile(
                 #    'ifdh took '+str(ttt-tt)+'seconds\n', self.fermilogfile)
