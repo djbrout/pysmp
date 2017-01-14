@@ -5864,7 +5864,7 @@ class smp:
                           ,ra = ras[goodstarcols]
                           ,dec = decs[goodstarcols]
                           ,catmag = mag_cat[goodstarcols]
-                          ,expnum =
+                          #,expnum =
                           )
 
                 #ttt = time.time()
