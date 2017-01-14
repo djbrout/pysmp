@@ -734,7 +734,7 @@ class smp:
 
 
             skysig=np.nan
-            if cntrs > 10000:
+            if cntrs > 1:
                continue
             #if snparams.mjd[j] != 56636.:
             #    if snparams.mjd[j] < 57000.:
