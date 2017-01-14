@@ -1159,8 +1159,8 @@ class smp:
                     starcat.objid = starcat.bigid[cols]
 
 
-                    self.tmpwriter.savez(self.zptoutpath+'/'+str(self.field)+'_CCD'+str(self.ccdnum)+'_standards.npz',
-                             ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
+                    #self.tmpwriter.savez(self.zptoutpath+'/'+str(self.field)+'_CCD'+str(self.ccdnum)+'_standards.npz',
+                    #         ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
 
                     if not len(cols):
                         # print "Error : No stars in image!!"
