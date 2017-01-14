@@ -3408,6 +3408,7 @@ class smp:
         if self.fermilog:
             self.tmpwriter.appendfile('prepping snfit mcmc\n', self.fermilogfile)
         #self.dosnfit = False
+        sys.exit()
         if self.dosnfit:
             if not self.dogalfit:
                 try:
@@ -5885,7 +5886,7 @@ class smp:
 
                 outtext = []
                 for i in range(len(ras[goodstarcols])):
-                    outtext.append(str(ras[goodstarcols][i])+'\t'+str(decs[goodstarcols][i])+'\t'+str(mag_cat[goodstarcols][i])+'\t'+filt+'\t'+self.expnum+'\n')
+                    outtext.append(str(ids[goodstarcols])+'\t'+str(ras[goodstarcols][i])+'\t'+str(decs[goodstarcols][i])+'\t'+str(mag_cat[goodstarcols][i])+'\t'+filt+'\t'+self.expnum+'\n')
 
                 self.tmpwriter.appendfile(outtext, self.laskerstarcat)
 
