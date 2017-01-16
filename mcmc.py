@@ -569,26 +569,41 @@ class metropolis_hastings():
             if self.survey == 'PS1':
                 map(self.mapshiftPSF,np.arange(self.Nimage))
             else:
-                q = multiprocessing.Queue(maxsize=5)
+                # q = multiprocessing.Queue(maxsize=5)
+                # jobs = []
+                # for i in range(len(self.sky)):
+                #     if self.flags[i] == 0:
+                #         if self.modelstd[i] > 0:
+                #             p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
+                #             jobs.append(p)
+                #             p.start()
+                #
+                # while not q.empty():
+                #     for j in jobs:
+                #         try:
+                #             psf, ind = q.get(block=False)
+                #             q.task_done()
+                #             #print 'joining job',j
+                #             self.kicked_psfs[ind, :, :] = psf
+                #             if j.is_alive():
+                #                 j.terminate()
+                #         except:
+                #             pass
+
+                q = multiprocessing.Queue()
+
                 jobs = []
                 for i in range(len(self.sky)):
                     if self.flags[i] == 0:
-                        if self.modelstd[i] > 0:
-                            p = multiprocessing.Process(target=self.poolshiftPSF, args=(q, i,))
-                            jobs.append(p)
-                            p.start()
+                        p = multiprocessing.Process(target=self.poolshiftPSF,
+                                                    args=(q, i,))
+                        jobs.append(p)
+                        p.start()
+                        psf, ind = q.get()
+                        self.kicked_psfs[ind, :, :] = psf
 
-                while not q.empty():
-                    for j in jobs:
-                        try:
-                            psf, ind = q.get(block=False)
-                            q.task_done()
-                            #print 'joining job',j
-                            self.kicked_psfs[ind, :, :] = psf
-                            if j.is_alive():
-                                j.terminate()
-                        except:
-                            pass
+                for j in jobs:
+                    j.join()
                             #print j,'not ready'
             #self.shiftPSFall()
             #print self.x_pix_offset,self.y_pix_offset
