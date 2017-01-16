@@ -166,8 +166,8 @@ class metropolis_hastings():
         self.chainsnpz = chainsnpz
 
         self.useskyerr = useskyerr
-        self.psfcenterx = psfcenterx
-        self.psfcentery = psfcentery
+        self.psfcenterx = psfcentery
+        self.psfcentery = psfcenterx
 
         self.inmask = mask
 
