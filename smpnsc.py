@@ -1368,12 +1368,27 @@ class smp:
             #     self.field = np.nan
 
             ########NEWWWWWWWWWWWWWWWW#######################
-            if self.usefake:
-                imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
-                if not self.snparams.survey == 'PS1':
-                    print imfile
-                    changename = True
-                    if changename:
+            if not self.oldformat:
+                if self.usefake:
+                    imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+                    if not self.snparams.survey == 'PS1':
+                        print imfile
+                        changename = True
+                        if changename:
+                            if int(imfile[:8]) < 20140601:
+                                imfile = imfile.replace('p1', 'Y1')
+                                noisefile = noisefile.replace('p1', 'Y1')
+                                psffile = psffile.replace('p1', 'Y1')
+                            elif int(imfile[:8]) < 20150601:
+                                imfile = imfile.replace('p1', 'Y2')
+                                noisefile = noisefile.replace('p1', 'Y2')
+                                psffile = psffile.replace('p1', 'Y2')
+                            elif int(imfile[:8]) < 20160601:
+                                imfile = imfile.replace('p1', 'Y3')
+                                noisefile = noisefile.replace('p1', 'Y3')
+                                psffile = psffile.replace('p1', 'Y3')
+                else:
+                    if not self.snparams.survey == 'PS1':
                         if int(imfile[:8]) < 20140601:
                             imfile = imfile.replace('p1', 'Y1')
                             noisefile = noisefile.replace('p1', 'Y1')
@@ -1386,20 +1401,6 @@ class smp:
                             imfile = imfile.replace('p1', 'Y3')
                             noisefile = noisefile.replace('p1', 'Y3')
                             psffile = psffile.replace('p1', 'Y3')
-            else:
-                if not self.snparams.survey == 'PS1':
-                    if int(imfile[:8]) < 20140601:
-                        imfile = imfile.replace('p1', 'Y1')
-                        noisefile = noisefile.replace('p1', 'Y1')
-                        psffile = psffile.replace('p1', 'Y1')
-                    elif int(imfile[:8]) < 20150601:
-                        imfile = imfile.replace('p1', 'Y2')
-                        noisefile = noisefile.replace('p1', 'Y2')
-                        psffile = psffile.replace('p1', 'Y2')
-                    elif int(imfile[:8]) < 20160601:
-                        imfile = imfile.replace('p1', 'Y3')
-                        noisefile = noisefile.replace('p1', 'Y3')
-                        psffile = psffile.replace('p1', 'Y3')
                 # noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
 
             imfile = os.path.join(rootdir, imfile)
@@ -1438,6 +1439,7 @@ class smp:
                 #print ifdhls
                 #print 'line 576'
                 # raw_input()
+                print ifdhls
                 print ifdhls
                 if (len(ifdhls) > 0):
                     if int(ifdhls.split()[-1]) == 0:
