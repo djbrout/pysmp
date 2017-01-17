@@ -5869,6 +5869,7 @@ class smp:
                     , decs=decs[goodstarcols]
                     , centroidedras = thisra[goodstarcols]
                     , centroideddecs = thisdec[goodstarcols]
+                    , ids = ids[goodstarcols]
                     , rmsaddin = rmsaddin
                     ,fit_zpt = md
                     ,fit_zpt_std = std
