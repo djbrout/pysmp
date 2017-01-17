@@ -287,7 +287,9 @@ class metropolis_hastings():
                 #     modelim = full_data_image[galsim.BoundsI( cx-self.model_radius,cx+self.model_radius-1,
                 #                                               cy-self.model_radius,cy+self.model_radius-1 )]
                 # else:
-                self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
+                if self.flags[i]  == 0:
+                    if self.modelstd[i] == 0:
+                        self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]
 
                 #[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
