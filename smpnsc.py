@@ -1335,7 +1335,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 20:
+            if cccc > 20000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2367,8 +2367,8 @@ class smp:
                     # print min(mag_star),np.median(mag_star),max(mag_star)
                     # raw_input()
 
-                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,tids,starcat,mag,sky,skyerr,snparams.mjd[j],
-                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
+                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,cras,cdecs,tids,starcat,mag,sky,skyerr,snparams.mjd[j],
+                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
                     if zpt == 0:
@@ -5023,7 +5023,7 @@ class smp:
 
 
     def getzpt(self,xstar,ystar,ras, decs,ids,starcat,mags,sky,skyerr,thismjd,
-                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,snparams,substamp,
+                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,imwcs,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
@@ -5036,7 +5036,7 @@ class smp:
         #                                                                decs[~badflag], mags[~badflag],\
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
-
+        thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
         print 'Computing zeropoint for',imfile
         print '\n'
         import pkfit_norecent_noise_smp
@@ -5862,6 +5862,8 @@ class smp:
                     #,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                     , ras=ras[goodstarcols]
                     , decs=decs[goodstarcols]
+                    , centroidedras = thisra[goodstarcols]
+                    , centroideddecs = thisdec[goodstarcols]
                     , rmsaddin = rmsaddin
                     ,fit_zpt = md
                     ,fit_zpt_std = std
