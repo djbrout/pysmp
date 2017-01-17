@@ -5037,6 +5037,8 @@ class smp:
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
         thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
+        thisra = np.array(thisra)
+        thisdec = np.array(thisdec)
         print 'Computing zeropoint for',imfile
         print '\n'
         import pkfit_norecent_noise_smp
@@ -5831,7 +5833,8 @@ class smp:
                     mag_compare_out = os.path.join(self.impath,name + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
                     print mag_compare_out
                 else:
-                    mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
+                    mag_compare_out = os.path.join(self.zptoutpath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
+                    #mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
             else:
                 if self.dogalsimpixfit:
                     mag_compare_out = os.path.join(self.impath,name + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz')
