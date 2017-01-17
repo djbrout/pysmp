@@ -3219,7 +3219,7 @@ class smp:
         except:
             print sys.exc_info()
             if not os.path.exists(isdonedir):
-                os.mkdirs(isdonedir)
+                os.mkdir(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
             sys.exit()
 
