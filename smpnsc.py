@@ -6454,7 +6454,7 @@ if __name__ == "__main__":
         elif o == "--savezptstamps":
             savezptstamps = True
         elif o == "--fermilog":
-            fermilog =
+            fermilog = True
         elif o == "--oldformat":
             oldformat = True
         else:
