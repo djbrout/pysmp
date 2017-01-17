@@ -2367,7 +2367,7 @@ class smp:
                     # print min(mag_star),np.median(mag_star),max(mag_star)
                     # raw_input()
 
-                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,cras,cdecs,tids,starcat,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,tids,starcat,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
