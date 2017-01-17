@@ -267,7 +267,7 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog=None,
              stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
-             savezptstamps=False,fermilog=False,isdonedir=None
+             savezptstamps=False,fermilog=False,isdonedir=None,oldformat=False
              ):
 
         print 'snfile',snfile
@@ -387,6 +387,7 @@ class smp:
         self.savezptstamps = savezptstamps
         self.fermilog = fermilog
         self.isdonedir = isdonedir
+        self.oldformat = oldformat
 
 
         self.useweights = useweights
@@ -742,18 +743,19 @@ class smp:
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
 
-            if self.usefake:
-                imfile = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
-                if not self.snparams.survey == 'PS1':
-                    imfile = imfile.replace('p1', 'Y1')
-                    noisefile = noisefile.replace('p1', 'Y1')
-                    psffile = psffile.replace('p1', 'Y1')
-                #noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
-            else:
-                if not self.snparams.survey == 'PS1':
-                    imfile = imfile.replace('p1','Y1')
-                    noisefile = noisefile.replace('p1','Y1')
-                    psffile = psffile.replace('p1', 'Y1')
+            if not self.oldformat:
+                if self.usefake:
+                    imfile = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
+                    if not self.snparams.survey == 'PS1':
+                        imfile = imfile.replace('p1', 'Y1')
+                        noisefile = noisefile.replace('p1', 'Y1')
+                        psffile = psffile.replace('p1', 'Y1')
+                    #noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
+                else:
+                    if not self.snparams.survey == 'PS1':
+                        imfile = imfile.replace('p1','Y1')
+                        noisefile = noisefile.replace('p1','Y1')
+                        psffile = psffile.replace('p1', 'Y1')
 
             imfile = os.path.join(rootdir,imfile)
             longimfile = copy(imfile)
@@ -6279,7 +6281,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog","isdonedir="])
+                      "lcfilepath=","fermilog","isdonedir=","oldformat"])
 
 
         #print opt
@@ -6308,7 +6310,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog","isdonedir"])
+                      "lcfilepath=","fermilog","isdonedir","oldformat"])
 
 
         #print opt
@@ -6318,6 +6320,7 @@ if __name__ == "__main__":
 
 
     verbose,nodiff,debug,clear_zpt,psf_model,root_dir,mergeno,loadzpt,ismultiple,dogalfit,dosnfit,dogalsimfit,dogalsimpixfit = False,False,False,False,False,False,False,False,False,True,True,False,False
+    oldformat = False
     savezptstamps = False
     fixgalzero,floatallepochs = False,False
     dailyoff = False
@@ -6451,7 +6454,9 @@ if __name__ == "__main__":
         elif o == "--savezptstamps":
             savezptstamps = True
         elif o == "--fermilog":
-            fermilog = True
+            fermilog =
+        elif o == "--oldformat":
+            oldformat = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -6555,6 +6560,8 @@ if __name__ == "__main__":
             fermilog = True
         elif o == "--isdonedir":
             isdonedir = a
+        elif o == "--oldformat":
+            oldformat = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -6674,7 +6681,7 @@ if __name__ == "__main__":
                                  galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
-                                    fermilog=fermilog)
+                                    fermilog=fermilog,oldformat=oldformat)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -6789,7 +6796,7 @@ if __name__ == "__main__":
                             useweights=useweights, dosextractor=dosextractor, fermigrid=fermigrid,
                             zptoutpath=zptoutpath,
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
-                            fermilog=fermilog)
+                            fermilog=fermilog,oldformat=oldformat)
         except:
             print sys.exc_info()
             if not os.path.exists(isdonedir):
@@ -6806,7 +6813,7 @@ if __name__ == "__main__":
                      galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
-                    fermilog=fermilog)
+                    fermilog=fermilog,oldformat=oldformat)
         #scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
