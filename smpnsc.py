@@ -1350,7 +1350,7 @@ class smp:
             badflag = 0
             nozpt = copy(orig_nozpt)
 
-            # longimfile = copy(imfile)
+            # longimfile = copy(imfile )
             # if self.fermigrid & self.worker:
             #     imfile = imfile.split('/')[-1]
             #     noisefile = noisefile.split('/')[-1]
