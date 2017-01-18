@@ -2664,8 +2664,8 @@ class smp:
 
                                     noise_stamp[image_stamp > 500000.] = 0.
 
-                                    skysn *= scalefactor
-                                    skyerrsn *= scalefactor
+                                    #skysn *= scalefactor
+                                    #skyerrsn *= scalefactor
 
                                     #for iiii in noise_stamp.ravel():
                                     #    print iiii
