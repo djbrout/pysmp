@@ -873,8 +873,8 @@ class smp:
                 #sys.exit()
             try:
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
-                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
-                self.expnum = imfile.split('/')[-1].split('_')[1]
+                self.ccdnum = int(imfile.split('/')[-1].split('_')[-1][:2])
+                self.expnum = int(imfile.split('/')[-1].split('_')[1])
 
             except:
                 self.ccdnum = np.nan
@@ -1284,8 +1284,8 @@ class smp:
 
             try:
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
-                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
-                self.expnum = imfile.split('/')[-1].split('_')[1]
+                self.ccdnum = int(imfile.split('/')[-1].split('_')[-1][:2])
+                self.expnum = int(imfile.split('/')[-1].split('_')[1])
 
             except:
                 self.ccdnum = np.nan
