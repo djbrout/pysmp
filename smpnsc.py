@@ -2129,7 +2129,7 @@ class smp:
                     else:
                         self.gain = gainb
                 else:
-                    if self.xsn < 2049:
+                    if xsn < 2049:
                         if ysn > 1024:
                             self.gain = gaina
                         else:
