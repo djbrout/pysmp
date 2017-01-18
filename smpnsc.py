@@ -873,8 +873,8 @@ class smp:
                 #sys.exit()
             try:
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
-                self.ccdnum = int(imfile.split('/')[-1].split('_')[-1][:2])
-                self.expnum = int(imfile.split('/')[-1].split('_')[1])
+                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+                self.expnum = imfile.split('/')[-1].split('_')[1]
 
             except:
                 self.ccdnum = np.nan
@@ -1284,8 +1284,8 @@ class smp:
 
             try:
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
-                self.ccdnum = int(imfile.split('/')[-1].split('_')[-1][:2])
-                self.expnum = int(imfile.split('/')[-1].split('_')[1])
+                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+                self.expnum = imfile.split('/')[-1].split('_')[1]
 
             except:
                 self.ccdnum = np.nan
@@ -2102,6 +2102,12 @@ class smp:
                 q2 = [32,33,34,39,40,41,45,46,47,51,52,56,57,60]
                 q3 = [3,6,7,11,12,16,17,18,22,23,24,29,30,31]
                 q4 = [36,37,38,42,43,44,48,49,50,54,55,58,59,62]
+
+                try:
+                    ttt = int(self.ccdnum)
+                except:
+                    self.ccdnum = '0'
+
                 if int(self.ccdnum) in q1:
                     if ysn<1025:
                         self.gain = gaina
