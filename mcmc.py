@@ -1135,9 +1135,13 @@ class metropolis_hastings():
                 ax.set_title(title)
             axs = axgm.imshow(self.galaxy_model * self.mask,cmap='gray',interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axgm)
-            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            #axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:].ravel()[self.data[i,:,:].ravel() != 0.]),vmax=np.max(self.data[i,:,:]))
+
             cbar = fig.colorbar(axs, ax=axim)
-            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            #axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:].ravel()[self.data[i,:,:].ravel() != 0.]),vmax=np.max(self.data[i,:,:]))
+
             cbar = fig.colorbar(axs, ax=axpsf)
             resid = (self.data[i,:,:] - self.sims[i])*self.mask
             md = np.median(resid[resid!=0.].ravel())
