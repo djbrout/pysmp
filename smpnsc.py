@@ -5843,8 +5843,8 @@ class smp:
                     mag_compare_out = os.path.join(self.impath,name + '_' + str(filt) + 'band_dillonzptinfo_galsimglobalstar.npz')
                     print mag_compare_out
                 else:
-                    mag_compare_out = os.path.join(self.zptoutpath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
-                    #mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
+                    #mag_compare_out = os.path.join(self.zptoutpath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
+                    mag_compare_out = os.path.join(self.impath,name + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz')
             else:
                 if self.dogalsimpixfit:
                     mag_compare_out = os.path.join(self.impath,name + '_' + str(filt) + 'band_dillonzptinfo_galsim.npz')
