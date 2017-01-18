@@ -3479,6 +3479,7 @@ class smp:
             print 'modelstd after',modelstd
             #raw_input()
             #fixgalzero = True
+            self.fixgalzero = False
             if self.fixgalzero:
                 print 'fixing galmodel to zero'
                 galmodel = galmodel*0.
@@ -3516,9 +3517,9 @@ class smp:
             #raw_input('mmmmmmm')
 
             aaa = mcmc3.metropolis_hastings(
-                    galmodel = galmodel#*0.
+                    galmodel = galmodel*0.
                     , modelvec = modelvec
-                    , galstd = galstd#*0. + 1.
+                    , galstd = galstd*0. + 1.
                     , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
