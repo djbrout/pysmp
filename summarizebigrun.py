@@ -304,6 +304,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     imstamp = np.asarray(imstamp)
     print fakemag.shape
     print flux.shape
+    raw_input()
     #print fakemag[0].shape
     #sys.exit()
     fitzpt = np.asarray(fitzpt)
@@ -323,7 +324,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.axhline(0)
     plt.xlim(19,29)
     #plt.ylim(-.1,.1)
-    plt.ylim(-500,500)
+    plt.ylim(-.2,.2)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir+'/percentagefluxdiff.png')

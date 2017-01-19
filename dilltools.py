@@ -286,7 +286,7 @@ def readcol(filename,headline=1,startline=2,delim=' '):
                         try:
                             return_cols[column_list[index]].append(col.strip())
                         except:
-                            print 'WARNING: Could not read line '+str(linenum+1)+' of '+filename
+                            print 'WARNING2: Could not read line '+str(linenum+1)+' of '+filename
                     index += 1
         linenum += 1
     inf.close()
