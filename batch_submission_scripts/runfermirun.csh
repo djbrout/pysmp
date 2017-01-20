@@ -12,6 +12,7 @@ setup easyaccess
 setup extralibs 1.0
 setup galsim
 
+
 echo "source /cvmfs/des.opensciencegrid.org/eeups/startupcachejob21i.sh"
 echo "kx509"
 echo "voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis"
@@ -19,6 +20,8 @@ echo "voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis"
 echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 echo "source /grid/fermiapp/products/common/etc/setups.sh"
 echo "setup ifdhc"
+export IFDH_XROOTD_EXTRA="-f -N"
+
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 ifdh cp -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
 echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
