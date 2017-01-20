@@ -1110,7 +1110,8 @@ class metropolis_hastings():
             self.model_params()
             #print self.x_pix_offset,self.y_pix_offset
             #raw_input('sssss')
-            map(self.mapshiftPSF, np.arange(self.Nimage))
+            if self.psf_shift_std > 0:
+                map(self.mapshiftPSF, np.arange(self.Nimage))
             self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
                         self.flags, self.fitflags, self.sims, self.gal_conv)
             wmask = copy(self.weights[i,:,:])
