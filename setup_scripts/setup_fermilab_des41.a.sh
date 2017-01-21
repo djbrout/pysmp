@@ -19,6 +19,9 @@ setup extralibs 1.0
 setup ifdhc
 echo "EUPS setup complete"
 
+
+
 source /cvmfs/fermilab.opensciencegrid.org/products/common/etc/setups
+PYTHONPATH=$PYTHONPATH:/cvmfs/fermilab.opensciencegrid.org/products/common/prd/jobsub_client/v1_2_2/NULL
 setup jobsub_client
 echo 'done setting up jobsub_client'
