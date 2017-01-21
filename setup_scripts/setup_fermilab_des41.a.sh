@@ -22,6 +22,8 @@ echo "EUPS setup complete"
 
 
 source /cvmfs/fermilab.opensciencegrid.org/products/common/etc/setups
-PYTHONPATH=$PYTHONPATH:/cvmfs/fermilab.opensciencegrid.org/products/common/prd/jobsub_client/v1_2_2/NULL
+PYTHONPATH=$PYTHONPATH:/cvmfs/fermilab.opensciencegrid.org/products/common/prd/jobsub_client/v1_2_2/NULL:/cvmfs/fermilab.opensciencegrid.org/products/common/prd/pycurl/v7_16_4/Linux64bit-2-6-2-12/pycurl
+
+
 setup jobsub_client
 echo 'done setting up jobsub_client'
