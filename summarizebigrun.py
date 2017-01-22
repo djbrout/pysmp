@@ -315,13 +315,14 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
 
     fakeflux = 10**(.4*(31. - fakemag))
 
-    for fm,ff in zip(fakemag,fakeflux):
-        print fm,ff
+    for fm,ff,fl in zip(fakemag,fakeflux),flux:
+
+        print fm,ff,fl
     raw_input()
 
     #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
-    ww = (flux != 0.)#(fakemag < 28.5) & (flux != 0.)
+    ww = (flux != 0.) & (fakemag != 0)#(fakemag < 28.5) & (flux != 0.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
