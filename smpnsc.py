@@ -742,10 +742,11 @@ class smp:
             #        continue
             didglobalstar = True
             #nozpt = copy(orig_nozpt)
+            if self.usefake:
+                imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
 
             if not self.oldformat:
                 if self.usefake:
-                    imfile = ''.join(imfile.split('.')[:-1])+'+fakeSN.fits'
                     if not self.snparams.survey == 'PS1':
                         imfile = imfile.replace('p1', 'Y1')
                         noisefile = noisefile.replace('p1', 'Y1')
@@ -1368,9 +1369,11 @@ class smp:
             #     self.field = np.nan
 
             ########NEWWWWWWWWWWWWWWWW#######################
+            if self.usefake:
+                imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
+
             if not self.oldformat:
                 if self.usefake:
-                    imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
                     if not self.snparams.survey == 'PS1':
                         print imfile
                         changename = True
