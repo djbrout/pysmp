@@ -315,7 +315,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
 
     fakeflux = 10**(.4*(31. - fakemag))
 
-    for fm,ff,fl in zip(fakemag,fakeflux),flux:
+    for fm,ff,fl in zip(fakemag,fakeflux,flux):
 
         print fm,ff,fl
     raw_input()
