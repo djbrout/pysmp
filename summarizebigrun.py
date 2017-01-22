@@ -137,7 +137,7 @@ def grabstardata(imagedir,outfile):
     os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     os.system('rm dat.dat')
 
-def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
+def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=True):
 
     dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
     dofakemjd = np.array(dofakemjd,dtype='float')
@@ -186,8 +186,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r'):
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
 
-        if not len(dofakemjd[ cra & cdec ]) > 0:
-            fakemag = data['FAKEMAG']*0. + 99.
+        if not oldformat:
+            if not len(dofakemjd[ cra & cdec ]) > 0:
+                fakemag = data['FAKEMAG']*0. + 99.
+            else:
+                fakemag = data['FAKEMAG']
         else:
             fakemag = data['FAKEMAG']
 
