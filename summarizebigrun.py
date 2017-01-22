@@ -137,7 +137,7 @@ def grabstardata(imagedir,outfile):
     os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     os.system('rm dat.dat')
 
-def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
+def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=True):
 
     dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
     dofakemjd = np.array(dofakemjd,dtype='float')
@@ -1270,13 +1270,13 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/pnfs/des/scratch/pysmp/smp_v42'
+    resultsdir = '/pnfs/des/scratch/pysmp/smp_v22'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
-    cd = '/pnfs/des/scratch/pysmp/smp_v42/np_data/summary_results.npz'
+    cd = '/pnfs/des/scratch/pysmp/smp_v22/np_data/summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
