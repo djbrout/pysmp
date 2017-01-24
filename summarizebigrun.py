@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v42/","/pnfs/des/persistent/smp/v42/stardatav.npz")
+        grabstardata("/pnfs/des/persistent/smp/v62/","/pnfs/des/persistent/smp/v62/stardatav.npz")
         sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -145,7 +145,8 @@ def grabstardata(imagedir,outfile):
         #print bigdata['centroidedras'].shape
         #print bigdata['ids'] == i
         print i,np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
-        stds.append(np.std(bigdata['centroidedras'][bigdata['ids'] == i]))
+        if np.std(bigdata['centroidedras'][bigdata['ids'] == i]) > 0.:
+            stds.append(np.std(bigdata['centroidedras'][bigdata['ids'] == i]))
 
     print 'std is', np.mean(stds)
     sys.exit()
