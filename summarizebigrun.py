@@ -137,14 +137,16 @@ def grabstardata(imagedir,outfile):
                         print 'FAILED', fname
                         pass
 
+    for i in np.unique(bigdata['ids']):
+       print np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
+    sys.exit()
+
     np.savez('dat.dat', **bigdata)
     os.system('ifdh rm ' + outfile)
     os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     os.system('rm dat.dat')
 
-    for i in np.unique(bigdata['ids']):
-        print np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
-    sys.exit()
+
 def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
 
     dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
