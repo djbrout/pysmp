@@ -140,10 +140,10 @@ def grabstardata(imagedir,outfile):
     bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
     bigdata['ids'] = np.array(bigdata['ids'])
     for i in zptdata['ids']:
-        print i
-        print bigdata['centroidedras'].shape
-        print bigdata['ids'] == i
-        print np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
+        #print i
+        #print bigdata['centroidedras'].shape
+        #print bigdata['ids'] == i
+        print i,np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
     sys.exit()
 
     np.savez('dat.dat', **bigdata)
