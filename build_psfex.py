@@ -4,6 +4,9 @@ import sys
 
 def build(psffile, x, y, stampsize):
 
+    print "dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
+                                                                                 stampsize)
+
     psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
                                                                                  stampsize)).readlines()
 
