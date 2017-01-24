@@ -68,7 +68,7 @@ def lookup_rms_addin(smpfile,obsid):
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'sky':[], 'skyerr': [],'psf':[],'poisson':[]}
+               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[]}
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
@@ -98,6 +98,10 @@ def grabstardata(imagedir,outfile):
                         #if True:
 
                         cm = zptdata['cat_magvvv']
+
+                        bigdata['ids'].extend(zptdata['ids'])
+                        bigdata['centroidedras'].extend(zptdata['centroidedras'])
+                        bigdata['centroideddecs'].extend(zptdata['centroideddecs'])
 
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
@@ -138,6 +142,9 @@ def grabstardata(imagedir,outfile):
     os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     os.system('rm dat.dat')
 
+    for i in np.unique(bigdata['ids']):
+        print np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
+    sys.exit()
 def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
 
     dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
