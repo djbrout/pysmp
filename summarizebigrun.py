@@ -72,7 +72,7 @@ def grabstardata(imagedir,outfile):
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 10.: break
+        if cntr > 100.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
 
@@ -139,11 +139,15 @@ def grabstardata(imagedir,outfile):
 
     bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
     bigdata['ids'] = np.array(bigdata['ids'])
+    stds = []
     for i in zptdata['ids']:
         #print i
         #print bigdata['centroidedras'].shape
         #print bigdata['ids'] == i
         print i,np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
+        stds.append(np.std(bigdata['centroidedras'][bigdata['ids'] == i]))
+
+    print 'std is', np.mean(stds)
     sys.exit()
 
     np.savez('dat.dat', **bigdata)
