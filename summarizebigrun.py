@@ -36,8 +36,8 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
-        #sys.exit()
+        grabstardata("/pnfs/des/persistent/smp/v6/","/pnfs/des/persistent/smp/v6/stardatav6.npz")
+        sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
     else:
@@ -89,6 +89,7 @@ def grabstardata(imagedir,outfile):
                     continue
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 print zptdata.keys()
+                raw_input()
                 if not fname in zptfiles:
                     try:
                         #if True:
