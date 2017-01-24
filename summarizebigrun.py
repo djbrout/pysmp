@@ -137,7 +137,7 @@ def grabstardata(imagedir,outfile):
                         print 'FAILED', fname
                         pass
 
-    for i in np.unique(bigdata['ids']):
+    for i in zptdata['ids']:
         print i
         print bigdata['centroidedras'].shape
         print bigdata['ids'] == i
