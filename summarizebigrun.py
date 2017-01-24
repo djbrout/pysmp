@@ -137,6 +137,8 @@ def grabstardata(imagedir,outfile):
                         print 'FAILED', fname
                         pass
 
+    bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
+    bigdata['ids'] = np.array(bigdata['ids'])
     for i in zptdata['ids']:
         print i
         print bigdata['centroidedras'].shape
