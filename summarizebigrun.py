@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/pnfs/des/persistent/smp/v62/","/pnfs/des/persistent/smp/v6/stardata.npz")
+        grabstardata("/pnfs/des/persistent/smp/v4/","/pnfs/des/persistent/smp/v4/stardata.npz")
         sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -151,7 +151,7 @@ def grabstardata(imagedir,outfile):
     print 'std is', np.mean(stds)
     #sys.exit()
 
-    np.savez('v6.dat', **bigdata)
+    np.savez('v4.dat', **bigdata)
     #os.system('ifdh rm ' + outfile)
     #os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     #os.system('rm dat.dat')
