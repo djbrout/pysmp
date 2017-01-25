@@ -280,9 +280,11 @@ def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
                     # The sky annulus is (nearly) empty of stars, (as in a diff image)
                     # so we can simply compute the sigma-clipped mean of all pixels in
                     # the annulus
+                    print skybuf.shape
                     skybufclipped = sigmaclip( skybuf, low=4.0, high=4.0)
-                    skymod = np.mean( skybufclipped.ravel() )
-                    skysig = np.std( skybufclipped.ravel() )
+                    skymod = np.mean( skybufclipped )
+                    skysig = np.std( skybufclipped )
+                    print skysig.shape
                     skyskw = -999#skew( skybufclipped )
 
                 else:
