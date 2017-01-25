@@ -131,6 +131,8 @@ def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
     # Set parameter limits
     if len(minsky) == 0: minsky = 20
 
+    minsky = -1000.
+
     # Number of columns and rows in image array
     s = np.shape(image)
     ncol = s[1]
