@@ -23,7 +23,7 @@ import mmm
 where,asfarray,asarray,array,zeros,arange = np.where,np.asfarray,np.asarray,np.array,np.zeros,np.arange
 
 def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
-         skyrad=[40,50], badpix=[0,0], setskyval = None, minsky=[],
+         skyrad=[40,60], badpix=[0,0], setskyval = None, minsky=[],
          skyisempty=False, exact = False, readnoise = 0,
          verbose=True, debug=False,ignoreneg=False):
     """ Compute concentric aperture photometry on one ore more stars

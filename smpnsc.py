@@ -2464,7 +2464,7 @@ class smp:
                 np.set_printoptions(threshold=50000)
                 #for i in im[:,round(ysn)]:
                 #    print i
-                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 30.,skyisempty=True,verbose=False)#,skyrad=skyrad)
+                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 60.,skyisempty=True,verbose=False)#,skyrad=skyrad)
                 print imfile
                 print skysn,skyerrsn
                 #raw_input('checking sky and skyerr')
