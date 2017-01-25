@@ -2511,6 +2511,7 @@ class smp:
                         xhi = xsn+stampsize
 
                     mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
+
                     skysig=1.48*np.median(abs(vals-np.median(vals)))
                     mysky = np.median(vals)
                     #print mysky
@@ -2534,6 +2535,7 @@ class smp:
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
+                        print 'mysky',mysky,'myskysig',skysig
                         raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
