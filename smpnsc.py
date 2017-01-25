@@ -2464,10 +2464,10 @@ class smp:
                 np.set_printoptions(threshold=50000)
                 #for i in im[:,round(ysn)]:
                 #    print i
-                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 60.,verbose=False)#,skyrad=skyrad)
+                magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 30.,verbose=False)#,skyrad=skyrad)
                 print imfile
                 print skysn,skyerrsn
-                raw_input('checking sky and skyerr')
+                #raw_input('checking sky and skyerr')
                 #magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn2,badflag,outstr = aper.aper(im,xsn,ysn,apr = 15.,verbose=False)#,skyrad=skyrad)
                 #print skyerrsn,skyerrsn2
                 #raw_input()
@@ -2524,6 +2524,8 @@ class smp:
                         sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
 
+                        print sexsky,sexrms
+                        raw_input('sextractor')
                         bkgrnd = pf.getdata(imfile + '.background')
                         print bkgrnd.shape
                         sexsky = np.mean(bkgrnd[ylow:yhi,xlow:xhi].ravel()) * scalefactor
