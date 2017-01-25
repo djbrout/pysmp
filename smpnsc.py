@@ -2634,7 +2634,8 @@ class smp:
                     # stdev = np.zeros(len(model))
                     # stdev[-1] = np.sqrt(model[-1])
 
-
+                else:
+                    print 'badflaggggg'
 
                 #if snparams.psf_model.lower() == 'psfex':
                 fwhm = float(snparams.psf[j])
