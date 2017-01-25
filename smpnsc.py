@@ -2525,16 +2525,16 @@ class smp:
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
 
                         print sexsky,sexrms
-                        raw_input('sextractor')
+                        #raw_input('sextractor')
                         bkgrnd = pf.getdata(imfile + '.background')
                         print bkgrnd.shape
                         sexsky = np.mean(bkgrnd[ylow:yhi,xlow:xhi].ravel()) * scalefactor
                         bkgrndrms = pf.getdata(imfile + '.background_rms')
-                        sexrms = np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel())* scalefactor
+                        sexrms = (np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel()**.5)* scalefactor)**2.
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
                         print sexsky, sexrms
-                        raw_input('youyo')
+                        #raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
@@ -2699,7 +2699,8 @@ class smp:
                                         mask *= noise_stamp
 
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
-                                        smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
+                                        #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
+                                        smp_noise[i,:,:] = noise_stamp*1./sexrms * mask
 
                                     #if round(float(snparams.mjd[j])) == 57011:
                                     #    raw_input()
@@ -2749,8 +2750,12 @@ class smp:
                                         #print 'sky'*1000
                                         #raw_input('sig comparo')
                                     else:
-                                        smp_dict['sky'][i] = skysn
-                                        smp_dict['skyerr'][i] = skyerrsn
+
+                                        #smp_dict['sky'][i] = skysn
+                                        smp_dict['sky'][i] = sexsky
+                                        #smp_dict['skyerr'][i] = skyerrsn
+                                        smp_dict['skyerr'][i] = sexrms**.5
+                                        #sexrms
 
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
