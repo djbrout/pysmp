@@ -2465,6 +2465,9 @@ class smp:
                 #for i in im[:,round(ysn)]:
                 #    print i
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 30.,verbose=False)#,skyrad=skyrad)
+                print imfile
+                print skysn,skyerrsn
+                raw_input('checking sky and skyerr')
                 #magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn2,badflag,outstr = aper.aper(im,xsn,ysn,apr = 15.,verbose=False)#,skyrad=skyrad)
                 #print skyerrsn,skyerrsn2
                 #raw_input()
