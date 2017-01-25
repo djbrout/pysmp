@@ -2524,7 +2524,7 @@ class smp:
                         sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
                                                                         ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
 
-                        #print sexsky,sexrms
+                        print sexsky,sexrms
                         #raw_input('sextractor')
                         bkgrnd = pf.getdata(imfile + '.background')
                         #print bkgrnd.shape
@@ -2534,7 +2534,7 @@ class smp:
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
-                        #raw_input('youyo')
+                        raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
