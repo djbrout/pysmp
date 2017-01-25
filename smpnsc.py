@@ -2300,12 +2300,12 @@ class smp:
                 #for xx in x_star1:
                 #    print xx
                 print im.shape
-                try:
-                    mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                        aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
-                except:
-                    print 'failed aper'
-                    badflag = 1
+                #try:
+                mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
+                    aper.aper(im,x_star1,y_star1,apr = 30,verbose=False,ignoreneg=True)
+                #except:
+                #    print 'failed aper'
+                #    badflag = 1
                 badflagx[badflagarr] = 1
                 #print sky
                 #raw_input()
@@ -2540,7 +2540,7 @@ class smp:
                         #sexrms *= scalefactor
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
                         print 'mysky',mysky,'myskysig',skysig
-                        raw_input('youyo')
+                        #raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
@@ -2638,8 +2638,8 @@ class smp:
                     # stdev = np.zeros(len(model))
                     # stdev[-1] = np.sqrt(model[-1])
 
-                else:
-                    print 'badflaggggg'
+                #else:
+                #    print 'badflaggggg'
 
                 #if snparams.psf_model.lower() == 'psfex':
                 fwhm = float(snparams.psf[j])
