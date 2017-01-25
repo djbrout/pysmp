@@ -254,6 +254,14 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             bigdata['dec'].extend(data['DEC'])
             bigdata['image_stamp'].extend(data['IMAGE_STAMP'])
 
+            fakeflux = 10 ** (.4 * (31. - fakemag))
+
+            www = (fakemag < 20.) & (data['FLUX']-fakeflux < 600.)
+            if len(fakemag[www]) > 0:
+                print f
+                print 'stopped because has a bad outlier'
+                raw_input()
+
             #for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
             #    if abs(faz - fiz) > 1:
                     #print f
@@ -373,6 +381,8 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.xlabel('Fake Mag')
     plt.ylabel('Flux Difference')
     plt.savefig(outdir + '/fluxdiff.png')
+
+    print
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
