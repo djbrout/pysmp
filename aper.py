@@ -283,7 +283,7 @@ def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
                     skybufclipped = sigmaclip( skybuf, low=4.0, high=4.0)
                     skymod = np.mean( skybufclipped )
                     skysig = np.std( skybufclipped )
-                    skyskw = skew( skybufclipped )
+                    skyskw = -999#skew( skybufclipped )
 
                 else:
                     # Compute the sky mode, sigma and skewness using the
