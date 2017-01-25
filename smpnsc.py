@@ -2470,7 +2470,7 @@ class smp:
                 #    print i
                 magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn,badflag,outstr = aper.aper(im,xsn,ysn,apr = 60.,skyisempty=True,verbose=False)#,skyrad=skyrad)
                 print imfile
-                print skysn,skyerrsn
+                print 'hhh2',skysn,skyerrsn,badflag
                 #raw_input('checking sky and skyerr')
                 #magsn,magerrsn,fluxsn,fluxerrsn,skysn,skyerrsn2,badflag,outstr = aper.aper(im,xsn,ysn,apr = 15.,verbose=False)#,skyrad=skyrad)
                 #print skyerrsn,skyerrsn2
@@ -2489,10 +2489,10 @@ class smp:
                         badflag = 1
                         #raw_input('mask badflag')
                         print 'mask badflag'
-                if skysn < -1e5:
-                    badflag = 1
-                    #raw_input('skysn badflag')
-                    #print 'skysn badflag'
+                #if skysn < -1e5:
+                #    badflag = 1
+                #    #raw_input('skysn badflag')
+                #    #print 'skysn badflag'
 
                 if not badflag:
                     stampsize = 256
@@ -2657,7 +2657,7 @@ class smp:
                         print 'infinite skysig'
                         #raw_input('skysig badflag')
                         badflag = 1
-                    if skysig < 0.:
+                    if sexrms < 0.:
                         print 'skysig less than one'
                         #raw_input('skysig1 badflag')
                         badflag = 1
