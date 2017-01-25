@@ -2657,7 +2657,7 @@ class smp:
                         print 'infinite skysig'
                         #raw_input('skysig badflag')
                         badflag = 1
-                    if skysig < 1:
+                    if skysig < 0.:
                         print 'skysig less than one'
                         #raw_input('skysig1 badflag')
                         badflag = 1
