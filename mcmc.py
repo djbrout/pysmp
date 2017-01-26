@@ -919,7 +919,7 @@ class metropolis_hastings():
                     #print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
                 else:
                     if self.comboerr:
-                        v = ((sims - data) ** 2 / (skyerr ** 2 + simnosnnosky / self.gain) * self.mask).ravel()
+                        v = ((sims - data) ** 2 / (3*skyerr ** 2 + simnosnnosky / self.gain) * self.mask).ravel()
                         a = np.sum(v[(v > 0.) & (v < 9999999.)])
                         chisq = a
                         if self.covarerr:
