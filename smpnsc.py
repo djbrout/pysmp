@@ -2784,7 +2784,7 @@ class smp:
                                         #smp_dict['sky'][i] = skysn
                                         smp_dict['sky'][i] = sexsky
                                         #smp_dict['skyerr'][i] = skyerrsn
-                                        smp_dict['skyerr'][i] = sexrms*.5
+                                        smp_dict['skyerr'][i] = sexrms*.3
                                         #sexrms
 
                                     smp_dict['flag'][i] = 0
