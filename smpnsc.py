@@ -5793,9 +5793,10 @@ class smp:
             #print 'scatter'
             #print len(mag_cat[goodstarcols])
             plt.clf()
-            plt.scatter(mag_cat[goodstarcols], -2.5*np.log10(flux_star[goodstarcols]))
+            plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
             #print 'plot'
-            plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
+            #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
+            plt.axhline(0,color='black')
             #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-30.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
             plt.xlabel('cat mag')
