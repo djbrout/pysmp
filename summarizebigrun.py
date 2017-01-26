@@ -433,6 +433,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.xlim(-10,10)
     plt.ylim(-2000,2000)
     plt.xlabel('sky')
+    plt.title('Fakemag < 22')
     plt.ylabel('Flux Difference')
     plt.savefig(outdir + '/skyfluxdifflt22.png')
 
@@ -447,6 +448,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.xlim(-10,10)
     plt.ylim(-2000,2000)
     plt.xlabel('sky')
+    plt.title('Fakemag > 22')
     plt.ylabel('Flux Difference')
     plt.savefig(outdir + '/skyfluxdiffgt22.png')
 
