@@ -2386,9 +2386,9 @@ class smp:
 
                     dosextractor = True
                     if dosextractor:
-                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + stampsize,
-                                                                         500 - stampsize,
-                                                                         500 + stampsize, 500 - stampsize,
+                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
+                                                                         500 - 50,
+                                                                         500 + 50, 500 - 50,
                                                                          snparams.survey)
 
                         print sexsky, sexrms
