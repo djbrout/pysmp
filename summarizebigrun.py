@@ -71,7 +71,7 @@ def grabstardata(imagedir,outfile):
                'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[]}
     zptfiles = []
     cntr = 0
-    for dirName, subdirList, fileList in os.walk(imagedir)[::-1]:
+    for dirName, subdirList, fileList in os.walk(imagedir):
         if cntr > 200.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
