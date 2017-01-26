@@ -2384,9 +2384,27 @@ class smp:
                     # print min(mag_star),np.median(mag_star),max(mag_star)
                     # raw_input()
 
+                    dosextractor = True
+                    if dosextractor:
+                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + stampsize,
+                                                                         500 - stampsize,
+                                                                         500 + stampsize, 500 - stampsize,
+                                                                         snparams.survey)
+
+                        print sexsky, sexrms
+                        # raw_input('sextractor')
+                        bkgrnd = pf.getdata(imfile + '.background')
+                        # print bkgrnd.shape
+                        sexsky = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel()) * scalefactor
+                        bkgrndrms = pf.getdata(imfile + '.background_rms')
+                        sexrms = (np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel() ** .5) * scalefactor) ** 2.
+
+                    else:
+                        bkgrnd = None
+                        bkgrndrms = None
                     zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                         longimfile,psf=self.psf,mjd=str(float(snparams.mjd[j])))
+                                         longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
                     if zpt == 0:
                         badflag = 1
@@ -2489,6 +2507,9 @@ class smp:
                         badflag = 1
                         #raw_input('mask badflag')
                         print 'mask badflag'
+
+
+
                 #if skysn < -1e5:
                 #    badflag = 1
                 #    #raw_input('skysn badflag')
@@ -2535,7 +2556,7 @@ class smp:
                         #print bkgrnd.shape
                         sexsky = np.mean(bkgrnd[ylow:yhi,xlow:xhi].ravel()) * scalefactor
                         bkgrndrms = pf.getdata(imfile + '.background_rms')
-                        sexrms = (np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel()**.5)* scalefactor)**2.
+                        sexrms = np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel())* scalefactor
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
@@ -2709,7 +2730,7 @@ class smp:
 
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
-                                        smp_noise[i,:,:] = noise_stamp*1./sexrms * mask
+                                        smp_noise[i,:,:] = noise_stamp*1./sexrms**2 * mask
 
                                     #if round(float(snparams.mjd[j])) == 57011:
                                     #    raw_input()
@@ -2763,7 +2784,7 @@ class smp:
                                         #smp_dict['sky'][i] = skysn
                                         smp_dict['sky'][i] = sexsky
                                         #smp_dict['skyerr'][i] = skyerrsn
-                                        smp_dict['skyerr'][i] = sexrms**.5
+                                        smp_dict['skyerr'][i] = sexrms
                                         #sexrms
 
                                     smp_dict['flag'][i] = 0
@@ -5057,7 +5078,7 @@ class smp:
 
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,imwcs,snparams,substamp,
-                mjdoff,mjdslopeinteroff,j,longimfile,psf='',mjd=None,
+                mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
 
@@ -5228,6 +5249,16 @@ class smp:
                         se = sexrms
                     else:
                         sexsky, sexrms = s, se
+
+                    dosextractor = True
+                    if dosextractor:
+                        xl = max([x-50,0])
+                        xh = min([x + 50, im.shape[1]])
+                        yl = max([x - 50, 0])
+                        yh = min([y + 50, im.shape[0]])
+
+                        s  = np.mean(bkgrnd[yl:yh,xl:xh].ravel())
+                        se = np.mean(bkgrndrms[yl:yh,xl:xh].ravel())
 
                     scale,errmag,chi,dms,good,image_stamp,simstamp,psf = chkpsf.fit(imfile.split('.fits')[0],xpos=x+1,ypos=y+1,ra=ra,dec=dec,
                                                                  pdf_pages=pdf_pagesc,radius=params.substamp/2.-1.,
