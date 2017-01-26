@@ -422,6 +422,8 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir + '/percentagefluxdiffchi.png')
 
+    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 22.)
+
     plt.clf()
     plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
     ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww]),
@@ -431,8 +433,22 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.xlim(-10,10)
     plt.ylim(-2000,2000)
     plt.xlabel('sky')
-    plt.ylabel('Percentage Flux Difference')
-    plt.savefig(outdir + '/skypercentagefluxdiff.png')
+    plt.ylabel('Flux Difference')
+    plt.savefig(outdir + '/skyfluxdifflt22.png')
+
+    ww = (flux != 0.) & (fakemag != 0) & (fakemag > 22.)
+
+    plt.clf()
+    plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
+    ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww]),
+                            np.arange(-10,10, 1),window=2.)
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    plt.axhline(0)
+    plt.xlim(-10,10)
+    plt.ylim(-2000,2000)
+    plt.xlabel('sky')
+    plt.ylabel('Flux Difference')
+    plt.savefig(outdir + '/skyfluxdiffgt22.png')
 
     ww = (dpmjd > 200.) & (flux != 0)
     plt.clf()
