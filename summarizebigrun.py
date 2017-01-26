@@ -75,7 +75,7 @@ def grabstardata(imagedir,outfile):
         if cntr > 200.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
-
+            print fname
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 print os.path.join(imagedir,dirName,fname)
