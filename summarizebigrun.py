@@ -964,6 +964,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
+
+    print max(catmag)
+    raw_input()
     ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
 
     flux = flux[ww]
