@@ -196,6 +196,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     for f in smpfiles[:]:
         cntr += 1
         if cntr > 10000: continue
+        if cntr == 34: continue
         print cntr, 'of',tot
         deep = 0
         os.system('cp '+f+' test.npz')
