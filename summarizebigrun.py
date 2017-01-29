@@ -340,6 +340,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     ra = np.asarray(ra)
     dec = np.asarray(dec)
     imstamp = np.asarray(imstamp)
+    fakefiles = np.asarray(fakefiles,dtype='str')
     print fakemag.shape
     print flux.shape
     #raw_input()
