@@ -265,7 +265,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             if len(fakemag[www]) > 0:
                 print f
                 print 'stopped because has a bad outlier'
-                raw_input()
+                #raw_input()
 
             #for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
             #    if abs(faz - fiz) > 1:
