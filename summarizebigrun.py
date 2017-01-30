@@ -976,7 +976,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     st = np.std(ff)
 
     print max(catmag)
-    raw_input()
+    #raw_input()
     ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
 
     flux = flux[ww]
@@ -1129,10 +1129,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
     ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='blue', orientation='horizontal')
-
-    ax4.scatter(catmag, fresid, alpha=.02, color='blue')
-    ax, ay, aystd = dt.bindata(catmag, fresid,
-                               np.arange(16., max(catmag), .1), window=1.)
+    ww = abs(fresid) < .1
+    ax4.scatter(catmag[ww], fresid[ww], alpha=.02, color='blue')
+    ax, ay, aystd = dt.bindata(catmag[ww], fresid[ww],
+                               np.arange(16., max(catmag[ww]), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
     #ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
