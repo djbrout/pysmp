@@ -1505,7 +1505,8 @@ class smp:
                         #     imfile = imfilel.split('/')[-1]
                         # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                         noisefile = longimfile.split('.fits')[0]+'.weight.fits'
-                        print 'reading in noisefile',noisefile
+
+                        print 'reading in noisefile',noisefile,'asdfasdf'
                         lfz = os.popen('ifdh lss ' + noisefile + '.fz').read()
                         if (len(lfz) > 0):
                             print 'there is fz'
