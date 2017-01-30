@@ -1502,11 +1502,14 @@ class smp:
                         #         0] + '+fakeSN.fits' + ' .').read()
                         #     imfile = imfilel.split('/')[-1]
                         # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                        print 'reading in noisefile'
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
+                        print 'funpacking noisefile'
                         os.popen('funpack ' + noisefile.split('/')[-1] + '.fz')
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         # print 'ifdh cp ' + psffile + ' .'
+                        print 'reading in psf file'
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                         # os.popen('funpack '+psffile)
                         psffile = psffile.split('/')[-1]
