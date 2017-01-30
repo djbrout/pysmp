@@ -1462,7 +1462,7 @@ class smp:
                     #         0] + '+fakeSN.fits' + ' .').read()
                     #     imfile = imfilel.split('/')[-1]
                     # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                    print 'reading in noisefile'
+                    print 'reading in noisefile',noisefile
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + ' .').read()
                     noisefile = noisefile.split('/')[-1]
                     weightsfile = noisefile
