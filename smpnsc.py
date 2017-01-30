@@ -1462,10 +1462,12 @@ class smp:
                     #         0] + '+fakeSN.fits' + ' .').read()
                     #     imfile = imfilel.split('/')[-1]
                     # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
+                    print 'reading in noisefile'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + ' .').read()
                     noisefile = noisefile.split('/')[-1]
                     weightsfile = noisefile
                     # print 'ifdh cp ' + psffile + ' .'
+                    print 'reading in psffile'
                     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                     psffile = psffile.split('/')[-1]
                     # print 'copied all files'
