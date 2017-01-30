@@ -281,8 +281,13 @@ def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
                     # so we can simply compute the sigma-clipped mean of all pixels in
                     # the annulus
                     skybufclipped = sigmaclip( skybuf, low=4.0, high=4.0)
-                    skymod = np.mean( skybufclipped )[0]
-                    skysig = np.std( skybufclipped )[0]
+                    try:
+                        skymod = np.mean( skybufclipped )[0]
+                        skysig = np.std( skybufclipped )[0]
+                    except:
+                        print 'sky buff excepted'
+                        skymod, skysig, skyskw = mmm.mmm(skybuf, readnoise=readnoise, minsky=minsky)
+
                     skyskw = -999#skew( skybufclipped )
 
                 else:
