@@ -374,7 +374,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
-    print fakefiles[ww][((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.04) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] > -.4) & (fakemag[ww]<21.)]
+    print fakefiles[ww][((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.04) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] > -.4) & (fakemag[ww]<22.)]
     raw_input()
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
