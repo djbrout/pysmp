@@ -1507,10 +1507,12 @@ class smp:
                         print 'reading in noisefile'
                         lfz = os.popen('ifdh lss ' + noisefile + '.fz').read()
                         if (len(lfz) > 0):
+                            print 'there is fz'
                             os.popen('ifdh cp ' + noisefile + '.fz .').read()
                             print 'funpacking noisefile'
                             os.popen('funpack ' + noisefile.split('/')[-1] + '.fz')
                         else:
+                            print 'there is no fz'
                             os.popen('ifdh cp ' + noisefile + ' .').read()
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
