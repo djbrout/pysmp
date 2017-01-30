@@ -72,7 +72,7 @@ def grabstardata(imagedir,outfile):
     zptfiles = []
     cntr = 0
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 50000.: break
+        if cntr > 1450.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
