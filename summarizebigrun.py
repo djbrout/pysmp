@@ -376,7 +376,8 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
 
     #print fakefiles[ww][((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.04) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] > -.4) & (fakemag[ww]<22.)]
     #raw_input()
-    print fakefiles
+    for k in np.unique(fakefiles):
+        print k
     raw_input()
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
