@@ -1510,6 +1510,7 @@ class smp:
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
                         # os.popen('funpack '+psffile)
                         psffile = psffile.split('/')[-1]
+                        print 'done grabbing images'
                         # print 'copied all files'
                         # print os.popen('ifdh ls .').read()
                         # sys.exit()
@@ -1528,8 +1529,10 @@ class smp:
                 self.field = np.nan
 
             try:
+                print 'reading in'
                 im = pyfits.getdata(imfile)
                 hdr = pyfits.getheader(imfile)
+                print 'done reading in'
                 #print 'image shape', im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
@@ -2559,6 +2562,7 @@ class smp:
                         sexrms = np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel())* scalefactor
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
+                        print snparams.mjd[i]
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
                         print 'mysky',mysky,'myskysig',skysig
                         #raw_input('youyo')
