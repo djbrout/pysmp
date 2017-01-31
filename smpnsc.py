@@ -495,6 +495,8 @@ class smp:
 
                     'psf_centerx':np.zeros(snparams.nvalid),
                     'psf_centery':np.zeros(snparams.nvalid),
+                    'expnum':np.zeros(snparams.nvalid),
+
                     }
         smp_scale = np.zeros(snparams.nvalid)
         smp_sky = np.zeros(snparams.nvalid)
@@ -2820,6 +2822,7 @@ class smp:
 
                                     fileroot = imfile.split('.fits')[0]
                                     smp_dict['fileroots'][i] = fileroot
+                                    smp_dict['expnum'][i] = self.expnum
                                     #if self.snparams.survey == 'PS1':
                                     #    smp_dict['fullims'].append('%s.fits' % fileroot)
                                     #    smp_dict['impsfs'].append('%s.dao.psf.fits' % fileroot)
@@ -3221,6 +3224,16 @@ class smp:
                 if smp_dict['skyerr'][i] > 1000.:
                     smp_dict['flag'][i] = 1
 
+        print 'MJD', '\t', 'BAND', '\t', 'CCD', '\t', 'FIT_ZPT', '\t', 'EXPNUM', '\t', 'SKY', '\t', 'Skyerr', '\t', 'GAIN', ''
+        psfs = []
+        for i, scale in enumerate(smp_dict['scale']):
+            if i in np.where((smp_dict['flag'] == 1))[0]:
+                print smp_dict['mjd'][i],'\t','FLAGGED'
+            else:
+                fitzpt = smp_dict['zpt'][i]
+                fakezpt = smp_dict['fakezpt'][i]
+                print smp_dict['mjd'][i], filt, self.ccdnum ,round(fitzpt, 2), smp_dict['expnum'][i],\
+                    round(smp_dict['sky'][i], 2), round(smp_dict['skyerr'][i],2), smp_dict['image_filename'][i], smp_dict['gain'][i]
 
         zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
         self.tmpwriter.savez(zptnpz
