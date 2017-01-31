@@ -1340,7 +1340,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 30:
+            if cccc > 3000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2465,6 +2465,7 @@ class smp:
             print 'zpt',zpt,'nominal',firstzpt
             print 'scalefactor',scalefactor
             #print 'before',np.max(im)
+            #im *= self.gain
             im *= scalefactor
             #print 'after',np.max(im)
             #raw_input()
@@ -2749,7 +2750,7 @@ class smp:
 
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
-                                        smp_noise[i,:,:] = noise_stamp*1./sexrms**2 * mask
+                                        smp_noise[i,:,:] = noise_stamp*1./(sexrms/4.)**2 * mask
 
                                     #if round(float(snparams.mjd[j])) == 57011:
                                     #    raw_input()
@@ -2764,6 +2765,9 @@ class smp:
                                     #print 'image-stamp',image_stamp.shape
                                     #print 'smp_im',smp_im[i,:,:].shape,i
 
+                                    # if not self.oldformat:
+                                    #     smp_im[i, :, :] = image_stamp + sexrms**2
+                                    # else:
                                     smp_im[i,:,:] = image_stamp
 
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
@@ -3235,7 +3239,7 @@ class smp:
                 print smp_dict['mjd'][i], filt, self.ccdnum ,round(fitzpt, 2), smp_dict['expnum'][i],\
                     round(smp_dict['sky'][i]/(10**(.4*(31-fitzpt))), 2), \
                     round(smp_dict['skyerr'][i]/(10**(.4*(31-fitzpt))),2),  smp_dict['gain'][i]
-        raw_input()
+        #raw_input()
         zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
         self.tmpwriter.savez(zptnpz
                 , mjd = smp_dict['mjd']
