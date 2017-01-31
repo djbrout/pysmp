@@ -3233,7 +3233,8 @@ class smp:
                 fitzpt = smp_dict['zpt'][i]
                 fakezpt = smp_dict['fakezpt'][i]
                 print smp_dict['mjd'][i], filt, self.ccdnum ,round(fitzpt, 2), smp_dict['expnum'][i],\
-                    round(smp_dict['sky'][i]/(10**(.4*(31-fitzpt))), 2), round(smp_dict['skyerr'][i],2),  smp_dict['gain'][i]
+                    round(smp_dict['sky'][i]/(10**(.4*(31-fitzpt))), 2), \
+                    round(smp_dict['skyerr'][i]/(10**(.4*(31-fitzpt))),2),  smp_dict['gain'][i]
         raw_input()
         zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
         self.tmpwriter.savez(zptnpz
