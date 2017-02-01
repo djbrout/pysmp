@@ -1297,10 +1297,12 @@ class smp:
 
 
 
-            self.laskerstarcat = os.path.join(self.outdir,'stardata','lasker','CCD'+self.ccdnum+'_'+filt+'band.starcat')
-            print self.laskerstarcat
+
 
             if self.fermigrid:
+                self.laskerstarcat = os.path.join(self.outdir, 'stardata', 'lasker',
+                                                  'CCD' + self.ccdnum + '_' + filt + 'band.starcat')
+                print self.laskerstarcat
                 if not startedstarcat:
                     try:
                         os.system('ifdh mkdir '+os.path.join(self.outdir,'stardata'))
