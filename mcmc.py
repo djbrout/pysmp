@@ -911,7 +911,16 @@ class metropolis_hastings():
                     wmask[wmask > -11.] = 1
                     #print np.max(sims),sky
                     #v = ((sims - data) ** 2  * self.mask  * wmask / (1./weights + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
+
+
+
+
+                    #v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sims-sky)/gain  + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
+
+
+
+                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sims-sky)/gain  + (.0056)**2*(sims-sky)**2 + self.readnoise/gain)).ravel()
+
 
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])

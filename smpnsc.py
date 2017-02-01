@@ -2750,7 +2750,7 @@ class smp:
 
                                         #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
-                                        smp_noise[i,:,:] = noise_stamp*1./(sexrms/4.)**2 * mask
+                                        smp_noise[i,:,:] = noise_stamp*1./(sexrms)**2 * mask
 
                                     #if round(float(snparams.mjd[j])) == 57011:
                                     #    raw_input()
