@@ -1342,7 +1342,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 3000:
+            if cccc > 10:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2839,8 +2839,8 @@ class smp:
 
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
-                                    print smp_dict['zpterr']
-                                    raw_input()
+                                    #print smp_dict['zpterr']
+                                    #raw_input()
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
                                     #smp_dict['mjdoff'].append( mjdoff )
                                     #smp_dict['mjdslopeinteroff'].append(mjdslopeinteroff)
