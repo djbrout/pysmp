@@ -234,7 +234,8 @@ class metropolis_hastings():
         self.survey = survey
         self.scalefactor = scalefactor
         self.dontplotstamps = dontplotstamps
-        self.sigmazpt = sigmazpt
+        self.sigmazpt = np.array(sigmazpt)
+        print 'sigmazpt',sigmazpt.shape
 
         # if dobkg :
         #     self.sky = []
@@ -660,7 +661,7 @@ class metropolis_hastings():
         #raw_input()
 
 
-        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask,self.modelvec,self.sigmazpt))
+        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask))
         #print self.csv
         #print csv
         #raw_input()
