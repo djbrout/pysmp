@@ -5630,6 +5630,9 @@ class smp:
         #for f, m in zip(flux_chisq,flux_mychisq):
         #    print f, m
         print '-'*100
+        for fs in flux_star:
+            print fs
+        raw_input()
         #sys.exit()
 
         if self.savezptstamps:
