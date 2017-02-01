@@ -3652,6 +3652,7 @@ class smp:
                     , gain=smp_dict['gain']
                     , dobkg = False
                     , bkg = smp_bkg
+                    , sigmazpt = smp_dict['zpterr']
 
                     )
             modelveco = copy(modelvec)
