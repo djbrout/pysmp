@@ -234,7 +234,7 @@ class metropolis_hastings():
         self.survey = survey
         self.scalefactor = scalefactor
         self.dontplotstamps = dontplotstamps
-
+        self.sigmazpt = sigmazpt
 
         # if dobkg :
         #     self.sky = []
