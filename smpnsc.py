@@ -2210,6 +2210,8 @@ class smp:
 
                     if gogo:
                         try:
+                            print zpt_file
+
                             zptdata = np.load(zpt_file) #load previous zpt information
 
                             print zptdata.keys()
@@ -5216,9 +5218,9 @@ class smp:
             #if i < float(params.numcheckstars):
             #    isnotcheckstars[i] = 0
 
-            #if mc > 21:
-            #    #print mc,'star too dim'
-            #    continue
+            if mc > 21:
+                #print mc,'star too dim'
+                continue
             print i,x,y,mc,s,se
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
@@ -5312,7 +5314,7 @@ class smp:
                         #badflag[i] = 1
                         #mag_cat[i] = 99
                         #print 'badflaggg'*10
-                        print ''
+                        print 'notgood'
                         #print 'star not in fcmp... still including in fit.'
                         #bad = True
                 else:
