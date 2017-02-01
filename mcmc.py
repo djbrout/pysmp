@@ -235,7 +235,7 @@ class metropolis_hastings():
         self.scalefactor = scalefactor
         self.dontplotstamps = dontplotstamps
         self.sigmazpt = np.array(sigmazpt)
-        print 'sigmazpt',sigmazpt.shape
+        print 'sigmazpt',self.sigmazpt.shape
 
         # if dobkg :
         #     self.sky = []
