@@ -3505,6 +3505,7 @@ class smp:
         #self.dosnfit = False
         #sys.exit()
         if self.dosnfit:
+            print 'zpterr', smp_dict['zpterr']
             if not self.dogalfit:
                 try:
                     chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
