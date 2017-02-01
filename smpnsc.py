@@ -6066,7 +6066,8 @@ class smp:
 
         if not bad:
             if rmsaddin > 0.1:
-                'rmsaddin large'*100.
+                print rmsaddin
+                print 'rmsaddin large'*100.
                 bad = True
                 md = 0
                 std = 0
