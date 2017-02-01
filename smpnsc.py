@@ -6065,7 +6065,7 @@ class smp:
             print 'Error : not enough good stars to compute zeropoint!!!'*20
 
         if not bad:
-            if std > 0.1:
+            if std > 0.05:
                 #print rmsaddin
                 #print 'rmsaddin large'*100.
                 bad = True
