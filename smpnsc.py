@@ -5630,9 +5630,7 @@ class smp:
         #for f, m in zip(flux_chisq,flux_mychisq):
         #    print f, m
         print '-'*100
-        for fs in flux_star:
-            print fs
-        raw_input()
+
         #sys.exit()
 
         if self.savezptstamps:
@@ -5711,6 +5709,8 @@ class smp:
 
         #NEED TO MAKE A PLOT HERE!
         print goodstarcols
+
+
         if len(goodstarcols) > self.params.minzptstars:
 
             if not self.dogalsimpixfit:
@@ -5755,7 +5755,7 @@ class smp:
                                     (flux_star > 0) &
                                     (badflag == 0) &
                                     (isnotcheckstars == 1))[0]
-
+            bad = False
             if self.fermilog:
                 self.tmpwriter.appendfile('fitzpt '+str(md)+' +-'+str(std)+' diffimzpt '+str(snparams.zp[j])+'\n', self.fermilogfile)
 
