@@ -140,6 +140,7 @@ class metropolis_hastings():
                 , fileroots = None
                  , dobkg = False
                  , bkg = None
+                 ,sigmazpt=None
                 ):
         '''
         if model is None:
@@ -659,7 +660,7 @@ class metropolis_hastings():
         #raw_input()
 
 
-        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask,self.modelvec))
+        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask,self.modelvec,self.sigmazpt))
         #print self.csv
         #print csv
         #raw_input()
@@ -903,7 +904,7 @@ class metropolis_hastings():
                 self.sims[ epoch,:,:] =  (star_conv + galaxy_conv)*self.mask
     '''
 
-    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,modelvec):
+    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,modelvec,sigmazpt):
         chisq  = 0
 
         if flags == 0:
@@ -921,8 +922,14 @@ class metropolis_hastings():
 
                     sms = sims-sky
                     sms[sms<0] = 0.
+                    lsms = sims-sky
+                    lsms[sms<1.] = 1.
 
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sms)/gain  + (.0056)**2*(sims-sky)**2 + self.readnoise/gain)).ravel()
+                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 +
+                                                                     (sms)/gain + (10**(.4*2.5*np.log10(lsms)) -
+                                                                     10**(.4*(2.5*np.log10(lsms)+sigmazpt)) )**2 +
+                                                                     (.0056)**2*(sims-sky)**2 +
+                                                                     self.readnoise/gain)).ravel()
 
 
                     #v = np.real(v)
