@@ -3489,6 +3489,7 @@ class smp:
                 , platescale = .27
                 , mjdoff = smp_dict['mjdoff']
                 , fitradec = True
+                , sigmazpt = smp_dict['zpterr']
                 )
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps  = aaa.get_params()
 
