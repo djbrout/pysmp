@@ -285,6 +285,9 @@ class metropolis_hastings():
             self.original_psfs = copy(psfs)
             self.weights = weights
 
+        self.wmask = copy(self.weights)
+        self.wmask[self.wmask > -11.] = 1
+
         self.psf_shape = self.psfs[0,:,:].shape
         self.xvals = np.arange(self.psf_shape[0])
         self.yvals = np.arange(self.psf_shape[1])
@@ -656,7 +659,7 @@ class metropolis_hastings():
         #raw_input()
 
 
-        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain))
+        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask,self.modelvec))
         #print self.csv
         #print csv
         #raw_input()
@@ -900,15 +903,14 @@ class metropolis_hastings():
                 self.sims[ epoch,:,:] =  (star_conv + galaxy_conv)*self.mask
     '''
 
-    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain):
+    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,modelvec):
         chisq  = 0
 
         if flags == 0:
             if fitflags == 0:
                 if self.model_errors:
                     #v = ( (sims - data)**2 / (sims/self.gain + (self.readnoise/self.gain)**2) ).ravel()
-                    wmask = copy(weights)
-                    wmask[wmask > -11.] = 1
+
                     #print np.max(sims),sky
                     #v = ((sims - data) ** 2  * self.mask  * wmask / (1./weights + (sims-sky)/gain + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
 
@@ -917,9 +919,10 @@ class metropolis_hastings():
 
                     #v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sims-sky)/gain  + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
 
+                    sms = sims-sky
+                    sms[sms<0] = 0.
 
-
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sims-sky)/gain  + (.0056)**2*(sims-sky)**2 + self.readnoise/gain)).ravel()
+                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sms)/gain  + (.0056)**2*(sims-sky)**2 + self.readnoise/gain)).ravel()
 
 
                     #v = np.real(v)
