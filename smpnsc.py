@@ -2839,6 +2839,8 @@ class smp:
 
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
+                                    print smp_dict['zpterr']
+                                    raw_input()
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
                                     #smp_dict['mjdoff'].append( mjdoff )
                                     #smp_dict['mjdslopeinteroff'].append(mjdslopeinteroff)
