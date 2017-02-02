@@ -1305,7 +1305,7 @@ class smp:
                 print self.laskerstarcat
                 if not startedstarcat:
                     try:
-                        os.system('ifdh mkdir '+os.path.join(self.outdir,'stardata'))
+                        os.system('ifdh  mkdir '+os.path.join(self.outdir,'stardata'))
                     except:
                         pass
                     try:
