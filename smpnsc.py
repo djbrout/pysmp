@@ -2775,7 +2775,7 @@ class smp:
                                     smp_im[i,:,:] = image_stamp
 
                                     print sexsky
-                                    save_fits_image(image_stamp,str(self.snparams.mjd)+'.fits')
+                                    save_fits_image(image_stamp,str(self.snparams.mjd[i])+'.fits')
                                     raw_input()
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
