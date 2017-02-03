@@ -2777,7 +2777,7 @@ class smp:
                                     print xsn,ysn
                                     print sexsky, sexsky/(10**(.4*(31.-zpt)))
                                     print longimfile
-                                    print snparams.fake_truemag[j]
+                                    print snparams.fake_truemag[i]
                                     save_fits_image(image_stamp,str(self.snparams.mjd[i])+'.fits')
                                     raw_input()
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
