@@ -2774,12 +2774,13 @@ class smp:
                                     # else:
                                     smp_im[i,:,:] = image_stamp
                                     #if snparams.fake_truemag[j] < 24:
-                                    print xsn,ysn
-                                    print sexsky, sexsky/(10**(.4*(31.-zpt)))
-                                    print longimfile
-                                    print snparams.fake_truemag[i]
-                                    save_fits_image(image_stamp,str(self.snparams.mjd[i])+'.fits')
-                                    raw_input()
+                                    if '/pnfs/des/persistent/smp/v4/20141001_SN-S1/r_45/' in longimfile:
+                                        print xsn,ysn
+                                        print sexsky, sexsky/(10**(.4*(31.-zpt)))
+                                        print longimfile
+                                        print snparams.fake_truemag[i], zpt
+                                        save_fits_image(image_stamp,str(self.snparams.mjd[i])+'.fits')
+                                        raw_input()
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
                                     if not self.snparams.survey == 'PS1':
