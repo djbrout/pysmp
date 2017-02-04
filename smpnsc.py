@@ -2774,7 +2774,7 @@ class smp:
                                     # else:
                                     smp_im[i,:,:] = image_stamp
                                     #if float(snparams.fake_truemag[j]) < 24:
-                                    if '/pnfs/des/persistent/smp/v4/20131001_SN-S2/r_12/' in longimfile:
+                                    if '/pnfs/des/persistent/smp/v62/20131009_SN-S2/r_12/' in longimfile:
                                         print xsn,ysn
                                         print sexsky, sexsky/(10**(.4*(31.-zpt)))
                                         print longimfile
