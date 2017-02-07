@@ -82,7 +82,8 @@ for i,f in enumerate(commonfiles):
 
                     resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
-                    residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
+                    residstamp.append(v6dat['data'][j,:,:]/10**(.4*(31-v6dat['fitzpt'][j])) - v6dat['sky'][j]/10**(.4*(31-v6dat['fitzpt'][j])) -
+                                      v4dat['data'][ww,:,:]/10**(.4*(31-v4dat['fitzpt'][ww][0]))  + v4dat['sky'][ww]/10**(.4*(31-v4dat['fitzpt'][ww][0])))
     except:
         print 'column not in file'
 
