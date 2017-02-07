@@ -35,6 +35,8 @@ bigv6mjd = []
 bigv4mjd = []
 bigv6fitflux = []
 bigv4fitflux = []
+bigv6sky = []
+bigv4sky = []
 resid = []
 residstamp = []
 
@@ -73,6 +75,8 @@ for i,f in enumerate(commonfiles):
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
+                    bigv6sky.append(v6dat['sky'][j])
+                    bigv4sky.append(v4dat['sky'][ww][0])
 
                     resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
@@ -114,16 +118,25 @@ for i,r in enumerate(residstamp):
     if fakemag[i] < 24.:
         fig = plt.figure()
         plt.clf()
-        ax = plt.subplot(111)
-        print np.array(r[0,:,:]).shape
-        print max(np.array(r[0,:,:]).ravel()), min(np.array(r[0,:,:]).ravel())
+        plt.subplot(131)
+        plt.title('Fakemag: '+str(round(fakemag[i],2))+'\n Residual Flux: '+str(round(resid[i])))
+
         plt.imshow(np.array(r[0,:,:]), cmap='gray', interpolation='nearest')
         plt.colorbar()
+        plt.subplot(132)
+        plt.title('V6')
+
+        plt.imshow(np.array(bigv6stamps[i][0, :, :]-bigv6sky[i]), cmap='gray', interpolation='nearest')
+        plt.colorbar()
+        plt.subplot(133)
+        plt.title('V4')
+        plt.imshow(np.array(bigv4stamps[i][0, :, :]-bigv4sky[i]), cmap='gray', interpolation='nearest')
+        plt.colorbar()
+
         # try:
         #     cbar = fig.colorbar(ax)
         # except:
         #     print 'could not produce a color bar'
-        plt.title('Fakemag: '+str(round(fakemag[i],2))+' Residual Flux: '+str(round(resid[i])))
 
         #if cntr%1 == 0:
         pdf_pages.savefig(fig)
