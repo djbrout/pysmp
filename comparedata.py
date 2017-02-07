@@ -73,7 +73,7 @@ for i,f in enumerate(commonfiles):
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
-                    resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
+                    resid.append(-1*np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
                     residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
     except:
@@ -89,7 +89,7 @@ print bigv4mjd.shape,bigv6mjd.shape,resid.shape
 
 plt.scatter(10**(.4*(31.-fakemag)),resid)
 plt.xlabel('Fake Flux')
-plt.ylabel('DATA RESIDUAL FLUX')
+plt.ylabel('V4-V6 RESIDUAL DATA FLUX')
 plt.savefig('resid.png')
 
 from matplotlib.backends.backend_pdf import PdfPages
