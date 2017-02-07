@@ -61,7 +61,7 @@ for i,f in enumerate(commonfiles):
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
 
-                    resid.append(np.sum((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'] ).ravel()))
+                    resid.append(np.sum((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][j] ).ravel()))
     #except:
     #    print 'column not in file'
 
