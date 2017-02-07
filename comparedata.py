@@ -41,8 +41,8 @@ for i,f in enumerate(commonfiles):
             if m != 0 :
                 ww = v4dat['mjd'] == m
 
-                bigv6fakemags.append(v6dat['fakemags'][j])
-                bigv4fakemags.append(v4dat['fakemags'][ww])
+                bigv6fakemags.append(v6dat['fakemag'][j])
+                bigv4fakemags.append(v4dat['fakemag'][ww])
 
                 bigv6stamps.append(v6dat['data'][j])
                 bigv4stamps.append(v4dat['data'][ww])
