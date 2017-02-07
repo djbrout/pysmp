@@ -36,23 +36,24 @@ for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
     print i
-    for j,m in enumerate(v6dat['mjd']):
+    try:
+        for j,m in enumerate(v6dat['mjd']):
 
-        if m in v4dat['mjd']:
-            if m != 0 :
-                ww = v4dat['mjd'] == m
+            if m in v4dat['mjd']:
+                if m != 0 :
+                    ww = v4dat['mjd'] == m
 
-                bigv6fakemags.append(v6dat['fakemag'][j])
-                bigv4fakemags.append(v4dat['fakemag'][ww])
+                    bigv6fakemags.append(v6dat['fakemag'][j])
+                    bigv4fakemags.append(v4dat['fakemag'][ww])
 
-                bigv6stamps.append(v6dat['data'][j])
-                bigv4stamps.append(v4dat['data'][ww])
+                    bigv6stamps.append(v6dat['data'][j])
+                    bigv4stamps.append(v4dat['data'][ww])
 
-                bigv6mjd.append(v6dat['mjd'][j])
-                bigv4mjd.append(v4dat['mjd'][ww])
+                    bigv6mjd.append(v6dat['mjd'][j])
+                    bigv4mjd.append(v4dat['mjd'][ww])
 
-                bigv6fitflux.append(v6dat['modelvec'][j])
-                bigv4fitflux.append(v4dat['modelvec'][ww])
+                    bigv6fitflux.append(v6dat['modelvec'][j])
+                    bigv4fitflux.append(v4dat['modelvec'][ww])
 
 
 bigv6mjd = np.array(bigv6mjd)
