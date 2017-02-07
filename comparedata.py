@@ -94,6 +94,8 @@ for i,r in enumerate(residstamp):
 
         ax = plt.subplot(330+cntr%9)
         print np.array(r[0,:,:]).shape
+        print max(np.array(r[0,:,:])),print min(np.array(r[0,:,:]))
+
 
         ax.imshow(np.array(r[0]), cmap='gray', interpolation='nearest')
 
