@@ -128,8 +128,8 @@ for i,r in enumerate(residstamp):
         plt.subplot(132)
         plt.title('V6')
 
-        mn = min((bigv6stamps[i]-bigv6sky[i]).ravel().extend((bigv4stamps[i]-bigv4sky[i])))
-        mx = max((bigv6stamps[i]-bigv6sky[i]).ravel().extend((bigv4stamps[i]-bigv4sky[i])))
+        mn = min(list((bigv6stamps[i]-bigv6sky[i]).ravel()).extend(list((bigv4stamps[i]-bigv4sky[i]).ravel())))
+        mx = max(list((bigv6stamps[i]-bigv6sky[i]).ravel()).extend(list((bigv4stamps[i]-bigv4sky[i]).ravel())))
 
         plt.imshow(np.array(bigv6stamps[i]-bigv6sky[i]), cmap='gray', interpolation='nearest',vmin=mn,vmax=mx)
         plt.colorbar()
