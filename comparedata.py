@@ -51,7 +51,7 @@ for i,f in enumerate(commonfiles):
                     v4dat['sky']
                     v6dat['sky']
                     ww = v4dat['mjd'] == m
-
+                    print v6dat['fakemag'][j],v4dat['fakemag'][ww][0]
                     bigv6fakemags.append(v6dat['fakemag'][j])
                     bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
@@ -65,6 +65,8 @@ for i,f in enumerate(commonfiles):
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
                     resid.append(np.sum((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] ).ravel()))
+
+                    residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
     except:
         print 'column not in file'
 
@@ -80,3 +82,7 @@ plt.scatter(10**(.4*(31.-fakemag)),resid)
 plt.xlabel('Fake Flux')
 plt.ylabel('DATA RESIDUAL FLUX')
 plt.savefig('resid.png')
+
+
+for i,r in enumerate(residstamp):
+    if fakemag < 22.:
