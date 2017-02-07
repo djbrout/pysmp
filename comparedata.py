@@ -60,3 +60,5 @@ for i,f in enumerate(commonfiles):
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
 print bigv4mjd.shape,bigv6mjd.shape
+
+
