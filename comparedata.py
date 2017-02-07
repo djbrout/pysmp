@@ -56,7 +56,7 @@ for i,f in enumerate(commonfiles):
     v4dat = np.load(v4dir + f)
     print v6dat.keys()
 
-    if True:
+    try:
         for j,m in enumerate(v6dat['mjd']):
 
             if m in v4dat['mjd']:
@@ -69,7 +69,7 @@ for i,f in enumerate(commonfiles):
                     bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
                     bigv6stamps.append(v6dat['data'][j,:,:]*10**(.4*(31-v6dat['fitzpt'][j])))
-                    bigv4stamps.append(v4dat['data'][ww][0,:,:]*10**(.4(31-v4dat['fitzpt'][ww][0])))
+                    bigv4stamps.append(v4dat['data'][ww][0,:,:]*10**(.4*(31-v4dat['fitzpt'][ww][0])))
 
                     bigv6mjd.append(v6dat['mjd'][j])
                     bigv4mjd.append(v4dat['mjd'][ww][0])
@@ -83,8 +83,8 @@ for i,f in enumerate(commonfiles):
                     resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
                     residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
-    # except:
-    #     print 'column not in file'
+    except:
+        print 'column not in file'
 
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
