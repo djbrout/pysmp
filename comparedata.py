@@ -118,10 +118,10 @@ for i,r in enumerate(residstamp):
 
         ax.imshow(np.array(r[0,:,:]), cmap='gray', interpolation='nearest')
 
-        #try:
-        #    cbar = fig.colorbar(ax)
-        #except:
-        #    print 'could not produce a color bar'
+        try:
+            cbar = fig.colorbar(ax)
+        except:
+            print 'could not produce a color bar'
         ax.set_title('Fakemag: '+str(round(fakemag[i],2))+' Residual Flux: '+str(round(resid[i])))
 
         #if cntr%1 == 0:
