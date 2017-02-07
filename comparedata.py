@@ -2,7 +2,7 @@ import numpy as np
 import os
 
 v6dir = '/pnfs/des/scratch/pysmp/smp_v622/np_data/r/'
-v4dir = '/pnfs/des/scratch/pysmp/smp_v4/np_data/r/'
+v4dir = '/pnfs/des/scratch/pysmp/smp_v42/np_data/r/'
 
 f6 = os.listdir(v6dir)
 ff6 = []
