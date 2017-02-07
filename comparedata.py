@@ -40,12 +40,13 @@ for i,f in enumerate(commonfiles):
     print i
     print v4dat.keys()
     print v6dat.keys()
-    if True:
+    try:
         for j,m in enumerate(v6dat['mjd']):
 
             if m in v4dat['mjd']:
                 if m != 0 :
-
+                    v4dat['sky']
+                    v6dat['sky']
                     ww = v4dat['mjd'] == m
 
                     bigv6fakemags.append(v6dat['fakemag'][j])
@@ -60,10 +61,9 @@ for i,f in enumerate(commonfiles):
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
-
                     resid.append(np.sum((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][j] ).ravel()))
-    #except:
-    #    print 'column not in file'
+    except:
+        print 'column not in file'
 
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
