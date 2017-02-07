@@ -68,8 +68,8 @@ for i,f in enumerate(commonfiles):
                     bigv6fakemags.append(v6dat['fakemag'][j])
                     bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
-                    bigv6stamps.append(v6dat['data'][j,:,:]/10**(.4*(31-v6dat['fitzpt'][j])))
-                    bigv4stamps.append(v4dat['data'][ww][0,:,:]/10**(.4*(31-v4dat['fitzpt'][ww][0])))
+                    bigv6stamps.append(v6dat['data'][j,:,:])#/10**(.4*(31-v6dat['fitzpt'][j])))
+                    bigv4stamps.append(v4dat['data'][ww][0,:,:])#/10**(.4*(31-v4dat['fitzpt'][ww][0])))
 
                     bigv6mjd.append(v6dat['mjd'][j])
                     bigv4mjd.append(v4dat['mjd'][ww][0])
@@ -132,7 +132,7 @@ for i,r in enumerate(residstamp):
         plt.colorbar()
         plt.subplot(133)
         plt.title('V4')
-        plt.imshow(np.array(bigv4stamps[i]--bigv4sky[i]), cmap='gray', interpolation='nearest')
+        plt.imshow(np.array(bigv4stamps[i]-bigv4sky[i]), cmap='gray', interpolation='nearest')
         plt.colorbar()
 
         # try:
