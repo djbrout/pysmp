@@ -75,8 +75,8 @@ bigv4mjd = np.array(bigv4mjd)
 resid = np.array(resid)
 fakemag = np.array(bigv6fakemags)
 print bigv4mjd.shape,bigv6mjd.shape,resid.shape
-for r in resid:
-    print r
+#for r in resid:
+#    print r
 
 plt.scatter(10**(.4*(31.-fakemag)),resid)
 plt.xlabel('Fake Flux')
