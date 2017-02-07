@@ -114,7 +114,7 @@ for i,r in enumerate(residstamp):
     if fakemag[i] < 24.:
         fig = plt.figure()
         plt.clf()
-        ax = plt.subplot(131)
+        ax = plt.subplot(111)
         print np.array(r[0,:,:]).shape
         print max(np.array(r[0,:,:]).ravel()), min(np.array(r[0,:,:]).ravel())
         plt.imshow(np.array(r[0,:,:]), cmap='gray', interpolation='nearest')
@@ -123,7 +123,7 @@ for i,r in enumerate(residstamp):
         #     cbar = fig.colorbar(ax)
         # except:
         #     print 'could not produce a color bar'
-        ax.set_title('Fakemag: '+str(round(fakemag[i],2))+' Residual Flux: '+str(round(resid[i])))
+        plt.title('Fakemag: '+str(round(fakemag[i],2))+' Residual Flux: '+str(round(resid[i])))
 
         #if cntr%1 == 0:
         pdf_pages.savefig(fig)
