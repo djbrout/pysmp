@@ -1,6 +1,10 @@
 import numpy as np
 import os
 
+import matplotlib as m
+m.use('Agg')
+import matplotlib.pyplot as plt
+
 v6dir = '/pnfs/des/scratch/pysmp/smp_v622/np_data/r/'
 v4dir = '/pnfs/des/scratch/pysmp/smp_v42/np_data/r/'
 
@@ -67,8 +71,12 @@ for i,f in enumerate(commonfiles):
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
 resid = np.array(resid)
+fakemag = np.array(bigv6fakemags)
 print bigv4mjd.shape,bigv6mjd.shape,resid.shape
 for r in resid:
     print r
 
-
+plt.scatter(10**(.4*(31.-fakemag)),resid)
+plt.xlabel('Fake Flux')
+plt.ylabel('DATA RESIDUAL FLUX')
+plt.savefig('resid.png')
