@@ -34,7 +34,7 @@ bigv4fitflux = []
 for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
-
+    print i
     for j,m in enumerate(v6dat['mjd']):
 
         if m in v4dat['mjd']:
