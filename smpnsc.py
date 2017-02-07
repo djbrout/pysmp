@@ -1342,7 +1342,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 10:
+            if cccc > 1000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2787,7 +2787,7 @@ class smp:
                                         smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
                                     else:
                                         smp_psf[i, :, :] = psf_stamp
-
+                                    save_fits_image(psf_stamp,'test.psf')
                                     c = 20
                                     psa = self.snparams.platescale
 
