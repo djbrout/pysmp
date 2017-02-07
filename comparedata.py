@@ -56,7 +56,7 @@ for i,f in enumerate(commonfiles):
     v4dat = np.load(v4dir + f)
     print v6dat.keys()
 
-    try:
+    if True:
         for j,m in enumerate(v6dat['mjd']):
 
             if m in v4dat['mjd']:
@@ -83,8 +83,8 @@ for i,f in enumerate(commonfiles):
                     resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
                     residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
-    except:
-        print 'column not in file'
+    # except:
+    #     print 'column not in file'
 
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
