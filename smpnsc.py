@@ -3664,6 +3664,10 @@ class smp:
                     , dobkg = False
                     , bkg = smp_bkg
                     , sigmazpt = smp_dict['zpterr']
+                    , fakemag = smp_dict['fakemag']
+                    , fitzpt = smp_dict['zpt']
+                    , fakezpt = smp_dict['fakezpt']
+                    , datafilenames = smp_dict['image_filename']
 
                     )
             modelveco = copy(modelvec)

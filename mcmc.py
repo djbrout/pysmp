@@ -141,6 +141,10 @@ class metropolis_hastings():
                  , dobkg = False
                  , bkg = None
                  ,sigmazpt=None
+                 ,fakemag=None
+                 ,fitzpt=None
+                 ,fakezpt=None
+                 ,datafilenames=None
                 ):
         '''
         if model is None:
@@ -235,6 +239,10 @@ class metropolis_hastings():
         self.scalefactor = scalefactor
         self.dontplotstamps = dontplotstamps
         self.sigmazpt = sigmazpt
+        self.fakemag = fakemag
+        self.fakezpt=fakezpt
+        self.fitzpt=fitzpt
+        self.datafilenames = datafilenames
         print 'sigmazpt',self.sigmazpt.shape
 
         # if dobkg :
@@ -1247,7 +1255,8 @@ class metropolis_hastings():
                  modelvec_nphistory=self.modelvec_nphistory, galmodel_nphistory=self.galmodel_nphistory,
                  sims=self.sims,data=self.data,accepted_history=self.accepted_history,chisqhist=self.chisq,
                  redchisqhist=self.redchisq,xhistory=np.array(self.xhistory),yhistory=np.array(self.yhistory),
-                 chisqvec=self.csv,raoff=raoff,decoff=decoff)
+                 chisqvec=self.csv,raoff=raoff,decoff=decoff,mjd=self.mjd,fakemag=self.fakemag,fitzpt=self.fitzpt,
+                             fakezpt=self.fakezpt,datafilenames=self.datafilenames)
 
     def savefig(self, fname):
         if self.isfermigrid and self.isworker:
