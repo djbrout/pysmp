@@ -66,8 +66,9 @@ for i,f in enumerate(commonfiles):
                     bigv6fakemags.append(v6dat['fakemag'][j])
                     bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
+                    print v4dat['data'][ww].shape
                     bigv6stamps.append(v6dat['data'][j,:,:])
-                    bigv4stamps.append(v4dat['data'][ww,:,:])
+                    bigv4stamps.append(v4dat['data'][ww])
 
                     bigv6mjd.append(v6dat['mjd'][j])
                     bigv4mjd.append(v4dat['mjd'][ww][0])
