@@ -54,7 +54,8 @@ for i,f in enumerate(commonfiles):
 
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww])
-
+    except:
+        print 'column not in file'
 
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
