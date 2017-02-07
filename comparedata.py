@@ -97,7 +97,7 @@ for i,r in enumerate(residstamp):
         print max(np.array(r[0,:,:]).ravel()), min(np.array(r[0,:,:]).ravel())
 
 
-        ax.imshow(np.array(r[0]), cmap='gray', interpolation='nearest')
+        ax.imshow(np.array(r[0,:,:]), cmap='gray', interpolation='nearest')
 
         try:
             cbar = fig.colorbar(ax)
