@@ -537,7 +537,7 @@ class smp:
             datf = os.path.join(npoutdir, filename + '_withSn.npz')
             print datf
             ls = os.popen('ifdh ls ' + datf).read()
-            print 'ls',ls
+            #print 'ls',ls
             print len(ls) > 0
             #raw_input('hhhh')
             if len(ls) > 0:
