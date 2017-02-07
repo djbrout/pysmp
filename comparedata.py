@@ -91,7 +91,7 @@ for i,r in enumerate(residstamp):
     #print np.array(r).shape
     if fakemag[i] < 24.:
 
-        ax = plt.subplot(550+i%25)
+        ax = plt.subplot(330+i%9)
         print np.array(r[0,:,:]).shape
 
         ax.imshow(np.array(r[0]), cmap='gray', interpolation='nearest')
@@ -102,10 +102,10 @@ for i,r in enumerate(residstamp):
             print 'could not produce a color bar'
         ax.set_title('Fakemag '+str(round(fakemag[i],2)))
 
-        if i%25 == 0:
+        if i%9 == 0:
             pdf_pages.savefig(fig)
             fig = plt.figure()
             plt.clf()
 
-if i%25 > 0:
+if i%9 > 0:
     pdf_pages.savefig(fig)
