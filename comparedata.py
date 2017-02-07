@@ -38,11 +38,14 @@ for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
     print i
+    print v4dat.keys()
+    print v6dat.keys()
     try:
         for j,m in enumerate(v6dat['mjd']):
 
             if m in v4dat['mjd']:
                 if m != 0 :
+
                     ww = v4dat['mjd'] == m
 
                     bigv6fakemags.append(v6dat['fakemag'][j])
