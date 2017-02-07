@@ -51,7 +51,7 @@ for i,f in enumerate(commonfiles):
                     v4dat['sky']
                     v6dat['sky']
                     ww = v4dat['mjd'] == m
-                    print v6dat['fakemag'][j],v4dat['fakemag'][ww][0]
+                    #print v6dat['fakemag'][j],v4dat['fakemag'][ww][0]
                     bigv6fakemags.append(v6dat['fakemag'][j])
                     bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
@@ -92,8 +92,8 @@ for i,r in enumerate(residstamp):
     if fakemag[i] < 24.:
 
         ax = plt.subplot(550+i%25)
-
-        ax.imshow(r[0,:,:], cmap='gray', interpolation='nearest')
+        print np.array(r[0,:,:]).shape
+        ax.imshow(np.array(r[0]), cmap='gray', interpolation='nearest')
 
         cbar = fig.colorbar(ax)
 
