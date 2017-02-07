@@ -38,6 +38,15 @@ bigv4fitflux = []
 resid = []
 residstamp = []
 
+substamp = 30
+mask = np.zeros((substamp,substamp))
+skyerr_radius = 7.
+for x in np.arange(substamp):
+    for y in np.arange(substamp):
+        if np.sqrt((substamp / 2. - x) ** 2 + (substamp / 2. - y) ** 2) < skyerr_radius:
+
+            mask[int(x), int(y)] = 1.
+
 for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
@@ -64,7 +73,7 @@ for i,f in enumerate(commonfiles):
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
-                    resid.append(np.sum((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] ).ravel()))
+                    resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
                     residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
     except:
