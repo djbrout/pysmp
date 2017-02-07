@@ -20,6 +20,7 @@ for f in f4:
 commonfiles = []
 for f in ff6:
     if f in ff4:
+        print f
         commonfiles.append(f)
 
 bigv6stamps = []
