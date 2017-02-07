@@ -37,6 +37,8 @@ bigv6fitflux = []
 bigv4fitflux = []
 bigv6sky = []
 bigv4sky = []
+bigv6zpt = []
+bigv4zpt = []
 resid = []
 residstamp = []
 
@@ -66,8 +68,8 @@ for i,f in enumerate(commonfiles):
                     bigv6fakemags.append(v6dat['fakemag'][j])
                     bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
-                    bigv6stamps.append(v6dat['data'][j,:,:])
-                    bigv4stamps.append(v4dat['data'][ww][0,:,:])
+                    bigv6stamps.append(v6dat['data'][j,:,:]*10**(.4*(31-v6dat['fitzpt'][j])))
+                    bigv4stamps.append(v4dat['data'][ww][0,:,:]*10**(.4(31-v4dat['fitzpt'][ww][0])))
 
                     bigv6mjd.append(v6dat['mjd'][j])
                     bigv4mjd.append(v4dat['mjd'][ww][0])
