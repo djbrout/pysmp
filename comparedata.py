@@ -44,16 +44,16 @@ for i,f in enumerate(commonfiles):
                     ww = v4dat['mjd'] == m
 
                     bigv6fakemags.append(v6dat['fakemag'][j])
-                    bigv4fakemags.append(v4dat['fakemag'][ww])
+                    bigv4fakemags.append(v4dat['fakemag'][ww][0])
 
                     bigv6stamps.append(v6dat['data'][j])
                     bigv4stamps.append(v4dat['data'][ww])
 
                     bigv6mjd.append(v6dat['mjd'][j])
-                    bigv4mjd.append(v4dat['mjd'][ww])
+                    bigv4mjd.append(v4dat['mjd'][ww][0])
 
                     bigv6fitflux.append(v6dat['modelvec'][j])
-                    bigv4fitflux.append(v4dat['modelvec'][ww])
+                    bigv4fitflux.append(v4dat['modelvec'][ww][0])
     except:
         print 'column not in file'
 
