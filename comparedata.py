@@ -96,9 +96,12 @@ plt.ylabel('V6-V4 RESIDUAL DATA FLUX')
 plt.savefig('resid.png')
 
 plt.clf()
-plt.scatter(resid,bigv6fitflux-bigv4fitflux)
+plt.scatter(resid,bigv6fitflux-bigv4fitflux,alpha=.5)
 plt.xlabel('DATA Residual Flux (V6-V4)')
 plt.ylabel('MODEL Residual Flux (V6-V4)')
+plt.xlim(-1000,1000)
+plt.ylim(-1000,1000)
+plt.plot([-1000,1000],[-1000,1000],color='black')
 plt.savefig('residc.png')
 
 from matplotlib.backends.backend_pdf import PdfPages
