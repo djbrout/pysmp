@@ -116,7 +116,7 @@ plt.clf()
 for i,r in enumerate(residstamp):
     #print np.array(r).shape
     if fakemag[i] < 24.:
-        fig = plt.figure()
+        fig = plt.figure(figsize=(20,20))
         plt.clf()
         plt.subplot(131)
         plt.title('Fakemag: '+str(round(fakemag[i],2))+'\n Residual Flux: '+str(round(resid[i])))
