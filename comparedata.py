@@ -93,10 +93,13 @@ for i,r in enumerate(residstamp):
 
         ax = plt.subplot(550+i%25)
         print np.array(r[0,:,:]).shape
+
         ax.imshow(np.array(r[0]), cmap='gray', interpolation='nearest')
 
-        cbar = fig.colorbar(ax)
-
+        try:
+            cbar = fig.colorbar(ax)
+        except:
+            print 'could not produce a color bar'
         ax.set_title('Fakemag '+str(round(fakemag[i],2)))
 
         if i%25 == 0:
