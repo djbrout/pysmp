@@ -88,12 +88,12 @@ pdf_pages = PdfPages('v4v6_resid.pdf')
 fig = plt.figure()
 plt.clf()
 for i,r in enumerate(residstamp):
-    print np.array(r).shape
+    #print np.array(r).shape
     if fakemag[i] < 24.:
 
         ax = plt.subplot(550+i%25)
 
-        ax.imshow(r, cmap='gray', interpolation='nearest')
+        ax.imshow(r[0], cmap='gray', interpolation='nearest')
 
         cbar = fig.colorbar(ax)
 
