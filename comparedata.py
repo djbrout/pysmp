@@ -74,7 +74,7 @@ for i,f in enumerate(commonfiles):
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
 
 
-                    resid.append(-1*np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
+                    resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
 
                     residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
     except:
@@ -92,13 +92,13 @@ print bigv4mjd.shape,bigv6mjd.shape,resid.shape
 
 plt.scatter(10**(.4*(31.-fakemag)),resid)
 plt.xlabel('Fake Flux')
-plt.ylabel('V4-V6 RESIDUAL DATA FLUX')
+plt.ylabel('V6-V4 RESIDUAL DATA FLUX')
 plt.savefig('resid.png')
 
 plt.clf()
-plt.scatter(resid,bigv4fitflux-bigv6fitflux)
-plt.xlabel('DATA Residual Flux (V4-V6)')
-plt.ylabel('MODEL Residual Flux (V4-V6)')
+plt.scatter(resid,bigv6fitflux-bigv4fitflux)
+plt.xlabel('DATA Residual Flux (V6-V4)')
+plt.ylabel('MODEL Residual Flux (V6-V4)')
 plt.savefig('residc.png')
 
 from matplotlib.backends.backend_pdf import PdfPages
@@ -111,17 +111,15 @@ for i,r in enumerate(residstamp):
     if fakemag[i] < 24.:
         fig = plt.figure()
         plt.clf()
-        ax = plt.subplot(111)
+        ax = plt.subplot(131)
         print np.array(r[0,:,:]).shape
         print max(np.array(r[0,:,:]).ravel()), min(np.array(r[0,:,:]).ravel())
-
-
         ax.imshow(np.array(r[0,:,:]), cmap='gray', interpolation='nearest')
-
-        try:
-            cbar = fig.colorbar(ax)
-        except:
-            print 'could not produce a color bar'
+        plt.colorbar()
+        # try:
+        #     cbar = fig.colorbar(ax)
+        # except:
+        #     print 'could not produce a color bar'
         ax.set_title('Fakemag: '+str(round(fakemag[i],2))+' Residual Flux: '+str(round(resid[i])))
 
         #if cntr%1 == 0:
