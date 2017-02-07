@@ -93,7 +93,7 @@ for i,r in enumerate(residstamp):
 
         ax = plt.subplot(550+i%25)
 
-        ax.imshow(r[0], cmap='gray', interpolation='nearest')
+        ax.imshow(r[0,:,:], cmap='gray', interpolation='nearest')
 
         cbar = fig.colorbar(ax)
 
