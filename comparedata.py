@@ -86,3 +86,4 @@ plt.savefig('resid.png')
 
 for i,r in enumerate(residstamp):
     if fakemag < 22.:
+        pass
