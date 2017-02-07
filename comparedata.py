@@ -31,6 +31,8 @@ bigv6mjd = []
 bigv4mjd = []
 bigv6fitflux = []
 bigv4fitflux = []
+resid = []
+residstamp = []
 
 for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
@@ -54,11 +56,17 @@ for i,f in enumerate(commonfiles):
 
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
+
+
+                    resid.append(np.sum((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'] ).ravel()))
     except:
         print 'column not in file'
 
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
-print bigv4mjd.shape,bigv6mjd.shape
+resid = np.array(resid)
+print bigv4mjd.shape,bigv6mjd.shape,resid.shape
+for r in resid:
+    print r
 
 
