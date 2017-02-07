@@ -22,5 +22,12 @@ for f in ff6:
     if f in ff4:
         commonfiles.append(f)
 
+bigv6stamps = []
+bigv4stamps = []
+bigfakemags = []
+bigfakefluxs = []
 for f in commonfiles:
-    print f
+    v6dat = np.load(v6dir+f)
+    v4dat = np.load(v4dir + f)
+    print v6dat.keys()
+    raw_input()
