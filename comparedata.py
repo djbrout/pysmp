@@ -83,7 +83,25 @@ plt.xlabel('Fake Flux')
 plt.ylabel('DATA RESIDUAL FLUX')
 plt.savefig('resid.png')
 
-
+from matplotlib.backends.backend_pdf import PdfPages
+pdf_pages = PdfPages('v4v6_resid.pdf')
+fig = plt.figure()
+plt.clf()
 for i,r in enumerate(residstamp):
-    if fakemag < 22.:
-        pass
+    if fakemag[i] < 24.:
+
+        ax = plt.subplot(550+i%25)
+
+        ax.imshow(r, cmap='gray', interpolation='nearest')
+
+        cbar = fig.colorbar(ax)
+
+        ax.set_title('Fakemag '+str(round(fakemag[i],2)))
+
+        if i%25 == 0:
+            pdf_pages.savefig(fig)
+            fig = plt.figure()
+            plt.clf()
+
+if i%25 > 0:
+    pdf_pages.savefig(fig)
