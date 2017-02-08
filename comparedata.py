@@ -61,7 +61,8 @@ for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
     print v6dat.keys()
-
+    if i > 0:
+        continue
     #if True:
     try:
         for j,m in enumerate(v6dat['mjd']):
@@ -148,7 +149,7 @@ for i,r in enumerate(residstamp):
         plt.subplot(131)
         plt.title('Fakemag: '+str(round(fakemag[i],2))+'\n Residual Flux: '+str(round(resid[i])))
 
-        plt.imshow(np.array(r[0,:,:]), cmap='gray', interpolation='nearest')
+        plt.imshow(np.array(r[:,:]), cmap='gray', interpolation='nearest')
         plt.colorbar()
         plt.subplot(132)
         plt.title('V6')
