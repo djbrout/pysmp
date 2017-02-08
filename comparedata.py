@@ -4,9 +4,13 @@ import os
 import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
+import pyfits as pf
 
 v6dir = '/pnfs/des/scratch/pysmp/smp_v622/np_data/r/'
 v4dir = '/pnfs/des/scratch/pysmp/smp_v42/np_data/r/'
+
+v6root = '/pnfs/des/persistent/smp/v62/'
+v4root = '/pnfs/des/persistent/smp/v4/'
 
 f6 = os.listdir(v6dir)
 ff6 = []
@@ -29,6 +33,8 @@ for f in ff6:
 
 bigv6stamps = []
 bigv4stamps = []
+bigv6ostamps = []
+bigv4ostamps = []
 bigv6fakemags = []
 bigv4fakemags = []
 bigv6mjd = []
@@ -63,6 +69,8 @@ for i,f in enumerate(commonfiles):
                 if m != 0 :
                     v4dat['sky']
                     v6dat['sky']
+                    v6dat['x']
+                    v4dat['y']
                     ww = v4dat['mjd'] == m
                     #print v6dat['fakemag'][j],v4dat['fakemag'][ww][0]
                     bigv6fakemags.append(v6dat['fakemag'][j])
@@ -70,6 +78,16 @@ for i,f in enumerate(commonfiles):
 
                     bigv6stamps.append(v6dat['data'][j,:,:])#*10**(.4*(31-v6dat['fitzpt'][j])))
                     bigv4stamps.append(v4dat['data'][ww][0,:,:])#*10**(.4*(31-v4dat['fitzpt'][ww][0])))
+
+                    v6data = pf.getdata(v6root+v6dat['datafilename'][j])
+                    v4data = pf.getdata(v4root+v4dat['datafilename'][ww][0])
+
+                    x = int(v6dat['x'][j])
+                    y = int(v6dat['y'][j])
+                    v6data = v6data[y-30:y+30,x-30:x+30]
+                    v4data = v4data[y-30:y+30,x-30:x+30]
+
+                    bigv6ostamps.append(v6data)
 
                     bigv6mjd.append(v6dat['mjd'][j])
                     bigv4mjd.append(v4dat['mjd'][ww][0])
@@ -80,9 +98,15 @@ for i,f in enumerate(commonfiles):
                     bigv6sky.append(v6dat['sky'][j])
                     bigv4sky.append(v4dat['sky'][ww][0])
 
-                    resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
+                    v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
+                    v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
 
-                    residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
+                    #resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
+                    resid.append(np.sum(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel()))
+
+                    #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
+                    residstamp.append(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel())
+
     except:
         print 'column not in file'
 
