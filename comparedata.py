@@ -48,7 +48,7 @@ bigv4zpt = []
 resid = []
 residstamp = []
 
-substamp = 30
+substamp = 60
 mask = np.zeros((substamp,substamp))
 skyerr_radius = 7.
 for x in np.arange(substamp):
