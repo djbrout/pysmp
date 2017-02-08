@@ -1548,6 +1548,7 @@ class smp:
             try:
                 print 'reading in'
                 im = pyfits.getdata(imfile)
+                im += 600.
                 hdr = pyfits.getheader(imfile)
                 print 'done reading in'
                 #print 'image shape', im.shape
