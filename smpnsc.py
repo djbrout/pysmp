@@ -70,7 +70,7 @@ snvarnameslist = {'ID_OBS': 'string','ID_COADD': 'string','MJD':'float','BAND':'
 snvarnameslist_ps = {'ID_OBS': 'string', 'ID_COADD': 'string', 'MJD': 'float', 'BAND': 'string',
                   'IMAGE_NAME_SEARCH': 'string', 'IMAGE_NAME_MASK': 'string', 'IMAGE_NAME_NOISE': 'string',
                   'FILE_NAME_PSF': 'string', 'FAKE_TRUEMAG': 'float', 'ZP': 'float',
-                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string'}
+                  'FLUX': 'float', 'FLUXERR': 'float', 'PHOTFLAG': 'string','SKYSIG':'float'}
 
 paramkeywordlist = {'STAMPSIZE':'float ','RADIUS1':'float',
                     'RADIUS2':'float','SUBSTAMP':'float',
@@ -2810,6 +2810,8 @@ class smp:
                                     #     #raw_input()
 
                                     if self.snparams.survey == 'PS1':
+                                        print self.snparams.skysig[j]*scalefactor,skyysn
+                                        raw_input()
                                         smp_dict['sky'][i] = skyysn
                                         smp_dict['skyerr'][i] = skysig
                                         #print skysig,skyerrsn,sexrms
