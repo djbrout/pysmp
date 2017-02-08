@@ -1548,7 +1548,6 @@ class smp:
             try:
                 print 'reading in'
                 im = pyfits.getdata(imfile)
-                im += 1600.
                 hdr = pyfits.getheader(imfile)
                 print 'done reading in'
                 #print 'image shape', im.shape
@@ -2166,6 +2165,8 @@ class smp:
 
             #print self.gain
             #raw_input('gain')
+            im *= 4.
+            im += 1000.
             mjdoff = 0.
             mjdslopeinteroff = 0.
             gogo = True
