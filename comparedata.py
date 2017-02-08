@@ -88,6 +88,8 @@ for i,f in enumerate(commonfiles):
                     y = int(v6dat['y'][j])
                     v6data = v6data[y-15:y+15,x-15:x+15]
                     v4data = v4data[y-15:y+15,x-15:x+15]
+                    print v6data.shape
+                    print v4data.shape
 
                     bigv6ostamps.append(v6data)
 
@@ -107,7 +109,7 @@ for i,f in enumerate(commonfiles):
                     resid.append(np.sum(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel()))
 
                     #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
-                    residstamp.append(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel())
+                    residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
 
     except:
         print 'column not in file'
