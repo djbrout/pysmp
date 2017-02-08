@@ -2165,7 +2165,7 @@ class smp:
 
             #print self.gain
             #raw_input('gain')
-            im *= 4.
+            im /= 4.
             im += 1000.
             mjdoff = 0.
             mjdslopeinteroff = 0.
