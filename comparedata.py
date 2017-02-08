@@ -61,8 +61,8 @@ for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
     print v6dat.keys()
-    if i > 0:
-        continue
+    #if i > 0:
+    #    continue
     #if True:
     try:
         for j,m in enumerate(v6dat['mjd']):
@@ -88,8 +88,8 @@ for i,f in enumerate(commonfiles):
                     y = int(v6dat['y'][j])
                     v6data = v6data[y-15:y+15,x-15:x+15]
                     v4data = v4data[y-15:y+15,x-15:x+15]
-                    print v6data.shape
-                    print v4data.shape
+                    #print v6data.shape
+                    #print v4data.shape
 
                     bigv6ostamps.append(v6data)
 
