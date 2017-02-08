@@ -2742,7 +2742,8 @@ class smp:
                                         #print skyerrsn,skysig
                                         #print np.max(noise_stamp.ravel())
                                         #raw_input()
-
+                                        print self.snparams.skysig[j] * scalefactor,skyerrsn
+                                        raw_input()
                                         smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         dt.save_fits_image(image_stamp,'im.fits',go=True)
 
@@ -2814,7 +2815,7 @@ class smp:
                                         #raw_input()
                                         smp_dict['sky'][i] = skyysn
                                         smp_dict['skyerr'][i] = self.snparams.skysig[j]*scalefactor
-                                        smp_dict['skyerr'][i] = skysig
+                                        #smp_dict['skyerr'][i] = skysig
                                         #print skysig,skyerrsn,sexrms
                                         #print skyysn,skysn,sexsky
                                         #print 'sky'*1000
