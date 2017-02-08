@@ -2810,7 +2810,7 @@ class smp:
                                     #     #raw_input()
 
                                     if self.snparams.survey == 'PS1':
-                                        print self.snparams.skysig[j]*scalefactor,skyysn
+                                        print self.snparams.skysig[j]*scalefactor,skysig
                                         raw_input()
                                         smp_dict['sky'][i] = skyysn
                                         smp_dict['skyerr'][i] = skysig
