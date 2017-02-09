@@ -23,7 +23,7 @@ echo "setup ifdhc"
 export IFDH_XROOTD_EXTRA="-f -N"
 
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-ifdh cp -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
+ifdh cp --force=xrootd -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
 echo 'unzippppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 unzip pysmp.zip
 cd pysmp
