@@ -541,7 +541,7 @@ class smp:
             print len(ls) > 0
             #raw_input('hhhh')
             if len(ls) > 0:
-                os.system('ifdh cp '+datf+' .')
+                os.system('ifdh cp --force=xrootd '+datf+' .')
                 dat = np.load(filename + '_withSn.npz')
                 print dat['modelvec_nphistory'].shape[0]
                 if dat['modelvec_nphistory'].shape[0] == 1000:
@@ -573,7 +573,7 @@ class smp:
                 if len(ls) > 0:
                     print star_offset_file
                     #sys.exit()
-                    os.system('ifdh cp '+star_offset_file+' .')
+                    os.system('ifdh cp --force=xrootd '+star_offset_file+' .')
                     star_offset_file = filename+'band_starGlobalOffsets.npz'
                 else:
                     print 'Could not find star offset file. Calculating...'
@@ -802,7 +802,7 @@ class smp:
                 if (len(ifdhls) > 1):
                     if (int(ifdhls.split()[-1]) > 0) :
                         print 'Copying over',imfile
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+imfile+' .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd '+imfile+' .').read()
                         #imfilel = copy(imfilel)
                         imfile = imfile.split('/')[-1]
                         print 'imfile',imfile
@@ -816,11 +816,11 @@ class smp:
                         #         0] + '+fakeSN.fits' + ' .').read()
                         #     imfile = imfilel.split('/')[-1]
                         #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd '+noisefile+' .').read()
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         #print 'ifdh cp ' + psffile + ' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
                         psffile = psffile.split('/')[-1]
                         #print 'copied all files'
                         #print os.popen('ifdh ls .').read()
@@ -836,7 +836,7 @@ class smp:
                     #print 'line 610'
                     #raw_input()
                     if len(ifdhls) > 0:
-                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
+                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + imfile + '.fz .').read()
                         #print a
                         a = os.popen('funpack '+imfile.split('/')[-1]+'.fz').read()
                         #print a
@@ -854,13 +854,13 @@ class smp:
                         #         0] + '+fakeSN.fits' + ' .').read()
                         #     imfile = imfilel.split('/')[-1]
                         # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + '.fz .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + noisefile + '.fz .').read()
                         os.popen('funpack '+noisefile.split('/')[-1]+'.fz')
                         os.popen('rm '+noisefile.split('/')[-1]+'.fz')
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         # print 'ifdh cp ' + psffile + ' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
                         #os.popen('funpack '+psffile)
                         psffile = psffile.split('/')[-1]
                         # print 'copied all files'
@@ -1321,7 +1321,7 @@ class smp:
                     if len(ls) > 0:
                         self.laskerstarcat = 'lsc.txt'
                         #os.popen('ifdh rm ' + self.laskerstarcat)
-                    os.popen('ifdh cp tmp.txt ' + self.laskerstarcat)
+                    os.popen('ifdh cp --force=xrootd tmp.txt ' + self.laskerstarcat)
             #sys.exit()
 
 
@@ -1452,7 +1452,7 @@ class smp:
                     if int(ifdhls.split()[-1]) == 0:
                         print 'EMTPY FILE!'*10
                         continue
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .').read()
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + imfile + ' .').read()
                     # imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
                     print 'imfile', imfile
@@ -1467,12 +1467,12 @@ class smp:
                     #     imfile = imfilel.split('/')[-1]
                     # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     print 'reading in noisefile',noisefile
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + noisefile + ' .').read()
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + noisefile + ' .').read()
                     noisefile = noisefile.split('/')[-1]
                     weightsfile = noisefile
                     # print 'ifdh cp ' + psffile + ' .'
                     print 'reading in psffile'
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
                     psffile = psffile.split('/')[-1]
                     # print 'copied all files'
                     # print os.popen('ifdh ls .').read()
@@ -1491,7 +1491,7 @@ class smp:
                         if int(ifdhls.split()[-1] == 0) :
                             print 'EMPTY FILE!'*10
                             continue
-                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + '.fz .').read()
+                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + imfile + '.fz .').read()
                         print a
                         a = os.popen('funpack ' + imfile.split('/')[-1] + '.fz').read()
                         print a
@@ -1514,17 +1514,17 @@ class smp:
                         lfz = os.popen('ifdh lss ' + noisefile + '.fz').read()
                         if (len(lfz) > 0):
                             print 'there is fz'
-                            os.popen('ifdh cp ' + noisefile + '.fz .').read()
+                            os.popen('ifdh cp --force=xrootd ' + noisefile + '.fz .').read()
                             print 'funpacking noisefile'
                             os.popen('funpack ' + noisefile.split('/')[-1] + '.fz')
                         else:
                             print 'there is no fz'
-                            os.popen('ifdh cp ' + noisefile + ' .').read()
+                            os.popen('ifdh cp --force=xrootd ' + noisefile + ' .').read()
                         noisefile = noisefile.split('/')[-1]
                         weightsfile = noisefile
                         # print 'ifdh cp ' + psffile + ' .'
                         print 'reading in psf file'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + psffile + ' .').read()
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
                         # os.popen('funpack '+psffile)
                         psffile = psffile.split('/')[-1]
                         print 'done grabbing images'
@@ -2204,7 +2204,7 @@ class smp:
                             ls = os.popen('ifdh ls ' + zpt_file).read()
                             print ls
                             if len(ls) > 0:
-                                os.popen('ifdh cp '+zpt_file+' .')
+                                os.popen('ifdh cp --force=xrootd '+zpt_file+' .')
                                 zpt_file = zpt_file.split('/')[-1]
                             else:
                                 print '1812 setting nozpt to True'
@@ -3937,7 +3937,7 @@ class smp:
             ls = os.popen('ifdh ls ' + smplightcurvefile).read()
             if len(ls) > 0:
                 os.popen('ifdh rm ' + smplightcurvefile)
-            os.popen('ifdh cp lc.txt '+smplightcurvefile)
+            os.popen('ifdh cp --force=xrootd lc.txt '+smplightcurvefile)
         if self.fermilog:
             self.tmpwriter.appendfile('SMP Successful\n', self.fermilogfile)
         print('SMP was successful!!!')
@@ -6837,7 +6837,7 @@ if __name__ == "__main__":
             print 'not stopping here because dont know what happens after'
             if fermigrid & worker:
                 print 'ifdh 4366'
-                os.system('ifdh cp '+snfile+' .')
+                os.system('ifdh cp --force=xrootd '+snfile+' .')
                 snfile = osnfile
 
     '''if ismultiple:

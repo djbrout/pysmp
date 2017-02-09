@@ -1188,7 +1188,7 @@ class metropolis_hastings():
         gc.collect()
         if self.isfermigrid and self.isworker:
             print os.popen('ifdh rm ' + self.lcout + '_stamps.pdf').read()
-            print os.popen('ifdh cp stamps.pdf '+self.lcout+'_stamps.pdf').read()
+            print os.popen('ifdh cp --force=xrootd stamps.pdf '+self.lcout+'_stamps.pdf').read()
         print 'Saved', self.lcout + '_stamps.pdf'
             #else:
         #    print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
@@ -1263,7 +1263,7 @@ class metropolis_hastings():
         if self.isfermigrid and self.isworker:
             plt.savefig('tmp.png')
             os.popen('ifdh rm ' + fname).read()
-            print os.popen('ifdh cp tmp.png '+fname).read()
+            print os.popen('ifdh cp --force=xrootd tmp.png '+fname).read()
             os.popen('rm tmp.png')
         else:
             plt.savefig(fname)
