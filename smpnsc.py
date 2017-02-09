@@ -1321,7 +1321,7 @@ class smp:
                     if len(ls) > 0:
                         self.laskerstarcat = 'lsc.txt'
                         #os.popen('ifdh rm ' + self.laskerstarcat)
-
+                    else:
                         os.popen('ifdh cp --force=xrootd tmp.txt ' + self.laskerstarcat)
             #sys.exit()
 
