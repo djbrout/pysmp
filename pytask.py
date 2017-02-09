@@ -25,7 +25,7 @@ corelist = np.arange(24)
 
 cntr = -1
 i = -1
-offset = 100
+offset = 150
 while i < 23:
     cntr += 1
     if lightcurves[cntr+offset][:11]+lightcurves[cntr+offset][9:].split('.')[0]+'.smp' in os.listdir(os.path.join(smpdir,'lightcurves')):
