@@ -2166,7 +2166,7 @@ class smp:
             #print self.gain
             #raw_input('gain')
             if self.snparams.survey == 'DES':
-                im /= 4.
+                #im /= 4.
                 im += 1000.
             mjdoff = 0.
             mjdslopeinteroff = 0.
