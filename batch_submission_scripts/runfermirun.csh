@@ -20,7 +20,7 @@ echo "voms-proxy-init -rfc -noregen -valid 24:00 -voms des:/des/Role=Analysis"
 echo 'sourcing fermiapp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 echo "source /grid/fermiapp/products/common/etc/setups.sh"
 echo "setup ifdhc"
-export IFDH_XROOTD_EXTRA="-f -N"
+export IFDH_XROOTD_EXTRA="-f -N -S 4"
 
 echo 'copying zip to worker node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 ifdh cp --force=xrootd -D /pnfs/des/persistent/desdm/djbrout/pysmp.zip .
