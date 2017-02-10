@@ -1453,7 +1453,9 @@ class smp:
                     if int(ifdhls.split()[-1]) == 0:
                         print 'EMTPY FILE!'*10
                         continue
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + imfile + ' .').read()
+                    ifdhlss = os.popen('ifdh lss ' + imfile.split('/')[-1]).read()
+                    if not (len(ifdhlss)>0):
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + imfile + ' .').read()
                     # imfilel = copy(imfilel)
                     imfile = imfile.split('/')[-1]
                     print 'imfile', imfile
@@ -1468,12 +1470,16 @@ class smp:
                     #     imfile = imfilel.split('/')[-1]
                     # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     print 'reading in noisefile',noisefile
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + noisefile + ' .').read()
+                    ifdhlss = os.popen('ifdh lss ' + noisfile.split('/')[-1]).read()
+                    if not (len(ifdhlss)>0):
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + noisefile + ' .').read()
                     noisefile = noisefile.split('/')[-1]
                     weightsfile = noisefile
                     # print 'ifdh cp ' + psffile + ' .'
                     print 'reading in psffile'
-                    os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
+                    ifdhlss = os.popen('ifdh lss ' + psffile.split('/')[-1]).read()
+                    if not (len(ifdhlss)>0):
+                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
                     psffile = psffile.split('/')[-1]
                     # print 'copied all files'
                     # print os.popen('ifdh ls .').read()
