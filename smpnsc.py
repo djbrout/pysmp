@@ -1470,7 +1470,7 @@ class smp:
                     #     imfile = imfilel.split('/')[-1]
                     # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
                     print 'reading in noisefile',noisefile
-                    ifdhlss = os.popen('ifdh lss ' + noisfile.split('/')[-1]).read()
+                    ifdhlss = os.popen('ifdh lss ' + noisefile.split('/')[-1]).read()
                     if not (len(ifdhlss)>0):
                         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + noisefile + ' .').read()
                     noisefile = noisefile.split('/')[-1]
