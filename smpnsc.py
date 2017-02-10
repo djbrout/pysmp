@@ -2764,9 +2764,9 @@ class smp:
                                         noise_stamp[noise_stamp <= 0.] = 0
                                         mask *= noise_stamp
 
-                                        #smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2)
+                                        smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2) * mask
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
-                                        smp_noise[i,:,:] = noise_stamp*1./(sexrms)**2 * mask
+                                        #smp_noise[i,:,:] = noise_stamp*1./(sexrms)**2 * mask
 
                                     #if round(float(snparams.mjd[j])) == 57011:
                                     #    raw_input()
@@ -2823,6 +2823,7 @@ class smp:
                                         #raw_input()
                                         smp_dict['sky'][i] = skyysn
                                         smp_dict['skyerr'][i] = self.snparams.skysig[j]*scalefactor
+
                                         #smp_dict['skyerr'][i] = skysig
                                         #print skysig,skyerrsn,sexrms
                                         #print skyysn,skysn,sexsky
@@ -2830,10 +2831,10 @@ class smp:
                                         #raw_input('sig comparo')
                                     else:
 
-                                        #smp_dict['sky'][i] = skysn
-                                        smp_dict['sky'][i] = sexsky
-                                        #smp_dict['skyerr'][i] = skyerrsn
-                                        smp_dict['skyerr'][i] = sexrms
+                                        smp_dict['sky'][i] = mysky
+                                        #smp_dict['sky'][i] = sexsky
+                                        smp_dict['skyerr'][i] = skysig
+                                        #smp_dict['skyerr'][i] = sexrms
                                         #sexrms
 
                                     smp_dict['flag'][i] = 0
