@@ -382,12 +382,12 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.scatter(hostmag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
     ax, ay, aystd = bindata(hostmag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(min(hostmag[ww]),max(hostmag[ww]), .5))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    #plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
     plt.xlim(19,29)
     #plt.ylim(-.1,.1)
-    plt.ylim(-.5,.5)
+    plt.ylim(-.75,.75)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir+'/percentagefluxdiff_hostmag.png')
