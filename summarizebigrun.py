@@ -531,7 +531,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
 
     ww = (dpmjd > 280.) & (flux != 0)
     plt.clf()
-    plt.hist(flux[ww],fluxerr[ww], bins=np.arange(-4.1, 4, .2))
+    plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-4.1, 4, .2))
     plt.xlim(-4, 4)
     plt.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
 
