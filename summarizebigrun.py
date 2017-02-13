@@ -412,7 +412,21 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.ylabel('Flux Difference ')
     plt.savefig(outdir + '/fluxdiff.png')
 
-    print
+    skyresid = 2000. - sky / 10 ** (.4 * (31 - fitzpt))
+    plt.clf()
+    fig = plt.figure(figsize=(15,10))
+    plt.scatter(skyresid[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
+    ax, ay, aystd = bindata(skyresid[ww], (flux[ww] - fakeflux[ww]),
+                            np.arange(-10,10,.3))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    plt.axhline(0)
+    plt.xlim(-10,10)
+    # plt.ylim(-.1,.1)
+    plt.ylim(-1000, 1000)
+    plt.xlabel('Sky Resid')
+    plt.ylabel('Flux Difference')
+    plt.savefig(outdir + '/fluxdiff_sky.png')
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
