@@ -519,6 +519,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     ww = (dpmjd > 320.) & (flux != 0)
     plt.clf()
     plt.hist(flux[ww],bins=np.arange(-1050,1000,100))
+    plt.xlabel('Flux for epochs without fake SN Flux')
     plt.xlim(-1000,1000)
     plt.savefig(outdir + '/emptyflux.png')
 
@@ -534,7 +535,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-4.1, 4, .2),normed=True)
     plt.xlim(-4, 4)
     plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
-
+    plt.xlabel('flux/fluxerr (epochs without fake SN Flux)')
     plt.savefig(outdir + '/emptyfluxstd.png')
 
     plt.clf()
@@ -544,6 +545,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
                                np.arange(19, 28, .1))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    plt.xlabel('Hostmag')
+    plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
     plt.axhline(0)
     plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
