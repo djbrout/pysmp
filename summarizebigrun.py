@@ -537,6 +537,16 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
 
     plt.savefig(outdir + '/emptyfluxstd.png')
 
+    plt.clf()
+    plt.scatter(hostmag[ww],flux[ww] / fluxerr[ww])
+    plt.xlim(19, 28)
+    plt.ylim(-4,4)
+    ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
+                               np.arange(-10, 10, .1))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    plt.axhline(0)
+    plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
+
     print 'saved png'
 
 def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir):
