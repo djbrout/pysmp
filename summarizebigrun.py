@@ -516,7 +516,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     plt.ylabel('Flux Difference')
     plt.savefig(outdir + '/skyfluxdiffgt22.png')
 
-    ww = (dpmjd > 280.) & (flux != 0)
+    ww = (dpmjd > 320.) & (flux != 0)
     plt.clf()
     plt.hist(flux[ww],bins=np.arange(-1050,1000,100))
     plt.xlim(-1000,1000)
@@ -529,11 +529,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
 
-    ww = (dpmjd > 280.) & (flux != 0)
+    ww = (dpmjd > 320.) & (flux != 0)
     plt.clf()
     plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-4.1, 4, .2))
     plt.xlim(-4, 4)
-    plt.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+    plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
 
     plt.savefig(outdir + '/emptyfluxstd.png')
 
