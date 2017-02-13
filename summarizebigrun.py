@@ -417,11 +417,11 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     fig = plt.figure(figsize=(15,10))
     plt.scatter(skyresid[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
     ax, ay, aystd = bindata(skyresid[ww], (flux[ww] - fakeflux[ww]),
-                            np.arange(-10,10,.3))
+                            np.arange(-100,100,2))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
-    plt.xlim(-10,10)
+    plt.xlim(-100,100)
     # plt.ylim(-.1,.1)
     plt.ylim(-1000, 1000)
     plt.xlabel('Sky Resid')
