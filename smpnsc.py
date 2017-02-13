@@ -1743,8 +1743,8 @@ class smp:
                 weights = pyfits.getdata(weightsfile)
                 maskfile = weightsfile
                 mask = weights
-                mask[mask<.0001] = 0
-                mask[mask>= .0001] = 1
+                mask[mask<0.000000001] = 0
+                mask[mask>=0.000000001]=1
             else:
                 noise = pyfits.getdata(noisefile)
                 mask = pyfits.getdata(maskfile)
