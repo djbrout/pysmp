@@ -55,7 +55,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     print len(data['Flux'])
     print np.unique(data['field'])
     #raw_input()
-    plotpercentageresid(data['Flux'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],data['image_stamp'],'.',data['fakefiles'],data['HostMag'])#resultsdir)
+    plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],data['image_stamp'],'.',data['fakefiles'],data['HostMag'])#resultsdir)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],'.')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
@@ -332,7 +332,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     return bigdata
 
 
-def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     sky = np.asarray(sky)
@@ -343,6 +343,7 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     imstamp = np.asarray(imstamp)
     fakefiles = np.asarray(fakefiles,dtype='str')
     hostmag = np.asarray(hostmag)
+    fluxerr = np.asarray(fluxerr)
 
     print fakemag.shape
     print flux.shape
@@ -515,11 +516,26 @@ def plotpercentageresid(flux,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,d
     plt.ylabel('Flux Difference')
     plt.savefig(outdir + '/skyfluxdiffgt22.png')
 
-    ww = (dpmjd > 200.) & (flux != 0)
+    ww = (dpmjd > 280.) & (flux != 0)
     plt.clf()
     plt.hist(flux[ww],bins=np.arange(-1050,1000,100))
     plt.xlim(-1000,1000)
     plt.savefig(outdir + '/emptyflux.png')
+
+    import matplotlib.mlab as mlab
+    import math
+    mean = 0
+    variance = 1
+    sigma = math.sqrt(variance)
+    x = np.arange(-5, 5, .1)
+
+    ww = (dpmjd > 280.) & (flux != 0)
+    plt.clf()
+    plt.hist(flux[ww],fluxerr[ww], bins=np.arange(-4.1, 4, .2))
+    plt.xlim(-4, 4)
+    plt.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+
+    plt.savefig(outdir + '/emptyfluxstd.png')
 
     print 'saved png'
 
