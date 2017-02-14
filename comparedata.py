@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pyfits as pf
 
 v6dir = '/pnfs/des/scratch/pysmp/smp_v627/np_data/r/'
-v4dir = '/pnfs/des/scratch/pysmp/smp_v42/np_data/r/'
+v4dir = '/pnfs/des/scratch/pysmp/smp_v624/np_data/r/'
 
 v6root = '/pnfs/des/persistent/smp/v62/'
 v4root = '/pnfs/des/persistent/smp/v4/'
