@@ -65,7 +65,8 @@ for i,f in enumerate(commonfiles):
     #    continue
     #if True:
     try:
-        print np.sum((v6dat['galmodel_params']*mask).ravel()),np.sum((v4dat['galmodel_params']*mask).ravel()), np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v4dat['galmodel_params']*mask).ravel())
+        print round(np.sum((v6dat['galmodel_params']*mask).ravel())),round(np.sum((v4dat['galmodel_params']*mask).ravel())), round(np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v4dat['galmodel_params']*mask).ravel()))
+
         # for j,m in enumerate(v6dat['mjd']):
         #
         #     if m in v4dat['mjd']:
