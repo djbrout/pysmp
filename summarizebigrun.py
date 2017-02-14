@@ -394,7 +394,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     plt.savefig(outdir+'/fluxdiff_hostmag.png')
 
 
-    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 23.)
+    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 25.)
 
 
     plt.clf()
