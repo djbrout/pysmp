@@ -520,7 +520,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     plt.ylabel('Flux Difference')
     plt.savefig(outdir + '/skyfluxdifflt22.png')
 
-    ww = (flux != 0.) & (fakemag != 0) & (fakemag > 22.)
+    ww = (flux != 0.) & (fakemag != 0) #& (fakemag > 22.)
 
     plt.clf()
     plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
