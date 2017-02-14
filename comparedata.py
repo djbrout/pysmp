@@ -6,7 +6,7 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 import pyfits as pf
 
-v6dir = '/pnfs/des/scratch/pysmp/smp_v625/np_data/r/'
+v6dir = '/pnfs/des/scratch/pysmp/smp_v623/np_data/r/'
 v4dir = '/pnfs/des/scratch/pysmp/smp_v627/np_data/r/'
 
 v6root = '/pnfs/des/persistent/smp/v62/'
@@ -65,6 +65,7 @@ for i,f in enumerate(commonfiles):
     #    continue
     #if True:
     try:
+        print np.sum((v6dat['galmodel_params']*mask).ravel()),np.sum((v6dat['galmodel_params']*mask).ravel()), np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v6dat['galmodel_params']*mask).ravel())
         for j,m in enumerate(v6dat['mjd']):
 
             if m in v4dat['mjd']:
@@ -104,9 +105,8 @@ for i,f in enumerate(commonfiles):
 
                     v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
                     v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
-                    print v6dat['galmodel_params'].shape
 
-                    raw_input()
+
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
 
                     #print
@@ -116,7 +116,7 @@ for i,f in enumerate(commonfiles):
                     #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
                     residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
 
-        raw_input()
+        #raw_input()
 
     except:
         print 'column not in file'
