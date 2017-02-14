@@ -60,62 +60,66 @@ for x in np.arange(substamp):
 for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
-    #print v6dat.keys()
+    print v6dat.keys()
     #if i > 0:
     #    continue
     #if True:
     try:
-        print round(np.sum((v6dat['galmodel_params']*mask).ravel())),round(np.sum((v4dat['galmodel_params']*mask).ravel())), round(np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v4dat['galmodel_params']*mask).ravel()))
+        #print round(np.sum((v6dat['galmodel_params']*mask).ravel())),round(np.sum((v4dat['galmodel_params']*mask).ravel())), round(np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v4dat['galmodel_params']*mask).ravel()))
 
-        # for j,m in enumerate(v6dat['mjd']):
-        #
-        #     if m in v4dat['mjd']:
-        #         if m != 0 :
-        #             v4dat['sky']
-        #             v6dat['sky']
-        #             v6dat['x']
-        #             v4dat['y']
-        #             ww = v4dat['mjd'] == m
-        #             #print v6dat['fakemag'][j],v4dat['fakemag'][ww][0]
-        #             bigv6fakemags.append(v6dat['fakemag'][j])
-        #             bigv4fakemags.append(v4dat['fakemag'][ww][0])
-        #
-        #             bigv6stamps.append(v6dat['data'][j,:,:])#*10**(.4*(31-v6dat['fitzpt'][j])))
-        #             bigv4stamps.append(v4dat['data'][ww][0,:,:])#*10**(.4*(31-v4dat['fitzpt'][ww][0])))
-        #
-        #             v6data = pf.getdata(v6dat['datafilenames'][j])
-        #             v4data = pf.getdata(v4dat['datafilenames'][ww][0])
-        #
-        #             x = int(v6dat['x'][j])
-        #             y = int(v6dat['y'][j])
-        #             v6data = v6data[y-15:y+15,x-15:x+15]
-        #             v4data = v4data[y-15:y+15,x-15:x+15]
-        #             #print v6data.shape
-        #             #print v4data.shape
-        #
-        #             bigv6ostamps.append(v6data)
-        #
-        #             bigv6mjd.append(v6dat['mjd'][j])
-        #             bigv4mjd.append(v4dat['mjd'][ww][0])
-        #
-        #             bigv6fitflux.append(v6dat['modelvec'][j])
-        #             bigv4fitflux.append(v4dat['modelvec'][ww][0])
-        #
-        #             bigv6sky.append(v6dat['sky'][j])
-        #             bigv4sky.append(v4dat['sky'][ww][0])
-        #
-        #             v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
-        #             v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
-        #
-        #
-        #             #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
-        #
-        #             #print
-        #             #resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
-        #             resid.append(np.sum(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel()))
-        #
-        #             #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
-        #             residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
+        for j,m in enumerate(v6dat['mjd']):
+
+            if m in v4dat['mjd']:
+                if m != 0 :
+                    v4dat['sky']
+                    v6dat['sky']
+                    v6dat['x']
+                    v4dat['y']
+                    ww = v4dat['mjd'] == m
+                    #print v6dat['fakemag'][j],v4dat['fakemag'][ww][0]
+                    bigv6fakemags.append(v6dat['fakemag'][j])
+                    bigv4fakemags.append(v4dat['fakemag'][ww][0])
+
+                    bigv6stamps.append(v6dat['data'][j,:,:])#*10**(.4*(31-v6dat['fitzpt'][j])))
+                    bigv4stamps.append(v4dat['data'][ww][0,:,:])#*10**(.4*(31-v4dat['fitzpt'][ww][0])))
+
+                    v6data = pf.getdata(v6dat['datafilenames'][j])
+                    v4data = pf.getdata(v4dat['datafilenames'][ww][0])
+
+                    x = int(v6dat['x'][j])
+                    y = int(v6dat['y'][j])
+                    v6data = v6data[y-15:y+15,x-15:x+15]
+                    v4data = v4data[y-15:y+15,x-15:x+15]
+                    #print v6data.shape
+                    #print v4data.shape
+
+                    bigv6ostamps.append(v6data)
+
+                    bigv6mjd.append(v6dat['mjd'][j])
+                    bigv4mjd.append(v4dat['mjd'][ww][0])
+
+                    bigv6fitflux.append(v6dat['modelvec'][j])
+                    bigv4fitflux.append(v4dat['modelvec'][ww][0])
+
+                    bigv6sky.append(v6dat['sky'][j])
+                    bigv4sky.append(v4dat['sky'][ww][0])
+
+                    v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
+                    v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
+
+                    if v6dat['modelvec'][j] == 0:
+                        v6gal = round(np.sum(v6dat['sims'][j,:,:]*mask.ravel()))
+                        v4gal = round(np.sum(v4dat['sims'][ww][0, :, :]*mask.ravel()))
+                        print v6gal,v4gal,v6gal-v4gal
+
+                    #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
+
+                    #print
+                    #resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
+                    resid.append(np.sum(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel()))
+
+                    #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
+                    residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
 
         #raw_input()
 
