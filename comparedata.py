@@ -64,9 +64,9 @@ for i,f in enumerate(commonfiles):
     #if i > 0:
     #    continue
     #if True:
-    try:
+    #try:
         #print round(np.sum((v6dat['galmodel_params']*mask).ravel())),round(np.sum((v4dat['galmodel_params']*mask).ravel())), round(np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v4dat['galmodel_params']*mask).ravel()))
-
+    if True:
         for j,m in enumerate(v6dat['mjd']):
 
             if m in v4dat['mjd']:
@@ -123,8 +123,8 @@ for i,f in enumerate(commonfiles):
 
         #raw_input()
 
-    except:
-        print 'column not in file'
+    # except:
+    #     print 'column not in file'
 
 bigv6mjd = np.array(bigv6mjd)
 bigv4mjd = np.array(bigv4mjd)
