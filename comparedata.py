@@ -104,7 +104,7 @@ for i,f in enumerate(commonfiles):
 
                     v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
                     v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
-                    print v6data['galmodel_params'].shape
+                    print v6dat['galmodel_params'].shape
 
                     raw_input()
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
