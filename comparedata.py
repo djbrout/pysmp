@@ -60,7 +60,7 @@ for x in np.arange(substamp):
 for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
-    print v6dat.keys()
+    #print v6dat.keys()
     #if i > 0:
     #    continue
     #if True:
