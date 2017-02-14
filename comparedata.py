@@ -6,7 +6,7 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 import pyfits as pf
 
-v6dir = '/pnfs/des/scratch/pysmp/smp_v624/np_data/r/'
+v6dir = '/pnfs/des/scratch/pysmp/smp_v623/np_data/r/'
 v4dir = '/pnfs/des/scratch/pysmp/smp_v627/np_data/r/'
 
 v6root = '/pnfs/des/persistent/smp/v62/'
