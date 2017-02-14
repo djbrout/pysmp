@@ -104,7 +104,9 @@ for i,f in enumerate(commonfiles):
 
                     v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
                     v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
+                    print v6data['galmodel_params'].shape
 
+                    raw_input()
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
 
                     #print
@@ -114,7 +116,6 @@ for i,f in enumerate(commonfiles):
                     #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
                     residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
 
-        print v6data['galmodel_params'].shape
         raw_input()
 
     except:
