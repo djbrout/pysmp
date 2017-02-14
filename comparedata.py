@@ -6,8 +6,8 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 import pyfits as pf
 
-v6dir = '/pnfs/des/scratch/pysmp/smp_v622/np_data/r/'
-v4dir = '/pnfs/des/scratch/pysmp/smp_v42/np_data/r/'
+v6dir = '/pnfs/des/scratch/pysmp/smp_v625/np_data/r/'
+v4dir = '/pnfs/des/scratch/pysmp/smp_v627/np_data/r/'
 
 v6root = '/pnfs/des/persistent/smp/v62/'
 v4root = '/pnfs/des/persistent/smp/v4/'
@@ -104,6 +104,9 @@ for i,f in enumerate(commonfiles):
 
                     v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
                     v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
+
+                    print v6dat['fitzpt']-v4dat['fitzpt']
+                    raw_input()
 
                     #resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
                     resid.append(np.sum(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel()))
