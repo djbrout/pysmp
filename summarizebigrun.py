@@ -421,11 +421,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(fakeflux[ww], (flux[ww] - fakeflux[ww]), alpha=.5)
     ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
-                            np.arange(min(fakemag[ww]), max(fakemag[ww]), 5000))
+                            np.arange(min(fakeflux[ww]), max(fakeflux[ww]), 200))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
-    plt.xlim(0, 50000)
+    plt.xlim(0, 5000)
     # plt.ylim(-.1,.1)
     plt.ylim(-600, 600)
     plt.xlabel('Fake Mag')
