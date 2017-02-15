@@ -416,6 +416,24 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     for k in np.unique(fakefiles):
         print k
     #raw_input()
+
+    ww = (flux != 0.) & (fakemag != 99)  # (fakemag < 28.5) & (flux != 0.)
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(flux[ww])
+    #ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
+    #                        np.arange(-100, 1000, 200))
+    #plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    #plt.axhline(0)
+    plt.xlim(-500, 500)
+    # plt.ylim(-.1,.1)
+    #plt.ylim(-600, 600)
+    plt.xlabel('Fake Flux')
+    plt.ylabel('Flux Difference ')
+    plt.savefig(outdir + '/efluxdiff.png')
+
+
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
@@ -428,9 +446,12 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     plt.xlim(0, 5000)
     # plt.ylim(-.1,.1)
     plt.ylim(-600, 600)
-    plt.xlabel('Fake Mag')
+    plt.xlabel('Fake Flux')
     plt.ylabel('Flux Difference ')
     plt.savefig(outdir + '/fluxdiff.png')
+
+
+
 
     skyresid = 2000. - sky / 10 ** (.4 * (31 - fitzpt))
     plt.clf()
