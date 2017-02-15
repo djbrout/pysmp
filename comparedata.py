@@ -100,7 +100,7 @@ for i,f in enumerate(commonfiles):
 
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
-                    print v6dat['modelvec'][j],v4dat['modelvec'][ww][0], v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],v6dat['skyerr'][j][15][15],v4dat['skyerr'][ww][0][15][15]
+                    #print v6dat['modelvec'][j],v4dat['modelvec'][ww][0], v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],v6dat['skyerr'][j][15][15],v4dat['skyerr'][ww][0][15][15]
 
                     bigv6sky.append(v6dat['sky'][j])
                     bigv4sky.append(v4dat['sky'][ww][0])
@@ -109,8 +109,8 @@ for i,f in enumerate(commonfiles):
                     v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
 
                     if v6dat['modelvec'][j] == 0:
-                        v6gal = round(np.sum((v6dat['sims'][j,:,:]*mask-v6dat['sky'][j]).ravel()))
-                        v4gal = round(np.sum((v4dat['sims'][ww][0, :, :]*mask-v4dat['sky'][ww][0]).ravel()))
+                        v6gal = round(np.sum(((v6dat['sims'][j,:,:]-v6dat['sky'][j])*mask).ravel()))
+                        v4gal = round(np.sum(((v4dat['sims'][ww][0, :, :]-v4dat['sky'][ww][0])*mask).ravel()))
                         #print v6gal,v4gal,v6gal-v4gal
 
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
