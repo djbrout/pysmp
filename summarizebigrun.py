@@ -420,7 +420,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     ww = (flux != 0.) & (fakemag != 99)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww],bins=15)
+    plt.hist(flux[ww],bins=np.arange(-650,600,100))
     #ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
     #plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
