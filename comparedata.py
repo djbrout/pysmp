@@ -142,6 +142,8 @@ print bigv4mjd.shape,bigv6mjd.shape,resid.shape
 #    print r
 
 plt.scatter(resid,residstamp)
+plt.xlim(-200,200)
+plt.ylim(-300,300)
 plt.xlabel('data resid')
 plt.ylabel('gal resid')
 plt.savefig('galresid.png')
