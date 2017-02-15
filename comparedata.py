@@ -61,8 +61,8 @@ for i,f in enumerate(commonfiles):
     v6dat = np.load(v6dir+f)
     v4dat = np.load(v4dir + f)
     print v6dat.keys()
-    #if i > 0:
-    #    continue
+    if i > 10:
+        continue
     #if True:
     #try:
         #print round(np.sum((v6dat['galmodel_params']*mask).ravel())),round(np.sum((v4dat['galmodel_params']*mask).ravel())), round(np.sum((v6dat['galmodel_params']*mask).ravel())-np.sum((v4dat['galmodel_params']*mask).ravel()))
@@ -113,16 +113,18 @@ for i,f in enumerate(commonfiles):
                     if v6dat['modelvec'][j] >-9999999:
                         v6gal = round(np.sum(((v6dat['sims'][j,:,:]-v6dat['sky'][j])*mask).ravel()))
                         v4gal = round(np.sum(((v4dat['sims'][ww][0, :, :]-v4dat['sky'][ww][0])*mask).ravel()))
-                        print dataresid,zptresid,v6gal-v4gal#v6gal,v4gal,v6gal-v4gal,(v6gal-v4gal)/v6gal,v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],(v6dat['modelvec'][j]-v4dat['modelvec'][ww][0])/v6dat['modelvec'][j]
+                        skyresid = v6dat['sky'][j]-v4dat['sky'][ww][0]
+                        print dataresid,zptresid,v6gal-v4gal,skyresid#v6gal,v4gal,v6gal-v4gal,(v6gal-v4gal)/v6gal,v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],(v6dat['modelvec'][j]-v4dat['modelvec'][ww][0])/v6dat['modelvec'][j]
 
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
 
                     #print
                     #resid.append(np.sum(((v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww] )*mask).ravel()))
                     #resid.append(np.sum(((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] )*mask).ravel()))
-                    resid.append((v6gal-v4gal)/v6gal)
+                    resid.append(dataresid)
                     #residstamp.append(v6dat['data'][j,:,:] - v6dat['sky'][j] - v4dat['data'][ww,:,:]  + v4dat['sky'][ww])
-                    residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
+                    residstamp.append(v6gal-v4gal)
+                    #residstamp.append((v6data*v6scalefactor - v6dat['sky'][j] - v4data*v4scalefactor  + v4dat['sky'][ww] ))
 
         #raw_input()
 
@@ -139,8 +141,9 @@ print bigv4mjd.shape,bigv6mjd.shape,resid.shape
 #for r in resid:
 #    print r
 
-plt.hist(resid,bins=10)
-plt.xlabel('Percentage diff in galaxy flux')
+plt.scatter(resid,residstamp)
+plt.xlabel('data resid')
+plt.ylabel('gal resid')
 plt.savefig('galresid.png')
 plt.clf()
 plt.scatter(10**(.4*(31.-fakemag)),resid)
