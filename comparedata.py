@@ -100,7 +100,7 @@ for i,f in enumerate(commonfiles):
 
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
-                    print v6dat['modelvec'][j],v4dat['modelvec'][ww][0], v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],v6dat['skyerr'][j],v4dat['skyerr'][ww][0]
+                    print v6dat['modelvec'][j],v4dat['modelvec'][ww][0], v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],v6dat['skyerr'][j][0],v4dat['skyerr'][ww][0][0]
 
                     bigv6sky.append(v6dat['sky'][j])
                     bigv4sky.append(v4dat['sky'][ww][0])
