@@ -108,10 +108,12 @@ for i,f in enumerate(commonfiles):
                     v6scalefactor = 10**(.4*(31.-v6dat['fitzpt'][j]))
                     v4scalefactor = 10**(.4*(31.-v4dat['fitzpt'][ww][0]))
 
+                    dataresid = np.sum(v6dat['data'][j, :, :]-v4dat['data'][ww][0,:,:]).ravel())
+
                     if v6dat['modelvec'][j] >-9999999:
                         v6gal = round(np.sum(((v6dat['sims'][j,:,:]-v6dat['sky'][j])*mask).ravel()))
                         v4gal = round(np.sum(((v4dat['sims'][ww][0, :, :]-v4dat['sky'][ww][0])*mask).ravel()))
-                        print v6gal,v4gal,v6gal-v4gal,(v6gal-v4gal)/v6gal,v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],(v6dat['modelvec'][j]-v4dat['modelvec'][ww][0])/v6dat['modelvec'][j]
+                        print dataresid,v6gal,v4gal,v6gal-v4gal,(v6gal-v4gal)/v6gal,v6dat['modelvec'][j]-v4dat['modelvec'][ww][0],(v6dat['modelvec'][j]-v4dat['modelvec'][ww][0])/v6dat['modelvec'][j]
 
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
 
