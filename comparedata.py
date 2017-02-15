@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pyfits as pf
 
 v6dir = '/pnfs/des/scratch/pysmp/smp_v627/np_data/r/'
-v4dir = '/pnfs/des/scratch/pysmp/smp_v624/np_data/r/'
+v4dir = '/pnfs/des/scratch/pysmp/smp_v625/np_data/r/'
 
 v6root = '/pnfs/des/persistent/smp/v62/'
 v4root = '/pnfs/des/persistent/smp/v4/'
@@ -100,6 +100,7 @@ for i,f in enumerate(commonfiles):
 
                     bigv6fitflux.append(v6dat['modelvec'][j])
                     bigv4fitflux.append(v4dat['modelvec'][ww][0])
+                    print v6dat['modelvec'][j],v4dat['modelvec'][ww][0], v6dat['modelvec'][j]-v4dat['modelvec'][ww][0]
 
                     bigv6sky.append(v6dat['sky'][j])
                     bigv4sky.append(v4dat['sky'][ww][0])
