@@ -111,7 +111,7 @@ for i,f in enumerate(commonfiles):
                     if v6dat['modelvec'][j] == 0:
                         v6gal = round(np.sum((v6dat['sims'][j,:,:]*mask-v6dat['sky'][j]).ravel()))
                         v4gal = round(np.sum((v4dat['sims'][ww][0, :, :]*mask-v4dat['sky'][ww][0]).ravel()))
-                        print v6gal,v4gal,v6gal-v4gal
+                        #print v6gal,v4gal,v6gal-v4gal
 
                     #print v6dat['fitzpt'][j]-v4dat['fitzpt'][ww][0]
 
