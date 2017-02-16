@@ -193,7 +193,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
-               'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[]}
+               'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
@@ -267,8 +267,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             for e in data['IMAGE_FILE']:
                 expnum = e.split('_')[3]
                 ccd = e.split('_')[5][4:]
-                bigdata['expnums'].append(expnum)
-                bigdata['ccds'].append(ccd)
+                #bigdata['expnums'].append(expnum)
+                #bigdata['ccds'].append(ccd)
                 diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
                 print diffzpt
                 raw_input()
