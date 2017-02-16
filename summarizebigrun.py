@@ -278,6 +278,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
                     #print ccd, expnum,diffzpt
                     #raw_input()
+                    print diffzpt[0]
                     bigdata['diffzpt'].append(diffzpt[0])
                 except:
                     bigdata['diffzpt'].append(0)
