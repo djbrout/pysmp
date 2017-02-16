@@ -270,7 +270,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     ccd = e.split('_')[5][4:]
                     #bigdata['expnums'].append(expnum)
                     #bigdata['ccds'].append(ccd)
-                    print len((dccd == ccd) & (dexp == expnum))
+                    print len(dz[(dccd == ccd) & (dexp == expnum)])
                     diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
                     print ccd, expnum,diffzpt
                     raw_input()
