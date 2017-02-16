@@ -441,8 +441,8 @@ class metropolis_hastings():
         #         newcpsf.append(fr2)
         #     self.centered_psfs = copy(newcpsf)
 
-        print np.mean(self.data[10,:,:]), self.sky[10]
-        raw_input()
+        #print np.mean(self.data[10,:,:]), self.sky[10]
+        #raw_input()
 
         self.run_d_mc()
 
