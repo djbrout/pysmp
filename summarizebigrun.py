@@ -258,6 +258,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
 
+            print data['IMAGE_FILE']
+            raw_input()
+
             bigdata['ra'].extend(data['RA'])
             bigdata['dec'].extend(data['DEC'])
             bigdata['image_stamp'].extend(data['IMAGE_STAMP'])
@@ -1535,7 +1538,7 @@ if __name__ == "__main__":
     fakedir = '/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/pnfs/des/scratch/pysmp/smp_v628'
+    resultsdir = '/pnfs/des/scratch/pysmp/smp_v627'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
