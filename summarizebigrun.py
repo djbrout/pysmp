@@ -278,7 +278,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
                     #print ccd, expnum,diffzpt
                     #raw_input()
-                    bigdata['diffzpt'].append(diffzpt)
+                    bigdata['diffzpt'].append(diffzpt[0])
                 except:
                     bigdata['diffzpt'].append(0)
                     print 'nanana'
@@ -352,8 +352,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
         #raw_input()
-    print bigdata['diffzpt']
-    raw_input()
+    #print bigdata['diffzpt']
+    #raw_input()
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
