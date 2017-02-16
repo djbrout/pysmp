@@ -270,13 +270,12 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     ccd = e.split('_')[5][4:]
                     #bigdata['expnums'].append(expnum)
                     #bigdata['ccds'].append(ccd)
-                    print ccd, expnum, diffzpt
                     diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
-                    print diffzpt
+                    print ccd, expnum,diffzpt
                     raw_input()
                     bigdata['diffzpt'].append(diffzpt)
                 except:
-                    print 'nanana'
+                   print 'nanana'
             raw_input()
 
             bigdata['ra'].extend(data['RA'])
