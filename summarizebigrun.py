@@ -549,7 +549,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
 
 
 
-    ww = (flux != 0.) & (fakemag != 0) & (fakemag > 24.)
+    ww = (flux != 0.) & (fakemag != 0) & (fakemag ==99.)
 
     plt.clf()
     plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
