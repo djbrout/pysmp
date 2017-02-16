@@ -170,10 +170,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
 
 
     diffzpts = dt.readcol('S2_ZP.out', delim=' ')
-    dz = diffzpts['zpt']
-    dccd = diffzpts['ccd']
-    dexp = diffzpts['expnum']
-    dfield = diffzpts['field']
+    dz = np.array(diffzpts['zpt'])
+    dccd = np.array(diffzpts['ccd'],dtype='str')
+    dexp = np.array(diffzpts['expnum'],dtype='str')
+    dfield = np.array(diffzpts['field'],dtype='str')
 
     #print dofakemjd
 
