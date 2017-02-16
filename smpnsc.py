@@ -2722,9 +2722,15 @@ class smp:
                 # print snparams.zp[j],zpt
                 # print fwhm_arcsec,params.fwhm_max
                 # raw_input()
+
+                if self.snparams.survey == 'DES':
+                    if abs(mysky) > 100.:
+                        badflag = True
+
                 badflags.append(badflag)
                 if badflag:
                     print 'badflaggg'*100
+
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
