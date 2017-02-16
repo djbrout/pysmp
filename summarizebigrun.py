@@ -266,23 +266,23 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             #print data['IMAGE_FILE']
             for e in data['IMAGE_FILE']:
                 try:
-                    print e
+                    #print e
                     expnum = float(e.split('_')[3])
                     ccd = float(e.split('_')[7].split('+')[0])
                     #bigdata['expnums'].append(expnum)
                     #bigdata['ccds'].append(ccd)
-                    if dz[(dccd == ccd) & (dexp == expnum)]:
-                        print 'pass'
-                    else:
-                        print 'fail'
+                    #if dz[(dccd == ccd) & (dexp == expnum)]:
+                    #    print 'pass'
+                    #else:
+                    #    print 'fail'
                     diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
-                    print ccd, expnum,diffzpt
-                    raw_input()
+                    #print ccd, expnum,diffzpt
+                    #raw_input()
                     bigdata['diffzpt'].append(diffzpt)
                 except:
                     bigdata['diffzpt'].append(0)
                     print 'nanana'
-            raw_input()
+            #raw_input()
 
             bigdata['ra'].extend(data['RA'])
             bigdata['dec'].extend(data['DEC'])
