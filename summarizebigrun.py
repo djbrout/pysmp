@@ -270,6 +270,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             www = (fakemag < 21.5) & (data['FLUX']-fakeflux < -600.) & (data['FLUX']-fakeflux > -1000.)
             if len(fakemag[www]) > 0:
                 print f
+
                 print 'stopped because has a bad outlier'
                 #raw_input()
 
