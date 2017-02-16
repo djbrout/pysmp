@@ -352,6 +352,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
         #raw_input()
+    print bigdata['diffzpt']
+    raw_input()
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
