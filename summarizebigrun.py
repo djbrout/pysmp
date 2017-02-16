@@ -1570,7 +1570,7 @@ if __name__ == "__main__":
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
-    cd = '/pnfs/des/scratch/pysmp/smp_v628/np_data/summary_results.npz'
+    cd = '/pnfs/des/scratch/pysmp/smp_v622/np_data/summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
