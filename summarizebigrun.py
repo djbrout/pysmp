@@ -268,7 +268,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                 try:
                     print e
                     expnum = e.split('_')[3]
-                    ccd = e.split('_')[5][4:]
+                    ccd = e.split('_')[7].split('+')[0]
                     #bigdata['expnums'].append(expnum)
                     #bigdata['ccds'].append(ccd)
                     if dz[(dccd == ccd) & (dexp == expnum)]:
