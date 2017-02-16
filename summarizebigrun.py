@@ -487,7 +487,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     plt.ylim(-.1, .1)
     plt.xlabel('Fake Flux')
     plt.ylabel('Flux Difference ')
-    plt.savefig(outdir + '/fluxdiff.png')
+    plt.savefig(outdir + '/pfluxdiff.png')
 
 
     skyresid = 2000. - sky / 10 ** (.4 * (31 - fitzpt))
