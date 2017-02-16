@@ -263,16 +263,20 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
 
-            print data['IMAGE_FILE']
+            #print data['IMAGE_FILE']
             for e in data['IMAGE_FILE']:
-                expnum = e.split('_')[3]
-                ccd = e.split('_')[5][4:]
-                #bigdata['expnums'].append(expnum)
-                #bigdata['ccds'].append(ccd)
-                diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
-                print diffzpt
-                raw_input()
-                bigdata['diffzpt'].append(diffzpt)
+                try:
+                    expnum = e.split('_')[3]
+                    ccd = e.split('_')[5][4:]
+                    #bigdata['expnums'].append(expnum)
+                    #bigdata['ccds'].append(ccd)
+                    print ccd, expnum, diffzpt
+                    diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
+                    print diffzpt
+                    raw_input()
+                    bigdata['diffzpt'].append(diffzpt)
+                except:
+                    print 'nanana'
             raw_input()
 
             bigdata['ra'].extend(data['RA'])
