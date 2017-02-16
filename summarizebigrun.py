@@ -276,7 +276,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     raw_input()
                     bigdata['diffzpt'].append(diffzpt)
                 except:
-                   print 'nanana'
+                    bigdata['diffzpt'].append(0)
+                    print 'nanana'
             raw_input()
 
             bigdata['ra'].extend(data['RA'])
