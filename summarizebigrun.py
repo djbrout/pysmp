@@ -266,6 +266,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             #print data['IMAGE_FILE']
             for e in data['IMAGE_FILE']:
                 try:
+                    print e
                     expnum = e.split('_')[3]
                     ccd = e.split('_')[5][4:]
                     #bigdata['expnums'].append(expnum)
