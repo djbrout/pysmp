@@ -170,9 +170,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
 
 
     diffzpts = dt.readcol('S2_ZP.out', delim=' ')
-    dz = np.array(diffzpts['zpt'])
-    dccd = np.array(diffzpts['ccd'],dtype='str')
-    dexp = np.array(diffzpts['expnum'],dtype='str')
+    dz = np.array(diffzpts['zpt'],dtype='float')
+    dccd = np.array(diffzpts['ccd'],dtype='float')
+    dexp = np.array(diffzpts['expnum'],dtype='float')
     dfield = np.array(diffzpts['field'],dtype='str')
 
     #print dofakemjd
@@ -267,8 +267,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             for e in data['IMAGE_FILE']:
                 try:
                     print e
-                    expnum = e.split('_')[3]
-                    ccd = e.split('_')[7].split('+')[0]
+                    expnum = float(e.split('_')[3])
+                    ccd = float(e.split('_')[7].split('+')[0])
                     #bigdata['expnums'].append(expnum)
                     #bigdata['ccds'].append(ccd)
                     if dz[(dccd == ccd) & (dexp == expnum)]:
