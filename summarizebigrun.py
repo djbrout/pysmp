@@ -169,6 +169,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     dofakedec = np.array(dofakedec,dtype='float')
 
 
+    diffzpts = dt.readcol('S2_ZP.out', delim=' ')
+    dz = diffzpts['zpt']
+    dccd = diffzpts['ccd']
+    dexp = diffzpts['expnum']
+    dfield = diffzpts['field']
 
     #print dofakemjd
 
@@ -259,6 +264,15 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
 
             print data['IMAGE_FILE']
+            for e in data['IMAGE_FILE']:
+                expnum = e.split('_')[3]
+                ccd = e.split('_')[5][4:]
+                bigdata['expnums'].append(expnum)
+                bigdata['ccds'].append(ccd)
+                diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
+                print diffzpt
+                raw_input()
+                bigdata['diffzpt'].append(diffzpt)
             raw_input()
 
             bigdata['ra'].extend(data['RA'])
