@@ -3193,6 +3193,7 @@ class smp:
         zpt = smp_dict['zpt']
         fakezpt = smp_dict['fakezpt']
 
+
         
         fake_flux = 10.**(.4*(fakezpt-fakemag))
         nfake_flux = 10.**(.4*(27.5-fakemag))*10.**(.4*(31.-27.5))

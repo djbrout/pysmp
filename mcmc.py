@@ -444,6 +444,11 @@ class metropolis_hastings():
         #print np.mean(self.data[10,:,:]), self.sky[10]
         #raw_input()
 
+        self.fpsfs = []
+
+        for i in range(self.Nimage):
+            self.fpsfs.append(np.fft.fft2(self.centered_psfs[i, :, :]))
+
         self.run_d_mc()
 
 
@@ -585,7 +590,8 @@ class metropolis_hastings():
             if self.survey == 'PS1':
                 map(self.mapshiftPSF,np.arange(self.Nimage))
             else:
-                self.shiftPSF()
+                #self.shiftPSF()
+                self.float_sn_pos()
                 print self.x_pix_offset, self.y_pix_offset
                 # # q = multiprocessing.Queue(maxsize=5)
                 # # jobs = []
@@ -773,7 +779,25 @@ class metropolis_hastings():
     def float_sn_pos( self ):
         self.x_pix_offset = self.current_x_offset + np.random.normal( scale= self.psf_shift_std )
         self.y_pix_offset = self.current_y_offset + np.random.normal( scale= self.psf_shift_std ) 
+        self.garyshiftpsf(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
+
         #self.shiftPSF(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
+
+
+    def fouriershift(self, xoff, yoff, fpsf):
+        dim = fpsf.shape[0]
+        #k = np.arange(0, dim)
+        phasex = np.exp(np.fft.fftfreq(dim) * (-2j * np.pi * xoff))
+        phasey = np.exp(np.fft.fftfreq(dim) * (-2j * np.pi * yoff))
+        # This tweak is needed to maintain perfect Hermitian arrays
+        phasex.imag[dim / 2] = 0.
+        phasey.imag[dim / 2] = 0.
+        return fpsf * phasex[np.newaxis, :] * phasey[:, np.newaxis]
+
+    def garyshiftpsf(self,y_off=0.0,x_off=0.0):
+        for i in self.Nimage:
+            fs = self.fouriershift(x_off, y_off, self.fpsfs[i])
+            self.kicked_psfs[i, :, :] = np.fft.ifft2(fs)
 
     def movepsfs(self,x,y):
         #tpsf = self.build_psfex()
