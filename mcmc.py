@@ -956,18 +956,18 @@ class metropolis_hastings():
 
 
 
-                    #v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + (sims-sky)/gain  + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
+                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + np.sqrt((sims-sky)**2)/gain  + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
 
-                    sms = sims-sky
-                    sms[sms<0] = 0.
-                    lsms = sims-sky
-                    lsms[sms<1.] = 1.
-
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 +
-                                                                     (sms)/gain + (10**(.4*2.5*np.log10(lsms)) -
-                                                                     10**(.4*(2.5*np.log10(lsms)+sigmazpt)) )**2 +
-                                                                     (.0056)**2*(sims-sky)**2 +
-                                                                     self.readnoise/gain)).ravel()
+                    # sms = sims-sky
+                    # sms[sms<0] = 0.
+                    # lsms = sims-sky
+                    # lsms[sms<1.] = 1.
+                    #
+                    # v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 +
+                    #                                                  (sms)/gain + (10**(.4*2.5*np.log10(lsms)) -
+                    #                                                  10**(.4*(2.5*np.log10(lsms)+sigmazpt)) )**2 +
+                    #                                                  (.0056)**2*(sims-sky)**2 +
+                    #                                                  self.readnoise/gain)).ravel()
 
 
                     #v = np.real(v)
