@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-LC_ALL=C fgrep -m 1 -l "SN-S1" /pnfs/des/scratch/pysmp/imglistfake/*.dat > data/s1lightcurves.txt
+awk 'FNR > 50 { nextfile }; /SN-S1/ { print FILENAME }' /pnfs/des/scratch/pysmp/imglistfake/des_fake_*.dat | uniq > data/s1lightcurves.txt
