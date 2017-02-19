@@ -592,7 +592,7 @@ class metropolis_hastings():
             else:
                 #self.shiftPSF()
                 self.float_sn_pos()
-                print self.x_pix_offset, self.y_pix_offset
+                #print self.x_pix_offset, self.y_pix_offset
                 # # q = multiprocessing.Queue(maxsize=5)
                 # # jobs = []
                 # # for i in range(len(self.sky)):
