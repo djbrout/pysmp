@@ -796,8 +796,10 @@ class metropolis_hastings():
 
     def garyshiftpsf(self,y_off=0.0,x_off=0.0):
         for i in range(self.Nimage):
-            fs = self.fouriershift(x_off, y_off, self.fpsfs[i])
-            self.kicked_psfs[i, :, :] = np.fft.ifft2(fs)
+            if self.flags[i] == 0:
+                if self.modelstd[i] > 1:
+                    fs = self.fouriershift(x_off, y_off, self.fpsfs[i])
+                    self.kicked_psfs[i, :, :] = np.fft.ifft2(fs)
 
     def movepsfs(self,x,y):
         #tpsf = self.build_psfex()
