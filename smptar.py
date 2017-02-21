@@ -1353,8 +1353,8 @@ class smp:
             print imfile
             epochtime  = time.time()
 
-            if j in badindices:
-                continue
+            #if j in badindices:
+            #    continue
             if round(snparams.mjd[j]) == 0:
                 #raw_input('mjdddd')
                 continue
