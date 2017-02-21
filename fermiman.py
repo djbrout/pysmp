@@ -16,7 +16,8 @@ def getfakefiles(ccd,field,num):
                  " | uniq > data/"+field.lower()+"lightcurves.txt").read()
 
         print out
-        raw_input()
+        print len(out)
+        #raw_input()
         if len(goodfakes) == num:
             break
 
