@@ -3,6 +3,7 @@ import numpy as np
 
 
 def getfakefiles(ccd,field,num):
+    print 'data/'+field.lower()+'lightcurves.txt'
     allfieldfakes = open('data/'+field.lower()+'lightcurves.txt').readlines()
     goodfakes = []
     for fk in allfieldfakes:
@@ -67,4 +68,4 @@ if __name__ == "main":
         elif o in ["-f","--field"]:
             field = a
 
-    setup(ccd,field)
+    setup(ccd,field,num)
