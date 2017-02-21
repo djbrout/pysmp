@@ -68,4 +68,5 @@ if __name__ == "main":
         elif o in ["-f","--field"]:
             field = a
 
+    print ccd,field,num
     setup(ccd,field,num)
