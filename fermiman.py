@@ -3,15 +3,15 @@ import os
 
 
 def getfakefiles(ccd,field,num):
-    print 'data/'+field.lower()+'lightcurves.txt'
+    #print 'data/'+field.lower()+'lightcurves.txt'
     allfieldfakes = open('data/'+field.lower()+'lightcurves.txt','r').readlines()
     goodfakes = []
-    print allfieldfakes
+    #print allfieldfakes
 
 
     for fk in allfieldfakes:
 
-        print "awk 'FNR > 250 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip() +" | uniq > data/"+field.lower()+"lightcurves.txt"
+        print "awk 'FNR > 70 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip() +" | uniq > data/"+field.lower()+"lightcurves.txt"
         out = os.popen("awk 'FNR > 150 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip() +
                  " | uniq > data/"+field.lower()+"lightcurves.txt").read()
 
