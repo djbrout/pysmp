@@ -4,7 +4,7 @@ import os
 
 def getfakefiles(ccd,field,num):
     print 'data/'+field.lower()+'lightcurves.txt'
-    allfieldfakes = open('data/'+field.lower()+'lightcurves.txt').readlines()
+    allfieldfakes = open('data/'+field.lower()+'lightcurves.txt','r').readlines()
     goodfakes = []
     print allfieldfakes
 
