@@ -11,8 +11,8 @@ def getfakefiles(ccd,field,num):
 
     for fk in allfieldfakes:
 
-        print "awk 'FNR > 150 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk +" | uniq > data/"+field.lower()+"lightcurves.txt"
-        out = os.popen("awk 'FNR > 150 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk +
+        print "awk 'FNR > 150 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip() +" | uniq > data/"+field.lower()+"lightcurves.txt"
+        out = os.popen("awk 'FNR > 150 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip() +
                  " | uniq > data/"+field.lower()+"lightcurves.txt").read()
 
         print out
