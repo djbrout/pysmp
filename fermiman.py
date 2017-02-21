@@ -1,24 +1,33 @@
 import numpy as np
-
+import os
 
 
 def getfakefiles(ccd,field,num):
     print 'data/'+field.lower()+'lightcurves.txt'
     allfieldfakes = open('data/'+field.lower()+'lightcurves.txt').readlines()
     goodfakes = []
+
+
+
     for fk in allfieldfakes:
 
+        print fk
+        out = os.popen("awk 'FNR > 150 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk +
+                 " | uniq > data/"+field.lower()+"lightcurves.txt").read()
+
+        print out
+        raw_input()
         if len(goodfakes) == num:
             break
 
-        stopreading = False
-        for l in open(fk.strip()).readlines():
-            if 'g_'+ccd+'.LIST' in l:
-                print fk
-                goodfakes.append(fk)
-                stopreading = True
-            if stopreading:
-                break
+        # stopreading = False
+        # for l in open(fk.strip()).readlines():
+        #     if 'g_'+ccd+'.LIST' in l:
+        #         print fk
+        #         goodfakes.append(fk)
+        #         stopreading = True
+        #     if stopreading:
+        #         break
 
 
     return goodfakes
