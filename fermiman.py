@@ -12,7 +12,7 @@ def getfakefiles(ccd,field,num):
             break
 
         stopreading = False
-        for l in open(fk).readlines():
+        for l in open(fk.strip()).readlines():
             if 'g_'+ccd+'.LIST' in l:
                 print fk
                 goodfakes.append(fk)
