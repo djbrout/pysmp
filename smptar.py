@@ -6504,7 +6504,7 @@ if __name__ == "__main__":
     snfilepath = None
     bigstarcatalog=None
     galaxyfoldername='.'
-    snfilelist = None
+    snfilelist = '.'
     files_split_by_filter = False
     useweights = False
     stardumppsf = False
