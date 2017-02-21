@@ -44,8 +44,7 @@ def setup(ccd,field,num):
 
 
 
-if __name__ == "main":
-    print 'hello'
+if __name__ == "__main__":
     import sys,getopt
     try:
         args = sys.argv[1:]
