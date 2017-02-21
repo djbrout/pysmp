@@ -2,6 +2,10 @@ import numpy as np
 import os
 
 
+def run(fakefiles):
+    for ff in fakefiles:
+        os.popen('python smptar.py -f r -r "." -s '+ff.strip())
+
 def getfakefiles(ccd,field,num):
     #print 'data/'+field.lower()+'lightcurves.txt'
     allfieldfakes = open('data/'+field.lower()+'lightcurves.txt','r').readlines()
@@ -11,26 +15,27 @@ def getfakefiles(ccd,field,num):
 
     for fk in allfieldfakes:
 
-        print "awk 'FNR > 50 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip() +" | uniq "
+        print "awk 'FNR > 50 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip()
         out = os.popen("awk 'FNR > 50 { nextfile }; /g_"+ccd+".LIST/ { print FILENAME }' "+ fk.strip()).read()
 
         print out
-        print len(out)
-        #raw_input()
+
+        if len(out) > 0:
+            goodfakes.append(fk)
+
         if len(goodfakes) == num:
             break
 
-        # stopreading = False
-        # for l in open(fk.strip()).readlines():
-        #     if 'g_'+ccd+'.LIST' in l:
-        #         print fk
-        #         goodfakes.append(fk)
-        #         stopreading = True
-        #     if stopreading:
-        #         break
-
-
     return goodfakes
+
+
+def ifdhtarballs(field,ccdnums):
+    print ''
+    # for ccd in ccdnums:
+    #    print os.popen('ifdh cp -D --force=xrootd /pnfs/des/persistent/smp/v62/SN-'+field.upper()+'_CCD'+str(ccd)+'_v6.tar .').read()
+    #    print os.popen('tar -xf SN-'+field.upper()+'_CCD'+str(ccd)+'_v6.tar').read()
+    #
+    # os.popen('ifdh log "Job $CLUSTER.$PROCESS has finished copying its input file at `date`"')
 
 def setup(ccd,field,num):
 
@@ -48,9 +53,9 @@ def setup(ccd,field,num):
 
     print ccdnums
 
+    ifdhtarballs(field,ccdnums)
 
-
-
+    run(fakelist)
 
 
 if __name__ == "__main__":
