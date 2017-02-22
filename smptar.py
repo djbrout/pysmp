@@ -1333,6 +1333,7 @@ class smp:
                         os.system('ifdh mkdir '+os.path.join(self.outdir,'stardata','lasker'))
                     except:
                         pass
+                    os.system('yes |  rm tmp.txt')
                     fout = open('tmp.txt', 'w')
                     print >> fout, '# ID\t RA\t DEC\t CATMAG\t FILTER\t EXPNUM\n'
                     fout.close()
