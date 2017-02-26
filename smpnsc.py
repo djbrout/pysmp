@@ -2727,9 +2727,9 @@ class smp:
                 # print fwhm_arcsec,params.fwhm_max
                 # raw_input()
 
-                if self.snparams.survey == 'DES':
-                    if abs(mysky) > 100.:
-                        badflag = True
+                # if self.snparams.survey == 'DES':
+                #     if abs(mysky) > 100.:
+                #         badflag = True
 
                 badflags.append(badflag)
                 if badflag:
