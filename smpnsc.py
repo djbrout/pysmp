@@ -17,19 +17,13 @@ import os
 import sys
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
-print 'imported 1'
 #import scipy.ndimage
-print 'imported 2'
 import matplotlib as m
-print 'imported 3'
 import mcmc as mcmc3
-print 'imported 4'
 #import mcmc3galsimpixshift as mcmc3galsimpixshift
-print 'imported 5'
 m.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-print 'imported 6'
 
 import pyfits as pf
 import scipy.signal
@@ -51,7 +45,6 @@ import dilltools as dt
 import chkpsf
 import scipy.optimize as opti
 
-print 'imported'
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
                  'ZPFLUX':'float','RA':'string',
@@ -6889,6 +6882,7 @@ if __name__ == "__main__":
     if files_split_by_filter:
         filt = snfile.split('_')[1].split('.')[0]
     print 'getting snparams'
+    print snfile,root_dir
     try:
         snparams = get_snfile(snfile, root_dir, useweights)
     except:
