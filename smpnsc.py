@@ -2650,7 +2650,8 @@ class smp:
                             #sys.exit()
                             psf_stamp = self.psf
                             print xsn,ysn,im.shape,skysn,skyerrsn
-                            scale = snparams.flux[i]
+                            scale = 10**(.4*(31.-snparams.fake_truemag[i]))
+                            errmag =
                             # errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                             #     pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
 
@@ -2817,7 +2818,7 @@ class smp:
 
 
                                     smp_dict['scale'][i] = scale
-                                    smp_dict['scale_err'][i] = errmag
+                                    #smp_dict['scale_err'][i] = errmag
                                     # smp_dict['sky'][i] = skysn
                                     # #raw_input('sssssss')
                                     # dosextractor=False
