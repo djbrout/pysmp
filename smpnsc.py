@@ -2435,6 +2435,8 @@ class smp:
                     else:
                         bkgrnd = None
                         bkgrndrms = None
+
+
                     zpt,zpterr,zpt_file, rmsaddin = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
@@ -6063,31 +6065,66 @@ class smp:
                 #print imfile
                 #raw_input()
                 name = imfile.split('/')[-1][:-8]
-                mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
+                #mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
+                mag_compare_out = os.path.join(self.impath,
+                                               name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz')
                 #print 'lengoodstarcols',len(mag_cat[goodstarcols])
                 #raw_input()
-                self.tmpwriter.savez(mag_compare_out
-                                     # ,ra = ras[goodstarcols]
-                                     # ,dec = decs[goodstarcols]
-                                     , cat_mag=mag_cat[goodstarcols]
-                                     , fit_mag=-2.5 * np.log10(fluxcol[goodstarcols])
-                                     , fitflux = fluxcol[goodstarcols]
-                                     # ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
-                                     # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
-                                     , ras = ras[goodstarcols]
-                                     , decs = decs[goodstarcols]
-                                     , fit_zpt=md
-                                     , fit_zpt_std=std
-                                     , sky=starsky[goodstarcols]
-                                     , skyerr=starskyerr[goodstarcols]
-                                     # ,mcmc_me_zpt = mcmc_me_md
-                                     # ,mcmc_me_zpt_std = mcmc_me_std
-                                     , cat_zpt=cat_zpt
-                                     , rmsaddin=rmsaddin
-                                     , mjd=mjd
-                                     , mjdoff=mjdoff
-                                     , mjdslopeinteroff=mjdslopeinteroff
-                                     )
+
+                np.savez(mag_compare_out
+                         # ,ra = ras[goodstarcols]
+                         # ,dec = decs[goodstarcols]
+                         , cat_magvvv=mag_cat[goodstarcols]
+                         , fit_mag=-2.5 * np.log10(fluxcol[goodstarcols])
+                         , fit_mag_err=-2.5 * np.log10(fluxcol[goodstarcols]) + 2.5 * np.log10(fluxcol[goodstarcols] + flux_star_std[goodstarcols])
+                         , flux_starh=fluxcol[goodstarcols]
+                         , flux_star_std=flux_star_std[goodstarcols]
+                         , chisqu=flux_chisq[goodstarcols]
+                         # ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
+                         # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+                         , ras=ras[goodstarcols]
+                         , decs=decs[goodstarcols]
+                         , centroidedras=thisra[goodstarcols]
+                         , centroideddecs=thisdec[goodstarcols]
+                         , ids=ids[goodstarcols]
+                         , rmsaddin=rmsaddin
+                         , fit_zpt=md
+                         , fit_zpt_std=std
+                         , sky=starsky[goodstarcols]
+                         , skyerr=starskyerr[goodstarcols]
+                         # ,mcmc_me_zpt = mcmc_me_md
+                         # ,mcmc_me_zpt_std = mcmc_me_std
+                         , cat_zpt=cat_zpt
+                         , mjd=thismjd
+                         , psfs=psfs[goodstarcols, :, :]
+                         , mjdoff=mjdoff
+                         , mjdslopeinteroff=mjdslopeinteroff
+                         )
+
+
+
+                # self.tmpwriter.savez(mag_compare_out
+                #                      # ,ra = ras[goodstarcols]
+                #                      # ,dec = decs[goodstarcols]
+                #                      , cat_mag=mag_cat[goodstarcols]
+                #                      , fit_mag=-2.5 * np.log10(fluxcol[goodstarcols])
+                #                      , fitflux = fluxcol[goodstarcols]
+                #                      # ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
+                #                      # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
+                #                      , ras = ras[goodstarcols]
+                #                      , decs = decs[goodstarcols]
+                #                      , fit_zpt=md
+                #                      , fit_zpt_std=std
+                #                      , sky=starsky[goodstarcols]
+                #                      , skyerr=starskyerr[goodstarcols]
+                #                      # ,mcmc_me_zpt = mcmc_me_md
+                #                      # ,mcmc_me_zpt_std = mcmc_me_std
+                #                      , cat_zpt=cat_zpt
+                #                      , rmsaddin=rmsaddin
+                #                      , mjd=mjd
+                #                      , mjdoff=mjdoff
+                #                      , mjdslopeinteroff=mjdslopeinteroff
+                #                      )
             bad = False
             #raw_input('ZEROPOINTING WAS GOOD')
         else:
