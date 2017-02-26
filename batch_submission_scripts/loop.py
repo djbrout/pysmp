@@ -4,7 +4,7 @@ import numpy as np
 import time
 
 allindexes = range(0,10)
-np.random.shuffle(allindexes)
+#np.random.shuffle(allindexes)
 
 for i in allindexes:
     print i
