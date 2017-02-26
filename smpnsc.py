@@ -6064,7 +6064,7 @@ class smp:
                     pass
                 #print imfile
                 #raw_input()
-                name = imfile.split('/')[-1][:-8]
+                name = imfile.split('/')[-1][:-5]
                 #mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
                 mag_compare_out = os.path.join(self.impath,
                                                name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz')
