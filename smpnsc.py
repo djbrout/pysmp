@@ -2748,6 +2748,8 @@ class smp:
 
                                     noise_stamp[image_stamp > 500000.] = 0.
 
+                                    print 'here'*100
+
                                     #skysn *= scalefactor
                                     #skyerrsn *= scalefactor
 
