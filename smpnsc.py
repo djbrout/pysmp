@@ -2818,7 +2818,7 @@ class smp:
                                         smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
                                     else:
                                         smp_psf[i, :, :] = psf_stamp
-                                    save_fits_image(psf_stamp,'testpsf.fits')
+                                    #save_fits_image(psf_stamp,'testpsf.fits')
                                     c = 20
                                     psa = self.snparams.platescale
 
