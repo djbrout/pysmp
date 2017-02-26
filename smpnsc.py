@@ -44,6 +44,7 @@ import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
 import scipy.optimize as opti
+import psfex
 
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
@@ -6227,6 +6228,11 @@ class smp:
         return (average, variance**.5)
 
     def build_psfex(self, psffile,x,y,imfile,dogalsim=False,stop=False):
+        a = psfex.PSFEx(psffile)
+        im = a.get_rec(y, x)[4:-3, 4:-3]
+        return im, (round(x), round(y))
+
+    def build_psfex_old(self, psffile,x,y,imfile,dogalsim=False,stop=False):
         '''
         Inputs from dump_psfex output file:
 
