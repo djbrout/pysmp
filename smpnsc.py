@@ -427,6 +427,8 @@ class smp:
         self.lcfilepath = os.path.join(oldoutdir,'lightcurves')
         if self.fermigrid and self.worker:
             os.popen('ifdh mkdir '+self.lcfilepath).read()
+        else:
+            os.popen('mkdir '+self.lcfilepath)
 
         if not os.path.exists(self.zptstamps):
             if fermigrid & worker:
