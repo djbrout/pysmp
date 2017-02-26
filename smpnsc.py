@@ -17,6 +17,7 @@ import os
 import sys
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
+print 'imported 1'
 import scipy.ndimage
 import matplotlib as m
 import mcmc as mcmc3
@@ -24,6 +25,7 @@ import mcmc3galsimpixshift as mcmc3galsimpixshift
 m.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+print 'imported 2'
 
 import pyfits as pf
 import scipy.signal
@@ -45,7 +47,7 @@ import dilltools as dt
 import chkpsf
 import scipy.optimize as opti
 
-
+print 'imported'
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
                  'ZPFLUX':'float','RA':'string',
