@@ -39,7 +39,7 @@ GEWEKE COVARIANCE
 
 
 import numpy as np
-import scipy.ndimage
+#import scipy.ndimage
 import scipy.signal
 import scipy.ndimage as nd
 #from . import Matplot, flib
