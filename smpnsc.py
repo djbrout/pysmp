@@ -2738,6 +2738,11 @@ class smp:
                 if badflag:
                     print 'badflaggg'*100
 
+                if np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
+                    print 'im min max'*100
+                if np.max(psf_stamp[params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4,
+                          params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4]) == np.max(psf_stamp[:, :]):
+                    print 'psf min max'*100
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
