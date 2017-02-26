@@ -3017,6 +3017,7 @@ class smp:
                                     i += 1
                                     print 'epochtime',time.time()-epochtime
 
+        print 'dillscale',smp_dict['scale']
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with zeropoints\n ', self.fermilogfile)
         if self.fermigrid and self.worker:
