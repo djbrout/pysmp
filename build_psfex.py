@@ -7,6 +7,7 @@ def build(psffile, x, y, stampsize):
     a = psfex.PSFEx(psffile)
     im = a.get_rec(y, x)[4:-3, 4:-3]
     return im, (round(x), round(y))
+
 # def build(psffile, x, y, stampsize):
 #
 #     print "dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
