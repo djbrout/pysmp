@@ -302,10 +302,10 @@ class metropolis_hastings():
         self.xvals = np.arange(self.psf_shape[0])
         self.yvals = np.arange(self.psf_shape[1])
 
-        self.splines = []
-        for epoch in np.arange(Nimage):
-            self.splines.append(scipy.interpolate.RectBivariateSpline(self.xvals, self.yvals, self.psfs[epoch,:,:]))
-            #self.data[epoch,20,20] = scipy.signal.convolve2d(self.data[epoch],100000*self.psfs[i],mode='same')
+        #self.splines = []
+        #for epoch in np.arange(Nimage):
+        #    self.splines.append(scipy.interpolate.RectBivariateSpline(self.xvals, self.yvals, self.psfs[epoch,:,:]))
+        #    #self.data[epoch,20,20] = scipy.signal.convolve2d(self.data[epoch],100000*self.psfs[i],mode='same')
         #self.galstd[20,20] = 1000
         
         self.kicked_psfs = copy(self.psfs)
