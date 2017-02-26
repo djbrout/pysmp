@@ -18,7 +18,7 @@ import sys
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 print 'imported 1'
-import scipy.ndimage
+#import scipy.ndimage
 print 'imported 2'
 import matplotlib as m
 print 'imported 3'
