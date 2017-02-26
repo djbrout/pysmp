@@ -2,14 +2,13 @@ import os
 from subprocess import *
 import numpy as np
 import time
-nproc=4
 
-allindexes = range(0,4000)
+allindexes = range(0,10)
 np.random.shuffle(allindexes)
 
 for i in allindexes:
     print i
-    script = '/project/projectdirs/des/p9smp/SEaR/submission_scripts/sm_' + str(i) + '.sh'
+    script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
     f = open(script, 'w')
     f.write(
         '#!/bin/bash -l\n' +
@@ -17,19 +16,18 @@ for i in allindexes:
         '#SBATCH -n 1\n' +
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
-        '#SBATCH -A des\n' +
-        '#SBATCH --time=00:19:00\n' +
-        '#SBATCH --output=/project/projectdirs/des/p9smp/searscratch/sm_' + str(i) + '_v22_0.log\n' +
-        '#SBATCH --error=/project/projectdirs/des/p9smp/searscratch/sm_' + str(i) + '_v22_0.log\n' +
-        '#SBATCH --job-name=2_iband_' + str(i) + '\n' +
+        '#SBATCH -A dessn\n' +
+        '#SBATCH --time=05:19:00\n' +
+        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60.log\n' +
+        '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60.log\n' +
+        '#SBATCH --job-name=rband_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
         '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
         '#SBATCH --gres=craynetwork:1\n' +
         '\n' +
-        'cd /project/projectdirs/des/p9smp/SEaR/\n' +
-        'module load python\n'+
-        'source setupcori.sh\n'+
+        'cd /project/projectdirs/des/djbrout/pysmp/\n' +
+        'source setup_scripts/setupcori2.sh\n'+
         #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
         'echo "RUNNING NOW"\n'+
         #'python test.py\n'
@@ -37,7 +35,7 @@ for i in allindexes:
         #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
         #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
         #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-        'source edisonsubmit.sh ' + str(i) + ' 1 \n' +
+        'python smpnsc.py --index=' + str(i) + ' \n' +
         '\n'
     )
     f.close()
