@@ -1288,6 +1288,12 @@ class smp:
 
         self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
         starcat = txtobj(self.starcatfile, useloadtxt=True)
+
+        starids = np.array(starcat.objid)
+        starras = np.array(starcat.ra)
+        stardecs = np.array(starcat.dec)
+        starmags = np.array(starcat.mag)
+
         print 'done reading in starcatfile'
         wehavestarcat = True
 
@@ -2023,7 +2029,7 @@ class smp:
                     #raw_input()
                     mag_star = starcat.mag
                     #mag_star = starcat.mag[cols]
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras, starglobaldecs)), 0))
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starras, stardecs)), 0))
                     #coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra[cols], starcat.dec[cols])), 0))
                     x_star, y_star = [], []
 
@@ -2070,7 +2076,7 @@ class smp:
                     print 'getting stars'
                     #self.rdnoise = hdr[params.rdnoise_name]
                     #self.gain = hdr[params.gain_name] #1
-                    cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
+                    cols = (starras > ra_low) & (starras < ra_high) & (stardecs > dec_low) & (stardecs < dec_high)
 
                     #print starglobalras[cols]
 
@@ -2081,8 +2087,8 @@ class smp:
                         raise exceptions.RuntimeError("Error : No stars in image!!")
                     
                     #mag_star = starcat.mag[cols]
-                    mag_star = starglobalmags[cols]
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starglobalras[cols], starglobaldecs[cols])), 0))
+                    mag_star = starmags[cols]
+                    coords = zip(*w.wcs_world2pix(np.array(zip(starras[cols], stardecs[cols])), 0))
                     x_star,y_star = [],[]
 
                     for xval,yval in zip(*coords):
