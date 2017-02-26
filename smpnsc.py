@@ -6488,7 +6488,7 @@ if __name__ == "__main__":
     mergeno = 0
     snfilepath = None
     bigstarcatalog=None
-    galaxyfoldername=None
+    galaxyfoldername=''
     snfilelist = None
     files_split_by_filter = False
     useweights = False
