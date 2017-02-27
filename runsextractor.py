@@ -22,6 +22,7 @@ import dilltools as dt
 import os
 
 def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index=''):
+    print 'inside getsky and skyerr'
     if survey == 'DES':
         sexpath = "sex"
         fermigrid  = True
