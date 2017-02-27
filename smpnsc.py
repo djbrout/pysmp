@@ -6291,6 +6291,8 @@ class smp:
     def build_psfex(self, psffile,x,y,imfile,dogalsim=False,stop=False):
         a = psfex.PSFEx(psffile)
         im = a.get_rec(y, x)[3:-4, 3:-4]
+        im /= np.sum(im.ravel())
+
         return im, (round(x), round(y))
 
     def build_psfex_old(self, psffile,x,y,imfile,dogalsim=False,stop=False):
