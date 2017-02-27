@@ -240,6 +240,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             #bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
 
             print data.keys()
+            raw_input()
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
