@@ -61,14 +61,18 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',b
             background = line.split('Background: ')[1].split(' ')[0]
             rms = line.split('RMS: ')[1].split(' ')[0]
 
+    if bigreturn:
+        bkgrnd = pf.getdata(
+            '/global/cscratch1/sd/dbrout/sewpy_logs/' + index + '_' + imagefilename.split('/')[-1] + '.background')
+        bkgrndrms = pf.getdata(
+            '/global/cscratch1/sd/dbrout/sewpy_logs/' + index + '_' + imagefilename.split('/')[-1] + '.background_rms')
+
     try:
         os.remove(newfilename)
         os.remove(newfilename.split('.fits')[0]+'.cat.txt')
         os.remove(newfilename.split('.fits')[0]+'.log.txt')
 
-        if bigreturn:
-            bkgrnd = pf.getdata('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
-            bkgrndrms = pf.getdata('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
+
         os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
         os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
     except:
