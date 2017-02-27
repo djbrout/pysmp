@@ -2223,7 +2223,7 @@ class smp:
                         try:
                             print zpt_file
 
-                            zptdata = np.load(zpt_file) #load previous zpt information
+                            zptdata = np.load(zpt_file.replace('+fakeSN','')) #load previous zpt information
 
                             print zptdata.keys()
                             zpt = zptdata['fit_zpt']
@@ -6078,7 +6078,7 @@ class smp:
                 name = imfile.split('/')[-1][:-5]
                 #mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
                 mag_compare_out = os.path.join(self.impath,
-                                               name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz')
+                                               name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz').replace('+fakeSN','')
                 #print 'lengoodstarcols',len(mag_cat[goodstarcols])
                 #raw_input()
 
