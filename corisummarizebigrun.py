@@ -23,16 +23,16 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/pnfs/des/persistent/smp/v62/","/pnfs/des/persistent/smp/v62/stardata.npz")
+        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata.npz")
         #sys.exit()
-        data = grabdata(tmpwriter,resultsdir,cd)
+        #data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
         dostars = True
         if dostars:
-            stardata = np.load('v4.dat.npz')
+            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],
