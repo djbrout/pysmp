@@ -44,7 +44,10 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index=''):
             workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , config={"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":index+'_'+imagefilename+'.background, '+index+'_'+imagefilename+'.background_rms'
+            , config={"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":index+'_'+imagefilename.split('/')[-1]+
+                                                                                      '.background, '+
+                                                                                      index+'_'+imagefilename.split('/')[-1]+
+                                                                                      '.background_rms'
                       ,"back_size":"256"}
 
         )
@@ -60,8 +63,8 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index=''):
 
     try:
         os.remove(newfilename)
-        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename+'.background')
-        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename+'.background_rms')
+        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
+        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
     except:
         pass
     return float(background), float(rms)
