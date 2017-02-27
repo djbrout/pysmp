@@ -1277,7 +1277,7 @@ class smp:
         #print offsetdec
         print 'Done with centroiding!!'
         #sys.exit()
-        orig_nozpt = copy(nozpt)
+        #orig_nozpt = copy(nozpt)
         print nozpt
         #raw_input()
         startedstarcat = False
@@ -2175,7 +2175,7 @@ class smp:
             #print self.gain
             #raw_input('gain')
             if self.snparams.survey == 'DES':
-                im += 10000.
+                im += 1000.
             mjdoff = 0.
             mjdslopeinteroff = 0.
             gogo = True
