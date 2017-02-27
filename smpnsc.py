@@ -5262,13 +5262,15 @@ class smp:
         #     raw_input()
         #     mag_cat *= -1.
         prevra = 0
-        for x,y,m,s,se,mc,ra,dec,iii,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,ids,range(len(xstar))):
+        for x,y,m,s,se,mc,ra,dec,iii,bf,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,ids,badflag,range(len(xstar))):
             #print x,y,mc
             #print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,5) == round(ra,5):
                 #print 'same star, so skipping'
                 continue
             prevra = ra
+            if bf == 1:
+                continue
             #print i
             #cntr += 1
             #if i > 150:
