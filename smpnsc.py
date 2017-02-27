@@ -2426,10 +2426,10 @@ class smp:
 
                         print sexsky, sexrms
                         # raw_input('sextractor')
-                        bkgrnd = pf.getdata(imfile + '.background')
+                        #bkgrnd = pf.getdata(imfile + '.background')
                         # print bkgrnd.shape
                         #sexsky = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel()) * scalefactor
-                        bkgrndrms = pf.getdata(imfile + '.background_rms')
+                        #bkgrndrms = pf.getdata(imfile + '.background_rms')
                         #sexrms = (np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel() ** .5) * scalefactor) ** 2.
 
                     else:
