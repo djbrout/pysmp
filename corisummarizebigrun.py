@@ -234,7 +234,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             #try:
             #print data['ID_OBS']
             #raw_input()
-            print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
+            #print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
             #data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
             #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
             #bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
@@ -281,7 +281,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
 
             www = (fakemag < 21.5) & (data['FLUX']-fakeflux < -600.) & (data['FLUX']-fakeflux > -1000.)
             if len(fakemag[www]) > 0:
-                print f
+                #print f
 
                 print 'stopped because has a bad outlier'
                 #raw_input()
