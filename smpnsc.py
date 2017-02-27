@@ -2675,16 +2675,16 @@ class smp:
                             #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, pkpsf_stamp = 1,1,1,0,100,200,100,200,image_stamp,noise_stamp,image_stamp*0+1,image_stamp*0 + 1
 
 
-                            self.dobackgroundstamp = True
-                            if self.dobackgroundstamp:
-                                bkgrnd = pf.getdata(imfile+'.background')
-                                bkg_stamp = bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]*scalefactor
-                                # bkgrnd = pf.getdata(imfile + '.background_rms')*scalefactor
-                                # noise_stamp = 1/bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                #           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]**2.
-
-                                bkg_stamp = bkg_stamp * 0. + skysn
+                            # self.dobackgroundstamp = True
+                            # if self.dobackgroundstamp:
+                            #     bkgrnd = pf.getdata(imfile+'.background')
+                            #     bkg_stamp = bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                            #               self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]*scalefactor
+                            #     # bkgrnd = pf.getdata(imfile + '.background_rms')*scalefactor
+                            #     # noise_stamp = 1/bkgrnd[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
+                            #     #           self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]**2.
+                            #
+                            #     bkg_stamp = bkg_stamp * 0. + skysn
 
                             msk = copy(image_stamp)
                             msk[msk != 0.] = 1
