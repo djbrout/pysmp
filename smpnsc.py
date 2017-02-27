@@ -2422,7 +2422,7 @@ class smp:
                         sexsky, sexrms, bkgrnd, bkgrndrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
                                                                          500 - 50,
                                                                          500 + 50, 500 - 50,
-                                                                         snparams.survey, bigreturn=True)
+                                                                         snparams.survey, bigreturn=True,index=snparams.snfile)
 
                         print sexsky, sexrms
                         # raw_input('sextractor')
