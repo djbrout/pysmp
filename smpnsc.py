@@ -2330,7 +2330,7 @@ class smp:
                 x_star1[badflagarr] = 100.
                 y_star1[badflagarr] = 100.
                 print x_star1
-                raw_input()
+                #raw_input()
                 #for xx in x_star1:
                 #    print xx
                 print im.shape
