@@ -2738,9 +2738,9 @@ class smp:
                 if badflag:
                     print 'badflaggg'*100
 
-                if np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
+                if not np.min(im[ysn-2:ysn+3,xsn-2:xsn+3]) != np.max(im[ysn-2:ysn+3,xsn-2:xsn+3]):
                     print 'im min max'*100
-                if np.max(psf_stamp[params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4,
+                if not np.max(psf_stamp[params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4,
                           params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4]) == np.max(psf_stamp[:, :]):
                     print 'psf min max'*100
                 if not badflag:
