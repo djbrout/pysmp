@@ -394,15 +394,19 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     ww = (flux != 0.) & (fakemag != 0)#(fakemag < 28.5) & (flux != 0.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
-    ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
-                            np.arange(min(fakemag[ww]),max(fakemag[ww]), .5))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
 
     plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.1)
     ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
                             np.arange(min(fakemag[ww]), max(fakemag[ww]), .5))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP',alpha=.4)
+
+    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
+    ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
+                            np.arange(min(fakemag[ww]),max(fakemag[ww]), .5))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+
 
     plt.axhline(0)
     plt.xlim(19,29)
