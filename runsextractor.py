@@ -36,6 +36,7 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',b
     if not os.path.exists('/global/cscratch1/sd/dbrout/sewpy_logs/'):
         os.makedirs('/global/cscratch1/sd/dbrout/sewpy_logs/')
     newfilename = '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'trimmed_'+imagefilename.split('/')[-1]
+    print newfilename
     #dt.savefits(im, newfilename,fermigrid=fermigrid)
     dt.save_fits_image(im, newfilename,go=True)
 
