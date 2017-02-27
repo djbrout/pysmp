@@ -190,7 +190,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         if cntr > 10000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
-        if not '_r_'  in f: continue
+        if not '_r.smp' in f: continue
         print cntr, 'of',tot
         deep = 0
         os.system('cp '+f+' test.npz')
