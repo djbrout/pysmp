@@ -156,7 +156,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     dofakedec = np.array(dofakedec,dtype='float')
 
 
-    diffzpts = dt.readcol('S2_ZP.out', delim=' ')
+    diffzpts = dt.readcol('ZP.out', delim=' ')
     dz = np.array(diffzpts['zpt'],dtype='float')
     dccd = np.array(diffzpts['ccd'],dtype='float')
     dexp = np.array(diffzpts['expnum'],dtype='float')
