@@ -23,7 +23,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata.npz")
+        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
         #sys.exit()
         #data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
@@ -141,7 +141,7 @@ def grabstardata(imagedir,outfile):
         print 'ids not in archiv'
     #sys.exit()
 
-    np.savez('v4.dat', **bigdata)
+    np.savez(outfile, **bigdata)
     #os.system('ifdh rm ' + outfile)
     #os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     #os.system('rm dat.dat')
