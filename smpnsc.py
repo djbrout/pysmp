@@ -2419,6 +2419,7 @@ class smp:
 
                     dosextractor = True
                     if dosextractor:
+                        print imfile
                         sexsky, sexrms, bkgrnd, bkgrndrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
                                                                          500 - 50,
                                                                          500 + 50, 500 - 50,
