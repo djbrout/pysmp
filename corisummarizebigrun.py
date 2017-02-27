@@ -23,9 +23,9 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
+        #grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
         #sys.exit()
-        #data = grabdata(tmpwriter,resultsdir,cd)
+        data = grabdata(tmpwriter,resultsdir,cd)
         #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -1555,13 +1555,13 @@ if __name__ == "__main__":
     fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/v61_noshift'
+    resultsdir = '/project/projectdirs/des/djbrout/v62'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
-    cd = '/project/projectdirs/des/djbrout/v60/summary_results.npz'
+    cd = '/project/projectdirs/des/djbrout/v62/summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
