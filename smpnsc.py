@@ -2325,11 +2325,12 @@ class smp:
                 #sys.exit()
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
-                print x_star1,y_star1
+                print x_star1
                 badflagarr = (x_star1 < 0) | (y_star1 < 0) | (x_star1 - im.shape[1] > 0) | (y_star1 - im.shape[0] > 0)
                 x_star1[badflagarr] = 100.
                 y_star1[badflagarr] = 100.
-
+                print xstar1
+                raw_input()
                 #for xx in x_star1:
                 #    print xx
                 print im.shape
@@ -5431,20 +5432,20 @@ class smp:
                         #print 'errrrr',se**2,(se**2/np.sum(psf**2))
                         #print 'sumimresid',np.sum(image_stamp-image_stamppk)
 
-                        ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
-                        px, py = cntrd.cntrd(psf, 15, 15, 3.)
-
-                        #tt = time.time()
-                        #for i in range(100):
-                        #    psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
-
-                        #ttt = time.time()
-                        #print 'time per psfdump is '+str((ttt-tt)/100.)
-                        #raw_input()
-                        ix = round(ix,2)
-                        iy = round(iy,2)
-                        px = round(px,2)
-                        py = round(py,2)
+                        # ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
+                        # px, py = cntrd.cntrd(psf, 15, 15, 3.)
+                        #
+                        # #tt = time.time()
+                        # #for i in range(100):
+                        # #    psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
+                        #
+                        # #ttt = time.time()
+                        # #print 'time per psfdump is '+str((ttt-tt)/100.)
+                        # #raw_input()
+                        # ix = round(ix,2)
+                        # iy = round(iy,2)
+                        # px = round(px,2)
+                        # py = round(py,2)
 
                         #print 'scale CHECKEEEEEE', scale, scaleck
 
@@ -5543,12 +5544,12 @@ class smp:
                             #for ax, title in zip([axim, axpsf, axdiff, axchi], ['im', 'mod', 'resid', 'chisq: '+
                             #        str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
 
-                            for ax, title in zip([axim, axpsf, axdiff, axchi],
-                                                 ['im ' + str(ix) + ', ' + str(iy), 'mod ' + str(px) + ", " + str(py),
-                                                  'resid ' + str(round(x, 2)) + ', ' + str(round(y, 2)), 'chisq: ' +
-                                                          str(round(np.sum((image_stamp - s - (
-                                                              psf * scale)) ** 2 * fitrad / se ** 2) / len(
-                                                              fitrad[fitrad > 0].ravel()), 2))]):
+                            # for ax, title in zip([axim, axpsf, axdiff, axchi],
+                            #                      ['im ' + str(ix) + ', ' + str(iy), 'mod ' + str(px) + ", " + str(py),
+                            #                       'resid ' + str(round(x, 2)) + ', ' + str(round(y, 2)), 'chisq: ' +
+                            #                               str(round(np.sum((image_stamp - s - (
+                            #                                   psf * scale)) ** 2 * fitrad / se ** 2) / len(
+                            #                                   fitrad[fitrad > 0].ravel()), 2))]):
 
                                 # print ra
                                 # if round(ra,5) == round(43.11884695,5):
@@ -5556,7 +5557,7 @@ class smp:
                                 #     #raw_input()
                                 #     ax.set_title(title+' CULPRIT')
                                 # else:
-                                ax.set_title(title)
+                                #ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             cbar = fig.colorbar(axs, ax=axim)
                             axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
