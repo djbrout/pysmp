@@ -21,7 +21,7 @@ import pyfits as pf
 import dilltools as dt
 import os
 
-def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
+def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index=''):
     if survey == 'DES':
         sexpath = "sex"
         fermigrid  = True
@@ -32,18 +32,18 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
     #im = pf.getdata(imagefilename)
     #hdr = pf.getheader(imagefilename)
     #im = im[ylow:yhi,xlow:xhi]
-    if not os.path.exists('sewpy_logs/'):
-        os.makedirs('sewpy_logs/')
-    newfilename = 'sewpy_logs/trimmed_'+imagefilename.split('/')[-1]
+    if not os.path.exists('/global/cscratch1/sd/dbrout/sewpy_logs/'):
+        os.makedirs('/global/cscratch1/sd/dbrout/sewpy_logs/')
+    newfilename = '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'trimmed_'+imagefilename.split('/')[-1]
     #dt.savefits(im, newfilename,fermigrid=fermigrid)
     dt.save_fits_image(im, newfilename,go=True)
 
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
-            workdir='sewpy_logs/'
+            workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , config={"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":imagefilename+'.background, '+imagefilename+'.background_rms'
+            , config={"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":index+'_'+imagefilename+'.background, '+index+'_'+imagefilename+'.background_rms'
                       ,"back_size":"256"}
 
         )
@@ -57,7 +57,12 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES'):
             background = line.split('Background: ')[1].split(' ')[0]
             rms = line.split('RMS: ')[1].split(' ')[0]
 
-    os.remove(newfilename)
+    try:
+        os.remove(newfilename)
+        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename+'.background')
+        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename+'.background_rms')
+    except:
+        pass
     return float(background), float(rms)
 
 #im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
