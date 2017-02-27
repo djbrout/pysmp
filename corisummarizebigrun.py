@@ -65,7 +65,7 @@ def grabstardata(imagedir,outfile):
             #print fname
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
-                print os.path.join(imagedir,dirName,fname)
+                #print os.path.join(imagedir,dirName,fname)
                 if not 'SN-S2' in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
@@ -171,7 +171,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         if '.smp' in f:
             smpfiles.append(os.path.join(resultsdir, 'lightcurves', f))
 
-    print "Found " + str(len(smpfiles)) + " .smp files"
+    #print "Found " + str(len(smpfiles)) + " .smp files"
 
     if not os.path.exists(os.path.join(resultsdir,'Summary')):
         os.makedirs(os.path.join(resultsdir,'Summary'))
@@ -190,6 +190,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         if cntr > 10000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
+        if not '_r_'  in f: continue
         print cntr, 'of',tot
         deep = 0
         os.system('cp '+f+' test.npz')
@@ -197,7 +198,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         tra = data['RA']
         #print data.keys()
         #raw_input()
-        print tra[0]
+        #print tra[0]
         dra = np.zeros(len(dofakera))+tra[0]
         cra = np.isclose(dra,dofakera,atol=1.e-3)
         tdec = data['DEC']
@@ -265,11 +266,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
                     #print ccd, expnum,diffzpt
                     #raw_input()
-                    print diffzpt[0]
+                    #print diffzpt[0]
                     bigdata['diffzpt'].append(diffzpt[0])
                 except:
                     bigdata['diffzpt'].append(0)
-                    print 'nanana'
+                    #print 'nanana'
             #raw_input()
 
             bigdata['ra'].extend(data['RA'])
@@ -303,7 +304,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             #     raw_input()
             #     bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
             bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
-            print f,'read in'
+            #print f,'read in'
         # except:
         #     print 'Columns missing in file '+f
 
@@ -324,7 +325,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         filt = f.split('/')[-1][18]
         fakefile = os.path.join(fakedir,fakef+'.dat')
         ff = open(fakefile,'r').readlines()
-        print 'fileter',filt
+        #print 'fileter',filt
         hostmag = -999
         #raw_input()
         for l in ff:
@@ -336,7 +337,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
                     else:
                         hgf = float(l.split()[2])
                     hostmag = 27.5 - 2.5 * np.log10(hgf)
-        print 'hostmag',hostmag
+        #print 'hostmag',hostmag
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
         #raw_input()
