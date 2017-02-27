@@ -42,7 +42,9 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     print len(data['Flux'])
     print np.unique(data['field'])
     #raw_input()
-    plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['diffzpt'], data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],data['image_stamp'],'.',data['fakefiles'],data['HostMag'])#resultsdir)
+    plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['diffzpt'], data['diffimflux'],
+                        data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
+                        data['image_stamp'],'.',data['fakefiles'],data['HostMag'])#resultsdir)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],'.')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
@@ -180,7 +182,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
-               'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[]}
+               'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
+               'diffimfluxerr':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
@@ -253,6 +256,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             bigdata['mjd'].extend(data['MJD'])
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
+            bigdata['diffimflux'].extend(data['DIFFIM_FLUX'])
 
             #print data['IMAGE_FILE']
             for e in data['IMAGE_FILE']:
@@ -353,7 +357,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     sky = np.asarray(sky)
@@ -366,6 +370,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     hostmag = np.asarray(hostmag)
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
+    diffimflux = np.array(diffimflux)
     print fakezpt
 
     print fakemag.shape
@@ -377,6 +382,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     fakezpt = np.asarray(fakezpt)
 
     fakeflux = 10**(.4*(31. - fakemag))
+    diffimflux *= 10**(.4*(31. - fakezpt))
 
     for fm,ff,fl in zip(fakemag,fakeflux,flux):
 
@@ -392,6 +398,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,sky,dpmjd,chisq,imfi
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(min(fakemag[ww]),max(fakemag[ww]), .5))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.1)
+    ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
+                            np.arange(min(fakemag[ww]), max(fakemag[ww]), .5))
+    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP',alpha=.4)
 
     plt.axhline(0)
     plt.xlim(19,29)
