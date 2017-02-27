@@ -80,10 +80,8 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',b
         pass
 
     if bigreturn:
-        print 'bigly'
-        float(background), float(rms), bkgrnd, bkgrndrms
+        return float(background), float(rms), bkgrnd, bkgrndrms
 
-    print 'notbigly'
     return float(background), float(rms)
 
 #im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
