@@ -21,7 +21,7 @@ import pyfits as pf
 import dilltools as dt
 import os
 
-def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index=''):
+def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',bigreturn=False):
     print 'inside getsky and skyerr'
     if survey == 'DES':
         sexpath = "sex"
@@ -65,10 +65,18 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index=''):
         os.remove(newfilename)
         os.remove(newfilename.split('.fits')[0]+'.cat.txt')
         os.remove(newfilename.split('.fits')[0]+'.log.txt')
+
+        if bigreturn:
+            bkgrnd = pf.getdata('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
+            bkgrndrms = pf.getdata('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
         os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
         os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
     except:
         pass
+
+    if bigreturn:
+        float(background), float(rms), bkgrnd, bkgrndrms
+
     return float(background), float(rms)
 
 #im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'

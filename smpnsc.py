@@ -2419,10 +2419,10 @@ class smp:
 
                     dosextractor = True
                     if dosextractor:
-                        sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
+                        sexsky, sexrms, bkgrnd, bkgrndrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
                                                                          500 - 50,
                                                                          500 + 50, 500 - 50,
-                                                                         snparams.survey)
+                                                                         snparams.survey, bigreturn=True)
 
                         print sexsky, sexrms
                         # raw_input('sextractor')
