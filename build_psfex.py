@@ -5,7 +5,8 @@ import psfex
 
 def build(psffile, x, y, stampsize):
     a = psfex.PSFEx(psffile)
-    im = a.get_rec(y, x)[4:-3, 4:-3]
+    im = a.get_rec(y, x)[3:-4, 3:-4]
+    im /= np.sum(im.ravel())
     return im, (round(x), round(y))
 
 # def build(psffile, x, y, stampsize):
