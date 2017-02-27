@@ -2587,15 +2587,15 @@ class smp:
                     print imfile
                     dosextractor = True
                     if dosextractor:
-                        sexsky,sexrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
-                                                                        ylow-100+stampsize,yhi+100-stampsize,snparams.survey)
+                        sexsky,sexrms,bkgrnd,bkgrndrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
+                                                                        ylow-100+stampsize,yhi+100-stampsize,snparams.survey,bigreturn=True,index=snparams.snfile.split('/')[-1].replace('.dat',''))
 
                         print sexsky,sexrms
                         #raw_input('sextractor')
-                        bkgrnd = pf.getdata(imfile + '.background')
+                        #bkgrnd = pf.getdata(imfile + '.background')
                         #print bkgrnd.shape
                         sexsky = np.mean(bkgrnd[ylow:yhi,xlow:xhi].ravel()) * scalefactor
-                        bkgrndrms = pf.getdata(imfile + '.background_rms')
+                        #bkgrndrms = pf.getdata(imfile + '.background_rms')
                         sexrms = np.mean(bkgrndrms[ylow:yhi,xlow:xhi].ravel())* scalefactor
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
