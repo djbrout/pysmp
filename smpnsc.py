@@ -2420,6 +2420,8 @@ class smp:
                     dosextractor = True
                     if dosextractor:
                         print imfile
+                        print snparams.snfile.split('/')[-1].replace('.dat','')
+
                         sexsky, sexrms, bkgrnd, bkgrndrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
                                                                          500 - 50,
                                                                          500 + 50, 500 - 50,
