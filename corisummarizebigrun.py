@@ -239,6 +239,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
             #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
             #bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
 
+            print data.keys()
+
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
             bigdata['FakeMag'].extend(fakemag)
