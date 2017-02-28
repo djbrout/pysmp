@@ -389,6 +389,16 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #raw_input()
     #print fakemag[0].shape
     #sys.exit()
+
+    plt.clf()
+    plt.scatter(diffimflux,flux)
+    plt.plot([min(diffimflux),max(diffimflux)],[min(diffimflux),max(diffimflux)],color='black')
+    plt.xlabel('Diffim Flux')
+    plt.ylabel('SMP Flux')
+
+    plt.savefig(outdir+'/fluxvs.png')
+
+
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
 
