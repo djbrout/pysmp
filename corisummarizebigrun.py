@@ -373,15 +373,15 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     imstamp = np.asarray(imstamp)
     fakefiles = np.asarray(fakefiles,dtype='str')
     hostmag = np.asarray(hostmag)
-    print hostmag.shape
-    raw_input()
+    # print hostmag.shape
+    # raw_input()
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
     diffimflux = np.array(diffimflux)
-    print fakezpt
-
-    print fakemag.shape
-    print flux.shape
+    # print fakezpt
+    #
+    # print fakemag.shape
+    # print flux.shape
     #raw_input()
     #print fakemag[0].shape
     #sys.exit()
@@ -391,9 +391,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     fakeflux = 10**(.4*(31. - fakemag))
     diffimflux *= 10**(.4*(31. - fakezpt))
 
-    for fm,ff,fl in zip(fakemag,fakeflux,flux):
-
-        print fm,ff,fl
+    # for fm,ff,fl in zip(fakemag,fakeflux,flux):
+    #
+    #     print fm,ff,fl
     #raw_input()
 
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
@@ -424,40 +424,47 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
     print 'saved', outdir+'/percentagefluxdiff.png'
-    print min(hostmag[ww]),max(hostmag[ww])
+    # print min(hostmag[ww]),max(hostmag[ww])
     plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.scatter(hostmag[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
-    ax, ay, aystd = bindata(hostmag[ww],(flux[ww]-fakeflux[ww]),
-                            np.arange(min(hostmag[ww]),max(hostmag[ww]), .2))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
-    plt.axhline(0)
-    plt.xlim(19,29)
-    #plt.ylim(-.1,.1)
-    plt.ylim(-1000,1000)
-    plt.xlabel('Host Mag')
-    plt.ylabel('Flux Difference')
-    plt.savefig(outdir+'/fluxdiff_hostmag.png')
+    try:
+        fig = plt.figure(figsize=(15, 10))
+        plt.scatter(hostmag[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
+        ax, ay, aystd = bindata(hostmag[ww],(flux[ww]-fakeflux[ww]),
+                                np.arange(min(hostmag[ww]),max(hostmag[ww]), .2))
+        plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
+        plt.axhline(0)
+        plt.xlim(19,29)
+        #plt.ylim(-.1,.1)
+        plt.ylim(-1000,1000)
+        plt.xlabel('Host Mag')
+        plt.ylabel('Flux Difference')
+        plt.savefig(outdir+'/fluxdiff_hostmag.png')
+    except:
+        print 'bad hostmags'
 
     ww = (flux != 0.) & (fakemag != 0) & (fakemag < 25.)
 
 
-    plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.scatter(hostmag[ww], (flux[ww] - fakeflux[ww]), alpha=.5)
-    ax, ay, aystd = bindata(hostmag[ww], (flux[ww] - fakeflux[ww]),
-                            np.arange(min(hostmag[ww]), max(hostmag[ww]), .2))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    try:
+        plt.clf()
+        fig = plt.figure(figsize=(15, 10))
+        plt.scatter(hostmag[ww], (flux[ww] - fakeflux[ww]), alpha=.5)
+        ax, ay, aystd = bindata(hostmag[ww], (flux[ww] - fakeflux[ww]),
+                                np.arange(min(hostmag[ww]), max(hostmag[ww]), .2))
+        plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
-    plt.axhline(0)
-    plt.xlim(19, 29)
-    # plt.ylim(-.1,.1)
-    plt.ylim(-1000, 1000)
-    plt.xlabel('Host Mag')
-    plt.ylabel('Flux Difference')
-    plt.savefig(outdir + '/fluxdiffgt23_hostmag.png')
+        plt.axhline(0)
+        plt.xlim(19, 29)
+        # plt.ylim(-.1,.1)
+        plt.ylim(-1000, 1000)
+        plt.xlabel('Host Mag')
+        plt.ylabel('Flux Difference')
+        plt.savefig(outdir + '/fluxdiffgt23_hostmag.png')
+    except:
+        print 'bad hostmags'
+
     #print fakefiles[ww][((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.04) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] > -.4) & (fakemag[ww]<22.)]
     #raw_input()
     for k in np.unique(fakefiles):
@@ -663,29 +670,32 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.savefig(outdir + '/emptyfluxstd.png')
 
     plt.clf()
-    plt.scatter(hostmag[ww],flux[ww] / fluxerr[ww])
-    plt.xlim(19, 28)
-    plt.ylim(-4,4)
-    ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
-                               np.arange(19, 28, .1))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-    plt.xlabel('Hostmag')
-    plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
-    plt.axhline(0)
-    plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
-    plt.clf()
-    plt.scatter(hostmag[ww], flux[ww])
-    plt.xlim(19, 28)
-    plt.ylim(-2500, 2500)
-    ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww]),
-                               np.arange(19, 28, .1))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-    plt.xlabel('Hostmag')
-    plt.ylabel('Flux (epochs without fake SN Flux)')
-    plt.axhline(0)
-    plt.savefig(outdir + '/emptyfluxvshostmag.png')
+    try:
+        plt.scatter(hostmag[ww],flux[ww] / fluxerr[ww])
+        plt.xlim(19, 28)
+        plt.ylim(-4,4)
+        ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
+                                   np.arange(19, 28, .1))
+        plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+        plt.xlabel('Hostmag')
+        plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
+        plt.axhline(0)
+        plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
+        plt.clf()
+        plt.scatter(hostmag[ww], flux[ww])
+        plt.xlim(19, 28)
+        plt.ylim(-2500, 2500)
+        ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww]),
+                                   np.arange(19, 28, .1))
+        plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+        plt.xlabel('Hostmag')
+        plt.ylabel('Flux (epochs without fake SN Flux)')
+        plt.axhline(0)
+        plt.savefig(outdir + '/emptyfluxvshostmag.png')
+    except:
+        print 'bad hostmags'
     # plt.clf()
     # plt.scatter(fakemag[ww], flux[ww])
     # plt.xlim(19, 28)
