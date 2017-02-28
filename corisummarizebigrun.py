@@ -1593,7 +1593,7 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:f",
-            longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile="])
+            longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile=","filter="])
 
     except getopt.GetoptError as err:
         print "No command line argument s"
@@ -1613,7 +1613,7 @@ if __name__ == "__main__":
         elif o in ["-cdf","--cachedfile"]:
             cd = a
         elif o in ["-f"]:
-            filter = a
+            filter = str(a)
 
     print filter
     raw_input()
