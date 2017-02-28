@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(1000,864)
+allindexes = range(1000,1864)
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
