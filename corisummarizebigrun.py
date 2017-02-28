@@ -340,16 +340,19 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #print 'fileter',filt
         hostmag = -999
         #raw_input()
+        filters = np.array(['u','g','r','i','z'],dtype='str')
+        arg = np.argwhere(filters == filter)
         for l in ff:
             key = l.split(':')[0]
             if key == 'HOSTGAL_SB_FLUXCAL':
-                if filt == 'r':
-                    if float(l.split()[2]) <= 0.:
+                if filt == filter:
+                    if float(l.split()[arg]) <= 0.:
                         hgf = 1.
                     else:
-                        hgf = float(l.split()[2])
+                        hgf = float(l.split()[arg])
                     hostmag = 27.5 - 2.5 * np.log10(hgf)
-        #print 'hostmag',hostmag
+        print 'hostmag',hostmag
+        raw_input()
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
         #raw_input()
