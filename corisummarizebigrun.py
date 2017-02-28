@@ -792,7 +792,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
-    d = (flux - fakeflux) / ((fluxerr**2 - abs(flux) + 1. )**.5*1.08)
+    d = (flux - fakeflux) / ((fluxerr**2  )**.5*1.08)
 
     ww = (flux != 0.) #& (deep == 0)
 
@@ -1179,7 +1179,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     #ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 2.8)
+    ax3.set_ylim(.7, 1.4)
 
     fresid = np.zeros(flux.shape)
     for i, f, ff in zip(range(len(flux)), flux, fakeflux):
