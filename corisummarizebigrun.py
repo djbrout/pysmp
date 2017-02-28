@@ -1204,10 +1204,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir+'/chisqstd.png')
 
-    plt.clf()
-    plt.hist(chisqarr,bins=10)
-    plt.xlabel('chi sq')
-    plt.savefig(outdir+'/chisqhist.png')
+    # plt.clf()
+    # plt.hist(chisqarr,bins=10)
+    # plt.xlabel('chi sq')
+    # plt.savefig(outdir+'/chisqhist.png')
 
 
     print 'saved stdresid.png'
