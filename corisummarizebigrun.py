@@ -373,6 +373,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     imstamp = np.asarray(imstamp)
     fakefiles = np.asarray(fakefiles,dtype='str')
     hostmag = np.asarray(hostmag)
+    print hostmag.shape
+    raw_input()
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
     diffimflux = np.array(diffimflux)
@@ -420,6 +422,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
     plt.savefig(outdir+'/percentagefluxdiff.png')
+
+    print 'saved', outdir+'/percentagefluxdiff.png'
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
