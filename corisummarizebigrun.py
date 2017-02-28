@@ -1220,17 +1220,17 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
-    try:
-        ww = hostmag > 25
-        ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
-        ax3.plot(ax, ayrms, color='red', label='Hostmag > 25', linewidth=3)
-
-        ww = hostmag < 23.
-        ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
-        ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-        ax3.legend(fontsize='x-small',loc=2)
-    except:
-        print 'bad hostmags'
+    # try:
+    #     ww = hostmag > 25
+    #     ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
+    #     ax3.plot(ax, ayrms, color='red', label='Hostmag > 25', linewidth=3)
+    #
+    #     ww = hostmag < 23.
+    #     ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
+    #     ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+    #     ax3.legend(fontsize='x-small',loc=2)
+    # except:
+    #     print 'bad hostmags'
 
     plt.title(filter+' band')
 
