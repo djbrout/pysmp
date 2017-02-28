@@ -389,7 +389,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #raw_input()
     #print fakemag[0].shape
     #sys.exit()
-
+    diffimflux *= 10 ** (.4 * (31. - oldfakezpt))
     plt.clf()
     plt.scatter(diffimflux,flux)
     plt.plot([min(diffimflux),max(diffimflux)],[min(diffimflux),max(diffimflux)],color='black')
