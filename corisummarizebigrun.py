@@ -1615,4 +1615,6 @@ if __name__ == "__main__":
         elif o in ["-f"]:
             filter = a
 
+    print filter
+    raw_input()
     go(fakedir,resultsdir,cacheddata,cd,filter)
