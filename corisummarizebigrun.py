@@ -351,8 +351,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                     else:
                         hgf = float(l.split()[arg])
                     hostmag = 27.5 - 2.5 * np.log10(hgf)
-        print 'hostmag',hostmag
-        raw_input()
+        #print 'hostmag',hostmag
+        #raw_input()
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
         #raw_input()
