@@ -878,7 +878,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax2.set_xlim(0,.5)
     #.xlabel('STDEV')
     #plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='x-small',loc=(.25,.25))
+    ax2.legend(fontsize='xx-small',loc=(.25,1.25))
     #plt.savefig('stdresid.png')
 
     #plt.clf()
@@ -953,7 +953,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.xaxis.set_major_formatter(nullfmt)
     ax1.xaxis.set_major_formatter(nullfmt)
 
-    plt.subplots_adjust(wspace=0.001,hspace=0.001)
+    plt.subplots_adjust(wspace=0.01,hspace=0.01)
     plt.title(filter+' band')
 
     plt.savefig(outdir+'/std.png')
