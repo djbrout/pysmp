@@ -421,7 +421,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #raw_input()
     fakefluxo = copy(fakeflux)
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
-    fluxerr *= 10**(-1*.4*(fitzpt - fakezpt))
+    fluxerr *= 10**(.4*(fitzpt - fakezpt))
 
 
     d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
