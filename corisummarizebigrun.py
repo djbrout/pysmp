@@ -1620,5 +1620,4 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    raw_input()
     go(fakedir,resultsdir,cacheddata,cd,filter)
