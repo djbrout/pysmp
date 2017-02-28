@@ -389,6 +389,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
+    fakeflux = np.array(fakeflux)
     d = (flux - fakeflux) / ((fluxerr**2 )**.5)
     ww = (flux != 0.)
     d=d[ww]
