@@ -414,7 +414,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
     ww = (flux != 0.)
     d = d[ww]
-    dc99 = d[fakemag > 90]
+    dc99 = d[fakemag > 28]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
     #diffimflux *= 10**(.4*(31. - oldfakezpt))
