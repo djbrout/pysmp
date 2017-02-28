@@ -42,9 +42,9 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     print len(data['Flux'])
     print np.unique(data['field'])
 
-    if not os.path.exits(resultsdir+'/Summary/'):
+    if not os.path.exists(resultsdir+'/Summary/'):
         os.mkdir(resultsdir+'/Summary/')
-    if not os.path.exits(resultsdir+'/Summary/'+filter+'/'):
+    if not os.path.exists(resultsdir+'/Summary/'+filter+'/'):
         os.mkdir(resultsdir+'/Summary/'+filter+'/')
     #raw_input()
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['diffzpt'], data['diffimflux'],
