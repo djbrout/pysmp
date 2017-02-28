@@ -386,6 +386,15 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     diffimflux = 10**(.4*(31-dmag))
 
     oldfakezpt = np.array(oldfakezpt)
+
+    fakeflux = 10 ** (.4 * (31. - fakemag))
+    fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
+    d = (flux - fakeflux) / ((fluxerr**2 )**.5)
+    ww = (flux != 0.)
+    d=d[ww]
+    dc99 = d[fakemag > 90]
+    rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
+
     # print fakezpt
     #
     # print fakemag.shape
@@ -513,7 +522,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-6.2, 6, .4),normed=True)
+    plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-6.2, 6, .4),normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3)))
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
     # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
@@ -528,12 +537,13 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
     plt.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
-
+    plt.legend()
     # plt.ylim(-.1,.1)
     # plt.ylim(-600, 600)
     plt.xlabel('flux/fluxerr')
     plt.ylabel('Count')
     plt.title(filter+' band')
+
 
     plt.savefig(outdir + '/efluxdiffstd.png')
 
