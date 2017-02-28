@@ -945,6 +945,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.set_ylabel('RMS')
     ax3.set_title(filter+' band')
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+    plt.title(filter+' band')
 
     ax3.set_xlim(ax1.get_xlim())
     ax2.set_ylim(ax1.get_ylim())
@@ -954,7 +955,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.01,hspace=0.01)
-    plt.title(filter+' band')
 
     plt.savefig(outdir+'/std.png')
 
