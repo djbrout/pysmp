@@ -1592,7 +1592,7 @@ if __name__ == "__main__":
         args = sys.argv[1:]
 
         opt, arg = getopt.getopt(
-            args, "fd:rd:cd:cdf:f",
+            args, "fd:rd:cd:cdf:b",
             longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile=","filter="])
 
     except getopt.GetoptError as err:
@@ -1612,7 +1612,7 @@ if __name__ == "__main__":
             cacheddata = True
         elif o in ["-cdf","--cachedfile"]:
             cd = a
-        elif o in ["-f"]:
+        elif o in ["-b"]:
             filter = str(a)
 
     print filter
