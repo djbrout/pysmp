@@ -1154,7 +1154,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     #ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.8)
+    ax3.set_ylim(.7, 2.8)
 
     fresid = np.zeros(flux.shape)
     for i, f, ff in zip(range(len(flux)), flux, fakeflux):
@@ -1175,7 +1175,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
     ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
     ax4.set_xlim(ax1.get_xlim())
-    ax4.set_ylim(-.1, .1)
+    ax4.set_ylim(-.15, .15)
     ax4.set_xlabel('Chi Sq')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
@@ -1208,7 +1208,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir+'/chisqstd.png')
 
     plt.clf()
-    plt.hist(chisqarr,bins=np.arange(0.8,1.2,.001))
+    plt.hist(chisqarr,bins=np.arange(0.6,1.2,.01))
     plt.xlabel('chi sq')
     plt.savefig(outdir+'/chisqhist.png')
 
