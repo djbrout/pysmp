@@ -943,6 +943,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.set_xlabel('Fake Mag')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
+    ax3.set_title(filter+' band')
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
     ax3.set_xlim(ax1.get_xlim())
@@ -1061,6 +1062,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.set_xlabel('Host Mag')
         ax5.set_xlabel('Counts')
         ax3.set_ylabel('RMS')
+        ax3.set_title(filter + ' band')
+
         ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
         ax3.set_xlim(ax1.get_xlim())
@@ -1201,6 +1204,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.set_xlabel('Chi Sq')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
+    ax3.set_title(filter+' band')
+
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
     ax3.set_xlim(ax1.get_xlim())
@@ -1445,6 +1450,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     ax4.set_xlabel('Cat Mag')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
+    ax3.set_title(filter+' band')
+
     ax4.set_ylabel('(fitflux - catflux)/catflux')
 
     ax3.set_xlim(ax1.get_xlim())
