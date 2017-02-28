@@ -411,11 +411,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     fakeflux = 10**(.4*(31. - fakemag))
 
-    d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
-    ww = (flux != 0.)
-    d = d[ww]
-    dc99 = d[fakemag > 28]
-    rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
+
 
     #diffimflux *= 10**(.4*(31. - oldfakezpt))
 
@@ -425,6 +421,15 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #raw_input()
     fakefluxo = copy(fakeflux)
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    fluxerr *= 10**(-1*.4*(fitzpt - fakezpt))
+
+
+    d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
+    ww = (flux != 0.)
+    #d = d[ww]
+    #dc99 = d[fakemag > 28]
+    #rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
+    rms999 = 0.
 
     ww = (flux != 0.) & (fakemag != 0)#(fakemag < 28.5) & (flux != 0.)
     plt.clf()
