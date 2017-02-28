@@ -808,7 +808,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
-    d = (flux - fakeflux) / ((fluxerr**2 + abs(flux) + 1 )**.5*1.08)
+    d = (flux - fakeflux) / ((fluxerr**2 )**.5)
 
     ww = (flux != 0.) #& (deep == 0)
 
