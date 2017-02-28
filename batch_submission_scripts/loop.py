@@ -18,9 +18,9 @@ for i in allindexes:
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
         '#SBATCH --time=03:49:00\n' +
-        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60g.log\n' +
-        '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60g.log\n' +
-        '#SBATCH --job-name=gband_' + str(i) + '\n' +
+        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60r.log\n' +
+        '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60r.log\n' +
+        '#SBATCH --job-name=rband_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
         '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
