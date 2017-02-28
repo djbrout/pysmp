@@ -476,19 +476,19 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     ww = (flux != 0.) & (fakemag == 99)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww],bins=np.arange(-650,600,100))
-    #ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
-    #                        np.arange(-100, 1000, 200))
-    #plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-
-    #plt.axhline(0)
-    plt.xlim(-500, 500)
-    # plt.ylim(-.1,.1)
-    #plt.ylim(-600, 600)
-    plt.xlabel('Fake Flux')
-    plt.ylabel('Flux Difference ')
-    plt.savefig(outdir + '/efluxdiff.png')
+    # fig = plt.figure(figsize=(15, 10))
+    # plt.hist(flux[ww],bins=np.arange(-650,600,100))
+    # #ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
+    # #                        np.arange(-100, 1000, 200))
+    # #plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    #
+    # #plt.axhline(0)
+    # plt.xlim(-500, 500)
+    # # plt.ylim(-.1,.1)
+    # #plt.ylim(-600, 600)
+    # plt.xlabel('Fake Flux')
+    # plt.ylabel('Flux Difference ')
+    # plt.savefig(outdir + '/efluxdiff.png')
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
@@ -532,68 +532,68 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.scatter(fakeflux[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww], alpha=.5)
-    ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww],
-                            np.arange(-100,5000, 200))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-
-    plt.axhline(0)
-    plt.xlim(0, 5000)
-    # plt.ylim(-.1,.1)
-    plt.ylim(-.1, .1)
-    plt.xlabel('Fake Flux')
-    plt.ylabel('Flux Difference ')
-    plt.savefig(outdir + '/pfluxdiff.png')
+    # fig = plt.figure(figsize=(15, 10))
+    # plt.scatter(fakeflux[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww], alpha=.5)
+    # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww],
+    #                         np.arange(-100,5000, 200))
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    #
+    # plt.axhline(0)
+    # plt.xlim(0, 5000)
+    # # plt.ylim(-.1,.1)
+    # plt.ylim(-.1, .1)
+    # plt.xlabel('Fake Flux')
+    # plt.ylabel('Flux Difference ')
+    # plt.savefig(outdir + '/pfluxdiff.png')
 
 
     skyresid = 2000. - sky / 10 ** (.4 * (31 - fitzpt))
-    plt.clf()
-    fig = plt.figure(figsize=(15,10))
-    plt.scatter(skyresid[ww],(flux[ww]-fakeflux[ww]),alpha=.15)
-    ax, ay, aystd = bindata(skyresid[ww], (flux[ww] - fakeflux[ww]),
-                            np.arange(-100,100,3.))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-
-    plt.axhline(0)
-    plt.xlim(-25,25)
-    # plt.ylim(-.1,.1)
-    plt.ylim(-200, 200)
-    plt.xlabel('Sky Resid')
-    plt.ylabel('Flux Difference')
-    plt.savefig(outdir + '/fluxdiff_sky.png')
-
-    plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.scatter(skyresid[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww], alpha=.15)
-    ax, ay, aystd = bindata(skyresid[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww],
-                            np.arange(-100, 100, 3.))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-
-    plt.axhline(0)
-    plt.xlim(-25, 25)
-    # plt.ylim(-.1,.1)
-    plt.ylim(-.2, .2)
-    plt.xlabel('Sky Resid')
-    plt.ylabel('Percentage Flux Difference')
-    plt.savefig(outdir + '/pfluxdiff_sky.png')
+    # plt.clf()
+    # fig = plt.figure(figsize=(15,10))
+    # plt.scatter(skyresid[ww],(flux[ww]-fakeflux[ww]),alpha=.15)
+    # ax, ay, aystd = bindata(skyresid[ww], (flux[ww] - fakeflux[ww]),
+    #                         np.arange(-100,100,3.))
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    #
+    # plt.axhline(0)
+    # plt.xlim(-25,25)
+    # # plt.ylim(-.1,.1)
+    # plt.ylim(-200, 200)
+    # plt.xlabel('Sky Resid')
+    # plt.ylabel('Flux Difference')
+    # plt.savefig(outdir + '/fluxdiff_sky.png')
 
     plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.scatter(fakemag[ww], flux[ww], alpha=.5)
-    ax, ay, aystd = bindata(fakemag[ww], flux[ww] ,
-                           np.arange(min(fakemag[ww]), max(fakemag[ww]), .15))
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-
-    plt.scatter(fakemag[ww],fakeflux[ww],alpha=.5,color='red')
-
-    plt.axhline(0)
-    plt.xlim(22, 29)
-    # plt.ylim(-.1,.1)
-    plt.ylim(-500, 5000)
-    plt.xlabel('Fake Mag')
-    plt.ylabel('Fit Flux')
-    plt.savefig(outdir + '/fvf.png')
+    # fig = plt.figure(figsize=(15, 10))
+    # plt.scatter(skyresid[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww], alpha=.15)
+    # ax, ay, aystd = bindata(skyresid[ww], (flux[ww] - fakeflux[ww])/fakeflux[ww],
+    #                         np.arange(-100, 100, 3.))
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    #
+    # plt.axhline(0)
+    # plt.xlim(-25, 25)
+    # # plt.ylim(-.1,.1)
+    # plt.ylim(-.2, .2)
+    # plt.xlabel('Sky Resid')
+    # plt.ylabel('Percentage Flux Difference')
+    # plt.savefig(outdir + '/pfluxdiff_sky.png')
+    #
+    # plt.clf()
+    # fig = plt.figure(figsize=(15, 10))
+    # plt.scatter(fakemag[ww], flux[ww], alpha=.5)
+    # ax, ay, aystd = bindata(fakemag[ww], flux[ww] ,
+    #                        np.arange(min(fakemag[ww]), max(fakemag[ww]), .15))
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    #
+    # plt.scatter(fakemag[ww],fakeflux[ww],alpha=.5,color='red')
+    #
+    # plt.axhline(0)
+    # plt.xlim(22, 29)
+    # # plt.ylim(-.1,.1)
+    # plt.ylim(-500, 5000)
+    # plt.xlabel('Fake Mag')
+    # plt.ylabel('Fit Flux')
+    # plt.savefig(outdir + '/fvf.png')
 
     print imfiles[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
     print ra[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
@@ -606,11 +606,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(chisq[ww], (flux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.5)
     ax, ay, aystd = bindata(chisq[ww], (flux[ww] - fakeflux[ww]) / fakeflux[ww],
-                            np.arange(0,10, .005))
+                            np.arange(0,10, .05))
     plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
 
     plt.axhline(0)
-    plt.xlim(0, 1)
+    plt.xlim(0, 2)
     plt.ylim(-1.5, 1.5)
     plt.xlabel('Chi Sq')
     plt.ylabel('Percentage Flux Difference')
@@ -622,40 +622,40 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     ww = (flux != 0.) & (fakemag != 0) & (fakemag ==99.)
 
-    plt.clf()
-    plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
-    ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww]),
-                            np.arange(-10,10, 1),window=2.)
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-    plt.axhline(0)
-    plt.xlim(-10,10)
-    plt.ylim(-2000,2000)
-    plt.xlabel('sky')
-    plt.title('Fakemag < 22')
-    plt.ylabel('Flux Difference')
-    plt.savefig(outdir + '/skyfluxdifflt22.png')
+    # plt.clf()
+    # plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
+    # ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww]),
+    #                         np.arange(-10,10, 1),window=2.)
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    # plt.axhline(0)
+    # plt.xlim(-10,10)
+    # plt.ylim(-2000,2000)
+    # plt.xlabel('sky')
+    # plt.title('Fakemag < 22')
+    # plt.ylabel('Flux Difference')
+    # plt.savefig(outdir + '/skyfluxdifflt22.png')
 
     ww = (flux != 0.) & (fakemag != 0) & (fakemag == 99.)
 
-    plt.clf()
-    plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
-    ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww]),
-                            np.arange(-10,10, 1),window=2.)
-    plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
-    plt.axhline(0)
-    plt.xlim(-10,10)
-    plt.ylim(-2000,2000)
-    plt.xlabel('sky')
-    plt.title('Fakemag > 22')
-    plt.ylabel('Flux Difference')
-    plt.savefig(outdir + '/skyfluxdiffgt22.png')
+    # plt.clf()
+    # plt.scatter(sky[ww],(flux[ww]-fakeflux[ww]),alpha=.1)
+    # ax, ay, aystd = dt.bindata(sky[ww],(flux[ww]-fakeflux[ww]),
+    #                         np.arange(-10,10, 1),window=2.)
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+    # plt.axhline(0)
+    # plt.xlim(-10,10)
+    # plt.ylim(-2000,2000)
+    # plt.xlabel('sky')
+    # plt.title('Fakemag > 22')
+    # plt.ylabel('Flux Difference')
+    # plt.savefig(outdir + '/skyfluxdiffgt22.png')
 
     ww = (dpmjd > 320.) & (flux != 0)
-    plt.clf()
-    plt.hist(flux[ww],bins=np.arange(-1050,1000,100))
-    plt.xlabel('Flux for epochs without fake SN Flux')
-    plt.xlim(-1000,1000)
-    plt.savefig(outdir + '/emptyflux.png')
+    # plt.clf()
+    # plt.hist(flux[ww],bins=np.arange(-1050,1000,100))
+    # plt.xlabel('Flux for epochs without fake SN Flux')
+    # plt.xlim(-1000,1000)
+    # plt.savefig(outdir + '/emptyflux.png')
 
     import matplotlib.mlab as mlab
     import math
@@ -666,11 +666,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     ww = (fakemag == 99) & (flux != 0)
     plt.clf()
-    plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-4.1, 4, .2),normed=True)
-    plt.xlim(-4, 4)
-    plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
-    plt.xlabel('flux/fluxerr (epochs without fake SN Flux)')
-    plt.savefig(outdir + '/emptyfluxstd.png')
+    # plt.hist(flux[ww]/fluxerr[ww], bins=np.arange(-4.1, 4, .2),normed=True)
+    # plt.xlim(-4, 4)
+    # plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
+    # plt.xlabel('flux/fluxerr (epochs without fake SN Flux)')
+    # plt.savefig(outdir + '/emptyfluxstd.png')
 
     plt.clf()
 
@@ -1012,7 +1012,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
         ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-        ax3.set_ylim(.7,1.5)
+        ax3.set_ylim(.8,1.8)
 
         fresid = np.zeros(flux.shape)
         for i,f,ff in zip(range(len(flux)),flux,fakeflux):
@@ -1033,7 +1033,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--')
         ax4.plot(ax, ay-aystd, linewidth=2, color='orange',linestyle='--')
         ax4.set_xlim(ax1.get_xlim())
-        ax4.set_ylim(-.1,.1)
+        ax4.set_ylim(-.2,.2)
         ax4.set_xlabel('Host Mag')
         ax5.set_xlabel('Counts')
         ax3.set_ylabel('RMS')
