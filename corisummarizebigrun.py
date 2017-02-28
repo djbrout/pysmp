@@ -846,7 +846,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height/2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(16, 12))
+    plt.figure(1, figsize=(25, 20))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
@@ -878,7 +878,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax2.set_xlim(0,.5)
     #.xlabel('STDEV')
     #plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='x-small',loc=(.25,6))
+    ax2.legend(fontsize='x-small',loc=(.25,.25))
     #plt.savefig('stdresid.png')
 
     #plt.clf()
@@ -961,7 +961,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #--------------------------------------------------------------------------------------
     plt.clf()
-    fig = plt.figure(figsize=(16, 12))
+    fig = plt.figure(figsize=(25, 20))
     gs = gridspec.GridSpec(1, 2, width_ratios=[4, 1])
     ax1 = plt.subplot(gs[0])
     ax2 = plt.subplot(gs[1])
