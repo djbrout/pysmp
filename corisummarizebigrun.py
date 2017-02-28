@@ -14,7 +14,7 @@ import dilltools as dt
 from copy import copy
 
 
-def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
+def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
 
     if isfermigrid:
         useifdh = True
@@ -25,7 +25,7 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     if not cacheddata:
         #grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
         #sys.exit()
-        data = grabdata(tmpwriter,resultsdir,cd)
+        data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
         #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -41,12 +41,17 @@ def go(fakedir,resultsdir,cacheddata,cd,isfermigrid=False):
     print data.keys()
     print len(data['Flux'])
     print np.unique(data['field'])
+
+    if not os.path.exits(resultsdir+'/Summary/'):
+        os.mkdir(resultsdir+'/Summary/')
+    if not os.path.exits(resultsdir+'/Summary/'+filter+'/'):
+        os.mkdir(resultsdir+'/Summary/'+filter+'/')
     #raw_input()
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['diffzpt'], data['diffimflux'],
                         data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
-                        data['image_stamp'],'.',data['fakefiles'],data['HostMag'])#resultsdir)
+                        data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],filter)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
-                   data['Chisq'],data['rmsaddin'],data['field'],'.')#resultsdir)
+                   data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
@@ -149,7 +154,7 @@ def grabstardata(imagedir,outfile):
     #os.system('rm dat.dat')
     sys.exit()
 
-def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
+def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
     dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
     dofakemjd = np.array(dofakemjd,dtype='float')
@@ -170,7 +175,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
     smpfiles = []
     for f in files:
-        if '.smp' in f:
+        if filter+'.smp' in f:
             smpfiles.append(os.path.join(resultsdir, 'lightcurves', f))
 
     #print "Found " + str(len(smpfiles)) + " .smp files"
@@ -193,7 +198,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
         if cntr > 10000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
-        if not '_r.smp' in f: continue
+        #if not '_r.smp' in f: continue
         print cntr, 'of',tot
         deep = 0
         os.system('cp '+f+' test.npz')
@@ -357,7 +362,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'r',oldformat=False):
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     sky = np.asarray(sky)
@@ -1587,12 +1592,13 @@ if __name__ == "__main__":
         args = sys.argv[1:]
 
         opt, arg = getopt.getopt(
-            args, "fd:rd:cd:cdf",
+            args, "fd:rd:cd:cdf:f",
             longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile="])
 
     except getopt.GetoptError as err:
         print "No command line argument s"
 
+    filter = 'r'
 
     for o,a in opt:
         if o in ["-h","--help"]:
@@ -1606,5 +1612,7 @@ if __name__ == "__main__":
             cacheddata = True
         elif o in ["-cdf","--cachedfile"]:
             cd = a
+        elif o in ["-f"]:
+            filter = a
 
-    go(fakedir,resultsdir,cacheddata,cd)
+    go(fakedir,resultsdir,cacheddata,cd,filter)
