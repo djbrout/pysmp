@@ -50,7 +50,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['diffzpt'], data['diffimflux'],
                         data['sky'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],filter)
-    plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
+    plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['diffzpt'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/')#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
@@ -739,7 +739,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakezpt = np.asarray(fakezpt)
     rmsaddin = np.asarray(rmsaddin)
     fakeflux = 10 ** (.4 * (31. - fakemag))
-    fakeflux *= 10**(.4*(fitzpt - fakezpt))
+    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
     #fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     chisqarr = np.asarray(chisqarr)
