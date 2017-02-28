@@ -739,7 +739,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakezpt = np.asarray(fakezpt)
     rmsaddin = np.asarray(rmsaddin)
     fakeflux = 10 ** (.4 * (31. - fakemag))
-    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    fakeflux *= 10**(.4*(fitzpt - fakezpt))
 
     #fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     chisqarr = np.asarray(chisqarr)
@@ -878,7 +878,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax2.set_xlim(0,.5)
     #.xlabel('STDEV')
     #plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='small')
+    ax2.legend(fontsize='x-small')
     #plt.savefig('stdresid.png')
 
     #plt.clf()
