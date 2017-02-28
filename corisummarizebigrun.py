@@ -424,6 +424,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.ylim(-.1,.1)
     plt.xlabel('Fake Mag')
     plt.ylabel('Percentage Flux Difference')
+    plt.title(filter+' band')
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
     print 'saved', outdir+'/percentagefluxdiff.png'
@@ -443,6 +444,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         plt.ylim(-500,500)
         plt.xlabel('Host Mag')
         plt.ylabel('Flux Difference')
+        plt.title(filter + ' band')
+
         plt.savefig(outdir+'/fluxdiff_hostmag.png')
     except:
         print 'bad hostmags'
@@ -464,6 +467,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         plt.ylim(-1000, 1000)
         plt.xlabel('Host Mag')
         plt.ylabel('Flux Difference')
+        plt.title(filter + ' band')
+
         plt.savefig(outdir + '/fluxdiffgt23_hostmag.png')
     except:
         print 'bad hostmags'
@@ -512,6 +517,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     # plt.ylim(-600, 600)
     plt.xlabel('flux/fluxerr')
     plt.ylabel('Count')
+    plt.title(filter+' band')
+
     plt.savefig(outdir + '/efluxdiffstd.png')
 
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
@@ -528,6 +535,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.ylim(-600, 600)
     plt.xlabel('Fake Flux')
     plt.ylabel('Flux Difference ')
+    plt.title(filter+' band')
+
     plt.savefig(outdir + '/fluxdiff.png')
 
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
@@ -617,6 +626,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.ylim(-.2, .2)
     plt.xlabel('Chi Sq')
     plt.ylabel('Percentage Flux Difference')
+    plt.title(filter+' band')
+
     plt.savefig(outdir + '/percentagefluxdiffchi.png')
 
 
@@ -687,6 +698,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         plt.xlabel('Hostmag')
         plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
         plt.axhline(0)
+        plt.title(filter + ' band')
+
         plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
         plt.clf()
@@ -699,6 +712,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         plt.xlabel('Hostmag')
         plt.ylabel('Flux (epochs without fake SN Flux)')
         plt.axhline(0)
+        plt.title(filter + ' band')
+
         plt.savefig(outdir + '/emptyfluxvshostmag.png')
     except:
         print 'bad hostmags'
@@ -771,6 +786,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ff = copy(fakeflux)
     ff[ff < 1.] = 1.
     plt.hist(fluxerr/ff,bins=20,normed=True)
+    plt.title(filter+' band')
+
     plt.savefig('sinosn.png')
     plt.clf()
     np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
@@ -936,6 +953,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.001,hspace=0.001)
+    plt.title(filter+' band')
+
     plt.savefig(outdir+'/std.png')
 
 
@@ -1071,6 +1090,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
         # ax3.plot(ax, ayrms, color='purple', label='FakeMag < 22', linewidth=3)
         # ax3.legend(fontsize='small')
+        plt.title(filter + ' band')
 
         plt.savefig(outdir+'/hostmagstd.png')
 
@@ -1207,12 +1227,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     except:
         print 'bad hostmags'
 
+    plt.title(filter+' band')
+
     plt.savefig(outdir+'/chisqstd.png')
 
     plt.clf()
     plt.hist(chisqarr,bins=np.arange(0.6,1.5,.01))
     plt.xlim(.6,1.4)
     plt.xlabel('chi sq')
+    plt.title(filter+' band')
+
     plt.savefig(outdir+'/chisqhist.png')
 
 
