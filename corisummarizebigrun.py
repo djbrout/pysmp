@@ -438,8 +438,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.xlim(19,29)
     #plt.ylim(-.1,.1)
     plt.ylim(-.1,.1)
-    plt.xlabel('Fake Mag')
-    plt.ylabel('Percentage Flux Difference')
+    plt.xlabel('Fake Mag',textsize=3.)
+    plt.ylabel('Fractional Flux Difference',textsize=3.)
     plt.title(filter+' band')
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
