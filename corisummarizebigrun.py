@@ -424,7 +424,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
     print 'saved', outdir+'/percentagefluxdiff.png'
-
+    print min(hostmag[ww]),max(hostmag[ww])
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
     plt.scatter(hostmag[ww],(flux[ww]-fakeflux[ww]),alpha=.5)
