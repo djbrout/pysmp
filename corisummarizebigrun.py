@@ -247,8 +247,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
             #bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
 
-            print data.keys()
-            raw_input()
+            #print data.keys()
+            #raw_input()
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
@@ -380,7 +380,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     # raw_input()
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
+
     diffimflux = np.array(diffimflux)
+    dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
+    diffimflux = 10**(.4*(31-dmag))
+
     oldfakezpt = np.array(oldfakezpt)
     # print fakezpt
     #
@@ -389,7 +393,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #raw_input()
     #print fakemag[0].shape
     #sys.exit()
-    diffimflux *= 10 ** (.4 * (31. - fakezpt))
+    #diffimflux *= 10 ** (.4 * (31. - fakezpt))
+
     plt.clf()
     plt.scatter(diffimflux,flux)
     plt.plot([min(diffimflux),max(diffimflux)],[min(diffimflux),max(diffimflux)],color='black')
