@@ -885,7 +885,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
     ax3.set_ylim(.7,1.5)
-    ax3.legend(fontsize='small')
+    ax3.legend(fontsize='x-small')
 
     fresid = np.zeros(flux.shape)
     for i,f,ff in zip(range(len(flux)),flux,fakeflux):
@@ -991,7 +991,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax2.set_xlim(0,.5)
         #.xlabel('STDEV')
         #plt.ylabel('Normalized Count')
-        ax2.legend(fontsize='small')
+        ax2.legend(fontsize='x-small')
         #plt.savefig('stdresid.png')
 
         #plt.clf()
@@ -1131,7 +1131,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='small')
+    ax2.legend(fontsize='x-small')
     # plt.savefig('stdresid.png')
 
     # plt.clf()
@@ -1201,14 +1201,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ww = hostmag < 23.
         ax, ayrms = dt.binrms(chisqarr[ww], d[ww], np.arange(0.8, 1.2, .005), .02)
         ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-        ax3.legend(fontsize='small',loc=2)
+        ax3.legend(fontsize='x-small',loc=2)
     except:
         print 'bad hostmags'
 
     plt.savefig(outdir+'/chisqstd.png')
 
     plt.clf()
-    plt.hist(chisqarr,bins=np.arange(0.6,1.2,.01))
+    plt.hist(chisqarr,bins=np.arange(0.6,1.5,.01))
+    plt.xlim(.6,1.4)
     plt.xlabel('chi sq')
     plt.savefig(outdir+'/chisqhist.png')
 
