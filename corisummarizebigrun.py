@@ -440,7 +440,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         plt.axhline(0)
         plt.xlim(19,29)
         #plt.ylim(-.1,.1)
-        plt.ylim(-1000,1000)
+        plt.ylim(-500,500)
         plt.xlabel('Host Mag')
         plt.ylabel('Flux Difference')
         plt.savefig(outdir+'/fluxdiff_hostmag.png')
@@ -680,7 +680,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     try:
         plt.scatter(hostmag[ww],flux[ww] / fluxerr[ww])
         plt.xlim(19, 28)
-        plt.ylim(-4,4)
+        plt.ylim(-3,3)
         ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
                                    np.arange(19, 28, .1))
         plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
@@ -692,7 +692,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         plt.clf()
         plt.scatter(hostmag[ww], flux[ww])
         plt.xlim(19, 28)
-        plt.ylim(-2500, 2500)
+        plt.ylim(-700, 700)
         ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww]),
                                    np.arange(19, 28, .1))
         plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
@@ -1207,10 +1207,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir+'/chisqstd.png')
 
-    # plt.clf()
-    # plt.hist(chisqarr,bins=10)
-    # plt.xlabel('chi sq')
-    # plt.savefig(outdir+'/chisqhist.png')
+    plt.clf()
+    plt.hist(chisqarr,bins=np.arange(0.8,1.2,.001))
+    plt.xlabel('chi sq')
+    plt.savefig(outdir+'/chisqhist.png')
 
 
     print 'saved stdresid.png'
