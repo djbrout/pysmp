@@ -1612,7 +1612,7 @@ if __name__ == "__main__":
             cacheddata = True
         elif o in ["-cdf","--cachedfile"]:
             cd = a
-        elif o in ["-b"]:
+        elif o in ["-b","--filter"]:
             filter = str(a)
 
     print filter
