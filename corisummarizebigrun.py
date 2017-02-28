@@ -393,13 +393,13 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     fakezpt = np.asarray(fakezpt)
 
     fakeflux = 10**(.4*(31. - fakemag))
-    #diffimflux *= 10**(.4*(31. - oldfakezpt))
+    diffimflux *= 10**(.4*(31. - oldfakezpt))
 
     # for fm,ff,fl in zip(fakemag,fakeflux,flux):
     #
     #     print fm,ff,fl
     #raw_input()
-
+    fakefluxo = copy(fakeflux)
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
 
     ww = (flux != 0.) & (fakemag != 0)#(fakemag < 28.5) & (flux != 0.)
@@ -407,7 +407,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     fig = plt.figure(figsize=(15, 10))
 
 
-    plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.1, color='red')
+    plt.scatter(fakemag[ww], (diffimflux[ww] - fakefluxo[ww]) / fakefluxo[ww], alpha=.1, color='red')
     ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
                             np.arange(min(fakemag[ww]), max(fakemag[ww]), .5))
     plt.errorbar(ax, ay, aystd, markersize=10, color='red', fmt='o', label='Diffim',alpha=.4)
