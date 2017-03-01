@@ -256,6 +256,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             expn = (expnum == float(exn))
             print exn, fm
             print dofakemag2[expnum == float(exn)]
+            raw_input()
             ifm = (dofakemag2 == fm)
             #print exn, fm
             #print dofakemjd2[expn & ifm]
