@@ -246,7 +246,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #print imf
             try:
                 exn = imf.split('/')[-1].split('_')[1]
-                ccd = float(imf.split('_')[7].split('+')[0])
+                #ccd = float(imf.split('_')[7].split('+')[0])
             except:
                 newfakemag.append(99)
                 continue
@@ -573,7 +573,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         print k
     #raw_input()
 
-    ww = (flux != 0.) & (fakemag == 99)  # (fakemag < 28.5) & (flux != 0.)
+    ww = (flux != 0.) & (fakemag == 99.)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     # fig = plt.figure(figsize=(15, 10))
     # plt.hist(flux[ww],bins=np.arange(-650,600,100))
