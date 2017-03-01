@@ -216,8 +216,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #if not '_r.smp' in f: continue
         print cntr, 'of',tot
         deep = 0
-        os.system('cp '+f+' test.npz')
-        data = dt.readcol('test.npz')
+        #os.system('cp '+f+' test.npz')
+        data = dt.readcol(f)
         tra = data['RA']
         # print data.keys()
         # raw_input()
