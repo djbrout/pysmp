@@ -981,9 +981,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.xaxis.set_major_formatter(nullfmt)
     ax5.yaxis.set_major_formatter(nullfmt)
 
+    outliers3 = float(len(d[d>3.]))/float(len(d))
+    outliers5 = float(len(d[d>5.]))/float(len(d))
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))
+                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3)+'\n3sig Outlier'+
+                                                                ' Fraction: '+str(round(outliers3,2))+'\n5sig Outlier'+
+                                                                ' Fraction: '+str(round(outliers5,2)))
              ,orientation='horizontal')
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
@@ -1005,6 +1009,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #plt.clf()
     fakemag[fakemag == 99] = 28.5
+
+
+
 
     ax1.scatter(fakemag,d,alpha=.3,color='blue')
     ax, ay, aystd = dt.bindata(fakemag[d<3.], d[d<3.], np.arange(19.5, max(fakemag), .1),window=.5)
