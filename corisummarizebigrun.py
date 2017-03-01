@@ -261,6 +261,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 newfakemag.append(99.)
             else:
                 print dofaketflux[cra & cdec & expn & ifm][0], dofakeflux[cra & cdec & expn & ifm][0]
+                print 2.5*np.log10(dofaketflux[cra & cdec & expn & ifm][0]) - 2.5*np.log10(dofakeflux[cra & cdec & expn & ifm][0])
                 nfm = fm + 2.5*np.log10(dofaketflux[cra & cdec & expn & ifm][0]) - 2.5*np.log10(dofakeflux[cra & cdec & expn & ifm][0])
                 newfakemag.append(nfm)
 
