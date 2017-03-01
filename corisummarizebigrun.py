@@ -210,7 +210,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
-        if cntr > 25: continue
+        if cntr > 9000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -276,7 +276,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 newfakemag.append(99.)
                 #print fm, 99
             else:
-                print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
+                #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
                 #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 newfakemag.append(nfm)
