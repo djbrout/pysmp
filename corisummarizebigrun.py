@@ -491,7 +491,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #d = d[ww]
     #dc99 = d[fakemag > 28]
     #rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
-    rms99 = 0.
+    #rms99 = 0.
 
     ww = (flux != 0.) & (fakemag != 0)#(fakemag < 28.5) & (flux != 0.)
     plt.clf()
