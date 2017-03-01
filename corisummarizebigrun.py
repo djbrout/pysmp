@@ -249,10 +249,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 newfakemag.append(99)
                 continue
             dra = np.zeros(len(dofakera2)) + tra[0]
-            cra = np.isclose(dra, dofakera2, atol=1.e-2)
+            cra = np.isclose(dra, dofakera2, atol=2.e-2)
             tdec = data['DEC']
             ddec = np.zeros(len(dofakedec2)) + tdec[0]
-            cdec = np.isclose(ddec, dofakedec2, atol=1.e-2)
+            cdec = np.isclose(ddec, dofakedec2, atol=2.e-2)
             expn = (expnum == float(exn))
             #print exn, fm
 
@@ -267,7 +267,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 newfakemag.append(99.)
                 #print fm, 99
             else:
-                print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[ www][0]
+                print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0]
                 #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 nfm = float(fm) - 2.5*np.log10(dofaketflux[www][0]) + 2.5*np.log10(dofakeflux[www][0])
                 newfakemag.append(nfm)
