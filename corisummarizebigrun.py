@@ -197,7 +197,6 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
     if not os.path.exists(os.path.join(resultsdir,'Summary')):
         os.makedirs(os.path.join(resultsdir,'Summary'))
-    os.system('rm '+cd+' -f')
     #outfile = os.path.join(resultsdir,'Summary','sumdata.npz')
     outfile = cd
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
@@ -419,6 +418,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
     #print bigdata['diffzpt']
     #raw_input()
+    os.system('rm '+cd+' -f')
+
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
@@ -428,7 +429,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
 def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt):
     flux = np.asarray(flux)
-    fakemag = np.asarray(fakemag)
+    fakemag = np.asarray(fakemag,dtype='float')
     sky = np.asarray(sky)
     chisq = np.asarray(chisq)
     imfiles = np.asarray(imfiles,dtype='str')
