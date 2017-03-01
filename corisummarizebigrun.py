@@ -574,7 +574,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
         print k
     #raw_input()
 
-    ww = (flux != 0.) & (np.array(fakemag,dtype='float') == 99.)  # (fakemag < 28.5) & (flux != 0.)
+    ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     # fig = plt.figure(figsize=(15, 10))
     # plt.hist(flux[ww],bins=np.arange(-650,600,100))
