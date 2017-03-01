@@ -209,7 +209,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
-        if cntr > 2500: continue
+        if cntr > 250: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -260,9 +260,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             if not len(dofakemjd2[cra & cdec & expn & ifm]) > 0:
                 newfakemag.append(99.)
             else:
-                #print dofaketflux[cra & cdec & expn & ifm][0], dofakeflux[cra & cdec & expn & ifm][0]
-                nm = dofakemag2[cra & cdec & expn & ifm][0] + 2.5*np.log10(dofaketflux[cra & cdec & expn & ifm][0]) - 2.5*np.log10(dofakeflux[cra & cdec & expn & ifm][0])
-                newfakemag.append(nm)
+                print dofaketflux[cra & cdec & expn & ifm][0], dofakeflux[cra & cdec & expn & ifm][0]
+                nfm = fm + 2.5*np.log10(dofaketflux[cra & cdec & expn & ifm][0]) - 2.5*np.log10(dofakeflux[cra & cdec & expn & ifm][0])
+                newfakemag.append(nfm)
 
                 #raw_input()
 
