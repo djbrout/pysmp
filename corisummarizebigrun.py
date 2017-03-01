@@ -246,7 +246,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             try:
                 exn = imf.split('/')[-1].split('_')[1]
             except:
-                exn = '-999'
+                newfakemag.append(99)
+                continue
             dra = np.zeros(len(dofakera2)) + tra[0]
             cra = np.isclose(dra, dofakera2, atol=1.e-3)
             tdec = data['DEC']
