@@ -255,7 +255,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             # cdec = np.isclose(ddec, dofakedec2, atol=1.e-3)
             expn = (expnum == float(exn))
             print exn, fm
-            print dofakemag2[(expnum == float(exn)) & (dofakemag2 == fm)]
+            print dofakemag2[(float(expnum) == float(exn)) & (float(dofakemag2) == float(fm))]
             raw_input()
             ifm = (dofakemag2 == fm)
             #print exn, fm
