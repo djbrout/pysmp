@@ -1797,4 +1797,5 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
+    cd = '/project/projectdirs/des/djbrout/v62/summary_results_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter)
