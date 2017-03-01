@@ -218,8 +218,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         os.system('cp '+f+' test.npz')
         data = dt.readcol('test.npz')
         tra = data['RA']
-        print data.keys()
-        raw_input()
+        # print data.keys()
+        # raw_input()
         #print tra[0]
         dra = np.zeros(len(dofakera))+tra[0]
         cra = np.isclose(dra,dofakera,atol=1.e-3)
@@ -274,6 +274,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
             #raw_input()
 
+        print np.array(newfakemag)-fakemag
+        raw_input()
         fakemag = np.array(newfakemag)
 
         '''
