@@ -169,6 +169,19 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     dexp = np.array(diffzpts['expnum'],dtype='float')
     dfield = np.array(diffzpts['field'],dtype='str')
 
+
+
+    dofakefilt2,dofakemjd2,dofakemag2,dofaketflux,dofakeflux,dofakera2,dofakedec2 = np.loadtxt('data/doFake.out',
+                                            usecols=(3, 9, 10,11,12, 14,15), unpack=True, dtype='string', skiprows=1)
+    dofakemjd2 = np.array(dofakemjd2, dtype='float')
+    dofakemag2 = np.array(dofakemag2, dtype='float')
+    dofakera2 = np.array(dofakera2, dtype='float')
+    dofakedec2 = np.array(dofakedec2, dtype='float')
+    dofaketflux = np.array(dofaketflux, dtype='float')
+    dofakeflux = np.array(dofakeflux, dtype='float')
+    dofakerand = dofakeflux/dofaketflux
+
+
     #print dofakemjd
 
     #raw_input('dofakemjd')
@@ -225,6 +238,13 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             continue
         if np.min(data['FLUX']) < -10000:
             continue
+
+        newfakemag = []
+        for imf,fm in zip(data['IMAGE_FILE'],fakemag):
+            print imf
+            raw_input()
+
+
 
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
