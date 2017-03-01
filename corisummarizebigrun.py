@@ -249,7 +249,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             tdec = data['DEC']
             ddec = np.zeros(len(dofakedec2)) + tdec[0]
             cdec = np.isclose(ddec, dofakedec2, atol=1.e-3)
-            expn = (expnum == exn)
+            expn = (expnum == float(exn))
             ifm = (dofakemag2 == fm)
             print exn, fm
             print dofakemjd2[expn & ifm]
