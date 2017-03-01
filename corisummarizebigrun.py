@@ -502,7 +502,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     #                         np.arange(min(fakemag[ww]), max(fakemag[ww]), .5))
     # plt.errorbar(ax, ay, aystd, markersize=10, color='red', fmt='o', label='Diffim',alpha=.4)
 
-    print fakemag.shape,flux.shape,fakeflux.shape
+    print fakemag[ww].shape,flux[ww].shape,fakeflux[ww].shape
+
+
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(min(fakemag[ww]),max(fakemag[ww]), .5))
