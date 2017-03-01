@@ -241,7 +241,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             continue
 
         newfakemag = []
-        for imf,fm in zip(data['IMAGE_FILE'],fakemag):
+        for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
             #print imf
             try:
                 exn = imf.split('/')[-1].split('_')[1]
@@ -249,10 +249,12 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 newfakemag.append(99)
                 continue
             dra = np.zeros(len(dofakera2)) + tra[0]
-            cra = np.isclose(dra, dofakera2, atol=1.e-2)
+            cra = np.isclose( dofakera2,dra, atol=1.e-3)
             tdec = data['DEC']
             ddec = np.zeros(len(dofakedec2)) + tdec[0]
-            cdec = np.isclose(ddec, dofakedec2, atol=1.e-2)
+            cdec = np.isclose(dofakedec2, ddec, atol=1.e-3)
+
+
             expn = (expnum == float(exn))
             #print exn, fm
 
