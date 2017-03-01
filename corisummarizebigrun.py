@@ -265,14 +265,14 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #print dofakemjd2[expn & ifm]
             if not len(dofakemag2[www]) > 0:
                 newfakemag.append(99.)
-                print fm, 99
+                #print fm, 99
             else:
-                print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[ www][0]
-                print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
+                #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[ www][0]
+                #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 newfakemag.append(nfm)
 
-            raw_input()
+            #raw_input()
 
         fakemag = np.array(newfakemag)
 
