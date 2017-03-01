@@ -251,6 +251,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             cdec = np.isclose(ddec, dofakedec2, atol=1.e-3)
             expn = (expnum == exn)
             ifm = (dofakemag2 == fm)
+            print exn, fm
             print dofakemjd2[expn & ifm]
             if not len(dofakemjd2[cra & cdec & expn & ifm]) > 0:
                 newfakemag.append(99.)
