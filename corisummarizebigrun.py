@@ -182,7 +182,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     dofakerand = dofakeflux/dofaketflux
     expnum = np.array(expnum, dtype='float')
     dofakeccds = np.array(dofakeccds,dtype='float')
-
+    dofakefilt2 = np.array(dofakefilt2,dtype='string')
 
     #print dofakemjd
 
@@ -260,6 +260,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
             expn = (expnum == float(exn))
             ccdw = (dofakeccds == ccd)
+            filtw = (dofakefilt2 == 'g')
             #print exn, fm
 
             # print dofakemag2[]
