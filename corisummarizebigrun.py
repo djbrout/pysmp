@@ -180,7 +180,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     dofaketflux = np.array(dofaketflux, dtype='float')
     dofakeflux = np.array(dofakeflux, dtype='float')
     dofakerand = dofakeflux/dofaketflux
-    expnum = np.array(expnum, dtype='float')
+    dofakeexpnum = np.array(expnum, dtype='float')
     dofakeccds = np.array(dofakeccds,dtype='float')
     dofakefilt2 = np.array(dofakefilt2,dtype='string')
 
@@ -258,7 +258,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
 
 
-            expn = (expnum == float(exn))
+            expn = (dofakeexpnum == float(exn))
+
             ccdw = (dofakeccds == ccd)
             #filtw = (dofakefilt2 == 'g')
             #print exn, fm
