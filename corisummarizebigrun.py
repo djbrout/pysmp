@@ -1053,7 +1053,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                             np.arange(19.5, 26., .1),window=2.)
     ax4.plot([19, 28.7], [0, 0],color='grey')
 
-    ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1), 1.5)
+    ax, ayrms = dt.binrms(fakemag, d, np.arange(19.5, 28, .1), 1.5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
