@@ -248,16 +248,17 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             except:
                 newfakemag.append(99)
                 continue
-            # dra = np.zeros(len(dofakera2)) + tra[0]
-            # cra = np.isclose(dra, dofakera2, atol=1.e-3)
-            # tdec = data['DEC']
-            # ddec = np.zeros(len(dofakedec2)) + tdec[0]
-            # cdec = np.isclose(ddec, dofakedec2, atol=1.e-3)
-            # expn = (expnum == float(exn))
-            # print exn, fm
+            dra = np.zeros(len(dofakera2)) + tra[0]
+            cra = np.isclose(dra, dofakera2, atol=1.e-3)
+            tdec = data['DEC']
+            ddec = np.zeros(len(dofakedec2)) + tdec[0]
+            cdec = np.isclose(ddec, dofakedec2, atol=1.e-3)
+            expn = (expnum == float(exn))
+            #print exn, fm
 
             # print dofakemag2[]
-            www = (expnum == float(exn)) & (np.isclose(float(fm), dofakemag2, atol=1.e-3))
+            #www = (expnum == float(exn)) & (np.isclose(float(fm), dofakemag2, atol=1.e-3))
+            www = expn & cdec & cra
             #raw_input()
             # ifm = (dofakemag2 == fm)
             #print exn, fm
@@ -267,11 +268,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             else:
                 print dofaketflux[www][0], dofakeflux[ www][0]
                 print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
-                print + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 newfakemag.append(nfm)
 
-                #raw_input()
+            raw_input()
 
         fakemag = np.array(newfakemag)
 
