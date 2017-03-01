@@ -265,6 +265,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #print dofakemjd2[expn & ifm]
             if not len(dofakemag2[www]) > 0:
                 newfakemag.append(99.)
+                print 99
             else:
                 print dofaketflux[www][0], dofakeflux[ www][0]
                 print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
