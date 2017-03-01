@@ -209,7 +209,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     cntr = 0
     for f in smpfiles[:]:
         cntr += 1
-        if cntr > 10000: continue
+        if cntr > 250: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
