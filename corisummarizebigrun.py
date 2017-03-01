@@ -269,7 +269,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #raw_input()
             # ifm = (dofakemag2 == fm)
             #print exn, fm
-            print fm,dofakemag2[expn & ccdw]
+            print fm,dofakemag2[expn & ccdw & filtw]
             raw_input()
             if not len(dofakemag2[www]) > 0:
                 newfakemag.append(99.)
