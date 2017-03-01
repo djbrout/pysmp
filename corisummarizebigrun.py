@@ -242,7 +242,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
         newfakemag = []
         for imf,fm in zip(data['IMAGE_FILE'],fakemag):
-            print imf
+            #print imf
             exn = imf.split('/')[-1].split('_')[1]
             dra = np.zeros(len(dofakera2)) + tra[0]
             cra = np.isclose(dra, dofakera2, atol=1.e-3)
@@ -251,15 +251,18 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             cdec = np.isclose(ddec, dofakedec2, atol=1.e-3)
             expn = (expnum == float(exn))
             ifm = (dofakemag2 == fm)
-            print exn, fm
-            print dofakemjd2[expn & ifm]
+            #print exn, fm
+            #print dofakemjd2[expn & ifm]
             if not len(dofakemjd2[cra & cdec & expn & ifm]) > 0:
                 newfakemag.append(99.)
             else:
-                print dofaketflux[cra & cdec & expn & ifm], dofakeflux[cra & cdec & expn & ifm]
-                raw_input()
+                #print dofaketflux[cra & cdec & expn & ifm][0], dofakeflux[cra & cdec & expn & ifm][0]
+                dfzpt = dofakemag2[cra & cdec & expn & ifm][0] + 2.5*np.log10(dofaketflux[cra & cdec & expn & ifm][0])
+                newfakemag.append(dfzpt-2.5*np.log10(dofakeflux[cra & cdec & expn & ifm][0]))
 
+                #raw_input()
 
+        fakemag = np.array(newfakemag)
 
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
