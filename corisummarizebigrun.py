@@ -933,7 +933,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     fig = plt.figure(figsize=(15, 10))
     plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.2, 6, .4), normed=True,
-             label='RMS Fakemag = 99: ' + str(round(rms99, 3)))
+             label='RMS Fakemag = 99: ' + str(round(rms99, 3))+'\nSTD Fakemag = 99: '+
+                   str(round(np.std(flux[ww] / fluxerr[ww]),3)))
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
     # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
@@ -1807,5 +1808,5 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    cd = '/project/projectdirs/des/djbrout/v62/summary_results2_'+filter+'.npz'
+    cd = '/project/projectdirs/des/djbrout/v62/summary_results_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter)
