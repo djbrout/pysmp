@@ -435,9 +435,10 @@ class metropolis_hastings():
         #raw_input()
         
         self.kicked_galaxy_model = copy(self.galaxy_model)
-        self.simsnosn = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
-        self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
+        #self.simsnosn = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
+        #self.simsnosnnosky = map(self.mapkernel,self.modelvec*0.,self.kicked_psfs,self.centered_psfs,self.sky,self.flags,self.fitflags,self.sims,self.gal_conv)
 
+        self.simsnosn = copy(self.modelvec)*0.
         self.simsnosnnosky = copy(self.modelvec)*0.
 
         newcpsf = []
@@ -1221,7 +1222,8 @@ class metropolis_hastings():
             if self.psf_shift_std > 0:
                 map(self.mapshiftPSF, np.arange(self.Nimage))
             self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
-                        self.flags, self.fitflags, self.sims, self.gal_conv)
+                        self.flags, self.fitflags, self.sims, self.gal_conv,self.fpsfs,
+                        self.xgal_pix_offset,self.ygal_pix_offset)
             wmask = copy(self.weights[i,:,:])
             wmask[wmask > 0] = 1
             v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
