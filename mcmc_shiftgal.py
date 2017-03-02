@@ -522,7 +522,9 @@ class metropolis_hastings():
                     # self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
                     #                          self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
 
+                    print 'fit galaxy registration',self.xgal_pix_offset[10:20]
                     print 'fitting position:', self.x_pix_offset, self.y_pix_offset
+
 
                 if (self.counter % 10000) == 0:
                     self.plotchains()
