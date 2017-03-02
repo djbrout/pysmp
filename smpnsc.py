@@ -44,8 +44,12 @@ import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
 import scipy.optimize as opti
-import psfex
-
+psfexworked = False
+try:
+    import psfex
+    psfexworked = True
+except:
+    import buildPSFex
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
                  'ZPFLUX':'float','RA':'string',
@@ -6288,12 +6292,38 @@ class smp:
         variance = np.average((values-average)**2, weights=weights)  # Fast and numerically precise
         return (average, variance**.5)
 
-    def build_psfex(self, psffile,x,y,imfile,dogalsim=False,stop=False):
-        a = psfex.PSFEx(psffile)
-        im = a.get_rec(y, x)[3:-4, 3:-4]
-        im /= np.sum(im.ravel())
+    def build_psfex(self, psffile,x,y,imfile,dogalsim=False,stop=False,psfexworked=True):
+        if psfexworked:
+            a = psfex.PSFEx(psffile)
+            im = a.get_rec(y, x)[3:-4, 3:-4]
+            im /= np.sum(im.ravel())
 
-        return im, (round(x), round(y))
+            return im, (round(x), round(y))
+        else:
+            stampsize=30
+            psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
+                                                                                         stampsize)).readlines()
+
+            ix, iy, psfval = [], [], []
+            for line in psf:
+                # print line
+                line = line.replace('\n', '')
+                if line.startswith('PSF:'):
+                    linelist = line.split()
+                    ix += [int(linelist[1])];
+                    iy += [int(linelist[2])];
+                    psfval += [float(linelist[5])]
+                elif line.startswith("IMAGE_CENTER"):
+                    linelist = line.split()
+                    IMAGE_CENTERX = float(linelist[1]);
+                    IMAGE_CENTERY = float(linelist[2])
+
+            ix, iy, psfval = np.array(ix), np.array(iy), np.array(psfval)
+            psfout = np.zeros((stampsize, stampsize))
+            for x, y, p in zip(ix, iy, psfval):
+                psfout[y, x] = p
+
+            return (psfout), (IMAGE_CENTERX, IMAGE_CENTERY)
 
     def build_psfex_old(self, psffile,x,y,imfile,dogalsim=False,stop=False):
         '''
