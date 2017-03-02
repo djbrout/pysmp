@@ -277,7 +277,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             else:
                 #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
                 #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
-                nfm = float(fm) - 2.5*np.log10(dofaketflux[www][0]) + 2.5*np.log10(dofakeflux[www][0])
+                nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                 newfakemag.append(nfm)
 
             #raw_input()
