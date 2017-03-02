@@ -513,8 +513,8 @@ class metropolis_hastings():
                     for i in np.arange(len(self.psfs)):#NEED TO MAKE THE GALAXY MODEL AN AVERAGE AND NOT JUST LAST MCMC STEP
                         self.gal_conv.append(scipy.signal.convolve2d(self.galaxy_model, self.psfs[i], mode='same'))
 
-                    self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
-                                             self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
+                    # self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
+                    #                          self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
 
                     print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
@@ -655,9 +655,12 @@ class metropolis_hastings():
         #self.kernel()
         #self.gal_conv = copy(self.kicked_modelvec)
 
+        self.fgal = np.fft.fft2(self.kicked_galaxy_model)
+
         # if self.survey == 'PS1':
         self.sims = map(self.mapkernel, self.kicked_modelvec, self.kicked_psfs, self.centered_psfs, self.sky,
-                        self.flags, self.fitflags, self.sims, self.gal_conv)
+                        self.flags, self.fitflags, self.sims, self.gal_conv, self.fpsfs,
+                        self.current_xgal_offset,self.current_ygal_offset)
         # else:
         #     q = multiprocessing.Queue()
         #     jobs = []
@@ -858,7 +861,7 @@ class metropolis_hastings():
         q.put((sims,index))
 
     def mapkernel( self, kicked_modelvec, kicked_psfs, centered_psfs,sky,
-                   flags, fitflags, sims, galconv, fgal, galoffx, galoffy):
+                   flags, fitflags, sims, galconv, fpsf, galoffx, galoffy):
 
         # if self.shiftpsf:
         #     if flags == 0:
@@ -883,7 +886,7 @@ class metropolis_hastings():
         #             galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
         #             sims = (delta + galaxy_conv + sky) * self.mask
 
-        if self.galshiftstd:
+        if self.shiftgalstd:
             np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,fgal))
 
         if self.fix_gal_model:
