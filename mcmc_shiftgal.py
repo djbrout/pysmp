@@ -147,6 +147,7 @@ class metropolis_hastings():
                  ,fitzpt=None
                  ,fakezpt=None
                  ,datafilenames=None
+                 ,shiftgalstd=0.
                 ):
         '''
         if model is None:
@@ -245,6 +246,9 @@ class metropolis_hastings():
         self.fakezpt=fakezpt
         self.fitzpt=fitzpt
         self.datafilenames = datafilenames
+
+        self.shiftgalstd = shiftgalstd
+
         print 'sigmazpt',self.sigmazpt.shape
 
         # if dobkg :
@@ -476,6 +480,8 @@ class metropolis_hastings():
         self.modelvechistory = []
         self.xhistory = []
         self.yhistory = []
+        self.xgalhistory = []
+        self.ygalhistory = []
         self.accepted_history = 0
         self.accepted_int = 0
         self.t1 = time.time()
@@ -660,7 +666,7 @@ class metropolis_hastings():
         # if self.survey == 'PS1':
         self.sims = map(self.mapkernel, self.kicked_modelvec, self.kicked_psfs, self.centered_psfs, self.sky,
                         self.flags, self.fitflags, self.sims, self.gal_conv, self.fpsfs,
-                        self.current_xgal_offset,self.current_ygal_offset)
+                        self.xgal_pix_offset,self.ygal_pix_offset)
         # else:
         #     q = multiprocessing.Queue()
         #     jobs = []
@@ -886,19 +892,27 @@ class metropolis_hastings():
         #             galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
         #             sims = (delta + galaxy_conv + sky) * self.mask
 
-        if self.shiftgalstd:
-            np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,fgal))
+        if flags == 0:
+            if fitflags == 0.:
+                if self.shiftgalstd:
+                    galaxy_conv = np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,self.fgal))
+                    star_conv = kicked_modelvec * kicked_psfs
+                    sims = (star_conv + galaxy_conv + sky) * self.mask
+                else:
+                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
+                    star_conv = kicked_modelvec * kicked_psfs  # /np.sum(kicked_psfs.ravel())
+                    sims = (star_conv + galaxy_conv + sky) * self.mask
 
-        if self.fix_gal_model:
-            star_conv = kicked_modelvec * kicked_psfs
-            sims = (star_conv + sky) * self.mask
-            #sims =  (star_conv + galconv + sky)*self.mask
-        else:
-            if flags == 0:
-                if fitflags == 0.:
-                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
-                    star_conv = kicked_modelvec * kicked_psfs#/np.sum(kicked_psfs.ravel())
-                    sims = (star_conv + galaxy_conv + sky)*self.mask
+        # if self.fix_gal_model:
+        #     star_conv = kicked_modelvec * kicked_psfs
+        #     sims = (star_conv + sky) * self.mask
+        #     #sims =  (star_conv + galconv + sky)*self.mask
+        # else:
+        #     if flags == 0:
+        #         if fitflags == 0.:
+        #             galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs,mode='same')
+        #             star_conv = kicked_modelvec * kicked_psfs#/np.sum(kicked_psfs.ravel())
+        #             sims = (star_conv + galaxy_conv + sky)*self.mask
                     
         return sims
 
@@ -1115,6 +1129,9 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.current_x_offset = self.x_pix_offset
             self.current_y_offset = self.y_pix_offset
+        if self.shiftgalstd:
+            self.current_xgal_offset = self.xgal_pix_offset
+            self.current_ygal_offset = self.ygal_pix_offset
         if self.compressioncounter % self.compressionfactor == 0:
             #print 'len gal history', len(self.galhistory)
             if not self.dontsavegalaxy:
@@ -1123,6 +1140,9 @@ class metropolis_hastings():
             if self.shiftpsf:
                 self.xhistory.append(self.current_x_offset)
                 self.yhistory.append(self.current_y_offset)
+            if self.shiftgalstd:
+                self.xgalhistory.append(self.current_xgal_offset)
+                self.ygalhistory.append(self.current_ygal_offset)
         return
 
     def update_unaccepted_history( self ):
@@ -1134,6 +1154,9 @@ class metropolis_hastings():
             if self.shiftpsf:
                 self.xhistory.append(self.current_x_offset)
                 self.yhistory.append(self.current_y_offset)
+            if self.shiftgalstd:
+                self.xgalhistory.append(self.current_xgal_offset)
+                self.ygalhistory.append(self.current_ygal_offset)
         return
 
     def model_params( self ):
@@ -1161,6 +1184,8 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
+            self.xgal_pix_offset = np.mean(self.xgalhistory[burn_in:])
+            self.ygal_pix_offset = np.mean(self.ygalhistory[burn_in:])
             #for i in self.xhistory:
             #    print i
             #raw_input()
@@ -1269,17 +1294,22 @@ class metropolis_hastings():
                                    
         fig = plt.figure(1,figsize=(10,7))
         #for e in np.arange(numepochs):
-        plt.plot(np.arange(0,len(self.xhistory)*self.compressionfactor,self.compressionfactor),np.array(self.xhistory)[::1])
-        plt.plot(np.arange(0,len(self.yhistory)*self.compressionfactor,self.compressionfactor),np.array(self.yhistory)[::1])
+        plt.plot(np.arange(0,len(self.xhistory)*self.compressionfactor,self.compressionfactor),np.array(self.xhistory)[::1],label='SN X offset')
+        plt.plot(np.arange(0,len(self.yhistory)*self.compressionfactor,self.compressionfactor),np.array(self.yhistory)[::1],label='SN X offset')
+        plt.plot(np.arange(0, len(self.xgalhistory) * self.compressionfactor, self.compressionfactor),
+                 np.array(self.xgalhistory)[::1],label='Galaxy X offset')
+        plt.plot(np.arange(0, len(self.ygalhistory) * self.compressionfactor, self.compressionfactor),
+                 np.array(self.ygalhistory)[::1],label='Galaxy Y offset')
+        plt.legend()
         plt.xlabel('Step')
         plt.ylabel('Offset (pixels)')
         if self.shiftpsf:
             if self.isfermigrid:
-                self.savefig('SNoffset.png')
-                self.tmpwriter.cp('SNoffset.png',str(self.lcout)+'_SNoffset.png')
-                os.popen('rm SNoffset.png').read()
+                self.savefig('offset.png')
+                self.tmpwriter.cp('offset.png',str(self.lcout)+'_offset.png')
+                os.popen('rm offset.png').read()
             else:
-                self.savefig(str(self.lcout)+'_SNoffset.png')
+                self.savefig(str(self.lcout)+'_offset.png')
             #print str(self.lcout)+'_SNoffset1.png'
         #else:
         #    self.savefig('SNoffset2.png')
