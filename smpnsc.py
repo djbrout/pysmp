@@ -2107,7 +2107,7 @@ class smp:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
                 print snparams.RA,xsn,snparams
-                self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile)
+                self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
                 self.psf = self.psf/np.sum(self.psf)
 
             # elif snparams.psf_model.lower() == 'daophot':
@@ -2516,7 +2516,7 @@ class smp:
                 ysn = ysn[0]
                 opsf = copy(self.psf)
                 opsfcenter = copy(self.psfcenter)
-                self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile)
+                self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
                 self.psf = self.psf/np.sum(self.psf)
 
 
@@ -5025,7 +5025,7 @@ class smp:
                 if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51:
                     if self.stardumppsf:
                         if self.snparams.psf_model.lower() == 'psfex':
-                            psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
+                            psf, psfcenter = self.build_psfex(psffile,x,y,imfile,psfexworked=psfexworked)
 
                             #print psf.shape
                         elif psf == '':
@@ -5147,7 +5147,7 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile)
+                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,psfexworked=psfexworked)
                         print psf.shape
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
@@ -5295,7 +5295,7 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51:# and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True)
+                        psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True,psfexworked=psfexworked)
                         #print 'psfcenter',psfcenter
                         #raw_input()
                         #psf2, psfcenter2 = self.build_psfex(psffile,x+.05,y+.05,imfile,stop=True)
