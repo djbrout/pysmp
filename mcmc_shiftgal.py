@@ -894,7 +894,7 @@ class metropolis_hastings():
 
         if flags == 0:
             if fitflags == 0.:
-                if self.shiftgalstd:
+                if self.shiftgalstd>0.:
                     galaxy_conv = np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,self.fgal))
                     star_conv = kicked_modelvec * kicked_psfs
                     sims = (star_conv + galaxy_conv + sky) * self.mask
@@ -1184,8 +1184,10 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
-            self.xgal_pix_offset = np.mean(self.xgalhistory[burn_in:])
-            self.ygal_pix_offset = np.mean(self.ygalhistory[burn_in:])
+        if self.shiftgalstd >0.:
+            for i in np.arange(len(self.modelvec)):
+                self.xgal_pix_offset[i] = np.mean(self.xgalhistory[burn_in:,i])
+                self.ygal_pix_offset[i] = np.mean(self.ygalhistory[burn_in:,i])
             #for i in self.xhistory:
             #    print i
             #raw_input()
@@ -1194,7 +1196,8 @@ class metropolis_hastings():
             self.kicked_galaxy_model = self.galmodel_params
 
         self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
-                        self.flags, self.fitflags, self.sims, self.gal_conv)
+                        self.flags, self.fitflags, self.sims, self.gal_conv,self.fpsfs,
+                        self.xgal_pix_offset,self.ygal_pix_offset)
 
     def autocorr( self, x ):
         result = np.correlate( x, x, mode='full' )
@@ -1296,10 +1299,10 @@ class metropolis_hastings():
         #for e in np.arange(numepochs):
         plt.plot(np.arange(0,len(self.xhistory)*self.compressionfactor,self.compressionfactor),np.array(self.xhistory)[::1],label='SN X offset')
         plt.plot(np.arange(0,len(self.yhistory)*self.compressionfactor,self.compressionfactor),np.array(self.yhistory)[::1],label='SN X offset')
-        plt.plot(np.arange(0, len(self.xgalhistory) * self.compressionfactor, self.compressionfactor),
-                 np.array(self.xgalhistory)[::1],label='Galaxy X offset')
-        plt.plot(np.arange(0, len(self.ygalhistory) * self.compressionfactor, self.compressionfactor),
-                 np.array(self.ygalhistory)[::1],label='Galaxy Y offset')
+        # plt.plot(np.arange(0, len(self.xgalhistory) * self.compressionfactor, self.compressionfactor),
+        #          np.array(self.xgalhistory)[::1],label='Galaxy X offset')
+        # plt.plot(np.arange(0, len(self.ygalhistory) * self.compressionfactor, self.compressionfactor),
+        #          np.array(self.ygalhistory)[::1],label='Galaxy Y offset')
         plt.legend()
         plt.xlabel('Step')
         plt.ylabel('Offset (pixels)')
@@ -1445,6 +1448,13 @@ class metropolis_hastings():
 
     def make_history( self ):
         num_iter = len( self.modelvechistory )
+
+        if self.shiftgalstd > 0.:
+            self.xgalnphistory = np.zeros( (num_iter , len(self.modelvec)))
+            self.ygalnphistory = np.zeros( (num_iter , len(self.modelvec)))
+            for i in np.arange(num_iter):
+                self.xgalnphistory[i, :] = self.xgalnphistory[i]
+                self.ygalnphistory[i, :] = self.xgalnphistory[i]
         if not self.dontsavegalaxy:
             self.galmodel_nphistory = np.zeros( (num_iter , self.galaxy_model.shape[0], self.galaxy_model.shape[1]))
             self.modelvec_nphistory = np.zeros( (num_iter , len(self.modelvec)))
