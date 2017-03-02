@@ -240,51 +240,54 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         if np.min(data['FLUX']) < -10000:
             continue
 
-        newfakemag = []
-        for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
-            #print imf
-            try:
-                exn = imf.split('/')[-1].split('_')[1]
-                #ccd = float(imf.split('_')[7].split('+')[0])
-            except:
-                newfakemag.append(99)
-                continue
-            dra = np.zeros(len(dofakera2)) + tra[0]
-            cra = np.isclose( dofakera2,dra, atol=1.e-3)
-            tdec = data['DEC']
-            ddec = np.zeros(len(dofakedec2)) + tdec[0]
-            cdec = np.isclose(dofakedec2, ddec, atol=1.e-3)
+        skipnewfakemag = True
+        if not skipnewfakemag:
+            newfakemag = []
+            for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
+
+                #print imf
+                try:
+                    exn = imf.split('/')[-1].split('_')[1]
+                    #ccd = float(imf.split('_')[7].split('+')[0])
+                except:
+                    newfakemag.append(99)
+                    continue
+                dra = np.zeros(len(dofakera2)) + tra[0]
+                cra = np.isclose( dofakera2,dra, atol=1.e-3)
+                tdec = data['DEC']
+                ddec = np.zeros(len(dofakedec2)) + tdec[0]
+                cdec = np.isclose(dofakedec2, ddec, atol=1.e-3)
 
 
 
-            expn = (dofakeexpnum == float(exn))
+                expn = (dofakeexpnum == float(exn))
 
-            #ccdw = (dofakeccds == ccd)
-            #filtw = (dofakefilt2 == 'g')
-            #print exn, fm
+                #ccdw = (dofakeccds == ccd)
+                #filtw = (dofakefilt2 == 'g')
+                #print exn, fm
 
-            # print dofakemag2[]
-            #www = (expnum == float(exn)) & (np.isclose(float(fm), dofakemag2, atol=1.e-3))
-            www = expn & cdec & cra
+                # print dofakemag2[]
+                #www = (expnum == float(exn)) & (np.isclose(float(fm), dofakemag2, atol=1.e-3))
+                www = expn & cdec & cra
+                #raw_input()
+                # ifm = (dofakemag2 == fm)
+                #print exn, fm
+                #print fm,dofakemag2[expn],exn
+                #raw_input()
+                if not len(dofakemag2[www]) > 0:
+                    newfakemag.append(99.)
+                    #print fm, 99
+                else:
+                    #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
+                    #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
+                    nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
+                    newfakemag.append(nfm)
+
+                #raw_input()
+
+            #print np.array(newfakemag)-fakemag
             #raw_input()
-            # ifm = (dofakemag2 == fm)
-            #print exn, fm
-            #print fm,dofakemag2[expn],exn
-            #raw_input()
-            if not len(dofakemag2[www]) > 0:
-                newfakemag.append(99.)
-                #print fm, 99
-            else:
-                #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
-                #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
-                nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
-                newfakemag.append(nfm)
-
-            #raw_input()
-
-        #print np.array(newfakemag)-fakemag
-        #raw_input()
-        fakemag = np.array(newfakemag,dtype='float')
+            fakemag = np.array(newfakemag,dtype='float')
 
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
