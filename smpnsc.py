@@ -49,7 +49,7 @@ try:
     import psfex
     psfexworked = True
 except:
-    import buildPSFex
+    pass
 snkeywordlist = {'SURVEY':'string','SNID':'string','FILTERS':'string',
                  'PIXSIZE':'float','NXPIX':'float','NYPIX':'float',
                  'ZPFLUX':'float','RA':'string',
