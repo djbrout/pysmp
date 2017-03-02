@@ -3714,6 +3714,7 @@ class smp:
                     , fitzpt = smp_dict['zpt']
                     , fakezpt = smp_dict['fakezpt']
                     , datafilenames = smp_dict['image_filename']
+                    , shiftgalstd = .01
 
                     )
             modelveco = copy(modelvec)
