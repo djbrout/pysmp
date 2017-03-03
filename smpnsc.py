@@ -2663,7 +2663,7 @@ class smp:
                             if self.usefake:
                                 scale = 10**(.4*(31.-float(snparams.fake_truemag[i])))
                             else:
-                                scale = float(snparams.flux)
+                                scale = float(snparams.flux[i])
 
                             #errmag =
                             # errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
