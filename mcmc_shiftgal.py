@@ -63,7 +63,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import gc
 import chkpsf_fast
 
-#import build_psfex
+import build_psfex
 
 import rdpsf
 import sys
