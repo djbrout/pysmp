@@ -2434,6 +2434,7 @@ class smp:
                                                             index=snparams.snfile.split('/')[-1].replace('.dat',''))
 
                         print sexsky, sexrms
+
                         # raw_input('sextractor')
                         #bkgrnd = pf.getdata(imfile + '.background')
                         # print bkgrnd.shape
@@ -5476,11 +5477,16 @@ class smp:
 
                         #usesextractorim = True
                         #if usesextractorim:
-                        self.dosextractor = False
+                        self.dosextractor = True
                         if self.dosextractor:
-                            bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                            bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + \
+                                           np.mean(bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
+                            se_in =np.mean(bkgrndrms[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
                         else:
                             bkgrndstamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + s
+                            se_in = se
+
+
                         # noise_stamp = noise_stamp*1/(se**2)
                         # noise_stamp = noise_stamp * 1 / (sexrms ** 2)
                         gal = np.zeros(image_stamp.shape)
@@ -5524,7 +5530,7 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
-                                                                             fitrad, gal, mjd, se,self.gain,guess_scale=10**(.4*(31.-m)))
+                                                                             fitrad, gal, mjd, se_in,self.gain,guess_scale=10**(.4*(31.-m)))
                             #print scale
                             #raw_input('ls fit')
                         # except:
