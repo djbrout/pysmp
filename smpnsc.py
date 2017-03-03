@@ -2660,9 +2660,10 @@ class smp:
                             #sys.exit()
                             psf_stamp = self.psf
                             print xsn,ysn,im.shape,skysn,skyerrsn
-                            #scale = 10**(.4*(31.-float(snparams.fake_truemag[i])))
-
-                            scale = 100.
+                            if self.usefake:
+                                scale = 10**(.4*(31.-float(snparams.fake_truemag[i])))
+                            else:
+                                scale = float(snparams.flux)
 
                             #errmag =
                             # errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
