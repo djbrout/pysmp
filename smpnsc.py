@@ -2859,10 +2859,10 @@ class smp:
                                         #raw_input('sig comparo')
                                     else:
 
-                                        smp_dict['sky'][i] = mysky
-                                        #smp_dict['sky'][i] = sexsky
-                                        smp_dict['skyerr'][i] = skysig
-                                        #smp_dict['skyerr'][i] = sexrms
+                                        #smp_dict['sky'][i] = mysky
+                                        smp_dict['sky'][i] = sexsky
+                                        #smp_dict['skyerr'][i] = skysig
+                                        smp_dict['skyerr'][i] = sexrms
                                         #sexrms
 
                                     smp_dict['flag'][i] = 0
