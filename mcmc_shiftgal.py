@@ -603,8 +603,8 @@ class metropolis_hastings():
         # t2 = time.time()
 
         if self.shiftgalstd > 0.:
-            self.xgal_pix_offset = self.current_xgal_offset + np.random.normal(self.Nimage,scale=self.shiftgalstd)
-            self.ygal_pix_offset = self.current_ygal_offset + np.random.normal(self.Nimage,scale=self.shiftgalstd)
+            self.xgal_pix_offset = self.current_xgal_offset + np.random.normal(size=self.Nimage,scale=self.shiftgalstd)
+            self.ygal_pix_offset = self.current_ygal_offset + np.random.normal(size=self.Nimage,scale=self.shiftgalstd)
 
         if self.shiftpsf:
             #print 'shifting'
