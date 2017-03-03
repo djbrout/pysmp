@@ -2660,7 +2660,10 @@ class smp:
                             #sys.exit()
                             psf_stamp = self.psf
                             print xsn,ysn,im.shape,skysn,skyerrsn
-                            scale = 10**(.4*(31.-float(snparams.fake_truemag[i])))
+                            #scale = 10**(.4*(31.-float(snparams.fake_truemag[i])))
+
+                            scale = 100.
+
                             #errmag =
                             # errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,pkpsf_stamp = \
                             #     pk.pkfit_norecent_noise_smp(1,xsn,ysn,skysn,skyerrsn,params.fitrad,returnStamps=True,stampsize=params.substamp)
