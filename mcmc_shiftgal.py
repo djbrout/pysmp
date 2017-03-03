@@ -512,6 +512,7 @@ class metropolis_hastings():
                 tps = (time.time()-self.t1)/self.counter
                 print 'Time per step:',tps
                 print 'PSF Position:',self.current_x_offset,self.current_y_offset
+
                 #print 'mjdoff: ',self.mjdoff
                 #sys.exit()
                 if (self.counter % 1000) == 0:
@@ -567,7 +568,7 @@ class metropolis_hastings():
                 self.didtimeout = True
             #plt.imshow(self.data[20,self.substamp/2.-14.:self.substamp/2.+14.,self.substamp/2.-14.:self.substamp/2.+14.])
             #plt.show()
-            print 'fit galaxy registration', self.xgal_pix_offset[10:20]
+            #print 'fit galaxy registration', self.xgal_pix_offset[10:20]
         #sys.exit()
         self.summarize_run()
         #sys.exit()
