@@ -1190,7 +1190,7 @@ class metropolis_hastings():
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
         if self.shiftgalstd >0.:
-            for i in np.arange(len(self.modelvec)):
+            for i in np.arange(self.Nimage):
                 self.xgal_pix_offset[i] = np.mean(self.xgalhistory[burn_in:,i])
                 self.ygal_pix_offset[i] = np.mean(self.ygalhistory[burn_in:,i])
             #for i in self.xhistory:
