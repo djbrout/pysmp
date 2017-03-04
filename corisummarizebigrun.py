@@ -1421,6 +1421,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir+'/chisqhist.png')
 
+    plt.clf()
+    #plt.hist(chisqarr, bins=np.arange(0., 1.5, .01))
+    plt.scatter(chisqarr,d)
+    plt.xlim(.0, 1.4)
+    plt.ylim(-4,4)
+    plt.xlabel('chi sq')
+    plt.ylable('rms')
+    plt.title(filter + ' band')
+
+    plt.savefig(outdir + '/chisqvsrms.png')
+
+
 
     print 'saved stdresid.png'
 
