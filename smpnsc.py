@@ -2587,10 +2587,10 @@ class smp:
 
                     mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
 
-                    plt.clf()
-                    plt.hist(im[ylow:yhi,xlow:xhi].ravel(),bins=np.arange(5405,5600,10))
-
-                    plt.savefig('testimvar.png')
+                    # plt.clf()
+                    # plt.hist(im[ylow:yhi,xlow:xhi].ravel(),bins=np.arange(5405,5600,10))
+                    #
+                    # plt.savefig('testimvar.png')
 
                     skysig=1.48*np.median(abs(vals-np.median(vals)))
                     mysky = np.median(vals)
@@ -2617,7 +2617,7 @@ class smp:
                         print snparams.mjd[i]
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
                         print 'mysky',mysky,'myskysig',skysig
-                        print 'skysn',skysn,'skyerrsn',skyerrsn
+                        #print 'skysn',skysn,'skyerrsn',skyerrsn
                         raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
@@ -5442,10 +5442,37 @@ class smp:
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
+                        stampsize = 256
+                        ysn = psfcenter[0]
+                        xsn = psfcenter[1]
+                        if ysn - stampsize < 0:
+                            ylow = 0
+                        else:
+                            ylow = ysn - stampsize
+                        if ysn + stampsize > im.shape[0]:
+                            yhi = im.shape[0] - 1
+                        else:
+                            yhi = ysn + stampsize
+                        if xsn - stampsize < 0:
+                            xlow = 0
+                        else:
+                            xlow = xsn - stampsize
+                        if xsn + stampsize > im.shape[1]:
+                            xhi = im.shape[1] - 1
+                        else:
+                            xhi = xsn + stampsize
 
-                        pm = 100
-                        mean, st, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
-                                                             clipsig=4, maxiter=18)
+                        sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
+
+                        # pm = 100
+                        # sin, sein, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
+                        #                                      clipsig=4, maxiter=8)
+
+                        #mysky, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
+
+                        #skysig = np.std(vals))
+                        #mysky = np.mean(vals)
+
                         # cccc
                         #raw_input()
                         totalarea = len(fitrad[fitrad>0])
@@ -5496,10 +5523,10 @@ class smp:
                         if self.dosextractor:
                             bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + \
                                            np.mean(bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
-                            se_in =np.mean(bkgrndrms[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
+                            sein =np.mean(bkgrndrms[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
                         else:
-                            bkgrndstamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + s
-                            se_in = se
+                            bkgrndstamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + sin
+                            #se_in = se
 
 
                         # noise_stamp = noise_stamp*1/(se**2)
@@ -5545,7 +5572,7 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
-                                                                             fitrad, gal, mjd, se_in,self.gain,guess_scale=10**(.4*(31.-m)))
+                                                                             fitrad, gal, mjd, sein,self.gain,guess_scale=10**(.4*(31.-m)))
                             #print scale
                             #raw_input('ls fit')
                         # except:
