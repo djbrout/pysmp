@@ -936,11 +936,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr))
 
     #ww = (flux != 0) & (fakeflux < 1.)
-    print flux[ww],fluxerr[ww]
+    print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.2, 6., .4), normed=True)#,
-             #label='RMS Fakemag = 99: ' + str(round(rms99, 3))+'\nSTD Fakemag = 99: '+
-             #      str(round(np.std(flux[ww] / fluxerr[ww]),3)))
+    plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.2, 6., .4), normed=True,
+             label='RMS Fakemag = 99: ' + str(round(rms99, 3)))
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
     # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
