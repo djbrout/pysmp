@@ -1427,7 +1427,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlim(.0, 1.4)
     plt.ylim(-4,4)
     plt.xlabel('chi sq')
-    plt.ylable('rms')
+    plt.ylabel('rms')
     plt.title(filter + ' band')
 
     plt.savefig(outdir + '/chisqvsrms.png')
