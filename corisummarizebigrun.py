@@ -941,7 +941,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.025, 6., .05), normed=True,
+    plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.05, 6., .1), normed=True,
              label='RMS Fakemag = 99: ' + str(round(rms99, 3)))
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
@@ -972,7 +972,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist((flux[ww]-fakeflux[ww]) / fluxerr[ww], bins=np.arange(-6.025, 6., .05), normed=True,
+    plt.hist((flux[ww]-fakeflux[ww]) / fluxerr[ww], bins=np.arange(-6.05, 6., .1), normed=True,
              label='RMS Fakemag < 99: ' + str(round(rmsr, 3)))
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
