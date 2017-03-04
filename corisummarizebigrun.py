@@ -928,6 +928,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     rms992 = np.std(dc99[abs(dc99) < 4.])
     print rms99,rms992
+    raw_input()
 
     dcr = d[fakemag < 28.]
     rmsr = np.sqrt(np.nanmean(np.square(dcr[abs(dcr) < 3.])))
