@@ -995,9 +995,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     outliers5 = float(len(d[abs(d)>5.]))/float(len(d))
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'+
-                                                                ' Fraction: '+str(round(outliers3,3))+'\n5sig Outlier'+
-                                                                ' Fraction: '+str(round(outliers5,3)),orientation='horizontal')
+                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
+                                                                #' Fraction: '+str(round(outliers3,3))+'\n5sig Outlier'+
+                                                                #' Fraction: '+str(round(outliers5,3))
+                                                                ,orientation='horizontal')
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
 
