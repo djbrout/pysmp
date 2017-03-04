@@ -2620,7 +2620,7 @@ class smp:
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms
                         print 'mysky',mysky,'myskysig',skysig
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
-                        raw_input('youyo')
+                        #raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
