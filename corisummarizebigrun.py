@@ -1415,7 +1415,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.clf()
     plt.hist(chisqarr,bins=np.arange(0.6,1.5,.01))
-    plt.xlim(.6,1.4)
+    plt.xlim(.0,1.4)
     plt.xlabel('chi sq')
     plt.title(filter+' band')
 
