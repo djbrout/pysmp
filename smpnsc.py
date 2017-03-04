@@ -2587,6 +2587,10 @@ class smp:
 
                     mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
 
+                    plt.clf()
+                    plt.hist(im[ylow:yhi,xlow:xhi].ravel(),bins=15)
+                    plt.savefig('testimvar.png')
+
                     skysig=1.48*np.median(abs(vals-np.median(vals)))
                     mysky = np.median(vals)
                     #print mysky
