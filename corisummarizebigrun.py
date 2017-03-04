@@ -966,6 +966,36 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir + '/efluxdiffstd.png')
 
+    ww = (flux != 0) & (np.array(fakemag, dtype='float') < 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr))
+
+    #ww = (flux != 0) & (fakeflux < 1.)
+    print rms99
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist((flux[ww]-fakeflux[ww]) / fluxerr[ww], bins=np.arange(-6.2, 6., .4), normed=True,
+             label='RMS Fakemag < 99: ' + str(round(rmsr, 3)))
+    # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
+    #                        np.arange(-100, 1000, 200))
+    # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
+
+    # plt.axhline(0)
+    plt.xlim(-5, 5)
+
+    import matplotlib.mlab as mlab
+    import math
+    mean = 0
+    variance = 1
+    sigma = math.sqrt(variance)
+    x = np.arange(-5, 5, .1)
+    plt.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
+    plt.legend()
+    # plt.ylim(-.1,.1)
+    # plt.ylim(-600, 600)
+    plt.xlabel('flux/fluxerr')
+    plt.ylabel('Count')
+    plt.title(filter + ' band')
+
+    plt.savefig(outdir + '/fluxdiffstd.png')
 
     nullfmt = NullFormatter()  # no labels
 
