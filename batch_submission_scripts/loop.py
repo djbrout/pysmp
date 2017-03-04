@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,250)
+allindexes = range(250,1200)
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
@@ -35,7 +35,7 @@ for i in allindexes:
         #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
         #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
         #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-        'python smpnsc.py --index=' + str(i) + ' -f g --nozpt \n' +
+        'python smpnsc.py --index=' + str(i) + ' -f g \n' +
         '\n'
     )
     f.close()
