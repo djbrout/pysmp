@@ -2107,9 +2107,13 @@ class smp:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
                 print snparams.RA,xsn,snparams
-                self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
-                self.psf = self.psf/np.sum(self.psf)
-
+                try:
+                    self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
+                    self.psf = self.psf/np.sum(self.psf)
+                except:
+                    self.psf = 0
+                    badflag = 1
+                    print 'badflagpsf'*100
             # elif snparams.psf_model.lower() == 'daophot':
             #     self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
             #     #self.psf = rdpsf.rdpsf(psffile)[0]
@@ -6306,6 +6310,7 @@ class smp:
 
     def build_psfex(self, psffile,x,y,imfile,dogalsim=False,stop=False,psfexworked=True):
         if psfexworked:
+
             a = psfex.PSFEx(psffile)
             im = a.get_rec(y, x)[3:-4, 3:-4]
             im /= np.sum(im.ravel())
