@@ -932,7 +932,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax1 = plt.subplot(gs[0])
     # ax2 = plt.subplot(gs[1])
 
-    ww = (flux != 0) & (np.array(fakemag,dtype='float') > 90.) & (fluxerr >0.) & (np.isfinite(flux)) & (np.isfinite(fluxerr))
+    ww = (flux != 0) & (np.array(fakemag,dtype='float') > 90.) & (fluxerr >0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr))
 
     #ww = (flux != 0) & (fakeflux < 1.)
     print flux[ww],fluxerr[ww]
