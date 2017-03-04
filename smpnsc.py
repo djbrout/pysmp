@@ -2868,10 +2868,10 @@ class smp:
                                         #raw_input('sig comparo')
                                     else:
 
-                                        #smp_dict['sky'][i] = mysky
-                                        smp_dict['sky'][i] = sexsky
-                                        #smp_dict['skyerr'][i] = skysig
-                                        smp_dict['skyerr'][i] = sexrms
+                                        smp_dict['sky'][i] = mysky
+                                        #smp_dict['sky'][i] = sexsky
+                                        smp_dict['skyerr'][i] = skysig
+                                        #smp_dict['skyerr'][i] = sexrms
                                         #sexrms
 
                                     smp_dict['flag'][i] = 0
@@ -5368,7 +5368,7 @@ class smp:
                     else:
                         sexsky, sexrms = s, se
 
-                    dosextractor = True
+                    dosextractor = False
                     if dosextractor:
                         xl = max([x-50,0])
                         xh = min([x + 50, im.shape[1]])
@@ -5486,7 +5486,7 @@ class smp:
 
                         #usesextractorim = True
                         #if usesextractorim:
-                        self.dosextractor = True
+                        self.dosextractor = False
                         if self.dosextractor:
                             bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + \
                                            np.mean(bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
