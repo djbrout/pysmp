@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(1000,1864)
+allindexes = range(0,48)
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
@@ -17,9 +17,9 @@ for i in allindexes:
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=05:49:00\n' +
-        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60z.log\n' +
-        '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v60z.log\n' +
+        '#SBATCH --time=06:49:00\n' +
+        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1g.log\n' +
+        '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1g.log\n' +
         '#SBATCH --job-name=zband_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
@@ -35,7 +35,7 @@ for i in allindexes:
         #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
         #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
         #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-        'python smpnsc.py --index=' + str(i) + ' -f z \n' +
+        'python smpnsc.py --index=' + str(i) + ' -f g --nozpt \n' +
         '\n'
     )
     f.close()
