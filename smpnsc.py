@@ -2920,7 +2920,7 @@ class smp:
                                     smp_dict['scalefactor'][i] = scalefactor
                                     smp_dict['snra'][i] = snparams.RA
                                     smp_dict['sndec'][i] = snparams.DECL
-                                    smp_dict['skysig'][i] = skysig
+                                    smp_dict['skysig'][i] = skysig*scalefactor
                                     smp_dict['sexrms'][i] = sexrms
                                     smp_dict['sexsky'][i] = sexsky
                                     smp_dict['imwcs'].append(w)
