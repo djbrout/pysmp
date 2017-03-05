@@ -1206,8 +1206,8 @@ class metropolis_hastings():
                     self.galmodel_params[ i, j ] = np.median( self.galmodel_nphistory[ burn_in : , i, j ] )
                     self.galmodel_uncertainty[ i, j ] = np.std( self.galmodel_nphistory[ burn_in : , i, j ] )
         else:
-            self.galmodel_params = self.kicked_galmodel
-            self.galmodel_uncertainty = self.kicked_galmodel*0. + 1.
+            self.galmodel_params = self.kicked_fgal
+            self.galmodel_uncertainty = self.kicked_fgal*0. + 1.
 
 
         if self.shiftpsf:
@@ -1493,7 +1493,7 @@ class metropolis_hastings():
                 self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
         else:
             # self.galmodel_nphistory = np.zeros((self.galaxy_model.shape[0], self.galaxy_model.shape[1]))
-            self.galmodel_nphistory = self.kicked_galmodel
+            self.galmodel_nphistory = self.kicked_fgal
             self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
             for i in np.arange(num_iter):
                 self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
