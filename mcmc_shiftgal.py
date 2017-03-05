@@ -906,9 +906,14 @@ class metropolis_hastings():
         if flags == 0:
             if fitflags == 0.:
                 if self.shiftgalstd>0.:
+
                     galaxy_conv = np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,self.fgal)).real
                     star_conv = kicked_modelvec * kicked_psfs
                     sims = (star_conv + galaxy_conv + sky) * self.mask
+                    if galoffx > 1.:
+                        sims+=np.inf
+                    if galoffy > 1.:
+                        sims+=np.inf
                 else:
                     galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
                     star_conv = kicked_modelvec * kicked_psfs  # /np.sum(kicked_psfs.ravel())
