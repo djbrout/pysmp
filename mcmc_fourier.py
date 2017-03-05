@@ -814,10 +814,10 @@ class metropolis_hastings():
         #raw_input()
         #self.kicked_model = self.model + self.deltas
 
-        if not self.pixelate_model is None:
-            self.kicked_galaxy_model = self.unpixelate(self.kicked_galmodel,self.pixelate_model,self.substamp)
-        else:
-            self.kicked_galaxy_model = self.kicked_galmodel
+        # if not self.pixelate_model is None:
+        #     self.kicked_galaxy_model = self.unpixelate(self.kicked_galmodel,self.pixelate_model,self.substamp)
+        # else:
+        #     self.kicked_galaxy_model = self.kicked_galmodel
         
         #self.kicked_galaxy_model = self.kicked_model[ 0 : self.substamp**2. ].reshape( self.substamp, self.substamp )
         return
@@ -1222,7 +1222,7 @@ class metropolis_hastings():
             #raw_input()
             map(self.mapshiftPSF, np.arange(self.Nimage))
             #self.shiftPSF(x_off=self.xo, y_off=self.yo)
-            self.kicked_galaxy_model = self.galmodel_params
+            #self.kicked_galaxy_model = self.galmodel_params
 
         self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
                         self.flags, self.fitflags, self.sims, self.gal_conv,self.fpsfs,
