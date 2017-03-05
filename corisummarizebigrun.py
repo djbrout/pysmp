@@ -1342,7 +1342,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     # plt.clf()
     ax1.scatter(chisqarr, d, alpha=.3, color='blue')
-    ax, ay, aystd = dt.bindata(chisqarr, d, np.arange(0.8, 1.2, .001), window=.01)
+    ax, ay, aystd = dt.bindata(chisqarr, d, np.arange(0.4, 1.6, .001), window=.01)
     ax1.plot([min(chisqarr), max(chisqarr)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -1350,7 +1350,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(0.8, 1.2)
+    ax1.set_xlim(0.4, 1.6)
     ax1.set_ylim(-3., 3.)
     ax1.set_xlabel('Chi Sq')
     ax1.set_ylabel('STD')
@@ -1360,7 +1360,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     #ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.4)
+    ax3.set_ylim(.7, 1.6)
 
     fresid = np.zeros(flux.shape)
     for i, f, ff in zip(range(len(flux)), flux, fakeflux):
