@@ -171,8 +171,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
 
 
-    expnum,dofakeccds,dofakefilt2,dofakemjd2,dofakemag2,dofaketflux,dofakeflux,dofakera2,dofakedec2 = np.loadtxt('data/doFake.out',
-                                            usecols=(1,2,3, 9, 10,11,12, 14,15), unpack=True, dtype='string', skiprows=1)
+    expnum,dofakeccds,dofakefilt2,dofakeid,dofakemjd2,dofakemag2,dofaketflux,dofakeflux,dofakera2,dofakedec2 = np.loadtxt('data/doFake.out',
+                                            usecols=(1,2,3,5, 9, 10,11,12, 14,15), unpack=True, dtype='string', skiprows=1)
     dofakemjd2 = np.array(dofakemjd2, dtype='float')
     dofakemag2 = np.array(dofakemag2, dtype='float')
     dofakera2 = np.array(dofakera2, dtype='float')
@@ -183,7 +183,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     dofakeexpnum = np.array(expnum, dtype='float')
     dofakeccds = np.array(dofakeccds,dtype='float')
     dofakefilt2 = np.array(dofakefilt2,dtype='string')
-
+    dofakeid = np.array(dofakeid,dtype='float')
     #print dofakemjd
 
     #raw_input('dofakemjd')
@@ -202,7 +202,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
-               'diffimfluxerr':[]}
+               'diffimfluxerr':[],'fakeid':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
@@ -279,12 +279,14 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 #raw_input()
                 if not len(dofakemag2[www]) > 0:
                     newfakemag.append(99.)
+                    bigdata['fakeid'].append(99.)
                     #print fm, 99
                 else:
                     #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
                     #print 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                     nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                     newfakemag.append(nfm)
+                    bigdata['fakeid'].append(dofakeid[www][0])
 
                 #raw_input()
 
@@ -328,6 +330,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
             bigdata['diffimflux'].extend(data['DIFFIM_FLUX'])
+
+            print np.mean(data['CHI2']), bigdata['fakeid'][-10:]
 
             #print data['IMAGE_FILE']
             for e in data['IMAGE_FILE']:
