@@ -5471,7 +5471,9 @@ class smp:
                         else:
                             xhi = xsn + stampsize
 
-                        sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
+                        #sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
+                        sin = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel())
+                        sein = np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel())
 
                         # pm = 100
                         # sin, sein, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
@@ -5729,7 +5731,7 @@ class smp:
                 #print scale
                 if not bad:
                     psfs[i,:,:] = psf
-                    print 'Fit star',i,scale,errmag,s,se
+                    print 'Fit star',i,scale,errmag,s,se, chi
                 #raw_input()
                 #print flux_chisq[i]
                 #raw_input()
