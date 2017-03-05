@@ -5838,9 +5838,13 @@ class smp:
 
         #NEED TO MAKE A PLOT HERE!
         print goodstarcols
-
+        print '-'*100
 
         if len(goodstarcols) > self.params.minzptstars:
+
+            for fl,fc in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
+                print fl,fc
+            print '-' * 100
 
             if not self.dogalsimpixfit:
                 fluxcol = flux_star
