@@ -1263,7 +1263,7 @@ class metropolis_hastings():
             for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
                 ax.set_title(title)
             if not self.pixelate_model is None:
-                self.plotgalmodel = scipy.ndimage.zoom(self.galaxy_model,self.pixelate,order=0)
+                self.plotgalmodel = self.unpixelate(self.kicked_galmodel,self.pixelate_model,self.substamp)
             axs = axgm.imshow(self.plotgalmodel * self.mask,cmap='gray',interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axgm)
             #axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
