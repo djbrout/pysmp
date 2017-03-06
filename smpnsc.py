@@ -962,8 +962,13 @@ class smp:
                 else:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%psffile)
 
+            print maskfile
+            mask = pyfits.getdata(maskfile)
+            print mask.shape
+            raw_input()
             if not nomask:
                 if useweights:
+
                     maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
                     mask = pyfits.getdata(maskfile)
 
