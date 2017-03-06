@@ -674,7 +674,7 @@ class metropolis_hastings():
         #self.gal_conv = copy(self.kicked_modelvec)
 
         if not self.pixelate_model is None:
-            if not self.pixelate_moel == 1.:
+            if not self.pixelate_model == 1.:
                 self.kicked_galaxy_model = scipy.ndimage.zoom(self.kicked_galaxy_model,2,order=0)
         self.fgal = np.fft.fft2(self.kicked_galaxy_model)
 
