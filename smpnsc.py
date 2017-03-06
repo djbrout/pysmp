@@ -3700,7 +3700,7 @@ class smp:
                     , substamp = params.substamp
                     , Nimage = len(smp_dict['sky'])
                     , maxiter = self.params.sn_plus_galmodel_steps
-                    , mask = None
+                    , mask = smp_mask
                     , sky=smp_dict['sky']
                     , mjd=smp_dict['mjd']
                     , gewekenum=9999999
