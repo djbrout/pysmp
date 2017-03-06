@@ -3680,11 +3680,11 @@ class smp:
 
             #print modelvec
             #raw_input('mmmmmmm')
-            import mcmc_fourier as mcmc3
+            import mcmc_shiftgal as mcmc3
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel*0.
                     , modelvec = modelvec
-                    , galstd = galstd*0. + 1.
+                    , galstd = galstd*0. + .4
                     , modelstd = modelstd*4.
                     , data = smp_im
                     , psfs = smp_psf
