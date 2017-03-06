@@ -3622,7 +3622,7 @@ class smp:
 
             galmodel = galmodel_params
             import scipy.ndimage
-            galmodel = scipy.ndimage.zoom(galmodel_params, .5, order=0)
+            #galmodel = scipy.ndimage.zoom(galmodel_params, .5, order=0)
             print 'galmodel',galmodel
 
 
@@ -3719,7 +3719,7 @@ class smp:
                     , outpath = outimages
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
-                    , pixelate_model = 2.
+                    , pixelate_model = 1.
                     , burnin = .5
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
@@ -3747,7 +3747,7 @@ class smp:
                     , fitzpt = smp_dict['zpt']
                     , fakezpt = smp_dict['fakezpt']
                     , datafilenames = smp_dict['image_filename']
-                    , shiftgalstd = .00
+                    , shiftgalstd = .001
 
                     )
             modelveco = copy(modelvec)
