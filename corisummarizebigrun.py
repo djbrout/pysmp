@@ -1830,13 +1830,13 @@ if __name__ == "__main__":
     fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/v66pixshift/'
+    resultsdir = '/project/projectdirs/des/djbrout/v67pixshift/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
-    cd = '/project/projectdirs/des/djbrout/v66pixshift//summary_results.npz'
+    cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
 
@@ -1868,5 +1868,5 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    cd = '/project/projectdirs/des/djbrout/v66pixshift/summary_results_'+filter+'.npz'
+    cd = '/project/projectdirs/des/djbrout/v67pixshift/summary_results_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter)
