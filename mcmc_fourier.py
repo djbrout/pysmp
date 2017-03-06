@@ -438,9 +438,9 @@ class metropolis_hastings():
 
 
         self.fgal = np.fft.fft2(self.galaxy_model)
-        self.galstd = np.zeros((30,30,2))
-        self.galstd[:,:,0] = np.sqrt(np.sqrt(self.fgal.real**2))
-        self.galstd[:,:,1] = np.sqrt(np.sqrt(self.fgal.imag**2))
+        self.galstd = np.zeros((30,30,2))+1.
+        # self.galstd[:,:,0] = np.sqrt(np.sqrt(self.fgal.real**2))
+        # self.galstd[:,:,1] = np.sqrt(np.sqrt(self.fgal.imag**2))
         self.galdeltas = copy(self.galstd)
         self.kicked_fgal = copy(self.fgal)
         #self.kicked_galaxy_model = copy(self.galaxy_model)
