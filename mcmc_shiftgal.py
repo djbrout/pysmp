@@ -247,7 +247,9 @@ class metropolis_hastings():
         self.fakezpt=fakezpt
         self.fitzpt=fitzpt
         self.datafilenames = datafilenames
-        self.immask = mask
+        self.immask = []
+        for i in range(Nimage):
+            self.immask.append(mask[i,:,:])
 
 
         self.shiftgalstd = shiftgalstd
