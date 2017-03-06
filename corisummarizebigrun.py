@@ -995,20 +995,21 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/efluxdiff.png')
 
     plt.clf()
-    plt.xlim(-1000, 1000)
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr))
 
     # ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(fluxerr[ww], bins=np.arange(-105, 100., 10.), normed=True,
+    plt.hist(fluxerr[ww], bins=np.arange(-102.5, 400., 5.), normed=True,
              label='Mean Err Fakemag = 99: ' + str(round(np.mean(fluxerr[ww]), 3)))
     plt.legend()
     # plt.ylim(-.1,.1)
     # plt.ylim(-600, 600)
     plt.xlabel('fluxerr')
     plt.ylabel('Count')
+    plt.xlim(0, 400)
+
     plt.title(filter + ' band')
 
     plt.savefig(outdir + '/efluxerrdiff.png')
