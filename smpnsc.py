@@ -2559,11 +2559,11 @@ class smp:
                     #raw_input('badflagd')
                     badflag = 1
 
-                if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
-                    if self.useweights:
-                        badflag = 1
-                        #raw_input('mask badflag')
-                        print 'mask badflag'
+                # if np.sum(mask[ysn-params.fitrad:ysn+params.fitrad+1,xsn-params.fitrad:xsn+params.fitrad+1]) != 0:
+                #     if self.useweights:
+                #         badflag = 1
+                #         #raw_input('mask badflag')
+                #         print 'mask badflag'
 
 
 
