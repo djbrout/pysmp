@@ -811,7 +811,7 @@ class metropolis_hastings():
                 self.modeldeltas[i] = 0.
 
         #self.kicked_galmodel = self.galaxy_model + self.galdeltas
-        self.kicked_fgal = self.fgal.real+self.galdeltas[:,:,0]+self.fgal.imag+self.galdeltas[:,:,1]
+        self.kicked_fgal = self.fgal.real+self.galdeltas[:,:,0]+self.fgal.imag+1.j*self.galdeltas[:,:,1]
         self.kicked_modelvec = self.modelvec + self.modeldeltas
         #print self.modeldeltas
         #raw_input()
