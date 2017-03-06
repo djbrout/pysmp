@@ -371,7 +371,7 @@ class metropolis_hastings():
                 for y in np.arange(substamp):
                     if np.sqrt((substamp/2. - x)**2 + (substamp/2. - y)**2) < skyerr_radius:
                         self.skyerr[i,int(x),int(y)] = skyerr[i]
-                        tempgalmodel[int(x),int(y)] = copy(self.galaxy_model[int(x),int(y)])
+                        #tempgalmodel[int(x),int(y)] = copy(self.galaxy_model[int(x),int(y)])
                         self.mask[int(x),int(y)] = 1.
                         self.fitparamscounter += 1
 
@@ -397,7 +397,7 @@ class metropolis_hastings():
         '''
         #skyerr_ravel is just taking the first epoch, but should really look at all epochs for images with bad skyerrs
 
-        self.galaxy_model = copy(tempgalmodel)
+        #self.galaxy_model = copy(tempgalmodel)
         
         #self.galstd = np.sqrt(self.galaxy_model)*
 
