@@ -962,10 +962,10 @@ class smp:
                 else:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%psffile)
 
-            print maskfile
-            mask = pyfits.getdata(maskfile)
-            print mask.shape
-            raw_input()
+            # print maskfile
+            # mask = pyfits.getdata(maskfile)
+            # print mask.shape
+            # raw_input()
             if not nomask:
                 if useweights:
 
@@ -1029,7 +1029,7 @@ class smp:
             if nomask:
                 if self.useweights:
                     mask = np.zeros(np.shape(weights))
-                    maskcols = np.where((weights < 0) |
+                    maskcols = np.where((weights < 1e-8) |
                                         (np.isfinite(weights) == False))
                     mask[maskcols] = 100.0
 
@@ -1649,10 +1649,10 @@ class smp:
                 else:
                     os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz' % psffile)
 
-            if not nomask:
-                if useweights:
-                    maskfile = os.path.join(self.rootdir, snparams.image_name_search[j])
-                    mask = pyfits.getdata(maskfile)
+            # if not nomask:
+            #     if useweights:
+            #         maskfile = os.path.join(self.rootdir, snparams.image_name_search[j])
+            #         mask = pyfits.getdata(maskfile)
 
 
 
@@ -1776,12 +1776,12 @@ class smp:
                 noise = np.sqrt(1/noise)
             elif params.weight_type.lower() != 'noise':
                 raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
-            if nomask:
-                if self.useweights:
-                    mask = np.zeros(np.shape(weights))
-                    maskcols = np.where((weights < 0) |
-                                        (np.isfinite(weights) == False))
-                    mask[maskcols] = 100.0
+            # if nomask:
+            #     if self.useweights:
+            #         mask = np.zeros(np.shape(weights))
+            #         maskcols = np.where((weights < 0) |
+            #                             (np.isfinite(weights) == False))
+            #         mask[maskcols] = 100.0
 
             wcsworked = True
             try:
