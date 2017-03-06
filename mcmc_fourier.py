@@ -441,7 +441,7 @@ class metropolis_hastings():
         self.galstd = np.zeros((30,30,2))
         self.galstd[:,:,0] = np.sqrt(np.sqrt(self.fgal.real**2))
         self.galstd[:,:,1] = np.sqrt(np.sqrt(self.fgal.imag**2))
-
+        self.galdeltas = copy(self.galstd)
         self.kicked_fgal = copy(self.fgal)
         #self.kicked_galaxy_model = copy(self.galaxy_model)
 
@@ -782,10 +782,11 @@ class metropolis_hastings():
 
     def adjust_model( self ):
         
-        # for i in np.arange( self.galdeltas.shape[0]  ):
-        #     for j in np.arange( self.galdeltas.shape[1] ):
-        #         for k in np.arange(2):
-        self.galdeltas = np.random.normal(size=(30,30,2),scale=self.galstd)
+        for i in np.arange( self.galdeltas.shape[0]  ):
+            for j in np.arange( self.galdeltas.shape[1] ):
+                for k in np.arange(2):
+                    if self.galstd[i,j,k] > 0.:
+                        self.galdeltas[i,j,k] = np.random.normal(scale=self.galstd[i,j,k])
 
                 # if self.galstd[i,j] > 0.:
                 #     self.galdeltas[i,j] = np.random.normal( scale= self.galstd[ i, j ] )
