@@ -3616,7 +3616,10 @@ class smp:
 
 
             galmodel = galmodel_params
+            import scipy.ndimage
+            galmodel = scipy.ndimage.zoom(galmodel_params, .5, order=0)
             print 'galmodel',galmodel
+
 
             galstd = np.sqrt(abs(galmodel))/params.galmodel_div
             print 'galstd',galstd
@@ -3711,7 +3714,7 @@ class smp:
                     , outpath = outimages
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
-                    , pixelate_model = 1.
+                    , pixelate_model = 2.
                     , burnin = .5
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')

@@ -58,6 +58,7 @@ import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
 import scipy.interpolate as interpol
+import scipy.ndimage
 import dilltools as dt
 from matplotlib.backends.backend_pdf import PdfPages
 import gc
@@ -400,11 +401,11 @@ class metropolis_hastings():
         
         #self.galstd = np.sqrt(self.galaxy_model)*
 
-        if not self.pixelate_model is None:
-            if not self.pixelate_model == 1.:
-                self.galaxy_model = self.pixelate(self.galaxy_model,self.pixelate_model)
-                self.galstd = np.sqrt(self.galaxy_model)*2.
-                self.galdeltas = copy(self.galstd)
+        # if not self.pixelate_model is None:
+        #     if not self.pixelate_model == 1.:
+        #         self.galaxy_model = self.pixelate(self.galaxy_model,self.pixelate_model)
+        #         self.galstd = np.sqrt(self.galaxy_model)*2.
+        #         self.galdeltas = copy(self.galstd)
             #everythingelse = self.model[substamp**2:]
             #everythingelse_stds = self.deltas[substamp**2:]
 
@@ -672,6 +673,9 @@ class metropolis_hastings():
         #self.kernel()
         #self.gal_conv = copy(self.kicked_modelvec)
 
+        if not self.pixelate_model is None:
+            if not self.pixelate_moel == 1.:
+                self.kicked_galaxy_model = scipy.ndimage.zoom(self.kicked_galaxy_model,2,order=0)
         self.fgal = np.fft.fft2(self.kicked_galaxy_model)
 
         # if self.survey == 'PS1':
@@ -908,6 +912,7 @@ class metropolis_hastings():
                 if self.shiftgalstd>0.:
 
                     galaxy_conv = np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,self.fgal)).real
+
                     star_conv = kicked_modelvec * kicked_psfs
                     sims = (star_conv + galaxy_conv + sky) * self.mask
                     if galoffx > 1.:
