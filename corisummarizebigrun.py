@@ -1888,7 +1888,7 @@ if __name__ == "__main__":
             longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile=","filter="])
 
     except getopt.GetoptError as err:
-        print "No command line argument s"
+        print "No command line argument    s"
 
     filter = 'r'
 
