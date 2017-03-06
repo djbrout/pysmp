@@ -240,7 +240,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         if np.min(data['FLUX']) < -10000:
             continue
 
-        skipnewfakemag = False
+        skipnewfakemag = True
         if not skipnewfakemag:
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
@@ -974,6 +974,25 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.title(filter + ' band')
 
     plt.savefig(outdir + '/efluxdiffstd.png')
+
+    plt.clf()
+    plt.xlim(-500, 500)
+    ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr))
+
+    # ww = (flux != 0) & (fakeflux < 1.)
+    print rms99
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(flux[ww], bins=np.arange(-505,500., 10.), normed=True,
+             label='STD Fakemag = 99: ' + str(round(np.std(flux[ww]), 3)))
+    plt.legend()
+    # plt.ylim(-.1,.1)
+    # plt.ylim(-600, 600)
+    plt.xlabel('flux')
+    plt.ylabel('Count')
+    plt.title(filter + ' band')
+
+    plt.savefig(outdir + '/efluxdiff.png')
 
     ww = (flux != 0) & (np.array(fakemag, dtype='float') < 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr))
@@ -1830,7 +1849,7 @@ if __name__ == "__main__":
     fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/v67pixshift/'
+    resultsdir = '/project/projectdirs/des/djbrout/v65shift/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
