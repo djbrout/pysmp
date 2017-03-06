@@ -548,7 +548,7 @@ class metropolis_hastings():
                 #    print i,self.mjd[i], self.chisqvec[i]/len(self.mask[self.mask>0.].ravel()),self.mjdoff[i][0],self.mjdoff[i][1],np.mean(self.modelvec_nphistory[:,i])
 
 
-            if self.counter == 5000:
+            if self.counter == 50000000:
                 mn, st, num = dt.iterstat(np.array(chsqs)[np.array(chsqs) > 0.] ,
                                              startMedian=True, sigmaclip=3, iter=3)
 
@@ -915,10 +915,10 @@ class metropolis_hastings():
 
                     star_conv = kicked_modelvec * kicked_psfs
                     sims = (star_conv + galaxy_conv + sky) * self.mask
-                    if galoffx > 1.:
-                        sims+=np.inf
-                    if galoffy > 1.:
-                        sims+=np.inf
+                    # if galoffx > 1.:
+                    #     sims+=np.inf
+                    # if galoffy > 1.:
+                    #     sims+=np.inf
                 else:
                     galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
                     star_conv = kicked_modelvec * kicked_psfs  # /np.sum(kicked_psfs.ravel())

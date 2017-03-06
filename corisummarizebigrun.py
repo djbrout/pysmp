@@ -459,7 +459,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     oldfakezpt = np.array(oldfakezpt)
 
-    print fakefiles[(fluxerr<10.) & (fluxerr>0.)]
+    print fakefiles[(fluxerr<30.) & (fluxerr>0.)]
     raw_input()
     # print fakezpt
     #
