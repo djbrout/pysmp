@@ -247,6 +247,8 @@ class metropolis_hastings():
         self.fakezpt=fakezpt
         self.fitzpt=fitzpt
         self.datafilenames = datafilenames
+        self.immask = mask
+
 
         self.shiftgalstd = shiftgalstd
 
@@ -376,7 +378,6 @@ class metropolis_hastings():
                         self.fitparamscounter += 1
 
         self.skyerr_ravel = self.skyerr[0].ravel()
-        
         # else:
         #     self.skyerr = np.zeros([substamp,substamp]) 
         #     self.mask = np.zeros([substamp,substamp]) 
@@ -716,7 +717,7 @@ class metropolis_hastings():
         #raw_input()
 
 
-        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask,self.sigmazpt))
+        self.csv = np.array(map( self.mapchis, self.sims, self.data, self.immask, self.flags, self.fitflags, self.skyerr,self.simsnosn,self.simsnosnnosky,self.sky,self.weights,self.gain,self.wmask,self.sigmazpt))
         #print self.csv
         #print csv
         #raw_input()
@@ -998,7 +999,7 @@ class metropolis_hastings():
                 self.sims[ epoch,:,:] =  (star_conv + galaxy_conv)*self.mask
     '''
 
-    def mapchis( self, sims, data, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,sigmazpt):
+    def mapchis( self, sims, data, immask, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,sigmazpt):
         chisq  = 0
 
         if flags == 0:
@@ -1012,7 +1013,7 @@ class metropolis_hastings():
 
 
 
-                    v = ((sims - data) ** 2  * self.mask  * wmask / (skyerr**2 + np.sqrt((sims-sky)**2)/gain  + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
+                    v = ((sims - data) ** 2  * self.mask * immask * wmask / (skyerr**2 + np.sqrt((sims-sky)**2)/gain  + self.readnoise/gain)).ravel()#hardcoded gain, hardcoded readnoise
 
                     # sms = sims-sky
                     # sms[sms<0] = 0.

@@ -2931,7 +2931,7 @@ class smp:
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
-                                    smp_mask[i,:,:] = msk
+                                    smp_mask[i,:,:] = mask
                                     #smp_dict['mask'][i] = msk
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['image_filename'][i] = longimfile
