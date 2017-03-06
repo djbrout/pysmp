@@ -976,14 +976,14 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/efluxdiffstd.png')
 
     plt.clf()
-    plt.xlim(-1500, 1500)
+    plt.xlim(-1000, 1000)
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr))
 
     # ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww], bins=np.arange(-1512.5,1500., 25.), normed=True,
+    plt.hist(flux[ww], bins=np.arange(-1012.5,1000., 25.), normed=True,
              label='STD Fakemag = 99: ' + str(round(np.std(flux[ww]), 3)))
     plt.legend()
     # plt.ylim(-.1,.1)
