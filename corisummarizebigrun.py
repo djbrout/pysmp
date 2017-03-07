@@ -1037,7 +1037,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     mean = 0
     variance = 1
     sigma = math.sqrt(variance)
-    x = np.arange(-5.1, 5, .2)
+    x = np.arange(-5., 5, .1)
     plt.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
     plt.legend()
     # plt.ylim(-.1,.1)
