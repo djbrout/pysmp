@@ -1872,7 +1872,7 @@ if __name__ == "__main__":
     fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/v71shift/'
+    resultsdir = '/project/projectdirs/des/djbrout/v72/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
