@@ -506,6 +506,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     fakefluxo = copy(fakeflux)
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
     fluxerr *= 10**(-1*.4*(fitzpt - fakezpt))
+    sky *= 10**(.4*(31-fitzpt))
 
     plt.clf()
     plt.scatter(flux, fluxerr, alpha=.1)
