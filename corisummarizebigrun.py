@@ -517,11 +517,19 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
     plt.clf()
     plt.scatter(hostmag, fluxerr, alpha=.1)
-    plt.xlabel('SMP Flux')
+    plt.xlabel('Hostmag')
     plt.ylabel('SMP Fluxerr')
     plt.ylim(50, 550)
-    plt.xlim(20, 28)
+    plt.xlim(21, 30)
     plt.savefig(outdir + '/fluxerrvshostmag.png')
+
+    plt.clf()
+    plt.scatter(sky, fluxerr, alpha=.1)
+    plt.xlabel('Sky')
+    plt.ylabel('SMP Fluxerr')
+    plt.ylim(50, 550)
+    #plt.xlim(, 30)
+    plt.savefig(outdir + '/fluxerrvssky.png')
 
     d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
     ww = (flux != 0.)
