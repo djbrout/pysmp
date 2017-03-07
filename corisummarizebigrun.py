@@ -218,8 +218,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
         tra = data['RA']
-        print data.keys()
-        raw_input()
+        #print data.keys()
+        #raw_input()
         #print tra[0]
         dra = np.zeros(len(dofakera))+tra[0]
         cra = np.isclose(dra,dofakera,atol=1.e-3)
@@ -484,7 +484,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.scatter(dpmjd, fluxerr)
     plt.xlabel('DPMJD')
     plt.ylabel('SMP Fluxerr')
-
+    plt.ylim(50,450)
+    plt.xlim(-40,300)
     plt.savefig(outdir + '/fluxerrvsDPMJD.png')
 
 
