@@ -17,7 +17,7 @@ for i in allindexes:
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=02:59:00\n' +
+        '#SBATCH --time=01:59:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1rsim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1rsim.log\n' +
         '#SBATCH --job-name=simr_' + str(i) + '\n' +
@@ -35,7 +35,7 @@ for i in allindexes:
         #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
         #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
         #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-        'python smpnsc.py --index=' + str(i) + ' -f r --nozpt \n' +
+        'python smpnsc.py --index=' + str(i) + ' -f g \n' +
         '\n'
     )
     f.close()
