@@ -979,7 +979,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/efluxdiffstd.png')
 
     plt.clf()
-    plt.xlim(-1000, 1000)
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .5) & (chisqarr < 1.4)
 
@@ -994,6 +993,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlabel('flux')
     plt.ylabel('Count')
     plt.title(filter + ' band')
+    plt.xlim(-1000, 1000)
 
     plt.savefig(outdir + '/efluxdiff.png')
 
