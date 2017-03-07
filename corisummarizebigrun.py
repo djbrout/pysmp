@@ -240,7 +240,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         if np.min(data['FLUX']) < -10000:
             continue
 
-        skipnewfakemag = True
+        skipnewfakemag = False
         if not skipnewfakemag:
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
