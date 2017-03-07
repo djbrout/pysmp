@@ -3692,7 +3692,7 @@ class smp:
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel*0.
                     , modelvec = modelvec
-                    , galstd = galstd*0. + .33
+                    , galstd = galstd*0. + .3
                     , modelstd = modelstd*4.
                     , data = smp_im
                     , psfs = smp_psf
@@ -3747,7 +3747,7 @@ class smp:
                     , fitzpt = smp_dict['zpt']
                     , fakezpt = smp_dict['fakezpt']
                     , datafilenames = smp_dict['image_filename']
-                    , shiftgalstd = .00002
+                    , shiftgalstd = .00001
 
                     )
             modelveco = copy(modelvec)
