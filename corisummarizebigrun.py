@@ -813,10 +813,10 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
 
         plt.clf()
         plt.scatter(hostmag[ww], flux[ww])
-        plt.xlim(21, 29)
+        plt.xlim(21, 30)
         plt.ylim(-700, 700)
         ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww]),
-                                   np.arange(19, 28, .2))
+                                   np.arange(19, 30, .2))
         plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
         plt.xlabel('Hostmag')
         plt.ylabel('Flux (epochs without fake SN Flux)')
