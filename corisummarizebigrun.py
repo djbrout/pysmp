@@ -330,7 +330,6 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
             bigdata['diffimflux'].extend(data['DIFFIM_FLUX'])
-
             print np.mean(data['CHI2']), bigdata['fakeid'][-10:]
 
             #print data['IMAGE_FILE']
@@ -440,6 +439,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag,dtype='float')
+    dpmjd = np.asarray(dpmjd,dtype='float')
     sky = np.asarray(sky)
     chisq = np.asarray(chisq)
     imfiles = np.asarray(imfiles,dtype='str')
@@ -479,6 +479,13 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,dpmjd
     plt.ylabel('SMP Flux')
 
     plt.savefig(outdir+'/fluxvs.png')
+
+    plt.clf()
+    plt.scatter(dpmjd, fluxerr)
+    plt.xlabel('DPMJD')
+    plt.ylabel('SMP Fluxerr')
+
+    plt.savefig(outdir + '/fluxerrvsDPMJD.png')
 
 
     fitzpt = np.asarray(fitzpt)
