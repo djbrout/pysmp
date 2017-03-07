@@ -553,7 +553,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     plt.savefig(outdir + '/fluxerrvsskyerr.png')
 
     plt.clf()
-    plt.hist(skyerr, bins=np.arange(0,200,20))
+    plt.hist(skyerr, bins=np.arange(0,200,5.),normed=True)
     plt.xlabel('SMP Skyerr')
     plt.xlim(0, 200)
     plt.savefig(outdir + '/skyerrhist.png')
