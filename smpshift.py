@@ -3839,8 +3839,8 @@ class smp:
                     , fitzpt = smp_dict['zpt']
                     , fakezpt = smp_dict['fakezpt']
                     , datafilenames = smp_dict['image_filename']
-                    , nightlyoffx = smp_dict['xoff']
-                    , nightlyoffy = smp_dict['yoff']
+                    , nightlyoffx = -1*smp_dict['xoff']
+                    , nightlyoffy = -1*smp_dict['yoff']
 
                     )
             modelveco = copy(modelvec)
