@@ -3103,9 +3103,9 @@ class smp:
                                 nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
                                 nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
                                 nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)[0]**.5)
-                                #print 'worked'
+                                print ind,'worked'
                             except:
-                                print 'didnt work'
+                                print ind, 'didnt work'
                                 pass
 
                 nightlyoffra = np.array(nightlyoffra)
@@ -3120,7 +3120,7 @@ class smp:
                 for e,j in enumerate(np.argsort(nightlydist)):
                     print int(j)
                     if e  < 25:
-                        goodindices[e] = int(j)
+                        goodindices.append(int(j))
                 goodindices = np.array(goodindices,dtype='int')
                 smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
                 smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
