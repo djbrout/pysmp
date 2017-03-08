@@ -3105,6 +3105,7 @@ class smp:
                                 nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)[0]**.5)
                                 #print 'worked'
                             except:
+                                print 'didnt work'
                                 pass
 
                 nightlyoffra = np.array(nightlyoffra)
