@@ -3102,7 +3102,7 @@ class smp:
                                 float(meanstarras[ind] - smp_starra[k, ww])
                                 nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
                                 nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
-                                nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)**.5)
+                                nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)[0]**.5)
                                 #print 'worked'
                             except:
                                 print 'didnt work'
