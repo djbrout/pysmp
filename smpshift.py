@@ -3119,33 +3119,38 @@ class smp:
                 goodindices = []
                 for e,j in enumerate(np.argsort(nightlydist)):
                     print int(j)
-                    if e  < 25:
+                    if e  < 40:
                         goodindices.append(int(j))
                 goodindices = np.array(goodindices,dtype='int')
-                smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
-                smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
-                print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
+
+                if len(goodindices) < 24:
+                    print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
+                    smp_dict['flag'][k] = 1
+                else:
+                    smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
+                    smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
+                    print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
 
 
 
 
-                w = wcs.WCS(im)
+                    w = wcs.WCS(im)
 
 
 
-                xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA , snparams.DECL]]), 0))
-                xsn = xsn[0]
-                ysn = ysn[0]
+                    xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA , snparams.DECL]]), 0))
+                    xsn = xsn[0]
+                    ysn = ysn[0]
 
-                xsno, ysno = zip(*w.wcs_world2pix(np.array([[snparams.RA + smp_dict['raoff'][k], snparams.DECL + smp_dict['decoff'][k]]]), 0))
-                xsno = xsno[0]
-                ysno = ysno[0]
+                    xsno, ysno = zip(*w.wcs_world2pix(np.array([[snparams.RA + smp_dict['raoff'][k], snparams.DECL + smp_dict['decoff'][k]]]), 0))
+                    xsno = xsno[0]
+                    ysno = ysno[0]
 
-                smp_dict['xoff'] = xsn-xsno
-                smp_dict['yoff'] = ysn-ysno
+                    smp_dict['xoff'] = xsn-xsno
+                    smp_dict['yoff'] = ysn-ysno
 
-                print 'pix off',smp_dict['xoff'],smp_dict['yoff']
-                raw_input()
+                    print 'pix off',smp_dict['xoff'],smp_dict['yoff']
+                    #raw_input()
 
 
         #print 'dillscale',smp_dict['scale']
@@ -3776,7 +3781,7 @@ class smp:
 
             #print modelvec
             #raw_input('mmmmmmm')
-            import mcmc_shiftgal as mcmc3
+            import mcmcoffset as mcmc3
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel*0.
                     , modelvec = modelvec
@@ -3835,7 +3840,8 @@ class smp:
                     , fitzpt = smp_dict['zpt']
                     , fakezpt = smp_dict['fakezpt']
                     , datafilenames = smp_dict['image_filename']
-                    , shiftgalstd = .00001
+                    , nightlyoffx = smp_dict['xoff']
+                    , nightlyoffy = smp_dict['yoff']
 
                     )
             modelveco = copy(modelvec)

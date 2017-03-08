@@ -148,7 +148,8 @@ class metropolis_hastings():
                  ,fitzpt=None
                  ,fakezpt=None
                  ,datafilenames=None
-                 ,shiftgalstd=0.
+                 ,nightlyoffx = None
+                 ,nightlyoffy = None
                 ):
         '''
         if model is None:
@@ -248,11 +249,15 @@ class metropolis_hastings():
         self.fitzpt=fitzpt
         self.datafilenames = datafilenames
         self.immask = []
+
+        self.nightlyoffx = nightlyoffx
+        self.nightlyoffy = nightlyoffy
+
         for i in range(Nimage):
             self.immask.append(mask[i,:,:])
 
 
-        self.shiftgalstd = shiftgalstd
+        #self.shiftgalstd = shiftgalstd
 
         print 'sigmazpt',self.sigmazpt.shape
 
@@ -461,6 +466,9 @@ class metropolis_hastings():
         self.current_xgal_offset = np.zeros(self.Nimage)
         self.current_ygal_offset = np.zeros(self.Nimage)
 
+        self.xgal_pix_offset = self.nightlyoffx
+        self.ygal_pix_offset = self.nightlyoffy
+
 
 
         self.fpsfs = []
@@ -528,7 +536,7 @@ class metropolis_hastings():
                     # self.simsnosnnosky = map(self.mapkernel, self.modelvec * 0., self.kicked_psfs, self.centered_psfs,
                     #                          self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
 
-                    print 'fit galaxy registration', self.xgal_pix_offset[10:20]
+                    #print 'fit galaxy registration', self.xgal_pix_offset[10:20]
                     print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
 
@@ -607,15 +615,17 @@ class metropolis_hastings():
         self.adjust_model()
         # t2 = time.time()
 
-        if self.shiftgalstd > 0.:
-            self.xgal_pix_offset = self.current_xgal_offset + np.random.normal(size=self.Nimage, scale=self.shiftgalstd)
-            self.ygal_pix_offset = self.current_ygal_offset + np.random.normal(size=self.Nimage, scale=self.shiftgalstd)
-            self.xgal_pix_offset[0] = 0.
-            self.ygal_pix_offset[0] = 0.
+        # if self.shiftgalstd > 0.:
+        #     self.xgal_pix_offset = self.current_xgal_offset + np.random.normal(size=self.Nimage, scale=self.shiftgalstd)
+        #     self.ygal_pix_offset = self.current_ygal_offset + np.random.normal(size=self.Nimage, scale=self.shiftgalstd)
+        #     self.xgal_pix_offset[0] = 0.
+        #     self.ygal_pix_offset[0] = 0.
+        #
+        #
+        # else:
+        #     self.xgal_pix_offset = np.random.normal(size=self.Nimage,scale=1)*0.
+        #     self.ygal_pix_offset = np.random.normal(size=self.Nimage,scale=1)*0.
 
-        else:
-            self.xgal_pix_offset = np.random.normal(size=self.Nimage,scale=1)*0.
-            self.ygal_pix_offset = np.random.normal(size=self.Nimage,scale=1)*0.
 
         if self.shiftpsf:
             #print 'shifting'
@@ -839,7 +849,7 @@ class metropolis_hastings():
         for i in range(self.Nimage):
             if self.flags[i] == 0:
                 if self.modelstd[i] > 1:
-                    fs = self.fouriershift(x_off, y_off, self.fpsfs[i])
+                    fs = self.fouriershift(x_off+self.nightlyoffx[i], y_off+self.nightlyoffy[i], self.fpsfs[i])
                     self.kicked_psfs[i, :, :] = np.fft.ifft2(fs)
 
     def movepsfs(self,x,y):
@@ -912,20 +922,20 @@ class metropolis_hastings():
 
         if flags == 0:
             if fitflags == 0.:
-                if self.shiftgalstd>0.:
+                # if self.shiftgalstd>0.:
 
-                    galaxy_conv = np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,self.fgal)).real
+                galaxy_conv = np.fft.ifft2(fpsf*self.fouriershift(galoffx,galoffy,self.fgal)).real
 
-                    star_conv = kicked_modelvec * kicked_psfs
-                    sims = (star_conv + galaxy_conv + sky) * self.mask
+                star_conv = kicked_modelvec * kicked_psfs
+                sims = (star_conv + galaxy_conv + sky) * self.mask
                     # if galoffx > 1.:
                     #     sims+=np.inf
                     # if galoffy > 1.:
                     #     sims+=np.inf
-                else:
-                    galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
-                    star_conv = kicked_modelvec * kicked_psfs  # /np.sum(kicked_psfs.ravel())
-                    sims = (star_conv + galaxy_conv + sky) * self.mask
+                # else:
+                #     galaxy_conv = scipy.signal.fftconvolve(self.kicked_galaxy_model, centered_psfs, mode='same')
+                #     star_conv = kicked_modelvec * kicked_psfs  # /np.sum(kicked_psfs.ravel())
+                #     sims = (star_conv + galaxy_conv + sky) * self.mask
 
         # if self.fix_gal_model:
         #     star_conv = kicked_modelvec * kicked_psfs
