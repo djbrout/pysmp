@@ -3084,6 +3084,7 @@ class smp:
             ww = np.where(smp_starind == ind)
             meanstarras[ind] = np.mean(smp_starra[ww].ravel())
             meanstardecs[ind] = np.mean(smp_stardec[ww].ravel())
+        print np.unique(ind)
 
         for im,fl,k in zip(smp_dict['image_filename'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
 
