@@ -2465,6 +2465,7 @@ class smp:
                         bkgrndrms = None
 
                     print len(tras), len(tids)
+                    raw_input()
                     zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
