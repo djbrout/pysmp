@@ -1163,9 +1163,9 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.current_x_offset = self.x_pix_offset
             self.current_y_offset = self.y_pix_offset
-        if self.shiftgalstd:
-            self.current_xgal_offset = self.xgal_pix_offset
-            self.current_ygal_offset = self.ygal_pix_offset
+        # if self.shiftgalstd:
+        #     self.current_xgal_offset = self.xgal_pix_offset
+        #     self.current_ygal_offset = self.ygal_pix_offset
         if self.compressioncounter % self.compressionfactor == 0:
             #print 'len gal history', len(self.galhistory)
             if not self.dontsavegalaxy:
@@ -1174,9 +1174,9 @@ class metropolis_hastings():
             if self.shiftpsf:
                 self.xhistory.append(self.current_x_offset)
                 self.yhistory.append(self.current_y_offset)
-            if self.shiftgalstd:
-                self.xgalhistory.append(self.current_xgal_offset)
-                self.ygalhistory.append(self.current_ygal_offset)
+            # if self.shiftgalstd:
+            #     self.xgalhistory.append(self.current_xgal_offset)
+            #     self.ygalhistory.append(self.current_ygal_offset)
         return
 
     def update_unaccepted_history( self ):
@@ -1188,9 +1188,9 @@ class metropolis_hastings():
             if self.shiftpsf:
                 self.xhistory.append(self.current_x_offset)
                 self.yhistory.append(self.current_y_offset)
-            if self.shiftgalstd:
-                self.xgalhistory.append(self.current_xgal_offset)
-                self.ygalhistory.append(self.current_ygal_offset)
+            # if self.shiftgalstd:
+            #     self.xgalhistory.append(self.current_xgal_offset)
+            #     self.ygalhistory.append(self.current_ygal_offset)
         return
 
     def model_params( self ):
@@ -1218,16 +1218,16 @@ class metropolis_hastings():
         if self.shiftpsf:
             self.x_pix_offset = np.mean(self.xhistory[burn_in:])
             self.y_pix_offset = np.mean(self.yhistory[burn_in:])
-        if self.shiftgalstd >0.:
-            for i in np.arange(self.Nimage):
-                self.xgal_pix_offset[i] = np.mean(self.xgalnphistory[burn_in:,i])
-                self.ygal_pix_offset[i] = np.mean(self.ygalnphistory[burn_in:,i])
-            #for i in self.xhistory:
-            #    print i
-            #raw_input()
-            map(self.mapshiftPSF, np.arange(self.Nimage))
-            #self.shiftPSF(x_off=self.xo, y_off=self.yo)
-            self.kicked_galaxy_model = self.galmodel_params
+        # if self.shiftgalstd >0.:
+        #     for i in np.arange(self.Nimage):
+        #         self.xgal_pix_offset[i] = np.mean(self.xgalnphistory[burn_in:,i])
+        #         self.ygal_pix_offset[i] = np.mean(self.ygalnphistory[burn_in:,i])
+        #     #for i in self.xhistory:
+        #     #    print i
+        #     #raw_input()
+        #     map(self.mapshiftPSF, np.arange(self.Nimage))
+        #     #self.shiftPSF(x_off=self.xo, y_off=self.yo)
+        #     self.kicked_galaxy_model = self.galmodel_params
 
         self.sims = map(self.mapkernel, self.modelvec_params, self.kicked_psfs, self.centered_psfs, self.sky,
                         self.flags, self.fitflags, self.sims, self.gal_conv,self.fpsfs,
@@ -1486,12 +1486,12 @@ class metropolis_hastings():
     def make_history( self ):
         num_iter = len( self.modelvechistory )
 
-        if self.shiftgalstd > 0.:
-            self.xgalnphistory = np.zeros( (num_iter , len(self.modelvec)))
-            self.ygalnphistory = np.zeros( (num_iter , len(self.modelvec)))
-            for i in np.arange(num_iter):
-                self.xgalnphistory[i, :] = self.xgalnphistory[i]
-                self.ygalnphistory[i, :] = self.xgalnphistory[i]
+        # if self.shiftgalstd > 0.:
+        #     self.xgalnphistory = np.zeros( (num_iter , len(self.modelvec)))
+        #     self.ygalnphistory = np.zeros( (num_iter , len(self.modelvec)))
+        #     for i in np.arange(num_iter):
+        #         self.xgalnphistory[i, :] = self.xgalnphistory[i]
+        #         self.ygalnphistory[i, :] = self.xgalnphistory[i]
         if not self.dontsavegalaxy:
             self.galmodel_nphistory = np.zeros( (num_iter , self.galaxy_model.shape[0], self.galaxy_model.shape[1]))
             self.modelvec_nphistory = np.zeros( (num_iter , len(self.modelvec)))
