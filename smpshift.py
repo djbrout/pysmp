@@ -3146,8 +3146,8 @@ class smp:
                     xsno = xsno[0]
                     ysno = ysno[0]
 
-                    smp_dict['xoff'] = xsn-xsno
-                    smp_dict['yoff'] = ysn-ysno
+                    smp_dict['xoff'][i] = xsn-xsno
+                    smp_dict['yoff'][i] = ysn-ysno
 
                     print 'pix off',smp_dict['xoff'],smp_dict['yoff']
                     #raw_input()
