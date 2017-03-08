@@ -2479,7 +2479,7 @@ class smp:
                     #                                     psf=self.psf)
             else:
                 if doglobalstar:
-                    zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                    zpt_file = imfile.split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
                 else:
                     zpt_file = imfile.split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo.npz'
 
