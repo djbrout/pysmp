@@ -1377,7 +1377,7 @@ class metropolis_hastings():
                  redchisqhist=self.redchisq,xhistory=np.array(self.xhistory),yhistory=np.array(self.yhistory),
                  chisqvec=self.csv,raoff=raoff,decoff=decoff,mjd=self.mjd,fakemag=self.fakemag,fitzpt=self.fitzpt,
                  fakezpt=self.fakezpt,datafilenames=self.datafilenames,sky=self.sky,skyerr=self.skyerr,
-                             x=self.x,y=self.y)
+                             x=self.x,y=self.y,xoff=self.nightlyoffx,yoff=self.nightlyoffy)
 
     def savefig(self, fname):
         if self.isfermigrid and self.isworker:

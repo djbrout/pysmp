@@ -1363,7 +1363,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 10:
+            if cccc > 20:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3387,7 +3387,7 @@ class smp:
 
 
         print smp_dict['image_filename'][-1]        
-        print 'MJD','\t','BAND','\t','FIT_ZPT','\t','FAKE_ZPT','\t','PSF','\t','SKY','\t','SexSky','\t','Skyerr','\t','Skysig','\t','SexRMS','\t','IMAGE_FILENAME','\t','GAIN',''
+        print 'MJD','\t','BAND','\t','FIT_ZPT','\t','FAKE_ZPT','\t','PSF','\t','SKY','\t','SexSky','\t','Skyerr','\t','Skysig','\t','SexRMS','\t','IMAGE_FILENAME','\t','GAIN','\t','XOFF','\t','YOFF'
         psfs = []
         for i,scale in enumerate(smp_dict['scale']):
             if i in np.where((smp_dict['flag'] == 1))[0]:
@@ -3400,7 +3400,7 @@ class smp:
                 print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',\
                     round(self.get_fwhm_of_2d_psf(smp_psf[i]),2),round(smp_dict['sky'][i],2),round(smp_dict['sexsky'][i],2),\
                     round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),round(smp_dict['sexrms'][i],2),\
-                    smp_dict['image_filename'][i],smp_dict['gain'][i]
+                    smp_dict['image_filename'][i],smp_dict['gain'][i],smp_dict['xoff'][i],smp_dict['yoff'][i]
                 #if abs(fitzpt - fakezpt) > .025:
                 #    smp_dict['fitflag'][i] = 1
                 #if smp_dict['mjd'][i] < snparams.peakmjd +100:
