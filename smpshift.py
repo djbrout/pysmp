@@ -2481,7 +2481,7 @@ class smp:
                 if doglobalstar:
                     zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
                 else:
-                    zpt_file = imfile.split('.')[-2].replace('fakeSN','') + '_'+str(filt)+'band_dillonzptinfo.npz'
+                    zpt_file = imfile.split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo.npz'
 
                 zptdata = np.load(zpt_file) #load previous zpt information
                 zpt = zptdata['fit_zpt']
