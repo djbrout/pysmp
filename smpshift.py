@@ -3111,14 +3111,14 @@ class smp:
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
-                for nd in nightlydist:
-                    print nd
+                #for nd in nightlydist:
+                #    print nd
                 #raw_input('nightly distnaces')
 
                 #FINDING THE CLOSEST 25 STARS TO CALCULATE OFFSETS
                 goodindices = []
                 for e,j in enumerate(np.argsort(nightlydist)):
-                    print int(j)
+                    #print int(j)
                     if e  < 40:
                         goodindices.append(int(j))
                 goodindices = np.array(goodindices,dtype='int')
