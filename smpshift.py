@@ -3108,8 +3108,8 @@ class smp:
                                 print 'didnt work'
                                 pass
 
-                nightlyoffra = np.array(nightlyoffra.ravel())
-                nightlyoffdec = np.array(nightlyoffdec.ravel())
+                nightlyoffra = np.array(nightlyoffra)
+                nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
                 for nd in nightlydist:
                     print nd
