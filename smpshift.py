@@ -3110,17 +3110,17 @@ class smp:
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
-                #for nd in nightlydist:
-                #    print nd
+                for nd in nightlydist:
+                    print nd
                 #raw_input('nightly distnaces')
 
                 #FINDING THE CLOSEST 25 STARS TO CALCULATE OFFSETS
-                goodindices = np.zeros(25)
+                goodindices = []
                 for e,j in enumerate(np.argsort(nightlydist)):
                     print int(j)
                     if e  < 25:
                         goodindices[e] = int(j)
-
+                goodindices = np.array(goodindices,dtype='int')
                 smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
                 smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
                 print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
