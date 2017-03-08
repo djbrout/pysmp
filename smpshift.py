@@ -2490,6 +2490,7 @@ class smp:
                     mjdslopeinteroff = zptdata['mjdslopeinteroff']
                     rmsaddin = zptdata['rmsaddin']
                     thisra = zptdata['thisra']
+                    print 'getting rasssssss'
                     thisdec = zptdata['thisdec']
                     thisids = zptdata['thisids']
                 dotestoff = False
