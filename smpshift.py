@@ -3085,7 +3085,7 @@ class smp:
             ww = np.where(smp_starind == ind)
             meanstarras[ind] = np.mean(smp_starra[ww].ravel())
             meanstardecs[ind] = np.mean(smp_stardec[ww].ravel())
-        print np.unique(ind)
+        print np.unique(smp_starind)
 
         for im,fl,k in zip(smp_dict['image_filename'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
 
@@ -3093,7 +3093,7 @@ class smp:
                 nightlyoffra = []
                 nightlyoffdec = []
                 nightlydist = []
-                for ind in np.unique(ind):
+                for ind in np.unique(smp_starind):
                     ww = smp_starind[k,:] == ind
                     nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
                     nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
