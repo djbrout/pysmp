@@ -3117,8 +3117,9 @@ class smp:
                 #FINDING THE CLOSEST 25 STARS TO CALCULATE OFFSETS
                 goodindices = np.zeros(25)
                 for e,j in enumerate(np.argsort(nightlydist)):
+                    print int(j)
                     if e  < 25:
-                        goodindices[e] = j
+                        goodindices[e] = int(j)
 
                 smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
                 smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
