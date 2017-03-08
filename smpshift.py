@@ -2417,7 +2417,6 @@ class smp:
                 #print badflag.shape
                 #raw_input('we are before the zpt calc')
                 skipactualzeropoint = False
-                #print 'just before getzpt'
                 #sys.exit()
                 #print 'nozpt',nozpt
                 #sys.exit()
@@ -6374,7 +6373,7 @@ class smp:
 
         if bad:
             return 0,0,0,0,0,0,0
-        return(md,std,mag_compare_out,rmsaddin,thisra,thisdec,thisids)
+        return(md,std,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols])
 
     def get_fwhm_of_2d_psf(self,psfstamp):
 
