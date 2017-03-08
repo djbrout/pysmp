@@ -1363,7 +1363,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 2500:
+            if cccc > 10:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2464,9 +2464,8 @@ class smp:
                         bkgrnd = None
                         bkgrndrms = None
 
-                    print len(tras), len(tids)
-                    raw_input()
-                    zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
+
+                    zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
@@ -2492,6 +2491,7 @@ class smp:
                     rmsaddin = zptdata['rmsaddin']
                     thisra = zptdata['thisra']
                     thisdec = zptdata['thisdec']
+                    thisids = zptdata['thisids']
                 dotestoff = False
                 if zpt == 0:
                     print 'zerpoint badflag'
@@ -2867,6 +2867,7 @@ class smp:
 
                                     smp_starra[i,:len(thisra)] = thisra
                                     smp_stardec[i,:len(thisdec)] = thisdec
+                                    smp_starind[i,:len(thisids)] = thisids
 
                                     smp_dict['scale'][i] = scale
                                     #smp_dict['scale_err'][i] = errmag
@@ -3071,7 +3072,59 @@ class smp:
                                     i += 1
                                     print 'epochtime',time.time()-epochtime
 
-        print 'dillscale',smp_dict['scale']
+
+
+
+
+        #now loop over images again and get nightly offsets...
+
+        meanstarras = {}
+        meanstardecs = {}
+        for ind in np.unique(smp_starind):
+            ww = np.where(smp_starind == ind)
+            meanstarras[ind] = np.mean(smp_starra[ww].ravel())
+            meanstardecs[ind] = np.mean(smp_stardec[ww].ravel())
+
+        for im,fl,k in zip(smp_dict['image_filename'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
+
+            if fl != 1:
+                nightlyoffra = []
+                nightlyoffdec = []
+                nightlydist = []
+                for ind in np.unique(ind):
+                    ww = smp_starind[k,:] == ind
+                    nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
+                    nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
+                    nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)**.5)
+
+                nightlyoffra = np.array(nightlyoffra)
+                nightlyoffdec = np.array(nightlyoffdec)
+                nightlydist = np.array(nightlydist)
+                for nd in nightlydist:
+                    print nd
+                raw_input('nightly distnaces')
+                smp_dict['raoff'][k] = np.mean(nightlyoffra)
+                smp_dict['decoff'][k] = np.mean(nightlyoffdec)
+
+
+                thisra = smp_starra[k,:]
+                thisdec = smp_stardec[k,:]
+                thisids = smp_starind[k,:]
+
+
+            w = wcs.WCS(im)
+
+            xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA + mjdoff[0], snparams.DECL + mjdoff[1]]]), 0))
+            xsn = xsn[0]
+            ysn = ysn[0]
+
+
+
+
+
+
+
+        #print 'dillscale',smp_dict['scale']
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with zeropoints\n ', self.fermilogfile)
         if self.fermigrid and self.worker:
@@ -5243,6 +5296,7 @@ class smp:
         thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
         thisra = np.array(thisra)
         thisdec = np.array(thisdec)
+        thisids = np.array(ids)
         print 'Computing zeropoint for',imfile
         print '\n'
         import pkfit_norecent_noise_smp
@@ -6216,6 +6270,7 @@ class smp:
                          , mjdslopeinteroff=mjdslopeinteroff
                          , thisra = thisra[goodstarcols]
                          , thisdec = thisdec[goodstarcols]
+                         , thisids = thisids[goodstarcols]
                          )
 
 
@@ -6288,8 +6343,8 @@ class smp:
         #sys.exit()
 
         if bad:
-            return 0,0,0,0,0,0
-        return(md,std,mag_compare_out,rmsaddin,thisra,thisdec)
+            return 0,0,0,0,0,0,0
+        return(md,std,mag_compare_out,rmsaddin,thisra,thisdec,thisids)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
 
