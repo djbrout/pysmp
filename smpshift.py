@@ -2477,28 +2477,28 @@ class smp:
                     #                                     badflag, mag_star, im, weights, mask, psffile, imfile, snparams,
                     #                                     params.substamp, mjdoff, mjdslopeinteroff,
                     #                                     psf=self.psf)
+            else:
+                if doglobalstar:
+                    zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
                 else:
-                    if doglobalstar:
-                        zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
-                    else:
-                        zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
+                    zpt_file = imfile.split('.')[-2] + '_'+str(filt)+'band_dillonzptinfo.npz'
 
-                    zptdata = np.load(zpt_file) #load previous zpt information                                                                                                                       
-                    zpt = zptdata['fit_zpt']
-                    zpterr = zptdata['fit_zpt_std']
-                    mjdoff = zptdata['mjdoff']
-                    mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                    rmsaddin = zptdata['rmsaddin']
-                    thisra = zptdata['thisra']
-                    print 'getting rasssssss'
-                    thisdec = zptdata['thisdec']
-                    thisids = zptdata['thisids']
-                dotestoff = False
-                if zpt == 0:
-                    print 'zerpoint badflag'
-                    badflag = 1
-                if dotestoff:
-                    self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
+                zptdata = np.load(zpt_file) #load previous zpt information
+                zpt = zptdata['fit_zpt']
+                zpterr = zptdata['fit_zpt_std']
+                mjdoff = zptdata['mjdoff']
+                mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                rmsaddin = zptdata['rmsaddin']
+                thisra = zptdata['thisra']
+                print 'getting rasssssss'
+                thisdec = zptdata['thisdec']
+                thisids = zptdata['thisids']
+            dotestoff = False
+            if zpt == 0:
+                print 'zerpoint badflag'
+                badflag = 1
+            if dotestoff:
+                self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
 
 
             if not ('firstzpt' in locals()): firstzpt = 31. ####firstzpt = zpt
