@@ -3103,9 +3103,9 @@ class smp:
                                 nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
                                 nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
                                 nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)[0]**.5)
-                                print ind,'worked'
+                                #print ind,'worked'
                             except:
-                                print ind, 'didnt work'
+                                #print ind, 'didnt work'
                                 pass
 
                 nightlyoffra = np.array(nightlyoffra)
@@ -3146,10 +3146,10 @@ class smp:
                     xsno = xsno[0]
                     ysno = ysno[0]
 
-                    smp_dict['xoff'][i] = xsn-xsno
-                    smp_dict['yoff'][i] = ysn-ysno
+                    smp_dict['xoff'][k] = xsn-xsno
+                    smp_dict['yoff'][k] = ysn-ysno
 
-                    print 'pix off',smp_dict['xoff'],smp_dict['yoff']
+                    print 'pix off',smp_dict['xoff'][k],smp_dict['yoff'][k]
                     #raw_input()
 
 
