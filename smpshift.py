@@ -3095,10 +3095,12 @@ class smp:
                 nightlydist = []
                 for ind in np.unique(smp_starind):
                     if ind != 0:
+                        print ind
                         ww = smp_starind[k,:] == ind
-                        nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
-                        nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
-                        nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)**.5)
+                        if len(ww) > 0:
+                            nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww]))
+                            nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww]))
+                            nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)**.5)
 
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
