@@ -3095,7 +3095,7 @@ class smp:
                 nightlydist = []
                 for ind in np.unique(smp_starind):
                     if ind != 0:
-                        print ind
+                        #print ind
                         ww = smp_starind[k,:] == ind
                         if len(ww) > 0:
                             try:
@@ -3103,35 +3103,47 @@ class smp:
                                 nightlyoffra.append(float(meanstarras[ind] - smp_starra[k,ww])[0])
                                 nightlyoffdec.append(float(meanstardecs[ind] - smp_stardec[k, ww])[0])
                                 nightlydist.append(((smp_dict['snra'][k] - smp_starra[k,ww])**2+(smp_dict['sndec'][k] - smp_stardec[k,ww])**2)[0]**.5)
-                                print 'worked'
+                                #print 'worked'
                             except:
                                 pass
 
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
-                for nd in nightlydist:
-                    print nd
-                raw_input('nightly distnaces')
-                smp_dict['raoff'][k] = np.mean(nightlyoffra)
-                smp_dict['decoff'][k] = np.mean(nightlyoffdec)
+                #for nd in nightlydist:
+                #    print nd
+                #raw_input('nightly distnaces')
 
+                #FINDING THE CLOSEST 25 STARS TO CALCULATE OFFSETS
+                goodindices = np.zeros(25)
+                for e,j in enumerate(np.argsort(nightlydist)):
+                    if e  < 25:
+                        goodindices[e] = j
 
-                thisra = smp_starra[k,:]
-                thisdec = smp_stardec[k,:]
-                thisids = smp_starind[k,:]
-
-
-            w = wcs.WCS(im)
-
-            xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA + mjdoff[0], snparams.DECL + mjdoff[1]]]), 0))
-            xsn = xsn[0]
-            ysn = ysn[0]
+                smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
+                smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
+                print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
 
 
 
 
+                w = wcs.WCS(im)
 
+
+
+                xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA , snparams.DECL]]), 0))
+                xsn = xsn[0]
+                ysn = ysn[0]
+
+                xsno, ysno = zip(*w.wcs_world2pix(np.array([[snparams.RA + smp_dict['raoff'][k], snparams.DECL + smp_dict['decoff'][k]]]), 0))
+                xsno = xsno[0]
+                ysno = ysno[0]
+
+                smp_dict['xoff'] = xsn-xsno
+                smp_dict['yoff'] = ysn-ysno
+
+                print 'pix off',smp_dict['xoff'],smp_dict['yoff']
+                raw_input()
 
 
         #print 'dillscale',smp_dict['scale']
