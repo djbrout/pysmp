@@ -3145,8 +3145,8 @@ class smp:
                     xsno = xsno[0]
                     ysno = ysno[0]
 
-                    smp_dict['yoff'][k] = xsno-xsn + np.mean(smp_dict['snx']-np.round(smp_dict['snx']))-smp_dict['snx'][k]+round(smp_dict['snx'][k])
-                    smp_dict['xoff'][k] = ysno-ysn + np.mean(smp_dict['sny']-np.round(smp_dict['sny']))-smp_dict['sny'][k]+round(smp_dict['sny'][k])
+                    smp_dict['yoff'][k] = xsno-xsn - (np.mean(smp_dict['snx']-np.round(smp_dict['snx']))-smp_dict['snx'][k]+round(smp_dict['snx'][k]))
+                    smp_dict['xoff'][k] = ysno-ysn - (np.mean(smp_dict['sny']-np.round(smp_dict['sny']))-smp_dict['sny'][k]+round(smp_dict['sny'][k]))
 
 
                     # print smp_dict['snx'][0]-round(smp_dict['snx'][0])-smp_dict['snx'][k]+round(smp_dict['snx'][k]),\
