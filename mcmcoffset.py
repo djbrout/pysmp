@@ -849,7 +849,8 @@ class metropolis_hastings():
         for i in range(self.Nimage):
             if self.flags[i] == 0:
                 if self.modelstd[i] > 1:
-                    fs = self.fouriershift(x_off+self.nightlyoffx[i], y_off+self.nightlyoffy[i], self.fpsfs[i])
+                    #fs = self.fouriershift(x_off+self.nightlyoffx[i], y_off+self.nightlyoffy[i], self.fpsfs[i])
+                    fs = self.fouriershift(x_off, y_off, self.fpsfs[i])
                     self.kicked_psfs[i, :, :] = np.fft.ifft2(fs)
 
     def movepsfs(self,x,y):
