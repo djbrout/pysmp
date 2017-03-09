@@ -3128,7 +3128,7 @@ class smp:
                 else:
                     smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
                     smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
-                    print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
+                    #print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
 
 
 
@@ -3148,7 +3148,10 @@ class smp:
                     smp_dict['yoff'][k] = xsno-xsn
                     smp_dict['xoff'][k] = ysno-ysn
 
-                    print 'pix off',smp_dict['xoff'][k],smp_dict['yoff'][k]
+
+                    print smp_dict['xsn'][0]-smp_dict['xsn'][k],smp_dict['ysn'][0]-smp_dict['ysn'][k]
+
+                    #print 'pix off',smp_dict['xoff'][k],smp_dict['yoff'][k]
                     #raw_input()
 
 
