@@ -20,7 +20,7 @@ for i in allindexes:
         '#SBATCH --time=02:49:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1rsim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1rsim.log\n' +
-        '#SBATCH --job-name=simr_' + str(i) + '\n' +
+        '#SBATCH --job-name=simg_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
         '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
