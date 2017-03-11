@@ -20,7 +20,7 @@ for i in allindexes:
         '#SBATCH --time=02:49:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1rsim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '_v1rsim.log\n' +
-        '#SBATCH --job-name=simi_' + str(i) + '\n' +
+        '#SBATCH --job-name=simz_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
         '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -35,7 +35,7 @@ for i in allindexes:
         #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
         #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
         #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-        'python smpshift.py --index=' + str(i) + ' -f i --nozpt\n' +
+        'python smpshift.py --index=' + str(i) + ' -f z --nozpt\n' +
         '\n'
     )
     f.close()
