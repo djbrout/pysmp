@@ -462,9 +462,12 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
 
     oldfakezpt = np.array(oldfakezpt)
 
-    print fakefiles[(fluxerr<30.) & (fluxerr>0.)]
-    raw_input()
-    print fakefiles[(chisq < 0.1)]
+    #print fakefiles[(fluxerr<30.) & (fluxerr>0.)]
+    #raw_input()
+    #print fakefiles[(chisq < 0.1)]
+    #raw_input()
+    for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
+        print ff, fl
     raw_input()
     # print fakezpt
     #
@@ -576,7 +579,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #                         np.arange(min(fakemag[ww]), max(fakemag[ww]), .5))
     # plt.errorbar(ax, ay, aystd, markersize=10, color='red', fmt='o', label='Diffim',alpha=.4)
 
-    print fakemag[ww].shape,flux[ww].shape,fakeflux[ww].shape
+    #print fakemag[ww].shape,flux[ww].shape,fakeflux[ww].shape
 
 
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
@@ -643,8 +646,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
 
     #print fakefiles[ww][((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.04) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] > -.4) & (fakemag[ww]<22.)]
     #raw_input()
-    for k in np.unique(fakefiles):
-        print k
+    #for k in np.unique(fakefiles):
+    #    print k
     #raw_input()
 
     ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.)  # (fakemag < 28.5) & (flux != 0.)
@@ -773,10 +776,10 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     # plt.ylabel('Fit Flux')
     # plt.savefig(outdir + '/fvf.png')
 
-    print imfiles[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
-    print ra[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
-    print dec[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
-    print imstamp[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+    #print imfiles[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+    #print ra[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+    #print dec[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
+    #print imstamp[ww][(fakemag[ww]<21) & ((flux[ww]-fakeflux[ww])/fakeflux[ww] < -.9)]
 
     #raw_input('imfiles bad')
 
