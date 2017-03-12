@@ -35,7 +35,7 @@ for i in allindexes:
         #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
         #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
         #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-        'python smpshift.py --index=' + str(i) + ' -f z --nozpt\n' +
+        'python smpshift.py --index=' + str(i) + ' -f g \n' +
         '\n'
     )
     f.close()
