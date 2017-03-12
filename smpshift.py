@@ -6990,6 +6990,8 @@ if __name__ == "__main__":
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
+    nozpt = False
+
     #worker = True
     if isEmbarrasinglyParallel:
         index = os.environ[parallelvar]
