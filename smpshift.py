@@ -3786,10 +3786,10 @@ class smp:
             #raw_input('mmmmmmm')
             import mcmcoffset as mcmc3
             aaa = mcmc3.metropolis_hastings(
-                    galmodel = galmodel*0.
+                    galmodel = galmodel
                     , modelvec = modelvec
-                    , galstd = galstd*0. + .4
-                    , modelstd = modelstd*4.
+                    , galstd = galstd
+                    , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
