@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,49)
+allindexes = range(1000,1865)
 filts = ['g','r','i','z']
 #np.random.shuffle(allindexes)
 
@@ -20,9 +20,9 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time=02:49:00\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/speclogs/' + str(i) + '_'+filt+'spec.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/speclogs/' + str(i) + '_'+filt+'spec.log\n' +
-            '#SBATCH --job-name=spec'+filt+'_' + str(i) + '\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
+            '#SBATCH --job-name=sim'+filt+'_' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
