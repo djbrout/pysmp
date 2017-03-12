@@ -3729,7 +3729,7 @@ class smp:
             modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
             print 'modelstd before',modelstd
 
-            modelstd[(modelstd < 10.) & (modelstd > 0.)] = 10.
+            modelstd[(modelstd < 2.) & (modelstd > 0.)] = 2.
 
             tstart = time.time()
             #print 'modelstd',modelstd
@@ -3789,7 +3789,7 @@ class smp:
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
                     , modelvec = modelvec
-                    , galstd = galstd*5.
+                    , galstd = galstd
                     , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
