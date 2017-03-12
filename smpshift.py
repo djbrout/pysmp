@@ -3717,6 +3717,7 @@ class smp:
 
 
             galmodel = galmodel_params
+            galmodel = smp_im[ww, :, :] - smp_dict['sky'][ww]
             import scipy.ndimage
             #galmodel = scipy.ndimage.zoom(galmodel_params, .5, order=0)
             print 'galmodel',galmodel
