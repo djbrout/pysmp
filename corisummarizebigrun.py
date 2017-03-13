@@ -468,7 +468,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #raw_input()
     for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
         print ff, fl
-    raw_input()
+    #raw_input()
     # print fakezpt
     #
     # print fakemag.shape
@@ -998,7 +998,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     rms992 = np.std(dc99[abs(dc99) < 3.])
     print rms99,rms992
-    raw_input()
+    #raw_input()
 
     dcr = d[fakemag < 28.]
     rmsr = np.sqrt(np.nanmean(np.square(dcr[abs(dcr) < 3.])))
@@ -1014,7 +1014,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr > .5) & (chisqarr < 1.4)
 
     #ww = (flux != 0) & (fakeflux < 1.)
-    print rms99
+    #print rms99
     fig = plt.figure(figsize=(15, 10))
     plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.1, 6., .2), normed=True,
              label='RMS Fakemag = 99: ' + str(round(rms99, 3)))
@@ -1125,7 +1125,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height/2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(25, 20))
+    plt.figure(1, figsize=(45, 40))
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
