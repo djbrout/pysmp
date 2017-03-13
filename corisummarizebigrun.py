@@ -1114,15 +1114,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.13, 0.65
+    left, width = 0.13, 0.61
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
-    rect_scatter = [left, bottom+height/2., width, height/2.]
-    rect_scatterflux = [left, bottom, width, height/2.]
-    rect_histx = [left, bottom_h-.04, width, .2]
-    rect_histy = [left_h, bottom+height/2., 0.2, height/2.]
-    rect_histyflux = [left_h, bottom, 0.2, height/2.]
+    rect_scatter = [left, bottom + height / 2., width, height / 2.]
+    rect_scatterflux = [left, bottom, width, height / 2.]
+    rect_histx = [left, bottom_h - .04, width, .18]
+    rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
+    rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
     # start with a rectangular Figure
     plt.figure(1, figsize=(45, 40))
@@ -1401,16 +1401,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     # definitions for the axes
     # definitions for the axes
-    left, width = 0.13, 0.65
+    left, width = 0.13, 0.61
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width, height / 2.]
     rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h - .04, width, .2]
+    rect_histx = [left, bottom_h - .04, width, .18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
-
     # start with a rectangular Figure
     plt.figure(1, figsize=(25, 20))
 
@@ -1631,13 +1630,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.13, 0.65
+    left, width = 0.13, 0.61
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width, height / 2.]
     rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h - .04, width, .2]
+    rect_histx = [left, bottom_h - .04, width, .18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
@@ -1784,16 +1783,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
 
     # definitions for the axes
     # definitions for the axes
-    left, width = 0.13, 0.65
+    left, width = 0.13, 0.61
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width, height / 2.]
     rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h - .04, width, .2]
+    rect_histx = [left, bottom_h - .04, width, .18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
-
     # start with a rectangular Figure
     plt.figure(1, figsize=(25, 20))
 
