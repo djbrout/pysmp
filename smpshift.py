@@ -3789,8 +3789,8 @@ class smp:
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
                     , modelvec = modelvec
-                    , galstd = galstd
-                    , modelstd = modelstd
+                    , galstd = galstd/2.
+                    , modelstd = modelstd*2.
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
