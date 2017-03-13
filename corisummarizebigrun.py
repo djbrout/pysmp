@@ -1255,16 +1255,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.1, 0.65
-    bottom, height = 0.1, 0.65
+    # definitions for the axes
+    left, width = 0.13, 0.65
+    bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
-    rect_scatter = [left, bottom+height/2., width, height/2.]
-    rect_scatterflux = [left, bottom, width, height/2.]
-    rect_histx = [left, bottom_h, width, 0.2]
-    rect_histy = [left_h, bottom+height/2., 0.2, height/2.]
-    rect_histyflux = [left_h, bottom, 0.2, height/2.]
-
+    rect_scatter = [left, bottom + height / 2., width, height / 2.]
+    rect_scatterflux = [left, bottom, width, height / 2.]
+    rect_histx = [left, bottom_h - .04, width, .2]
+    rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
+    rect_histyflux = [left_h, bottom, 0.2, height / 2.]
     # start with a rectangular Figure
     try:
         plt.figure(1, figsize=(32, 24))
@@ -1323,7 +1323,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
         ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-        ax3.set_ylim(.8,1.8)
+        ax3.set_ylim(.9,1.25)
 
         fresid = np.zeros(flux.shape)
         for i,f,ff in zip(range(len(flux)),flux,fakeflux):
@@ -1353,7 +1353,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
         ax3.set_xlim(ax1.get_xlim())
-        ax3.set_ylim(.8,1.4)
+        ax3.set_ylim(.9,1.25)
         ax2.set_ylim(ax1.get_ylim())
         ax5.set_ylim(ax4.get_ylim())
         ax2.xaxis.set_major_formatter(nullfmt)
@@ -1400,13 +1400,14 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.1, 0.65
-    bottom, height = 0.1, 0.65
+    # definitions for the axes
+    left, width = 0.13, 0.65
+    bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width, height / 2.]
     rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h, width, 0.2]
+    rect_histx = [left, bottom_h - .04, width, .2]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
@@ -1465,7 +1466,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     #ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.6)
+    ax3.set_ylim(.9, 1.25)
 
     fresid = np.zeros(flux.shape)
     for i, f, ff in zip(range(len(flux)), flux, fakeflux):
@@ -1630,13 +1631,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.1, 0.65
-    bottom, height = 0.1, 0.65
+    left, width = 0.13, 0.65
+    bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width, height / 2.]
     rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h, width, 0.2]
+    rect_histx = [left, bottom_h - .04, width, .2]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
@@ -1782,13 +1783,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.1, 0.65
-    bottom, height = 0.1, 0.65
+    # definitions for the axes
+    left, width = 0.13, 0.65
+    bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width, height / 2.]
     rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h, width, 0.2]
+    rect_histx = [left, bottom_h - .04, width, .2]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
