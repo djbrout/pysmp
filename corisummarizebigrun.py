@@ -1115,7 +1115,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     # definitions for the axes
     left, width = 0.1, 0.65
-    bottom, height = 0.1, 0.65
+    bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom+height/2., width, height/2.]
