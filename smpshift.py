@@ -3789,7 +3789,7 @@ class smp:
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
                     , modelvec = modelvec
-                    , galstd = galstd*0. + .4
+                    , galstd = galstd*0. + 1.
                     , modelstd = modelstd*4.
                     , data = smp_im
                     , psfs = smp_psf
