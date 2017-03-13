@@ -1114,7 +1114,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.1, 0.65
+    left, width = 0.13, 0.65
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
@@ -1189,7 +1189,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-    ax3.set_ylim(.7,1.5)
+    ax3.set_ylim(.9,1.25)
     ax3.legend(fontsize='x-small')
 
     fresid = np.zeros(flux.shape)
