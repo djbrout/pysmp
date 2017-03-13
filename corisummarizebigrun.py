@@ -478,22 +478,22 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #sys.exit()
     #diffimflux *= 10 ** (.4 * (31. - fakezpt))
 
-    plt.clf()
-    plt.scatter(diffimflux,flux)
-    plt.plot([min(diffimflux),max(diffimflux)],[min(diffimflux),max(diffimflux)],color='black')
-    plt.xlabel('Diffim Flux')
-    plt.ylabel('SMP Flux')
-
-    plt.savefig(outdir+'/fluxvs.png')
-
-    plt.clf()
-    plt.scatter(dpmjd, fluxerr, alpha=.1)
-    plt.xlabel('DPMJD')
-    plt.ylabel('SMP Fluxerr')
-    plt.ylim(50,550)
-    plt.xlim(-40,300)
-    plt.savefig(outdir + '/fluxerrvsDPMJD.png')
-
+    # plt.clf()
+    # plt.scatter(diffimflux,flux)
+    # plt.plot([min(diffimflux),max(diffimflux)],[min(diffimflux),max(diffimflux)],color='black')
+    # plt.xlabel('Diffim Flux')
+    # plt.ylabel('SMP Flux')
+    #
+    # plt.savefig(outdir+'/fluxvs.png')
+    #
+    # plt.clf()
+    # plt.scatter(dpmjd, fluxerr, alpha=.1)
+    # plt.xlabel('DPMJD')
+    # plt.ylabel('SMP Fluxerr')
+    # plt.ylim(50,550)
+    # plt.xlim(-40,300)
+    # plt.savefig(outdir + '/fluxerrvsDPMJD.png')
+    #
 
 
 
@@ -514,52 +514,52 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     fluxerr *= 10**(-1*.4*(fitzpt - fakezpt))
     sky *= 10**(.4*(31-fitzpt))
 
-    plt.clf()
-    plt.scatter(flux, fluxerr, alpha=.1)
-    plt.xlabel('SMP Flux')
-    plt.ylabel('SMP Fluxerr')
-    plt.ylim(50, 550)
-    plt.xlim(-1000, 7000)
-    plt.savefig(outdir + '/fluxerrvsflux.png')
-
-    plt.clf()
-    plt.scatter(hostmag, fluxerr, alpha=.1)
-    plt.xlabel('Hostmag')
-    plt.ylabel('SMP Fluxerr')
-    plt.ylim(50, 550)
-    plt.xlim(21, 30)
-    plt.savefig(outdir + '/fluxerrvshostmag.png')
-
-    plt.clf()
-    plt.scatter(sky, fluxerr, alpha=.1)
-    plt.xlabel('Sky')
-    plt.ylabel('SMP Fluxerr')
-    plt.ylim(50, 550)
-    plt.xlim(-2000, 10000)
-    plt.savefig(outdir + '/fluxerrvssky.png')
-
-    plt.clf()
-    plt.scatter(fitzpt, fluxerr, alpha=.1)
-    plt.xlabel('SMP ZPT')
-    plt.ylabel('SMP Fluxerr')
-    plt.ylim(50, 550)
-    plt.xlim(31.5, 32.5)
-    plt.savefig(outdir + '/fluxerrvszpt.png')
-
-    ww = fakemag == 99
-    plt.clf()
-    plt.scatter(skyerr[ww], fluxerr[ww], alpha=.1)
-    plt.xlabel('SMP Skyerr')
-    plt.ylabel('SMP Fluxerr')
-    plt.ylim(50, 550)
-    plt.xlim(0, 200)
-    plt.savefig(outdir + '/fluxerrvsskyerr.png')
-
-    plt.clf()
-    plt.hist(skyerr, bins=np.arange(0,100,2.),normed=True)
-    plt.xlabel('SMP Skyerr')
-    plt.xlim(0, 100)
-    plt.savefig(outdir + '/skyerrhist.png')
+    # plt.clf()
+    # plt.scatter(flux, fluxerr, alpha=.1)
+    # plt.xlabel('SMP Flux')
+    # plt.ylabel('SMP Fluxerr')
+    # plt.ylim(50, 550)
+    # plt.xlim(-1000, 7000)
+    # plt.savefig(outdir + '/fluxerrvsflux.png')
+    #
+    # plt.clf()
+    # plt.scatter(hostmag, fluxerr, alpha=.1)
+    # plt.xlabel('Hostmag')
+    # plt.ylabel('SMP Fluxerr')
+    # plt.ylim(50, 550)
+    # plt.xlim(21, 30)
+    # plt.savefig(outdir + '/fluxerrvshostmag.png')
+    #
+    # plt.clf()
+    # plt.scatter(sky, fluxerr, alpha=.1)
+    # plt.xlabel('Sky')
+    # plt.ylabel('SMP Fluxerr')
+    # plt.ylim(50, 550)
+    # plt.xlim(-2000, 10000)
+    # plt.savefig(outdir + '/fluxerrvssky.png')
+    #
+    # plt.clf()
+    # plt.scatter(fitzpt, fluxerr, alpha=.1)
+    # plt.xlabel('SMP ZPT')
+    # plt.ylabel('SMP Fluxerr')
+    # plt.ylim(50, 550)
+    # plt.xlim(31.5, 32.5)
+    # plt.savefig(outdir + '/fluxerrvszpt.png')
+    #
+    # ww = fakemag == 99
+    # plt.clf()
+    # plt.scatter(skyerr[ww], fluxerr[ww], alpha=.1)
+    # plt.xlabel('SMP Skyerr')
+    # plt.ylabel('SMP Fluxerr')
+    # plt.ylim(50, 550)
+    # plt.xlim(0, 200)
+    # plt.savefig(outdir + '/fluxerrvsskyerr.png')
+    #
+    # plt.clf()
+    # plt.hist(skyerr, bins=np.arange(0,100,2.),normed=True)
+    # plt.xlabel('SMP Skyerr')
+    # plt.xlim(0, 100)
+    # plt.savefig(outdir + '/skyerrhist.png')
 
 
     d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
