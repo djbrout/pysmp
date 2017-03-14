@@ -1307,8 +1307,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #plt.savefig('stdresid.png')
 
         #plt.clf()
-        ww = fakemag < 10000.
-        ax1.scatter(hostmag,d,alpha=.3,color='blue')
+        ww = fakemag < 30.
+        ax1.scatter(hostmag[ww],d[ww],alpha=.3,color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1),window=1.5)
         ax1.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
         ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
@@ -1322,7 +1322,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1.set_xlabel('Host Mag')
         ax1.set_ylabel('STD')
 
-        ax, ayrms= dt.binrms(hostmag, d, np.arange(min(hostmag), 27.5, .1),.5)
         #ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
@@ -1337,10 +1336,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                 fresid[i] = (f - ff) / max([abs(ff),1.])
         #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-        ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
+        ax5.hist(fresid[ww], bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
-        ax4.scatter(hostmag,fresid,alpha=.3,color='blue')
-        ax, ay, aystd = dt.bindata(hostmag,fresid,
+        ax4.scatter(hostmag[ww],fresid[ww],alpha=.3,color='blue')
+        ax, ay, aystd = dt.bindata(hostmag[ww],fresid[ww],
                                 np.arange(min(hostmag), 27.5, .1),window=1.)
         ax4.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
 
@@ -1365,8 +1364,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1.xaxis.set_major_formatter(nullfmt)
         plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
-        ww = fakemag < 100.
-        ax, ayrms = dt.binrms(hostmag, d, np.arange(min(hostmag), max(hostmag), .1), 1.5)
+        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
 
