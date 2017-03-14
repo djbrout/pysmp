@@ -967,7 +967,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     d = (flux - fakeflux) / ((fluxerr**2 )**.5)
 
-    ww = (flux != 0.) #& (deep == 0)
+    ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) #& (deep == 0)
 
     #fakemag[fakemag==99] = 29.5
     flux = flux[ww]
@@ -1082,8 +1082,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     print fakemag[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)]
     print flux[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)]
-    raw_input()
-    ww = (flux != 0) & (np.array(fakemag, dtype='float') < 27.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    #raw_input()
+    ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
          (abs(flux - fakeflux) > 0.1)
 
@@ -1142,8 +1142,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.xaxis.set_major_formatter(nullfmt)
     ax5.yaxis.set_major_formatter(nullfmt)
 
-    outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .5) & (chisqarr < 1.5)]))/float(len(d))
-    outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .6) & (chisqarr < 1.5)]))/float(len(d))
+    outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .5) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
+    outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .6) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
 
     ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
                                                                 '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
@@ -1175,7 +1175,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     ax1.scatter(fakemag,d,alpha=.3,color='blue')
-    ax, ay, aystd = dt.bindata(fakemag[d<3.], d[d<3.], np.arange(19., 28, .1),window=.5)
+    ax, ay, aystd = dt.bindata(fakemag[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], d[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], np.arange(19., 28, .1),window=.5)
     ax1.plot([19, 28.7], [0, 0],color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
