@@ -1082,8 +1082,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     print fakemag[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 90.)]
     print flux[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 90.)]
-    raw_input()
-    ww = (flux != 0) & (np.array(fakemag, dtype='float') < 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    #raw_input()
+    ww = (flux != 0) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
          (abs(flux - fakeflux) > 0.1)
 
