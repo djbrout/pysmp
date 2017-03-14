@@ -1475,7 +1475,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                 fresid[i] = (f - ff) / max([abs(ff), 1.])
         # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-        ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
+        ax5.hist(fresid[ww], bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
 
         ax4.scatter(hostmag[ww], fresid[ww], alpha=.3, color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], fresid[ww],
@@ -1503,7 +1503,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1.xaxis.set_major_formatter(nullfmt)
         plt.subplots_adjust(wspace=0.001, hspace=0.001)
 
-        ww = fakemag < 100.
+        #ww = fakemag > 90.
         ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
