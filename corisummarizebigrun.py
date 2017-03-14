@@ -1410,7 +1410,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
     # start with a rectangular Figure
-    try:
+    if True:
         plt.figure(1, figsize=(32, 24))
 
         ax1 = plt.axes(rect_scatter)
@@ -1525,8 +1525,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
         plt.savefig(outdir + '/emptyhostmagstd.png')
 
-    except:
-        print 'bad hostmags'
+    #except:
+    #    print 'bad hostmags'
 
 
 
