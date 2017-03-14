@@ -1523,7 +1523,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax3.legend(fontsize='small')
         plt.title(filter + ' band')
 
-        plt.savefig(outdir + '/hostmagstd.png')
+        plt.savefig(outdir + '/emptyhostmagstd.png')
 
     except:
         print 'bad hostmags'
