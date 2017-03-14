@@ -466,7 +466,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #raw_input()
     #print fakefiles[(chisq < 0.1)]
     #raw_input()
-    for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
+    for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 30.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
         print ff, fl
     #raw_input()
     # print fakezpt
@@ -566,7 +566,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     ww = (flux != 0.)
     d = d[ww]
     fm = np.array(fakemag,dtype='float')[ww]
-    dc99 = d[fm > 90.]
+    dc99 = d[fm > 30.]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
     ww = (flux != 0.) & (fakemag != 0)#(fakemag < 28.5) & (flux != 0.)
@@ -650,7 +650,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #    print k
     #raw_input()
 
-    ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.)  # (fakemag < 28.5) & (flux != 0.)
+    ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 30.)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     # fig = plt.figure(figsize=(15, 10))
     # plt.hist(flux[ww],bins=np.arange(-650,600,100))
@@ -993,7 +993,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     dc = d[abs(d) < 3.]
 
-    dc99 = d[(np.array(fakemag,dtype='float') > 90.) & (chisqarr > .5) & (chisqarr < 1.4)]
+    dc99 = d[(np.array(fakemag,dtype='float') > 30.) & (chisqarr > .5) & (chisqarr < 1.4)]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
     rms992 = np.std(dc99[abs(dc99) < 3.])
@@ -1010,7 +1010,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax1 = plt.subplot(gs[0])
     # ax2 = plt.subplot(gs[1])
 
-    ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.) & (fluxerr >0.) & (np.isfinite(flux)) & \
+    ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 30.) & (fluxerr >0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.)
 
     #ww = (flux != 0) & (fakeflux < 1.)
@@ -1042,7 +1042,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/efluxdiffstd.png')
 
     plt.clf()
-    ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    ww = (flux != 0) & (np.array(fakemag, dtype='float') > 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .5) & (chisqarr < 1.7)
 
     # ww = (flux != 0) & (fakeflux < 1.)
@@ -1061,7 +1061,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/efluxdiff.png')
 
     plt.clf()
-    ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    ww = (flux != 0) & (np.array(fakemag, dtype='float') > 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .5) & (chisqarr < 1.4)
 
     # ww = (flux != 0) & (fakeflux < 1.)
@@ -1080,6 +1080,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir + '/efluxerrdiff.png')
 
+    print fakemag[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 90.)]
     print fakemag[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 90.)]
     print flux[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 90.)]
     #raw_input()
