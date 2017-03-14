@@ -1081,12 +1081,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/efluxerrdiff.png')
 
     ww = (flux != 0) & (np.array(fakemag, dtype='float') < 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
+         (flux - fakeflux != 0.)
 
     #ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist((flux[ww]-fakeflux[ww]) / fluxerr[ww], bins=np.arange(-6.015, 6., .01), normed=True,
+    plt.hist((flux[ww]-fakeflux[ww]) / fluxerr[ww], bins=np.arange(-6.1, 6., .2), normed=True,
              label='RMS Fakemag < 99: ' + str(round(rmsr, 3)))
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
