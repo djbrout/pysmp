@@ -1307,7 +1307,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #plt.savefig('stdresid.png')
 
         #plt.clf()
-        ww = fakemag > 90.
+        ww = fakemag < 10000.
         ax1.scatter(hostmag,d,alpha=.3,color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1),window=1.5)
         ax1.plot([min(hostmag), max(hostmag)], [0, 0],color='grey')
@@ -1366,7 +1366,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
         ww = fakemag < 100.
-        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+        ax, ayrms = dt.binrms(hostmag, d, np.arange(min(hostmag), max(hostmag), .1), 1.5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
 
@@ -1390,7 +1390,143 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     except:
         print 'bad hostmags'
 
+    plt.clf()
+    fig = plt.figure(figsize=(25, 20))
+    gs = gridspec.GridSpec(1, 2, width_ratios=[4, 1])
+    ax1 = plt.subplot(gs[0])
+    ax2 = plt.subplot(gs[1])
 
+    nullfmt = NullFormatter()  # no labels
+
+    # definitions for the axes
+    # definitions for the axes
+    left, width = 0.13, 0.61
+    bottom, height = 0.1, 0.6
+    bottom_h = left_h = left + width + 0.02
+
+    rect_scatter = [left, bottom + height / 2., width, height / 2.]
+    rect_scatterflux = [left, bottom, width, height / 2.]
+    rect_histx = [left, bottom_h - .04, width, .18]
+    rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
+    rect_histyflux = [left_h, bottom, 0.2, height / 2.]
+    # start with a rectangular Figure
+    try:
+        plt.figure(1, figsize=(32, 24))
+
+        ax1 = plt.axes(rect_scatter)
+        ax3 = plt.axes(rect_histx)
+        ax2 = plt.axes(rect_histy)
+        ax4 = plt.axes(rect_scatterflux)
+        ax5 = plt.axes(rect_histyflux)
+
+        # no labels
+        ax2.yaxis.set_major_formatter(nullfmt)
+        ax3.xaxis.set_major_formatter(nullfmt)
+        ax5.yaxis.set_major_formatter(nullfmt)
+
+        ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS Fakemag = 99: ' + str(round(rms99, 3)) +
+                                                                     '\nRMS Fakemag < 99: ' + str(round(rmsr, 3))
+                 , orientation='horizontal')
+        # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
+        #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
+
+        import matplotlib.mlab as mlab
+        import math
+        mean = 0
+        variance = 1
+        sigma = math.sqrt(variance)
+        x = np.arange(-5, 5, .1)
+        ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+
+        ax2.set_ylim(-4, 4)
+        ax2.set_xlim(0, .5)
+        # .xlabel('STDEV')
+        # plt.ylabel('Normalized Count')
+        ax2.legend(fontsize='xx-small', loc=(0., 1.25))
+        # plt.savefig('stdresid.png')
+
+        # plt.clf()
+        ww = fakemag > 90.
+        ax1.scatter(hostmag[ww], d, alpha=.3, color='blue')
+        ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1), window=1.5)
+        ax1.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
+        ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+        ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+        ax1.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
+        # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
+
+        ax1.set_xlim(21, 28)
+        ax1.set_ylim(-3., 3.)
+        ax1.set_xlabel('Host Mag')
+        ax1.set_ylabel('STD')
+
+        # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
+
+
+        ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
+        ax3.set_ylim(.9, 1.25)
+
+        fresid = np.zeros(flux.shape)
+        for i, f, ff in zip(range(len(flux)), flux, fakeflux):
+            if f == 0.:
+                fresid[i] = np.nan
+            else:
+                fresid[i] = (f - ff) / max([abs(ff), 1.])
+        # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+
+        ax5.hist(fresid, bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
+
+        ax4.scatter(hostmag[ww], fresid[ww], alpha=.3, color='blue')
+        ax, ay, aystd = dt.bindata(hostmag[ww], fresid[ww],
+                                   np.arange(min(hostmag), 27.5, .1), window=1.)
+        ax4.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
+
+        ax4.plot(ax, ay, linewidth=3, color='orange')
+        ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
+        ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
+        ax4.set_xlim(ax1.get_xlim())
+        ax4.set_ylim(-.2, .2)
+        ax4.set_xlabel('Host Mag')
+        ax5.set_xlabel('Counts')
+        ax3.set_ylabel('RMS')
+        ax3.set_title(filter + ' band')
+
+        ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+
+        ax3.set_xlim(ax1.get_xlim())
+        ax3.set_ylim(.9, 1.25)
+        ax2.set_ylim(ax1.get_ylim())
+        ax5.set_ylim(ax4.get_ylim())
+        ax2.xaxis.set_major_formatter(nullfmt)
+        ax3.xaxis.set_major_formatter(nullfmt)
+        ax1.xaxis.set_major_formatter(nullfmt)
+        plt.subplots_adjust(wspace=0.001, hspace=0.001)
+
+        ww = fakemag < 100.
+        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+        ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
+        ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+
+        # ww = fakemag > 28.
+        # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+        # ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
+        #
+        # ww = fakemag < 22.
+        # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+        # ax3.plot(ax, ayrms, color='green', label='FakeMag < 22', linewidth=3)
+        # ax3.legend(fontsize='small')
+        #
+        # ww = (fakemag > 22.) & (fakemag < 28)
+        # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
+        # ax3.plot(ax, ayrms, color='purple', label='FakeMag < 22', linewidth=3)
+        # ax3.legend(fontsize='small')
+        plt.title(filter + ' band')
+
+        plt.savefig(outdir + '/hostmagstd.png')
+
+    except:
+        print 'bad hostmags'
 
 
 
