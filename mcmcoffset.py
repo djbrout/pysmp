@@ -409,11 +409,11 @@ class metropolis_hastings():
         
         #self.galstd = np.sqrt(self.galaxy_model)*
 
-        # if not self.pixelate_model is None:
-        #     if not self.pixelate_model == 1.:
-        #         self.galaxy_model = self.pixelate(self.galaxy_model,self.pixelate_model)
-        #         self.galstd = np.sqrt(self.galaxy_model)*2.
-        #         self.galdeltas = copy(self.galstd)
+        if not self.pixelate_model is None:
+            if not self.pixelate_model == 1.:
+                self.galaxy_model = self.pixelate(self.galaxy_model,self.pixelate_model)
+                self.galstd = np.sqrt(self.galaxy_model)*2.
+                self.galdeltas = copy(self.galstd)
             #everythingelse = self.model[substamp**2:]
             #everythingelse_stds = self.deltas[substamp**2:]
 
@@ -688,7 +688,7 @@ class metropolis_hastings():
 
         # if not self.pixelate_model is None:
         #     if not self.pixelate_model == 1.:
-        #         self.kicked_galaxy_model = scipy.ndimage.zoom(self.kicked_galaxy_model,2,order=0)
+        #         self.kicked_galaxy_model = scipy.ndimage.zoom(self.kicked_galaxy_model,self.,order=0)
         self.fgal = np.fft.fft2(self.kicked_galaxy_model)
 
         # if self.survey == 'PS1':
