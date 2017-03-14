@@ -1082,7 +1082,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (flux != 0) & (np.array(fakemag, dtype='float') < 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
-         (flux - fakeflux != 0.)
+         (abs(flux - fakeflux) > 0.1)
 
     #ww = (flux != 0) & (fakeflux < 1.)
     print rms99
