@@ -1080,8 +1080,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir + '/efluxerrdiff.png')
 
-    for fmm,fffl in zip(fakemag[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],flux[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)]):
-        print fmm,fffl
+    for fmm,fffl,fafl in zip(fakemag[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],
+                        flux[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],
+                        fakeflux[(flux != 0.) & ((flux-fakeflux) / fluxerr < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)]):
+        print fmm,fffl,fafl
     raw_input()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
