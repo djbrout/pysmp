@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(274,1865)
+allindexes = range(0,1865)
 filts = ['g','r','i','z']
 #np.random.shuffle(allindexes)
 
@@ -19,7 +19,7 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=06:49:00\n' +
+            '#SBATCH --time=04:49:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
             '#SBATCH --job-name=sim'+filt+'_' + str(i) + '\n' +
