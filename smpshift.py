@@ -3078,6 +3078,10 @@ class smp:
 
         #now loop over images again and get nightly offsets...
 
+        if len(smp_dict['fitflag'] == 0) < 2:
+            raise ValueError(
+                "Not enough epochs without SN flux ( > 1 )")
+
         meanstarras = {}
         meanstardecs = {}
         for ind in np.unique(smp_starind):
