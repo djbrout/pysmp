@@ -3077,7 +3077,8 @@ class smp:
 
 
         #now loop over images again and get nightly offsets...
-
+        print smp_dict[smp_dict['mjd_flag'] == 1]
+        raw_input()
         if len(smp_dict[smp_dict['mjd_flag'] == 1]) < 2:
             raise ValueError(
                 "Not enough epochs without SN flux ( > 1 )")
