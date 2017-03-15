@@ -202,7 +202,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
-               'diffimfluxerr':[],'fakeid':[],'skyerr':[]}
+               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[]}
     zptfiles = []
     #deep = 0
     tot = len(smpfiles)
@@ -315,8 +315,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
             #bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
 
-            #print data.keys()
-            #raw_input()
+            print data.keys()
+            raw_input()
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
