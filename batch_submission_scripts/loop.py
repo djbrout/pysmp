@@ -3,8 +3,9 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(235,1865)
-filts = ['g','r','i','z']
+allindexes = range(0,1865)
+#filts = ['g','r','i','z']
+filts = ['g']
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
