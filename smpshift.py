@@ -3816,7 +3816,7 @@ class smp:
                     , outpath = outimages
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
-                    , pixelate_model = 3.
+                    , pixelate_model = 2.
                     , burnin = .5
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
