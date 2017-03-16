@@ -2017,7 +2017,9 @@ class metropolis_hastings():
         return out
 
     def pixelate(self,matrix,pixelation_factor):
-        zmatrix = nd.interpolation.zoom(matrix, 1./float(pixelation_factor))
+        scipy.misc.imresize(lanczos)
+        #zmatrix = nd.interpolation.zoom(matrix, 1./float(pixelation_factor))
+
         return zmatrix
     
     def unpixelate(self,matrix,pixelation_factor,substamp):
