@@ -3047,6 +3047,8 @@ class smp:
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_y
                                         smp_dict['hostgal_sbmag'][i] = -99
 
+                                    raw_input()
+
                                     if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
