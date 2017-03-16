@@ -3168,6 +3168,13 @@ class smp:
                     smp_dict['yoff'][k] = xsno-xsn #+ smp_dict['snx'][k] - round(smp_dict['snx'][k])
                     smp_dict['xoff'][k] = ysno-ysn #+ smp_dict['sny'][k] - round(smp_dict['sny'][k])
 
+                    if smp_dict['yoff'][k] > .5:
+                        print 'NIGHTLY OFFSET IS TOO LARGE'
+                        smp_dict['flag'][k] = 1
+                    if smp_dict['xoff'][k] > .5:
+                        print 'NIGHTLY OFFSET IS TOO LARGE'
+                        smp_dict['flag'][k] = 1
+
                     # x_psf,y_psf = cntrd.cntrd(smp_psf[k,:,:],15,15,2.)
                     # print x_psf,y_psf,-smp_dict['snx'][k]+round(smp_dict['snx'][k]),\
                     #     -smp_dict['sny'][k]+round(smp_dict['sny'][k])
