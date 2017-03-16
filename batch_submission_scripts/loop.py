@@ -19,8 +19,8 @@ for i in allindexes:
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
-            '#SBATCH -A des\n' +
-            '#SBATCH --time=04:49:00\n' +
+            '#SBATCH -A dessn\n' +
+            '#SBATCH --time=06:49:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
             '#SBATCH --job-name=spec'+filt+'_' + str(i) + '\n' +
