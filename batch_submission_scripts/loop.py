@@ -15,7 +15,7 @@ for i in allindexes:
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
-            '#SBATCH --partition=scavange\n' +
+            '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
