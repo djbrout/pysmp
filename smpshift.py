@@ -3054,8 +3054,8 @@ class smp:
                                         smp_dict['mjd_flag'][i] = 1
 
                                     #print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
-                                    print smp_dict['flag'][i],'flagggggg'
-                                    raw_input()
+                                    #print smp_dict['flag'][i],'flagggggg'
+                                    #raw_input()
 
                                     if self.dogalfit:
                                         if smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
@@ -3132,7 +3132,7 @@ class smp:
                         goodindices.append(int(j))
                 goodindices = np.array(goodindices,dtype='int')
 
-                if len(goodindices) < 24:
+                if len(goodindices) < 10:
                     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
                     smp_dict['flag'][k] = 1
                 else:
