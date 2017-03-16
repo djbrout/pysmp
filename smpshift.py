@@ -3126,19 +3126,29 @@ class smp:
 
                 #FINDING THE CLOSEST 25 STARS TO CALCULATE OFFSETS
                 goodindices = []
+
                 for e,j in enumerate(np.argsort(nightlydist)):
                     #print int(j)
-                    if e  < 40:
-                        goodindices.append(int(j))
+                    #if e  < 40:
+                    goodindices.append(int(j))
+
                 goodindices = np.array(goodindices,dtype='int')
 
-                if len(goodindices) < 10:
-                    print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
-                    smp_dict['flag'][k] = 1
-                else:
+                try:
+                    goodindices = goodindices[:30]
                     smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
                     smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
-                    #print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
+                except:
+                    print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
+                    smp_dict['flag'][k] = 1
+
+                # if len(goodindices) < 10:
+                #     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
+                #     smp_dict['flag'][k] = 1
+                # else:
+                #     smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
+                #     smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
+                #     #print 'radec off', np.mean(nightlyoffra[goodindices]),np.mean(nightlyoffdec[goodindices])
 
 
 
