@@ -412,7 +412,7 @@ class metropolis_hastings():
         if not self.pixelate_model is None:
             if not self.pixelate_model == 1.:
                 self.galaxy_model = self.pixelate(self.galaxy_model,self.pixelate_model)
-                self.galstd = np.sqrt(np.abs(self.galaxy_model))/3. + .1
+                self.galstd = np.sqrt(np.abs(self.galaxy_model))*0. + 2.
                 self.galdeltas = copy(self.galstd)
             #everythingelse = self.model[substamp**2:]
             #everythingelse_stds = self.deltas[substamp**2:]
