@@ -3047,7 +3047,7 @@ class smp:
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_y
                                         smp_dict['hostgal_sbmag'][i] = -99
 
-                                    raw_input()
+                                    #raw_input()
 
                                     if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
@@ -3273,14 +3273,15 @@ class smp:
                         #    smp_dict['flag'][arg] = 1
 
         #Make sure the psf is not zero
-        for i in np.arange(len(smp_dict['sky'])):
-            if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
-                #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
-                #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
-                print 'hehehehehehehehehe'
-                #raw_input()
-                smp_dict['flag'][i] = 1
-                smp_dict['mjd'][i]
+
+        # for i in np.arange(len(smp_dict['sky'])):
+        #     if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
+        #         #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
+        #         #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
+        #         print 'hehehehehehehehehe'
+        #         #raw_input()
+        #         smp_dict['flag'][i] = 1
+        #         smp_dict['mjd'][i]
 
         try:
             ww = usearg
