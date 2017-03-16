@@ -2116,5 +2116,5 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    cd = resultsdir+'/summary_results_'+filter+'.npz'
+    cd = '/global/cscratch1/sd/dbrout/'+'/summary_results_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter)
