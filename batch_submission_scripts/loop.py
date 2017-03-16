@@ -4,8 +4,8 @@ import numpy as np
 import time
 
 allindexes = range(0,50)
-#filts = ['g','r','i','z']
-filts = ['g']
+filts = ['g','r','i','z']
+#filts = ['g']
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
@@ -15,7 +15,7 @@ for i in allindexes:
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
-            '#SBATCH --partition=shared\n' +
+            '#SBATCH --partition=scavange\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
