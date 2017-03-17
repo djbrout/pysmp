@@ -3818,7 +3818,7 @@ class smp:
                     galmodel = galmodel
                     , modelvec = modelvec
                     , galstd = galstd*0 + .5
-                    , modelstd = modelstd*4.
+                    , modelstd = modelstd*6.
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
