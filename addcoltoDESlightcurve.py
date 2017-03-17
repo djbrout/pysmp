@@ -3,8 +3,8 @@ import numpy as np
 import os
 
 def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fakemag):
-    #if not os.path.exists(saveloc):
-    #    os.makedirs(saveloc)
+    if not os.path.exists(saveloc):
+        os.makedirs(saveloc)
     savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
     origfile = open(lightcurvefile,'r')
     lines = origfile.readlines()
@@ -24,8 +24,8 @@ def addtolightcurve(lightcurvefile,saveloc,column_name,filt,mjd,flux,fluxerr,fak
             ww = (mjd == tmjd) & (filt == band)
             if fluxerr[ww] > 0:
                 line = line.strip()+' '+str(round(flux[ww][0],2))+' '+str(round(fluxerr[ww][0],2))+' '+str(round(fakemag[ww][0],3))+'\n'
-            else:
-                line = line.strip()+' -999 -999 -999\n'
+            #else:
+            #    line = line.strip()+' -999 -999 -999\n'
         savefile.write(line)
         #print line
     savefile.close()
