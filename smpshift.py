@@ -1363,7 +1363,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 5000:
+            if cccc > 5:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3084,9 +3084,9 @@ class smp:
         print np.where([smp_dict['mjd_flag'] == 1])
         print len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)])
         #raw_input()
-        if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
-            raise ValueError(
-                "Not enough epochs without SN flux ( > 1 )")
+        # if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
+        #     raise ValueError(
+        #         "Not enough epochs without SN flux ( > 1 )")
 
         meanstarras = {}
         meanstardecs = {}
