@@ -41,6 +41,7 @@ GEWEKE COVARIANCE
 import numpy as np
 #import scipy.ndimage
 import scipy.signal
+import scipy.misc
 import scipy.ndimage as nd
 #from . import Matplot, flib
 #from .utils import autocorr, autocov
@@ -2017,16 +2018,19 @@ class metropolis_hastings():
         return out
 
     def pixelate(self,matrix,pixelation_factor):
-        scipy.misc.imresize(lanczos)
+        zmatrix = scipy.misc.imresize(matrix, 1/float(pixelation_factor),interp='lanczos')
         #zmatrix = nd.interpolation.zoom(matrix, 1./float(pixelation_factor))
 
         return zmatrix
     
     def unpixelate(self,matrix,pixelation_factor,substamp):
-        bigmat = nd.interpolation.zoom(matrix, float(pixelation_factor))
+        #bigmat = nd.interpolation.zoom(matrix, float(pixelation_factor))
+        bigmat = scipy.misc.imresize(matrix, float(pixelation_factor),interp='lanczos')
+
         if bigmat.shape[0] == substamp:
             outmat = bigmat
         else:
+            print 'padding'
             outmat = self.pad(bigmat,substamp)
         return outmat
 
