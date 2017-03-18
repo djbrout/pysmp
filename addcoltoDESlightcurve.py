@@ -73,7 +73,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 #print line
         savefile.write(wline)
     savefile.close()
-    raw_input()
+    #raw_input()
 
 
 
