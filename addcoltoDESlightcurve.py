@@ -47,9 +47,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     for line in lines:
         #print len(line.replace('#', '').split()),line
         wline = line
-        if saveinplace:
-            print len(line.replace('#', '').split()),line
-            raw_input()
+        #if saveinplace:
+        #    print len(line.replace('#', '').split()),line
+        #    #raw_input()
         if len(line.replace('#','').split()) == 26:
             continue
         elif line.split(' ')[0] == 'VARNAMES:':
@@ -62,7 +62,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             tmjd = round(float(line.split()[3]),2)
             band = line.split()[4]
             ww = (np.round(mjd,2) == tmjd) & (filt == band)
-            print len(fluxerr[ww])
+            #print len(fluxerr[ww])
             if len(fluxerr[ww]) == 1:
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(zptrms[ww][0], 3))+\
