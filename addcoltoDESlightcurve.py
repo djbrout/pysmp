@@ -112,7 +112,10 @@ if __name__ == "__main__":
             if 'starfits' in sn:
                 continue
             lcfile = lcdir+'/'+sn+'.dat'
-            smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            if not filt is None:
+                smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            else:
+                smpfile = resultsdir+'/lightcurves/'+sn+'_g.smp'
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
