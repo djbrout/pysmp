@@ -43,15 +43,14 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     #zp = np.array(zp)
     for line in lines:
-        #print line
+        print len(line.replace('#', '').split()),line
+
         if len(line.replace('#','').split()) == 44:
             continue
         elif line.split(' ')[0] == 'VARNAMES:':
             line = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_ZPT_RMS SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
             #print line
-            print len(line.replace('#', '').split())
-
             if filt is None:
                 line = line.strip() + ' -999 -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
@@ -67,6 +66,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                        ' ' + str(fix[ww][0]) + ' ' + str(flag[ww][0]) + '\n'
 
                 #print line
+        raw_input()
         savefile.write(line)
     savefile.close()
 
