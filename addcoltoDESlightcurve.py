@@ -48,6 +48,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #print len(line.replace('#', '').split()),line
         if saveinplace:
             print len(line.replace('#', '').split()),line
+            raw_input()
         if len(line.replace('#','').split()) == 26:
             continue
         elif line.split(' ')[0] == 'VARNAMES:':
