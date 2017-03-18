@@ -54,7 +54,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         elif line.split(' ')[0] == 'VARNAMES:':
             line = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_ZPT_RMS SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
-            print len(line.replace('#', '').split())
+            #print len(line.replace('#', '').split())
             if filt is None:
                 line = line.strip() + ' -999 -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
