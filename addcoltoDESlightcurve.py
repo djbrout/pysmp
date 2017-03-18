@@ -122,7 +122,7 @@ if __name__ == "__main__":
     for i, filt in enumerate(filts):
         sne = os.listdir(resultsdir+'/SNe')
 
-        for sn in sne:
+        for sn in sne[:1]:
             if 'starfits' in sn:
                 continue
             lcfile = lcdir+'/'+sn+'.dat'
@@ -148,7 +148,7 @@ if __name__ == "__main__":
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
 
-    os.system('cd '+resultsdir+'; tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir+'/')
+    os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir+'/')
 
 
 #addtolightcurve('testlc.dat','./testdats/','testcol',,[888,777,000,111],[8,8,8,8],[31.,31.,31.,31.])
