@@ -81,7 +81,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
     resultsdir = '/project/projectdirs/des/djbrout/spec4/'
 
-    savelcdir = resultsdir+'/spec_1_0'
+    savelcdir = resultsdir+'spec_1_0'
 
 
 
