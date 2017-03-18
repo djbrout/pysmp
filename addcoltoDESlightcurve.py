@@ -50,14 +50,14 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #if saveinplace:
         #    print len(line.replace('#', '').split()),line
         #    #raw_input()
-        if len(line.replace('#','').split()) == 26:
+        if len(line.replace('#','').split()) == 25:
             pass
         elif line.split(' ')[0] == 'VARNAMES:':
-            wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_ZPT_RMS SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
+            wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
             #print len(line.replace('#', '').split())
             if filt is None:
-                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999\n'
+                wline = line.strip() + ' -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
             tmjd = round(float(line.split()[3]),2)
             band = line.split()[4]
@@ -65,7 +65,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             #print len(fluxerr[ww])
             if len(fluxerr[ww]) == 1:
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
-                       ' 31. '+str(round(zptrms[ww][0], 3))+\
+                       ' 31. '+\
                        ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(sky[ww][0], 3)) + ' ' + str(round(skyerr[ww][0], 3)) + \
                        ' ' + str(fix[ww][0]) + ' ' + str(flag[ww][0]) + '\n'
