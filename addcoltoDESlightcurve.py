@@ -43,7 +43,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     #zp = np.array(zp)
     for line in lines:
-        #print len(line.replace('#', '').split()),line
+        print len(line.replace('#', '').split()),line
 
         if len(line.replace('#','').split()) == 26:
             continue
