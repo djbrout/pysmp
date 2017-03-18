@@ -55,7 +55,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             tmjd = round(float(line.split()[3]),2)
             band = line.split()[4]
             ww = (np.round(mjd,2) == tmjd) & (filt == band)
-            print len(fluxerr[ww])
+            #print len(fluxerr[ww])
             if len(fluxerr[ww]) == 1:
                 line = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(zptrms[ww][0], 3))+\
@@ -63,7 +63,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                        ' ' + str(round(sky[ww][0], 3)) + ' ' + str(round(skyerr[ww][0], 3)) + \
                        ' ' + str(fix[ww][0]) + ' ' + str(flag[ww][0]) + '\n'
 
-                print line
+                #print line
         savefile.write(line)
     savefile.close()
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],filt=filt,saveinplace=inplace)
             print 'SAVED SUCCESSFULLY',filt,savelcfile,
-            raw_input()
+            #raw_input()
 
 
 
