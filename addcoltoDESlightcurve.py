@@ -122,10 +122,13 @@ if __name__ == "__main__":
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
 
-            addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
+            try:
+                addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],filt=filt,saveinplace=inplace)
-            print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+                print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+            except:
+                print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
 
 
