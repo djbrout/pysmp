@@ -3817,8 +3817,8 @@ class smp:
             aaa = mcmc3.metropolis_hastings(
                     galmodel = galmodel
                     , modelvec = modelvec
-                    , galstd = galstd*0 + .5
-                    , modelstd = modelstd*6.
+                    , galstd = galstd*0 + .6
+                    , modelstd = modelstd*2.
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
@@ -3844,7 +3844,7 @@ class smp:
                     , outpath = outimages
                     , compressionfactor = 100
                     , fix_gal_model = fixgal
-                    , pixelate_model = 2.
+                    , pixelate_model = 2.7
                     , burnin = .5
                     , lcout = os.path.join(self.lcfilepath,filename)
                     , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
