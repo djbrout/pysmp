@@ -122,6 +122,7 @@ if __name__ == "__main__":
             addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],filt=filt,saveinplace=inplace)
+            print 'SAVED SUCCESSFULLY',filt,savelcfile,
             raw_input()
 
 
