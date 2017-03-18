@@ -1011,7 +1011,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax1 = plt.subplot(gs[0])
     # ax2 = plt.subplot(gs[1])
 
-    ww = (flux != 0.) & (dpmjd > 300.) & (fluxerr >0.) & (np.isfinite(flux)) & \
+    ww = (flux != 0.) & (dpmjd > 100.) & (fluxerr >0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.)
 
     #ww = (flux != 0) & (fakeflux < 1.)
