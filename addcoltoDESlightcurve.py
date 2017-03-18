@@ -132,6 +132,8 @@ if __name__ == "__main__":
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
+            print sndata.keys()
+            raw_input()
 
             if True:
                 addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
