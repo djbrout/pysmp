@@ -49,15 +49,15 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             line = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_ZPT_RMS SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
             print line
-
             if filt is None:
                 line = line.strip() + ' -999 -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
             tmjd = round(float(line.split()[3]),3)
             band = line.split()[4]
             ww = (np.round(mjd,3) == tmjd) & (filt == band)
-            if fluxerr[ww] > 0:
-                line = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
+            #print
+            #if fluxerr[ww] > 0:
+            line = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(zptrms[ww][0], 3))+\
                        ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(sky[ww][0], 3)) + ' ' + str(round(skyerr[ww][0], 3)) + \
