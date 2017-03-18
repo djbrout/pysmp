@@ -320,8 +320,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
-            print data['FLUXERR']
-            raw_input()
+            #print data['FLUXERR']
+            #raw_input()
             bigdata['FakeMag'].extend(fakemag)
             bigdata['FitZPT'].extend(data['ZPT'])
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
@@ -502,7 +502,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
 
-    fakeflux = 10**(.4*(31. - fakemag))
+    #fakeflux = 10**(.4*(31. - fakemag))
 
 
     #diffimflux *= 10**(.4*(31. - oldfakezpt))
@@ -512,8 +512,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #     print fm,ff,fl
     #raw_input()
     fakefluxo = copy(fakeflux)
-    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
-    fluxerr *= 10**(-1*.4*(fitzpt - fakezpt))
+    #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    #fluxerr *= 10**(-1*.4*(fitzpt - fakezpt))
     sky *= 10**(.4*(31-fitzpt))
 
     # plt.clf()
@@ -913,8 +913,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakezpt = np.asarray(fakezpt)
     rmsaddin = np.asarray(rmsaddin)
     fakeflux = 10 ** (.4 * (31. - fakemag))
-    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
-    fluxerr *= 10**(.4*(fitzpt - fakezpt))
+    #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    #fluxerr *= 10**(.4*(fitzpt - fakezpt))
     dpmjd=np.array(dpmjd)
 
     #fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
@@ -1016,9 +1016,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         if f > 0.:
             print f,fe
 
-    raw_input()
+    #raw_input()
 
-    ww = (flux != 0.) & (dpmjd > 100.) & (fluxerr >0.) & (np.isfinite(flux)) & \
+    ww = (flux != 0.) & (dpmjd > 280.) & (fluxerr >0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.)
 
     #ww = (flux != 0) & (fakeflux < 1.)
