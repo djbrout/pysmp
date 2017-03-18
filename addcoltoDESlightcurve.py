@@ -10,7 +10,6 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         os.makedirs(os.path.basename(saveloc))
 
     if saveinplace:
-        print 'inplace'
         origfile = open(saveloc, 'r')
         lines = origfile.readlines()
         origfile.close()
@@ -81,7 +80,7 @@ if __name__ == "__main__":
 
 
 
-    filts = ['g','r','i','z',None]
+    filts = ['g','r','i','z']
 
     import sys, getopt
 
