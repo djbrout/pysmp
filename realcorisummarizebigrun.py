@@ -1010,6 +1010,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # gs = gridspec.GridSpec(1, 3, width_ratios=[4, 1])
     # ax1 = plt.subplot(gs[0])
     # ax2 = plt.subplot(gs[1])
+    for f, fe in zip(flux,fluxerr):
+        if f > 0.:
+            print f,fe
+
+    raw_input()
 
     ww = (flux != 0.) & (dpmjd > 100.) & (fluxerr >0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.)
