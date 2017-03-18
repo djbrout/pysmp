@@ -107,7 +107,7 @@ if __name__ == "__main__":
             inplace = False
             if i > 0: inplace = True
             print open(smpfile).readlines()
-            sndata = dt.readcol(smpfile,0,1)
+            sndata = dt.readcol(smpfile,1,2)
             print sndata.keys()
             raw_input()
             #addtolightcurve(lcfile,savelcfile,)
