@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
 
 
-    filts = ['g','r','i','z']
+    filts = ['g','r','i','z',None]
 
     import sys, getopt
 
