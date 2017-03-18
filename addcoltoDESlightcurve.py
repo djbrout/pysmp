@@ -4,7 +4,7 @@ import os
 from copy import copy
 import dilltools as dt
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr,flag,zptrms,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptrms,filt=None,saveinplace=False):
 
     if not os.path.exists(saveloc):
         os.makedirs(saveloc)
