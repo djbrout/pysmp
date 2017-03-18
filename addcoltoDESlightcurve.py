@@ -6,8 +6,8 @@ import dilltools as dt
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,filt=None,saveinplace=False):
 
-    if not os.path.exists(saveloc):
-        os.makedirs(saveloc)
+    if not os.path.exists(os.path.basename(saveloc)):
+        os.makedirs(os.path.basename(saveloc))
 
     if saveinplace:
         origfile = open(saveloc, 'r')
