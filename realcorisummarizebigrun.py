@@ -502,7 +502,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
 
-    #fakeflux = 10**(.4*(31. - fakemag))
+    fakeflux = flux*0.
 
 
     #diffimflux *= 10**(.4*(31. - oldfakezpt))
