@@ -571,7 +571,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     dc99 = d[fm > 90.]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
-    ww = (flux != 0.) & (dpmjd > 300.)#(fakemag < 28.5) & (flux != 0.)
+    ww = (flux != 0.) & (dpmjd > 250.)#(fakemag < 28.5) & (flux != 0.)
     plt.clf()
     # fig = plt.figure(figsize=(15, 10))
     #
@@ -996,7 +996,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     dc = d[abs(d) < 3.]
 
-    dc99 = d[(dpmjd > 300.) & (chisqarr > .5) & (chisqarr < 1.4)]
+    dc99 = d[(dpmjd > 250.) & (chisqarr > .5) & (chisqarr < 1.4)]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
     rms992 = np.std(dc99[abs(dc99) < 3.])
@@ -1457,7 +1457,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # plt.savefig('stdresid.png')
 
         # plt.clf()
-        ww = (flux!=0) & (dpmjd>300.)
+        ww = (flux!=0) & (dpmjd>250.)
         ax1.scatter(hostmag[ww], d[ww], alpha=.3, color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1), window=1.5)
         ax1.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
