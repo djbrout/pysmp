@@ -4,7 +4,7 @@ import os
 from copy import copy
 import dilltools as dt
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptrms,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,filt=None,saveinplace=False):
 
     if not os.path.exists(saveloc):
         os.makedirs(saveloc)
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
             addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
-                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],filt=filt,saveinplace=inplace)
+                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['flag'],filt=filt,saveinplace=inplace)
             print 'SAVED SUCCESSFULLY',filt,savelcfile,
             raw_input()
 
