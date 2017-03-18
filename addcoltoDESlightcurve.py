@@ -18,7 +18,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         lines = origfile.readlines()
         origfile.close()
 
-    savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
+    savefile = open(saveloc,'w')
 
 
 
