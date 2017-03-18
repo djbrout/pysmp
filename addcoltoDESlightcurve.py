@@ -2,6 +2,7 @@
 import numpy as np
 import os
 from copy import copy
+import dilltools as dt
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr,filt=None,saveinplace=False):
 
@@ -98,11 +99,18 @@ if __name__ == "__main__":
             if 'starfits' in sn:
                 continue
             lcfile = lcdir+'/'+sn+'.dat'
-            print lcfile
             smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
-            print smpfile
+            savelcfile = savelcdir+'/'+sn+'_smp.dat'
+            if not os.path.exists(smpfile):
+                print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+                continue
+            inplace = False
+            if i > 0: inplace = True
 
-
+            sndata = dt.read(smpfile,0,1)
+            print sndata.keys()
+            raw_input()
+            #addtolightcurve(lcfile,savelcfile,)
         raw_input()
 
 
