@@ -13,6 +13,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         origfile = open(saveloc, 'r')
         lines = origfile.readlines()
         origfile.close()
+        print lines
+        raw_input()
     else:
         origfile = open(lightcurvefile, 'r')
         lines = origfile.readlines()
