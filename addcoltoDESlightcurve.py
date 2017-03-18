@@ -142,7 +142,7 @@ if __name__ == "__main__":
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
 
-
+    os.system('cd '+resultsdir+'; tar -xf '+savelcdir.split('/')[-1])
 
 
 #addtolightcurve('testlc.dat','./testdats/','testcol',,[888,777,000,111],[8,8,8,8],[31.,31.,31.,31.])
