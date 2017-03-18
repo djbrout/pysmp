@@ -99,8 +99,8 @@ if __name__ == "__main__":
         elif o in ["--savelcdir"]:
             savelcdir = a
 
-    if not os.path.exists(os.basename(savelcdir)):
-        os.mkdir(os.basename(savelcdir))
+    if not os.path.exists(os.path.basename(savelcdir)):
+        os.mkdir(os.path.basename(savelcdir))
 
     for i, filt in enumerate(filts):
         sne = os.listdir(resultsdir+'/SNe')
