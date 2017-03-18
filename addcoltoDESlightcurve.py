@@ -10,6 +10,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         os.makedirs(os.path.basename(saveloc))
 
     if saveinplace:
+        print 'inplace'
         origfile = open(saveloc, 'r')
         lines = origfile.readlines()
         origfile.close()
