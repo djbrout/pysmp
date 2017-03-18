@@ -99,6 +99,10 @@ if __name__ == "__main__":
                 continue
             lcfile = lcdir+'/'+sn+'.dat'
             print lcfile
+            smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            print smpfile
+
+
         raw_input()
 
 
