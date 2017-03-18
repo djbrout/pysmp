@@ -3,14 +3,17 @@ import numpy as np
 import os
 from copy import copy
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr,filt=None):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr,filt=None,saveinplace=False):
 
     if not os.path.exists(saveloc):
         os.makedirs(saveloc)
 
-    savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
-    origfile = open(lightcurvefile,'r')
+    origfile = open(lightcurvefile, 'r')
     lines = origfile.readlines()
+    origfile.close()
+
+    savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
+
 
 
 
@@ -49,7 +52,50 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr
 
         savefile.write(line)
     savefile.close()
-    origfile.close()
+
+
+
+if __name__ == "__main__":
+    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
+    resultsdir = '/project/projectdirs/des/djbrout/spec4/'
+
+    savelcdir = resultsdir+'/newlc'
+
+
+
+    filts = ['g','r','i','z']
+
+    import sys, getopt
+
+    try:
+        args = sys.argv[1:]
+
+        opt, arg = getopt.getopt(
+            args, "fd:rd:cd:cdf:b",
+            longopts=["lcdir=", "resultsdir=", "savelcdir"])
+
+    except getopt.GetoptError as err:
+        print "No command line argument    s"
+
+    for o, a in opt:
+        if o in ["-h", "--help"]:
+            print __doc__
+            sys.exit(0)
+        elif o in ["--lcdir"]:
+            lcdir = a
+        elif o in ["-rd", "--resultsdir"]:
+            resultsdir = a
+        elif o in ["--savelcdir"]:
+            savelcdir = a
+
+    if not os.path.exists(savelcdir):
+        os.mkdir(savelcdir)
+
+    for i, filt in enumerate(filts):
+        sne = os.listdir(resultsdir+'/SNe')
+        print sne
+        raw_input()
+
 
 
 
