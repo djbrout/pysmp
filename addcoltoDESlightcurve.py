@@ -93,7 +93,10 @@ if __name__ == "__main__":
 
     for i, filt in enumerate(filts):
         sne = os.listdir(resultsdir+'/SNe')
+
         for sn in sne:
+            if 'starfits' in sn:
+                continue
             lcfile = lcdir+'/'+sn+'.dat'
             print lcfile
         raw_input()
