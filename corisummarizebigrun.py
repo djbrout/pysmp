@@ -2076,7 +2076,7 @@ def bindata(x, y, bins, returnn=False):
 
 if __name__ == "__main__":
     fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
-    fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
+    #fakedir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
