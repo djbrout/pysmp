@@ -13,8 +13,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         origfile = open(saveloc, 'r')
         lines = origfile.readlines()
         origfile.close()
-        print lines
-        raw_input()
+        #print lines
+        #raw_input()
     else:
         origfile = open(lightcurvefile, 'r')
         lines = origfile.readlines()
@@ -46,7 +46,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     #zp = np.array(zp)
     for line in lines:
         #print len(line.replace('#', '').split()),line
-
+        if saveinplace:
+            print len(line.replace('#', '').split()),line
         if len(line.replace('#','').split()) == 26:
             continue
         elif line.split(' ')[0] == 'VARNAMES:':
