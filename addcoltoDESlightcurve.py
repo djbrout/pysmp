@@ -4,14 +4,19 @@ import os
 from copy import copy
 import dilltools as dt
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr,flag,zptrms,filt=None,saveinplace=False):
 
     if not os.path.exists(saveloc):
         os.makedirs(saveloc)
 
-    origfile = open(lightcurvefile, 'r')
-    lines = origfile.readlines()
-    origfile.close()
+    if saveinplace:
+        origfile = open(saveloc, 'r')
+        lines = origfile.readlines()
+        origfile.close()
+    else:
+        origfile = open(lightcurvefile, 'r')
+        lines = origfile.readlines()
+        origfile.close()
 
     savefile = open(saveloc+'/'+lightcurvefile.split('/')[-1],'w')
 
@@ -22,22 +27,26 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr
     flux = np.array(flux)
     fluxerr = np.array(fluxerr)
     zpt = np.array(zpt)
+    zptrms = np.array(zptrms)
     chisq = np.array(chisq)
     sky = np.array(sky)
     skyerr = np.array(skyerr)
+
+    flag = np.array(flag,dtype='int')
     fix = copy(flux)
 
     fix[fix == 0.] = int(1)
     fix[fix != 1] = int(0)
+    fix = np.array(fix,dtype='int')
 
 
 
     #zp = np.array(zp)
     for line in lines:
-        if len(line) == 20:
+        if len(line.replace('#','').split(' ')) == 44:
             continue
         elif line.split(' ')[0] == 'VARNAMES:':
-            line = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX\n'
+            line = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_ZPT_RMS SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
             if filt is None:
                 line = line.strip() + ' -999 -999 -999 -999 -999 -999 -999\n'
@@ -47,9 +56,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,chisq,sky,skyerr
             ww = (mjd == tmjd) & (filt == band)
             if fluxerr[ww] > 0:
                 line = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
-                       ' '+str(round(zpt[ww][0], 3))+' '+str(round(chisq[ww][0], 3))+ \
+                       ' 31. '+str(round(zptrms[ww][0], 3))+\
+                       ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(sky[ww][0], 3)) + ' ' + str(round(skyerr[ww][0], 3)) + \
-                       ' ' + str(round(fix[ww][0], 3)) + '\n'
+                       ' ' + str(fix[ww][0]) + ' ' + str(flag[ww][0]) + '\n'
 
         savefile.write(line)
     savefile.close()
@@ -104,14 +114,15 @@ if __name__ == "__main__":
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 continue
+
             inplace = False
             if i > 0: inplace = True
-            print open(smpfile).readlines()
             sndata = dt.readcol(smpfile,1,2)
-            print sndata.keys()
+
+            addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
+                            sndata['ZPT'], sndata['RMSADDIN'],
+                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],filt=filt,saveinplace=inplace)
             raw_input()
-            #addtolightcurve(lcfile,savelcfile,)
-        raw_input()
 
 
 
