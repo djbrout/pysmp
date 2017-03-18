@@ -4,7 +4,7 @@ import os
 from copy import copy
 import dilltools as dt
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
         os.makedirs(os.path.basename(saveloc))
@@ -33,6 +33,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     chisq = np.array(chisq)
     sky = np.array(sky)
     skyerr = np.array(skyerr)
+    zptfiles = np.array(zptfiles,dtype='str')
 
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
@@ -50,10 +51,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #if saveinplace:
         #    print len(line.replace('#', '').split()),line
         #    #raw_input()
-        if len(line.replace('#','').split()) == 25:
+        if len(line.replace('#','').split()) == 27:
             pass
         elif line.split(' ')[0] == 'VARNAMES:':
-            wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
+            wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
             #print len(line.replace('#', '').split())
             if filt is None:
@@ -64,10 +65,15 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             ww = (np.round(mjd,2) == tmjd) & (filt == band)
             #print len(fluxerr[ww])
             if len(fluxerr[ww]) == 1:
+                zptdata = np.load(zptfiles[ww])
+                fit_zpt = zptdata['fit_zpt']
+                fit_zpt_std = zptdata['fit_zpt_std']
+                tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
+                tskyerr = skyerr[ww][0]
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
-                       ' 31. '+\
+                       ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
-                       ' ' + str(round(sky[ww][0], 3)) + ' ' + str(round(skyerr[ww][0], 3)) + \
+                       ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                        ' ' + str(fix[ww][0]) + ' ' + str(flag[ww][0]) + '\n'
 
                 #print line
@@ -133,7 +139,7 @@ if __name__ == "__main__":
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
             try:
-                zptdata = np.load(sndata['ZPTFILE'][0])
+                zptfiles = np.load(sndata['ZPTFILE'][0])
             except:
                 continue
             print zptdata.keys()
@@ -142,7 +148,7 @@ if __name__ == "__main__":
             if True:
                 addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
-                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],filt=filt,saveinplace=inplace)
+                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],filt=filt,saveinplace=inplace)
                 print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
             #except:
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
