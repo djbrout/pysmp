@@ -51,9 +51,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             if filt is None:
                 line = line.strip() + ' -999 -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
-            tmjd = float(line.split()[3])
+            tmjd = round(float(line.split()[3]),3)
             band = line.split()[4]
-            ww = (mjd == tmjd) & (filt == band)
+            ww = (round(mjd,3) == tmjd) & (filt == band)
             if fluxerr[ww] > 0:
                 line = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(zptrms[ww][0], 3))+\
