@@ -47,11 +47,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     for line in lines:
         #print len(line.replace('#', '').split()),line
         wline = line
-        if saveinplace:
-            print len(line.replace('#', '').split()),line
+        #if saveinplace:
+        #    print len(line.replace('#', '').split()),line
         #    #raw_input()
         if len(line.replace('#','').split()) == 26:
-            continue
+            pass
         elif line.split(' ')[0] == 'VARNAMES:':
             wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_ZPT SMP_ZPT_RMS SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
         elif line.split(' ')[0] == 'OBS:':
