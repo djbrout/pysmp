@@ -3245,7 +3245,7 @@ class smp:
         if self.snparams.survey == 'PS1':
             smp_noise[infinitecols] = 0.0
         smp_im[infinitecols] = 0
-        mpparams = np.concatenate((np.zeros(float(params.substamp)**2.),smp_dict['scale'],smp_dict['sky']))
+        mpparams = np.concatenate((np.zeros(int(float(params.substamp)**2.)),smp_dict['scale'],smp_dict['sky']))
 
         mpdict = [{'value':'','step':0,
                   'relstep':0,'fixed':0, 'xtol': 1E-15} for i in range(len(mpparams))]
