@@ -2705,13 +2705,13 @@ class smp:
                             #               np.floor(xsn) - (params.substamp - 1) / 2:np.floor(xsn) + (
                             #                                                                         params.substamp - 1) / 2 + 1]
 
-                            image_stamp = im[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
-                            noise_stamp = (np.sqrt(weights[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.])*scalefactor)**2
+                            image_stamp = im[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
+                                          int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]
+                            noise_stamp = (np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
+                                          int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)])*scalefactor)**2
 
-                            mask_stamp = mask[self.psfcenter[1] - params.substamp/2.:self.psfcenter[1] + params.substamp/2.,
-                                          self.psfcenter[0] - params.substamp/2.:self.psfcenter[0] + params.substamp/2.]
+                            mask_stamp = mask[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
+                                          int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]
                             mask = mask_stamp
                             #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, pkpsf_stamp = 1,1,1,0,100,200,100,200,image_stamp,noise_stamp,image_stamp*0+1,image_stamp*0 + 1
 
@@ -2972,8 +2972,8 @@ class smp:
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
                                     if self.snparams.survey == 'DES':
-                                        smp_dict['psf_centerx'][i] = self.psfcenter[1]
-                                        smp_dict['psf_centery'][i] = self.psfcenter[0]
+                                        smp_dict['psf_centerx'][i] = int(self.psfcenter[1])
+                                        smp_dict['psf_centery'][i] = int(self.psfcenter[0])
 
                                     smp_dict['gain'][i] = self.gain
                                     if self.snparams.survey == 'PS1':
@@ -5586,8 +5586,8 @@ class smp:
                         #image_stamp = im[np.floor(y+.5) - (params.substamp) / 2:np.floor(y+.5) + (params.substamp ) / 2 ,
                         #               np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
 
-                        image_stamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-                        gnoise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
+                        image_stamp = im[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)]
+                        #gnoise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
@@ -5671,11 +5671,11 @@ class smp:
                         #if usesextractorim:
                         self.dosextractor = False
                         if self.dosextractor:
-                            bkgrndstamp =  bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + \
-                                           np.mean(bkgrnd[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
-                            sein =np.mean(bkgrndrms[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15].ravel())
+                            bkgrndstamp =  bkgrnd[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)]*0. + \
+                                           np.mean(bkgrnd[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)].ravel())
+                            sein =np.mean(bkgrndrms[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)].ravel())
                         else:
-                            bkgrndstamp = im[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]*0. + sin
+                            bkgrndstamp = im[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)]*0. + sin
                             #se_in = se
 
 
