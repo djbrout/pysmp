@@ -58,7 +58,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         elif line.split(' ')[0] == 'OBS:':
             #print len(line.replace('#', '').split())
             if filt is None:
-                wline = line.strip() + ' -999 -999 -999 -999 -999 -999\n'
+                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
             tmjd = round(float(line.split()[3]),2)
             band = line.split()[4]
