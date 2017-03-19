@@ -417,10 +417,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             key = l.split(':')[0]
             if key == 'HOSTGAL_SB_FLUXCAL':
                 if filt == filter:
-                    if float(l.split()[arg]) <= 0.:
+                    if float(l.split()[int(arg)]) <= 0.:
                         hgf = 1.
                     else:
-                        hgf = float(l.split()[arg])
+                        hgf = float(l.split()[int(arg)])
                     hostmag = 27.5 - 2.5 * np.log10(hgf)
         #print 'hostmag',hostmag
         #raw_input()
