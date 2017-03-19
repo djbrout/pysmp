@@ -215,7 +215,7 @@ class metropolis_hastings():
         self.dosave = dosave
         self.lcout = lcout
         self.chainsnpz = chainsnpz
-        self.acceptance_vec = np.zeros(maxiter+1,dtype='int')
+        self.acceptance_vec = np.zeros(int(maxiter+1),dtype='int')
         self.convolvegal = convolvegal
         self.useskyerr = useskyerr
         self.usesimerr = usesimerr
