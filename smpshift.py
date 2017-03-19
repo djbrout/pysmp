@@ -2588,21 +2588,21 @@ class smp:
                     stampsize = 256
 
                     if ysn-stampsize < 0:
-                        ylow = 0
+                        ylow = int(0)
                     else:
-                        ylow = ysn-stampsize
+                        ylow = int(ysn-stampsize)
                     if ysn+stampsize>im.shape[0]:
-                        yhi = im.shape[0]-1
+                        yhi = int(im.shape[0]-1)
                     else:
-                        yhi = ysn+stampsize
+                        yhi = int(ysn+stampsize)
                     if xsn-stampsize < 0:
-                        xlow = 0
+                        xlow = int(0)
                     else:
-                        xlow = xsn-stampsize
+                        xlow = int(xsn-stampsize)
                     if xsn+stampsize>im.shape[1]:
-                        xhi = im.shape[1]-1
+                        xhi = int(im.shape[1]-1)
                     else:
-                        xhi = xsn+stampsize
+                        xhi = int(xsn+stampsize)
 
                     mean,st,vals = sigma_clip.meanclip(im[ylow:yhi,xlow:xhi],clipsig = 4, maxiter = 8)
 
@@ -5595,21 +5595,21 @@ class smp:
                         ysn = psfcenter[0]
                         xsn = psfcenter[1]
                         if ysn - stampsize < 0:
-                            ylow = 0
+                            ylow = int(0)
                         else:
-                            ylow = ysn - stampsize
+                            ylow = int(ysn - stampsize)
                         if ysn + stampsize > im.shape[0]:
-                            yhi = im.shape[0] - 1
+                            yhi = int(im.shape[0] - 1)
                         else:
-                            yhi = ysn + stampsize
+                            yhi = int(ysn + stampsize)
                         if xsn - stampsize < 0:
-                            xlow = 0
+                            xlow = int(0)
                         else:
-                            xlow = xsn - stampsize
+                            xlow = int(xsn - stampsize)
                         if xsn + stampsize > im.shape[1]:
-                            xhi = im.shape[1] - 1
+                            xhi = int(im.shape[1] - 1)
                         else:
-                            xhi = xsn + stampsize
+                            xhi = int(xsn + stampsize)
 
                         #sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
                         sin = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel())
