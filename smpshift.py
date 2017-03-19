@@ -443,7 +443,8 @@ class smp:
             else:
                 os.makedirs(self.zptstamps)
 
-        print snparams.nvalid,params.substamp
+        #print snparams.nvalid,params.substamp
+        params.substamp = int(params.substamp)
         smp_bkg = np.zeros([snparams.nvalid,params.substamp,params.substamp])
 
         smp_im = np.zeros([snparams.nvalid,params.substamp,params.substamp])
