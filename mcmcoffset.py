@@ -2018,14 +2018,14 @@ class metropolis_hastings():
         return out
 
     def pixelate(self,matrix,pixelation_factor):
-        #zmatrix = scipy.misc.imresize(matrix, 1/float(pixelation_factor),interp='lanczos')
-        zmatrix = nd.interpolation.zoom(matrix, 1./float(pixelation_factor))
+        zmatrix = scipy.misc.imresize(matrix, 1/float(pixelation_factor),interp='lanczos')
+        #zmatrix = nd.interpolation.zoom(matrix, 1./float(pixelation_factor))
 
         return zmatrix
     
     def unpixelate(self,matrix,pixelation_factor,substamp):
-        bigmat = nd.interpolation.zoom(matrix, float(pixelation_factor))
-        #bigmat = scipy.misc.imresize(matrix, float(pixelation_factor),interp='lanczos')
+        #bigmat = nd.interpolation.zoom(matrix, float(pixelation_factor))
+        bigmat = scipy.misc.imresize(matrix, float(pixelation_factor),interp='lanczos')
 
         if bigmat.shape[0] == substamp:
             outmat = bigmat
