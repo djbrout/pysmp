@@ -7,9 +7,38 @@ except:
     pass
 
 def build(psffile, x, y, stampsize,psfexworked=True):
-    a = psfex.PSFEx(psffile)
-    im = a.get_rec(y, x)[3:-4, 3:-4]
-    im /= np.sum(im.ravel())
+    try:
+        a = psfex.PSFEx(psffile)
+        im = a.get_rec(y, x)[3:-4, 3:-4]
+        im /= np.sum(im.ravel())
+    except:
+
+        print "dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
+                                                                            stampsize)
+
+        psf = os.popen("dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
+                                                                                     stampsize)).readlines()
+
+        ix, iy, psfval = [], [], []
+        for line in psf:
+            # print line
+            line = line.replace('\n', '')
+            if line.startswith('PSF:'):
+                linelist = line.split()
+                ix += [int(linelist[1])];
+                iy += [int(linelist[2])];
+                psfval += [float(linelist[5])]
+            elif line.startswith("IMAGE_CENTER"):
+                linelist = line.split()
+                IMAGE_CENTERX = float(linelist[1]);
+                IMAGE_CENTERY = float(linelist[2])
+
+        ix, iy, psfval = np.array(ix), np.array(iy), np.array(psfval)
+        im = np.zeros((stampsize, stampsize))
+        for x, y, p in zip(ix, iy, psfval):
+            im[y, x] = p
+
+
     return im, (round(x), round(y))
 
 
