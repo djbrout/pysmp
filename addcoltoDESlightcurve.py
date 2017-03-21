@@ -34,7 +34,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     sky = np.array(sky)
     skyerr = np.array(skyerr)
     zptfiles = np.array(zptfiles,dtype='str')
-    idobs = np.array(idobs,dtype='str')
+    idobs = np.array(idobs)
 
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
