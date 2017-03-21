@@ -64,7 +64,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             tmjd = float(line.split()[3])
             band = line.split()[4]
             texpnum = line.split()[12].split('/')[2].split('_')[1]
-            tidobs = line.split()[1]
+            tidobs = float(line.split()[1])
             ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
             #ww = np.core.defchararray.find(expnums, texpnum) != -1
             #print mjd,tmjd
