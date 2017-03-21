@@ -60,9 +60,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             if filt is None:
                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999\n'
             id = int(line.split()[1])
-            tmjd = round(float(line.split()[3]),3)
+            tmjd = float(line.split()[3])
             band = line.split()[4]
-            ww = (np.round(mjd,3) == tmjd) & (filt == band)
+            ww = np.isclose(mjd,tmjd,atol=0.001) & (filt == band)
             #print len(fluxerr[ww])
             if len(fluxerr[ww]) == 1:
                 zptdata = np.load(zptfiles[ww][0])
