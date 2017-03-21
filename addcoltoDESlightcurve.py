@@ -4,7 +4,7 @@ import os
 from copy import copy
 import dilltools as dt
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,expnums,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
         os.makedirs(os.path.basename(saveloc))
@@ -34,6 +34,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     sky = np.array(sky)
     skyerr = np.array(skyerr)
     zptfiles = np.array(zptfiles,dtype='str')
+    expnums = np.array(expnums,dtype='str')
 
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
@@ -62,7 +63,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             id = int(line.split()[1])
             tmjd = float(line.split()[3])
             band = line.split()[4]
-            ww = np.isclose(mjd,tmjd,atol=0.001) & (filt == band)
+            texpnum = line.split()[12].split('/')[2].split('_')[1]
+            #ww = np.isclose(mjd,tmjd,atol=0.001) & (filt == band)
+            ww = np.core.defchararray.find(expnums, texpnum) != -1
             print mjd,tmjd
             raw_input()
             #print len(fluxerr[ww])
@@ -144,7 +147,8 @@ if __name__ == "__main__":
             if True:
                 addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
-                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],filt=filt,saveinplace=inplace)
+                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
+                                sndata['EXPNUM'],filt=filt,saveinplace=inplace)
                 print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
             #except:
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
