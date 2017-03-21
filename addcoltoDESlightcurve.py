@@ -62,7 +62,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             id = int(line.split()[1])
             tmjd = round(float(line.split()[3]),3)
             band = line.split()[4]
-            ww = (np.round(mjd,2) == tmjd) & (filt == band)
+            ww = (np.round(mjd,3) == tmjd) & (filt == band)
             #print len(fluxerr[ww])
             if len(fluxerr[ww]) == 1:
                 zptdata = np.load(zptfiles[ww][0])
