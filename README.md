@@ -35,12 +35,10 @@
 python smpshift.py --index=$1 --nozpt
 ```
 
-### Submitting multiple fits
-
 Submit to your favorite batch grid system with each job containing a different --index=$1 .
 
 
-Afterwards you will run the following commands to summarize your jobs and regenerate lightcurves with SMP fluxes.
+Afterwards you will run the following command to regenerate lightcurves with SMP fluxes in a new directory! (dont overwrite old lightcurves!)
 
 ```
 python addcoltoDESlightcurve.py --lcdir=/path/to/new/lc/files --resultsdir=/path/to/smp/results
@@ -48,7 +46,19 @@ python addcoltoDESlightcurve.py --lcdir=/path/to/new/lc/files --resultsdir=/path
 
 ## Example output lightcurve file
 
-Will contain the original lightcurve file structure with the addition of several columns
+Contains the original forced photometry lightcurve file structure with the addition of several columns
+```
+SMP_FLUX - fit flux (at zpt of 31)
+SMP_FLUXERR - fit flux error (at zpt of 31)
+SMP_FLUX_ZPT - zeropoint of smp flux (always 31)
+SMP_FIT_ZPT - smp fit zeropoint which is used to scale all fluxes to 31
+SMP_FIT_ZPT_STD - uncertainty in smp fit zeropoint which is used to scale all fluxes to 31
+SMP_CHISQ - (sim_stamp - image_stamp)^2/(err)^2
+SMP_SKY - fit value for the sky
+SMP_SKYERR - uncertainty in the sky
+SMP_FIX - 1 means SN flux was fixed to zero in smp fit
+SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline
+```
+(just to be clear: ALL FLUXES, SKYS, SKYERRS, ETC... ARE REPORTED AT A ZEROPOINT OF 31)
 
-* asdf
-* asdf
+-999 means missing data
