@@ -26,6 +26,7 @@
 #### Inside default.param
 * SN_PLUS_GALMODEL_STEPS: 500000
 * SN_SHIFT_STD: 0.0001
+* SN_FLUX_PROPOSAL_MULT: 2. # Proposal STD is sqrt(diffim_flux)*SN_FLUX_PROPOSAL_DIV
 * GALMODEL_PROPOSAL_STD: .6
 
 
