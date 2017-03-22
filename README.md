@@ -23,7 +23,12 @@
 * FRA: 40.514263
 * FDEC: -1.630960
 ### MCMC Knobs
+
 #### Inside default.param
+* --doremap: will use Galsim to remap the galaxy model to the WCS grid of each nights image (SLOW but recommended for final photometry).
+
+#### Inside default.param
+* GALMODEL_PIXELATION_FACTOR: 2. # NO pixelation = 1.
 * SN_PLUS_GALMODEL_STEPS: 500000
 * SN_SHIFT_STD: 0.0001
 * SN_FLUX_PROPOSAL_MULT: 2. # Proposal STD is sqrt(diffim_flux)*SN_FLUX_PROPOSAL_DIV
