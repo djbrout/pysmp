@@ -3882,7 +3882,9 @@ class smp:
             if self.fermilog:
                 self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
             #sys.exit()
-            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params()
+            modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof  = aaa.get_params()
+            fitprob = dt.fitprobfromchisq(chisqs,ndof)
+            print fitprob
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(npoutdir,filename+'_withSn.npz')
 
@@ -4113,12 +4115,12 @@ class smp:
             tmp = smplightcurvefile
         fout = open(tmp, 'w')
         print >> fout, '# MJD DPMJD ID_OBS ID_COADD BAND ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
-                       'XPOS YPOS XOFF YOFF RA DEC CHI2 ' \
+                       'XPOS YPOS XOFF YOFF RA DEC CHI2 NDOF ' \
                        'SMP_FLAG MJD_FLAG SKY SKYERR RMSADDIN ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.3f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
+            print >> fout, '%.5f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
                            '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i],float(smp_dict['mjd'][i])-snparams.peakmjd, smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
                                 smp_dict['zpt'][i], smp_dict['zpterr'][i],
@@ -4126,7 +4128,7 @@ class smp:
                                 smp_dict['diffim_flux'][i],smp_dict['diffim_fluxerr'][i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
-                                chisqs[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
+                                chisqs[i], ndof[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
                                 smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],

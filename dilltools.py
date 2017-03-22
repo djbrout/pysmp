@@ -3,6 +3,7 @@ import pyfits as pf
 import os
 import scipy.signal
 import scipy.ndimage as nd
+import scipy.stats
 import sys
 
 #hello from fermilab2
@@ -36,6 +37,9 @@ def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
         return xvals, medians, mads, nums
     return xvals, medians, mads
 
+
+def fitprobfromchisq(x,df):
+    scipy.stats.chisquare(x,ddof=df)
 
 def binrms(x, y, bins,rad):
     medians = np.zeros(len(bins) - 1)
