@@ -1270,11 +1270,16 @@ class metropolis_hastings():
                 continue
             #fig = plt.figure(figsize=(20, 10))
             plt.clf()
-            axgm = plt.subplot(151)
-            axim = plt.subplot(152)
-            axpsf = plt.subplot(153)
-            axdiff = plt.subplot(154)
-            axchi = plt.subplot(155)
+            axgm = plt.subplot(251)
+            axim = plt.subplot(252)
+            axpsf = plt.subplot(253)
+            axdiff = plt.subplot(254)
+            axchi = plt.subplot(255)
+            axchi2 = plt.subplot(256)
+            axchi3 = plt.subplot(257)
+            axchi4 = plt.subplot(258)
+            axdiff2 = plt.subplot(259)
+
             for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
                 ax.set_title(title)
             if not self.pixelate_model is None:
@@ -1301,6 +1306,19 @@ class metropolis_hastings():
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
             plt.title(title)
+            chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask
+            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=(0,2,.02))
+            xchi = []
+            ychi = []
+            for jk in range(self.sims[i].shape[0]):
+                xchi.append(np.mean(chiarr[jk,:][self.mask[jk,:] > 0]))
+                ychi.append(np.mean(chiarr[:,jk][self.mask[:,jk] > 0]))
+
+            axs = axchi3.plot(xchi)
+            axs = axchi4.plot(ychi)
+            #axchi3.set_ylim()
+            axdiff2.hist(resid[resid!=0.])
+
             pdf_pages.savefig(fig)
         pdf_pages.close()
         plt.close()
