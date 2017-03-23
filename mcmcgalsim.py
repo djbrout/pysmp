@@ -215,6 +215,11 @@ class metropolis_hastings():
         self.fitradius = fitradius
         #radius = self.galmodel.shape[0]/2.
 
+        if self.flags[np.argmin(self.skysig)] == 0:
+
+        self.baseim = galsim.fits.read(self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0])
+
+
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
 
@@ -273,7 +278,7 @@ class metropolis_hastings():
                 des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
                 thispsf = des_psfex.getPSF(stamp_center)
 
-                im = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
+                im = self.basim[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1)]
 
                 #self.data[i,:,:] = im.array
