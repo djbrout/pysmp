@@ -215,7 +215,6 @@ class metropolis_hastings():
         self.fitradius = fitradius
         #radius = self.galmodel.shape[0]/2.
 
-        if self.flags[np.argmin(self.skysig)] == 0:
 
         self.baseim = galsim.fits.read(self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0])
 
