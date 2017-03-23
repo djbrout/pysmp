@@ -330,7 +330,7 @@ class metropolis_hastings():
         #print galsim.GSParams().__dict__
         #raw_input()
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000,folding_threshold=1.e-1,maxk_threshold=1.e-1)
-        self.psfparams = galsim.GSParams(maximum_fft_size=20240,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
+        self.psfparams = galsim.GSParams(maximum_fft_size=20240,kvalue_accuracy=1.e-1,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
         self.kicked_snraoff = copy(self.snraoff)
         self.kicked_sndecoff = copy(self.sndecoff)
@@ -766,7 +766,7 @@ class metropolis_hastings():
 
                     #print 'convolving'
                     #t4 = time.time()
-                    conv = galsim.Convolve(total_model,self.psfs[epoch],gsparams=self.big_fft_params)
+                    conv = galsim.Convolve(total_model,self.psfs[epoch],gsparams=self.psfparams)
 
                     #print 'drawing'
                     #t5 = time.time()
