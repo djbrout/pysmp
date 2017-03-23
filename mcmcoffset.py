@@ -1307,7 +1307,7 @@ class metropolis_hastings():
             # plt.colorbar()
             plt.title(title)
             chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask
-            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=(0,2,.02))
+            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,2,.02))
             xchi = []
             ychi = []
             for jk in range(self.sims[i].shape[0]):
