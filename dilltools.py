@@ -39,7 +39,7 @@ def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
 
 
 def fitprobfromchisq(x,df):
-    scipy.stats.chisquare(x,ddof=df)
+    return scipy.stats.chisquare(x,ddof=df)
 
 def binrms(x, y, bins,rad):
     medians = np.zeros(len(bins) - 1)
