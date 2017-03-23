@@ -3937,7 +3937,7 @@ class smp:
             aaa = mcmcgalsim.metropolis_hastings(
                     galmodel = galmodel*0 + 1.
                     , modelvec = modelvec*0.
-                    , galstd = galstd*0+3.
+                    , galstd = galstd*0+8.
                     , modelstd = modelstd*0.
                     , data = smp_im
                     , psfs = smp_psf
