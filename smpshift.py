@@ -3900,6 +3900,7 @@ class smp:
 
             galstd = np.sqrt(abs(galmodel)) / params.galmodel_div
 
+            galmodel = smp_im[ww, :, :] - smp_dict['sky'][ww]
 
             brighttest = False
             if brighttest:
@@ -3935,10 +3936,10 @@ class smp:
             print 'galmodelshape', galmodel.shape
             import mcmcgalsim
             aaa = mcmcgalsim.metropolis_hastings(
-                    galmodel = galmodel*0 + 1.
-                    , modelvec = modelvec*0.
+                    galmodel = galmodel
+                    , modelvec = modelvec
                     , galstd = galstd*0+8.
-                    , modelstd = modelstd*0.
+                    , modelstd = modelstd
                     , data = smp_im
                     , psfs = smp_psf
                     , weights = smp_noise
