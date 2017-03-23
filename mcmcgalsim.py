@@ -217,7 +217,8 @@ class metropolis_hastings():
 
 
         self.baseim = galsim.fits.read(self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0])
-
+        print self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0]
+        raw_input()
 
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
