@@ -393,11 +393,11 @@ class metropolis_hastings():
             self.accepted_int += 1
             self.mcmc_func()
             #print self.counter
-            if (self.counter % 10) == 0:#every 100 iterations
-                print np.array(self.csv) / len(self.mask[self.mask>0.].ravel())
-                collected = gc.collect()
-                #print "Garbage collector: collected %d objects." % (collected)
-                #tracker.print_diff()
+            #if (self.counter % 10) == 0:#every 100 iterations
+            #    print np.array(self.csv) / len(self.mask[self.mask>0.].ravel())
+            #    collected = gc.collect()
+            #    #print "Garbage collector: collected %d objects." % (collected)
+            #    #tracker.print_diff()
 
 
             if self.counter == 20000:
@@ -420,7 +420,7 @@ class metropolis_hastings():
                 self.check_geweke()
                 self.last_geweke = self.counter
 
-            print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3)
+            #print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3)
             if (self.counter % 100) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
