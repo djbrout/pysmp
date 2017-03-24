@@ -443,6 +443,7 @@ class metropolis_hastings():
                          psf=self.psfs[0,:,:],
                          gssimstamp=self.simstamps[0,:,:],
                          sky=self.sky[0])
+                print 'saved test.npz'
 
                 #raw_input()
             if self.counter > self.maxiter:
