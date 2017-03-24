@@ -1282,7 +1282,7 @@ class metropolis_hastings():
             axchi3 = plt.subplot(257)
             axchi4 = plt.subplot(258)
             axdiff2 = plt.subplot(259)
-            axstd = plt.subplot(2510)
+            axstd = plt.subplot(2,5,10)
 
 
             for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq']):
