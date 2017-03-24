@@ -1344,7 +1344,8 @@ class metropolis_hastings():
             axdiff2.set_ylabel('Count')
 
             stdarr = (self.data[i, :, :] - self.sims[i]) / self.skyerr[i] * self.mask
-            axstd.hist(stdarr[stdarr != 0.],bins=np.arange(-4.1,4,.2),normed=True)
+            axstd.hist(stdarr[stdarr != 0.],bins=np.arange(-4.1,4,.2),normed=True,label='Mean: '+str(round(np.mean(stdarr[stdarr !=0].ravel()),2))+
+                       '\nSTD: '+str(round(np.std(stdarr[stdarr != 0].ravel()),2)))
             axstd.set_xlim(-4,4)
 
             mean = 0
@@ -1352,7 +1353,7 @@ class metropolis_hastings():
             sigma = math.sqrt(variance)
             x = np.arange(-5, 5, .05)
             axstd.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
-
+            axstd.legend(loc='upper right',fontsize='x-small')
             pdf_pages.savefig(fig)
         pdf_pages.close()
         plt.close()
