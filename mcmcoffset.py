@@ -1309,11 +1309,11 @@ class metropolis_hastings():
             # plt.colorbar()
             #plt.title(title)
             chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask
-            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,2,.05),normed=True)
+            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,3,.05),normed=True)
             k_values = [1]
             linestyles = ['-', '--', ':', '-.']
             mu = 0
-            x = np.linspace(0, 2., 100)
+            x = np.linspace(0, 3., 100)
             for k, ls in zip(k_values, linestyles):
                 dist = chi2(k, mu)
                 axchi2.plot(x, dist.pdf(x), ls=ls, c='black',
