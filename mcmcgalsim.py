@@ -424,7 +424,7 @@ class metropolis_hastings():
                 self.last_geweke = self.counter
 
             print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3)
-            if (self.counter % 100) ==0:
+            if (self.counter % 10) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
                 print 'Num Iterations: ' + str( self.counter )
@@ -436,6 +436,13 @@ class metropolis_hastings():
                 if (self.counter % 10000) == 0:
                     self.plotchains()
                 #self.savechains()
+
+                np.savez('test.npz',galmodel=self.modelim,
+                         wcs=self.model_wcs,
+                         snoffset=self.snoffsets[0],
+                         psf=self.psfs[0,:,:],
+                         gssimstamp=self.simstamps[0,:,:],
+                         sky=self.sky[0])
 
                 #raw_input()
             if self.counter > self.maxiter:
