@@ -1339,7 +1339,9 @@ class metropolis_hastings():
             axchi4.set_ylabel('Mean Chi Sq')
             axchi4.set_xlabel('Y Pixel')
             #axchi3.set_ylim()
-            axdiff2.hist(resid[resid!=0.],align='left')
+            axdiff2.hist(resid[resid!=0.],align='left',label='Mean: '+str(round(np.mean(resid[resid!=0.].ravel()),2))+
+                         '\nUOM: '+str(round(np.std(resid[resid!=0.].ravel())/np.sqrt(len(resid[resid!=0.].ravel())),2)))
+
             axdiff2.set_xlabel('Residual')
             axdiff2.set_ylabel('Count')
 
