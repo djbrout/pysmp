@@ -440,7 +440,7 @@ class metropolis_hastings():
                 np.savez('test.npz',galmodel=self.modelim,
                          wcs=self.model_wcs,
                          snoffset=self.snoffsets[0],
-                         psf=self.psfs[0,:,:],
+                         psf=self.psfs[0],
                          gssimstamp=self.simstamps[0,:,:],
                          sky=self.sky[0])
                 print 'saved test.npz'
