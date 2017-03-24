@@ -1357,7 +1357,7 @@ class metropolis_hastings():
             sigma = math.sqrt(variance)
             x = np.arange(-5, 5, .05)
             axstd.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
-            axstd.legend(loc='upper right',fontsize='x-small',align='right')
+            axstd.legend(loc='upper right',fontsize='x-small')
             axstd.set_xlabel('(Data Pixel - Model Pixel) / Uncertainty')
             pdf_pages.savefig(fig)
         pdf_pages.close()
