@@ -1311,7 +1311,7 @@ class metropolis_hastings():
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
             #plt.title(title)
-            chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask
+            chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / (self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask
             axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,3,.05),normed=True)
             k_values = [1]
             linestyles = ['-', '--', ':', '-.']
@@ -1343,7 +1343,7 @@ class metropolis_hastings():
             axdiff2.set_xlabel('Residual')
             axdiff2.set_ylabel('Count')
 
-            stdarr = (self.data[i, :, :] - self.sims[i]) / self.skyerr[i] * self.mask
+            stdarr = (self.data[i, :, :] - self.sims[i]) / np.sqrt(self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask
             axstd.hist(stdarr[stdarr != 0.],bins=np.arange(-4.2,4,.4),normed=True,label='Mean: '+str(round(np.mean(stdarr[stdarr !=0].ravel()),2))+
                        '\nSTD: '+str(round(np.std(stdarr[stdarr != 0].ravel()),2)))
             axstd.set_xlim(-4,4)
