@@ -67,6 +67,7 @@ import chkpsf_fast
 import matplotlib.mlab as mlab
 import math
 import build_psfex
+import scipy.stats
 
 import rdpsf
 import sys
@@ -1312,16 +1313,25 @@ class metropolis_hastings():
             # plt.colorbar()
             #plt.title(title)
             chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / (self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask
-            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,3,.05),normed=True)
             k_values = [1]
-            linestyles = ['-', '--', ':', '-.']
+            linestyles = ['-']
             mu = 0
-            x = np.linspace(0, 3., 100)
+            x = np.linspace(0, 10., 100)
             for k, ls in zip(k_values, linestyles):
                 dist = chi2(k, mu)
                 axchi2.plot(x, dist.pdf(x), ls=ls, c='black',
                          label=r'$k=%i$' % k)
             #axchi2.legend(loc='upper right',fontsize='x-small')
+
+            hist, bin_edges = np.histogram(chiarr[chiarr>0.].ravel(),bins=np.arange(0,1000,.05),density=True)
+            bin_centers = (bin_edges[:-1]+bin_edges[1:])/2.
+
+            chisqfitprob = scipy.stats.chisquare(hist,f_exp=dist.pdf(bin_centers))
+            csq = chisqfitprob[0]
+            fitprob = chisqfitprob[1]
+            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,10,.05),normed=True,label='Chisq: '+str(round(csq,2))+
+                              '\nFitprob: '+str(round(fitprob,2)))
+            axchi2.legend(loc='upper right',fontsize='x-small')
 
             axchi2.set_xlabel('Chi Squared')
             axchi2.set_ylabel('Count')
