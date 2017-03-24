@@ -1240,6 +1240,8 @@ class metropolis_hastings():
         return result[ result.size / 2 : ]
 
     def plotstamps(self):
+        from scipy.stats import chi2
+
         if self.isfermigrid and self.isworker:
             pdf_pages = PdfPages('stamps.pdf')
         else:
@@ -1280,7 +1282,7 @@ class metropolis_hastings():
             axchi4 = plt.subplot(258)
             axdiff2 = plt.subplot(259)
 
-            for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
+            for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq']):
                 ax.set_title(title)
             if not self.pixelate_model is None:
                 self.plotgalmodel = self.unpixelate(self.kicked_galmodel,self.pixelate_model,self.substamp)
@@ -1305,9 +1307,21 @@ class metropolis_hastings():
             cbar = fig.colorbar(axs, ax=axchi)
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
-            plt.title(title)
+            #plt.title(title)
             chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask
-            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,2,.1))
+            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,2,.1),normed=True)
+            k_values = [1, 2, 5, 7]
+            linestyles = ['-', '--', ':', '-.']
+            mu = 0
+            x = np.linspace(0, 2., 100)
+            for k, ls in zip(k_values, linestyles):
+                dist = chi2(k, mu)
+                axchi2.plot(x, dist.pdf(x), ls=ls, c='black',
+                         label=r'$k=%i$' % k)
+            axchi2.legend(loc='upper right',fontsize='x-small')
+
+            axchi2.set_xlabel('Chi Squared')
+            axchi2.set_ylabel('Count')
             xchi = []
             ychi = []
             for jk in range(self.sims[i].shape[0]):
@@ -1315,9 +1329,16 @@ class metropolis_hastings():
                 ychi.append(np.mean(chiarr[:,jk][self.mask[:,jk] > 0]))
 
             axs = axchi3.plot(xchi)
+            axchi3.set_ylabel('Mean Chi Sq')
+            axchi3.set_xlabel('X Pixel')
+
             axs = axchi4.plot(ychi)
+            axchi4.set_ylabel('Mean Chi Sq')
+            axchi4.set_xlabel('Y Pixel')
             #axchi3.set_ylim()
             axdiff2.hist(resid[resid!=0.],align='left')
+            axdiff2.set_xlabel('Residual')
+            axdiff2.set_ylabel('Count')
 
             pdf_pages.savefig(fig)
         pdf_pages.close()
