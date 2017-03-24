@@ -64,7 +64,8 @@ import dilltools as dt
 from matplotlib.backends.backend_pdf import PdfPages
 import gc
 import chkpsf_fast
-
+import matplotlib.mlab as mlab
+import math
 import build_psfex
 
 import rdpsf
@@ -1281,6 +1282,8 @@ class metropolis_hastings():
             axchi3 = plt.subplot(257)
             axchi4 = plt.subplot(258)
             axdiff2 = plt.subplot(259)
+            axstd = plt.subplot(2510)
+
 
             for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq']):
                 ax.set_title(title)
@@ -1339,6 +1342,16 @@ class metropolis_hastings():
             axdiff2.hist(resid[resid!=0.],align='left')
             axdiff2.set_xlabel('Residual')
             axdiff2.set_ylabel('Count')
+
+            stdarr = (self.data[i, :, :] - self.sims[i]) / self.skyerr[i] * self.mask
+            axstd.hist(stdarr[stdarr != 0.],bins=np.arange(-4.1,4,.2),normed=True)
+            axstd.set_xlim(-4,4)
+
+            mean = 0
+            variance = 1
+            sigma = math.sqrt(variance)
+            x = np.arange(-5, 5, .05)
+            axstd.plot(x, mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
 
             pdf_pages.savefig(fig)
         pdf_pages.close()
