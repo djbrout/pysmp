@@ -1310,7 +1310,7 @@ class metropolis_hastings():
             #plt.title(title)
             chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask
             axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,2,.1),normed=True)
-            k_values = [1, 2, 5, 7]
+            k_values = [1]
             linestyles = ['-', '--', ':', '-.']
             mu = 0
             x = np.linspace(0, 2., 100)
@@ -1318,7 +1318,7 @@ class metropolis_hastings():
                 dist = chi2(k, mu)
                 axchi2.plot(x, dist.pdf(x), ls=ls, c='black',
                          label=r'$k=%i$' % k)
-            axchi2.legend(loc='upper right',fontsize='x-small')
+            #axchi2.legend(loc='upper right',fontsize='x-small')
 
             axchi2.set_xlabel('Chi Squared')
             axchi2.set_ylabel('Count')
