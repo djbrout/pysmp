@@ -218,6 +218,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
         tra = data['RA']
+        data.keys()
         #print data.keys()
         #raw_input()
         #print tra[0]
