@@ -219,6 +219,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         data = dt.readcol(f)
         tra = data['RA']
         if len(tra) == 0:
+            print 'empty'
             continue
         #print data.keys()
         #raw_input()
