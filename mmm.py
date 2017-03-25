@@ -286,7 +286,7 @@ def mmm( sky_vector,
                 j -= 1
                 k += 1
 
-        skymed = np.sum(sky[j:k+1])/(k-j+1)
+        skymed = np.sum(sky[int(j):int(k+1)])/(k-j+1)
 
         #  If the mean is less than the median, then the problem of contamination
         #  is slight, and the mean is what we really want.
