@@ -4129,7 +4129,7 @@ class smp:
                                 smp_dict['diffim_flux'][i],smp_dict['diffim_fluxerr'][i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
-                                chisqs[i], ndof[i], smp_dict['flag'][i],smp_dict['mjd_flag'][i],
+                                chisqs[i], -999, smp_dict['flag'][i],smp_dict['mjd_flag'][i],
                                 smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
