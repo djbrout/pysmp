@@ -205,6 +205,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[]}
     zptfiles = []
     #deep = 0
+    print smpfiles
     tot = len(smpfiles)
     cntr = 0
     for f in smpfiles[:]:
@@ -232,6 +233,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
         if not oldformat:
             if not len(dofakemjd[ cra & cdec ]) > 0:
+                print 'dddd'
                 fakemag = data['FAKEMAG']*0. + 99.
             else:
                 fakemag = data['FAKEMAG']
