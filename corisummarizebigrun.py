@@ -237,7 +237,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
 
-        print dofakemjd[ cra & cdec ]
+        print dofakemjd[:10]
         raw_input()
 
         if not oldformat:
