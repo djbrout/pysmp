@@ -4121,8 +4121,8 @@ class smp:
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.5f %.2f %i %i %s %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %s %i %.3f ' \
-                           '%.3f %.3f %s %s %s %s %s %s %s %s %s %s' % (
+            print >> fout, '%.5f %.5f %i %i %s %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %s %i %.5f ' \
+                           '%.5f %.5f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i],float(smp_dict['mjd'][i])-snparams.peakmjd, smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
                                 smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i], smp_dict['fakezpt'][i],
