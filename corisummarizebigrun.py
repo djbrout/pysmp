@@ -224,7 +224,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
         tra = data['RA']
-        print tra
+        #print tra
         if len(tra) == 0:
             print 'empty'
             continue
@@ -232,11 +232,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
         #print tra[0]
         dra = np.zeros(len(dofakera))+tra[0]
-        cra = np.isclose(dra,dofakera,atol=1.e-1)
+        cra = np.isclose(dra,dofakera,atol=1.e-0)
         tdec = data['DEC']
-        print tra[0],tdec[0]
+        print tra[0],tdec[0],
         ddec = np.zeros(len(dofakedec))+tdec[0]
-        cdec = np.isclose(ddec,dofakedec,atol=1.e-1)
+        cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
 
         print dofakera[cra & cdec]
         raw_input()
