@@ -277,7 +277,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
                 # print dofakemag2[]
                 #www = (expnum == float(exn)) & (np.isclose(float(fm), dofakemag2, atol=1.e-3))
-                www = expn #& cdec & cra
+                www = expn & cdec & cra
                 print dofakeid[www]
                 raw_input()
                 # ifm = (dofakemag2 == fm)
