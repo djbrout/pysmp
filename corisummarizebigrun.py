@@ -209,6 +209,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     tot = len(smpfiles)
     cntr = 0
     for f in smpfiles[:]:
+        if f == '/project/projectdirs/des/djbrout/106x3/lightcurves/des_fake_00212070_g.smp':
+            raw_input('filee')
         cntr += 1
         if cntr > 5000: continue
         #if cntr == 34: continue
