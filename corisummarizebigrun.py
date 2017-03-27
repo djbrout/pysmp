@@ -239,9 +239,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
         print fakeid
-        if fakeid in dofakeid:
-            raw_input()
-            #print fakeid
+        #if fakeid in dofakeid:
+        #    raw_input()
+        #    #print fakeid
         #print dofakeid[dofakeid == fakeid]
         #raw_input()
 
