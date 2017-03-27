@@ -251,11 +251,12 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
 
-                #print imf
+                print imf
                 try:
                     exn = imf.split('/')[-1].split('_')[1]
                     #ccd = float(imf.split('_')[7].split('+')[0])
                 except:
+                    print 'skipping'
                     newfakemag.append(99)
                     continue
                 if fm == 99.:
