@@ -209,10 +209,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     tot = len(smpfiles)
     cntr = 0
     for f in smpfiles[:]:
-        if f == '/project/projectdirs/des/djbrout/106x3/lightcurves/des_fake_00212070_g.smp':
-            raw_input('filee')
-        print f
-        raw_input()
+        #if f == '/project/projectdirs/des/djbrout/106x3/lightcurves/des_fake_00212070_g.smp':
+        #    raw_input('filee')
+
+        #print f
+        #raw_input()
         cntr += 1
         if cntr > 5000: continue
         #if cntr == 34: continue
@@ -223,6 +224,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
         tra = data['RA']
+        print tra
         if len(tra) == 0:
             print 'empty'
             continue
@@ -234,6 +236,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         tdec = data['DEC']
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
+
+        print dofakemjd[ cra & cdec ]
+        raw_input()
 
         if not oldformat:
             if not len(dofakemjd[ cra & cdec ]) > 0:
