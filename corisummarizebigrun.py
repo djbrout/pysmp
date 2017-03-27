@@ -235,18 +235,18 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         dra = np.zeros(len(dofakera))+tra[0]
         cra = np.isclose(dra,dofakera,atol=1.e-0)
         tdec = data['DEC']
-        print tra[0],tdec[0],
+        #print tra[0],tdec[0],
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
-        print fakeid
-        #if fakeid in dofakeid:
-        #    raw_input()
+        #print fakeid
+        #if not fakeid in dofakeid:
+        #    continue
         #    #print fakeid
         #print dofakeid[dofakeid == fakeid]
         #raw_input()
 
         if not oldformat:
-            if not len(dofakemjd[ cra & cdec ]) > 0:
+            if not fakeid in dofakeid 0:
                 print 'dddd'
                 fakemag = data['FAKEMAG']*0. + 99.
             else:
@@ -277,11 +277,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                     print 'fakemag already is 99'
                     newfakemag.append(99)
                     continue
-                dra = np.zeros(len(dofakera2)) + tra[0]
-                cra = np.isclose( dofakera2,dra, atol=1.e-3)
-                tdec = data['DEC']
-                ddec = np.zeros(len(dofakedec2)) + tdec[0]
-                cdec = np.isclose(dofakedec2, ddec, atol=1.e-3)
+                #dra = np.zeros(len(dofakera2)) + tra[0]
+                #cra = np.isclose( dofakera2,dra, atol=1.e-3)
+                #tdec = data['DEC']
+                #ddec = np.zeros(len(dofakedec2)) + tdec[0]
+                #cdec = np.isclose(dofakedec2, ddec, atol=1.e-3)
 
 
 
@@ -293,7 +293,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
                 # print dofakemag2[]
                 #www = (expnum == float(exn)) & (np.isclose(float(fm), dofakemag2, atol=1.e-3))
-                www = expn & cdec & cra
+                dfw = fakeid in dofakeid
+                www = expn & dfw
                 #print dofakeid[www]
                 #raw_input()
                 # ifm = (dofakemag2 == fm)
