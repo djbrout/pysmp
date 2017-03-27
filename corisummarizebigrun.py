@@ -234,6 +234,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         dra = np.zeros(len(dofakera))+tra[0]
         cra = np.isclose(dra,dofakera,atol=1.e-1)
         tdec = data['DEC']
+        print tra[0],tdec[0]
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-1)
 
