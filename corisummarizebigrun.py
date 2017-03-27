@@ -232,12 +232,12 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #print data.keys()
         #raw_input()
         #print tra[0]
-        dra = np.zeros(len(dofakera))+tra[0]
-        cra = np.isclose(dra,dofakera,atol=1.e-0)
-        tdec = data['DEC']
+        #dra = np.zeros(len(dofakera))+tra[0]
+        #cra = np.isclose(dra,dofakera,atol=1.e-0)
+        #tdec = data['DEC']
         #print tra[0],tdec[0],
-        ddec = np.zeros(len(dofakedec))+tdec[0]
-        cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
+        #ddec = np.zeros(len(dofakedec))+tdec[0]
+        #cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
         #print fakeid
         #if not fakeid in dofakeid:
         #    continue
@@ -246,7 +246,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
 
         if not oldformat:
-            if not fakeid in dofakeid 0:
+            if not fakeid in dofakeid:
                 print 'dddd'
                 fakemag = data['FAKEMAG']*0. + 99.
             else:
