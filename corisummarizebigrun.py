@@ -232,12 +232,12 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
         #print tra[0]
         dra = np.zeros(len(dofakera))+tra[0]
-        cra = np.isclose(dra,dofakera,atol=1.e-3)
+        cra = np.isclose(dra,dofakera,atol=1.e-2)
         tdec = data['DEC']
         ddec = np.zeros(len(dofakedec))+tdec[0]
-        cdec = np.isclose(ddec,dofakedec,atol=1.e-3)
+        cdec = np.isclose(ddec,dofakedec,atol=1.e-2)
 
-        print dofakera[:10]
+        print dofakera[cra & cdec]
         raw_input()
 
         if not oldformat:
