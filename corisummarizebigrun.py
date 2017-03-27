@@ -239,14 +239,14 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 fakemag = data['FAKEMAG']
         else:
             fakemag = data['FAKEMAG']
-        print fakemag
-        raw_input()
+        #print fakemag
+        #raw_input()
         if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
             continue
         if np.min(data['FLUX']) < -10000:
             continue
 
-        skipnewfakemag = True
+        skipnewfakemag = False
         if not skipnewfakemag:
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
