@@ -214,6 +214,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
         #print f
         #raw_input()
+        fakeid = f.split('_')[-2]
         cntr += 1
         if cntr > 5000: continue
         #if cntr == 34: continue
@@ -238,7 +239,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         ddec = np.zeros(len(dofakedec))+tdec[0]
         cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
 
-        print dofakera[cra & cdec]
+        print dofakeid[dofakeid == fakeid]
         raw_input()
 
         if not oldformat:
