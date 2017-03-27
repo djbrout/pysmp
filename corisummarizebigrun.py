@@ -273,10 +273,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                     print 'skipping'
                     newfakemag.append(99)
                     continue
-                if fm == 99.:
-                    print 'fakemag already is 99'
-                    newfakemag.append(99)
-                    continue
+                # if fm == 99.:
+                #     print 'fakemag already is 99'
+                #     newfakemag.append(99)
+                #     continue
                 #dra = np.zeros(len(dofakera2)) + tra[0]
                 #cra = np.isclose( dofakera2,dra, atol=1.e-3)
                 #tdec = data['DEC']
