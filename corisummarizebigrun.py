@@ -240,6 +240,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
         #print fakeid
         fw = np.where(dofakeid == fakeid)
+        print np.unique(dofakeid), fakeid
         print fw,len(fw)
         raw_input()
         #if fakeid in dofakeid:
