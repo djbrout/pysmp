@@ -258,8 +258,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 fakemag = data['FAKEMAG']
         else:
             fakemag = data['FAKEMAG']
-        #print fakemag
-        #raw_input()
+        print fakemag
+        raw_input()
         if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
             continue
         if np.min(data['FLUX']) < -10000:
