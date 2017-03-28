@@ -391,11 +391,11 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
             fakeflux = 10 ** (.4 * (31. - fakemag))
 
-            www = (fakemag < 21.5) & (data['FLUX']-fakeflux < -600.) & (data['FLUX']-fakeflux > -1000.)
-            if len(fakemag[www]) > 0:
-                #print f
-
-                print 'stopped because has a bad outlier'
+            # www = (fakemag < 21.5) & (data['FLUX']-fakeflux < -600.) & (data['FLUX']-fakeflux > -1000.)
+            # if len(fakemag[www]) > 0:
+            #     #print f
+            #
+            #     print 'stopped because has a bad outlier'
                 #raw_input()
 
             #for m, faz, fiz in zip(data['MJD'],data['FAKEZPT'], data['ZPT']):
