@@ -460,8 +460,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
     #print bigdata['diffzpt']
     #raw_input()
-    print np.unique(np.array(bigdata['FakeMag']))
-    raw_input('here')
+    #print np.unique(np.array(bigdata['FakeMag']))
+    #raw_input('here')
 
     os.system('rm '+cd+' -f')
 
