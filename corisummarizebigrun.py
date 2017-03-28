@@ -216,7 +216,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
         fakeid = f.split('_')[-2]
         cntr += 1
-        if cntr > 5000: continue
+        if cntr > 15: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -259,7 +259,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         else:
             fakemag = data['FAKEMAG']
         print fakemag
-        raw_input()
+        #raw_input()
         if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
             print 'bad DPMJD'*20
             continue
@@ -460,6 +460,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
     #print bigdata['diffzpt']
     #raw_input()
+    print np.unique(np.array(bigdata['FakeMag']))
+    raw_input('here')
+
     os.system('rm '+cd+' -f')
 
     print 'saving to cachfile'
