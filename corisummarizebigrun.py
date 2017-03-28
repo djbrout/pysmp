@@ -239,10 +239,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #ddec = np.zeros(len(dofakedec))+tdec[0]
         #cdec = np.isclose(ddec,dofakedec,atol=1.e-0)
         #print fakeid
-        fw = np.where(dofakeid == fakeid)
-        print np.unique(dofakeid), fakeid
-        print fw,len(fw)
-        raw_input()
+        # fw = np.where(dofakeid == fakeid)
+        # print np.unique(dofakeid), int(fakeid)
+        # print fw,len(fw)
+        # raw_input()
         #if fakeid in dofakeid:
         #    raw_input(fakeid)
         #    continue
@@ -251,7 +251,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
 
         if not oldformat:
-            if not fakeid in dofakeid:
+            if not int(fakeid) in dofakeid:
                 print 'dddd'
                 fakemag = data['FAKEMAG']*0. + 99.
             else:
