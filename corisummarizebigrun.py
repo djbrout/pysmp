@@ -497,7 +497,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #raw_input()
     for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
         print ff, fl
-    raw_input()
+    #raw_input()
     # print fakezpt
     #
     # print fakemag.shape
@@ -611,6 +611,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #print fakemag[ww].shape,flux[ww].shape,fakeflux[ww].shape
 
 
+    print fakemag[ww]
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(19,28, .5))
@@ -630,6 +631,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     print 'saved', outdir+'/percentagefluxdiff.png'
     # print min(hostmag[ww]),max(hostmag[ww])
     plt.clf()
+    raw_input()
 
     try:
         fig = plt.figure(figsize=(15, 10))
