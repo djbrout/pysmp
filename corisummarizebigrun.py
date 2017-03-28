@@ -495,7 +495,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #raw_input()
     #print fakefiles[(chisq < 0.1)]
     #raw_input()
-    for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
+    # for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
+    #     print ff, fl
+    for fl , ff in zip(fakefiles[(fluxerr>0.) & (fakemag < 90.)],flux[(fluxerr>0.) & (fakemag < 90.)]):
         print ff, fl
     #raw_input()
     # print fakezpt
