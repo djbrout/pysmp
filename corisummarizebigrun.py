@@ -185,6 +185,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     dofakefilt2 = np.array(dofakefilt2,dtype='string')
     dofakeid = np.array(dofakeid,dtype='float')
     #print dofakemjd
+    dofakezpt = dofakemag2 - 2.5*np.log10(dofaketflux)
 
     #raw_input('dofakemjd')
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
@@ -311,6 +312,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                 if not len(dofakemag2[www]) > 0:
                     newfakemag.append(99.)
                     bigdata['fakeid'].append(99.)
+                    bigdata['FakeZPT'].append(31.)
+
                     #print fm, 99
                 else:
                     #print fm, dofakemag2[www][0], dofaketflux[www][0], dofakeflux[www][0], len(dofakemag2[www])
@@ -318,6 +321,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
                     nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                     newfakemag.append(nfm)
                     bigdata['fakeid'].append(dofakeid[www][0])
+                    bigdata['FakeZPT'].append(dofakezpt[www][0])
 
                 #raw_input()
 
@@ -353,9 +357,9 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             bigdata['Fluxerr'].extend(data['FLUXERR'])
             bigdata['FakeMag'].extend(fakemag)
             bigdata['FitZPT'].extend(data['ZPT'])
-            print data['FAKEZPT']
-            raw_input('aaa')
-            bigdata['FakeZPT'].extend(data['FAKEZPT'])
+            #print data['ZPT'],data['FAKEZPT']
+            #raw_input('aaa')
+            #bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
             bigdata['sky'].extend(data['SKY'])
             bigdata['DPMJD'].extend(data['DPMJD'])
@@ -367,27 +371,27 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
             print np.mean(data['CHI2']), bigdata['fakeid'][-10:]
 
-            #print data['IMAGE_FILE']
-            for e in data['IMAGE_FILE']:
-                try:
-                    #print e
-                    expnum = float(e.split('_')[3])
-                    ccd = float(e.split('_')[7].split('+')[0])
-                    #bigdata['expnums'].append(expnum)
-                    #bigdata['ccds'].append(ccd)
-                    #if dz[(dccd == ccd) & (dexp == expnum)]:
-                    #    print 'pass'
-                    #else:
-                    #    print 'fail'
-                    diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
-                    #print ccd, expnum,diffzpt
-                    #raw_input()
-                    #print diffzpt[0]
-                    bigdata['diffzpt'].append(diffzpt[0])
-                except:
-                    bigdata['diffzpt'].append(0)
-                    #print 'nanana'
-            #raw_input()
+            # #print data['IMAGE_FILE']
+            # for e in data['IMAGE_FILE']:
+            #     try:
+            #         #print e
+            #         expnum = float(e.split('_')[3])
+            #         ccd = float(e.split('_')[7].split('+')[0])
+            #         #bigdata['expnums'].append(expnum)
+            #         #bigdata['ccds'].append(ccd)
+            #         #if dz[(dccd == ccd) & (dexp == expnum)]:
+            #         #    print 'pass'
+            #         #else:
+            #         #    print 'fail'
+            #         diffzpt = dz[(dccd == ccd) & (dexp == expnum)]
+            #         #print ccd, expnum,diffzpt
+            #         #raw_input()
+            #         #print diffzpt[0]
+            #         bigdata['diffzpt'].append(diffzpt[0])
+            #     except:
+            #         bigdata['diffzpt'].append(0)
+            #         #print 'nanana'
+            # #raw_input()
 
             bigdata['ra'].extend(data['RA'])
             bigdata['dec'].extend(data['DEC'])
