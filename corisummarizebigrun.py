@@ -353,7 +353,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             bigdata['Fluxerr'].extend(data['FLUXERR'])
             bigdata['FakeMag'].extend(fakemag)
             bigdata['FitZPT'].extend(data['ZPT'])
-            print data['ZPT']
+            print data['FAKEZPT']
             raw_input('aaa')
             bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['Chisq'].extend(data['CHI2'])
