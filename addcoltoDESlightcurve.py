@@ -32,6 +32,13 @@ BADZPT_FLAG = 16\
 BADZPTERR_FLAG = 32\
 ```'
 
+CHISQ_FLAG = 2
+PIPELINE_FLAG = 1
+BADSKY_FLAG = 4
+BADSKYERR_FLAG = 8
+BADZPT_FLAG = 16
+BADZPTERR_FLAG = 32
+
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
