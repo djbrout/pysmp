@@ -5,32 +5,32 @@ from copy import copy
 import dilltools as dt
 
 
-readmetext = '## Example output lightcurve file\
-Contains the original forced photometry lightcurve file structure with the addition of several columns\
-```\
-SMP_FLUX - fit flux (at zpt of 31)\
-SMP_FLUXERR - fit flux error (at zpt of 31)\
-SMP_FLUX_ZPT - zeropoint of smp flux (always 31)\
-SMP_FIT_ZPT - smp fit zeropoint which is used to scale all fluxes to 31\
-SMP_FIT_ZPT_STD - uncertainty in smp fit zeropoint which is used to scale all fluxes to 31\
-SMP_CHISQ - (sim_stamp - image_stamp)^2/(err)^2\
-SMP_SKY - fit value for the sky\
-SMP_SKYERR - uncertainty in the sky\
-SMP_FIX - 1 means SN flux was fixed to zero in smp fit\
-SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\
-```\
-(just to be clear: ALL FLUXES, SKYS, SKYERRS, ETC... ARE REPORTED AT A ZEROPOINT OF 31)\
--999 means missing data\
-\
-## Flag Bit Definitions\
-```\
-CHISQ_FLAG = 2\
-PIPELINE_FLAG = 1\
-BADSKY_FLAG = 4\
-BADSKYERR_FLAG = 8\
-BADZPT_FLAG = 16\
-BADZPTERR_FLAG = 32\
-```'
+readmetext = '## Example output lightcurve file\n\
+Contains the original forced photometry lightcurve file structure with the addition of several columns\n\
+```\n\
+SMP_FLUX - fit flux (at zpt of 31)\n\
+SMP_FLUXERR - fit flux error (at zpt of 31)\n\
+SMP_FLUX_ZPT - zeropoint of smp flux (always 31)\n\
+SMP_FIT_ZPT - smp fit zeropoint which is used to scale all fluxes to 31\n\
+SMP_FIT_ZPT_STD - uncertainty in smp fit zeropoint which is used to scale all fluxes to 31\n\
+SMP_CHISQ - (sim_stamp - image_stamp)^2/(err)^2\n\
+SMP_SKY - fit value for the sky\n\
+SMP_SKYERR - uncertainty in the sky\n\
+SMP_FIX - 1 means SN flux was fixed to zero in smp fit\n\
+SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\n\
+```\n\
+(just to be clear: ALL FLUXES, SKYS, SKYERRS, ETC... ARE REPORTED AT A ZEROPOINT OF 31)\n\
+-999 means missing data\n\
+\n\
+## Flag Bit Definitions\n\
+```\n\
+CHISQ_FLAG = 2\n\
+PIPELINE_FLAG = 1\n\
+BADSKY_FLAG = 4\n\
+BADSKYERR_FLAG = 8\n\
+BADZPT_FLAG = 16\n\
+BADZPTERR_FLAG = 32\n\
+```\n'
 
 CHISQ_FLAG = 2
 PIPELINE_FLAG = 1
