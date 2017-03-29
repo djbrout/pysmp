@@ -32,14 +32,15 @@ BADZPT_FLAG = 16\n\
 BADZPTERR_FLAG = 32\n\
 DONTFIT_FLAG = 65536\n\
 ```\n'
-
-CHISQ_FLAG = 8192
-PIPELINE_FLAG =4096
-BADSKY_FLAG = 16384
-BADSKYERR_FLAG = 32768
-BADZPT_FLAG = 65536
-BADZPTERR_FLAG = 32
-DONTFIT_FLAG= 65536
+#
+# CHISQ_FLAG = 8192
+# PIPELINE_FLAG =4096
+# BADSKY_FLAG = 16384
+# BADSKYERR_FLAG = 32768
+# BADZPT_FLAG = 65536
+# BADZPTERR_FLAG = 32
+DONTFIT_FLAG= 32768
+FAILED_SMP_FLAG = 65536
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
@@ -97,7 +98,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         elif line.split(' ')[0] == 'OBS:':
             #print len(line.replace('#', '').split())
             if filt is None:
-                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999\n'
+                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
             id = int(line.split()[1])
             tmjd = float(line.split()[3])
             band = line.split()[4]
