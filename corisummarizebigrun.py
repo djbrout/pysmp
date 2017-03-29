@@ -185,7 +185,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     dofakefilt2 = np.array(dofakefilt2,dtype='string')
     dofakeid = np.array(dofakeid,dtype='float')
     #print dofakemjd
-    dofakezpt = dofakemag2 - 2.5*np.log10(dofaketflux)
+    dofakezpt = dofakemag2 + 2.5*np.log10(dofaketflux)
 
     #raw_input('dofakemjd')
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
