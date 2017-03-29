@@ -621,8 +621,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
 
     #print fakemag[ww].shape,flux[ww].shape,fakeflux[ww].shape
 
-
-    print np.unique(fakeflux)
+    for x in np.unique(fakeflux):
+        print x
+    #print np.unique(fakeflux)
     raw_input('fakeflux')
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
