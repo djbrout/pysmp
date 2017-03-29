@@ -125,6 +125,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     thisflag += BADZPT_FLAG
                 if (fit_zpt_std > 0.2):
                     thisflag += BADZPTERR_FLAG
+                print thisflag
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
@@ -179,7 +180,7 @@ if __name__ == "__main__":
     readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
     readme.write(readmetext)
     readme.close()
-    raw_input()
+    #raw_input()
     snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
     for i, filt in enumerate(filts):
