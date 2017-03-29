@@ -217,7 +217,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
         fakeid = f.split('_')[-2]
         cntr += 1
-        if cntr > 150000: continue
+        if cntr > 50: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -644,7 +644,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     plt.axhline(0)
     plt.xlim(19,29)
     #plt.ylim(-.1,.1)
-    plt.ylim(-5.1,5.1)
+    plt.ylim(-.2,.2)
     plt.xlabel('Fake Mag',fontsize=30.)
     plt.ylabel('Fractional Flux Difference',fontsize=30.)
     plt.title(filter+' band',fontsize=30.)
