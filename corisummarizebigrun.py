@@ -487,9 +487,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     skyerr = np.asarray(skyerr)
     # print hostmag.shape
     # raw_input()
-    print np.unique(fakemag)
-    print np.unique(flux)
-    raw_input('asdf')
+    #print np.unique(fakemag)
+    #print np.unique(flux)
+    #raw_input('asdf#')
 
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
@@ -633,7 +633,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     plt.axhline(0)
     plt.xlim(19,29)
     #plt.ylim(-.1,.1)
-    plt.ylim(-.1,.1)
+    plt.ylim(-5.1,5.1)
     plt.xlabel('Fake Mag',fontsize=30.)
     plt.ylabel('Fractional Flux Difference',fontsize=30.)
     plt.title(filter+' band',fontsize=30.)
