@@ -179,7 +179,7 @@ if __name__ == "__main__":
     readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
     readme.write(readmetext)
     readme.close()
-
+    raw_input()
     snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
     for i, filt in enumerate(filts):
