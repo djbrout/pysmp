@@ -8,6 +8,8 @@ CHISQ_FLAG = 2
 PIPELINE_FLAG = 1
 BADSKY_FLAG = 4
 BADSKYERR_FLAG = 8
+BADZPT_FLAG = 16
+BADZPTERR_FLAG = 32
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
@@ -90,6 +92,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     thisflag += BADSKY_FLAG
                 if abs(tskyerr) < .5:
                     thisflag += BADSKYERR_FLAG
+                if (fit_zpt < 27.) | (fit_zpt > 35.):
+                    thisflag += BADZPT_FLAG
+                if (fit_zpt_std > 0.2):
+                    thisflag += BADZPTERR_FLAG
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
