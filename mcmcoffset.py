@@ -1323,13 +1323,14 @@ class metropolis_hastings():
                          label=r'$k=%i$' % k)
             #axchi2.legend(loc='upper right',fontsize='x-small')
 
-            hist, bin_edges = np.histogram(chiarr[chiarr>0.].ravel(),bins=np.arange(0,1000,.05),density=True)
+            hist, bin_edges = np.histogram(chiarr[chiarr>0.].ravel(),bins=np.arange(0,1000,.1),density=True)
             bin_centers = (bin_edges[:-1]+bin_edges[1:])/2.
 
-            chisqfitprob = scipy.stats.chisquare(hist,f_exp=dist.pdf(bin_centers),ddof=len(bin_centers)-2.)
+            chisqfitprob = scipy.stats.chisquare(hist,f_exp=dist.pdf(bin_centers),ddof=2.)
             csq = chisqfitprob[0]
             fitprob = chisqfitprob[1]
-            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,10,.05),normed=True,label='Chisq: '+str(round(csq,2))+
+
+            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,10,.1),normed=True,label='Chisq: '+str(round(csq,2))+
                               '\nFitprob: '+str(round(fitprob,2)))
             axchi2.legend(loc='upper right',fontsize='x-small')
             axchi2.set_xlim(0,6)
