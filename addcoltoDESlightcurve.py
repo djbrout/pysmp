@@ -4,12 +4,33 @@ import os
 from copy import copy
 import dilltools as dt
 
-CHISQ_FLAG = 2
-PIPELINE_FLAG = 1
-BADSKY_FLAG = 4
-BADSKYERR_FLAG = 8
-BADZPT_FLAG = 16
-BADZPTERR_FLAG = 32
+
+readmetext = '## Example output lightcurve file\
+Contains the original forced photometry lightcurve file structure with the addition of several columns\
+```\
+SMP_FLUX - fit flux (at zpt of 31)\
+SMP_FLUXERR - fit flux error (at zpt of 31)\
+SMP_FLUX_ZPT - zeropoint of smp flux (always 31)\
+SMP_FIT_ZPT - smp fit zeropoint which is used to scale all fluxes to 31\
+SMP_FIT_ZPT_STD - uncertainty in smp fit zeropoint which is used to scale all fluxes to 31\
+SMP_CHISQ - (sim_stamp - image_stamp)^2/(err)^2\
+SMP_SKY - fit value for the sky\
+SMP_SKYERR - uncertainty in the sky\
+SMP_FIX - 1 means SN flux was fixed to zero in smp fit\
+SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\
+```\
+(just to be clear: ALL FLUXES, SKYS, SKYERRS, ETC... ARE REPORTED AT A ZEROPOINT OF 31)\
+-999 means missing data\
+\
+## Flag Bit Definitions\
+```\
+CHISQ_FLAG = 2\
+PIPELINE_FLAG = 1\
+BADSKY_FLAG = 4\
+BADSKYERR_FLAG = 8\
+BADZPT_FLAG = 16\
+BADZPTERR_FLAG = 32\
+```'
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
@@ -26,6 +47,12 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         origfile = open(lightcurvefile, 'r')
         lines = origfile.readlines()
         origfile.close()
+
+
+    if filt == None:
+        readme = open(os.path.basename(saveloc) + '/' + saveloc.split('/')[-2] + '.README', 'w')
+        readme.write(readmetext)
+        readme.close()
 
     savefile = open(saveloc,'w')
 
@@ -147,12 +174,16 @@ if __name__ == "__main__":
     if not os.path.exists(savelcdir):
         os.mkdir(savelcdir)
 
+    snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
+
     for i, filt in enumerate(filts):
+
         sne = os.listdir(resultsdir+'/SNe')
 
         for sn in sne[:]:
             if 'starfits' in sn:
                 continue
+
             lcfile = lcdir+'/'+sn+'.dat'
             if not filt is None:
                 smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
@@ -162,6 +193,9 @@ if __name__ == "__main__":
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 continue
+
+            if filt == None:
+                snlist.write(sn+'_smp.dat\n')
 
             inplace = False
             if i > 0: inplace = True
@@ -177,6 +211,7 @@ if __name__ == "__main__":
             #except:
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
+    snlist.close()
     print 'cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/'
     os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
 
