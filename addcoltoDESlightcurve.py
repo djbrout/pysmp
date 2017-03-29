@@ -30,14 +30,16 @@ BADSKY_FLAG = 4\n\
 BADSKYERR_FLAG = 8\n\
 BADZPT_FLAG = 16\n\
 BADZPTERR_FLAG = 32\n\
+DONTFIT_FLAG = 65536
 ```\n'
 
-CHISQ_FLAG = 2
-PIPELINE_FLAG = 1
-BADSKY_FLAG = 4
-BADSKYERR_FLAG = 8
-BADZPT_FLAG = 16
+CHISQ_FLAG = 8192
+PIPELINE_FLAG =4096
+BADSKY_FLAG = 16384
+BADSKYERR_FLAG = 32768
+BADZPT_FLAG = 65536
 BADZPTERR_FLAG = 32
+DONTFIT_FLAG= 65536
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
@@ -114,17 +116,17 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 tskyerr = skyerr[ww][0]
                 thisflag = 0
                 if flag[ww][0] == 1:
-                    thisflag += PIPELINE_FLAG
+                    thisflag = DONTFIT_FLAG
                 if chisq[ww][0] > 1.25:
-                    thisflag += CHISQ_FLAG
+                    thisflag = DONTFIT_FLAG
                 if abs(tsky) > 1000:
-                    thisflag += BADSKY_FLAG
+                    thisflag = DONTFIT_FLAG
                 if abs(tskyerr) < .5:
-                    thisflag += BADSKYERR_FLAG
+                    thisflag = DONTFIT_FLAG
                 if (fit_zpt < 27.) | (fit_zpt > 35.):
-                    thisflag += BADZPT_FLAG
+                    thisflag = DONTFIT_FLAG
                 if (fit_zpt_std > 0.2):
-                    thisflag += BADZPTERR_FLAG
+                    thisflag = DONTFIT_FLAG
                 #print thisflag,chisq[ww][0]
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
