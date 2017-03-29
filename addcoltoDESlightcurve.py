@@ -56,11 +56,6 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         origfile.close()
 
 
-    if filt == None:
-        readme = open(os.path.basename(saveloc) + '/' + saveloc.split('/')[-2] + '.README', 'w')
-        readme.write(readmetext)
-        readme.close()
-
     savefile = open(saveloc,'w')
 
 
@@ -180,6 +175,10 @@ if __name__ == "__main__":
         os.mkdir(os.path.basename(savelcdir))
     if not os.path.exists(savelcdir):
         os.mkdir(savelcdir)
+
+    readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
+    readme.write(readmetext)
+    readme.close()
 
     snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
