@@ -4,6 +4,11 @@ import os
 from copy import copy
 import dilltools as dt
 
+CHISQ_FLAG = 2
+PIPELINE_FLAG = 1
+BADSKY_FLAG = 4
+BADSKYERR_FLAG = 8
+
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
@@ -76,11 +81,20 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 fit_zpt_std = zptdata['fit_zpt_std']
                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                 tskyerr = skyerr[ww][0]
+                thisflag = 0
+                if flag[ww][0] == 1:
+                    thisflag += PIPELINE_FLAG
+                if chisq[ww][0] > 1.3:
+                    thisflag += CHISQ_FLAG
+                if abs(tsky) > 1000:
+                    thisflag += BADSKY_FLAG
+                if abs(tskyerr) < .5:
+                    thisflag += BADSKYERR_FLAG
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                       ' ' + str(fix[ww][0]) + ' ' + str(flag[ww][0]) + '\n'
+                       ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
 
                 #print line
         savefile.write(wline)
@@ -93,7 +107,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
     resultsdir = '/project/projectdirs/des/djbrout/spec4/'
 
-    savelcdir = resultsdir+'spec_1_0'
+    savelcdir = resultsdir+'/spec_1_1'
 
 
 
@@ -124,6 +138,8 @@ if __name__ == "__main__":
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
+    if not os.path.exists(savelcdir):
+        os.mkdir(savelcdir)
 
     for i, filt in enumerate(filts):
         sne = os.listdir(resultsdir+'/SNe')
