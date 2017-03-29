@@ -115,7 +115,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 thisflag = 0
                 if flag[ww][0] == 1:
                     thisflag += PIPELINE_FLAG
-                if chisq[ww][0] > 1.3:
+                if chisq[ww][0] > 1.25:
                     thisflag += CHISQ_FLAG
                 if abs(tsky) > 1000:
                     thisflag += BADSKY_FLAG
