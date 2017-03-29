@@ -113,6 +113,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                 tskyerr = skyerr[ww][0]
                 thisflag = 0
+
                 if flag[ww][0] == 1:
                     thisflag += PIPELINE_FLAG
                 if chisq[ww][0] > 1.3:
@@ -125,7 +126,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     thisflag += BADZPT_FLAG
                 if (fit_zpt_std > 0.2):
                     thisflag += BADZPTERR_FLAG
-                print thisflag
+                print thisflag,
                 wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
