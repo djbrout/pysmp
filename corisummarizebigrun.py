@@ -502,7 +502,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
 
     for ft,fa in zip(fitzpt,fakezpt):
         print ft,fa
-    raw_input('asdffff')
+    #raw_input('asdffff')
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
 
@@ -636,7 +636,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     for x in np.unique(fakeflux):
         print x
     #print np.unique(fakeflux)
-    raw_input('fakeflux')
+    #raw_input('fakeflux')
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(19,28, .5))
@@ -645,7 +645,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
 
 
     plt.axhline(0)
-    plt.xlim(19,29)
+    plt.xlim(18,29)
     #plt.ylim(-.1,.1)
     plt.ylim(-.2,.2)
     plt.xlabel('Fake Mag',fontsize=30.)
@@ -656,7 +656,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     print 'saved', outdir+'/percentagefluxdiff.png'
     # print min(hostmag[ww]),max(hostmag[ww])
     plt.clf()
-    raw_input()
+    #raw_input()
 
     try:
         fig = plt.figure(figsize=(15, 10))
@@ -1143,7 +1143,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                         fakeflux[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)]):
 
         print fmm,fffl,fafl, fffl-fafl, fffle
-    raw_input()
+    #raw_input()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
          (abs(flux - fakeflux) > 0.1)
