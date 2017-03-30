@@ -1831,7 +1831,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # uindices = np.array(uindices)
 
     for sme,sm,ind,r,d in zip(starmagerr,starmag,indices,ras,decs):
-        print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5)]
+        print starmag[np.isclose(ras,r,rtol=1.e-6) & np.isclose(decs,d,rtol=1.e-6)]
         raw_input()
         repeatability = np.std(starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5)])
         plt.scatter(sme,repeatability,alpha=.3,color='black')
