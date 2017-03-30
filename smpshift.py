@@ -2712,9 +2712,11 @@ class smp:
 
                             print weightsfile
                             print self.psfcenter
-                            raw_input()
+                            #raw_input()
                             mask_stamp = mask[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                           int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]
+                            save_fits_image(mask_stamp,weightsfile.split('.fits')[0]+'_stamp.fits')
+                            raw_input()
                             mask = mask_stamp
                             #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, pkpsf_stamp = 1,1,1,0,100,200,100,200,image_stamp,noise_stamp,image_stamp*0+1,image_stamp*0 + 1
 
