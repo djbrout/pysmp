@@ -46,7 +46,7 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
             workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , config={"WEIGHT_TYPE":"MAP_RMS,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename+","+weightfilename,"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
+            , config={"WEIGHT_TYPE":"NONE,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename,"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
                                                                                       '.background, '+
                                                                                       '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
                                                                                       '.background_rms'
