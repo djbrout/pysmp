@@ -520,7 +520,10 @@ class metropolis_hastings():
             if (self.counter % 100) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
-                chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
+                #chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
+                chsqs = []
+                for i in range(self.Nimage):
+                    chsqs.append(self.csv / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
                 print 'Chisq For Each Epoch: ',chsqs
