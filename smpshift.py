@@ -1365,7 +1365,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 90:
+            if cccc > 9000:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -3507,7 +3507,7 @@ class smp:
 
 
         for i in range(len(smp_dict['sky'])):
-            if len(smp_noise[smp_noise > 0.].ravel()) < 10.:
+            if len(smp_noise[smp_noise > 0.].ravel()) < 350.:
                 smp_dict['flag'][i] = 1
 
         print 'skyerr',smp_dict['skyerr']
