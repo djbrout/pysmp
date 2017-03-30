@@ -1331,7 +1331,7 @@ class metropolis_hastings():
             fitprob = chisqfitprob[1]
 
             axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,10,.1),normed=True,label='Chisq: '+str(round(csq,2))+
-                              '\nFitprob: '+str(round(fitprob,2)))
+                              '\nFitprob: '+str(round(fitprob,5)))
             axchi2.legend(loc='upper right',fontsize='x-small')
             axchi2.set_xlim(0,6)
 

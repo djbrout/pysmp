@@ -2585,7 +2585,7 @@ class smp:
                 #    #print 'skysn badflag'
 
                 if not badflag:
-                    stampsize = 256
+                    stampsize = 32
 
                     if ysn-stampsize < 0:
                         ylow = int(0)
@@ -2623,8 +2623,8 @@ class smp:
                     print imfile
                     dosextractor = True
                     if dosextractor:
-                        sexsky,sexrms,bkgrnd,bkgrndrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-100+stampsize,xhi+100-stampsize,
-                                                                        ylow-100+stampsize,yhi+100-stampsize,snparams.survey,bigreturn=True,index=snparams.snfile.split('/')[-1].replace('.dat',''))
+                        sexsky,sexrms,bkgrnd,bkgrndrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-30+stampsize,xhi+30-stampsize,
+                                                                        ylow-30+stampsize,yhi+30-stampsize,snparams.survey,bigreturn=True,index=snparams.snfile.split('/')[-1].replace('.dat',''))
 
                         print sexsky,sexrms
                         #raw_input('sextractor')
