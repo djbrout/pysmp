@@ -12,6 +12,7 @@ import iterstat
 
 import dilltools as dt
 from copy import copy
+from scipy.stats import sigmaclip
 
 
 def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
@@ -23,9 +24,16 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        #grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
+        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
         #sys.exit()
+        stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
+        plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
+                    stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
+                    stardata['poisson'],stardata['ids'],
+                    title='rmsaddin_')
+        sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
+
         #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
@@ -35,8 +43,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        stardata['poisson'],
-                        title='rmsaddin_')
+                        stardata['poisson'],stardata['ids'],
+                        title='asdf_')
             #sys.exit()
     print data.keys()
     print len(data['Flux'])
@@ -1747,12 +1755,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,title=''):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
 
-    print max(catmag)
+    #print max(catmag)
     #raw_input()
     ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
 
@@ -1764,6 +1772,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
     sky = sky[ww]
     rmsaddin = rmsaddin[ww]
     poisson = poisson[ww]
+    indices = indices[ww]
+
+
+
+
     #print -2.5*np.log10(skyerr)+zpt
     #raw_input('skyerr in mags')
     #starmagerr = np.sqrt((-2.5*np.log10(sky)+2.5*np.log10(skyerr))**2+rmsaddin**2)
@@ -1786,11 +1799,35 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,title=
 
     starmag = -2.5*np.log10(flux) + zpt
 
+
+
+
+
+
     #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
     #raw_input()
     starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
+    starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)
+
+    plt.clf()
+    repeatability = []
+    uindices = []
+    for ind in np.unique(indices):
+        starobs = sigmaclip(starmag[indices == ind].ravel())
+        starmeanmag = np.mean(starobs)
+        repeatability.append(np.std(starobs))
+        uindices.append(ind)
+
+    repeatability = np.array(repeatability)
+    uindices = np.array(uindices)
+
+    for sme,ind in zip(starmagerr,indices):
+        plt.scatter(sme,repeatability[uindices == ind],alpha=.3,color='black')
+
+    plt.savefig('repeatabilitytest.png')
+
 
     print starmag[0:10]
     print catmag[0:10]
