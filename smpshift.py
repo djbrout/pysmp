@@ -2829,6 +2829,8 @@ class smp:
                                         mask *= noise_stamp
 
                                         smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2) * mask
+                                        smp_noise[i,:,:] = weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
+                                          int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         #smp_noise[i,:,:] = noise_stamp*1./(sexrms)**2 * mask
 
