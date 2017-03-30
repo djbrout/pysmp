@@ -37,13 +37,13 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
-        data = np.load(cd)
-        dostars = False
+        #data = np.load(cd)
+        dostars = True
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        stardata['poisson'],stardata['ids'],
+                        stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs']
                         title='asdf_')
             #sys.exit()
     print data.keys()
@@ -1755,7 +1755,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,title=''):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
@@ -1773,7 +1773,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     rmsaddin = rmsaddin[ww]
     poisson = poisson[ww]
     indices = indices[ww]
-
+    ras = ras[ww]
+    decs = decs[ww]
 
 
 
@@ -1812,27 +1813,26 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)
 
     plt.clf()
-    repeatability = []
-    uindices = []
-    for ind in np.unique(indices):
-        #print starmag[indices == ind]
-        #raw_input()
-        starobs = starmag[indices == ind]
-        starobs = starobs[starobs-np.mean(starobs) <.1]
-        starobs = sigmaclip(starobs)
-        starmeanmag = np.mean(starobs)
-        if len(starobs)>5.:
-            repeatability.append(np.std(starobs))
-            #print np.std(starobs)
-            uindices.append(ind)
+    # repeatability = []
+    # uindices = []
+    # for ind in np.unique(indices):
+    #     #print starmag[indices == ind]
+    #     #raw_input()
+    #     starobs = starmag[indices == ind]
+    #     starobs = starobs[starobs-np.mean(starobs) <.1]
+    #     starobs = sigmaclip(starobs)
+    #     starmeanmag = np.mean(starobs)
+    #     if len(starobs)>5.:
+    #         repeatability.append(np.std(starobs))
+    #         #print np.std(starobs)
+    #         uindices.append(ind)
 
-    repeatability = np.array(repeatability)
-    uindices = np.array(uindices)
+    # repeatability = np.array(repeatability)
+    # uindices = np.array(uindices)
 
-    for sme,ind in zip(starmagerr,indices):
-        print repeatability[uindices == ind]
-        if len(repeatability[uindices == ind]) > 0:
-            plt.scatter(sme,repeatability[uindices == ind],alpha=.3,color='black')
+    for sme,sm,ind,r,d in zip(starmagerr,starmag,indices,ras,decs):
+        repeatability = np.std(starmag[np.isclose(ras,r,rtol=1.e-4) & np.isclose(decs,d,rtol=1.e-4)])
+        plt.scatter(sme,repeatability,alpha=.3,color='black')
 
     plt.savefig('repeatabilitytest.png')
 
