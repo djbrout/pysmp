@@ -2585,7 +2585,7 @@ class smp:
                 #    #print 'skysn badflag'
 
                 if not badflag:
-                    stampsize = 500
+                    stampsize = 30
 
                     if ysn-stampsize < 0:
                         ylow = int(0)
