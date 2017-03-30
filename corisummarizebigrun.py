@@ -160,7 +160,7 @@ def grabstardata(imagedir,outfile):
     #os.system('ifdh rm ' + outfile)
     #os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     #os.system('rm dat.dat')
-    sys.exit()
+    #sys.exit()
 
 def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
