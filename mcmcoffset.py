@@ -251,14 +251,14 @@ class metropolis_hastings():
         self.fakezpt=fakezpt
         self.fitzpt=fitzpt
         self.datafilenames = datafilenames
-        self.immask = []
+        #self.immask = []
 
         self.nightlyoffx = nightlyoffx
         self.nightlyoffy = nightlyoffy
 
-        for i in range(Nimage):
-            self.immask.append(mask[i,:,:])
-
+        #for i in range(Nimage):
+        #    self.immask.append(mask[i,:,:])
+        self.immask = mask
 
         #self.shiftgalstd = shiftgalstd
 
@@ -597,12 +597,15 @@ class metropolis_hastings():
         print 'Num Iterations: ' + str( self.counter )
         print 'Accepted Percentage: ' + str( self.accepted_history )
         print 'Seconds per iteration: '+str(float(( self.t2 - self.t1 )/self.counter))
-        chsqs = self.csv / len(self.mask[self.mask > 0.].ravel())
+        chsqs = []
+        for i in range(self.Nimage):
+            chsqs.append(self.csv / len(self.mask[self.mask* self.immask[i,:,:] > 0.].ravel()))
         print 'Final Reduced ChiSq: ' + str(np.nanmean(chsqs[chsqs != 0.]))
         print 'Chisq For Each Epoch: ',chsqs
         self.plotchains()
         self.savechains()
         print 'plotting stamps... this may take a minute...'
+        self.dontplotstamps = False
         if not self.dontplotstamps:
             self.plotstamps()
         #np.savez(self.results_npz, pixel_history = self.pixel_history
@@ -1264,7 +1267,7 @@ class metropolis_hastings():
                         self.xgal_pix_offset,self.ygal_pix_offset)
             wmask = copy(self.weights[i,:,:])
             wmask[wmask > 0] = 1
-            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
+            v = ((self.sims[i] - self.data[i,:,:]) ** 2 * self.immask[i,:,:] *  self.mask * wmask / (1. / self.weights[i,:,:] + (self.sims[i] - self.sky[i]) / self.gain[i] + self.readnoise/self.gain[i])).ravel()  # hardcoded gain, hardcoded readnoise
             # v = np.real(v)
             chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
             tchi = chisq/len(self.mask[self.mask>0.].ravel())
@@ -1293,27 +1296,27 @@ class metropolis_hastings():
                 self.plotgalmodel = self.unpixelate(self.kicked_galmodel,self.pixelate_model,self.substamp)
             else:
                 self.plotgalmodel=self.kicked_galmodel
-            axs = axgm.imshow(self.plotgalmodel * self.mask,cmap='gray',interpolation='nearest')
+            axs = axgm.imshow(self.plotgalmodel * self.mask * self.immask[i,:,:],cmap='gray',interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axgm)
             #axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
-            axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:].ravel()[self.data[i,:,:].ravel() != 0.]),vmax=np.max(self.data[i,:,:]))
+            axs = axim.imshow(self.data[i,:,:] * self.mask * self.immask[i,:,:], cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:].ravel()[self.data[i,:,:].ravel() != 0.]),vmax=np.max(self.data[i,:,:]))
 
             cbar = fig.colorbar(axs, ax=axim)
             #axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
-            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:].ravel()[self.data[i,:,:].ravel() != 0.]),vmax=np.max(self.data[i,:,:]))
+            axs = axpsf.imshow(self.sims[i] * self.mask * self.immask[i,:,:], cmap='gray', interpolation='nearest',vmin=np.min(self.data[i,:,:].ravel()[self.data[i,:,:].ravel() != 0.]),vmax=np.max(self.data[i,:,:]))
 
             cbar = fig.colorbar(axs, ax=axpsf)
-            resid = (self.data[i,:,:] - self.sims[i])*self.mask
+            resid = (self.data[i,:,:] - self.sims[i])*self.mask * self.immask[i,:,:]
             md = np.median(resid[resid!=0.].ravel())
             std = np.std(resid[resid!=0.].ravel())
-            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=-4*std,vmax=4*std)
+            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask * self.immask[i,:,:], cmap='gray', interpolation='nearest',vmin=-4*std,vmax=4*std)
             cbar = fig.colorbar(axs, ax=axdiff)
-            axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
+            axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask * self.immask[i,:,:], cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
             cbar = fig.colorbar(axs, ax=axchi)
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
             #plt.title(title)
-            chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / (self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask
+            chiarr = (self.data[i,:,:] - self.sims[i]) ** 2 / (self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask * self.immask[i,:,:]
             k_values = [1]
             linestyles = ['-']
             mu = 0
@@ -1359,7 +1362,7 @@ class metropolis_hastings():
             axdiff2.set_ylabel('Count')
             axdiff2.legend(loc='upper right',fontsize='x-small')
 
-            stdarr = (self.data[i, :, :] - self.sims[i]) / np.sqrt(self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask
+            stdarr = (self.data[i, :, :] - self.sims[i]) / np.sqrt(self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask * self.immask[i,:,:]
             axstd.hist(stdarr[stdarr != 0.],bins=np.arange(-4.2,4,.4),normed=True,label='Mean: '+str(round(np.mean(stdarr[stdarr !=0].ravel()),2))+
                        '\nSTD: '+str(round(np.std(stdarr[stdarr != 0].ravel()),2)))
 
