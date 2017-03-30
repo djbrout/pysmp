@@ -3498,6 +3498,11 @@ class smp:
         #self.plotcheckstars()
         #self.plotallfake20staroffsets()
 
+
+        for i in range(len(smp_dict['sky'])):
+            if len(smp_noise[smp_noise > 0.].ravel()) < 10.:
+                smp_dict['flag'][i] = 1
+
         print 'skyerr',smp_dict['skyerr']
         print 'flag',smp_dict['flag']
         print 'mjdflag',smp_dict['mjd_flag']
@@ -3649,10 +3654,6 @@ class smp:
         self.smp_im = smp_im
         self.smp_psf = smp_psf
         self.smp_noise = smp_noise
-
-        for i in range(len(smp_dict['sky'])):
-            if len(smp_noise[smp_noise > 0.].ravel()) < 10.:
-                smp_dict['flag'][i] = 1
 
 
 
