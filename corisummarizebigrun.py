@@ -1836,8 +1836,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         print starmag[np.isclose(ras,r,rtol=1.e-6) & np.isclose(decs,d,rtol=1.e-6)]
         #raw_input()
         repeatability = np.std(starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5)])
-        plt.scatter(sme,repeatability,alpha=.3,color='black')
+        if repeatability < .3:
+            plt.scatter(sme,repeatability,alpha=.3,color='black')
 
+    plt.xscale('log')
+    plt.yscale('log')
     plt.savefig('repeatabilitytest.png')
 
 
