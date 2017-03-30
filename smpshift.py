@@ -2446,7 +2446,7 @@ class smp:
                         print imfile
                         print snparams.snfile.split('/')[-1].replace('.dat','')
 
-                        sexsky, sexrms, bkgrnd, bkgrndrms = runsextractor.getsky_and_skyerr(imfile, im, 500 + 50,
+                        sexsky, sexrms, bkgrnd, bkgrndrms = runsextractor.getsky_and_skyerr(imfile,weightsfile, im, 500 + 50,
                                                                          500 - 50,
                                                                          500 + 50, 500 - 50,
                                                                          snparams.survey, bigreturn=True,
@@ -2467,7 +2467,7 @@ class smp:
 
 
                     zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
-                                         badflagx,mag_star,im,weights,mask,maskfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
+                                         badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
                     if zpt == 0:
@@ -2623,7 +2623,7 @@ class smp:
                     print imfile
                     dosextractor = True
                     if dosextractor:
-                        sexsky,sexrms,bkgrnd,bkgrndrms = runsextractor.getsky_and_skyerr(imfile,im,xlow-30+stampsize,xhi+30-stampsize,
+                        sexsky,sexrms,bkgrnd,bkgrndrms = runsextractor.getsky_and_skyerr(imfile,weightsfile,im,xlow-30+stampsize,xhi+30-stampsize,
                                                                         ylow-30+stampsize,yhi+30-stampsize,snparams.survey,bigreturn=True,index=snparams.snfile.split('/')[-1].replace('.dat',''))
 
                         print sexsky,sexrms
@@ -5344,7 +5344,7 @@ class smp:
 
 
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
-                badflag,mag_cat,im,noise,mask,maskfile,psffile,imfile,imwcs,snparams,substamp,
+                badflag,mag_cat,im,noise,mask,maskfile,weightsfile,psffile,imfile,imwcs,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
                 mpfit_or_mcmc='mpfit',cat_zpt=-999):
         """Measure the zeropoints for the images"""
@@ -5509,7 +5509,7 @@ class smp:
                         else:
                             print imfile
                             try:
-                                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, x - 100, x + 100, y - 100, y + 100,
+                                sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,weightsfile,im, x - 100, x + 100, y - 100, y + 100,
                                                                          snparams.survey)
                             except IOError:
                                 print 'could not run sextractor'

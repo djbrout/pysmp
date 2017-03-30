@@ -21,7 +21,7 @@ import pyfits as pf
 import dilltools as dt
 import os
 
-def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',bigreturn=False):
+def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',bigreturn=False):
     print 'inside getsky and skyerr'
     if survey == 'DES':
         sexpath = "sex"
@@ -46,7 +46,7 @@ def getsky_and_skyerr(imagefilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',b
             workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , config={"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
+            , config={"WEIGHT IMAGE":weightfilename,"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
                                                                                       '.background, '+
                                                                                       '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
                                                                                       '.background_rms'
