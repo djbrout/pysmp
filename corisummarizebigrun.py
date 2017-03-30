@@ -1815,11 +1815,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     repeatability = []
     uindices = []
     for ind in np.unique(indices):
-
+        print starmag[indices == ind]
+        raw_input()
         starobs = sigmaclip(starmag[indices == ind].ravel())
         starmeanmag = np.mean(starobs)
         repeatability.append(np.std(starobs))
-        print np.std(starobs)
+        #print np.std(starobs)
         uindices.append(ind)
 
     repeatability = np.array(repeatability)
