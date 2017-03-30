@@ -2710,7 +2710,7 @@ class smp:
                             noise_stamp = (np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                           int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)])*scalefactor)**2
 
-                            print maskfile
+                            print weightsfile
                             print self.psfcenter
                             raw_input()
                             mask_stamp = mask[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
