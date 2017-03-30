@@ -5594,7 +5594,7 @@ class smp:
                         #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
                         #gnoise_stamp = np.ones(image_stamp.shape)/se**2
 
-                        stampsize = 256
+                        stampsize = 30
                         ysn = psfcenter[0]
                         xsn = psfcenter[1]
                         if ysn - stampsize < 0:
