@@ -29,7 +29,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
         plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                    stardata['poisson'],stardata['ids'],,stardata['centroidedras'],stardata['centroideddecs'],
+                    stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                     title='rmsaddin_')
         sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
