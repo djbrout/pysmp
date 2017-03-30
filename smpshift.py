@@ -1766,7 +1766,7 @@ class smp:
                 maskfile = weightsfile
                 mask = weights
                 mask[mask<0.000000001] = 0
-                mask[mask>=0.000000001]=1
+                mask[mask>=0.000000001]= 1
             else:
                 noise = pyfits.getdata(noisefile)
                 mask = pyfits.getdata(maskfile)
@@ -2710,6 +2710,9 @@ class smp:
                             noise_stamp = (np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                           int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)])*scalefactor)**2
 
+                            print maskfile
+                            print self.psfcenter
+                            raw_input()
                             mask_stamp = mask[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                           int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]
                             mask = mask_stamp
@@ -2829,8 +2832,8 @@ class smp:
                                         mask *= noise_stamp
 
                                         smp_noise[i,:,:] = noise_stamp*0.+1/(skysig**2) * mask
-                                        smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
-                                          int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
+                                        #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
+                                        #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         #smp_noise[i,:,:] = noise_stamp*1./(sexrms)**2 * mask
 
