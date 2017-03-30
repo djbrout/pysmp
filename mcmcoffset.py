@@ -1523,7 +1523,12 @@ class metropolis_hastings():
             #save_fits_image(self.data[0,:,:],'./out/MDJ'+str(self.mjd)+'data.fits')
         if not dontreturn:
             stamps = [datastamps,simstamps,galmodelstamps,weightstamps,psfstamps,chisqstamps]
-            chsqs = self.csv
+
+            chsqs = []
+            for i in range(self.Nimage):
+                chsqs.append(self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
+
+            chsqs = np.array(chsqs)
             ndof = len(self.mask[self.mask > 0.].ravel())
             return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq,stamps,chsqs,ndof # size: self.history[num_iter,len(self.model_params)]
         else:
