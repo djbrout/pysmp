@@ -81,7 +81,7 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 #print os.path.join(imagedir,dirName,fname)
-                if not 'SN-S2' in fname: continue
+                if not 'SN-S1' in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
                     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
@@ -1815,13 +1815,16 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     repeatability = []
     uindices = []
     for ind in np.unique(indices):
-        print starmag[indices == ind]
-        raw_input()
-        starobs = sigmaclip(starmag[indices == ind].ravel())
+        #print starmag[indices == ind]
+        #raw_input()
+        starobs = starmag[indices == ind]
+        starobs = starobs[starobs-np.mean(starobs) <.1]
+        starobs = sigmaclip(starobs)
         starmeanmag = np.mean(starobs)
-        repeatability.append(np.std(starobs))
-        #print np.std(starobs)
-        uindices.append(ind)
+        if len(starobs)>5.:
+            repeatability.append(np.std(starobs))
+            #print np.std(starobs)
+            uindices.append(ind)
 
     repeatability = np.array(repeatability)
     uindices = np.array(uindices)
