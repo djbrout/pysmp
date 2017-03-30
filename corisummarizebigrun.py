@@ -1824,6 +1824,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     uindices = np.array(uindices)
 
     for sme,ind in zip(starmagerr,indices):
+        print repeatability[uindices == ind]
         plt.scatter(sme,repeatability[uindices == ind],alpha=.3,color='black')
 
     plt.savefig('repeatabilitytest.png')
