@@ -3650,6 +3650,12 @@ class smp:
         self.smp_psf = smp_psf
         self.smp_noise = smp_noise
 
+        for i in range(len(smp_dict['sky'])):
+            if len(smp_noise[smp_noise > 0.].ravel()) < 10.:
+                smp_dict['flag'][i] = 1
+
+
+
         if self.dosnradecfit:
             if not self.dogalfit:
                 chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
