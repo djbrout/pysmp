@@ -1365,7 +1365,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 75:
+            if cccc > 15:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
@@ -2585,7 +2585,7 @@ class smp:
                 #    #print 'skysn badflag'
 
                 if not badflag:
-                    stampsize = 32
+                    stampsize = 500
 
                     if ysn-stampsize < 0:
                         ylow = int(0)
