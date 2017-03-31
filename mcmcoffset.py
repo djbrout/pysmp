@@ -1367,7 +1367,7 @@ class metropolis_hastings():
             axdiff2.legend(loc='upper right',fontsize='x-small')
 
             stdarr = (self.data[i, :, :] - self.sims[i]) / np.sqrt(self.skyerr[i]**2 + self.psfs[i,:,:]*self.modelvec[i]) * self.mask * self.immask[i,:,:]
-            axstd.hist(stdarr[stdarr != 0.],bins=np.arange(-4.2,4,.4),normed=True,label='Mean: '+str(round(np.mean(stdarr[stdarr !=0].ravel()),2))+
+            axstd.hist(stdarr[(stdarr != 0.) & (np.isfinite(stdarr))],bins=np.arange(-4.2,4,.4),normed=True,label='Mean: '+str(round(np.mean(stdarr[(stdarr !=0) & (np.isfinite(stdarr))].ravel()),2))+
                        '\nSTD: '+str(round(np.std(stdarr[stdarr != 0].ravel()),2)))
 
             axstd.set_xlim(-4,4)
