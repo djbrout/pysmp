@@ -1338,7 +1338,7 @@ class metropolis_hastings():
             csq = chisqfitprob[0]
             fitprob = chisqfitprob[1]
 
-            axs = axchi2.hist(chiarr[chiarr>0.].ravel(),bins=np.arange(0,10,.1),normed=True,label='Chisq: '+str(round(csq,2))+
+            axs = axchi2.hist(chiarr[(chiarr>0.) & (np.isfiinite(chiarr))].ravel(),bins=np.arange(0,10,.1),normed=True,label='Chisq: '+str(round(csq,2))+
                               '\nFitprob: '+str(round(fitprob,5)))
             axchi2.legend(loc='upper right',fontsize='x-small')
             axchi2.set_xlim(0,6)
@@ -1359,8 +1359,8 @@ class metropolis_hastings():
             axchi4.set_ylabel('Mean Chi Sq')
             axchi4.set_xlabel('Y Pixel')
             #axchi3.set_ylim()
-            axdiff2.hist(resid[resid!=0.],align='left',label='Mean: '+str(round(np.mean(resid[resid!=0.].ravel()),2))+
-                         '\nUOM: '+str(round(np.std(resid[resid!=0.].ravel())/np.sqrt(len(resid[resid!=0.].ravel())),2)))
+            axdiff2.hist(resid[(resid!=0.) & (np.isfinite(resid))],align='left',label='Mean: '+str(round(np.mean(resid[(resid!=0.) & (np.isfinite(resid))].ravel()),2))+
+                         '\nUOM: '+str(round(np.std(resid[(resid!=0.) & (np.isfinite(resid))].ravel())/np.sqrt(len(resid[(resid!=0.)  & (np.isfinite(resid))].ravel())),2)))
 
             axdiff2.set_xlabel('Residual')
             axdiff2.set_ylabel('Count')
