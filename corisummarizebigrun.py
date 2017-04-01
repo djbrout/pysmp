@@ -1904,6 +1904,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.yscale('log')
     plt.xlim(15.5,21.5)
     plt.ylim(-.01, .01)
+    plt.ylabel('photerr - repeatability')
     plt.plot([15.5, 21.5], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
