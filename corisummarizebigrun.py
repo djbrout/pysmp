@@ -2017,7 +2017,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecx.append(rai)
 
     plt.xscale('log')
-    plt.xlim(0.,.1)
+    plt.xlim(0.0001,.01)
     plt.ylim(-.01, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.00005, dontrootn=True)
@@ -2028,7 +2028,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('Sky Error')
     plt.ylabel('PhotErr - Repeatability')
     plt.plot([0., 1000], [0, 0], color='black')
-    plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_rmsuncertainty.png')
 
 
     print starmag[0:10]
