@@ -99,7 +99,7 @@ def grabstardata(imagedir,outfile):
                         #    continue
                         #if True:
 
-                        cm = zptdata['cat_magvvv']
+                        cm = zptdata['cat_magsmp']
 
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
@@ -109,7 +109,7 @@ def grabstardata(imagedir,outfile):
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_starh'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
-                        bigdata['catmag'].extend(zptdata['cat_magvvv'])
+                        bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
