@@ -1842,6 +1842,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
     starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) + rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
+
+    starmagerr = 1.0857*np.sqrt(skyerr**2+flux)/flux + rmsaddin
+
     plt.clf()
     # repeatability = []
     # uindices = []
