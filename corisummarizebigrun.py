@@ -1869,7 +1869,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         repeatability = np.std(starww)
         #repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 4.:
+        if len(starww) > 2.:
             #if repeatability < .3:
             plt.scatter(sme,repeatability,alpha=.3,color='black')
 
