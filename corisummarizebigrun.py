@@ -122,7 +122,7 @@ def grabstardata(imagedir,outfile):
 
                         fs = zptdata['flux_starh']
                         zp = zptdata['fit_zpt']
-                        ww = (cm < 18.) & (cm > 16.)
+                        ww = (cm < 23.) & (cm > 16.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
