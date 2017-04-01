@@ -1927,7 +1927,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             plt.scatter(cs, float(sme) - repeatability, alpha=.3, color='black')
             pltvec.append(sme - repeatability)
 
-    # plt.yscale('log')
+    plt.xscale('log')
     plt.xlim(0., 200.)
     plt.ylim(-.01, .01)
     plt.ylabel('photerr - repeatability')
