@@ -73,7 +73,7 @@ def grabstardata(imagedir,outfile):
                'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[]}
     zptfiles = []
     cntr = 0
-    goodbigdata = bigdata
+    goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
         if cntr > 500.: break
         #print('Found directory: %s' % dirName)
@@ -105,7 +105,7 @@ def grabstardata(imagedir,outfile):
                         #if max(zptdata['cat_mag'])>21.1:
                         #    continue
                         #if True:
-                        bigdata = goodbigdata
+                        bigdata = copy(goodbigdata)
                         cm = zptdata['cat_magsmp']
 
                         bigdata['ids'].extend(zptdata['ids'])
@@ -115,11 +115,11 @@ def grabstardata(imagedir,outfile):
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
                         bigdata['starflux'].extend(zptdata['flux_starh'])
+                        bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         bigdata['chisq'].extend(zptdata['chisqu'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
-                        bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
                             bigdata['psf'].append(psfs[i,:,:])
@@ -142,7 +142,7 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
                         print 'CNTR',cntr
-                        goodbigdata = bigdata
+                        goodbigdata = copy(bigdata)
                     except:
                         print 'FAILED', fname
                         pass
