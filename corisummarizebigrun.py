@@ -1888,10 +1888,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(.0003,.02)
     plt.ylim(.0003,.02)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .00001), window=.00004,dontrootn=True,alpha=.6)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .00001), window=.00004,dontrootn=True)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
 
 
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
@@ -1922,10 +1922,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('Catalog Magnitude')
     plt.ylabel('PhotErr - Repeatability')
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(15, 22, .1), window=.5,dontrootn=True,alpha=.6)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(15, 22, .1), window=.5,dontrootn=True)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
 
     plt.plot([15., 21.5], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
@@ -1954,10 +1954,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(0.5, 1000.)
     plt.ylim(-.01, .01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 1000, .1), window=.5,dontrootn=True,alpha=.6)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 1000, .1), window=.5,dontrootn=True)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
 
     plt.xlabel('Chi Squared')
     plt.ylabel('PhotErr - Repeatability')
@@ -1987,11 +1987,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(5, 500)
     plt.ylim(-.01, .01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(5, 500, .5), window=1., dontrootn=True,
-                               alpha=.6)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(5, 500, .5), window=1., dontrootn=True)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
 
     plt.xlabel('Sky Error')
     plt.ylabel('PhotErr - Repeatability')
@@ -2021,11 +2020,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(0.,.1)
     plt.ylim(-.01, .01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.00005, dontrootn=True,
-                               alpha=.6)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.00005, dontrootn=True)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
 
     plt.xlabel('Sky Error')
     plt.ylabel('PhotErr - Repeatability')
