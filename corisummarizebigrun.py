@@ -1761,21 +1761,21 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     st = np.std(ff)
 
     #print max(catmag)
-    print catmag.shape,rmsaddin.shape,ff.shape
+    print catmag.shape,rmsaddin.shape,ff.shape,indices.shape
     raw_input()
-    ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
-
-    flux = flux[ww]
-    fluxerr = fluxerr[ww]
-    zpt = zpt[ww]
-    catmag = catmag[ww]
-    skyerr= skyerr[ww]
-    sky = sky[ww]
-    rmsaddin = rmsaddin[ww]
-    poisson = poisson[ww]
-    indices = indices[ww]
-    ras = ras[ww]
-    decs = decs[ww]
+    # ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
+    #
+    # flux = flux[ww]
+    # fluxerr = fluxerr[ww]
+    # zpt = zpt[ww]
+    # catmag = catmag[ww]
+    # skyerr= skyerr[ww]
+    # sky = sky[ww]
+    # #rmsaddin = rmsaddin[ww]
+    # poisson = poisson[ww]
+    # indices = indices[ww]
+    # ras = ras[ww]
+    # decs = decs[ww]
 
 
 
@@ -1786,7 +1786,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(zpt-catmag))
-    chisq = chisq[ww]
+    #chisq = chisq[ww]
     #chisq = chisq[ww]*1/np.sqrt((abs(flux) / 3.))
     # plt.clf()
     # plt.scatter(catmag,(flux-catflux)/catflux)
@@ -1808,7 +1808,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
     #raw_input()
-    starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
+    #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
     starmagerr = -2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)
