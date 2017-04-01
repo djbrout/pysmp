@@ -1864,6 +1864,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # repeatability = np.array(repeatability)
     # uindices = np.array(uindices)
     cntr = 0
+    pltvecx = []
+    pltvecy = []
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > 10000: continue
@@ -1876,6 +1878,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         if len(starww) > 5.:
             #if repeatability < .3:
             plt.scatter(sme,repeatability,alpha=.3,color='black')
+            pltvecy.append(repeatability)
+            pltvecx.append(sme)
 
     plt.xscale('log')
     plt.yscale('log')
@@ -1883,13 +1887,20 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.ylabel('Repeatability')
     plt.xlim(.0003,.02)
     plt.ylim(.0003,.02)
+
+    ax, ay, aystd = dt.bindata(pltvecx,pltvecy, np.arange(.0003,.02, .1), window=.5)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
     plt.clf()
 
     cntr = 0
-    pltvec = []
+    pltvecx = []
+    pltvecy = []
     for sme, sm, ind, r, d, cm in zip(starmagerr, starmag, indices, ras, decs, catmag):
         cntr += 1
         if cntr > 10000: continue
@@ -1902,20 +1913,27 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         if len(starww) > 4.:
             # if repeatability < .3:
             plt.scatter(cm, float(sme) - repeatability, alpha=.3, color='black')
-            pltvec.append(sme-repeatability)
-
+            pltvecy.append(sme - repeatability)
+            pltvecx.append(cm)
     #plt.yscale('log')
     plt.xlim(15.,21.5)
     plt.ylim(-.01, .01)
     plt.xlabel('Catalog Magnitude')
     plt.ylabel('PhotErr - Repeatability')
+
+    x, ay, aystd = dt.bindata(pltvecx, pltvecy, np.arange(15, 22, .1), window=.5)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
     plt.plot([15., 21.5], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
     plt.clf()
 
     cntr = 0
-    pltvec = []
+    pltvecx = []
+    pltvecy = []
     for sme, sm, ind, r, d, cm,cs in zip(starmagerr, starmag, indices, ras, decs, catmag,chisq):
         cntr += 1
         if cntr > 10000: continue
@@ -1928,14 +1946,21 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         if len(starww) > 4.:
             # if repeatability < .3:
             plt.scatter(cs, float(sme) - repeatability, alpha=.3, color='black')
-            pltvec.append(sme - repeatability)
+            pltvecy.append(sme - repeatability)
+            pltvecx.append(cs)
 
     plt.xscale('log')
-    plt.xlim(0.5, 500.)
+    plt.xlim(0.5, 1000.)
     plt.ylim(-.01, .01)
+
+    x, ay, aystd = dt.bindata(pltvecx, pltvecy, np.arange(.5, 1000, .1), window=.5)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
     plt.xlabel('Chi Squared')
     plt.ylabel('PhotErr - Repeatability')
-    plt.plot([0., 200], [0, 0], color='black')
+    plt.plot([0., 1000], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
 
 
