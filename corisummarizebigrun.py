@@ -1840,7 +1840,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
-    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)) #+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
+    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)) + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
     plt.clf()
     # repeatability = []
@@ -1869,14 +1869,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         repeatability = np.std(starww)/np.sqrt(len(starww))
         #repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 4.:
+        if len(starww) > 5.:
             #if repeatability < .3:
             plt.scatter(sme,repeatability,alpha=.3,color='black')
 
     plt.xscale('log')
     plt.yscale('log')
-    plt.xlim(.0001,.1)
-    plt.ylim(.0001,.1)
+    plt.xlim(.0001,.01)
+    plt.ylim(.0001,.05)
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
