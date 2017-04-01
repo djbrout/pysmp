@@ -1879,6 +1879,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.yscale('log')
+    plt.xlabel('Photometric Error')
+    plt.ylabel('Repeatability')
     plt.xlim(.0003,.02)
     plt.ylim(.0003,.02)
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
@@ -1905,7 +1907,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.yscale('log')
     plt.xlim(15.,21.5)
     plt.ylim(-.01, .01)
-    plt.ylabel('photerr - repeatability')
+    plt.xlabel('Catalog Magnitude')
+    plt.ylabel('PhotErr - Repeatability')
     plt.plot([15., 21.5], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
@@ -1930,7 +1933,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xscale('log')
     plt.xlim(0.5, 500.)
     plt.ylim(-.01, .01)
-    plt.ylabel('photerr - repeatability')
+    plt.xlabel('Chi Squared')
+    plt.ylabel('PhotErr - Repeatability')
     plt.plot([0., 200], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
 
