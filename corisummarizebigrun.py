@@ -1882,7 +1882,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.clf()
     cntr = 0
-    for sme, sm, ind, r, d, cm, f, fe, rms in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr,rmsaddin):
+    for sme, sm, ind, r, d, cm, f, fe, rms, z in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr,rmsaddin, zpt):
         cntr += 1
         if cntr > 1000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -1893,7 +1893,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 5.:
             # if repeatability < .3:
-            plt.scatter(np.sqrt(fe**2+abs(f) + 10**(.4*(zpt/(zpt-rms)))**2), repeatability, alpha=.3, color='black')
+            plt.scatter(np.sqrt(fe**2+abs(f) + 10**(.4*(z/(z-rms)))**2), repeatability, alpha=.3, color='black')
 
     #plt.xscale('log')
     #plt.yscale('log')
