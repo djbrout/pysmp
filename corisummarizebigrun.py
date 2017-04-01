@@ -1880,6 +1880,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
+    plt.clf()
     cntr = 0
     for sme, sm, ind, r, d, cm, f, fe in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr):
         cntr += 1
@@ -1898,7 +1899,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.yscale('log')
     #plt.xlim(.0001, .01)
     #plt.ylim(.0001, .05)
-    plt.plot([min(fluxerr), max(fluxerr)], [min(fluxerr), max(fluxerr)], color='black')
+    #plt.plot([min(fluxerr), max(fluxerr)], [min(fluxerr), max(fluxerr)], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_photerr_influx.png')
 
     cntr = 0
