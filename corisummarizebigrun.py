@@ -73,8 +73,9 @@ def grabstardata(imagedir,outfile):
                'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[]}
     zptfiles = []
     cntr = 0
+    goodbigdata = {}
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 2000.: break
+        if cntr > 500.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -93,12 +94,12 @@ def grabstardata(imagedir,outfile):
                 #print zptdata.keys()
                 #raw_input()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                        if True:
                         #if max(zptdata['cat_mag'])>21.1:
                         #    continue
                         #if True:
-
+                        bigdata = goodbigdata
                         cm = zptdata['cat_magsmp']
 
                         bigdata['ids'].extend(zptdata['ids'])
@@ -135,9 +136,10 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
                         print 'CNTR',cntr
-                    # except:
-                    #     print 'FAILED', fname
-                    #     pass
+                        goodbigdata = bigdata
+                    except:
+                        print 'FAILED', fname
+                        pass
 
     try:
         bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
