@@ -30,7 +30,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                    title=filter+'_')
+                    title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
 
@@ -44,7 +44,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                        title=filter+'_')
+                        title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
             #sys.exit()
     print data.keys()
     print len(data['Flux'])
@@ -1763,7 +1763,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,title=''):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,title='',outdir='.'):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
@@ -1857,7 +1857,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(min(starmagerr),max(starmagerr))
     plt.ylim(min(starmagerr),max(starmagerr))
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
-    plt.savefig('repeatabilitytest.png')
+    plt.savefig(outdir+'/'+title+'_repeatabilitytest.png')
 
 
     print starmag[0:10]
