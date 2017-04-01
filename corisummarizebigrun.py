@@ -70,7 +70,7 @@ def lookup_rms_addin(smpfile,obsid):
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[]}
+               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],'numzptstars':[]}
     zptfiles = []
     cntr = 0
     goodbigdata = copy(bigdata)
@@ -154,7 +154,8 @@ def grabstardata(imagedir,outfile):
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=3, iter=10)
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
-                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
+                        bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
+                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
