@@ -1854,7 +1854,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.yscale('log')
-    plt.xlim(.0001)
+    plt.xlim(min(starmagerr),max(starmagerr))
+    plt.ylim(min(starmagerr),max(starmagerr))
+    plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig('repeatabilitytest.png')
 
 
