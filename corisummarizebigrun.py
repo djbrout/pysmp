@@ -75,7 +75,7 @@ def grabstardata(imagedir,outfile):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 300.: break
+        if cntr > 3000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -1886,7 +1886,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecy.append(sme - repeatability)
             pltvecx.append(fh)
 
-    plt.xscale('log')
+    #plt.xscale('log')
     plt.xlabel('PSF FWHM')
     plt.ylabel('Repeatability - PhotErr')
     plt.xlim(2, 10)
