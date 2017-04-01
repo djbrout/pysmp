@@ -1921,7 +1921,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('Catalog Magnitude')
     plt.ylabel('PhotErr - Repeatability')
 
-    x, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(15, 22, .1), window=.5)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(15, 22, .1), window=.5)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
