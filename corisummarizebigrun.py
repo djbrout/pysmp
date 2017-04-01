@@ -96,6 +96,7 @@ def grabstardata(imagedir,outfile):
                 if not fname in zptfiles:
                     try:
                         #if True:
+                        test = zptdata['chisqu']
                         try:
                             if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
                                 print 'skippeddddd'
@@ -1907,6 +1908,32 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.ylabel('photerr - repeatability')
     plt.plot([15., 21.5], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
+
+    plt.clf()
+
+    cntr = 0
+    pltvec = []
+    for sme, sm, ind, r, d, cm,cs in zip(starmagerr, starmag, indices, ras, decs, catmag,chisq):
+        cntr += 1
+        if cntr > 1000: continue
+        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        # print starmag[indices == ind]
+        # raw_input()
+        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+        repeatability = np.std(starww) / np.sqrt(len(starww))
+        # repeatability = np.std(starmag[indices == ind])
+        if len(starww) > 4.:
+            # if repeatability < .3:
+            plt.scatter(cs, float(sme) - repeatability, alpha=.3, color='black')
+            pltvec.append(sme - repeatability)
+
+    # plt.yscale('log')
+    plt.xlim(0., 10.)
+    plt.ylim(-.01, .01)
+    plt.ylabel('photerr - repeatability')
+    plt.plot([0., 10], [0, 0], color='black')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
+
 
     print starmag[0:10]
     print catmag[0:10]
