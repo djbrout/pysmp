@@ -1761,7 +1761,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     st = np.std(ff)
 
     #print max(catmag)
-    #raw_input()
+    print catmag.shape,rmsaddin.shape,ff.shape
+    raw_input()
     ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
 
     flux = flux[ww]
