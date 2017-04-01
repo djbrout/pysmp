@@ -1893,6 +1893,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
 
+
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
