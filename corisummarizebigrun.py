@@ -1898,7 +1898,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print 'finished resid'
 
     plt.plot([.0003,.02],[0,0],color='black')
-    plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerr.png')
+    plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png')
 
     plt.clf()
     cntr = 0
