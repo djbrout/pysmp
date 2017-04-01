@@ -1928,10 +1928,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvec.append(sme - repeatability)
 
     # plt.yscale('log')
-    plt.xlim(0., 100.)
+    plt.xlim(0., 200.)
     plt.ylim(-.01, .01)
     plt.ylabel('photerr - repeatability')
-    plt.plot([0., 10], [0, 0], color='black')
+    plt.plot([0., 200], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
 
 
