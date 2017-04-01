@@ -102,6 +102,8 @@ def grabstardata(imagedir,outfile):
                         if len(zptdata['cat_magsmp']) != len(zptdata['flux_starh']):
                             print 'skipperrrrr'
                             continue
+                        psfs = zptdata['psfs']
+
                         if len(psfs) != len(zptdata['cat_magsmp']):
                             print 'skippeppppppp'
                             continue
