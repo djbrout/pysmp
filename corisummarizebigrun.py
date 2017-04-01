@@ -75,7 +75,7 @@ def grabstardata(imagedir,outfile):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 500.: break
+        if cntr > 2000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -1842,12 +1842,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm in zip(starmagerr,starmag,indices,ras,decs,catmag):
         cntr+=1
         if cntr > 1000: continue
-        print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
         #raw_input()
         repeatability = np.std(starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)])
         #repeatability = np.std(starmag[indices == ind])
-        if repeatability < .3:
+        if len(repeatability) > 5.:
+            #if repeatability < .3:
             plt.scatter(sme,repeatability,alpha=.3,color='black')
 
     plt.xscale('log')
