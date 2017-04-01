@@ -2279,6 +2279,15 @@ class smp:
                 tdecs = starglobaldecs
                 tids = starglobalids
                 mag_star = starglobalmags
+
+                cols = (starcat.ra > ra_low) & (starcat.ra < ra_high) & (starcat.dec > dec_low) & (starcat.dec < dec_high)
+                tras = starcat.ra
+                tdecs = starcat.decc
+                tids = starcat.id
+                mag_star = starcat.mag
+
+
+
                 if not len(cols):
                     #print 'Error: no stars in image!'
                     #continue
@@ -2335,6 +2344,9 @@ class smp:
                     #         y_star += [yval]
 
                     x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starglobalras,starglobaldecs)),0))
+                    x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra,starcat.dec)),0))
+
+
                     # else:
                     #     x_star = x_starold
                     #     y_star = y_starold
