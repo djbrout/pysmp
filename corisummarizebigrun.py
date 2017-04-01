@@ -1879,7 +1879,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlim(min(catmag), max(catmag))
     plt.ylim(min(pltvec), max(pltvec))
-    plt.plot([min(cm), max(cm)], [0,0], color='black')
+    plt.plot([min(catmag), max(catmag)], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
     print starmag[0:10]
