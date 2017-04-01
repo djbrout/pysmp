@@ -1855,8 +1855,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.yscale('log')
-    plt.xlim(.0001,.2)
-    plt.ylim(.0001,.2)
+    plt.xlim(.0001,.01)
+    plt.ylim(.0001,.01)
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
@@ -1877,8 +1877,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvec.append(sme-repeatability)
 
     plt.yscale('log')
-    plt.xlim(16, 24)
-    plt.ylim(.0001, 1.)
+    plt.xlim(min(catmag), max(catmag))
+    plt.ylim(.0001, .1)
     plt.plot([16, 24], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
