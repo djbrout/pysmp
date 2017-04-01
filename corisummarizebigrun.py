@@ -1902,9 +1902,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvec.append(sme-repeatability)
 
     #plt.yscale('log')
-    plt.xlim(16,24)
+    plt.xlim(15.5,24)
     plt.ylim(-.01, .01)
-    plt.plot([16, 24], [0,0], color='black')
+    plt.plot([15.5, 24], [0,0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
     print starmag[0:10]
