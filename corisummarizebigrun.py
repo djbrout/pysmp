@@ -135,7 +135,6 @@ def grabstardata(imagedir,outfile):
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
                         bigdata['catmag'].extend(zptdata['cat_magsmp'])
-                        bigdata['chisq'].extend(zptdata['chisqu'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
@@ -157,8 +156,11 @@ def grabstardata(imagedir,outfile):
                         bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
+                        bigdata['chisq'].extend(zptdata['chisqu'])
+
                         cntr += 1
                         print 'CNTR',cntr
+
                         goodbigdata = copy(bigdata)
                     # except:
                     #     print 'FAILED', fname
