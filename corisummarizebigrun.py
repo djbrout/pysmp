@@ -117,8 +117,11 @@ def grabstardata(imagedir,outfile):
                         #    continue
                         #if True:
                         bigdata = copy(goodbigdata)
-                        cm = zptdata['cat_magsmp']
-
+                        try:
+                            cm = zptdata['cat_magsmp']
+                        except:
+                            print 'FAO:'
+                            continue
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
                         bigdata['centroideddecs'].extend(zptdata['centroideddecs'])
