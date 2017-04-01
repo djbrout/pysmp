@@ -1873,7 +1873,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, cs, se, rai in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq, skyerr,
                                                    rmsaddin):
         cntr += 1
-        if cntr > 1000: continue
+        if cntr > 20000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
