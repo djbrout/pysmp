@@ -1919,7 +1919,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecx.append(cm)
     #plt.yscale('log')
     plt.xlim(15.,21.5)
-    plt.ylim(-.01, .01)
+    plt.ylim(-.02, .01)
     plt.xlabel('Catalog Magnitude')
     plt.ylabel('PhotErr - Repeatability')
 
@@ -1953,7 +1953,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.xlim(0.5, 1000.)
-    plt.ylim(-.01, .01)
+    plt.ylim(-.02, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 1000, .1), window=1.,dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
@@ -1986,7 +1986,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.xlim(5, 500)
-    plt.ylim(-.01, .01)
+    plt.ylim(-.02, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(5, 500, .5), window=1., dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
@@ -2019,7 +2019,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.xlim(0.001,.05)
-    plt.ylim(-.01, .01)
+    plt.ylim(-.02, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.0001, dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
