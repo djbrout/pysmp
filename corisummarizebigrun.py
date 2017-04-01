@@ -1899,7 +1899,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.yscale('log')
     #plt.xlim(.0001, .01)
     #plt.ylim(.0001, .05)
-    #plt.plot([min(fluxerr), max(fluxerr)], [min(fluxerr), max(fluxerr)], color='black')
+    plt.plot([0,2500],[0,2500], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_photerr_influx.png')
 
     cntr = 0
