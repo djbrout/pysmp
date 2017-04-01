@@ -1887,7 +1887,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecx.append(rai)
 
     plt.xscale('log')
-    plt.xlim(0.001, .05)
+    plt.xlim(0.003, .05)
     plt.ylim(-.02, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.0001,
