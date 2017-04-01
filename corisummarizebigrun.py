@@ -2029,6 +2029,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('ZPT Uncertainty')
     plt.ylabel('PhotErr - Repeatability')
     plt.plot([0., 1000], [0, 0], color='black')
+    plt.plot([0., 1000], [0, 1000], color='black',linestyle='--')
+
     plt.savefig(outdir + '/' + title + '_repeatability_vs_zptuncertainty.png')
 
 
