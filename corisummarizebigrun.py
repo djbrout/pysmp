@@ -94,8 +94,8 @@ def grabstardata(imagedir,outfile):
                 #print zptdata.keys()
                 #raw_input()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                        #if True:
                         try:
                             if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
                                 print 'skippeddddd'
@@ -156,15 +156,16 @@ def grabstardata(imagedir,outfile):
                         bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
+
                         bigdata['chisq'].extend(zptdata['chisqu'])
 
                         cntr += 1
                         print 'CNTR',cntr
 
                         goodbigdata = copy(bigdata)
-                    # except:
-                    #     print 'FAILED', fname
-                    #     pass
+                    except:
+                        print 'FAILED', fname
+                        pass
 
     try:
         bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
