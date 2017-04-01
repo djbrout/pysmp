@@ -1888,7 +1888,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(.0003,.02)
     plt.ylim(.0003,.02)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.01, .00001), window=.0005,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.005, .00001), window=.0001,dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
