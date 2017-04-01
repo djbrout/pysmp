@@ -95,7 +95,7 @@ def grabstardata(imagedir,outfile):
                 #raw_input()
                 if not fname in zptfiles:
                     try:
-                        if True:
+                        #if True:
                         #if max(zptdata['cat_mag'])>21.1:
                         #    continue
                         #if True:
