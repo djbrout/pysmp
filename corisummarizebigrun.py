@@ -75,7 +75,7 @@ def grabstardata(imagedir,outfile):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 200000.: break
+        if cntr > 500.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -101,7 +101,11 @@ def grabstardata(imagedir,outfile):
                         if len(zptdata['cat_magsmp']) != len(zptdata['flux_starh']):
                             print 'skipperrrrr'
                             continue
+                        if len(psfs) != len(zptdata['cat_magsmp']):
+                            print 'skippeppppppp'
+                            continue
                         #if True:
+
                         #if max(zptdata['cat_mag'])>21.1:
                         #    continue
                         #if True:
