@@ -93,8 +93,8 @@ def grabstardata(imagedir,outfile):
                 #print zptdata.keys()
                 #raw_input()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                        #if True:
                         #if max(zptdata['cat_mag'])>21.1:
                         #    continue
                         #if True:
@@ -135,9 +135,9 @@ def grabstardata(imagedir,outfile):
                         zptfiles.append(fname)
                         cntr += 1
                         print 'CNTR',cntr
-                    # except:
-                    #     print 'FAILED', fname
-                    #     pass
+                    except:
+                        print 'FAILED', fname
+                        pass
 
     try:
         bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
