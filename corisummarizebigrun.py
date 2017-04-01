@@ -1964,6 +1964,74 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.plot([0., 1000], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
 
+    plt.clf()
+    cntr = 0
+    pltvecx = []
+    pltvecy = []
+    for sme, sm, ind, r, d, cm, cs,se in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq,skyerr):
+        cntr += 1
+        if cntr > 10000: continue
+        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        # print starmag[indices == ind]
+        # raw_input()
+        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+        repeatability = np.std(starww) / np.sqrt(len(starww))
+        # repeatability = np.std(starmag[indices == ind])
+        if len(starww) > 4.:
+            # if repeatability < .3:
+            plt.scatter(se, float(sme) - repeatability, alpha=.3, color='black')
+            pltvecy.append(sme - repeatability)
+            pltvecx.append(se)
+
+    plt.xscale('log')
+    plt.xlim(5, 500)
+    plt.ylim(-.01, .01)
+
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(5, 500, .5), window=1., dontrootn=True,
+                               alpha=.6)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
+    plt.xlabel('Sky Error')
+    plt.ylabel('PhotErr - Repeatability')
+    plt.plot([0., 1000], [0, 0], color='black')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_skyerr.png')
+
+    plt.clf()
+    cntr = 0
+    pltvecx = []
+    pltvecy = []
+    for sme, sm, ind, r, d, cm, cs, se,rai in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq, skyerr,rmsaddin):
+        cntr += 1
+        if cntr > 10000: continue
+        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        # print starmag[indices == ind]
+        # raw_input()
+        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+        repeatability = np.std(starww) / np.sqrt(len(starww))
+        # repeatability = np.std(starmag[indices == ind])
+        if len(starww) > 4.:
+            # if repeatability < .3:
+            plt.scatter(rai, float(sme) - repeatability, alpha=.3, color='black')
+            pltvecy.append(sme - repeatability)
+            pltvecx.append(rai)
+
+    plt.xscale('log')
+    plt.xlim(0.,.1)
+    plt.ylim(-.01, .01)
+
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.00005, dontrootn=True,
+                               alpha=.6)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
+    plt.xlabel('Sky Error')
+    plt.ylabel('PhotErr - Repeatability')
+    plt.plot([0., 1000], [0, 0], color='black')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
+
 
     print starmag[0:10]
     print catmag[0:10]
