@@ -103,6 +103,12 @@ def grabstardata(imagedir,outfile):
                         except:
                             print 'FAIL'
                             continue
+
+                        try:
+                            cm = zptdata['cat_magsmp']
+                        except:
+                            print 'FAO:'
+                            continue
                         if len(zptdata['cat_magsmp']) != len(zptdata['flux_starh']):
                             print 'skipperrrrr'
                             continue
@@ -117,11 +123,7 @@ def grabstardata(imagedir,outfile):
                         #    continue
                         #if True:
                         bigdata = copy(goodbigdata)
-                        try:
-                            cm = zptdata['cat_magsmp']
-                        except:
-                            print 'FAO:'
-                            continue
+
 
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
