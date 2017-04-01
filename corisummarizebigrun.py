@@ -145,7 +145,7 @@ def grabstardata(imagedir,outfile):
 
                         fs = zptdata['flux_starh']
                         zp = zptdata['fit_zpt']
-                        ww = (cm < 19.) & (cm > 16.)
+                        ww = (cm < 20.) & (cm > 16.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
@@ -1840,7 +1840,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
-    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+np.sqrt(flux))) + rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
+    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)) + rmsaddin + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
     plt.clf()
     # repeatability = []
