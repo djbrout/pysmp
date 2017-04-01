@@ -1904,6 +1904,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.savefig(outdir + '/' + title + '_repeatability_vs_zptuncertainty.png')
 
     plt.clf()
+    print 'saved zptu'
 
     cntr = 0
     pltvecx = []
