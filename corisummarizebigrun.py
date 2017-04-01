@@ -24,13 +24,13 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata")
+        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
         #sys.exit()
         stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
         plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                    title='rmsaddin_')
+                    title=filter+'_')
         sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
 
@@ -40,11 +40,11 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         #data = np.load(cd)
         dostars = True
         if dostars:
-            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
+            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                        title='asdf_')
+                        title=filter+'_')
             #sys.exit()
     print data.keys()
     print len(data['Flux'])
