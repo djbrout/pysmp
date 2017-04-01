@@ -2282,7 +2282,7 @@ class smp:
 
                 cols = (starcat.ra > ra_low) & (starcat.ra < ra_high) & (starcat.dec > dec_low) & (starcat.dec < dec_high)
                 tras = starcat.ra
-                tdecs = starcat.decc
+                tdecs = starcat.dec
                 tids = starcat.id
                 mag_star = starcat.mag
 
