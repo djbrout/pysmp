@@ -1955,7 +1955,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(0.5, 1000.)
     plt.ylim(-.01, .01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 1000, .1), window=.5,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 1000, .1), window=1.,dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
