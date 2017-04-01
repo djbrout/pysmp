@@ -1857,8 +1857,29 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(min(starmagerr),max(starmagerr))
     plt.ylim(min(starmagerr),max(starmagerr))
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
-    plt.savefig(outdir+'/'+title+'_repeatabilitytest.png')
+    plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
+    cntr = 0
+    pltvec = []
+    for sme, sm, ind, r, d, cm in zip(starmagerr, starmag, indices, ras, decs, catmag):
+        cntr += 1
+        if cntr > 1000: continue
+        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        # print starmag[indices == ind]
+        # raw_input()
+        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+        repeatability = np.std(starww)
+        # repeatability = np.std(starmag[indices == ind])
+        if len(starww) > 4.:
+            # if repeatability < .3:
+            plt.scatter(cm, sme - repeatability, alpha=.3, color='black')
+            pltvec.append(sme-repeatability)
+
+    plt.yscale('log')
+    plt.xlim(min(cm), max(cm))
+    plt.ylim(min(pltvec), max(pltvec))
+    plt.plot([min(cm), max(cm)], [0,0], color='black')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_catmag.png')
 
     print starmag[0:10]
     print catmag[0:10]
