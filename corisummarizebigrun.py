@@ -1840,7 +1840,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
-    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+np.sqrt(flux))) + rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson**2))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
+    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr)) + rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson**2))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
     plt.clf()
     # repeatability = []
@@ -1875,8 +1875,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xscale('log')
     plt.yscale('log')
-    plt.xlim(.0001,.01)
-    plt.ylim(.0001,.05)
+    plt.xlim(.001,.02)
+    plt.ylim(.001,.02)
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
