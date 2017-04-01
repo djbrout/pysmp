@@ -1767,7 +1767,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
-    fluxerr = np.sqrt(fluxerr**2 + flux)
+    #fluxerr = np.sqrt(fluxerr**2 + flux)
 
     #print max(catmag)
     #print catmag.shape,rmsaddin.shape,ff.shape,indices.shape,flux.shape,fluxerr.shape,zpt.shape
