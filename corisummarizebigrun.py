@@ -94,8 +94,8 @@ def grabstardata(imagedir,outfile):
                 #print zptdata.keys()
                 #raw_input()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                    #if True:
                         if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
                             print 'skippeddddd'
                             continue
@@ -150,9 +150,9 @@ def grabstardata(imagedir,outfile):
                         cntr += 1
                         print 'CNTR',cntr
                         goodbigdata = copy(bigdata)
-                    # except:
-                    #     print 'FAILED', fname
-                    #     pass
+                    except:
+                        print 'FAILED', fname
+                        pass
 
     try:
         bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
