@@ -1250,9 +1250,9 @@ class smp:
             starids = np.array(staroffsets['starids'])
             starmags = np.array(staroffsets['starmags'])
             # sys.exit()
-        starglobalids = []
         starglobalras = []
         starglobaldecs = []
+        starglobalids = []
         starglobalmags = []
         print starids.shape
         print np.unique(starids)
@@ -1272,6 +1272,7 @@ class smp:
             except:
                 starglobalras.append(np.nan)
                 starglobaldecs.append(np.nan)
+                starglobalmags.append(np.nan)
 
         starglobalids = np.array(starglobalids)
         starglobalras = np.array(starglobalras)
