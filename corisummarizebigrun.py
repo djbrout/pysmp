@@ -1869,7 +1869,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
-        if cntr > 10000: continue
+        if cntr > 100000: continue
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
         #raw_input()
@@ -1905,7 +1905,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm in zip(starmagerr, starmag, indices, ras, decs, catmag):
         cntr += 1
-        if cntr > 10000: continue
+        if cntr > 100000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -1938,7 +1938,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm,cs in zip(starmagerr, starmag, indices, ras, decs, catmag,chisq):
         cntr += 1
-        if cntr > 10000: continue
+        if cntr > 100000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -1955,7 +1955,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(0.5, 1000.)
     plt.ylim(-.02, .01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 1000, .1), window=1.,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.5, 30, .1), window=1.,dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
@@ -1971,7 +1971,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm, cs,se in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq,skyerr):
         cntr += 1
-        if cntr > 10000: continue
+        if cntr > 100000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2004,7 +2004,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm, cs, se,rai in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq, skyerr,rmsaddin):
         cntr += 1
-        if cntr > 10000: continue
+        if cntr > 100000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2018,7 +2018,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecx.append(rai)
 
     plt.xscale('log')
-    plt.xlim(0.001,.05)
+    plt.xlim(0.008,.05)
     plt.ylim(-.02, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.0001, dontrootn=True)
@@ -2029,7 +2029,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('ZPT Uncertainty')
     plt.ylabel('PhotErr - Repeatability')
     plt.plot([0., 1000], [0, 0], color='black')
-    plt.savefig(outdir + '/' + title + '_repeatability_vs_rmsuncertainty.png')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_zptuncertainty.png')
 
 
     print starmag[0:10]
