@@ -81,7 +81,7 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 #print os.path.join(imagedir,dirName,fname)
-                if not 'SN-S1' in fname: continue
+                if not 'SN-S2' in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
                     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
@@ -99,7 +99,7 @@ def grabstardata(imagedir,outfile):
                         #    continue
                         #if True:
 
-                        cm = zptdata['cat_magvvv']
+                        cm = zptdata['cat_magsmp']
 
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
