@@ -1898,6 +1898,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.xlabel('ZPT Uncertainty')
     plt.ylabel('PhotErr - Repeatability')
+    plt.title(title+'BAND')
     plt.plot([0., 1000], [0, 0], color='black')
     plt.plot([0., 1000], [0, 1000], color='black', linestyle='--')
 
@@ -1936,6 +1937,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
 
+    plt.title(title+'BAND')
 
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
@@ -1962,6 +1964,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.yscale('log')
     plt.xlim(15.,21.5)
     plt.ylim(-.02, .01)
+    plt.title(title+'BAND')
     plt.xlabel('Catalog Magnitude')
     plt.ylabel('PhotErr - Repeatability')
 
@@ -2005,6 +2008,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('Chi Squared')
     plt.ylabel('PhotErr - Repeatability')
     plt.plot([0., 1000], [0, 0], color='black')
+    plt.title(title+'BAND')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_chisq.png')
 
     plt.clf()
