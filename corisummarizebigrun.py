@@ -1880,7 +1880,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         if len(starww) > 5.:
             #if repeatability < .3:
             plt.scatter(sme,sme-repeatability,alpha=.3,color='black')
-            pltvecy.append(repeatability)
+            pltvecy.append(sme-repeatability)
             pltvecx.append(sme)
 
     plt.xscale('log')
@@ -1896,7 +1896,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.title(title+'BAND')
 
-    plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
+    plt.plot([.0003,.02],[0,0],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerr.png')
 
     plt.clf()
