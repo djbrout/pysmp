@@ -99,7 +99,7 @@ def grabstardata(imagedir,outfile):
                         #    continue
                         #if True:
 
-                        cm = zptdata['cat_magsmp']
+                        cm = zptdata['cat_magvvv']
 
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
