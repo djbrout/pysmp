@@ -6337,7 +6337,7 @@ class smp:
                 #raw_input()
 
                 fwhm = open(psffile,'r').readline().split('PSF_FWHM')[1].split('/')[0].split('=')[1]
-                print 'FWHM:',fwhm
+                print 'FWHM:',fwhm,np.float(fwhm)
 
                 np.savez(mag_compare_out
                          # ,ra = ras[goodstarcols]
