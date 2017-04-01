@@ -26,7 +26,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     if not cacheddata:
         grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
         #sys.exit()
-        stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata.npz')
+        stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
         plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
