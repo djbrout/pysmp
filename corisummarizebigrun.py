@@ -1889,7 +1889,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.xscale('log')
     plt.xlabel('PSF FWHM')
     plt.ylabel('Repeatability - PhotErr')
-    plt.xlim(5., 7)
+    plt.xlim(4., 7)
     plt.ylim(-.02, .01)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
