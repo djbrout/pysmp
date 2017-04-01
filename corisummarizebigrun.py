@@ -29,7 +29,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
         plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                    stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
+                    stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],stardata['fwhm'],
                     title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
@@ -43,7 +43,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
-                        stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
+                        stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],stardata['fwhm'],
                         title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
             #sys.exit()
     print data.keys()
@@ -70,12 +70,12 @@ def lookup_rms_addin(smpfile,obsid):
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
-               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],'numzptstars':[]}
+               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],'numzptstars':[], 'fwhm':[]}
     zptfiles = []
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 3000.: break
+        if cntr > 300.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -97,6 +97,7 @@ def grabstardata(imagedir,outfile):
                     try:
                         #if True:
                         test = zptdata['chisqu']
+                        test = zptdata['fwhm']
                         try:
                             if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
                                 print 'skippeddddd'
@@ -135,6 +136,8 @@ def grabstardata(imagedir,outfile):
                         bigdata['starflux'].extend(zptdata['flux_starh'])
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
+                        bigdata['fwhm'].extend(zptdata['flux_starh']*0. + zptdata['fwhm'])
+
                         bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         psfs = zptdata['psfs']
@@ -1785,7 +1788,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,title='',outdir='.'):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,fwhm,title='',outdir='.'):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
@@ -1865,6 +1868,42 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # repeatability = np.array(repeatability)
     # uindices = np.array(uindices)
 
+    cntr = 0
+    pltvecx = []
+    pltvecy = []
+    for sme, sm, ind, r, d, cm, f, fe,fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
+        cntr += 1
+        if cntr > 10000: continue
+        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        # print starmag[indices == ind]
+        # raw_input()
+        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+        repeatability = np.std(starww) / np.sqrt(len(starww))
+        # repeatability = np.std(starmag[indices == ind])
+        if len(starww) > 5.:
+            # if repeatability < .3:
+            plt.scatter(fh, sme - repeatability, alpha=.3, color='black')
+            pltvecy.append(sme - repeatability)
+            pltvecx.append(fh)
+
+    plt.xscale('log')
+    plt.xlabel('PSF FWHM')
+    plt.ylabel('Repeatability - PhotErr')
+    plt.xlim(2, 10)
+    plt.ylim(-.02, .01)
+
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
+                               dontrootn=True)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP', alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
+
+    plt.title(title + 'BAND')
+    print 'finished fwhm'
+    plt.plot([2, 10], [0, 0], color='black')
+    plt.savefig(outdir + '/' + title + '_repeatability_vs_fwhm.png')
+
+    plt.clf()
     cntr = 0
     pltvecx = []
     pltvecy = []
