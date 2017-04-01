@@ -122,6 +122,7 @@ def grabstardata(imagedir,outfile):
                         except:
                             print 'FAO:'
                             continue
+
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
                         bigdata['centroideddecs'].extend(zptdata['centroideddecs'])
