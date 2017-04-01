@@ -6336,6 +6336,9 @@ class smp:
                 #print 'lengoodstarcols',len(mag_cat[goodstarcols])
                 #raw_input()
 
+                fwhm = open(psffile,'r').readline().split('PSF_FWHM')[1].split('/')[0].split('=').split()[1]
+                print 'FWHM:',fwhm
+
                 np.savez(mag_compare_out
                          # ,ra = ras[goodstarcols]
                          # ,dec = decs[goodstarcols]
@@ -6367,8 +6370,9 @@ class smp:
                          , thisra = thisra[goodstarcols]
                          , thisdec = thisdec[goodstarcols]
                          , thisids = thisids[goodstarcols]
+                         , fwhm = np.float(fwhm)
                          )
-
+                raw_input()
 
 
                 # self.tmpwriter.savez(mag_compare_out
