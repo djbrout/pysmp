@@ -6336,7 +6336,7 @@ class smp:
                 #print 'lengoodstarcols',len(mag_cat[goodstarcols])
                 #raw_input()
 
-                fwhm = open(psffile,'r').readline().split('PSF_FWHM')[1].split('/')[0].split('=').split()[1]
+                fwhm = open(psffile,'r').readline().split('PSF_FWHM')[1].split('/')[0].split('=')[1].split()[1]
                 print 'FWHM:',fwhm
 
                 np.savez(mag_compare_out
