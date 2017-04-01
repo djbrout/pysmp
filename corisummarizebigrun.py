@@ -96,8 +96,12 @@ def grabstardata(imagedir,outfile):
                 if not fname in zptfiles:
                     #try:
                     if True:
-                        if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
-                            print 'skippeddddd'
+                        try:
+                            if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
+                                print 'skippeddddd'
+                                continue
+                        except:
+                            print 'FAIL'
                             continue
                         if len(zptdata['cat_magsmp']) != len(zptdata['flux_starh']):
                             print 'skipperrrrr'
