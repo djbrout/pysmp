@@ -75,7 +75,7 @@ def grabstardata(imagedir,outfile):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 2000.: break
+        if cntr > 200000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -1769,8 +1769,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     st = np.std(ff)
 
     #print max(catmag)
-    print catmag.shape,rmsaddin.shape,ff.shape,indices.shape,flux.shape,fluxerr.shape,zpt.shape
-    raw_input()
+    #print catmag.shape,rmsaddin.shape,ff.shape,indices.shape,flux.shape,fluxerr.shape,zpt.shape
+    #raw_input()
     # ww = (catmag < 29.) & (rmsaddin < 1.) & (abs(ff) < 5*st)
     #
     # flux = flux[ww]
@@ -1848,12 +1848,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         repeatability = np.std(starww)
         #repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 5.:
+        if len(starww) > 4.:
             #if repeatability < .3:
             plt.scatter(sme,repeatability,alpha=.3,color='black')
 
     plt.xscale('log')
     plt.yscale('log')
+    plt.xlim(.0001)
     plt.savefig('repeatabilitytest.png')
 
 
