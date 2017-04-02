@@ -271,7 +271,7 @@ class smp:
              doglobalstar=True,exactpos=True,bigstarcatalog=None,
              stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
-             savezptstamps=False,fermilog=False,isdonedir=None,oldformat=False
+             savezptstamps=False,fermilog=False,isdonedir=None,oldformat=False,continu=False,continudir=None
              ):
 
         print 'snfile',snfile
@@ -392,7 +392,8 @@ class smp:
         self.fermilog = fermilog
         self.isdonedir = isdonedir
         self.oldformat = oldformat
-
+        self.continu = continu
+        self.continudir = continudir
 
         self.useweights = useweights
         if not self.useweights:
@@ -2120,6 +2121,8 @@ class smp:
                 hdulist.info()
                 try:
                     psf_fwhm = hdulist[1].header[self.params.psf_fwhm]
+                    print psf_fwhm
+                    raw_input('fwhm')
                 except:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
@@ -3789,9 +3792,7 @@ class smp:
             modelstd[(modelstd < .1) & (modelstd > 0.)] = .1
 
             tstart = time.time()
-            #print 'modelstd',modelstd
-            #raw_input()
-            #self.floatallepochs = True
+
             brighttest = False
             if brighttest:
                 modelvec[:15]=0
@@ -3804,8 +3805,7 @@ class smp:
                 modelvec[smp_dict['mjd_flag'] == 1] = 0
                 modelstd[smp_dict['mjd_flag'] == 1] = 0
             print 'modelstd after',modelstd
-            #raw_input()
-            #fixgalzero = True
+
             self.fixgalzero = False
             if self.fixgalzero:
                 print 'fixing galmodel to zero'
@@ -3817,7 +3817,6 @@ class smp:
                 modelvec[:8] = 0
                 modelstd[:8] = 0
                 #modelvec = modelvec*10.
-
             else:
                 fixgal = False
 
@@ -3830,6 +3829,10 @@ class smp:
                 log = self.fermilogfile
             else:
                 log = None
+
+            if self.continu:
+                galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']
+                modelvec = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['modelvec']
 
             plt.clf()
             plt.close()
@@ -3906,14 +3909,24 @@ class smp:
 
                     )
             modelveco = copy(modelvec)
-            if self.fermilog:
-                self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
+            #if self.fermilog:
+            #    self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
             #sys.exit()
             modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof  = aaa.get_params()
             fitprob = dt.fitprobfromchisq(chisqs,ndof)
             print fitprob
             print 'TOTAL SMP SN TIME ',time.time()-tstart
             print os.path.join(npoutdir,filename+'_withSn.npz')
+            npzoutfile = os.path.join(self.lcfilepath,
+                                         snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')
+            np.savez(npzoutfile, modelvec=modelvec,
+                             modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params,
+                             galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory,
+                             galmodel_nphistory=galmodel_nphistory, sims=sims, data=smp_im,
+                             xhistory=xhistory,yhistory=yhistory,stamps=stamps,chisqs=chisqs,weights=smp_noise,
+                             flags=smp_dict['flag'], sky=smp_dict['sky'], mjd=smp_dict['mjd'], skyerr=smp_dict['skyerr'],
+
+                             accepted_history=accepted_history, chisqhist=chisqhist)
 
         #self.dogalsimfit = True
         if self.dogalsimfit:
@@ -6773,7 +6786,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog","isdonedir=","oldformat"])
+                      "lcfilepath=","fermilog","isdonedir=","oldformat","continue","continuedir="])
 
 
         #print opt
@@ -6802,7 +6815,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog","isdonedir","oldformat"])
+                      "lcfilepath=","fermilog","isdonedir","oldformat","continue","continuedir="])
 
 
         #print opt
@@ -6842,6 +6855,8 @@ if __name__ == "__main__":
     lcfilepath=snfilepath
     fermilog = False
     isdonedir = None
+    continu = False
+    continudir = None
 
     dobigstarcat = True
 
@@ -6949,6 +6964,10 @@ if __name__ == "__main__":
             fermilog = True
         elif o == "--oldformat":
             oldformat = True
+        elif o == "--continue":
+            continu = True
+        elif o == "--continuedir":
+            continudir = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7054,6 +7073,10 @@ if __name__ == "__main__":
             isdonedir = a
         elif o == "--oldformat":
             oldformat = True
+        elif o == "--continue":
+            continu = True
+        elif o == "--continuedir":
+            continudir = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7174,7 +7197,7 @@ if __name__ == "__main__":
                                  galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
-                                    fermilog=fermilog,oldformat=oldformat)
+                                    fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
                     #scenemodel.afterfit(snparams,params,donesn=True)
                     print "SMP Finished!"
                 except:
@@ -7290,7 +7313,7 @@ if __name__ == "__main__":
                             useweights=useweights, dosextractor=dosextractor, fermigrid=fermigrid,
                             zptoutpath=zptoutpath,
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
-                            fermilog=fermilog,oldformat=oldformat)
+                            fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
         except:
             print sys.exc_info()
             if not os.path.exists(isdonedir):
@@ -7307,7 +7330,7 @@ if __name__ == "__main__":
                      galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
-                    fermilog=fermilog,oldformat=oldformat)
+                    fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
         #scenemodel.afterfit(snparams,params,donesn=True)
     print "SMP Finished!"
      
