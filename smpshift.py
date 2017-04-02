@@ -2122,8 +2122,8 @@ class smp:
                 try:
                     psf_fwhm = hdulist[1].header[self.params.hdr_psf_fwhm]
                     #fwhm = open(psffile, 'r').readline().split(self.params.psf_fwhm)[1].split('/')[0].split('=')[1]
-                    print psf_fwhm
-                    raw_input('fwhm')
+                    #print psf_fwhm
+                    #raw_input('fwhm')
                 except:
                     print 'Could not find pwf_fwhm in fits header'
                     psf_fwhm = np.nan
@@ -3302,14 +3302,14 @@ class smp:
 
         arg = -1
         mn = 999999999
-        for sky in smp_dict['sky']:
+        for fwhma in smp_dict['fwhm_arcsec']:
             arg += 1
             if smp_dict['flag'][arg] == 0:
                 if smp_dict['mjd_flag'][arg] == 1:
-                    if sky < mn:
-                        if sky > 0.:
+                    if fwhma < mn:
+                        if fwhma > 0.:
                             if np.any(smp_im[arg,:,:]):
-                                mn = sky
+                                mn = fwhma
                                 usearg = arg
                         #else:
                         #    print 'herehhere neggggggg'
