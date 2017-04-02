@@ -2120,7 +2120,8 @@ class smp:
                 hdulist = fits.open(psffile)
                 hdulist.info()
                 try:
-                    psf_fwhm = hdulist[1].header[self.params.psf_fwhm]
+                    psf_fwhm = hdulist[1].header[self.params.hdr_psf_fwhm]
+                    #fwhm = open(psffile, 'r').readline().split(self.params.psf_fwhm)[1].split('/')[0].split('=')[1]
                     print psf_fwhm
                     raw_input('fwhm')
                 except:
