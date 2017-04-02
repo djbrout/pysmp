@@ -3311,21 +3311,16 @@ class smp:
                             if np.any(smp_im[arg,:,:]):
                                 mn = fwhma
                                 usearg = arg
-                        #else:
-                        #    print 'herehhere neggggggg'
-                        #    #raw_input()
-                        #    smp_dict['flag'][arg] = 1
 
-        #Make sure the psf is not zero
 
         for i in np.arange(len(smp_dict['sky'])):
             if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
                 #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
                 #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
-                print 'hehehehehehehehehe'
+                print 'MJD:',smp_dict['mjd'][i],'BAD PSF... SETTING FLAG TO 1'
                 #raw_input()
                 smp_dict['flag'][i] = 1
-                smp_dict['mjd'][i]
+                #smp_dict['mjd'][i]
 
         try:
             ww = usearg
