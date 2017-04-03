@@ -2131,7 +2131,7 @@ class smp:
                 print snparams.RA,xsn,snparams
                 try:
                     print psffile
-                    raw_input()
+                    #raw_input()
                     self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
                     self.psf = self.psf/np.sum(self.psf)
                 except:
@@ -3974,7 +3974,7 @@ class smp:
 
 
             if self.continu:
-                galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']
+                galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']/50.
                 modelvec = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['modelvec']
 
             print modelstd
