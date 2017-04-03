@@ -3968,6 +3968,11 @@ class smp:
             modelvec[smp_dict['mjd_flag'] == 1] = 0
             modelstd[smp_dict['mjd_flag'] == 1] = 0
 
+
+            if self.continu:
+                galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']
+                modelvec = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['modelvec']
+
             print modelstd
             print 'galmodelshape', galmodel.shape
             import mcmcgalsim

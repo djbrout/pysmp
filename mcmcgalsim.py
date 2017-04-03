@@ -403,20 +403,20 @@ class metropolis_hastings():
             #    #tracker.print_diff()
 
 
-            if self.counter == 20000:
-                mn, st, num = dt.iterstat(np.array(self.csv)[np.array(self.csv) > 0.] / len(self.mask[self.mask>0.].ravel()),
-                                          startMedian=True, sigmaclip=3, iter=3)
-
-                print np.array(self.csv)/ len(self.mask[self.mask>0.].ravel()) - mn
-                print st
-                #raw_input()
-                self.flags[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5 ] = 1
-                self.modelvec[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
-                self.modelstd[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
-
-                self.modelvec[np.array(self.kicked_modelvec) < -50000] = 0.
-                self.modelstd[np.array(self.kicked_modelvec) < -50000] = 0.
-                self.flags[np.array(self.kicked_modelvec) < -50000] = 1.
+            # if self.counter == 20000:
+            #     mn, st, num = dt.iterstat(np.array(self.csv)[np.array(self.csv) > 0.] / len(self.mask[self.mask>0.].ravel()),
+            #                               startMedian=True, sigmaclip=3, iter=3)
+            #
+            #     print np.array(self.csv)/ len(self.mask[self.mask>0.].ravel()) - mn
+            #     print st
+            #     #raw_input()
+            #     self.flags[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5 ] = 1
+            #     self.modelvec[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
+            #     self.modelstd[np.array(self.csv)/ len(self.mask[self.mask>0.].ravel())-mn > 3*st + 5]=0.
+            #
+            #     self.modelvec[np.array(self.kicked_modelvec) < -50000] = 0.
+            #     self.modelstd[np.array(self.kicked_modelvec) < -50000] = 0.
+            #     self.flags[np.array(self.kicked_modelvec) < -50000] = 1.
 
             #Check Geweke Convergence Diagnostic every 5000 iterations
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
@@ -433,8 +433,9 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 #print 'Chisqvec',self.chisqvec
-                if (self.counter % 10000) == 0:
+                if (self.counter % 1000) == 0:
                     self.plotchains()
+                    self.plotstamps()
                 #self.savechains()
 
                 np.savez('test.npz',galmodel=self.modelim,
