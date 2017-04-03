@@ -4031,8 +4031,8 @@ class smp:
             yoff = np.mean(yhistory[int(3 * len(yhistory) / 4.):])
 
 
-            self.tmpwriter.savez(os.path.join(outdir,filename+'_withSnAndGalsim.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist)
-            print os.path.join(outdir,filename+'_withSnAndGalsim.npz')
+            self.tmpwriter.savez(os.path.join(outdir,filename+'_Galsim.npz'),modelvec=modelvec, modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params, galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory, galmodel_nphistory=galmodel_nphistory, sims=sims,data=smp_im,accepted_history=accepted_history,chisqhist=chisqhist)
+            print os.path.join(outdir,filename+'_Galsim.npz')
         
         if self.dogalsimpixfit:    
             if not self.dogalfit:
