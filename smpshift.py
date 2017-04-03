@@ -2130,6 +2130,8 @@ class smp:
                     psf_fwhm = np.nan
                 print snparams.RA,xsn,snparams
                 try:
+                    print psffile
+                    raw_input()
                     self.psf, self.psfcenter = self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
                     self.psf = self.psf/np.sum(self.psf)
                 except:
@@ -2558,6 +2560,7 @@ class smp:
                 ysn = ysn[0]
                 opsf = copy(self.psf)
                 opsfcenter = copy(self.psfcenter)
+
                 self.psf, self.psfcenter= self.build_psfex(psffile,xsn,ysn,imfile,psfexworked=psfexworked)
                 self.psf = self.psf/np.sum(self.psf)
 

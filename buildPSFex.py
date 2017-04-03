@@ -28,6 +28,7 @@ def build_psfex(psffile, x, y, imfile, fitrad, dogalsim=False):
     return
 def build(psffile, x, y, stampsize):
 
+
     print "dump_psfex -inFile_psf %s -xpix %s -ypix %s -gridSize %s" % (psffile, x, y,
                                                                         stampsize)
 
