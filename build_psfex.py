@@ -46,6 +46,8 @@ def build(psffile, x, y, stampsize,psfexworked=True):
 
 
 def buildall(psffile, x, y, stampsize):
+    print psffile
+    raw_input()
     pstring = ''
     badvec = []
     for i,p,xi,yi in zip(np.arange(len(x)),psffile,x,y):
