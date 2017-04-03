@@ -7,6 +7,8 @@ except:
     pass
 
 def build(psffile, x, y, stampsize,psfexworked=True):
+    print 'psffile'
+    raw_input()
     try:
         a = psfex.PSFEx(psffile)
         im = a.get_rec(y, x)[3:-4, 3:-4]
