@@ -2778,7 +2778,7 @@ class smp:
                 if snparams.psf_unit.lower() == 'arcsec':
                     fwhm_arcsec = fwhm
                 elif snparams.psf_unit.lower().startswith('sigma-pix') or snparams.psf_unit.lower().startswith('pix'):
-                    fwhm_arcsec = fwhm*snparams.platescale
+                    fwhm_arcsec = fwhm*2.235*snparams.platescale
 
                 else:
                     raise exceptions.RuntimeError('Error : FWHM units not recognized!!')
