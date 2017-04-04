@@ -2976,8 +2976,8 @@ class smp:
                                     smp_mask[i,:,:] = mask
                                     #smp_dict['mask'][i] = msk
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                                    print fwhm_arcsec
-                                    raw_input('fwhm_arcsec')
+                                    #print fwhm_arcsec
+                                    #raw_input('fwhm_arcsec')
                                     smp_dict['image_filename'][i] = longimfile
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = longpsffile
