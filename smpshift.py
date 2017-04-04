@@ -5833,7 +5833,7 @@ class smp:
                             cbar = fig.colorbar(axs, ax=axchi)
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
                             # plt.colorbar()
-                            title = ''
+                            title = 'Chisq'
                             plt.title(title)
                             pdf_pagesc.savefig(fig)
 
