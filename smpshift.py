@@ -5787,7 +5787,7 @@ class smp:
                         # print 'pkfit chisq',schi,'fluxsmp chisq',cchi
 
                         #for i in range(self.Nimage):
-                        if self.savezptstamps:
+                        if (self.savezptstamps) & (bad == False):
                             fig = plt.figure(figsize=(20, 10))
                             axim = plt.subplot(141)
                             axpsf = plt.subplot(142)
