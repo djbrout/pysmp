@@ -1873,7 +1873,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm, f, fe,fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
         cntr += 1
-        if cntr > 100000: continue
+        if cntr > 1000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -1909,7 +1909,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
-        if cntr > 10000: continue
+        if cntr > 1000: continue
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
         #raw_input()
@@ -1946,7 +1946,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, cs, se, rai in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq, skyerr,
                                                    rmsaddin):
         cntr += 1
-        if cntr > 100000: continue
+        if cntr > 1000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -1985,7 +1985,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
-        if cntr > 100000: continue
+        if cntr > 1000: continue
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
         #raw_input()
@@ -2022,7 +2022,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm in zip(starmagerr, starmag, indices, ras, decs, catmag):
         cntr += 1
-        if cntr > 100000: continue
+        if cntr > 1000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2056,7 +2056,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm,cs in zip(starmagerr, starmag, indices, ras, decs, catmag,chisq):
         cntr += 1
-        if cntr > 100000: continue
+        if cntr > 1000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2090,7 +2090,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme, sm, ind, r, d, cm, cs,se in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq,skyerr):
         cntr += 1
-        if cntr > 100000: continue
+        if cntr > 1000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
