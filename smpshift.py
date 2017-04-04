@@ -1367,16 +1367,16 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc < 90:
-                cccc += 1
-                continue
+
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
                 # print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
                 continue
             print imfile
 
-
+            if cccc < 90:
+                cccc += 1
+                continue
 
             #raw_input()
             skysig=np.nan
