@@ -1308,8 +1308,8 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
 
             nozpt = copy(orig_nozpt)
-            if round(float(snparams.mjd[j])) != 56935:
-               continue
+            # if round(float(snparams.mjd[j])) != 56935:
+            #    continue
             try:
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
                 self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
