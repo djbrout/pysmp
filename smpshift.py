@@ -1368,6 +1368,7 @@ class smp:
             #    continue
             #raw_input('passed')
             if cccc < 50:
+                cccc += 1
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
