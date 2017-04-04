@@ -1367,7 +1367,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc < 50:
+            if cccc < 90:
                 cccc += 1
                 continue
             if filt != 'all' and band not in filt:

@@ -2426,10 +2426,6 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
     plt.savefig(outdir + '/' + title +'starchi.png')
 
-
-
-
-
     print 'saved starstd.png'
 
 def bindata(x, y, bins, returnn=False):
