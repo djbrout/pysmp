@@ -1306,7 +1306,6 @@ class smp:
         cccc = 0
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
-            if j < 50.: continue
             nozpt = copy(orig_nozpt)
             # if round(float(snparams.mjd[j])) != 56935:
             #    continue
@@ -1368,7 +1367,7 @@ class smp:
             #if round(snparams.mjd[j],2) != 56030.33:
             #    continue
             #raw_input('passed')
-            if cccc > 9000:
+            if cccc < 50:
                 continue
             if filt != 'all' and band not in filt:
                 # print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
