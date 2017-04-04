@@ -715,14 +715,14 @@ class metropolis_hastings():
                     sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
 
 
-                total_model = self.gs_model_interp + sn
+                total_model = self.gs_model_interp
 
 
-                conv = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
+                conv1 = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
+                conv2 = self.psf.withFlux(sn.flux).shift(self.snoffset)
 
-
-                conv.drawImage(image=simstamps,
-                                method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
+                conv1.drawImage(image=simstamps, method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
+                conv2.drawImage(image=simstamps, method='no_pixel',add_to_image=True)  # ,offset=offset)#Draw my model to the stamp at new wcs
 
                 sims = simstamps.array + sky
         #self.sims[index,:,:] = sims
