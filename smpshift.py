@@ -3117,9 +3117,9 @@ class smp:
         print np.where([smp_dict['mjd_flag'] == 1])
         print len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)])
         #raw_input()
-        if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
-            raise ValueError(
-                "Not enough epochs without SN flux ( > 1 )")
+        # if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
+        #     raise ValueError(
+        #         "Not enough epochs without SN flux ( > 1 )")
 
         meanstarras = {}
         meanstardecs = {}
