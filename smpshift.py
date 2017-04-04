@@ -2976,6 +2976,8 @@ class smp:
                                     smp_mask[i,:,:] = mask
                                     #smp_dict['mask'][i] = msk
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                                    print fwhm_arcsec
+                                    raw_input('fwhm_arcsec')
                                     smp_dict['image_filename'][i] = longimfile
                                     smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = longpsffile
@@ -5772,6 +5774,8 @@ class smp:
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
                                                                              fitrad, gal, mjd, sein,self.gain,guess_scale=10**(.4*(31.-m)))
+                            if not chi > 0.:
+                                bad = True
                             #print scale
                             #raw_input('ls fit')
                         # except:
