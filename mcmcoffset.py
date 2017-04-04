@@ -149,6 +149,7 @@ class metropolis_hastings():
                  ,sigmazpt=None
                  ,fakemag=None
                  ,fitzpt=None
+                 ,fitzptstdrootn=None
                  ,fakezpt=None
                  ,datafilenames=None
                  ,nightlyoffx = None
