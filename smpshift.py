@@ -5813,7 +5813,7 @@ class smp:
                                 # else:
                                 #ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
-                            axim.set_title('Catalog Mag '+str(mc))
+                            axim.set_title('Catalog Mag '+str(round(mc,2)))
                             cbar = fig.colorbar(axs, ax=axim)
                             axs = axpsf.imshow(psf/np.sum(psf) * scale * fitrad + s, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             axpsf.set_title('Model')
