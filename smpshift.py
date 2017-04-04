@@ -1374,7 +1374,7 @@ class smp:
                 continue
             print imfile
 
-            if cccc < 60:
+            if cccc < 67:
                 cccc += 1
                 continue
 
