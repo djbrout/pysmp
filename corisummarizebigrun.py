@@ -2144,7 +2144,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.axhline(1)
     plt.xlabel('Cat Mag')
     plt.ylabel('Chi Sq')
-    plt.savefig(title+'chivscat.png')
+    plt.savefig(outdir + '/' + title + 'chivscat.png')
     #chisq = np.nanmean(chisq[abs(d) < 3])
 
     plt.clf()
@@ -2289,7 +2289,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
-    plt.savefig(title+'starstd.png')
+    plt.savefig(outdir + '/' + title +'starstd.png')
 
 
 
@@ -2424,7 +2424,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
-    plt.savefig(title+'starchi.png')
+    plt.savefig(outdir + '/' + title +'starchi.png')
 
 
 
