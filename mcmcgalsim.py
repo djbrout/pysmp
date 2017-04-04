@@ -709,7 +709,7 @@ class metropolis_hastings():
         sims = simstamps
         if flags == 0:
             if fitflags == 0.:
-                sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec, gsparams=self.psfparams )
+                sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec )
                 sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
                 if not self.psf_shift_std is None:
                     sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
