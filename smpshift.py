@@ -3977,16 +3977,16 @@ class smp:
             modelstd[smp_dict['mjd_flag'] == 1] = 0
 
 
-            #if self.continu:
-            #    galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']/50.
-            #    modelvec = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['modelvec']
+            if self.continu:
+               galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']/2.
+               modelvec = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['modelvec']
 
             print modelstd
             print 'galmodelshape', galmodel.shape
             import mcmcgalsim
             #smp_dict['flag'][:-15] = 1
             aaa = mcmcgalsim.metropolis_hastings(
-                    galmodel = galmodel*0 + 0.0001
+                    galmodel = galmodel
                     , modelvec = modelvec
                     , galstd = galstd*0+8.
                     , modelstd = modelstd
