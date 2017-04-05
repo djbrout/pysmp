@@ -149,7 +149,6 @@ class metropolis_hastings():
                  ,sigmazpt=None
                  ,fakemag=None
                  ,fitzpt=None
-                 ,fitzptstdrootn=None
                  ,fakezpt=None
                  ,datafilenames=None
                  ,nightlyoffx = None
@@ -547,7 +546,7 @@ class metropolis_hastings():
                     print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
 
-                if (self.counter % 1000) == 0:
+                if (self.counter % 50000) == 0:
                     self.plotchains()
                     self.savechains()
                     self.plotstamps()
