@@ -3986,7 +3986,7 @@ class smp:
             import mcmcgalsim
             #smp_dict['flag'][:-15] = 1
             aaa = mcmcgalsim.metropolis_hastings(
-                    galmodel = galmodel*0+1.
+                    galmodel = galmodel*0 + 0.0001
                     , modelvec = modelvec
                     , galstd = galstd*0+8.
                     , modelstd = modelstd
