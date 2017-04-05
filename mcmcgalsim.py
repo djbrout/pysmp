@@ -222,6 +222,8 @@ class metropolis_hastings():
         print self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0]
         print self.baseim
         #raw_input()
+        galoriginx = 0
+        galoriginy = 0
 
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
@@ -301,8 +303,8 @@ class metropolis_hastings():
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]*0.0
                         galoriginx = self.psfcenterx[i]
                         galoriginy = self.psfcentery[i]
-                self.galoffsetsx.append(self.psfcenterx[i])
-                self.galoffsetsy.append(self.psfcenterx[i])
+                self.galoffsetsx.append(self.psfcenterx[i] - np.round(self.psfcenterx[i]))
+                self.galoffsetsy.append(self.psfcenterx[i] - np.round(self.psfcentery[i]))
 
                 #[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
                 #                                                cy-self.fitradius,cy+self.fitradius-1 ) ]*0.
@@ -331,8 +333,8 @@ class metropolis_hastings():
                 #self.sndecs.append(0.)
 
         #these are teh subpixel offsets for the galaxy model
-        self.galoffsetsx = self.galoffsetsx - galoriginx
-        self.galoffsetsy = self.galoffsetsy - galoriginy
+        self.galoffsetsx = self.galoffsetsx - galoriginx + np.round(galoriginx)
+        self.galoffsetsy = self.galoffsetsy - galoriginy + np.round(galoriginy)
 
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         #self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
