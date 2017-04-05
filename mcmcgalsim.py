@@ -261,7 +261,7 @@ class metropolis_hastings():
                 else:
                     self.imagefiles[i] = 'na'
             if self.imagefiles[i] == 'na':
-                #self.psfs.append(np.nan)
+                self.psfs.append(np.nan)
                 #self.imagestamps.append(np.nan)
                 self.simstamps.append(np.nan)
                 self.snobjs.append(np.nan)
@@ -287,7 +287,7 @@ class metropolis_hastings():
                 im = self.baseim[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1)]
 
-                #self.psfs.append(im.wcs.toWorld(thispsf,image_pos=im.trueCenter()))
+                self.psfs.append(im.wcs.toWorld(thispsf,image_pos=im.wcs.toWorld(im.trueCenter()).project(self.fiducial_coord)))
 
                 #self.imagestamps.append(im)
                 #print np.median(im.array),self.sky[i], np.median(self.data[i])
@@ -339,21 +339,21 @@ class metropolis_hastings():
         self.galoffsetsy = self.galoffsetsy - galoriginy + np.round(galoriginy)
 
 
-        for i in range(self.Nimage):
-            if self.imagefiles[i] == 'na':
-                self.psfs.append(np.nan)
-            else:
-                full_data_image = galsim.fits.read(self.imagefiles[i])
-                psf_center = full_data_image.wcs.posToImage(self.fiducial_coord)
-                des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
-                thispsf = des_psfex.getPSF(stamp_center)
-
-                im = self.baseim[galsim.BoundsI(self.psfcenterx[i] - substamp / 2., self.psfcenterx[i] + substamp / 2. - 1,
-                                                self.psfcentery[i] - substamp / 2., self.psfcentery[i] + substamp / 2. - 1)]
-
-                self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
-                self.psfs[-1] = self.psfs[-1].shift(self.galoffsetsx[i],self.galoffsetsy[i])
-                #self.psfs.append(thispsf)
+        # for i in range(self.Nimage):
+        #     if self.imagefiles[i] == 'na':
+        #         self.psfs.append(np.nan)
+        #     else:
+        #         full_data_image = galsim.fits.read(self.imagefiles[i])
+        #         psf_center = full_data_image.wcs.posToImage(self.fiducial_coord)
+        #         des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
+        #         thispsf = des_psfex.getPSF(stamp_center)
+        #
+        #         im = self.baseim[galsim.BoundsI(self.psfcenterx[i] - substamp / 2., self.psfcenterx[i] + substamp / 2. - 1,
+        #                                         self.psfcentery[i] - substamp / 2., self.psfcentery[i] + substamp / 2. - 1)]
+        #
+        #         self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
+        #         self.psfs[-1] = self.psfs[-1].shift(self.galoffsetsx[i],self.galoffsetsy[i])
+        #         #self.psfs.append(thispsf)
 
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         #self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
