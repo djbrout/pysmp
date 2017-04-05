@@ -261,7 +261,7 @@ class metropolis_hastings():
                 else:
                     self.imagefiles[i] = 'na'
             if self.imagefiles[i] == 'na':
-                self.psfs.append(np.nan)
+                #self.psfs.append(np.nan)
                 #self.imagestamps.append(np.nan)
                 self.simstamps.append(np.nan)
                 self.snobjs.append(np.nan)
@@ -280,22 +280,14 @@ class metropolis_hastings():
 
 
                 full_data_image = galsim.fits.read(self.imagefiles[i])
-                #full_weights_image = galsim.fits.read(self.weightfiles[i])
                 stamp_center = full_data_image.wcs.posToImage(self.fiducial_coord)
-                cx = int(round(stamp_center.x))
-                cy = int(round(stamp_center.y))
-                bigim_pix_center = galsim.PositionD(cx,cy)
                 des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
                 thispsf = des_psfex.getPSF(stamp_center)
 
                 im = self.baseim[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1)]
 
-                #self.data[i,:,:] = im.array
-                #im = full_data_image[ galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
-                #                                      cy-self.fitradius,cy+self.fitradius-1 ) ]
-                
-                self.psfs.append(im.wcs.toWorld(thispsf,image_pos=im.trueCenter()))
+                #self.psfs.append(im.wcs.toWorld(thispsf,image_pos=im.trueCenter()))
 
                 #self.imagestamps.append(im)
                 #print np.median(im.array),self.sky[i], np.median(self.data[i])
@@ -311,6 +303,7 @@ class metropolis_hastings():
                             galoriginx = self.psfcenterx[i]
                             galoriginy = self.psfcentery[i]
                             gotmodel = True
+
                 self.galoffsetsx.append(self.psfcenterx[i] - np.round(self.psfcenterx[i]))
                 self.galoffsetsy.append(self.psfcenterx[i] - np.round(self.psfcentery[i]))
 
@@ -344,6 +337,22 @@ class metropolis_hastings():
         #these are teh subpixel offsets for the galaxy model
         self.galoffsetsx = self.galoffsetsx - galoriginx + np.round(galoriginx)
         self.galoffsetsy = self.galoffsetsy - galoriginy + np.round(galoriginy)
+
+
+        for i in range(self.Nimage):
+            if self.imagefiles[i] == 'na':
+                self.psfs.append(np.nan)
+            else:
+                full_data_image = galsim.fits.read(self.imagefiles[i])
+                psf_center = full_data_image.wcs.posToImage(self.fiducial_coord)
+                des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
+                thispsf = des_psfex.getPSF(stamp_center)
+
+                im = self.baseim[galsim.BoundsI(self.psfcenterx[i] - substamp / 2., self.psfcenterx[i] + substamp / 2. - 1,
+                                                self.psfcentery[i] - substamp / 2., self.psfcentery[i] + substamp / 2. - 1)]
+
+                self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
+
 
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         #self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
