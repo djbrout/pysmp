@@ -296,7 +296,7 @@ class metropolis_hastings():
                 if self.flags[i]  == 0:
                     if self.modelstd[i] == 0:
                         self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
-                                                          self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 ) * 0.0]
+                                                          self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]*0.0
 
                 #[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
                 #                                                cy-self.fitradius,cy+self.fitradius-1 ) ]*0.
@@ -423,7 +423,7 @@ class metropolis_hastings():
                 self.last_geweke = self.counter
 
             print 'psf position', self.kicked_snraoff, self.kicked_sndecoff,round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3)
-            if (self.counter % 20) ==0:
+            if (self.counter % 100) ==0:
                 self.t2 = time.time()
                 print 'Total Time: ' + str( self.t2 - self.t1 )
                 print 'Num Iterations: ' + str( self.counter )
@@ -437,13 +437,13 @@ class metropolis_hastings():
                     self.plotstamps()
                 #self.savechains()
 
-                np.savez('test.npz',galmodel=self.modelim,
-                         wcs=self.model_wcs,
-                         snoffset=self.snoffsets[0],
-                         psf=self.psfs[0],
-                         gssimstamp=self.simstamps[0],
-                         sky=self.sky[0])
-                print 'saved test.npz'
+                # np.savez('test.npz',galmodel=self.modelim,
+                #          wcs=self.model_wcs,
+                #          snoffset=self.snoffsets[0],
+                #          psf=self.psfs[0],
+                #          gssimstamp=self.simstamps[0],
+                #          sky=self.sky[0])
+                #print 'saved test.npz'
 
                 #raw_input()
             if self.counter > self.maxiter:
