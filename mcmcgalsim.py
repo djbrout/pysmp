@@ -351,8 +351,9 @@ class metropolis_hastings():
                 im = self.baseim[galsim.BoundsI(self.psfcenterx[i] - substamp / 2., self.psfcenterx[i] + substamp / 2. - 1,
                                                 self.psfcentery[i] - substamp / 2., self.psfcentery[i] + substamp / 2. - 1)]
 
-                #self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
-                self.psfs.append(thispsf)
+                self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
+                self.psfs[-1] = self.psfs[-1].shift(self.galoffsetsx[i],self.galoffsetsy[i])
+                #self.psfs.append(thispsf)
 
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         #self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
