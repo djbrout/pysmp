@@ -718,7 +718,7 @@ class metropolis_hastings():
                 total_model = self.gs_model_interp
 
 
-                conv1 = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
+                conv1 = galsim.Convolve(total_model, psfs.shift(snoffsets), gsparams=self.psfparams)
                 #conv2 = psfs.withFlux(kicked_modelvec).shift(snoffsets)
 
                 conv1.drawImage(image=simstamps, method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
