@@ -330,7 +330,7 @@ class metropolis_hastings():
         #print galsim.GSParams().__dict__
         #raw_input()
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000,folding_threshold=1.e-1,maxk_threshold=1.e-1)
-        self.psfparams = galsim.GSParams(maximum_fft_size=500,k_interpolant='linear')
+        self.psfparams = galsim.GSParams(maximum_fft_size=500)
 
         self.kicked_snraoff = copy(self.snraoff)
         self.kicked_sndecoff = copy(self.sndecoff)
@@ -483,11 +483,11 @@ class metropolis_hastings():
 
         # Contains the convolution
         #print 'interpolating'
-        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
+        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model,k_interpolant='linear')
         gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
         new_gal_model.drawImage(image=gs_model, method='no_pixel')
 
-        self.gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',
+        self.gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',k_interpolant='linear',
                                                    calculate_stepk=False, calculate_maxk=False, gsparams=self.psfparams)
 
         #self.mapkernel()
@@ -736,11 +736,11 @@ class metropolis_hastings():
         #t1 = time.time()
 
 
-        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model)
+        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model,k_interpolant='linear')
         gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
         new_gal_model.drawImage(image=gs_model,method='no_pixel')
 
-        gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',
+        gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',k_interpolant='linear',
                                                                calculate_stepk=False, calculate_maxk=False)
 
 
