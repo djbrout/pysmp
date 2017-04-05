@@ -3983,7 +3983,7 @@ class smp:
 
             print modelstd
             print 'galmodelshape', galmodel.shape
-            import mcmcgalsim
+            import mcmcgalsimsmall as mcmcgalism
             #smp_dict['flag'][:-15] = 1
             aaa = mcmcgalsim.metropolis_hastings(
                     galmodel = galmodel
