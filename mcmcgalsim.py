@@ -309,7 +309,7 @@ class metropolis_hastings():
 
                 #[galsim.BoundsI( cx-self.fitradius,cx+self.fitradius-1,
                 #                                                cy-self.fitradius,cy+self.fitradius-1 ) ]*0.
-                #self.imagestampsformodel.append(modelim)
+                #self.imagestampsformodel.append(modelim)asdf
 
                 #print self.modelvec
                 #print i
