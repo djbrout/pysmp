@@ -300,6 +300,9 @@ class metropolis_hastings():
                         if self.modelstd[i] == 0:
                             self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
                                                               self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]*0.0
+
+                            self.modelim = galsim.Image(substamp, substamp, scale=.1)
+
                             galoriginx = self.psfcenterx[i]
                             galoriginy = self.psfcentery[i]
                             gotmodel = True
