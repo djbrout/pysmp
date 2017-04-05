@@ -330,8 +330,7 @@ class metropolis_hastings():
         #print galsim.GSParams().__dict__
         #raw_input()
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000,folding_threshold=1.e-1,maxk_threshold=1.e-1)
-        self.psfparams = galsim.GSParams(maximum_fft_size=500,kvalue_accuracy=1.e-1,folding_threshold=1.e-1,
-                                         maxk_threshold=1.e-1,xvalue_accuracy=1.e-2,shoot_accuracy=1.e-1)
+        self.psfparams = galsim.GSParams(maximum_fft_size=500,k_interpolant='linear')
 
         self.kicked_snraoff = copy(self.snraoff)
         self.kicked_sndecoff = copy(self.sndecoff)
