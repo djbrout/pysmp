@@ -219,7 +219,7 @@ class metropolis_hastings():
         self.baseim = galsim.fits.read(self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0])
         print self.imagefiles[( self.flags == 0 ) & (self.modelstd == 0.)][0]
         print self.baseim
-        raw_input()
+        #raw_input()
 
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
@@ -432,7 +432,7 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 #print 'Chisqvec',self.chisqvec
-                if (self.counter % 1000) == 0:
+                if (self.counter % 10000) == 0:
                     self.plotchains()
                     self.plotstamps()
                 #self.savechains()
