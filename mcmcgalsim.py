@@ -355,7 +355,7 @@ class metropolis_hastings():
 
                 #self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
                 #self.psfs[-1] = self.psfs[-1].shift(self.galoffsetsx[i],self.galoffsetsy[i])
-                self.galshifts.append(self.simstamps[i].trueCenter()-self.simstamps[i].wcs.poToImage(self.fiducial_coord))
+                self.galshifts.append(self.simstamps[i].trueCenter()-self.simstamps[i].wcs.posToImage(self.fiducial_coord))
                 #self.psfs.append(thispsf)
 
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
