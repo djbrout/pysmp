@@ -3978,7 +3978,7 @@ class smp:
 
 
             if self.continu:
-               galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']/1.3
+               galmodel = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['galmodel_params']/1.1
                modelvec = np.load(self.lcfilepath+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')['modelvec']
 
             print modelstd
