@@ -266,7 +266,7 @@ class metropolis_hastings():
                 self.simstamps.append(np.nan)
                 self.snobjs.append(np.nan)
                 self.snoffsets.append(np.nan)
-                self.galshifts.append(np.nan)
+                #self.galshifts.append(np.nan)
                 self.galoffsetsx.append(np.nan)
                 self.galoffsetsy.append(np.nan)
                 self.flags[i] = 1
@@ -339,25 +339,28 @@ class metropolis_hastings():
         self.galoffsetsy = self.galoffsetsy - galoriginy + np.round(galoriginy)
 
 
-        # for i in range(self.Nimage):
-        #     if self.imagefiles[i] == 'na':
-        #         self.psfs.append(np.nan)
-        #     else:
-        #         full_data_image = galsim.fits.read(self.imagefiles[i])
-        #         psf_center = full_data_image.wcs.posToImage(self.fiducial_coord)
-        #         des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
-        #         thispsf = des_psfex.getPSF(stamp_center)
-        #
-        #         im = self.baseim[galsim.BoundsI(self.psfcenterx[i] - substamp / 2., self.psfcenterx[i] + substamp / 2. - 1,
-        #                                         self.psfcentery[i] - substamp / 2., self.psfcentery[i] + substamp / 2. - 1)]
-        #
-        #         self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
-        #         self.psfs[-1] = self.psfs[-1].shift(self.galoffsetsx[i],self.galoffsetsy[i])
-        #         #self.psfs.append(thispsf)
+        for i in range(self.Nimage):
+            if self.imagefiles[i] == 'na':
+                #self.psfs.append(np.nan)
+                self.galshifts.append(np.nan)
+            else:
+                #full_data_image = galsim.fits.read(self.imagefiles[i])
+                # psf_center = full_data_image.wcs.posToImage(self.fiducial_coord)
+                # #des_psfex = galsim.des.DES_PSFEx(self.psffiles[i])
+                # # thispsf = des_psfex.getPSF(stamp_center)
+                # #
+                # im = self.baseim[galsim.BoundsI(self.psfcenterx[i] - substamp / 2., self.psfcenterx[i] + substamp / 2. - 1,
+                #                                 self.psfcentery[i] - substamp / 2., self.psfcentery[i] + substamp / 2. - 1)]
+                # im.wcs.posToImage(self.fiducial_coord)
+
+                #self.psfs.append(im.wcs.toWorld(thispsf, image_pos=psf_center))
+                #self.psfs[-1] = self.psfs[-1].shift(self.galoffsetsx[i],self.galoffsetsy[i])
+                self.galshifts.append(self.simstamps[i].true_center()-self.simstamps[i].wcs.poToImage(self.fiducial_coord))
+                #self.psfs.append(thispsf)
 
         self.model_pixel_scale_galsim = self.model_pixel_scale * galsim.arcsec
         #self.model_wcs = galsim.PixelScale(self.model_pixel_scale_galsim/galsim.arcsec)
-        self.model_wcs = im.wcs
+        self.model_wcs = self.modelim.wcs
         #print galsim.GSParams().__dict__
         #raw_input()
         self.big_fft_params = galsim.GSParams(maximum_fft_size=2024000,folding_threshold=1.e-1,maxk_threshold=1.e-1)
@@ -578,7 +581,7 @@ class metropolis_hastings():
         #          self.psfs, self.simstamps, self.sky,))
 
         self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs,
-                        self.simstamps, self.sky, self.galoffsetsx, self.galoffsetsy)
+                        self.simstamps, self.sky, self.galoffsetsx, self.galoffsetsy, self.galshifts)
 
         #t3 = time.time()
         #print 'kernel',t3-t2
@@ -733,7 +736,7 @@ class metropolis_hastings():
             output.put((sims, index))
 
     #@profile
-    def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky, galoffsetsx, galoffsetsy ):
+    def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky, galoffsetsx, galoffsetsy, galshifts ):
         #q, index,
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
@@ -753,7 +756,7 @@ class metropolis_hastings():
                 conv1 = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
                 #conv2 = psfs.withFlux(kicked_modelvec).shift(snoffsets)
 
-                conv1.drawImage(image=simstamps, method='no_pixel',wcs=simstamps.wcs)  # ,offset=offset)#Draw my model to the stamp at new wcs
+                conv1.drawImage(image=simstamps, method='no_pixel', offset=galshifts)  # ,offset=offset)#Draw my model to the stamp at new wcs
                 #conv2.drawImage(image=simstamps, method='no_pixel',add_to_image=True)  # ,offset=offset)#Draw my model to the stamp at new wcs
 
                 sims = simstamps.array + sky
