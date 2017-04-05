@@ -287,7 +287,7 @@ class metropolis_hastings():
                 im = self.baseim[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
                                                           self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1)]
 
-                self.psfs.append(im.wcs.toWorld(thispsf,image_pos=stamp_center)
+                self.psfs.append(im.wcs.toWorld(thispsf,image_pos=stamp_center))
 
                 #self.imagestamps.append(im)
                 #print np.median(im.array),self.sky[i], np.median(self.data[i])
