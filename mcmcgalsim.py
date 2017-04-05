@@ -495,22 +495,22 @@ class metropolis_hastings():
         #self.kernel()
         #self.mapkernel()
         #print 'simming'
-        q = Queue()
-
-        jobs = []
-        for i in range(len(self.sky)):
-            if self.flags[i] == 0:
-                p = multiprocessing.Process(target=self.mapkernel, args=(q, i,self.flags[i],self.fitflags[i],
-                                                                         self.kicked_modelvec[i], self.snoffsets[i],
-                                                                         self.psfs[i], self.simstamps[i], self.sky[i],))
-                jobs.append(p)
-                p.start()
-                sim, ind = q.get()
-                self.sims[ind,:,:] = sim
-
-        for j in jobs:
-            j.join()
-            #print '%s.exitcode = %s' % (j.name, j.exitcode)
+        # q = Queue()
+        #
+        # jobs = []
+        # for i in range(len(self.sky)):
+        #     if self.flags[i] == 0:
+        #         p = multiprocessing.Process(target=self.mapkernel, args=(q, i,self.flags[i],self.fitflags[i],
+        #                                                                  self.kicked_modelvec[i], self.snoffsets[i],
+        #                                                                  self.psfs[i], self.simstamps[i], self.sky[i],))
+        #         jobs.append(p)
+        #         p.start()
+        #         sim, ind = q.get()
+        #         self.sims[ind,:,:] = sim
+        #
+        # for j in jobs:
+        #     j.join()
+        #     #print '%s.exitcode = %s' % (j.name, j.exitcode)
 
 
         # task_queue = Queue()
@@ -546,7 +546,7 @@ class metropolis_hastings():
         # pool.map(self.mapkernel, (range(len(self.sky)),self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets,
         #          self.psfs, self.simstamps, self.sky,))
 
-        #self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
+        self.sims = map(self.mapkernel, self.flags,self.fitflags, self.kicked_modelvec, self.snoffsets, self.psfs, self.simstamps, self.sky)
 
         #t3 = time.time()
         #print 'kernel',t3-t2
@@ -701,8 +701,8 @@ class metropolis_hastings():
             output.put((sims, index))
 
     #@profile
-    def mapkernel(self, q, index, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
-
+    def mapkernel(self, flags, fitflags, kicked_modelvec ,snoffsets, psfs, simstamps, sky ):
+        #q, index,
         #self.psfparams = galsim.GSParams(maximum_fft_size=2024000,kvalue_accuracy=1.e-3,folding_threshold=1.e-1,maxk_threshold=1.e-1)
 
         #print sky
@@ -710,9 +710,9 @@ class metropolis_hastings():
         if flags == 0:
             if fitflags == 0.:
                 sn = galsim.Gaussian(sigma=1.e-8, flux=kicked_modelvec )
-                sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
-                if not self.psf_shift_std is None:
-                    sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
+                #sn = sn.shift(snoffsets)  # arcsec (relative to galaxy center)
+                #if not self.psf_shift_std is None:
+                #    sn = sn.shift(self.kicked_snraoff, self.kicked_sndecoff)
 
 
                 total_model = self.gs_model_interp
@@ -729,8 +729,8 @@ class metropolis_hastings():
 
         #output.put((sims, index))
 
-        q.put((sims,index))
-        #return sims
+        #q.put((sims,index))
+        return sims
 
 
     def kernel( self,  ):
