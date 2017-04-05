@@ -432,7 +432,7 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 #print 'Chisqvec',self.chisqvec
-                if (self.counter % 5000) == 0:
+                if (self.counter % 100) == 0:
                     self.plotchains()
                     self.plotstamps()
                 #self.savechains()
@@ -1023,14 +1023,14 @@ class metropolis_hastings():
             cbar = fig.colorbar(axs, ax=axgm)
             axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
             cbar = fig.colorbar(axs, ax=axim)
-            axs = axpsf.imshow(self.sims[i] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
+            axs = axpsf.imshow(self.sims[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
             cbar = fig.colorbar(axs, ax=axpsf)
-            resid = (self.data[i,:,:] - self.sims[i])*self.mask
+            resid = (self.data[i,:,:] - self.sims[i,:,:])*self.mask
             md = np.median(resid[resid!=0.].ravel())
             std = np.std(resid[resid!=0.].ravel())
-            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i]) * self.mask, cmap='gray', interpolation='nearest',vmin=-4*std,vmax=4*std)
+            axs = axdiff.imshow((self.data[i,:,:] - self.sims[i,:,:]) * self.mask, cmap='gray', interpolation='nearest',vmin=-4*std,vmax=4*std)
             cbar = fig.colorbar(axs, ax=axdiff)
-            axs = axchi.imshow((self.data[i,:,:] - self.sims[i]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
+            axs = axchi.imshow((self.data[i,:,:] - self.sims[i,:,:]) ** 2 / self.skyerr[i]**2 * self.mask, cmap='gray', interpolation='nearest', vmin=0, vmax=6.)
             cbar = fig.colorbar(axs, ax=axchi)
             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
             # plt.colorbar()
