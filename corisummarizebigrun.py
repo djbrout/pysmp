@@ -1868,6 +1868,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # repeatability = np.array(repeatability)
     # uindices = np.array(uindices)
 
+    plt.clf()
+    plt.hist(fwhm,bins=np.arange(0,10,.1),color='black')
+    plt.xlabel('FWHM (arcsec)')
+    plt.ylabel('# of Obs')
+    plt.savefig(outdir + '/' + title + 'fwhmhist.png')
+
+
+    plt.clf()
+
     cntr = 0
     pltvecx = []
     pltvecy = []
