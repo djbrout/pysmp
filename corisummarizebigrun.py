@@ -1874,7 +1874,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.ylabel('# of Obs')
     plt.savefig(outdir + '/' + title + 'fwhmhist.png')
 
-
+    print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
     cntr = 0
