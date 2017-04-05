@@ -483,11 +483,12 @@ class metropolis_hastings():
 
         # Contains the convolution
         #print 'interpolating'
-        new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model,k_interpolant='linear')
-        gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
-        new_gal_model.drawImage(image=gs_model, method='no_pixel')
 
-        self.gs_model_interp = galsim.InterpolatedImage(image=gs_model, x_interpolant='lanczos3',k_interpolant='linear',
+        ###new_gal_model = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model,k_interpolant='linear')
+        ###gs_model = galsim.Image(ncol=self.modelim.array.shape[1], nrow=self.modelim.array.shape[0], wcs=self.model_wcs)
+        ###new_gal_model.drawImage(image=gs_model, method='no_pixel')
+
+        self.gs_model_interp = galsim.InterpolatedImage(self.modelim + self.kicked_galaxy_model, x_interpolant='lanczos3',k_interpolant='linear',
                                                    calculate_stepk=False, calculate_maxk=False, gsparams=self.psfparams)
 
         #self.mapkernel()
