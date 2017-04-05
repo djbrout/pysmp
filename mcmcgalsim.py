@@ -212,6 +212,7 @@ class metropolis_hastings():
         self.galoffsetsy = []
         self.snobjs = []
         self.snoffsets = []
+        self.galshifts = []
         self.snraoff = snraoff
         self.sndecoff = sndecoff
         self.fitradius = fitradius
@@ -224,6 +225,7 @@ class metropolis_hastings():
         #raw_input()
         galoriginx = 0
         galoriginy = 0
+        gotmodel = False
 
         for i in np.arange(self.Nimage):
             #print self.imagefiles[i]
@@ -264,6 +266,9 @@ class metropolis_hastings():
                 self.simstamps.append(np.nan)
                 self.snobjs.append(np.nan)
                 self.snoffsets.append(np.nan)
+                self.galshifts.append(np.nan)
+                self.galoffsetsx.append(np.nan)
+                self.galoffsetsy.append(np.nan)
                 self.flags[i] = 1
                 #self.snras.append(np.nan)
                 #self.sndecs.append(np.nan)
@@ -297,12 +302,14 @@ class metropolis_hastings():
                 #     modelim = full_data_image[galsim.BoundsI( cx-self.model_radius,cx+self.model_radius-1,
                 #                                               cy-self.model_radius,cy+self.model_radius-1 )]
                 # else:
-                if self.flags[i]  == 0:
-                    if self.modelstd[i] == 0:
-                        self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
-                                                          self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]*0.0
-                        galoriginx = self.psfcenterx[i]
-                        galoriginy = self.psfcentery[i]
+                if not gotmodel:
+                    if self.flags[i]  == 0:
+                        if self.modelstd[i] == 0:
+                            self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
+                                                              self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]*0.0
+                            galoriginx = self.psfcenterx[i]
+                            galoriginy = self.psfcentery[i]
+                            gotmodel = True
                 self.galoffsetsx.append(self.psfcenterx[i] - np.round(self.psfcenterx[i]))
                 self.galoffsetsy.append(self.psfcenterx[i] - np.round(self.psfcentery[i]))
 
@@ -322,7 +329,6 @@ class metropolis_hastings():
 
                 self.snobjs.append(galsim.Gaussian(sigma = 1.e-8, flux = self.modelvec[i]))
                 self.snoffsets.append(im.wcs.toWorld(im.trueCenter()).project(self.fiducial_coord))
-
                 if self.fermigrid:
                     # print 'cleaning up copied files'
                     os.popen('rm '+self.imagefiles[i]).read()
@@ -332,6 +338,8 @@ class metropolis_hastings():
                 #self.snras.append(0.)
                 #self.sndecs.append(0.)
 
+        #for i in range(self.Nimage):
+        #    self.galshifts.append(im.wcs.toWorld(im.trueCenter()).project(self.fiducial_coord))
         #these are teh subpixel offsets for the galaxy model
         self.galoffsetsx = self.galoffsetsx - galoriginx + np.round(galoriginx)
         self.galoffsetsy = self.galoffsetsy - galoriginy + np.round(galoriginy)
@@ -731,10 +739,10 @@ class metropolis_hastings():
                 total_model = self.gs_model_interp
 
 
-                conv1 = galsim.Convolve(total_model, psfs, gsparams=self.psfparams)
+                conv1 = galsim.Convolve(total_model, psfs.shift(galoffsetsx,galoffsetsy), gsparams=self.psfparams)
                 #conv2 = psfs.withFlux(kicked_modelvec).shift(snoffsets)
 
-                conv1.drawImage(image=simstamps, method='no_pixel', offset=(galoffsetsx,galoffsetsy))  # ,offset=offset)#Draw my model to the stamp at new wcs
+                conv1.drawImage(image=simstamps, method='no_pixel')  # ,offset=offset)#Draw my model to the stamp at new wcs
                 #conv2.drawImage(image=simstamps, method='no_pixel',add_to_image=True)  # ,offset=offset)#Draw my model to the stamp at new wcs
 
                 sims = simstamps.array + sky
