@@ -407,8 +407,8 @@ class metropolis_hastings():
         self.platescale = platescale
         self.model_substamp = self.galaxy_model.shape[0]
         #self.galstd = self.pixelate(self.galstd,model_pixel_scale/platescale)
-        self.galdeltas = self.galaxy_model * 0. + .4 #copy(self.galstd)
-        self.galstd = self.galaxy_model * 0. + .4 #copy(self.galstd)
+        self.galdeltas = self.galaxy_model * 0. + 5. #copy(self.galstd)
+        self.galstd = self.galaxy_model * 0. + 5. #copy(self.galstd)
 
         self.run_d_mc()
 
@@ -477,7 +477,7 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 #print 'Chisqvec',self.chisqvec
-                if (self.counter % 10000) == 0:
+                if (self.counter % 1000) == 0:
                     self.plotchains()
                     self.plotstamps()
                 #self.savechains()
