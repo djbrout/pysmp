@@ -3771,6 +3771,7 @@ class smp:
                 st = time.time()
 
                 passflags = smp_dict['flags']
+                numiter = self.params.sn_plus_galmodel_steps
                 if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
                     dontfitflags[modelstd == 0] = 1
@@ -3780,6 +3781,7 @@ class smp:
                         dontfitflags[aw[:-10]] = 1
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
+                    numiter = 50000
 
 
 
@@ -3807,7 +3809,7 @@ class smp:
                         , weights = smp_noise
                         , substamp = params.substamp
                         , Nimage = len(smp_dict['sky'])
-                        , maxiter = self.params.sn_plus_galmodel_steps
+                        , maxiter = numiter
                         , mask = smp_mask
                         , sky=smp_dict['sky']
                         , mjd=smp_dict['mjd']
