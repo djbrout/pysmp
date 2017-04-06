@@ -301,14 +301,14 @@ class metropolis_hastings():
                             self.modelim = full_data_image[galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. - 1,
                                                               self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1 )]*0.0
 
-                            self.modelim = galsim.Image(substamp, substamp, scale=.1)
+                            self.modelim = galsim.Image(substamp*2, substamp*2., scale=.27/2.)
 
                             galoriginx = self.psfcenterx[i]
                             galoriginy = self.psfcentery[i]
                             gotmodel = True
-                            self.kicked_galaxy_model = copy( self.modelim.array * 0. )
-                            self.kicked_galmodel = copy( self.modelim.array * 0. )
-                            self.galaxy_model = copy( self.modelim.array * 0. )
+                            self.kicked_galaxy_model = copy( self.modelim.array * 0. + 10. )
+                            self.kicked_galmodel = copy( self.modelim.array * 0. + 10. )
+                            self.galaxy_model = copy( self.modelim.array * 0. + 10. )
 
                 self.galoffsetsx.append(self.psfcenterx[i] - np.round(self.psfcenterx[i]))
                 self.galoffsetsy.append(self.psfcenterx[i] - np.round(self.psfcentery[i]))
@@ -323,8 +323,11 @@ class metropolis_hastings():
                 # self.simstamps.append(full_data_image[ galsim.BoundsI( cx-fitradius,cx+fitradius-1,
                 #                                                        cy-fitradius,cy+fitradius-1 ) ] * 0.0)
                 #
-                self.simstamps.append(full_data_image[ galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,self.psfcenterx[i] + substamp / 2. -1,
-                                                          self.psfcentery[i] - substamp / 2.,self.psfcentery[i] + substamp / 2. -1) ] * 0.0)
+                self.simstamps.append( full_data_image[ galsim.BoundsI( self.psfcenterx[i] - substamp / 2.,
+                                                                        self.psfcenterx[i] + substamp / 2. -1,
+                                                                        self.psfcentery[i] - substamp / 2.,
+                                                                        self.psfcentery[i] + substamp / 2. -1) ] * 0.0)
+
 
 
                 self.snobjs.append(galsim.Gaussian(sigma = 1.e-8, flux = self.modelvec[i]))
