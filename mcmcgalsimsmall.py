@@ -477,7 +477,7 @@ class metropolis_hastings():
 
                 print 'Chi Square: '+str(round(self.thischisq/len(self.mask[self.mask>0.].ravel())/len(self.flags[self.flags==0]),3))
                 #print 'Chisqvec',self.chisqvec
-                if (self.counter % 1000) == 0:
+                if (self.counter % 100) == 0:
                     self.plotchains()
                     self.plotstamps()
                 #self.savechains()
@@ -1065,7 +1065,7 @@ class metropolis_hastings():
             axchi = plt.subplot(155)
             for ax, title in zip([axgm, axim, axpsf, axdiff, axchi], ['pgalmodel','image MJD '+str(round(self.mjd[i])), 'model', 'resid', 'chisq: '+str(round(tchi,2))]):
                 ax.set_title(title)
-            axs = axgm.imshow(self.galaxy_model * self.mask,cmap='gray',interpolation='nearest')
+            axs = axgm.imshow(self.galaxy_model * self.pixelate(self.mask,.5),cmap='gray',interpolation='nearest')
             cbar = fig.colorbar(axs, ax=axgm)
             axs = axim.imshow(self.data[i,:,:] * self.mask, cmap='gray', interpolation='nearest',vmin=np.min(self.sky[i]-self.sky[i]/3.),vmax=np.max(self.data[i,:,:]))
             cbar = fig.colorbar(axs, ax=axim)
