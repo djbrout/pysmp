@@ -2284,6 +2284,7 @@ class smp:
                     starcat.id = starcat.bigid
                     starcat.ra = starcat.bigra
                     starcat.dec = starcat.bigdec
+                    starcat.mag = starcat.bigmag
 
                 #self.rdnoise = hdr[params.rdnoise_name]
                 #self.gain =  hdr[params.gain_name]
