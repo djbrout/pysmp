@@ -2273,6 +2273,11 @@ class smp:
                 #     nozpt = True
                 #sys.exit()
             if nozpt:
+                if not wehavestarcat:
+                    starcat = txtobj(self.starcatfile, useloadtxt=True)
+                    print 'done reading in starcatfile'
+                    wehavestarcat = True
+
                 #self.rdnoise = hdr[params.rdnoise_name]
                 #self.gain =  hdr[params.gain_name]
 
