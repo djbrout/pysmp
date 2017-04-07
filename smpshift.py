@@ -3787,7 +3787,7 @@ class smp:
                 tstart = time.time()
                 st = time.time()
 
-                passflags = smp_dict['flag']
+                passflags = copy(smp_dict['flag'])
                 numiter = self.params.sn_plus_galmodel_steps
                 if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
