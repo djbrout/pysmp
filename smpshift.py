@@ -2252,8 +2252,8 @@ class smp:
                                 gogo = False
 
                     if gogo:
-                        #try:
-                        if True:
+                        try:
+                        #if True:
                             print zpt_file
 
                             zptdata = np.load(zpt_file.replace('+fakeSN','')) #load previous zpt information
@@ -2265,10 +2265,9 @@ class smp:
                             rmsaddin=1
                             mjdoff = zptdata['mjdoff']
                             mjdslopeinteroff = zptdata['mjdslopeinteroff']
-                            if len(zptdata['fit_zpt']) == 1:
-                                if zptdata['fit_zpt'] == 0.:
-                                    print 'loaded bad zpt, continuing...'
-                                    continue
+                            if zptdata['fit_zpt'] == 0.:
+                                print 'loaded bad zpt, continuing...'
+                                continue
                             #print 'thisworked'
                         #except:
                         #    print '2099 setting nozpt to True'
