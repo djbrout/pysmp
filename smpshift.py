@@ -3793,9 +3793,11 @@ class smp:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
                     dontfitflags[smp_dict['mjd_flag'] == 0 ] = 1
                     dontfitflags[smp_dict['flag'] == 1] = 1
-                    # if len(dontfitflags[dontfitflags == 0])>10.:
-                    #     aw = np.where(dontfitflags == 0)
-                    #     dontfitflags[aw[:-10]] = 1
+                    if len(dontfitflags[dontfitflags == 0])>10.:
+                        aw = np.argwhere(dontfitflags == 0)
+                        print 'aw', aw
+                        dontfitflags[aw[:-10]] = 1
+
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
                     numiter = 50000
