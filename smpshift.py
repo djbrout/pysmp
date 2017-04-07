@@ -3790,6 +3790,7 @@ class smp:
                 passflags = copy(smp_dict['flag'])
                 galstd = galstd * 0 + .9
                 numiter = self.params.sn_plus_galmodel_steps
+                shiftstd = self.params.sn_shift_std
                 if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
                     dontfitflags[smp_dict['mjd_flag'] == 0 ] = 1
@@ -3802,6 +3803,7 @@ class smp:
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
                     numiter = 50000
+                    shiftstd = 0.
                     galstd = galstd * 0 + 2.
                 #print 'smp_dict[flag]',smp_dict['flag']
                 print 'passflags',passflags
@@ -3841,10 +3843,10 @@ class smp:
                         , usesimerr = False
                         , flags = passflags
                         , fitflags = smp_dict['fitflag']*0.
-                        , psf_shift_std = self.params.sn_shift_std
+                        , psf_shift_std = shiftstd
                         , xoff = 0.
                         , yoff = 0.#.06
-                        , shiftpsf = self.params.sn_shift_std > 0.
+                        , shiftpsf = shiftstd > 0.
                         , fileappend = ''
                         , stop = False
                         , skyerr_radius = 12.
