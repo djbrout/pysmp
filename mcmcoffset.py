@@ -523,6 +523,7 @@ class metropolis_hastings():
                 #chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
                 chsqs = []
                 for i in range(self.Nimage):
+                    print 'cs comparo',self.csv[i],self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel())
                     chsqs.append(self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
@@ -1053,7 +1054,7 @@ class metropolis_hastings():
 
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
-                    #print chisq, np.mean(skyerr[skyerr < 1000].ravel())
+                    print 'csq',chisq, np.mean(skyerr[skyerr < 1000].ravel())
                     #print np.max(sims),np.max(data),np.mean(sims-data),np.max(weights),np.max(self.mask)
                     #print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
                 else:
