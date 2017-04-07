@@ -3795,16 +3795,16 @@ class smp:
                     dontfitflags[smp_dict['flag'] == 1] = 1
                     if len(dontfitflags[dontfitflags == 0])>10.:
                         aw = np.argwhere(dontfitflags == 0)
-                        print 'aw', aw
+                        #print 'aw', aw
                         dontfitflags[aw[:-10]] = 1
 
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
                     numiter = 50000
 
-                print 'smp_dict[flag]',smp_dict['flag']
+                #print 'smp_dict[flag]',smp_dict['flag']
                 print 'passflags',passflags
-                print 'dontfitflags',dontfitflags
+                #print 'dontfitflags',dontfitflags
 
                 if passv == 1: self.continu = True
                 try:
