@@ -7,8 +7,8 @@ except:
     pass
 
 def build(psffile, x, y, stampsize,psfexworked=True):
-    print 'psffile'
-    raw_input()
+    #print 'psffile'
+    #raw_input()
     try:
         a = psfex.PSFEx(psffile)
         im = a.get_rec(y, x)[3:-4, 3:-4]
@@ -46,8 +46,8 @@ def build(psffile, x, y, stampsize,psfexworked=True):
 
 
 def buildall(psffile, x, y, stampsize):
-    print psffile
-    raw_input()
+    #print psffile
+    #raw_input()
     pstring = ''
     badvec = []
     for i,p,xi,yi in zip(np.arange(len(x)),psffile,x,y):
