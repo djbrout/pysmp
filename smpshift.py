@@ -3567,7 +3567,7 @@ class smp:
         self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
                 , modelvec = modelvec*0.
-                , galstd = np.sqrt(galmodel)*2.
+                , galstd = np.sqrt(galmodel*0. +1.)*2.
                 , modelstd = np.sqrt(modelvec*0.)
                 , data = smp_im
                 , psfs = smp_psf
