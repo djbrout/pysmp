@@ -557,7 +557,7 @@ class metropolis_hastings():
                     #                          self.sky, self.flags, self.fitflags, self.sims, self.gal_conv)
 
                     #print 'fit galaxy registration', self.xgal_pix_offset[10:20]
-                    print 'fitting position:', self.x_pix_offset, self.y_pix_offset
+                    #print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
 
                 if (self.counter % 50000) == 0:
