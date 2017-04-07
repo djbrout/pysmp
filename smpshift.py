@@ -2264,6 +2264,9 @@ class smp:
                             rmsaddin=1
                             mjdoff = zptdata['mjdoff']
                             mjdslopeinteroff = zptdata['mjdslopeinteroff']
+                            if len(zptdata['fit_zpt']) == 1:
+                                if zptdata['fit_zpt'] == 0.:
+                                    continue
                             #print 'thisworked'
                         except:
                             print '2099 setting nozpt to True'
@@ -6324,7 +6327,6 @@ class smp:
                 #print imfile
                 #raw_input()
                 name = imfile.split('/')[-1][:-5]
-                #mag_compare_out = os.path.join(self.outdir,'stardata',filt, name + '_zptstardata.npz')
                 mag_compare_out = os.path.join(self.impath,
                                                name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz').replace('+fakeSN','')
                 #print 'lengoodstarcols',len(mag_cat[goodstarcols])
@@ -6334,16 +6336,12 @@ class smp:
                 print 'FWHM:',fwhm
 
                 np.savez(mag_compare_out
-                         # ,ra = ras[goodstarcols]
-                         # ,dec = decs[goodstarcols]
                          , cat_magsmp=mag_cat[goodstarcols]
                          , fit_mag=-2.5 * np.log10(fluxcol[goodstarcols])
                          , fit_mag_err=-2.5 * np.log10(fluxcol[goodstarcols]) + 2.5 * np.log10(fluxcol[goodstarcols] + flux_star_std[goodstarcols])
                          , flux_starh=fluxcol[goodstarcols]
                          , flux_star_std=flux_star_std[goodstarcols]
                          , chisqu=flux_chisq[goodstarcols]
-                         # ,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
-                         # ,mcmc_me_fit_mag_std = mcmc_me_mag_std[goodstarcols]
                          , ras=ras[goodstarcols]
                          , decs=decs[goodstarcols]
                          , centroidedras=thisra[goodstarcols]
@@ -6354,8 +6352,6 @@ class smp:
                          , fit_zpt_std=std
                          , sky=starsky[goodstarcols]
                          , skyerr=starskyerr[goodstarcols]
-                         # ,mcmc_me_zpt = mcmc_me_md
-                         # ,mcmc_me_zpt_std = mcmc_me_std
                          , cat_zpt=cat_zpt
                          , mjd=thismjd
                          , psfs=psfs[goodstarcols, :, :]
@@ -6404,6 +6400,40 @@ class smp:
             #raw_input('Error : not enough good stars to compute zeropoint!!!')
             bad = True
             #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
+
+            name = imfile.split('/')[-1][:-5]
+            mag_compare_out = os.path.join(self.impath,
+                                           name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz').replace(
+                                           '+fakeSN', '')
+
+            np.savez(mag_compare_out
+                     , cat_magsmp=0
+                     , fit_mag=-0
+                     , fit_mag_err=0
+                     , flux_starh=0
+                     , flux_star_std=0
+                     , chisqu=0
+                     , ras=0
+                     , decs=0
+                     , centroidedras=0
+                     , centroideddecs=0
+                     , ids=0
+                     , rmsaddin=0
+                     , fit_zpt=0
+                     , fit_zpt_std=0
+                     , sky=0
+                     , skyerr=0
+                     , cat_zpt=0
+                     , mjd=0
+                     , psfs=0
+                     , mjdoff=0
+                     , mjdslopeinteroff=0
+                     , thisra=0
+                     , thisdec=0
+                     , thisids=0
+                     , fwhm=0
+                     )
+
 
             print 'Error : not enough good stars to compute zeropoint!!!'*20
 
