@@ -2269,9 +2269,9 @@ class smp:
                                 print 'loaded bad zpt, continuing...'
                                 continue
                             #print 'thisworked'
-                        #except:
-                        #    print '2099 setting nozpt to True'
-                        #    nozpt = True
+                        except:
+                            print '2099 setting nozpt to True'
+                            nozpt = True
                 # except:
                 #     print('Warning : IMAGE_ZPT field does not exist!  Calculating')
                 #     nozpt = True
