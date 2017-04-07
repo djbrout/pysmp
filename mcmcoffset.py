@@ -262,6 +262,10 @@ class metropolis_hastings():
 
         #self.shiftgalstd = shiftgalstd
 
+
+
+
+
         print 'sigmazpt',self.sigmazpt.shape
 
         # if dobkg :
@@ -412,6 +416,12 @@ class metropolis_hastings():
         
         #self.galstd = np.sqrt(self.galaxy_model)*
 
+        for i in range(self.Nimage):
+            if len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()) == 0:
+                self.modelvec[i] = 0.
+                self.flags[i] = 1
+                self.modelstd[i] = 0.
+
         if not self.pixelate_model is None:
             if not self.pixelate_model == 1.:
                 self.galaxy_model = self.pixelate(self.galaxy_model,self.pixelate_model)
@@ -523,7 +533,7 @@ class metropolis_hastings():
                 #chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
                 chsqs = []
                 for i in range(self.Nimage):
-                    print 'cs comparo',self.csv[i],self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()),len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel())
+                    #print 'cs comparo',self.csv[i],self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()),len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel())
                     chsqs.append(self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
@@ -1054,7 +1064,7 @@ class metropolis_hastings():
 
                     #v = np.real(v)
                     chisq = np.sum(v[(v > 0.) & (v < 99999999.)])
-                    print 'csq',chisq, np.mean(skyerr[skyerr < 1000].ravel())
+                    #print 'csq',chisq, np.mean(skyerr[skyerr < 1000].ravel())
                     #print np.max(sims),np.max(data),np.mean(sims-data),np.max(weights),np.max(self.mask)
                     #print chisq,np.max(wmask.ravel()),np.max(self.mask.ravel()),np.max(sims.ravel()),np.max(data.ravel()),np.max(weights.ravel())
                 else:
