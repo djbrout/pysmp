@@ -3791,7 +3791,7 @@ class smp:
                 numiter = self.params.sn_plus_galmodel_steps
                 if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
-                    dontfitflags[modelstd !=0 ] = 1
+                    dontfitflags[smp_dict['mjd_flag'][i] == 0 ] = 1
                     dontfitflags[smp_dict['flag'] == 1] = 1
                     if len(dontfitflags[dontfitflags == 0])>10.:
                         aw = np.where(dontfitflags == 0)
