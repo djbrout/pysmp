@@ -527,14 +527,17 @@ class metropolis_hastings():
             if (self.counter % self.gewekenum) == self.gewekenum-1: 
                 self.check_geweke()
                 self.last_geweke = self.counter
-            if (self.counter % 100) == 0:
+            if (self.counter % 1000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
                 #chsqs = self.csv/len(self.mask[self.mask>0.].ravel())
                 chsqs = []
                 for i in range(self.Nimage):
                     #print 'cs comparo',self.csv[i],self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()),len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel())
-                    chsqs.append(self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
+                    if len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()) == 0.:
+                        chsqs.append(0.)
+                    else:
+                        chsqs.append(self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
                 print 'Chisq For Each Epoch: ',chsqs
