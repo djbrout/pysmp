@@ -2266,6 +2266,7 @@ class smp:
                             mjdslopeinteroff = zptdata['mjdslopeinteroff']
                             if len(zptdata['fit_zpt']) == 1:
                                 if zptdata['fit_zpt'] == 0.:
+                                    print 'loaded bad zpt, continuing...'
                                     continue
                             #print 'thisworked'
                         except:
@@ -3799,7 +3800,9 @@ class smp:
                     passflags += dontfitflags
                     numiter = 50000
 
-
+                print 'smp_dict[flag]',smp_dict['flag']
+                print 'passflags',passflags
+                print 'dontfitflags',dontfitflags
 
                 if passv == 1: self.continu = True
                 try:
