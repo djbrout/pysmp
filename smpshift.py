@@ -3788,6 +3788,7 @@ class smp:
                 st = time.time()
 
                 passflags = copy(smp_dict['flag'])
+                galstd = galstd * 0 + .9
                 numiter = self.params.sn_plus_galmodel_steps
                 if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
@@ -3801,7 +3802,7 @@ class smp:
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
                     numiter = 50000
-
+                    galstd = galstd * 0 + 2.
                 #print 'smp_dict[flag]',smp_dict['flag']
                 print 'passflags',passflags
                 #print 'dontfitflags',dontfitflags
@@ -3823,7 +3824,7 @@ class smp:
                 aaa = mcmc3.metropolis_hastings(
                         galmodel = galmodel
                         , modelvec = modelvec
-                        , galstd = galstd*0 + .9
+                        , galstd = galstd
                         , modelstd = modelstd*2.5
                         , data = smp_im
                         , psfs = smp_psf
