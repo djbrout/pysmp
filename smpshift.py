@@ -3685,6 +3685,7 @@ class smp:
                 galstd = galstd * 0 + .9
                 numiter = self.params.sn_plus_galmodel_steps
                 shiftstd = self.params.sn_shift_std
+                burnin = .5
                 if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
                     dontfitflags[smp_dict['mjd_flag'] == 0 ] = 1
@@ -3699,6 +3700,7 @@ class smp:
                     numiter = 50000
                     shiftstd = 0.
                     galstd = galstd * 0 + 2.
+                    burnin = .8
                 #print 'smp_dict[flag]',smp_dict['flag']
                 print 'passflags',passflags
                 #print 'dontfitflags',dontfitflags
@@ -3748,7 +3750,7 @@ class smp:
                         , compressionfactor = 100
                         , fix_gal_model = False
                         , pixelate_model = None
-                        , burnin = .5
+                        , burnin = burnin
                         , lcout = os.path.join(self.lcfilepath,filename)
                         , chainsnpz = os.path.join(npoutdir,filename+'_withSn.npz')
                         , mjdoff = smp_dict['mjdoff']
