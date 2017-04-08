@@ -51,7 +51,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         try:
             origfile = open(saveloc, 'r')
         except:
-            return
+            return False
         lines = origfile.readlines()
         origfile.close()
         #print lines
@@ -141,6 +141,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 #print line
         savefile.write(wline)
     savefile.close()
+    return True
     #raw_input()
 
 
@@ -207,20 +208,19 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 continue
 
-            if filt == None:
-                snlist.write(sn+'_smp.dat\n')
-
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
             #print sndata.keys()
 
             if True:
-                addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
+                successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
                                 sndata['ID_OBS'],filt=filt,saveinplace=inplace)
                 print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+                if filt == None and successful:
+                    snlist.write(sn + '_smp.dat\n')
             #except:
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
