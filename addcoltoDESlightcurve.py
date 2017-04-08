@@ -195,6 +195,7 @@ if __name__ == "__main__":
         sne = os.listdir(resultsdir+'/SNe')
 
         for sn in sne[:]:
+            print sn
             if 'starfits' in sn:
                 continue
 
