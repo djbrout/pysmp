@@ -2507,14 +2507,11 @@ class smp:
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
+
                     if zpt == 0:
                         badflag = 1
 
-                    # zpt, zpterr, zpt_file = self.getzpt(x_starold, y_starold, starcat.ra[cols], starcat.dec[cols], starcat, mag, sky, skyerr,
-                    #                                     snparams.mjd[j],
-                    #                                     badflag, mag_star, im, weights, mask, psffile, imfile, snparams,
-                    #                                     params.substamp, mjdoff, mjdslopeinteroff,
-                    #                                     psf=self.psf)
+
             else:
                 if doglobalstar:
                     zpt_file = imfile.split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
@@ -2531,6 +2528,10 @@ class smp:
                 print 'getting rasssssss'
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
+
+            if zpterr / float(len(thisra)) > 0.01:
+                badflag = 1
+                print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
             dotestoff = False
             if zpt == 0:
                 print 'zerpoint badflag'
@@ -2543,7 +2544,7 @@ class smp:
             if self.usediffimzpt:
                 scalefactor = 10**(-.4*(snparams.zp[j]-firstzpt))
             else:
-                if zpt != 0.0 and np.min(self.psf) > -10000:
+                if zpt != 0.0 and np.min(self.psf) > -10000 and np.isfinite(zpt):
                     scalefactor = 10.**(-0.4*(zpt-firstzpt))
                 if zpt == 0.:
                     #aw_input('zpt badflag')
