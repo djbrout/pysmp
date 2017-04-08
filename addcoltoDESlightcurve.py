@@ -45,18 +45,21 @@ FAILED_SMP_FLAG = 65536
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
+        print 'making'
         os.makedirs(os.path.basename(saveloc))
 
     if saveinplace:
         try:
             origfile = open(saveloc, 'r')
         except:
+            print 'doesnt exist'
             return False
         lines = origfile.readlines()
         origfile.close()
         #print lines
         #raw_input()
     else:
+        print 'else'
         origfile = open(lightcurvefile, 'r')
         lines = origfile.readlines()
         origfile.close()
@@ -89,6 +92,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     #zp = np.array(zp)
     for line in lines:
+        print line
         #print len(line.replace('#', '').split()),line
         wline = line
         #if saveinplace:
@@ -215,6 +219,7 @@ if __name__ == "__main__":
             #print sndata.keys()
 
             if True:
+                print 'adding'
                 successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
