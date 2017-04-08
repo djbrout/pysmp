@@ -3544,8 +3544,10 @@ class smp:
 
 
         for i in range(len(smp_dict['sky'])):
+            print smp_dict['mjd'][i],
             if len(smp_noise[smp_noise > 0.].ravel()) < 350.:
                 smp_dict['flag'][i] = 1
+                print '<--FLAGGED',
 
         print 'skyerr',smp_dict['skyerr']
         print 'flag',smp_dict['flag']
@@ -3635,54 +3637,6 @@ class smp:
         except:
             print 'could not save ',os.path.join(npoutdir,filename+'_smpDict.npz')
 
-        # if self.fermilog:
-        #     self.tmpwriter.appendfile('starting galaxy mcmc\n', self.fermilogfile)
-        # #self.dogalfit = False
-        # if self.dogalfit:
-        #     aaa = mcmc3.metropolis_hastings(
-        #             galmodel = galmodel
-        #             , modelvec = modelvec*0.
-        #             , galstd = np.sqrt(galmodel)/3
-        #             , modelstd = modelvec*0.
-        #             , data = smp_im
-        #             , psfs = smp_psf
-        #             , weights = smp_noise
-        #             , substamp = params.substamp
-        #             , Nimage = len(smp_dict['sky'])
-        #             , maxiter = self.params.galaxy_model_steps
-        #             , mask = None
-        #             , sky=smp_dict['sky']
-        #             , mjd=smp_dict['mjd']
-        #             , gewekenum=9999999
-        #             , skyerr=smp_dict['skyerr']
-        #             , useskyerr = True
-        #             , flags = smp_dict['flag']
-        #             , fitflags = smp_dict['fitflag']
-        #             , psf_shift_std = .0
-        #             , shiftpsf = False
-        #             , fileappend = ''
-        #             , stop = False
-        #             , skyerr_radius = 16.
-        #             , outpath = outimages
-        #             , compressionfactor = 100
-        #             , fix_gal_model = None
-        #             , pixelate_model = 1.
-        #             , burnin = .75
-        #             , lcout = os.path.join(self.lcfilepath+'/'+filename)
-        #             , chainsnpz = os.path.join(npoutdir,filename+'_nosn.npz')
-        #             , dontplotstamps = True
-        #             , sigmazpt = smp_dict['zpterr']
-        #             )
-        #
-        #
-        #
-        #     modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs  = aaa.get_params()
-        #
-        #     print 'TOTAL Galfit SMP TIME ',time.time()-tstart
-        #
-        #     print os.path.join(npoutdir,filename+'_nosn.npz')
-        #
-
 
         self.outdir = outdir
         self.galaxyoutdir = galaxyoutdir
@@ -3695,66 +3649,6 @@ class smp:
         self.smp_noise = smp_noise
 
 
-
-        # if self.dosnradecfit:
-        #     if not self.dogalfit:
-        #         chains = np.load(os.path.join(galaxyoutdir,filename+'_nosn.npz'))
-        #         galmodel_params = chains['galmodel_params']
-        #         galmodel_uncertainty = chains['galmodel_uncertainty']
-        #     galmodel = galmodel_params
-        #     galstd = np.sqrt(abs(galmodel))/5.
-        #     tstart = time.time()
-        #     modelvec = scaled_diffim_flux
-        #     modelstd = scaled_diffim_fluxerr/5.
-        #     if not self.floatallepochs:
-        #         modelvec[smp_dict['mjd_flag'] == 1] = 0
-        #         modelstd[smp_dict['mjd_flag'] == 1] = 0
-        #
-        #     fixgal = True
-        #     print 'fitting SN RA DEC'
-        #     aaa = mcmc3.metropolis_hastings(
-        #         galmodel = galmodel
-        #         , modelvec = modelvec
-        #         , galstd = galstd
-        #         , modelstd = modelstd
-        #         , data = smp_im
-        #         , psfs = smp_psf
-        #         , weights = smp_noise
-        #         , substamp = params.substamp
-        #         , Nimage = len(smp_dict['sky'])
-        #         , maxiter = 500000
-        #         , mask = None
-        #         , sky=smp_dict['sky']
-        #         , mjd=smp_dict['mjd']
-        #         , gewekenum=9999999
-        #         , skyerr=smp_dict['skyerr']
-        #         , useskyerr = True
-        #         , usesimerr = False
-        #         , flags = smp_dict['flag']+smp_dict['mjd_flag']
-        #         , fitflags = smp_dict['fitflag']*0.
-        #         , psf_shift_std = self.params.sn_shift_std
-        #         , xoff = 0.
-        #         , yoff = 0.
-        #         , shiftpsf = self.params.sn_shift_std > 0.
-        #         , fileappend = ''
-        #         , stop = False
-        #         , skyerr_radius = 16.
-        #         , outpath = outimages
-        #         , compressionfactor = 100
-        #         , fix_gal_model = fixgal
-        #         , pixelate_model = 1.
-        #         , burnin = .75
-        #         , lcout = os.path.join(self.lcfilepath,filename)
-        #         , chainsnpz = os.path.join(outdir,filename+'_withSngetRADEC.npz')
-        #         , platescale = .27
-        #         , mjdoff = smp_dict['mjdoff']
-        #         , fitradec = True
-        #         , sigmazpt = smp_dict['zpterr']
-        #         )
-        #     modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps  = aaa.get_params()
-        #
-        #     xoff = np.mean(xhistory[int(3*len(xhistory)/4.):])/.27
-        #     yoff = np.mean(yhistory[int(3*len(yhistory)/4.):])/.27
 
 
         if self.dosnfit:
