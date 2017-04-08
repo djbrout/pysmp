@@ -48,7 +48,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         os.makedirs(os.path.basename(saveloc))
 
     if saveinplace:
-        origfile = open(saveloc, 'r')
+        try:
+            origfile = open(saveloc, 'r')
+        except:
+            return
         lines = origfile.readlines()
         origfile.close()
         #print lines
