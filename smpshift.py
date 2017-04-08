@@ -3544,7 +3544,7 @@ class smp:
 
 
         for i in range(len(smp_dict['sky'])):
-            print smp_dict['mjd'][i],
+            print smp_dict['mjd'][i],len(smp_noise[i][smp_noise[i]*smp_mask[i] > 0.].ravel()),
             if len(smp_noise[i][smp_noise[i]*smp_mask[i] > 0.].ravel()) < 350.:
                 smp_dict['flag'][i] = 1
                 print '<--FLAGGED',
