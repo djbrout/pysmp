@@ -2139,10 +2139,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     from scipy.interpolate import interp1d
     f = interp1d(photerr, repeaterr)
-
-    #for i,sme in enumerate(starmagerr):
-    #    starmagerr[i] = f(sme)
-    starmagerrinterp = f(starmagerr)
+    starmagerrinterp = copy(starmagerr)
+    for i,sme in enumerate(starmagerr):
+        if sme <= min(photerr):
+            sme = min(photerr)
+        starmagerrinterp[i] = f(sme)
+    #starmagerrinterp = f(starmagerr)
 
     dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr
