@@ -2216,7 +2216,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # plt.clf()
 
     ax1.scatter(catmag, dmam, alpha=.02, color='black')
-    ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.5)
+    ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.1)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -2261,15 +2261,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # raw_input('zpt scatter err')
     #ax3.plot(ax, ayrms, color='red', label='ZPT Scatter Err', linewidth=3,alpha=.7)
 
-    ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
+    #ax, ayrms = dt.binrms(catmag, dp, np.arange(16., max(catmag), .1), .5)
     #ax3.plot(ax, ayrms, color='green', label='Poisson Err', linewidth=3,alpha=.7)
 
-    # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .5)
+    # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .1)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
+    ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .1)
     ax3.plot(ax, ayrms, color='orange', label='ZPT Scat + ChisMin', linewidth=3,alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
-    ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
+    ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.3, 0.8))
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
