@@ -1845,7 +1845,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
-    starmagerr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) + rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
+    starmagerrr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) + rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
 
     starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin/2.
@@ -2135,14 +2135,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print starmag[0:10]
     print catmag[0:10]
     dmz = (starmag - catmag) / starmagerr
-    dmam = (starmag - catmag) / starmagerr
+    dmam = (starmag - catmag) / starmagerrr
 
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
 
 
     #raw_input('printing mags')
-    dmam = (flux - catflux) / np.sqrt(fluxerr**2 + flux)
+    #dmam = (flux - catflux) / np.sqrt(fluxerr**2 + flux)
     ds = (flux - catflux) / skyerr
     dp = (flux-catflux) / poisson
 
