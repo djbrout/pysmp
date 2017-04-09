@@ -2143,6 +2143,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for i,sme in enumerate(starmagerr):
         if sme <= min(photerr):
             sme = min(photerr)
+        if sme >= max(photerr):
+            sme = max(photerr)
         starmagerrinterp[i] = f(sme)
     #starmagerrinterp = f(starmagerr)
 
