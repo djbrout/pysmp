@@ -1877,7 +1877,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 10000
+    maxpoints = 10000000
 
     cntr = 0
     pltvecx = []
@@ -1885,6 +1885,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, f, fe,fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
         cntr += 1
         if cntr > maxpoints: continue
+        if cntr > 100: continue
+
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -1921,6 +1923,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
+        if cntr > 100: continue
+
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
         #raw_input()
@@ -1958,6 +1962,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                                                    rmsaddin):
         cntr += 1
         if cntr > maxpoints: continue
+        if cntr > 100: continue
+
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -1997,6 +2003,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
+        if cntr > 100: continue
+
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
         #raw_input()
@@ -2152,7 +2160,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr
-    dmam = (starmag - catmag) / starmagerrinterp
+    dmam = (starmag - catmag) / rep
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
 
