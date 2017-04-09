@@ -1848,7 +1848,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerrr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) + rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
 
-    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin/2.
+    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux + rmsaddin
 
     plt.clf()
     # repeatability = []
@@ -2135,7 +2135,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print starmag[0:10]
     print catmag[0:10]
     dmz = (starmag - catmag) / starmagerr
-    dmam = (starmag - catmag) / starmagerrr
+    dmam = (starmag - catmag) / starmagerr
 
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
