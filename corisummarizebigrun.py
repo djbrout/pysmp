@@ -2194,7 +2194,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax5.yaxis.set_major_formatter(nullfmt)
 
     ax2.hist(dmam, bins=np.arange(-10.3, 10, .3), normed=True, label='RMS: ' + str(round(rms, 3))
-             , orientation='horizontal')
+             , orientation='horizontal',color='black')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
 
@@ -2204,7 +2204,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     variance = 1
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
-    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='grey', label='Gaussian Normal')
 
     ax2.set_ylim(-4, 4)
     ax2.set_xlim(0, .5)
@@ -2215,7 +2215,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     # plt.clf()
 
-    ax1.scatter(catmag, dmam, alpha=.02, color='blue')
+    ax1.scatter(catmag, dmam, alpha=.02, color='black')
     ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.5)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
@@ -2233,7 +2233,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
-    ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
+    ax3.plot([0, 100], [1., 1.], linestyle='--', color='grey')
     ax3.set_ylim(0., 3.)
     ax3.legend(fontsize='small')
 
@@ -2245,9 +2245,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             fresid[i] = (f - ff) / max([abs(ff), 1.])
     # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-    ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='blue', orientation='horizontal')
+    ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='black', orientation='horizontal')
     ww = abs(fresid) < .1
-    ax4.scatter(catmag[ww], fresid[ww], alpha=.02, color='blue')
+    ax4.scatter(catmag[ww], fresid[ww], alpha=.02, color='black')
     ax, ay, aystd = dt.bindata(catmag[ww], fresid[ww],
                                np.arange(16., max(catmag[ww]), .1), window=1.)
     ax4.plot([19, 28.7], [0, 0], color='grey')
@@ -2268,7 +2268,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .5)
     ax3.plot(ax, ayrms, color='orange', label='ZPT Scat + ChisMin', linewidth=3,alpha=.95)
-    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.25, 0.8))
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
@@ -2346,7 +2346,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax5.yaxis.set_major_formatter(nullfmt)
 
     ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS: ' + str(round(rms, 3))
-             , orientation='horizontal')
+             , orientation='horizontal',color='black')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
 
@@ -2356,7 +2356,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     variance = 1
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
-    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='black', label='Gaussian Normal')
+    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='red', label='Gaussian Normal')
 
     ax2.set_ylim(-4, 4)
     ax2.set_xlim(0, .5)
