@@ -2217,7 +2217,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax3.xaxis.set_major_formatter(nullfmt)
     ax5.yaxis.set_major_formatter(nullfmt)
 
-    ax2.hist(dmam, bins=np.arange(-10.1, 10, .2), normed=True, label='RMS: ' + str(round(rms, 3))
+    ax2.hist(dmam[np.isfinite(dmam)], bins=np.arange(-10.1, 10, .2), normed=True, label='RMS: ' + str(round(rms, 3))
              , orientation='horizontal',color='black')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
