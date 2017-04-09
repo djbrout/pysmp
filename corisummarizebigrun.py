@@ -2142,7 +2142,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
 
     #raw_input('printing mags')
-    d = (flux - catflux) / fluxerr
+    dmam = (flux - catflux) / np.sqrt(fluxerr**2 + flux)
     ds = (flux - catflux) / skyerr
     dp = (flux-catflux) / poisson
 
