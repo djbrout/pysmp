@@ -2013,10 +2013,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.0003,.02)
-    plt.ylim(.0003,.02)
+    plt.xlim(.0003,.007)
+    plt.ylim(.0003,.007)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .00001), window=.00004,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .0001), window=.0001,dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
