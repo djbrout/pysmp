@@ -2225,7 +2225,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
     ax1.set_xlim(16., max(catmag))
-    ax1.set_ylim(-6., 6.)
+    ax1.set_ylim(-10., 10.)
     ax1.set_xlabel('Cat Mag')
     ax1.set_ylabel('STD')
 
