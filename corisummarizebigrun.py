@@ -2216,7 +2216,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # plt.clf()
 
     ax1.scatter(catmag, dmam, alpha=.02, color='black')
-    ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.3,dontrootn=True)
+    ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.3)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -2225,7 +2225,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
     ax1.set_xlim(16., max(catmag))
-    ax1.set_ylim(-10., 10.)
+    ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Cat Mag')
     ax1.set_ylabel('STD')
 
