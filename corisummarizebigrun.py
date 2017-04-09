@@ -1845,10 +1845,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #starmagerr2 = ((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))**2 + rmsaddin**2 + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2 )**.5
     #starmagerr3 = ((-2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr))**2 + rmsaddin[ww]**2)**.5
     skymagerr = -2.5*np.log10(sky) + 2.5*np.log10(sky+skyerr)
-    starmagerrr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) + rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
+    starmagerrr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) #+ rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
-
-    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux + rmsaddin
+    #starmagerrr = 1.0857*fluxerr/flux
+    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
 
     plt.clf()
     # repeatability = []
@@ -1877,7 +1877,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 100
+    maxpoints = 10000
 
     cntr = 0
     pltvecx = []
@@ -2009,14 +2009,16 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecy.append(repeatability)
             pltvecx.append(sme)
 
-    plt.xscale('log')
-    plt.yscale('log')
+    #plt.xscale('log')
+    #plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
     plt.xlim(.0003,.02)
     plt.ylim(.0003,.02)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .00001), window=.00004,dontrootn=True)
+    photerr = copy(ax)
+    repeaterr = copy(ay)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
@@ -2134,9 +2136,17 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     print starmag[0:10]
     print catmag[0:10]
+
+    from scipy.interpolate import interp1d
+    f = interp1d(photerr, repeaterr)
+
+    #for i,sme in enumerate(starmagerr):
+    #    starmagerr[i] = f(sme)
+    starmagerrinterp = f(starmagerr)
+
     dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr
-
+    dmam = (starmag - catmag) / starmagerrinterp
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
 
