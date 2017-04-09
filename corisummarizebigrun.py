@@ -2301,7 +2301,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.subplots_adjust(wspace=0.001, hspace=0.001)
     plt.savefig(outdir + '/' + title +'starstd.png')
-
+    print 'saved',outdir + '/' + title +'starstd.png'
 
 
     #------------------------------------------------------------------------------------------------
