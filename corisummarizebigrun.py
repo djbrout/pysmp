@@ -2162,6 +2162,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # #starmagerrinterp = f(starmagerr)
 
     dmz = (starmag - catmag) / starmagerr
+    print starmagerr[:50]
+    print rep[:50]
+    raw_input('ccc')
     dmam = (starmag - catmag) / np.maximum(starmagerr,rep)
     #dmam = (starmag - catmag) / rep
     #dmas = (starmag - catmag) / starmagerr3
