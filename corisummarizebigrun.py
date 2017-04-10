@@ -1877,7 +1877,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 10000000
+    maxpoints = 10000
 
     cntr = 0
     pltvecx = []
@@ -2147,16 +2147,16 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print starmag[0:10]
     print catmag[0:10]
 
-    from scipy.interpolate import interp1d
-    f = interp1d(photerr, repeaterr)
-    starmagerrinterp = copy(starmagerr)
-    for i,sme in enumerate(starmagerr):
-        if sme <= min(photerr):
-            sme = min(photerr)+.0001
-        if sme >= max(photerr):
-            sme = max(photerr)-.0001
-        starmagerrinterp[i] = f(sme)
-    #starmagerrinterp = f(starmagerr)
+    # from scipy.interpolate import interp1d
+    # f = interp1d(photerr, repeaterr)
+    # starmagerrinterp = copy(starmagerr)
+    # for i,sme in enumerate(starmagerr):
+    #     if sme <= min(photerr):
+    #         sme = min(photerr)+.0001
+    #     if sme >= max(photerr):
+    #         sme = max(photerr)-.0001
+    #     starmagerrinterp[i] = f(sme)
+    # #starmagerrinterp = f(starmagerr)
 
     dmz = (starmag - catmag) / starmagerr
     dmam = (starmag - catmag) / starmagerr
