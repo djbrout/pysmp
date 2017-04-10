@@ -2162,7 +2162,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # #starmagerrinterp = f(starmagerr)
 
     dmz = (starmag - catmag) / starmagerr
-    dmam = (starmag - catmag) / starmagerrr
+    dmam = (starmag - catmag) / starmagerr
     #dmam = (starmag - catmag) / rep
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
