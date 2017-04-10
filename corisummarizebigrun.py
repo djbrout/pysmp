@@ -156,9 +156,10 @@ def grabstardata(imagedir,outfile):
                         # plt.savefig('testzpt.png')
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=3, iter=10)
+
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
                         bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
-                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std)
+                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
@@ -1848,7 +1849,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerrr = (-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr+poisson)) #+ rmsaddin# + (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))#+ rmsaddin #+ (-2.5*np.log10(flux) + 2.5*np.log10(flux+poisson))**2)**.5
 
     #starmagerrr = 1.0857*fluxerr/flux
-    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
+    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux + rmsaddin
 
     plt.clf()
     # repeatability = []
@@ -2080,6 +2081,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm,cs in zip(starmagerr, starmag, indices, ras, decs, catmag,chisq):
         cntr += 1
         if cntr > maxpoints: continue
+        if cntr > 100: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2114,6 +2116,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, cs,se in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq,skyerr):
         cntr += 1
         if cntr > maxpoints: continue
+        if cntr > 100: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2159,8 +2162,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # #starmagerrinterp = f(starmagerr)
 
     dmz = (starmag - catmag) / starmagerr
-    dmam = (starmag - catmag) / starmagerr
-    dmam = (starmag - catmag) / rep
+    dmam = (starmag - catmag) / starmagerrr
+    #dmam = (starmag - catmag) / rep
     #dmas = (starmag - catmag) / starmagerr3
     dsss = (starmag - catmag) / skymagerr
 
