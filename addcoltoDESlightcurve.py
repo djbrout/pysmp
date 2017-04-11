@@ -51,6 +51,7 @@ dofakeexpnum = np.array(expnum, dtype='float')
 dofakemag2 = np.array(dofakemag2, dtype='float')
 dofaketflux = np.array(dofaketflux, dtype='float')
 dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
+dofakeid = np.array(dofakeid, dtype='float')
 
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,
@@ -81,11 +82,13 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     if dofakes:
         fakeid = lightcurvefile.split('_')[-1].split('.')[0]
-        print fakeid
+        #print fakeid
         fakeisthere = True
-        print dofakeid[0:100]
+        #print dofakeid[0:100]
         if not int(fakeid) in dofakeid:
             fakeisthere = False
+        else:
+            print 'FOUNDIT'*10
 
 
     mjd = np.array(mjd)
@@ -155,8 +158,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     fit_zpt = tzpt
                     fit_zpt_std = 0.
                     tflux = 10 ** (.4 * (tzpt - tmag))
-                    print exn, tzpt, tmag, tflux
-                    raw_input()
+                    #print exn, tzpt, tmag, tflux
+                    #raw_input()
 
                 else:
                     tflux = flux[ww][0]
