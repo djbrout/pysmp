@@ -81,7 +81,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     if dofakes:
         print lightcurvefile.split('_')
-        fakeid = lightcurvefile.split('_')[-2]
+        fakeid = lightcurvefile.split('_')[-1].split('.')[0]
         fakeisthere = True
         if not int(fakeid) in dofakeid:
             fakeisthere = False
