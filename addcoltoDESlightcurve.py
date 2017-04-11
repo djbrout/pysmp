@@ -128,6 +128,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
 
             if len(fluxerr[ww]) == 1:
+                print 'here'
                 zptdata = np.load(zptfiles[ww][0])
                 if dofakes:
                     if fakeisthere:
