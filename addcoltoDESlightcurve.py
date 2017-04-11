@@ -226,6 +226,9 @@ if __name__ == "__main__":
         elif o in ["--fakes"]:
             fakes = True
 
+    print fakes
+    raw_input()
+
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
     if not os.path.exists(savelcdir):
