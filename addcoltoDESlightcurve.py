@@ -109,12 +109,12 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     #zp = np.array(zp)
     for line in lines:
-        print line
+        #print line
         #print len(line.replace('#', '').split()),line
         wline = line
         #if saveinplace:
         #    print len(line.replace('#', '').split()),line
-        raw_input()
+        #raw_input()
         if len(line.replace('#','').split()) == 27:
             print 'pass'
             pass
@@ -129,7 +129,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
 
             if len(fluxerr[ww]) == 1:
-                print 'here',dofakes
+                #print 'here',dofakes
                 zptdata = np.load(zptfiles[ww][0])
                 if dofakes:
                     if fakeisthere:
