@@ -80,6 +80,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     savefile = open(saveloc,'w')
 
     if dofakes:
+        print lightcurvefile.split('_')
         fakeid = lightcurvefile.split('_')[-2]
         fakeisthere = True
         if not int(fakeid) in dofakeid:
@@ -214,7 +215,7 @@ if __name__ == "__main__":
         print "No command line argument    s"
 
     for o, a in opt:
-        print o
+        #print o
         if o in ["-h", "--help"]:
             print __doc__
             sys.exit(0)
@@ -227,8 +228,8 @@ if __name__ == "__main__":
         elif o in ["--fakes"]:
             fakes = True
 
-    print fakes
-    raw_input()
+    #print fakes
+    #raw_input()
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
