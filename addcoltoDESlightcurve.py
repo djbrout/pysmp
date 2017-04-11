@@ -214,6 +214,7 @@ if __name__ == "__main__":
         print "No command line argument    s"
 
     for o, a in opt:
+        print o
         if o in ["-h", "--help"]:
             print __doc__
             sys.exit(0)
