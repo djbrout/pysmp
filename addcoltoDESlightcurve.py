@@ -108,12 +108,12 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
     #zp = np.array(zp)
     for line in lines:
-        #print line
+        print line
         #print len(line.replace('#', '').split()),line
         wline = line
         #if saveinplace:
         #    print len(line.replace('#', '').split()),line
-        #    #raw_input()
+        raw_input()
         if len(line.replace('#','').split()) == 27:
             pass
         elif line.split(' ')[0] == 'VARNAMES:':
