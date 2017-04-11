@@ -231,7 +231,9 @@ if __name__ == "__main__":
                 print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
-
+            #except:
+            #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
+            #raw_input()
     snlist.close()
     print 'cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/'
     os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
