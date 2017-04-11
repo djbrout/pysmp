@@ -155,7 +155,7 @@ if __name__ == "__main__":
     resultsdir = '/project/projectdirs/des/djbrout/109sim/'
 
     savelcdir = resultsdir+'/SMP_RAW_SIM_v1_1'
-
+    fakes = False
 
 
     filts = ['g','r','i','z',None]
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["lcdir=", "resultsdir=", "savelcdir"])
+            longopts=["lcdir=", "resultsdir=", "savelcdir","fakes"])
 
     except getopt.GetoptError as err:
         print "No command line argument    s"
@@ -182,6 +182,8 @@ if __name__ == "__main__":
             resultsdir = a
         elif o in ["--savelcdir"]:
             savelcdir = a
+        elif o in ["--fakes"]:
+            fakes = True
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -216,7 +218,10 @@ if __name__ == "__main__":
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
-            #print sndata.keys()
+            print sndata.keys()
+            raw_input()
+            if fakes: flux = sndata['']
+            else:     flux = sndata['FLUX']
 
             if True:
                 #print 'adding'
