@@ -42,7 +42,7 @@ DONTFIT_FLAG = 65536\n\
 DONTFIT_FLAG= 32768
 FAILED_SMP_FLAG = 65536
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,fakezpt,
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,
                     dofakes=False,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
@@ -81,7 +81,6 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     skyerr = np.array(skyerr)
     zptfiles = np.array(zptfiles,dtype='str')
     idobs = np.array(idobs)
-    fakezpt = np.array(fakezpt)
 
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
@@ -114,12 +113,14 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
             if len(fluxerr[ww]) == 1:
                 zptdata = np.load(zptfiles[ww][0])
-                print zptdata.keys()
-                raw_input()
                 if dofakes:
-                    fit_zpt = zptdata['fa']
-                    fit_zpt_std = zptdata['fit_zpt_std']
+                    tmag = float(line.split()[12])
+                    tzpt = float(line.split()[7])
+                    tflux = 10**(.4*(tzpt-tmag))
+                    fit_zpt = tzpt
+                    fit_zpt_std = 0.
                 else:
+                    tflux = flux[ww][0]
                     fit_zpt = zptdata['fit_zpt']
                     fit_zpt_std = zptdata['fit_zpt_std']
 
@@ -139,7 +140,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 if (fit_zpt_std > 0.2):
                     thisflag = DONTFIT_FLAG
                 #print thisflag,chisq[ww][0]
-                wline = line.strip() + ' ' + str(round(flux[ww][0], 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
+                wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
                        ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
@@ -221,25 +222,16 @@ if __name__ == "__main__":
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
-            #print sndata.keys()
-            #print sndata['FAKEZPT']
-            #print sndata['FAKEMAG']
-            #raw_input()
-            if fakes: flux = sndata['']
-            else:     flux = sndata['FLUX']
 
             if True:
-                #print 'adding'
                 successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
-                            sndata['ID_OBS'], sndata['FAKEZPT'], dofakes=fakes, filt=filt,saveinplace=inplace)
+                            sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace)
                 print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
-            #except:
-            #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
-            #raw_input()
+
     snlist.close()
     print 'cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/'
     os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
