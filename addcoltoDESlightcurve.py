@@ -219,6 +219,8 @@ if __name__ == "__main__":
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
             print sndata.keys()
+            print sndata['FAKEZPT']
+            print sndata['FAKEMAG']
             raw_input()
             if fakes: flux = sndata['']
             else:     flux = sndata['FLUX']
