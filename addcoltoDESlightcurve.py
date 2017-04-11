@@ -42,7 +42,8 @@ DONTFIT_FLAG = 65536\n\
 DONTFIT_FLAG= 32768
 FAILED_SMP_FLAG = 65536
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,fakezpt,
+                    dofakes=False,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
         #print 'making'
@@ -80,6 +81,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     skyerr = np.array(skyerr)
     zptfiles = np.array(zptfiles,dtype='str')
     idobs = np.array(idobs)
+    fakezpt = np.array(fakezpt)
 
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
@@ -106,20 +108,21 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             #print len(line.replace('#', '').split())
             if filt is None:
                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
-            #id = int(line.split()[1])
-            #tmjd = float(line.split()[3])
             band = line.split()[4]
-            #texpnum = line.split()[12].split('/')[2].split('_')[1]
             tidobs = float(line.split()[1])
             ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
-            #ww = np.core.defchararray.find(expnums, texpnum) != -1
-            #print mjd,tmjd
-            #raw_input()
-            #print len(fluxerr[ww])
+
             if len(fluxerr[ww]) == 1:
                 zptdata = np.load(zptfiles[ww][0])
-                fit_zpt = zptdata['fit_zpt']
-                fit_zpt_std = zptdata['fit_zpt_std']
+                print zptdata.keys()
+                raw_input()
+                if dofakes:
+                    fit_zpt = zptdata['fa']
+                    fit_zpt_std = zptdata['fit_zpt_std']
+                else:
+                    fit_zpt = zptdata['fit_zpt']
+                    fit_zpt_std = zptdata['fit_zpt_std']
+
                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                 tskyerr = skyerr[ww][0]
                 thisflag = 0
@@ -218,10 +221,10 @@ if __name__ == "__main__":
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
-            print sndata.keys()
-            print sndata['FAKEZPT']
-            print sndata['FAKEMAG']
-            raw_input()
+            #print sndata.keys()
+            #print sndata['FAKEZPT']
+            #print sndata['FAKEMAG']
+            #raw_input()
             if fakes: flux = sndata['']
             else:     flux = sndata['FLUX']
 
@@ -230,7 +233,7 @@ if __name__ == "__main__":
                 successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
-                                sndata['ID_OBS'],filt=filt,saveinplace=inplace)
+                            sndata['ID_OBS'], sndata['FAKEZPT'], dofakes=fakes, filt=filt,saveinplace=inplace)
                 print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
