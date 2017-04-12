@@ -87,8 +87,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #print dofakeid[0:100]
         if not int(fakeid) in dofakeid:
             fakeisthere = False
-        else:
-            print 'FOUNDIT'*10
+        #else:
+        #    print 'FOUNDIT'*10
 
 
     mjd = np.array(mjd)
@@ -281,7 +281,7 @@ if __name__ == "__main__":
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
                             sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace)
-                print cntr,'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+                print int(cntr),'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
             #except:
