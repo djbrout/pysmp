@@ -141,9 +141,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         exn = line.split()[13].split('/')[-1].split('_')[1]
 
                         expn = (dofakeexpnum == float(exn))
+                        print tmag,exn,
                         dfw = dofakeid == int(fakeid)
                         www = expn & dfw
-
+                        print dofakemag2[www]
                         if not len(dofakemag2[www]) > 0:
                             tmag = 99.
                             tzpt = 31.
