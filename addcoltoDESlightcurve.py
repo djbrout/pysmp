@@ -162,6 +162,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     fit_zpt = tzpt
                     fit_zpt_std = 0.
                     tflux = 10 ** (.4 * (tzpt - tmag))
+                    fluxerr = tflux**.5
                     #print exn, tzpt, tmag, tflux
                     #raw_input()
 
@@ -170,6 +171,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     fit_zpt = zptdata['fit_zpt']
                     fit_zpt_std = zptdata['fit_zpt_std']
                     flux_zpt = 31.
+                    fluxerr = fluxerr[ww][0]
 
                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                 tskyerr = skyerr[ww][0]
@@ -187,7 +189,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 if (fit_zpt_std > 0.2):
                     thisflag = DONTFIT_FLAG
                 #print thisflag,chisq[ww][0]
-                wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
+                wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(fluxerr, 3)) + \
                        ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
