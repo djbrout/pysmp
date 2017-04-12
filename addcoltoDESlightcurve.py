@@ -148,13 +148,16 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         if not len(dofakemag2[www]) > 0:
                             tmag = 99.
                             tzpt = 31.
+                            flux_zpt = 31.
                         else:
                             tzpt = dofakezpt[www][0]
+                            flux_zpt = dofakezpt[www][0]
                         #tzpt = float(line.split()[7])
 
                     else:
                         tmag = 99.
                         tzpt = 31.
+                        flux_zpt = 31.
 
                     fit_zpt = tzpt
                     fit_zpt_std = 0.
@@ -166,6 +169,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     tflux = flux[ww][0]
                     fit_zpt = zptdata['fit_zpt']
                     fit_zpt_std = zptdata['fit_zpt_std']
+                    flux_zpt = 31.
 
                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                 tskyerr = skyerr[ww][0]
@@ -184,7 +188,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     thisflag = DONTFIT_FLAG
                 #print thisflag,chisq[ww][0]
                 wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(fluxerr[ww][0], 3)) + \
-                       ' 31. '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
+                       ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                        ' '+str(round(chisq[ww][0], 3))+ \
                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                        ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
