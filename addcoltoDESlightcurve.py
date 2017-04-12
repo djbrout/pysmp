@@ -120,7 +120,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #    print len(line.replace('#', '').split()),line
         #raw_input()
         if len(line.replace('#','').split()) == 27:
-            print 'pass'
+            #print 'pass'
             pass
         elif line.split(' ')[0] == 'VARNAMES:':
             wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
@@ -141,10 +141,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         exn = line.split()[13].split('/')[-1].split('_')[1]
 
                         expn = (dofakeexpnum == float(exn))
-                        print tmag,exn,
+                        #print tmag,exn,
                         dfw = dofakeid == int(fakeid)
                         www = expn & dfw
-                        print dofakemag2[www]
+                        #print dofakemag2[www]
                         if not len(dofakemag2[www]) > 0:
                             tmag = 99.
                             tzpt = 31.
@@ -251,11 +251,13 @@ if __name__ == "__main__":
     #raw_input()
     snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
+
     for i, filt in enumerate(filts):
 
         sne = os.listdir(resultsdir+'/SNe')
-
+        cntr = 0.
         for sn in sne[:]:
+            cntr += 1
             #print sn
             if 'starfits' in sn:
                 continue
@@ -279,7 +281,7 @@ if __name__ == "__main__":
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
                             sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace)
-                print 'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+                print cntr,'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
             #except:
