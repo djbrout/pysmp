@@ -1683,86 +1683,6 @@ class smp:
                 continue
             cccc += 1
 
-            # if not fermigrid:
-            #     imfile = os.path.join(self.rootdir, imfile)
-            #     print imfile
-            #
-            #     psffile = os.path.join(self.rootdir, psffile)
-            #     if self.useweights:
-            #         weightsfile = os.path.join(self.rootdir, noisefile)
-            #     else:
-            #         noisefile, maskfile = os.path.join(self.rootdir, noisefile[0]), os.path.join(self.rootdir, noisefile[1])
-            #
-            # #imfile,noisefile,psffile = os.path.join(self.rootdir,imfile),\
-            # #    os.path.join(self.rootdir,noisefile),os.path.join(self.rootdir,psffile)
-            # #print imfile
-            # #raw_input('imfile')
-            # NEED TO IFDH CP FILES OVER FOR WHEN YOU DONT DO GLOBALSTARS... NEED TO REMEMBER MAINROOTDIR
-            # if not self.usefake:
-            #     if not os.path.exists(imfile):
-            #         #print os.popen('ls -ltr').read()
-            #         print 'funpack %s.fz' % imfile
-            #         print os.popen('funpack %s.fz' % imfile).read()
-            #         #d = pf.getdata(imfile)
-            #         #print 'dshape',d.shape
-            #         #sys.exit()
-            #         if not os.path.exists(imfile+'.fz'):
-            #             print('Error : file %s does not exist'%imfile)
-            #             continue
-            #             print('Error : file %s does not exist'%imfile)
-            #             raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
-            #         else:
-            #             os.system('funpack %s.fz'%imfile)
-            # if self.useweights:
-            #     if not os.path.exists(weightsfile):
-            #         os.system('gunzip %s.gz' % weightsfile)
-            #         if not os.path.exists(weightsfile):
-            #             os.system('funpack %s.fz' % weightsfile)
-            #             if not os.path.exists(weightsfile):
-            #                 raise exceptions.RuntimeError('Error : file %s does not exist' % weightsfile)
-            # else:
-            #     if not os.path.exists(noisefile):
-            #         os.system('gunzip %s.gz' % noisefile)
-            #         if not os.path.exists(noisefile):
-            #             os.system('funpack %s.fz' % noisefile)
-            #             if not os.path.exists(noisefile):
-            #                 raise exceptions.RuntimeError('Error : file %s does not exist' % noisefile)
-            #     if not os.path.exists(maskfile):
-            #         os.system('gunzip %s.gz' % maskfile)
-            #         if not os.path.exists(maskfile):
-            #             os.system('funpack %s.fz' % maskfile)
-            #             if not os.path.exists(maskfile):
-            #                 raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
-            # if not os.path.exists(psffile):
-            #     if not os.path.exists(psffile+'.fz'):
-            #         raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
-            #     else:
-            #         os.system('funpack %s.fz'%psffile)
-            #
-            # if not nomask:
-            #     if useweights:
-            #         maskfile = os.path.join(self.rootdir, snparams.image_name_search[j])
-            #         mask = pyfits.getdata(maskfile)
-            #
-            # if self.usefake:
-            #     fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
-            #     if not os.path.exists(fakeim):
-            #         print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-            #             0] + '+fakeSN.fits.gz' + ' .'
-            #         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-            #             0] + '+fakeSN.fits.gz' + ' .').read()
-            #         os.system('funpack %s.fz' % fakeim)
-            #         os.system('gunzip %s.gz' % fakeim)
-            #     imfile = fakeim
-            # try:
-            #     im = pyfits.getdata(imfile)
-            #     hdr = pyfits.getheader(imfile)
-            # except:
-            #     print 'Image is EMPTY, skipping star...'
-            #     continue
-            #
-            # snparams.platescale = hdr[self.params.hdr_platescale_name]
-            # snparams.airmass = hdr[self.params.hdr_airmass_name]
 
             if self.useweights:
                 weights = pyfits.getdata(weightsfile)
@@ -1895,118 +1815,7 @@ class smp:
                 badflag = 1
                 #raw_input()
 
-            # if type(snparams.starcat) == np.array:
-            #     if os.path.exists(snparams.starcat[j]):
-            #         starcat = txtobj(snparams.starcat[j],useloadtxt=True)
-            #         if not starcat.__dict__.has_key('mag'):
-            #             try:
-            #                 starcat.mag = starcat.__dict__[band]
-            #                 starcat.dmag = starcat.__dict__['d%s'%band]
-            #             except:
-            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[j])
-            #     else:
-            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
-            # elif type(snparams.starcat) == dict and 'des' in snfile:
-            #
-            #     if fermigrid and worker:
-            #         starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
-            #         # starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
-            #         #print starcatloc
-            #         ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-            #         #print ifdhls
-            #         #print 'ls on imfileloc'
-            #         ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-            #         #print ifdhls
-            #         #print 'ls on imfileloc/STARCAT*.LIST'
-            #         #print 'len starcat', len(ifdhls)
-            #         # sys.exit()
-            #         if len(ifdhls) > 0:
-            #             os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
-            #             a = os.popen('ls STARCAT*').read()
-            #             #print '743', a
-            #             starcatfile = ifdhls.strip().split('/')[-1]
-            #             #print '745', starcatfile
-            #             # sys.exit()
-            #             starcatloc = ''
-            #             ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-            #             #print ifdhls
-            #             #print 'sssssssssss'
-            #             starcatloc = ''
-            #             # raw_input()
-            #         else:
-            #             continue
-            #     else:
-            #         for fl in os.listdir(starcatloc):
-            #             if 'STARCAT' in fl:
-            #                 starcatfile = fl
 
-                # starcatfile = None
-                # starcatloc = '/'.join(imfile.split('/')[0:-1])+'/'
-                #
-                # if fermigrid and worker:
-                #     starcatloc = '/'.join(longimfile.split('/')[0:-1]) + '/'
-                #     ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-                #     print ifdhls
-                #     print 'ls on imfileloc'
-                #     ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-                #     print ifdhls
-                #     print 'ls on imfileloc/STARCAT*.LIST'
-                #     # sys.exit()
-                #     if len(ifdhls) > 0:
-                #         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
-                #         starcatfile = ifdhls.strip().split('/')[-1]
-                #         starcatloc = ''
-                #         ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-                #         print ifdhls
-                #     else:
-                #         continue
-                # else:
-                #     for fl in os.listdir(starcatloc):
-                #         if 'STARCAT' in fl:
-                #             starcatfile = fl
-
-
-            #     if fermigrid and worker:
-            #         #starcatfile = longimfile.split('/')[-1]
-            #         starcatloc = ''
-            #         a = os.popen('ls -ltr STARCAT*').read()
-            #         #print '743', a
-            #         starcatfile = a.split()[-1]
-            #         #print '745', starcatfile
-            #         #print 'starcat',starcatfile
-            #     else:
-            #         for fl in os.listdir(starcatloc):
-            #             #print fl
-            #             if 'STARCAT' in fl:
-            #                 starcatfile = fl
-            #     print starcatloc+starcatfile
-            #     if os.path.exists(starcatloc+starcatfile):
-            #         starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
-            #         if not starcat.__dict__.has_key('mag_%s'%band):
-            #             try:
-            #                 print starcat.__dict__
-            #                 starcat.mag = starcat.__dict__[band]
-            #                 starcat.dmag = starcat.__dict__['d%s'%band]
-            #             except:
-            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[band])
-            #     else:
-            #         print 'Error : catalog file %s does not exist!!'
-            #         continue
-            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
-            # else:
-            #     if os.path.exists(snparams.starcat[filt]):
-            #         starcat = txtobj(snparams.starcat[filt],useloadtxt=True)
-            #         if not starcat.__dict__.has_key('mag'):
-            #             try:
-            #                 starcat.mag = starcat.__dict__[band]
-            #                 starcat.dmag = starcat.__dict__['d%s'%band]
-            #             except:
-            #                 print snparams.starcat
-            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[filt])
-            #
-            #     else:
-            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
-                    
             #print 'about to do zeropoints'
             #sys.exit()
             if snparams.psf_model.lower() == 'daophot':
@@ -3136,9 +2945,9 @@ class smp:
         print np.where([smp_dict['mjd_flag'] == 1])
         print len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)])
         #raw_input()
-        # if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
-        #     raise ValueError(
-        #         "Not enough epochs without SN flux ( > 1 )")
+        if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
+            raise ValueError(
+                "Not enough epochs without SN flux ( > 1 )")
 
         meanstarras = {}
         meanstardecs = {}
