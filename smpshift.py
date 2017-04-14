@@ -2914,6 +2914,8 @@ class smp:
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
 
+                                    print 'mjdflag',smp_dict['mjd_flag'][i]
+
                                     #print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
                                     #print smp_dict['flag'][i],'flagggggg'
                                     #raw_input()
