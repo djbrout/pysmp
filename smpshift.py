@@ -1304,8 +1304,8 @@ class smp:
         #raw_input()
         startedstarcat = False
         cccc = 0
-        for imfile,noisefile,psffile,band,fakemag, j in \
-                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
+        for imfile,noisefile,psffile,band, j in \
+                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
 
             # if round(float(snparams.mjd[j])) != 56935:
@@ -1362,8 +1362,7 @@ class smp:
             if round(snparams.mjd[j]) == 0:
                 #raw_input('mjdddd')
                 continue
-            print fakemag
-            raw_input('fakemag')
+
             #if round(snparams.mjd[j]) != 56636.:
             #    if snparams.mjd[j] < 57000.:
             #        continue
@@ -1380,6 +1379,7 @@ class smp:
             if cccc > 6000:
                 #cccc += 1
                 continue
+
 
             #raw_input()
             skysig=np.nan
@@ -2550,7 +2550,7 @@ class smp:
                             psf_stamp = self.psf
                             print xsn,ysn,im.shape,skysn,skyerrsn
                             if self.usefake:
-                                scale = 10**(.4*(31.-float(snparams.fake_truemag[i])))
+                                scale = 10**(.4*(31.-float(snparams.fake_truemag[j])))
                             else:
                                 scale = float(snparams.flux[i])
 
@@ -2922,7 +2922,8 @@ class smp:
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
 
-                                    print 'mjdflag',smp_dict['mjd_flag'][i],'scale',scale
+                                    print 'fakemag',snparams.fake_truemag[j],'mjdflag',smp_dict['mjd_flag'][i],'scale',scale
+                                    raw_input()
 
                                     #print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
                                     #print smp_dict['flag'][i],'flagggggg'
