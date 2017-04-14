@@ -2935,7 +2935,7 @@ class smp:
                                     print 'epochtime',time.time()-epochtime
                     else:
                         print 'failed fwhm'
-                        #raw_input()
+                        raw_input()
 
 
 
