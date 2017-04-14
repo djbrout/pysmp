@@ -3497,7 +3497,7 @@ class smp:
                 galstd = np.sqrt(abs(galmodel))/params.galmodel_div
                 print 'galstd',galstd
 
-                modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
+                modelstd = np.sqrt(abs(smp_dict['scale']))/params.flux_std_div
                 print 'mjd_flag',smp_dict['mjd_flag']
                 print 'modelstd before',modelstd
                 print smp_dict['scale']
