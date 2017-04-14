@@ -2341,9 +2341,11 @@ class smp:
                 thisids = zptdata['thisids']
 
             try:
+                if len(thisra) < params.minzptstars:
+                    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small'
                 if zpterr / np.sqrt(float(len(thisra))) > 0.01:
-                badflag = 1
-                print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
+                    badflag = 1
+                    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
             except:
                 badlfag = 1
                 print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small'
@@ -5746,7 +5748,7 @@ class smp:
             else:
                 fluxcol = gsflux
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
-                                       startMedian=True,sigmaclip=1.5,iter=10)
+                                       startMedian=True,sigmaclip=3,iter=10)
             print ''
             print ''
             print '-'*100
