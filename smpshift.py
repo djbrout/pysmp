@@ -2340,9 +2340,14 @@ class smp:
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
 
-            if zpterr / float(len(thisra)) > 0.01:
+            try:
+                if zpterr / np.sqrt(float(len(thisra))) > 0.01:
                 badflag = 1
                 print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
+            except:
+                badlfag = 1
+                print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small'
+
             dotestoff = False
             if zpt == 0:
                 print 'zerpoint badflag'
