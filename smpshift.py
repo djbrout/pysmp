@@ -3498,11 +3498,13 @@ class smp:
                 print 'galstd',galstd
 
                 modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
+                print 'mjd_flag',smp_dict['mjd_flag']
                 print 'modelstd before',modelstd
                 print smp_dict['scale']
-
                 modelstd[(modelstd < .1) & (modelstd > 0.)] = .1
+                modelstd[smp_dict['mjd_flag'] == 1] = 0
 
+                print 'modelstd after',modelstd
                 tstart = time.time()
                 st = time.time()
 
