@@ -3187,6 +3187,7 @@ class smp:
             if i in np.where((smp_dict['mjd_flag'] == 1) | (smp_dict['flag'] == 1))[0]:
                 model[newsub**2+i] = 0
                 modelvec[i] = 0.
+                print i,'modelveczero'
             else:
                 #if scale < 25.:
                 #    model[newsub**2+i] = 0.
@@ -3496,6 +3497,7 @@ class smp:
 
                 modelstd = np.sqrt(abs(modelvec))/params.flux_std_div
                 print 'modelstd before',modelstd
+                print smp_dict['scale']
 
                 modelstd[(modelstd < .1) & (modelstd > 0.)] = .1
 
