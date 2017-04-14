@@ -3502,7 +3502,9 @@ class smp:
                 print 'modelstd before',modelstd
                 print smp_dict['scale']
                 modelstd[(modelstd < 1.) & (modelstd > 0.)] = 1.
-                modelstd[smp_dict['mjd_flag'] == 1] = 0
+                modelstd[smp_dict['mjd_flag'] == 1] = 0.
+                modelvec[smp_dict['mjd_flag'] == 1] = 0.
+
 
                 print 'modelstd after',modelstd
                 tstart = time.time()
