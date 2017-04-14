@@ -3501,7 +3501,7 @@ class smp:
                 print 'mjd_flag',smp_dict['mjd_flag']
                 print 'modelstd before',modelstd
                 print smp_dict['scale']
-                modelstd[(modelstd < 1.) & (modelstd > 0.)] = 3.
+                modelstd[(modelstd < 1.) & (modelstd > 0.)] = 10.
                 modelstd[smp_dict['mjd_flag'] == 1] = 0.
                 modelvec[smp_dict['mjd_flag'] == 1] = 0.
                 modelvec[smp_dict['flag'] == 1] = 0.
