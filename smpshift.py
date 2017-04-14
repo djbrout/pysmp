@@ -1304,9 +1304,11 @@ class smp:
         #raw_input()
         startedstarcat = False
         cccc = 0
-        for imfile,noisefile,psffile,band, j in \
-                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
+        for imfile,noisefile,psffile,band,fakemag, j in \
+                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band,snparams.fake_truemag, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
+            print fakemag
+            raw_input('fakemag')
             # if round(float(snparams.mjd[j])) != 56935:
             #    continue
             try:
