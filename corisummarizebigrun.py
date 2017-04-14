@@ -24,14 +24,14 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
     if not cacheddata:
-        grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
-        #sys.exit()
-        stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
-        plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
+        dostars = False
+        if dostars:
+            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
+            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
+            plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],stardata['fwhm'],
                     title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-        sys.exit()
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
 
         #sys.exit()
