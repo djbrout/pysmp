@@ -176,7 +176,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     fit_zpt_std = zptdata['fit_zpt_std']
                     flux_zpt = 31.
                     tfluxerr = fluxerr[ww][0]
-                    print tflux
+                    #print tflux
 
                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                 tskyerr = skyerr[ww][0]
