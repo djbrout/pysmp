@@ -131,78 +131,80 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             if filt is None:
                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
             elif band != filt:
-                continue
-            print line
-            raw_input()
-            tidobs = float(line.split()[1])
-            ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
+                wline = line
+                #continue
+            #print line
+            #raw_input()
+            else:
+                tidobs = float(line.split()[1])
+                ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
 
-            if len(fluxerr[ww]) == 1:
-                #print 'here',dofakes
-                zptdata = np.load(zptfiles[ww][0])
-                if dofakes:
-                    if fakeisthere:
-                        tmag = float(line.split()[12])
-                        exn = line.split()[13].split('/')[-1].split('_')[1]
+                if len(fluxerr[ww]) == 1:
+                    #print 'here',dofakes
+                    zptdata = np.load(zptfiles[ww][0])
+                    if dofakes:
+                        if fakeisthere:
+                            tmag = float(line.split()[12])
+                            exn = line.split()[13].split('/')[-1].split('_')[1]
 
-                        expn = (dofakeexpnum == float(exn))
-                        #print tmag,exn,
-                        dfw = dofakeid == int(fakeid)
-                        www = expn & dfw
-                        #print dofakemag2[www]
-                        if not len(dofakemag2[www]) > 0:
+                            expn = (dofakeexpnum == float(exn))
+                            #print tmag,exn,
+                            dfw = dofakeid == int(fakeid)
+                            www = expn & dfw
+                            #print dofakemag2[www]
+                            if not len(dofakemag2[www]) > 0:
+                                tmag = 99.
+                                tzpt = 31.
+                                flux_zpt = 31.
+                            else:
+                                tzpt = dofakezpt[www][0]
+                                flux_zpt = dofakezpt[www][0]
+                            #tzpt = float(line.split()[7])
+
+                        else:
                             tmag = 99.
                             tzpt = 31.
                             flux_zpt = 31.
-                        else:
-                            tzpt = dofakezpt[www][0]
-                            flux_zpt = dofakezpt[www][0]
-                        #tzpt = float(line.split()[7])
+
+                        fit_zpt = tzpt
+                        fit_zpt_std = 0.
+                        tflux = 10 ** (.4 * (tzpt - tmag))
+                        tfluxerr = tflux**.5
+                        #print exn, tzpt, tmag, tflux
+                        #raw_input()
 
                     else:
-                        tmag = 99.
-                        tzpt = 31.
+                        tflux = flux[ww][0]
+                        fit_zpt = zptdata['fit_zpt']
+                        fit_zpt_std = zptdata['fit_zpt_std']
                         flux_zpt = 31.
+                        tfluxerr = fluxerr[ww][0]
+                        #print tflux
 
-                    fit_zpt = tzpt
-                    fit_zpt_std = 0.
-                    tflux = 10 ** (.4 * (tzpt - tmag))
-                    tfluxerr = tflux**.5
-                    #print exn, tzpt, tmag, tflux
-                    #raw_input()
+                    tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
+                    tskyerr = skyerr[ww][0]
+                    thisflag = 0
+                    if flag[ww][0] == 1:
+                        thisflag = DONTFIT_FLAG
+                    if chisq[ww][0] > 1.25:
+                        thisflag = DONTFIT_FLAG
+                    if abs(tsky) > 1000:
+                        thisflag = DONTFIT_FLAG
+                    if abs(tskyerr) < .5:
+                        thisflag = DONTFIT_FLAG
+                    if (fit_zpt < 27.) | (fit_zpt > 35.):
+                        thisflag = DONTFIT_FLAG
+                    if (fit_zpt_std > 0.2):
+                        thisflag = DONTFIT_FLAG
+                    #print thisflag,chisq[ww][0]
+                    wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
+                           ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
+                           ' '+str(round(chisq[ww][0], 3))+ \
+                           ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
+                           ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
 
-                else:
-                    tflux = flux[ww][0]
-                    fit_zpt = zptdata['fit_zpt']
-                    fit_zpt_std = zptdata['fit_zpt_std']
-                    flux_zpt = 31.
-                    tfluxerr = fluxerr[ww][0]
-                    #print tflux
-
-                tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
-                tskyerr = skyerr[ww][0]
-                thisflag = 0
-                if flag[ww][0] == 1:
-                    thisflag = DONTFIT_FLAG
-                if chisq[ww][0] > 1.25:
-                    thisflag = DONTFIT_FLAG
-                if abs(tsky) > 1000:
-                    thisflag = DONTFIT_FLAG
-                if abs(tskyerr) < .5:
-                    thisflag = DONTFIT_FLAG
-                if (fit_zpt < 27.) | (fit_zpt > 35.):
-                    thisflag = DONTFIT_FLAG
-                if (fit_zpt_std > 0.2):
-                    thisflag = DONTFIT_FLAG
-                #print thisflag,chisq[ww][0]
-                wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
-                       ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
-                       ' '+str(round(chisq[ww][0], 3))+ \
-                       ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                       ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
-
-                #print line
-            #raw_input()
+                    #print line
+                #raw_input()
         savefile.write(wline)
     savefile.close()
     return True
