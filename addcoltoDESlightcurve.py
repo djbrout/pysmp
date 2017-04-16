@@ -132,7 +132,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
             elif band != filt:
                 continue
-            #print line
+            print line
+            raw_input()
             tidobs = float(line.split()[1])
             ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
 
