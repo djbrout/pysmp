@@ -250,8 +250,9 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir+'/SMP_RAW_SIMfaketrue_v1_1'
+    savelcdir = resultsdir+'/SMP_RAW_SIM_v1_2'
     fakes = False
+    faketrueflux = False
 
 
     filts = ['g','r','i','z',None]
@@ -263,7 +264,7 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["lcdir=", "resultsdir=", "savelcdir","fakes"])
+            longopts=["lcdir=", "resultsdir=", "savelcdir","dofakes","faketrueflux"])
 
     except getopt.GetoptError as err:
         print "No command line argument    s"
@@ -279,8 +280,10 @@ if __name__ == "__main__":
             resultsdir = a
         elif o in ["--savelcdir"]:
             savelcdir = a
-        elif o in ["--fakes"]:
+        elif o in ["--dofakes"]:
             fakes = True
+        elif o in ["--faketrueflux"]:
+            faketrueflux = True
 
     #print fakes
     #raw_input()
@@ -325,7 +328,7 @@ if __name__ == "__main__":
                 successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
                             sndata['ZPT'], sndata['RMSADDIN'],
                             sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
-                            sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace)
+                            sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace,faketrueflux=faketrueflux)
                 print int(cntr),'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
