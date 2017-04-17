@@ -55,7 +55,7 @@ dofakeid = np.array(dofakeid, dtype='float')
 
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,
-                    dofakes=False,filt=None,saveinplace=False):
+                    dofakes=False,faketrueflux=False,filt=None,saveinplace=False):
 
     if not os.path.exists(os.path.basename(saveloc)):
         #print 'making'
@@ -142,7 +142,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 if len(fluxerr[ww]) == 1:
                     #print 'here',dofakes
                     zptdata = np.load(zptfiles[ww][0])
-                    if dofakes:
+                    if faketrueflux:
                         if fakeisthere:
                             tmag = float(line.split()[12])
                             exn = line.split()[13].split('/')[-1].split('_')[1]
@@ -168,10 +168,44 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
                         fit_zpt = tzpt
                         fit_zpt_std = 0.
-                        tflux = 10 ** (.4 * (tzpt - tmag))
+                        #tflux = 10 ** (.4 * (tzpt - tmag ))
+                        tflux = 10**(.4*(tzpt - tmag))
+                        #tflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
                         tfluxerr = tflux**.5
+                        #tfluxerr *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
+
                         #print exn, tzpt, tmag, tflux
                         #raw_input()
+                    elif dofakes:
+                        if fakeisthere:
+                            tmag = float(line.split()[12])
+                            exn = line.split()[13].split('/')[-1].split('_')[1]
+
+                            expn = (dofakeexpnum == float(exn))
+                            #print tmag,exn,
+                            dfw = dofakeid == int(fakeid)
+                            www = expn & dfw
+                            #print dofakemag2[www]
+                            if not len(dofakemag2[www]) > 0:
+                                tmag = 99.
+                                tzpt = 31.
+                                flux_zpt = 31.
+                            else:
+                                tzpt = dofakezpt[www][0]
+                                flux_zpt = dofakezpt[www][0]
+                            #tzpt = float(line.split()[7])
+
+                        else:
+                            tmag = 99.
+                            tzpt = 31.
+                            flux_zpt = 31.
+                        tflux = flux[ww][0]
+                        fit_zpt = zptdata['fit_zpt']
+                        fit_zpt_std = zptdata['fit_zpt_std']
+                        flux_zpt = 31.
+                        tfluxerr = fluxerr[ww][0]
+                        tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+                        tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
 
                     else:
                         tflux = flux[ww][0]
