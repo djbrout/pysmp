@@ -307,8 +307,8 @@ if __name__ == "__main__":
         for sn in sne[:]:
             cntr += 1
             #print sn
-            if cntr > 10:
-                continue
+            #if cntr > 10:
+            #    continue
             if 'starfits' in sn:
                 continue
 
