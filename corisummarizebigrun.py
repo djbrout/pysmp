@@ -167,7 +167,8 @@ def getparametriczpt(imagedir,outfile):
                         bigdata['resid'].extend((float(zp) - cm[ww] - 2.5 * np.log10(fs[ww]))/(float(std)/.01))
 
 
-                        print 'worked now std', std / np.sqrt(len(cm[ww]))
+                        print 'worked',cntr, std
+                        cntr += 1
                         #bigdata['numzptstars'].extend(zptdata['flux_starh'] * 0. + len(cm[ww]))
                         #bigdata['rmsaddin'].extend(zptdata['flux_starh'] * 0. + std / np.sqrt(len(cm[ww])))
                         # print 'read in ',fname
