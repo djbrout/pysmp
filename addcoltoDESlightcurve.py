@@ -148,7 +148,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             #raw_input()
             if tidobs in idobs:
                 ww = np.isclose(idobs,tidobs,atol=0.1)# & (filt == band)
-
+                print fluxerr[ww]
+                raw_input()
                 if len(fluxerr[ww]) == 1:
                     #print 'here',dofakes
                     zptdata = np.load(zptfiles[ww][0])
