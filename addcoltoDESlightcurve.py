@@ -383,7 +383,8 @@ if __name__ == "__main__":
             idobs.extend(sndata['ID_OBS'])
 
 
-
+        print idobs
+        raw_input()
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
