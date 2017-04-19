@@ -379,16 +379,12 @@ if __name__ == "__main__":
             skyerr.extend(sndata['SKYERR'])
             smpflag.extend(sndata['SMP_FLAG'])
             zptfile.extend(sndata['ZPTFILE'])
-            print sndata['ID_OBS']
             idobs.extend(sndata['ID_OBS'])
 
-
-        print idobs
-        raw_input()
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     sndata['ID_OBS'], dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         #if filt == None and successful:
