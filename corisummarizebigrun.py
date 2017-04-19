@@ -155,7 +155,7 @@ def getparametriczpt(imagedir,outfile):
 
                         fs = zptdata['flux_starh']
                         zp = zptdata['fit_zpt']
-                        ww = (cm < 21.) & (cm > 18.5)
+                        ww = (cm < 20.) & (cm > 18.5)
 
                         # plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
@@ -184,6 +184,8 @@ def getparametriczpt(imagedir,outfile):
     plt.xlabel('catmag')
     plt.ylabel('scaled residuals')
     plt.savefig('zptresids.png')
+    print 'saved'
+    sys.exit()
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
