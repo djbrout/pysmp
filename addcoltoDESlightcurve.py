@@ -49,10 +49,10 @@ print 'reading dofake'
 import pandas as pd
 dofakedata = pd.read_csv('data/doFake.out', delim_whitespace=True, header=0)
 #print dofakedata
-dofakeexpnum = dofakedata['EXPNUM']
-dofakemag2 = dofakedata['TRUEMAG']
-dofaketflux = dofakedata['TRUEFLUXCNT']
-dofakeid = dofakedata['FAKEID']
+dofakeexpnum = dofakedata['EXPNUM'].values
+dofakemag2 = dofakedata['TRUEMAG'].values
+dofaketflux = dofakedata['TRUEFLUXCNT'].values
+dofakeid = dofakedata['FAKEID'].values
 
 #dofakeexpnum = np.array(expnum, dtype='float')
 #dofakemag2 = np.array(dofakemag2, dtype='float')
