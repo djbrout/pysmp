@@ -73,7 +73,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         try:
             origfile = open(saveloc, 'r')
         except:
-            #print 'doesnt exist'
+            print 'doesnt exist'
             return False
         lines = origfile.readlines()
         origfile.close()
