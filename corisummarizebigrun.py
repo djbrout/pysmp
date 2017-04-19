@@ -68,6 +68,120 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
 def lookup_rms_addin(smpfile,obsid):
     pass
 
+
+
+def getparametriczpt(imagedir,outfile):
+    bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt': [], 'catmag': [], 'chisq': [],
+               'rmsaddin': [],'resid':[],
+               'sky': [], 'skyerr': [], 'psf': [], 'poisson': [], 'ids': [], 'centroidedras': [], 'centroideddecs': [],
+               'numzptstars': [], 'fwhm': []}
+    zptfiles = []
+    cntr = 0
+    goodbigdata = copy(bigdata)
+    for dirName, subdirList, fileList in os.walk(imagedir):
+        if cntr > 100.: break
+        # print('Found directory: %s' % dirName)
+        for fname in fileList:
+            # print fname
+            if 'globalstar.npz' in fname:
+                # print('\t%s' % fname)
+                # print os.path.join(imagedir,dirName,fname)
+                if not 'SN-S2' in fname: continue
+                #    if not 'SN-S1' in fname: continue
+                try:
+                    os.system('cp ' + os.path.join(imagedir, dirName, fname) + ' test.npz')
+                    zptdata = np.load('test.npz')
+                except:
+                    print 'could not load'
+                    continue
+                # zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
+                # print zptdata.keys()
+                # raw_input()
+                if not fname in zptfiles:
+                    try:
+                        # if True:
+                        test = zptdata['chisqu']
+                        test = zptdata['fwhm']
+                        try:
+                            if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
+                                print 'skippeddddd'
+                                continue
+                        except:
+                            print 'FAIL'
+                            continue
+
+                        try:
+                            cm = zptdata['cat_magsmp']
+                        except:
+                            print 'FAO:'
+                            continue
+                        if len(zptdata['cat_magsmp']) != len(zptdata['flux_starh']):
+                            print 'skipperrrrr'
+                            continue
+                        psfs = zptdata['psfs']
+
+                        if len(psfs) != len(zptdata['cat_magsmp']):
+                            print 'skippeppppppp'
+                            continue
+                        # if True:
+
+                        # if max(zptdata['cat_mag'])>21.1:
+                        #    continue
+                        # if True:
+                        bigdata = copy(goodbigdata)
+
+                        bigdata['ids'].extend(zptdata['ids'])
+                        #bigdata['centroidedras'].extend(zptdata['centroidedras'])
+                        #bigdata['centroideddecs'].extend(zptdata['centroideddecs'])
+
+                        #bigdata['skyerr'].extend(zptdata['skyerr'])
+                        #bigdata['sky'].extend(zptdata['sky'])
+                        #bigdata['starflux'].extend(zptdata['flux_starh'])
+                        #bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
+                        #bigdata['starzpt'].extend(zptdata['flux_starh'] * 0. + zptdata['fit_zpt'])
+                        #bigdata['fwhm'].extend(zptdata['flux_starh'] * 0. + zptdata['fwhm'])
+
+                        bigdata['catmag'].extend(zptdata['cat_magsmp'])
+                        # bigdata['diffimzpt'].extend(zptdata['fakezpt'])
+                        #psfs = zptdata['psfs']
+                        #for i in range(len(psfs)):
+                        #    bigdata['psf'].append(psfs[i, :, :])
+                        #    bigdata['poisson'].append(
+                        #        np.sqrt(np.sum(psfs[i, :, :].ravel() ** 2 * zptdata['flux_starh'][i])))
+                        #    # print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
+                        #    # raw_input()
+
+                        fs = zptdata['flux_starh']
+                        zp = zptdata['fit_zpt']
+                        ww = (cm < 20.) & (cm > 17.)
+
+                        # plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
+                        # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
+                        # plt.savefig('testzpt.png')
+                        md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5 * np.log10(fs[ww]),
+                                                    startMedian=True, sigmaclip=3, iter=10)
+
+
+                        bigdata['resid'].extend((float(zp) - cm[ww] - 2.5 * np.log10(fs[ww]))/(float(std)/.01))
+
+
+                        print 'worked now std', std / np.sqrt(len(cm[ww]))
+                        #bigdata['numzptstars'].extend(zptdata['flux_starh'] * 0. + len(cm[ww]))
+                        #bigdata['rmsaddin'].extend(zptdata['flux_starh'] * 0. + std / np.sqrt(len(cm[ww])))
+                        # print 'read in ',fname
+                        #zptfiles.append(fname)
+
+                    except:
+                        print 'failed'
+
+    np.savez('zptparam.npz', **bigdata)
+    plt.clf()
+    plt.scatter(bigdata['catmag'],bigdata['resid'],alpha=.05,color='blue')
+    plt.axhline(0,color='black')
+    plt.xlabel('catmag')
+    plt.ylabel('scaled residuals')
+    plt.savefig('zptresids.png')
+
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
                'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],'numzptstars':[], 'fwhm':[]}
