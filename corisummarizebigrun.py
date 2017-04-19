@@ -180,8 +180,7 @@ def getparametriczpt(imagedir,outfile):
     np.savez('zptparam.npz', **bigdata)
     plt.clf()
     plt.scatter(bigdata['catmag'],bigdata['resid'],alpha=.05,color='blue')
-    ax, ay, aystd = bindata(bigdata['catmag'],bigdata['resid'],
-                            np.arange(15, 20.5, .5))
+    ax, ay, aystd = bindata(np.array(bigdata['catmag']0,np.array(bigdata['resid']),np.arange(15.5, 20.5, .5))
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
