@@ -63,7 +63,7 @@ print 'done reading dofake'
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False):
-
+    print 'inside'
     if not os.path.exists(os.path.basename(saveloc)):
         #print 'making'
         os.makedirs(os.path.basename(saveloc))
