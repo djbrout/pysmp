@@ -121,8 +121,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     writelines = ''
     #zp = np.array(zp)
     for line in lines:
-        print line
-        raw_input()
+        #print line
+        #raw_input()
         #print len(line.replace('#', '').split()),line
         wline = line
         #if saveinplace:
@@ -250,8 +250,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                            ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                            ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
 
-                    print wline
-                    raw_input()
+                    #print wline
+                    #raw_input()
                     #print line
                 #raw_input()
             else:
