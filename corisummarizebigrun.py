@@ -191,6 +191,8 @@ def getparametriczpt(imagedir,outfile):
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
     plt.axhline(0,color='black')
     plt.xlabel('catmag')
+    plt.ylim(-.2,.2)
+    plt.xlim(15.5,21)
     plt.ylabel('scaled residuals')
     plt.savefig('zptresids.png')
     print 'saved'
