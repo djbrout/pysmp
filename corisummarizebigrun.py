@@ -163,9 +163,12 @@ def getparametriczpt(imagedir,outfile):
                                                     startMedian=True, sigmaclip=3, iter=10)
 
                         if std == 0: continue
-                        bigdata['catmag'].extend(zptdata['cat_magsmp'])
 
-                        bigdata['resid'].extend((float(zp) - cm - 2.5 * np.log10(fs))/(float(std)/.01))
+                        ww = (cm > 15.5)
+
+                        bigdata['catmag'].extend(cm[ww])
+
+                        bigdata['resid'].extend((float(zp) - cm[ww] - 2.5 * np.log10(fs[ww]))/(float(std)/.01))
 
 
                         print 'worked',cntr, std
