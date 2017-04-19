@@ -48,6 +48,7 @@ print 'reading dofake'
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
 import pandas as pd
 dofakedata = pd.read_csv('data/doFake.out', sep=' ', header=0)
+print dofakedata
 dofakeexpnum = dofakedata['EXPNUM']
 dofakemag2 = dofakedata['TRUEMAG']
 dofaketflux = dofakedata['TRUEFLUXCNT']
