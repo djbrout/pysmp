@@ -47,7 +47,7 @@ print 'reading dofake'
 #expnum, dofakeccds, dofakefilt2, dofakeid, dofakemjd2, dofakemag2, dofaketflux, dofakeflux, dofakera2, dofakedec2 = np.loadtxt(
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
 import pandas as pd
-dofakedata = pd.read_csv('data/doFake.out', header=0)
+dofakedata = pd.read_csv('data/doFake.out', sep=' ', header=0)
 dofakeexpnum = dofakedata['EXPNUM']
 dofakemag2 = dofakedata['TRUEMAG']
 dofaketflux = dofakedata['TRUEFLUXCNT']
