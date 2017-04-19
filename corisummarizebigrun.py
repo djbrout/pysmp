@@ -155,7 +155,7 @@ def getparametriczpt(imagedir,outfile):
 
                         fs = zptdata['flux_starh']
                         zp = zptdata['fit_zpt']
-                        ww = (cm < 20.) & (cm > 17.)
+                        ww = (cm < 21.) & (cm > 18.5)
 
                         # plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
@@ -164,7 +164,7 @@ def getparametriczpt(imagedir,outfile):
                                                     startMedian=True, sigmaclip=3, iter=10)
 
 
-                        bigdata['resid'].extend((float(zp) - cm[ww] - 2.5 * np.log10(fs[ww]))/(float(std)/.01))
+                        bigdata['resid'].extend((float(zp) - cm - 2.5 * np.log10(fs))/(float(std)/.01))
 
 
                         print 'worked',cntr, std
