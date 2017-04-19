@@ -120,7 +120,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     writelines = ''
     #zp = np.array(zp)
     for line in lines:
-        print line
+        #print line
         #print len(line.replace('#', '').split()),line
         wline = line
         #if saveinplace:
@@ -144,8 +144,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             #raw_input()
             #else:
             tidobs = float(line.split()[1])
-            print tidobs,idobs
-            raw_input()
+            #print tidobs,idobs
+            #raw_input()
             if tidobs in idobs:
                 ww = np.isclose(idobs,tidobs,atol=0.1)# & (filt == band)
 
@@ -247,6 +247,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                            ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                            ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
 
+                    print wline
+                    raw_input()
                     #print line
                 #raw_input()
             else:
