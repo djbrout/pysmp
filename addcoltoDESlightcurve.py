@@ -347,7 +347,7 @@ if __name__ == "__main__":
         idobs = []
         cntr += 1
         for i, filt in enumerate(filts):
-        #for sn in sne[:]:
+            #for sn in sne[:]:
             #cntr += 1
             #print sn
             #if cntr > 50:
@@ -379,6 +379,7 @@ if __name__ == "__main__":
             skyerr.extend(sndata['SKYERR'])
             smpflag.extend(sndata['SMP_FLAG'])
             zptfile.extend(sndata['ZPTFILE'])
+            print sndata['ID_OBS']
             idobs.extend(sndata['ID_OBS'])
 
 
