@@ -359,7 +359,7 @@ if __name__ == "__main__":
                 continue
 
             inplace = False
-            if i > 0: inplace = True
+            #if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
 
             mjd.extend(sndata['MJD'])
@@ -376,10 +376,10 @@ if __name__ == "__main__":
 
 
 
-        successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
-                     sndata['ZPT'], sndata['RMSADDIN'],
-                     sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
-                     sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=False,faketrueflux=faketrueflux)
+        successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
+                     zpt, rmsaddin,
+                     chi2,sky,skyerr,smpflag,zptfile,
+                     sndata['ID_OBS'], dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         #if filt == None and successful:
