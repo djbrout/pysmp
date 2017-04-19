@@ -23,6 +23,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         useifdh = False
     tmpwriter = dt.tmpwriter(useifdh=useifdh)
 
+    getparametriczpt("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
+
     if not cacheddata:
         dostars = False
         if dostars:
