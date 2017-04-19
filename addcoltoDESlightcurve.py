@@ -120,7 +120,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     writelines = ''
     #zp = np.array(zp)
     for line in lines:
-        #print line
+        print line
         #print len(line.replace('#', '').split()),line
         wline = line
         #if saveinplace:
