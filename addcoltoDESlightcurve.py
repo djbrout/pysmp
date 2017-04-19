@@ -110,7 +110,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     fix = np.array(fix,dtype='int')
 
 
-
+    writelines = ''
     #zp = np.array(zp)
     for line in lines:
         #print line
@@ -239,7 +239,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
                     #print line
                 #raw_input()
-        savefile.write(wline)
+        writelines += wline
+        #savefile.write(wline)
+    savefile.write(writelines)
     savefile.close()
     return True
     #raw_input()
