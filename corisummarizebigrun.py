@@ -143,7 +143,6 @@ def getparametriczpt(imagedir,outfile):
                         #bigdata['starzpt'].extend(zptdata['flux_starh'] * 0. + zptdata['fit_zpt'])
                         #bigdata['fwhm'].extend(zptdata['flux_starh'] * 0. + zptdata['fwhm'])
 
-                        bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         # bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         #psfs = zptdata['psfs']
                         #for i in range(len(psfs)):
@@ -163,6 +162,8 @@ def getparametriczpt(imagedir,outfile):
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5 * np.log10(fs[ww]),
                                                     startMedian=True, sigmaclip=3, iter=10)
 
+                        if std == 0: continue
+                        bigdata['catmag'].extend(zptdata['cat_magsmp'])
 
                         bigdata['resid'].extend((float(zp) - cm - 2.5 * np.log10(fs))/(float(std)/.01))
 
