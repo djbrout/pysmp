@@ -276,7 +276,7 @@ if __name__ == "__main__":
     faketrueflux = False
 
 
-    filts = ['g','r','i','z',None]
+    filts = ['g','r','i','z']
 
     import sys, getopt
 
@@ -349,10 +349,10 @@ if __name__ == "__main__":
                 continue
 
             lcfile = lcdir+'/'+sn+'.dat'
-            if not filt is None:
-                smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
-            else:
-                continue
+            #if not filt is None:
+            smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            #else:
+            #    continue
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
@@ -381,7 +381,7 @@ if __name__ == "__main__":
                      sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
                      sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=False,faketrueflux=faketrueflux)
 
-        print int(cntr),'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+        print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         #if filt == None and successful:
         snlist.write(sn + '_smp.dat\n')
             #except:
