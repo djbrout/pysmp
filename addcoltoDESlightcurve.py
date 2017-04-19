@@ -384,7 +384,7 @@ if __name__ == "__main__":
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         #if filt == None and successful:
