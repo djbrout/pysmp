@@ -135,16 +135,17 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             #print len(line.replace('#', '').split())
             band = line.split()[4]
 
-            if filt is None:
-                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
-            elif band != filt:
-                wline = line
-                #continue
+            #if filt is None:
+            #    wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
+            #elif band != filt:
+            #    wline = line
+            #    #continue
             #print line
             #raw_input()
-            else:
-                tidobs = float(line.split()[1])
-                ww = np.isclose(idobs,tidobs,atol=0.1) & (filt == band)
+            #else:
+            tidobs = float(line.split()[1])
+            if tidobs in idobs:
+                ww = np.isclose(idobs,tidobs,atol=0.1)# & (filt == band)
 
                 if len(fluxerr[ww]) == 1:
                     #print 'here',dofakes
@@ -246,6 +247,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
                     #print line
                 #raw_input()
+            else:
+                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                    int(FAILED_SMP_FLAG)) + '\n'
         writelines += wline
         #savefile.write(wline)
     savefile.write(writelines)
@@ -311,12 +315,26 @@ if __name__ == "__main__":
     snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
 
-    for i, filt in enumerate(filts):
 
-        sne = os.listdir(resultsdir+'/SNe')
-        cntr = 0.
-        for sn in sne[:]:
-            cntr += 1
+    #for i, filt in enumerate(filts):
+    sne = os.listdir(resultsdir + '/SNe')
+    cntr = 0
+    for sn in sne[:]:
+        mjd = []
+        flux = []
+        fluxerr = []
+        zpt = []
+        rmsaddin = []
+        chi2 = []
+        sky = []
+        skyerr = []
+        smpflag = []
+        zptfile = []
+        idobs = []
+        cntr += 1
+        for i, filt in enumerate(filts):
+        #for sn in sne[:]:
+            #cntr += 1
             #print sn
             #if cntr > 50:
             #    continue
@@ -327,7 +345,7 @@ if __name__ == "__main__":
             if not filt is None:
                 smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             else:
-                smpfile = resultsdir+'/lightcurves/'+sn+'_g.smp'
+                continue
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
@@ -337,14 +355,28 @@ if __name__ == "__main__":
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
 
-            if True:
-                successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
-                            sndata['ZPT'], sndata['RMSADDIN'],
-                            sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
-                            sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace,faketrueflux=faketrueflux)
-                print int(cntr),'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
-                if filt == None and successful:
-                    snlist.write(sn + '_smp.dat\n')
+            mjd.extend(sndata['MJD'])
+            flux.extend(sndata['FLUX'])
+            fluxerr.extend(sndata['FLUXERR'])
+            zpt.extend(sndata['ZPT'])
+            rmsaddin.extend(sndata['RMSADDIN'])
+            chi2.extend(sndata['CHI2'])
+            sky.extend(sndata['SKY'])
+            skyerr.extend(sndata['SKYERR'])
+            smpflag.extend(sndata['SMP_FLAG'])
+            zptfile.extend(sndata['ZPTFILE'])
+            idobs.extend(sndata['ID_OBS'])
+
+
+
+        successful = addtolightcurve(lcfile,savelcfile,sndata['MJD'],sndata['FLUX'],sndata['FLUXERR'],
+                     sndata['ZPT'], sndata['RMSADDIN'],
+                     sndata['CHI2'],sndata['SKY'],sndata['SKYERR'],sndata['SMP_FLAG'],sndata['ZPTFILE'],
+                     sndata['ID_OBS'], dofakes=fakes, filt=filt,saveinplace=inplace,faketrueflux=faketrueflux)
+
+        print int(cntr),'SAVED SUCCESSFULLY',filt,savelcfile,'\n'
+        #if filt == None and successful:
+        snlist.write(sn + '_smp.dat\n')
             #except:
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
