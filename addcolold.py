@@ -277,6 +277,7 @@ if __name__ == "__main__":
             fakes = True
         elif o in ["--faketrueflux"]:
             faketrueflux = True
+            fakes = True
 
     # print fakes
     # raw_input()
