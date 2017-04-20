@@ -278,6 +278,8 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
                 continue
 
+            if cntr > 50:
+                continue
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile, 1, 2)
