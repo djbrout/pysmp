@@ -76,7 +76,7 @@ def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, ch
 
     savefile = open(saveloc, 'w')
 
-    if dofakes:
+    if dofakes | faketrueflux:
         fakeid = lightcurvefile.split('_')[-1].split('.')[0]
         # print fakeid
         fakeisthere = True
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir + '/SMP_RAW_SIM_v1_7'
+    savelcdir = resultsdir + '/SMP_RAW_SIMtrue_v1_7'
     fakes = False
     faketrueflux = False
 
@@ -277,7 +277,6 @@ if __name__ == "__main__":
             fakes = True
         elif o in ["--faketrueflux"]:
             faketrueflux = True
-            fakes = True
 
     # print fakes
     # raw_input()
