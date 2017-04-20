@@ -53,7 +53,7 @@ dofakeid = np.array(dofakeid, dtype='float')
 
 
 def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, chisq, sky, skyerr, flag, zptfiles, idobs,
-                    dofakes=False, faketrueflux=False, filt=None, saveinplace=False):
+                    dofakes=False, filt=None, saveinplace=False):
     if not os.path.exists(os.path.basename(saveloc)):
         # print 'making'
         os.makedirs(os.path.basename(saveloc))
@@ -76,7 +76,7 @@ def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, ch
 
     savefile = open(saveloc, 'w')
 
-    if dofakes | faketrueflux:
+    if dofakes:
         fakeid = lightcurvefile.split('_')[-1].split('.')[0]
         # print fakeid
         fakeisthere = True
@@ -112,7 +112,7 @@ def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, ch
         # if saveinplace:
         #    print len(line.replace('#', '').split()),line
         # raw_input()
-        if len(line.replace('#', '').split()) == 28:
+        if len(line.replace('#', '').split()) == 27:
             wline = line
             # pass
         elif line.split(' ')[0] == 'VARNAMES:':
@@ -136,7 +136,7 @@ def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, ch
                 if len(fluxerr[ww]) == 1:
                     # print 'here',dofakes
                     zptdata = np.load(zptfiles[ww][0])
-                    if faketrueflux:
+                    if dofakes:
                         if fakeisthere:
                             tmag = float(line.split()[12])
                             exn = line.split()[13].split('/')[-1].split('_')[1]
@@ -162,44 +162,10 @@ def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, ch
 
                         fit_zpt = tzpt
                         fit_zpt_std = 0.
-                        # tflux = 10 ** (.4 * (tzpt - tmag ))
                         tflux = 10 ** (.4 * (tzpt - tmag))
-                        # tflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
                         tfluxerr = tflux ** .5
-                        # tfluxerr *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
-
                         # print exn, tzpt, tmag, tflux
                         # raw_input()
-                    elif dofakes:
-                        if fakeisthere:
-                            tmag = float(line.split()[12])
-                            exn = line.split()[13].split('/')[-1].split('_')[1]
-
-                            expn = (dofakeexpnum == float(exn))
-                            # print tmag,exn,
-                            dfw = dofakeid == int(fakeid)
-                            www = expn & dfw
-                            # print dofakemag2[www]
-                            if not len(dofakemag2[www]) > 0:
-                                tmag = 99.
-                                tzpt = 31.
-                                flux_zpt = 31.
-                            else:
-                                tzpt = dofakezpt[www][0]
-                                flux_zpt = dofakezpt[www][0]
-                                # tzpt = float(line.split()[7])
-
-                        else:
-                            tmag = 99.
-                            tzpt = 31.
-                            flux_zpt = 31.
-                        tflux = flux[ww][0]
-                        fit_zpt = zptdata['fit_zpt']
-                        fit_zpt_std = zptdata['fit_zpt_std']
-                        flux_zpt = 31.
-                        tfluxerr = fluxerr[ww][0]
-                        tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
-                        tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
 
                     else:
                         tflux = flux[ww][0]
@@ -244,9 +210,8 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir + '/SMP_RAW_SIMtrue_v1_7'
+    savelcdir = resultsdir + '/SMP_RAW_SIM_v1_1'
     fakes = False
-    faketrueflux = False
 
     filts = ['g', 'r', 'i', 'z', None]
 
@@ -257,7 +222,7 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["lcdir=", "resultsdir=", "savelcdir=", "dofakes", "faketrueflux"])
+            longopts=["lcdir=", "resultsdir=", "savelcdir", "fakes"])
 
     except getopt.GetoptError as err:
         print "No command line argument    s"
@@ -273,10 +238,8 @@ if __name__ == "__main__":
             resultsdir = a
         elif o in ["--savelcdir"]:
             savelcdir = a
-        elif o in ["--dofakes"]:
+        elif o in ["--fakes"]:
             fakes = True
-        elif o in ["--faketrueflux"]:
-            faketrueflux = True
 
     # print fakes
     # raw_input()
@@ -312,8 +275,6 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
                 continue
 
-            if cntr > 50:
-                continue
             inplace = False
             if i > 0: inplace = True
             sndata = dt.readcol(smpfile, 1, 2)
@@ -323,8 +284,7 @@ if __name__ == "__main__":
                                              sndata['ZPT'], sndata['RMSADDIN'],
                                              sndata['CHI2'], sndata['SKY'], sndata['SKYERR'], sndata['SMP_FLAG'],
                                              sndata['ZPTFILE'],
-                                             sndata['ID_OBS'], dofakes=fakes, filt=filt, saveinplace=inplace,
-                                             faketrueflux=faketrueflux)
+                                             sndata['ID_OBS'], dofakes=fakes, filt=filt, saveinplace=inplace)
                 print int(cntr), 'SAVED SUCCESSFULLY', filt, savelcfile, '\n'
                 if filt == None and successful:
                     snlist.write(sn + '_smp.dat\n')
