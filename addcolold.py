@@ -205,9 +205,9 @@ def addtolightcurve(lightcurvefile, saveloc, mjd, flux, fluxerr, zpt, zptrms, ch
 
 if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
-    resultsdir = '/project/projectdirs/des/djbrout/110sim/'
+    resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir + '/SMP_RAW_SIM_v1_1'
+    savelcdir = resultsdir + '/SMP_RAW_SIM_v1_10'
     fakes = False
 
     filts = ['g', 'r', 'i', 'z', None]
