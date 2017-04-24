@@ -220,7 +220,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir + '/SMP_RAW_SIM_v1_10'
+    savelcdir = resultsdir + '/SMP_RAW_SIMtrue_v1_10'
     fakes = False
 
     filts = ['g', 'r', 'i', 'z', None]
