@@ -223,8 +223,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         fit_zpt_std = zptdata['fit_zpt_std']
                         flux_zpt = 31.
                         tfluxerr = fluxerr[ww][0]
-                        tflux *= 10 ** (1 * .4 * (fit_zpt - tzpt))
-                        tfluxerr *= 10 ** (1 * .4 * (fit_zpt - tzpt))
+                        tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+                        tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
 
                     elif keepgoing:
                         tflux = flux[ww][0]
