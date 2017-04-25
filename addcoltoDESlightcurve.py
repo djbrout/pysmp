@@ -197,7 +197,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         #raw_input()
                     elif (dofakes) & (keepgoing):
                         if fakeisthere:
-                            tmag = float(line.split()[12])
+                            #tmag = float(line.split()[12])
                             exn = line.split()[13].split('/')[-1].split('_')[1]
 
                             expn = (dofakeexpnum == float(exn))
@@ -206,18 +206,18 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             www = expn & dfw
                             #print dofakemag2[www]
                             if not len(dofakemag2[www]) > 0:
-                                tmag = 99.
+                                #tmag = 99.
                                 tzpt = 31.
-                                flux_zpt = 31.
+                                #flux_zpt = 31.
                             else:
                                 tzpt = dofakezpt[www][0]
-                                flux_zpt = dofakezpt[www][0]
+                                #flux_zpt = dofakezpt[www][0]
                             #tzpt = float(line.split()[7])
 
                         else:
-                            tmag = 99.
+                            #tmag = 99.
                             tzpt = 31.
-                            flux_zpt = 31.
+                            #flux_zpt = 31.
                         tflux = flux[ww][0]
                         fit_zpt = zptdata['fit_zpt']
                         fit_zpt_std = zptdata['fit_zpt_std']
@@ -292,10 +292,12 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux"])
+            longopts=["index=","lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux"])
 
     except getopt.GetoptError as err:
-        print "No command line argument    s"
+        print "No command line arguments"
+
+    index = None
 
     for o, a in opt:
         #print o
@@ -313,7 +315,8 @@ if __name__ == "__main__":
         elif o in ["--faketrueflux"]:
             faketrueflux = True
             fakes = True
-
+        elif o in ["--index"]:
+            index = int(a)
     #print fakes
     #raw_input()
 
@@ -322,16 +325,22 @@ if __name__ == "__main__":
     if not os.path.exists(savelcdir):
         os.mkdir(savelcdir)
 
-    readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
-    readme.write(readmetext)
-    readme.close()
+    #readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
+    #readme.write(readmetext)
+    #readme.close()
     #raw_input()
-    snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
+    #snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
 
 
     #for i, filt in enumerate(filts):
     sne = os.listdir(resultsdir + '/SNe')
+
+    if index is None:
+        sne = sne
+    else:
+        sne = [sne[index]]
+
     cntr = 0
     for sn in sne[:]:
         mjd = []
@@ -388,13 +397,15 @@ if __name__ == "__main__":
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         #if filt == None and successful:
-        snlist.write(sn + '_smp.dat\n')
+        #snlist.write(sn + '_smp.dat\n')
             #except:
             #    print 'SMP RESULTS DO NOT EXIST FOR ', smpfile
             #raw_input()
-    snlist.close()
-    print 'cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/'
-    os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
+    #snlist.close()
+
+    #print 'cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/'
+
+    #os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
 
 
 #addtolightcurve('testlc.dat','./testdats/','testcol',,[888,777,000,111],[8,8,8,8],[31.,31.,31.,31.])
