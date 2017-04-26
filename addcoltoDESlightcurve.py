@@ -265,7 +265,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir+'/SMP_SIM_v1_16'
+    savelcdir = resultsdir+'/SMP_SIM_v1_16true'
     fakes = False
     faketrueflux = False
 
