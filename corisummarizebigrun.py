@@ -670,11 +670,11 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
 
     for ft,fa in zip(fitzpt,fakezpt):
         print ft,fa
-    raw_input('asdffff')
+    #raw_input('asdffff')
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
 
-    diffimflux = np.array(diffimflux)
+    diffimflux = 10**(.4*(31-27.4))*np.array(diffimflux)
     dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
     diffimflux = 10**(.4*(31-dmag))
 
@@ -688,7 +688,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #     print ff, fl
     for fl , ff in zip(fakefiles[(fluxerr>0.) & (fakemag < 90.)],flux[(fluxerr>0.) & (fakemag < 90.)]):
         print ff, fl
-    raw_input()
+    #raw_input()
     # print fakezpt
     #
     # print fakemag.shape
