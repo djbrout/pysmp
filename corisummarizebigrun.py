@@ -1315,8 +1315,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww], bins=np.arange(-1012.5,1000., 25.), normed=True,
-             label='STD Fakemag = 99: ' + str(round(np.std(flux[ww]), 3)))
+    plt.hist(flux[ww], bins=np.arange(-1012.5,1000., 25.), normed=True,color='blue',histtype='step',
+             label='SMP STD Fakemag = 99: ' + str(round(np.std(flux[ww]), 3)))
+    plt.hist(diffimflux[ww], bins=np.arange(-1012.5,1000., 25.), normed=True,color='red',histtype='step',
+             label='DIFFIM STD Fakemag = 99: ' + str(round(np.std(diffimflux[ww]), 3)))
     plt.legend()
     # plt.ylim(-.1,.1)
     # plt.ylim(-600, 600)
