@@ -196,7 +196,7 @@ def getparametriczpt(imagedir,outfile):
     plt.ylabel('scaled residuals')
     plt.savefig('zptresids.png')
     print 'saved'
-    sys.exit()
+    #sys.exit()
 
 def grabstardata(imagedir,outfile):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [],
