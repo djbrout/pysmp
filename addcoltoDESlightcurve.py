@@ -46,20 +46,7 @@ FAILED_SMP_FLAG = 65536
 print 'reading dofake'
 #expnum, dofakeccds, dofakefilt2, dofakeid, dofakemjd2, dofakemag2, dofaketflux, dofakeflux, dofakera2, dofakedec2 = np.loadtxt(
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
-import pandas as pd
-dofakedata = pd.read_csv('data/doFake.out', delim_whitespace=True, header=0)
-#print dofakedata
-dofakeexpnum = dofakedata['EXPNUM'].values
-dofakemag2 = dofakedata['TRUEMAG'].values
-dofaketflux = dofakedata['TRUEFLUXCNT'].values
-dofakeid = dofakedata['FAKEID'].values
 
-#dofakeexpnum = np.array(expnum, dtype='float')
-#dofakemag2 = np.array(dofakemag2, dtype='float')
-#dofaketflux = np.array(dofaketflux, dtype='float')
-dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
-#dofakeid = np.array(dofakeid, dtype='float')
-print 'done reading dofake'
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False):
@@ -340,6 +327,19 @@ if __name__ == "__main__":
         sne = sne
     else:
         sne = [sne[index]]
+
+
+    if fakes:
+        import pandas as pd
+
+        dofakedata = pd.read_csv('data/doFake.out', delim_whitespace=True, header=0)
+        # print dofakedata
+        dofakeexpnum = dofakedata['EXPNUM'].values
+        dofakemag2 = dofakedata['TRUEMAG'].values
+        dofaketflux = dofakedata['TRUEFLUXCNT'].values
+        dofakeid = dofakedata['FAKEID'].values
+        dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
+        print 'done reading dofake'
 
     cntr = 0
     for sn in sne[:]:
