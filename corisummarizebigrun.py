@@ -440,7 +440,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             print 'BAD FLUX'*20
             continue
 
-        skipnewfakemag = False
+        skipnewfakemag = True
         if not skipnewfakemag:
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
