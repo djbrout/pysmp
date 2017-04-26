@@ -402,7 +402,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
         fakeid = f.split('_')[-2]
         cntr += 1
-        if cntr > 10000: continue
+        if cntr > 100: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -454,7 +454,8 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             continue
 
         skipnewfakemag = True
-        if not skipnewfakemag:
+        #if not skipnewfakemag:
+        if True:
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
 
@@ -539,7 +540,10 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
-            bigdata['FakeMag'].extend(fakemag)
+            if not skipnewfakemag:
+                bigdata['FakeMag'].extend(fakemag)
+            else:
+                bigdata['FakeMag'].extend(data['FAKEMAG'])
             bigdata['FitZPT'].extend(data['ZPT'])
             #print data['ZPT'],data['FAKEZPT']
             #raw_input('aaa')
