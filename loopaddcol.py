@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(0,1000)
+allindexes = range(0,100)
 
 for i in allindexes:
 
@@ -14,7 +14,7 @@ for i in allindexes:
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=0:10:00\n' +
+        '#SBATCH --time=0:12:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_dsim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_dsim.log\n' +
         '#SBATCH --job-name=addcol_' + str(i) + '\n' +
@@ -25,7 +25,7 @@ for i in allindexes:
         '\n' +
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --dofakes --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIM_v1_13 \n' +
+        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --faketrueflux --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIM_v1_16true \n' +
         '\n'
     )
     f.close()
