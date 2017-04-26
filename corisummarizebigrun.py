@@ -970,14 +970,14 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.hist((flux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.205,.2,.01), histtype='step',color='blue',label='SMP STD '+
+    plt.hist((flux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.505,.5,.01), histtype='step',color='blue',label='SMP STD '+
                                     str(round(1.48 * np.median(abs((flux[ww] - fakeflux[ww])/fakeflux[ww] - np.median((flux[ww] - fakeflux[ww])/fakeflux[ww]))), 3)))
-    plt.hist((diffimflux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.205,.2,.01), histtype='step',color='red',label='DIFFIM STD '+
+    plt.hist((diffimflux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.505,.5,.01), histtype='step',color='red',label='DIFFIM STD '+
                                     str(round(1.48 * np.median(abs((diffimflux[ww] - fakeflux[ww])/fakeflux[ww] - np.median((diffimflux[ww] - fakeflux[ww])/fakeflux[ww]))), 3)))
 
 
     plt.axhline(0)
-    plt.xlim(-.2, .2)
+    plt.xlim(-.5, .5)
     # plt.ylim(-.1,.1)
     #plt.ylim(-600, 600)
     #plt.xlabel('Fake Flux')
