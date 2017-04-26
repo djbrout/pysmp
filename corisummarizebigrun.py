@@ -1190,7 +1190,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rmsaddin = np.asarray(rmsaddin)
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
-    fluxerrz = (fluxerr**2 + (flux*np.array(zptstd))**2)**.5
+    fluxerrz = (fluxerr**2 + (flux*np.array(zptstd))**2 + flux)**.5
     diffimgflux = np.array(diffimflux)
     diffimgfluxerr = np.array(diffimfluxerr)
     diffimflux = 10 ** (.4 * (31 - 27.5)) * np.array(diffimflux)
