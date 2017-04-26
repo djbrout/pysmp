@@ -39,7 +39,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
         #sys.exit()
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
-        #data = np.load(cd)
+        data = np.load(cd)
         dostars = False
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
