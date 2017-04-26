@@ -62,7 +62,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
                         filter,data['FakeZPT'],data['rmsaddin'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
-                   data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'])#resultsdir)
+                   data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
+                   data['diffimflux'], data['diffimfluxerr'])#resultsdir)
     #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
     #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
     #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
@@ -1159,7 +1160,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1169,6 +1170,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakeflux = 10 ** (.4 * (31. - fakemag))
     fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
     fluxerrz = (fluxerr**2 + (flux*np.array(zptstd))**2)**.5
+    diffimgflux = np.array(diffimflux)
+    diffimgfluxerr = np.array(diffimfluxerr)
+    diffimflux = 10 ** (.4 * (31 - 27.5)) * np.array(diffimflux)
+    diffimfluxerr = 10 ** (.4 * (31 - 27.5)) * np.array(diffimfluxerr)
+
     #fluxerr *= 10**(.4*(fitzpt - fakezpt))
 
     #fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
@@ -1224,6 +1230,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     d = (flux - fakeflux) / ((fluxerr**2 )**.5)
     dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
+    df = (diffimflux - fakeflux) / ((diffimfluxerr**2 )**.5)
     ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) #& (deep == 0)
 
     #fakemag[fakemag==99] = 29.5
@@ -1236,6 +1243,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fluxerrz = fluxerrz[ww]
     d = d[ww]
     dz = dz[ww]
+    df = df[ww]
     hostmag = hostmag[ww]
     chisqarr = chisqarr[ww]
 
@@ -1480,7 +1488,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
     ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
-
+    ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
+    ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
     # ww = hostmag > 25.
