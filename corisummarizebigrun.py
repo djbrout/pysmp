@@ -328,36 +328,49 @@ def grabstardata(imagedir,outfile):
 
 def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
 
-    dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
-    dofakemjd = np.array(dofakemjd,dtype='float')
-    dofakemag = np.array(dofakemag,dtype='float')
-    dofakera = np.array(dofakera,dtype='float')
-    dofakedec = np.array(dofakedec,dtype='float')
+    # dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
+    # dofakemjd = np.array(dofakemjd,dtype='float')
+    # dofakemag = np.array(dofakemag,dtype='float')
+    # dofakera = np.array(dofakera,dtype='float')
+    # dofakedec = np.array(dofakedec,dtype='float')
 
 
-    diffzpts = dt.readcol('ZP.out', delim=' ')
-    dz = np.array(diffzpts['zpt'],dtype='float')
-    dccd = np.array(diffzpts['ccd'],dtype='float')
-    dexp = np.array(diffzpts['expnum'],dtype='float')
-    dfield = np.array(diffzpts['field'],dtype='str')
+    # diffzpts = dt.readcol('ZP.out', delim=' ')
+    # dz = np.array(diffzpts['zpt'],dtype='float')
+    # dccd = np.array(diffzpts['ccd'],dtype='float')
+    # dexp = np.array(diffzpts['expnum'],dtype='float')
+    # dfield = np.array(diffzpts['field'],dtype='str')
 
 
 
-    expnum,dofakeccds,dofakefilt2,dofakeid,dofakemjd2,dofakemag2,dofaketflux,dofakeflux,dofakera2,dofakedec2 = np.loadtxt('data/doFake.out',
-                                            usecols=(1,2,3,5, 9, 10,11,12, 14,15), unpack=True, dtype='string', skiprows=1)
-    dofakemjd2 = np.array(dofakemjd2, dtype='float')
-    dofakemag2 = np.array(dofakemag2, dtype='float')
-    dofakera2 = np.array(dofakera2, dtype='float')
-    dofakedec2 = np.array(dofakedec2, dtype='float')
-    dofaketflux = np.array(dofaketflux, dtype='float')
-    dofakeflux = np.array(dofakeflux, dtype='float')
-    dofakerand = dofakeflux/dofaketflux
-    dofakeexpnum = np.array(expnum, dtype='float')
-    dofakeccds = np.array(dofakeccds,dtype='float')
-    dofakefilt2 = np.array(dofakefilt2,dtype='string')
-    dofakeid = np.array(dofakeid,dtype='float')
-    #print dofakemjd
-    dofakezpt = dofakemag2 + 2.5*np.log10(dofaketflux)
+    # expnum,dofakeccds,dofakefilt2,dofakeid,dofakemjd2,dofakemag2,dofaketflux,dofakeflux,dofakera2,dofakedec2 = np.loadtxt('data/doFake.out',
+    #                                         usecols=(1,2,3,5, 9, 10,11,12, 14,15), unpack=True, dtype='string', skiprows=1)
+    # #dofakemjd2 = np.array(dofakemjd2, dtype='float')
+    # dofakemag2 = np.array(dofakemag2, dtype='float')
+    # #dofakera2 = np.array(dofakera2, dtype='float')
+    # #dofakedec2 = np.array(dofakedec2, dtype='float')
+    # dofaketflux = np.array(dofaketflux, dtype='float')
+    # dofakeflux = np.array(dofakeflux, dtype='float')
+    # #dofakerand = dofakeflux/dofaketflux
+    # dofakeexpnum = np.array(expnum, dtype='float')
+    # #dofakeccds = np.array(dofakeccds,dtype='float')
+    # #dofakefilt2 = np.array(dofakefilt2,dtype='string')
+    # dofakeid = np.array(dofakeid,dtype='float')
+    # ##print dofakemjd
+    # dofakezpt = dofakemag2 + 2.5*np.log10(dofaketflux)
+
+    import pandas as pd
+
+    dofakedata = pd.read_csv('data/doFake.out', delim_whitespace=True, header=0)
+    # print dofakedata
+    dofakeexpnum = dofakedata['EXPNUM'].values
+    dofakemag2 = dofakedata['TRUEMAG'].values
+    dofaketflux = dofakedata['TRUEFLUXCNT'].values
+    dofakeflux = dofakedata['FLUXCNT'].values
+    dofakeid = dofakedata['FAKEID'].values
+    dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
+    print 'done reading dofake'
+
 
     #raw_input('dofakemjd')
     files = os.listdir(os.path.join(resultsdir, 'lightcurves'))
