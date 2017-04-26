@@ -968,6 +968,27 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.savefig(outdir + '/fluxdiff.png')
 
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist((flux[ww] - fakeflux[ww])/fakeflux[ww], histtype='step',color='blue',label='SMP STD'+
+                                    str(round(1.48 * np.median(abs((flux[ww] - fakeflux[ww])/fakeflux[ww] - np.median((flux[ww] - fakeflux[ww])/fakeflux[ww]))), 3)))
+    plt.hist((diffimflux[ww] - fakeflux[ww])/fakeflux[ww], histtype='step',color='red',label='SMP STD'+
+                                    str(round(1.48 * np.median(abs((diffimflux[ww] - fakeflux[ww])/fakeflux[ww] - np.median((diffimflux[ww] - fakeflux[ww])/fakeflux[ww]))), 3)))
+
+
+    plt.axhline(0)
+    plt.xlim(-.2, .2)
+    # plt.ylim(-.1,.1)
+    #plt.ylim(-600, 600)
+    #plt.xlabel('Fake Flux')
+    #plt.ylabel('Flux Difference ')
+    plt.legend()
+    plt.title(filter + ' band')
+
+    plt.savefig(outdir + '/pfluxdiffhist.png')
+
+
+
     ww = (flux != 0.) & (fakemag != 0)  # (fakemag < 28.5) & (flux != 0.)
     plt.clf()
     # fig = plt.figure(figsize=(15, 10))
