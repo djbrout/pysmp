@@ -970,9 +970,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.hist((flux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.505,.5,.01), histtype='step',color='blue',label='SMP STD '+
+    plt.hist((flux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.51,.5,.02), histtype='step',color='blue',label='SMP STD '+
                                     str(round(1.48 * np.median(abs((flux[ww] - fakeflux[ww])/fakeflux[ww] - np.median((flux[ww] - fakeflux[ww])/fakeflux[ww]))), 3)))
-    plt.hist((diffimflux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.505,.5,.01), histtype='step',color='red',label='DIFFIM STD '+
+    plt.hist((diffimflux[ww] - fakeflux[ww])/fakeflux[ww],bins=np.arange(-.51,.5,.02), histtype='step',color='red',label='DIFFIM STD '+
                                     str(round(1.48 * np.median(abs((diffimflux[ww] - fakeflux[ww])/fakeflux[ww] - np.median((diffimflux[ww] - fakeflux[ww])/fakeflux[ww]))), 3)))
 
 
@@ -1336,9 +1336,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ww = (flux != 0) & (fakeflux < 1.)
     print rms99
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(flux[ww], bins=np.arange(-1012.5,1000., 25.), normed=True,color='blue',histtype='step',
+    plt.hist(flux[ww], bins=np.arange(-1025.,1000., 50.), normed=True,color='blue',histtype='step',
              label='SMP STD Fakemag = 99: ' + str(round(1.48 * np.median(abs(flux[ww] - np.median(flux[ww]))), 3)))
-    plt.hist(diffimflux[ww], bins=np.arange(-1012.5,1000., 25.), normed=True,color='red',histtype='step',
+    plt.hist(diffimflux[ww], bins=np.arange(-1025,1000., 50.), normed=True,color='red',histtype='step',
              label='DIFFIM STD Fakemag = 99: ' + str(round(1.48 * np.median(abs(diffimflux[ww] - np.median(diffimflux[ww]))), 3)))
     plt.legend()
     # plt.ylim(-.1,.1)
