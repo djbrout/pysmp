@@ -691,7 +691,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
 
-    diffimflux = 10**(.4*(31-27.4))*np.array(diffimflux)
+    diffimflux = 10**(-.4*(31-27.4))*np.array(diffimflux)
     #dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
     #diffimflux = 10**(.4*(31-dmag))
 
@@ -823,12 +823,12 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     #print np.unique(fakeflux)
     #raw_input('fakeflux')
 
-    plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.2)
+    plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.2,color='red')
     ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
                             np.arange(19, 28, .5))
     plt.errorbar(ax, ay, aystd, markersize=15, color='red', fmt='o', label='DIFFIMG')
 
-    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2)
+    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(19,28, .5))
     plt.errorbar(ax, ay, aystd, markersize=15, color='green', fmt='o', label='SMP')
