@@ -534,7 +534,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             #data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
             #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
             print data.keys()
-            raw_input()
+            raw_input( )
             bigdata['rmsaddin'].extend(data['CHI2'] * 0. + rms)
 
             #print data.keys()
