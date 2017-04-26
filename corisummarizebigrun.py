@@ -402,7 +402,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
         #raw_input()
         fakeid = f.split('_')[-2]
         cntr += 1
-        if cntr > 100: continue
+        if cntr > 10000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -688,8 +688,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     fakezpt = np.asarray(fakezpt)
 
     diffimflux = 10**(.4*(31-27.4))*np.array(diffimflux)
-    dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
-    diffimflux = 10**(.4*(31-dmag))
+    #dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
+    #diffimflux = 10**(.4*(31-dmag))
 
     oldfakezpt = np.array(oldfakezpt)
 
@@ -818,7 +818,13 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
         print x
     #print np.unique(fakeflux)
     #raw_input('fakeflux')
-    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.5)
+
+    plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.2)
+    ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
+                            np.arange(19, 28, .5))
+    plt.errorbar(ax, ay, aystd, markersize=15, color='red', fmt='o', label='DIFFIMG')
+
+    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2)
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
                             np.arange(19,28, .5))
     plt.errorbar(ax, ay, aystd, markersize=15, color='green', fmt='o', label='SMP')
