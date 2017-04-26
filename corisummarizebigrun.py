@@ -57,7 +57,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     if not os.path.exists(resultsdir+'/Summary/'+filter+'/'):
         os.mkdir(resultsdir+'/Summary/'+filter+'/')
     #raw_input()
-    plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],
+    plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
                         data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
                         filter,data['FakeZPT'],data['rmsaddin'])
@@ -558,6 +558,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
             bigdata['diffimflux'].extend(data['DIFFIM_FLUX'])
+            bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
 
             print np.mean(data['CHI2']), bigdata['fakeid'][-10:]
@@ -669,7 +670,7 @@ def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag,dtype='float')
     dpmjd = np.asarray(dpmjd,dtype='float')
@@ -696,6 +697,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,sky,skyer
     fakezpt = np.asarray(fakezpt)
 
     diffimflux = 10**(.4*(31-27.5))*np.array(diffimflux)
+    diffimfluxerr = 10**(.4*(31-27.5))*np.array(diffimfluxerr)
+
     #dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
     #diffimflux = 10**(.4*(31-dmag))
 
