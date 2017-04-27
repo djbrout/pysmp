@@ -28,11 +28,11 @@ fitzpts = []
 for m,z in zip(tmjds,zptfiles):
     if m > 0:
         a = np.load(z)
-        #print a.keys()
+        print a.keys()
         #print a['mpfit_zpt']
         #print len(a['mpfit_zpt'])
         #print len(a['mpfit_mag'])
-        #raw_input()
+        raw_input()
         fitzpt = a['mpfit_zpt']
         mag = a['mpfit_mag']
         catmag = a['cat_mag']
