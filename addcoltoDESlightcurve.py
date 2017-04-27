@@ -172,15 +172,16 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             tzpt = 31.
                             flux_zpt = 31.
 
-                        fit_zpt = tzpt
+                        fit_zpt = zptdata['fit_zpt']
                         fit_zpt_std = 0.
                         #tflux = 10 ** (.4 * (tzpt - tmag ))
                         tflux = 10**(.4*(tzpt - tmag))
                         tflux *= 10 ** (-1. * .4 * (fit_zpt - tzpt))
-                        print tflux,fit_zpt,tzpt
-                        print 'hereeee'
-                        raw_input()
+                        #print tflux,fit_zpt,tzpt
+                        #print 'hereeee'
+                        #raw_input()
                         tfluxerr = tflux**.5
+                        fit_zpt = tzpt
                         #tfluxerr *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
 
                         #print exn, tzpt, tmag, tflux
