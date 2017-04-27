@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(0,100)
+allindexes = range(100,1000)
 
 for i in allindexes:
 
