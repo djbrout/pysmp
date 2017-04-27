@@ -176,7 +176,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         fit_zpt_std = 0.
                         #tflux = 10 ** (.4 * (tzpt - tmag ))
                         tflux = 10**(.4*(tzpt - tmag))
-                        tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+                        tflux *= 10 ** (1 * .4 * (fit_zpt - tzpt))
                         tfluxerr = tflux**.5
                         #tfluxerr *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
 
@@ -265,7 +265,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir+'/SMP_SIM_v1_16true'
+    savelcdir = resultsdir+'/SMP_SIM_v1_17true'
     fakes = False
     faketrueflux = False
 
