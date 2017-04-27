@@ -38,6 +38,8 @@ def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
     return xvals, medians, mads
 
 
+
+
 def fitprobfromchisq(x,df):
     return scipy.stats.chisquare(x,ddof=df)
 
