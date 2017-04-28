@@ -5144,7 +5144,7 @@ class smp:
         #mcmc_mag_std = np.array([-999.]*len(xstar))
         mcmc_me_mag_std = np.array([-999.]*len(xstar))
 
-        radius = 9
+        radius = 8
         cntr = 0
         fitrad = np.zeros([substamp,substamp])
         for x in np.arange(substamp):   
