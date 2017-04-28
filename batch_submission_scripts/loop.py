@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,20)
+allindexes = range(20,100)
 filts = ['g','r','i','z']
 #filts = ['g']
 #np.random.shuffle(allindexes)
