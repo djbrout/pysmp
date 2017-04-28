@@ -2079,7 +2079,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 1000
+    maxpoints = 10000
 
     cntr = 0
     pltvecx = []
