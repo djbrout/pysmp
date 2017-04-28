@@ -232,6 +232,7 @@ def grabstardata(imagedir,outfile):
                         #if True:
                         test = zptdata['chisqu']
                         test = zptdata['fwhm']
+                        test = zptdata['zptscat']
                         try:
                             if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
                                 print 'skippeddddd'
@@ -294,7 +295,7 @@ def grabstardata(imagedir,outfile):
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
                         bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
                         bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
-                        bigdata['zptscat'].extend(zptdata['flux_starh'] * 0. + std)
+                        bigdata['zptscat'].extend(zptdata['zptscat'])
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
