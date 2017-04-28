@@ -2081,7 +2081,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 3000
+    maxpoints = 10000
 
     cntr = 0
     pltvecx = []
@@ -2221,14 +2221,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecy.append(repeatability)
             pltvecx.append(sme)
 
-    #plt.xscale('log')
-    #plt.yscale('log')
+    plt.xscale('log')
+    plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.0003,.007)
-    plt.ylim(.0003,.007)
+    plt.xlim(.0003,.02)
+    plt.ylim(.0003,.02)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .0001), window=.0001,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.02, .0001), window=.0001,dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
@@ -2263,14 +2263,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             pltvecy.append(repeatability)
             pltvecx.append(sme)
 
-    # plt.xscale('log')
-    # plt.yscale('log')
+    plt.xscale('log')
+    plt.yscale('log')
     plt.xlabel('Photometric Error + Zpt Scatter')
     plt.ylabel('Repeatability')
-    plt.xlim(.0003, .007)
-    plt.ylim(.0003, .007)
+    plt.xlim(.0003, .02)
+    plt.ylim(.0003, .02)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.0003, .007, .0001), window=.0001,
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.0003, .02, .0001), window=.0001,
                                dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
