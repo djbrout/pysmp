@@ -2225,8 +2225,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.0003,.01)
-    plt.ylim(.0003,.01)
+    plt.xlim(.0003,.02)
+    plt.ylim(.0003,.02)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.005, .0001), window=.0001,dontrootn=True)
     photerr = copy(ax)
@@ -2239,6 +2239,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
+
+    sys.exit()
 
     print 'saved repeat vs photerr1'
     plt.clf()
