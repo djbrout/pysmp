@@ -2049,9 +2049,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     #starmagerrr = 1.0857*fluxerr/flux
     starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
-    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
+    starmagerr = np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
 
-    starmagerrzpt = 1.0857*np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
+    starmagerrzpt = np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
 
 
     plt.clf()
@@ -2081,7 +2081,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 10000
+    maxpoints = 3000
 
     cntr = 0
     pltvecx = []
