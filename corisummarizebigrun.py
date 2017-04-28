@@ -2054,6 +2054,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerrzpt = np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
 
 
+    r = (flux-catflux)/(fluxerr**2+zptscat*flux)**.5
+
     plt.clf()
     # repeatability = []
     # uindices = []
@@ -2081,7 +2083,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 10000
+    maxpoints = 1000
 
     cntr = 0
     pltvecx = []
@@ -2240,7 +2242,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='grey')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
 
-    sys.exit()
+    #sys.exit()
 
     print 'saved repeat vs photerr1'
     plt.clf()
@@ -2412,7 +2414,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     dmz = (starmag - catmag) / starmagerr
     print starmagerr[:50]
     print rep[:50]
-    raw_input('ccc')
+    #raw_input('ccc')
     dmam = (starmag - catmag) / np.maximum(starmagerr,rep)
     #dmam = (starmag - catmag) / rep
     #dmas = (starmag - catmag) / starmagerr3
@@ -2438,9 +2440,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.clf()
 
-    dc = dmam[abs(dmam) < 3]
+    #dc = dmam[abs(dmam) < 3]
+    #rmsscat = r
 
-    rms = np.sqrt(np.nanmean(np.square(dc[abs(dc) < 3.])))
+    rms = np.sqrt(np.nanmean(np.square(r[abs(r) < 3.])))
+
 
     plt.clf()
 
