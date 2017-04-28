@@ -2282,7 +2282,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.plot([min(starmagerr), max(starmagerr)], [min(starmagerr), max(starmagerr)], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_photerrzpt.png')
-
+    print 'saved',outdir + '/' + title + '_repeatability_vs_photerrzpt.png'
     plt.clf()
 
     cntr = 0
