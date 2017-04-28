@@ -41,7 +41,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     else:
         #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
-        dostars = False
+        dostars = True
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
