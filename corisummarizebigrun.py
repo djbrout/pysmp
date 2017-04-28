@@ -281,7 +281,7 @@ def grabstardata(imagedir,outfile):
 
                         fs = zptdata['flux_starh']
                         zp = zptdata['fit_zpt']
-                        ww = (cm < 20.) & (cm > 16.)
+                        ww = (cm < 20.) & (cm > 17.)
 
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
@@ -292,6 +292,7 @@ def grabstardata(imagedir,outfile):
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
                         bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
                         bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
+                        bigdata['zptscat'].extend(zptdata['flux_starh'] * 0. + std)
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
