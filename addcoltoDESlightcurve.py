@@ -257,7 +257,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                         int(FAILED_SMP_FLAG)) + '\n'
         except:
-            print 'failed to get zpt'
+            e = sys.exc_info()[0]
+            print e
             wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                 int(FAILED_SMP_FLAG)) + '\n'
 
