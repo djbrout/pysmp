@@ -228,8 +228,8 @@ def grabstardata(imagedir,outfile):
                 #print zptdata.keys()
                 #raw_input()
                 if not fname in zptfiles:
-                    try:
-                        #if True:
+                    #try:
+                    if True:
                         test = zptdata['chisqu']
                         test = zptdata['fwhm']
                         test = zptdata['zptscat']
@@ -295,21 +295,21 @@ def grabstardata(imagedir,outfile):
                                                      startMedian=True, sigmaclip=3, iter=10)
 
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
-                        #bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
-                        #bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
+                        bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
+                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
                         bigdata['zptscat'].extend(zptdata['zptscat'])
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
-                        #bigdata['chisq'].extend(zptdata['chisqu'])
+                        bigdata['chisq'].extend(zptdata['chisqu'])
 
                         cntr += 1
                         print 'CNTR',cntr
 
                         goodbigdata = copy(bigdata)
-                    except:
-                        print 'FAILED', fname
-                        pass
+                    # except:
+                    #     print 'FAILED', fname
+                    #     pass
 
     try:
         bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
