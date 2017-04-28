@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(0,250)
+allindexes = range(0,100)
 
 for i in allindexes:
 
@@ -14,7 +14,7 @@ for i in allindexes:
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=0:12:00\n' +
+        '#SBATCH --time=00:05:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_dsim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_dsim.log\n' +
         '#SBATCH --job-name=addcol_' + str(i) + '\n' +
