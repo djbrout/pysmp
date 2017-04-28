@@ -15,7 +15,7 @@ from copy import copy
 from scipy.stats import sigmaclip
 
 
-def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
+def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
 
     if isfermigrid:
         useifdh = True
@@ -28,7 +28,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,isfermigrid=False):
     if not cacheddata:
         dostars = True
         if dostars:
-            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
+            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter,tfield)
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
@@ -202,7 +202,7 @@ def getparametriczpt(imagedir,outfile):
     print 'saved'
     #sys.exit()
 
-def grabstardata(imagedir,outfile):
+def grabstardata(imagedir,outfile,tfield):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [], 'zptscat':[],
                'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],'numzptstars':[], 'fwhm':[]}
     zptfiles = []
@@ -216,7 +216,7 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 #print os.path.join(imagedir,dirName,fname)
-                if not 'SN-X3' in fname: continue
+                if not tfield in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
                     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
@@ -2798,5 +2798,6 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    cd = '/global/cscratch1/sd/dbrout/'+'/summary_results_deep_'+filter+'.npz'
-    go(fakedir,resultsdir,cacheddata,cd,filter)
+    tfield = 'SN-X3'
+    cd = '/global/cscratch1/sd/dbrout/'+'/summary_results_'+tfield+'_'+filter+'.npz'
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield)
