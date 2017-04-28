@@ -2950,7 +2950,7 @@ class smp:
                         print 'failed fwhm'*100
                         #raw_input()
 
-        sys.exit()
+        #sys.exit()
 
 
         #now loop over images again and get nightly offsets...
