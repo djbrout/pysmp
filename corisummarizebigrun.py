@@ -2049,9 +2049,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     #starmagerrr = 1.0857*fluxerr/flux
     starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
-    starmagerr = np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
+    starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
 
-    starmagerrzpt = np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
+    starmagerrzpt = 1.0857*np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
 
 
     plt.clf()
@@ -2207,7 +2207,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 100000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -2249,7 +2249,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, f, fe in zip(starmagerrzpt, starmag, indices, ras, decs, catmag, flux, fluxerr):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 100000: continue
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
