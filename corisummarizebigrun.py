@@ -2019,7 +2019,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #starmagerr = rmsaddin
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
-    catflux = 10**(.4*(zpt-catmag))
+    catflux = 10**(.4*(np.array(zpt)-np.array(catmag)))
     #chisq = chisq[ww]
     #chisq = chisq[ww]*1/np.sqrt((abs(flux) / 3.))
     # plt.clf()
