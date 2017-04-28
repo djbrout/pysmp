@@ -301,7 +301,7 @@ def grabstardata(imagedir,outfile):
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
-                        bigdata['chisq'].extend(zptdata['chisqu'])
+                        #bigdata['chisq'].extend(zptdata['chisqu'])
 
                         cntr += 1
                         print 'CNTR',cntr
