@@ -2788,6 +2788,6 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    tfield = 'SN-X3'
+    tfield = 'SN-S2'
     cd = '/global/cscratch1/sd/dbrout/v6/summary_results_'+tfield+'_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield)
