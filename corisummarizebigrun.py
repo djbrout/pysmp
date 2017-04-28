@@ -2475,7 +2475,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax3.xaxis.set_major_formatter(nullfmt)
     ax5.yaxis.set_major_formatter(nullfmt)
 
-    ax2.hist(dmam[np.isfinite(dmam)], bins=np.arange(-10.1, 10, .2), normed=True, label='RMS: ' + str(round(rms, 3))
+    ax2.hist(r[np.isfinite(r)], bins=np.arange(-10.1, 10, .2), normed=True, label='RMS: ' + str(round(rms, 3))
              , orientation='horizontal',color='black')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
@@ -2497,8 +2497,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     # plt.clf()
 
-    ax1.scatter(catmag, dmam, alpha=.02, color='black')
-    ax, ay, aystd = dt.bindata(catmag, dmam, np.arange(min(catmag), max(catmag), .1), window=.3)
+    ax1.scatter(catmag, dr, alpha=.02, color='black')
+    ax, ay, aystd = dt.bindata(catmag, r, np.arange(min(catmag), max(catmag), .1), window=.3)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
@@ -2548,7 +2548,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .1)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
-    ax, ayrms = dt.binrms(catmag, dmam, np.arange(16., max(catmag), .1), .1)
+    ax, ayrms = dt.binrms(catmag, r, np.arange(16., max(catmag), .1), .1)
     ax3.plot(ax, ayrms, color='orange', label='ZPT Scat + ChisMin', linewidth=3,alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.4, 0.8))
