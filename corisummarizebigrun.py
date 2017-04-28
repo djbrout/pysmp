@@ -2497,7 +2497,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     # plt.clf()
 
-    ax1.scatter(catmag, dr, alpha=.02, color='black')
+    ax1.scatter(catmag, r, alpha=.02, color='black')
     ax, ay, aystd = dt.bindata(catmag, r, np.arange(min(catmag), max(catmag), .1), window=.3)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
