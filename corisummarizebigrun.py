@@ -34,7 +34,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],
-                    title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
+                    title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
 
         #sys.exit()
@@ -48,7 +48,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],
-                        title=filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
+                        title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
             #sys.exit()
     print data.keys()
     print len(data['Flux'])
