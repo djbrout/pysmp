@@ -295,8 +295,8 @@ def grabstardata(imagedir,outfile):
                                                      startMedian=True, sigmaclip=3, iter=10)
 
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
-                        bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
-                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
+                        #bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
+                        #bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
                         bigdata['zptscat'].extend(zptdata['zptscat'])
                         #print 'read in ',fname
                         zptfiles.append(fname)
