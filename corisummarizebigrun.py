@@ -2056,6 +2056,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     r = (flux-catflux)/(fluxerr**2+zptscat*flux)**.5
 
+    print r.shape,catmag.shape
+    raw_input()
+
     plt.clf()
     # repeatability = []
     # uindices = []
