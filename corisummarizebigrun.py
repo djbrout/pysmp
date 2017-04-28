@@ -216,7 +216,7 @@ def grabstardata(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 #print os.path.join(imagedir,dirName,fname)
-                if not 'SN-S2' in fname: continue
+                if not 'SN-X3' in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
                     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
@@ -2798,5 +2798,5 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    cd = '/global/cscratch1/sd/dbrout/'+'/summary_results_'+filter+'.npz'
+    cd = '/global/cscratch1/sd/dbrout/'+'/summary_results_deep_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter)
