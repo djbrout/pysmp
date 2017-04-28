@@ -209,7 +209,7 @@ def grabstardata(imagedir,outfile):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 1000.: break
+        if cntr > 4000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
