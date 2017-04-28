@@ -2207,7 +2207,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 100000: continue
+        if cntr > 4000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -2225,10 +2225,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.0003,.02)
-    plt.ylim(.0003,.02)
+    plt.xlim(.0003,.01)
+    plt.ylim(.0003,.01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.02, .0001), window=.0001,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.007, .0001), window=.0001,dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
