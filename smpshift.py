@@ -2950,7 +2950,7 @@ class smp:
                         print 'failed fwhm'*100
                         #raw_input()
 
-
+        sys.exit()
 
 
         #now loop over images again and get nightly offsets...
@@ -5756,7 +5756,13 @@ class smp:
                 #print 'fluxcol  =flux_star'
             else:
                 fluxcol = gsflux
+
+
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
+                                       startMedian=True,sigmaclip=3,iter=10)
+
+            ww2 = (mag_cat[goodstarcols] < 19.) & (mag_cat[goodstarcols] > 16.5)
+            md2,zptscat,num2 = self.iterstat(mag_cat[goodstarcols][ww2]+2.5*np.log10(fluxcol[goodstarcols][ww2]),
                                        startMedian=True,sigmaclip=3,iter=10)
             print ''
             print ''
@@ -6095,6 +6101,7 @@ class smp:
                          , thisdec = thisdec[goodstarcols]
                          , thisids = thisids[goodstarcols]
                          , fwhm = np.float(fwhm)
+                         , zptscat = zptscat
                          )
                 #raw_input()
 
@@ -6166,6 +6173,7 @@ class smp:
                      , thisdec=0
                      , thisids=0
                      , fwhm=0
+                     , zptscat = 0
                      )
 
 
