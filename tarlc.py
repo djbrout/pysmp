@@ -1,4 +1,4 @@
-resultsdir = '/project/projectdirs/des/djbrout/114simdep/'
+resultsdir = '/project/projectdirs/des/djbrout/114simdeep/'
 savelcdir = resultsdir+'/SMP_SIM_v1_deep'
 
 
