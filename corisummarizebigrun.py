@@ -28,31 +28,24 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
     if not cacheddata:
         dostars = True
         if dostars:
-            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter,tfield)
-            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
+            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield)
+            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],
                     title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-        data = grabdata(tmpwriter,resultsdir,cd,filter=filter)
-
-        #sys.exit()
+        data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter)
     else:
-        #data = np.load(os.path.join(resultsdir,'Summary','sumdata.npz'))
         data = np.load(cd)
         dostars = True
         if dostars:
-            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+filter+'.npz')
+            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-            #sys.exit()
-    print data.keys()
-    print len(data['Flux'])
-    print np.unique(data['field'])
 
     if not os.path.exists(resultsdir+'/Summary/'):
         os.mkdir(resultsdir+'/Summary/')
@@ -66,9 +59,6 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'])#resultsdir)
-    #starmag = stardata['starzpt'] - 2.5*np.log10(stardata['starflux'])
-    #starmagerr = - 2.5*np.log10(stardata['starflux']) + 2.5*
-    #err = 10**(.4*(data['starzpt']-2.5*np.log10()))
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -334,7 +324,7 @@ def grabstardata(imagedir,outfile,tfield):
     #os.system('rm dat.dat')
     #sys.exit()
 
-def grabdata(tmpwriter,resultsdir,cd,filter = 'g',oldformat=False):
+def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
 
     # dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
     # dofakemjd = np.array(dofakemjd,dtype='float')
