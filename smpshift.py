@@ -5183,8 +5183,8 @@ class smp:
         prevra = 0
         for x,y,m,s,se,mc,ra,dec,iii,bf,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,ids,badflag,range(len(xstar))):
 
-            print 'sky',s,'skyerr',se
-            raw_input()
+            #print 'sky',s,'skyerr',se
+            #raw_input()
             #print x,y,mc
             #print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,5) == round(ra,5):
