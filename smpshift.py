@@ -5885,7 +5885,9 @@ class smp:
             #print 'scatter'
             #print len(mag_cat[goodstarcols])
             plt.clf()
-            plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
+            #plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
+            plt.errorbar(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
+                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o')
             #print 'plot'
             #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.axhline(0,color='black')
