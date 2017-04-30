@@ -224,6 +224,7 @@ def grabstardata(imagedir,outfile,tfield):
                         test = zptdata['fwhm']
                         test = zptdata['zptscat']
                         test = zptdata['flux_starh']
+                        test = zptdata['fit_magsmp']
 
                         try:
                             if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
