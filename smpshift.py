@@ -2016,8 +2016,8 @@ class smp:
                         else:
                             self.gain = gainb
 
-            #print self.gain
-            #raw_input('gain')
+            print self.gain
+            raw_input('gain')
             if self.snparams.survey == 'DES':
                 im += 10000.
             mjdoff = 0.
