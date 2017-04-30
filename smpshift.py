@@ -2016,8 +2016,8 @@ class smp:
                         else:
                             self.gain = gainb
 
-            print self.gain
-            raw_input('gain')
+            #print self.gain
+            #raw_input('gain')
             if self.snparams.survey == 'DES':
                 im += 10000.
             mjdoff = 0.
@@ -2769,6 +2769,8 @@ class smp:
                                         smp_dict['skyerr'][i] = sexrms
                                         #sexrms
 
+                                    print sexsky,sexrms,np.mean(image_stamp.ravel()),np.std(image_stamp.ravel())
+                                    raw_input('sss')
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
                                     #CHECK FOR DIFFIM FLAGS
