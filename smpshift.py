@@ -2019,7 +2019,7 @@ class smp:
             #print self.gain
             #raw_input('gain')
             if self.snparams.survey == 'DES':
-                im += 1000.
+                im += 10000.
             mjdoff = 0.
             mjdslopeinteroff = 0.
             gogo = True
