@@ -4727,7 +4727,7 @@ class smp:
 
 
         vals = \
-        mpfitexpr.mpfitexpr("(p[0]*x*p[2])/(p[2]+p[0]**.5)", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
+        mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
         try:
             errmag = vals.perror[0]
             fluxls = vals.params[0]
