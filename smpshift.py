@@ -4727,7 +4727,7 @@ class smp:
         import mpfitexpr
 
         vals = \
-        mpfitexpr.mpfitexpr("p[0]*x", guess_scale, im - sky, skyerr, [1], full_output=True)[0]
+        mpfitexpr.mpfitexpr("p[0]*x", guess_scale, im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
         errmag = vals.perror[0]
         print errmag
         #print len(cov)
