@@ -33,7 +33,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                        stardata['fwhm'],stardata['zptscat'],
+                        stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
                     title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter)
     else:
@@ -44,7 +44,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                        stardata['fwhm'],stardata['zptscat'],
+                        stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         data = np.load(cd)
     if not os.path.exists(resultsdir+'/Summary/'):
@@ -1986,11 +1986,20 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,fwhm,zptscat,title='',outdir='.'):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,fwhm,zptscat,mjd,title='',outdir='.'):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
     fluxerr = np.sqrt(fluxerr**2)
+
+
+
+    plt.clf()
+    plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,500,1.),color='black')
+    plt.xlabel('SkyERR')
+    plt.ylabel('#')
+    plt.savefig(outdir + '/' + title + 'skyerrhist.png')
+    raw_input('skyerrdone')
 
     #print max(catmag)
     #print catmag.shape,rmsaddin.shape,ff.shape,indices.shape,flux.shape,fluxerr.shape,zpt.shape
