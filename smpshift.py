@@ -15,6 +15,8 @@ import numpy as np
 import exceptions
 import os
 import sys
+sys.path.append("./mpfit/")
+import mpfitexpr
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 #import scipy.ndimage
@@ -4719,16 +4721,18 @@ class smp:
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
         psf = psf/np.sum(psf.ravel())
-        fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
-                                   full_output=False)
-        print fluxls,cov
+        # fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
+        #                            full_output=False)
+        # print fluxls,cov
 
-        sys.path.append("./mpfit/")
-        import mpfitexpr
 
         vals = \
-        mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
-        errmag = vals.perror[0]
+        mpfitexpr.mpfitexpr("(p[0]*x*p[2])/(p[2]+p[0]**.5)", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
+        try:
+            errmag = vals.perror[0]
+            fluxls = vals.params[0]
+        except:
+            return 1, 1, 1, 1, 1, True
         print skyerr,errmag
         #print len(cov)
         raw_input('errmag')
@@ -4877,7 +4881,7 @@ class smp:
         #         print 'star too dim...'
         if not bad:
             #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
-            return fluxls, 100, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+            return vals.params[0], errmag, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
             return 1,1,1,1,1,True
 
@@ -6027,10 +6031,10 @@ class smp:
                 np.savez( ff
                     #,ra = ras[goodstarcols]
                     #,dec = decs[goodstarcols]
-                    ,cat_magvvv = mag_cat[goodstarcols]
+                    ,cat_mag = mag_cat[goodstarcols]
                     ,fit_mag = -2.5*np.log10(fluxcol[goodstarcols])
                     ,fit_mag_err = -2.5*np.log10(fluxcol[goodstarcols])+2.5*np.log10(fluxcol[goodstarcols]+flux_star_std[goodstarcols])
-                    ,flux_starh = fluxcol[goodstarcols]
+                    ,flux_starmp = fluxcol[goodstarcols]
                     ,flux_star_std = flux_star_std[goodstarcols]
                     ,chisqu=flux_chisq[goodstarcols]
                     #,mcmc_me_fit_mag = -2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols])
