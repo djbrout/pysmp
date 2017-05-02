@@ -1999,6 +1999,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('SkyERR')
     plt.ylabel('#')
     plt.savefig(outdir + '/' + title + 'skyerrhist.png')
+    print outdir + '/' + title + 'skyerrhist.png'
     raw_input('skyerrdone')
 
     #print max(catmag)
