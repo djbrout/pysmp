@@ -4722,8 +4722,16 @@ class smp:
         fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
                                    full_output=False)
         print fluxls,cov
+
+        sys.path.append("./mpfit/")
+        import mpfitexpr
+
+        vals = \
+        mpfitexpr.mpfitexpr("p[0]*x", guess_scale, im - sky, skyerr, [1], full_output=True)[0]
+        errmag = vals.perror[0]
+        print errmag
         #print len(cov)
-        raw_input('covshape')
+        raw_input('errmag')
         sim =  sky + fluxls * psf
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
