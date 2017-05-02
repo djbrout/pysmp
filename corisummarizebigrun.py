@@ -1992,7 +1992,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     st = np.std(ff)
     fluxerr = np.sqrt(fluxerr**2)
 
-
+    plt.clf()
+    plt.hist(fluxerr[(np.floor(mjd) == 56575)&(abs(catmag-20) < .5 )], bins=np.arange(0, 1000, 1.), color='black')
+    plt.xlabel('SkyERR')
+    plt.ylabel('#')
+    plt.savefig(outdir + '/' + title + 'photerrhist.png')
+    print outdir + '/' + title + 'photerrhist.png'
+    raw_input('skyerrdone')
 
     plt.clf()
     plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,70,1.),color='black')
