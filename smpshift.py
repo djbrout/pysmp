@@ -4715,9 +4715,9 @@ class smp:
         chisqvec = []
         fluxvec = []
         bad = False
-        galconv = scipy.signal.fftconvolve(gal,psf,mode='same')
+        #galconv = scipy.signal.fftconvolve(gal,psf,mode='same')
 
-        substamp = galconv.shape[0]
+        #substamp = galconv.shape[0]
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
         psf = psf/np.sum(psf.ravel())
@@ -4733,9 +4733,9 @@ class smp:
             fluxls = vals.params[0]
         except:
             return 1, 1, 1, 1, 1, True
-        print skyerr,errmag
+        #print skyerr,errmag
         #print len(cov)
-        raw_input('errmag')
+        #raw_input('errmag')
         sim =  sky + fluxls * psf
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
