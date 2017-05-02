@@ -28,7 +28,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
     if not cacheddata:
         dostars = True
         if dostars:
-            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield)
+            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield,filter)
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
@@ -192,9 +192,10 @@ def getparametriczpt(imagedir,outfile):
     print 'saved'
     #sys.exit()
 
-def grabstardata(imagedir,outfile,tfield):
+def grabstardata(imagedir,outfile,tfield,filt):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [], 'zptscat':[],
-               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],'numzptstars':[], 'fwhm':[]}
+               'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],
+               'numzptstars':[], 'fwhm':[],'mjd':[]}
     zptfiles = []
     cntr = 0
     goodbigdata = copy(bigdata)
@@ -207,6 +208,7 @@ def grabstardata(imagedir,outfile,tfield):
                 #print('\t%s' % fname)
                 #print os.path.join(imagedir,dirName,fname)
                 if not tfield in fname: continue
+                if not '_'+filt+'_' in fname: continue
                 #    if not 'SN-S1' in fname: continue
                 try:
                     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
@@ -215,8 +217,8 @@ def grabstardata(imagedir,outfile,tfield):
                     print 'could not load'
                     continue
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
-                print zptdata.keys()
-                raw_input()
+                #print zptdata.keys()
+                #raw_input()
                 if not fname in zptfiles:
                     try:
                         #if True:
@@ -224,7 +226,7 @@ def grabstardata(imagedir,outfile,tfield):
                         test = zptdata['fwhm']
                         test = zptdata['zptscat']
                         test = zptdata['flux_starh']
-                        test = zptdata['fit_magsmp']
+                        test = zptdata['fit_mag']
 
                         try:
                             if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
@@ -265,7 +267,7 @@ def grabstardata(imagedir,outfile,tfield):
                         bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
                         bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
                         bigdata['fwhm'].extend(zptdata['flux_starh']*0. + zptdata['fwhm'])
-
+                        bigdata['mjd'].extend(zptdata['flux_starh']*0. + zptdata['mjd'])
                         bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         psfs = zptdata['psfs']
@@ -320,6 +322,8 @@ def grabstardata(imagedir,outfile,tfield):
     #sys.exit()
 
     np.savez(outfile, **bigdata)
+    print np.unique(bigdata['mjd'])
+    sys.exit()
     #os.system('ifdh rm ' + outfile)
     #os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     #os.system('rm dat.dat')
