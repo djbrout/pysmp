@@ -6516,7 +6516,7 @@ def resid(param, psf, im, sigma, fitrad, sky, psfmag):
 def starresid(param, psf, im, se, fitrad, sky, gain):
     weight = 1. / (se**2 + psf * np.max([0, float(param)]) / gain + 1.)
     model = psf * param  + sky
-    residsig = (im - model) * weight * fitrad
+    residsig = (im - model)**2 * weight * fitrad
     return np.array(residsig.ravel())
 
 
