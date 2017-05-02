@@ -2770,7 +2770,7 @@ class smp:
                                         #sexrms
 
                                     print sexsky,sexrms,np.mean(image_stamp.ravel()),np.std(image_stamp.ravel())
-                                    raw_input('sss')
+                                    #raw_input('sss')
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
                                     #CHECK FOR DIFFIM FLAGS
@@ -4721,6 +4721,8 @@ class smp:
         psf = psf/np.sum(psf.ravel())
         fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
                                    full_output=False)
+        print cov.shape
+        raw_input('covshape')
         sim =  sky + fluxls * psf
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
