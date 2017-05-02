@@ -4722,7 +4722,7 @@ class smp:
         fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
                                    full_output=False)
         print fluxls,cov
-        print len(cov)
+        #print len(cov)
         raw_input('covshape')
         sim =  sky + fluxls * psf
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
