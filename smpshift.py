@@ -4721,7 +4721,7 @@ class smp:
         psf = psf/np.sum(psf.ravel())
         fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
                                    full_output=False)
-        print cov
+        print fluxls,cov
         print len(cov)
         raw_input('covshape')
         sim =  sky + fluxls * psf
