@@ -1995,7 +1995,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
 
     plt.clf()
-    plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,500,1.),color='black')
+    plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,70,1.),color='black')
     plt.xlabel('SkyERR')
     plt.ylabel('#')
     plt.savefig(outdir + '/' + title + 'skyerrhist.png')
