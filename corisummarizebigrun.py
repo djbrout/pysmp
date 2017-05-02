@@ -215,8 +215,8 @@ def grabstardata(imagedir,outfile,tfield):
                     print 'could not load'
                     continue
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
-                #print zptdata.keys()
-                #raw_input()
+                print zptdata.keys()
+                raw_input()
                 if not fname in zptfiles:
                     try:
                         #if True:
