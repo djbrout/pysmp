@@ -4736,13 +4736,27 @@ class smp:
         except:
             return 1, 1, 1, 1, 1, True
 
-        def f(x):
-            return np.sum((x*psf-im+sky)/(skyerr+x**.5))
+        vals = \
+            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+flux**.5, [1], full_output=True)[0]
 
-        m = Minuit(f,x=guess_scale)
+        def f(x):
+            return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
+
+        m = Minuit(f)
         m.migrad()
-        print m.values[0],flux,fluxls  # {'x': 2,'y': 3,'z': 4}
+        iflux = m.values[0]
+
+        def f(x):
+            return (x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+iflux**.5)
+
+        m = Minuit(f)
+        m.migrad()
+
+        print m.values[0],flux,fluxls[0]  # {'x': 2,'y': 3,'z': 4}
         print m.errors[0],errmag,cov  # {'x': 1,'y': 1,'z': 1}
+
+
+
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
