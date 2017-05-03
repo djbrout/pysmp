@@ -4748,8 +4748,15 @@ class smp:
         fluxminuit = m.values['x']
         fluxerrminuit = m.errors['x']
 
+        from lmfit import Minimizer, Parameters
+        def f(x,):
+            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
 
-        print fluxminuit,fluxerrminuit,fluxls
+        params = Parameters()
+        params.add('x', value=guess_scale)
+        fitter = Minimizer(f, params)
+        v = fitter.minimize(method='leastsq')
+        print fluxls,v.params['x']
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
