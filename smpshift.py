@@ -4739,9 +4739,9 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
         def f(x):
-            return np.sum((x*psf-im+sky)/(skyerr))
+            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
 
-        m = Minuit(f,x=fluxls,limit_x=(fluxls-1e6,fluxls+1e6))
+        m = Minuit(f,x=fluxls)
         m.migrad()
         #print m.values['x'],flux,fluxls  # {'x': 2,'y': 3,'z': 4}
         #print m.errors['x'],errmag,cov  # {'x': 1,'y': 1,'z': 1}
@@ -4749,7 +4749,7 @@ class smp:
         fluxerrminuit = m.errors['x']
 
 
-        print fluxminuit,fluxerrminuit
+        print fluxminuit,fluxerrminuit,fluxls
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
