@@ -4744,14 +4744,14 @@ class smp:
 
         m = Minuit(f)
         m.migrad()
-        print m.values
-        iflux = m.values['x']
-
-        def f(x):
-            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+iflux**.5))
-
-        m = Minuit(f)
-        m.migrad()
+        # print m.values
+        # iflux = m.values['x']
+        #
+        # def f(x):
+        #     return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+iflux**.5))
+        #
+        # m = Minuit(f)
+        # m.migrad()
 
         print m.values['x'],flux,fluxls[0]  # {'x': 2,'y': 3,'z': 4}
         print m.errors['x'],errmag,cov  # {'x': 1,'y': 1,'z': 1}
