@@ -4749,7 +4749,7 @@ class smp:
         fluxerrminuit = m.errors['x']
 
 
-
+        print fluxminuit,fluxerrminuit
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
