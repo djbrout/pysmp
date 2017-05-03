@@ -4737,7 +4737,7 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
         def f(x):
-            return np.sum((x*psf-im+sky)/(skyerr+x**.5))
+            return np.sum((x*psf-im+sky)/(skyerr))
 
         m = Minuit(f,x=guess_scale)
         m.migrad()
