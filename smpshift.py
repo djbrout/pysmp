@@ -4756,7 +4756,7 @@ class smp:
 
         params = Parameters()
         params.add('scale', value=guess_scale, min=1.)
-        params.add('pow', value=.5, vary=False)
+        #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
         v = fitter.minimize(method='leastsq')
@@ -4773,7 +4773,7 @@ class smp:
 
         params = Parameters()
         params.add('scale', value=fluxlm, min=1.)
-        params.add('pow', value=.5, vary=False)
+        #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
         v = fitter.minimize(method='leastsq')
