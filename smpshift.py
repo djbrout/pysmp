@@ -5970,7 +5970,9 @@ class smp:
             mde = v.params['m'].value
             mdeerr = v.params['m'].stderr
 
-
+            med, rmsaddin, num = self.iterstat(
+                float(mde) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
+                startMedian=True, sigmaclip=3, iter=10)
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
             #                              startMedian=True, sigmaclip=3, iter=10)
 
@@ -6176,10 +6178,10 @@ class smp:
 
                 np.savez(mag_compare_out
                          , cat_magsmp=mag_cat[goodstarcols]
-                         , fit_magsmp=-2.5 * np.log10(fluxcol[goodstarcols])
+                         , fit_mag=-2.5 * np.log10(fluxcol[goodstarcols])
                          , fit_mag_err=-2.5 * np.log10(fluxcol[goodstarcols]) + 2.5 * np.log10(fluxcol[goodstarcols] + flux_star_std[goodstarcols])
-                         , flux_starh=fluxcol[goodstarcols]
-                         , flux_star_std=flux_star_std[goodstarcols]
+                         , flux_starlm=fluxcol[goodstarcols]
+                         , flux_star_stdlm=flux_star_std[goodstarcols]
                          , chisqu=flux_chisq[goodstarcols]
                          , ras=ras[goodstarcols]
                          , decs=decs[goodstarcols]
@@ -6187,8 +6189,8 @@ class smp:
                          , centroideddecs=thisdec[goodstarcols]
                          , ids=ids[goodstarcols]
                          , rmsaddin=rmsaddin
-                         , fit_zpt=md
-                         , fit_zpt_std=std
+                         , fit_zpt=mde
+                         , fit_zpt_std=mdeerr
                          , sky=starsky[goodstarcols]
                          , skyerr=starskyerr[goodstarcols]
                          , cat_zpt=cat_zpt
@@ -6309,7 +6311,7 @@ class smp:
 
         if bad:
             return 0,0,0,0,0,0,0
-        return(md,std,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols])
+        return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols])
 
     def get_fwhm_of_2d_psf(self,psfstamp):
 
