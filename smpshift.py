@@ -4749,7 +4749,7 @@ class smp:
         fluxerrminuit = m.errors['x']
 
         from lmfit import Minimizer, Parameters
-        def f(x,):
+        def f(x):
             return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
 
         params = Parameters()
