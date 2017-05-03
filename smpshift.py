@@ -20,7 +20,6 @@ import mpfitexpr
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 from iminuit import Minuit
-from lmfit import Minimizer, Parameters
 
 #import scipy.ndimage
 import matplotlib as m
@@ -48,6 +47,8 @@ import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
+from lmfit import Minimizer, Parameters
+
 import scipy.optimize as opti
 psfexworked = False
 try:
