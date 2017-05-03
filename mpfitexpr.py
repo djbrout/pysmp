@@ -56,7 +56,7 @@ def mpfitexpr(func, x, y, err , start_params, check=True, full_output=False,
 			#exec '%s=__import__("%s")'%(a,b) in globals(),locals()
 			hash[i]= __import__(i)
 	def myfunc(p,fjac=None,x=None, y=None, err=None):
-		return [0, eval('(y-(%s))/(err+p[0]**.5)'%func,hash,locals())]
+		return [0, eval('(y-(%s))/(err)'%func,hash,locals())]
 
 	myre = "(?:[^a-zA-Z_]|^)p\[(\d+)\]"
 	r = re.compile(myre)
