@@ -4759,6 +4759,7 @@ class smp:
         print fluxls,v.params['x'].value
         print v.params['x'].__dict__
         fluxlm = v.params['x'].value
+        fluxerrlm = v.params['x'].stderr
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
