@@ -4723,20 +4723,20 @@ class smp:
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
         psf = psf/np.sum(psf.ravel())
-        fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
-                                   full_output=False)
-        fluxerrls = cov
-        # print fluxls,cov
-
-
-        vals = \
-        mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
-        try:
-            errmag = vals.perror[0]
-            fluxmp = vals.params[0]
-            fluxerrmp = errmag
-        except:
-            return 1, 1, 1, 1, 1, True
+        # fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
+        #                            full_output=False)
+        # fluxerrls = cov
+        # # print fluxls,cov
+        #
+        #
+        # vals = \
+        # mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
+        # try:
+        #     errmag = vals.perror[0]
+        #     fluxmp = vals.params[0]
+        #     fluxerrmp = errmag
+        # except:
+        #     return 1, 1, 1, 1, 1, True
 
         # def f(x):
         #     return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
@@ -4769,7 +4769,7 @@ class smp:
         def f(prms):
             scale = prms['scale']
             power = prms['pow']
-            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + scale**power)
+            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + fluxlm**.5)
 
         params = Parameters()
         params.add('scale', value=fluxlm, min=1.)
@@ -4784,7 +4784,7 @@ class smp:
 
         #print skyerr,errmag
         #print len(cov)
-        raw_input('comparison')
+        # raw_input('comparison')
         sim =  sky + fluxls * psf
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
