@@ -4725,6 +4725,7 @@ class smp:
         psf = psf/np.sum(psf.ravel())
         fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
                                    full_output=False)
+        fluxerrls = cov
         # print fluxls,cov
 
 
@@ -4732,7 +4733,8 @@ class smp:
         mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
         try:
             errmag = vals.perror[0]
-            flux = vals.params[0]
+            fluxmp = vals.params[0]
+            fluxerrmp = errmag
         except:
             return 1, 1, 1, 1, 1, True
 
@@ -4743,7 +4745,10 @@ class smp:
         m.migrad()
         print m.values['x'],flux,fluxls  # {'x': 2,'y': 3,'z': 4}
         print m.errors['x'],errmag,cov  # {'x': 1,'y': 1,'z': 1}
-        fluxls = flux
+        fluxminuit = m.values['x']
+        fluxerrminuit = m.errors['x']
+
+
 
         #print skyerr,errmag
         #print len(cov)
@@ -4893,7 +4898,7 @@ class smp:
         #         print 'star too dim...'
         if not bad:
             #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
-            return vals.params[0], errmag, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+            return fluxls, fluxerrls, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
             return 1,1,1,1,1,True
 
