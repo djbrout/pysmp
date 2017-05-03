@@ -4,8 +4,8 @@ import numpy as np
 import time
 
 allindexes = range(0,100)
-#filts = ['g','r','i','z']
-filts = ['g']
+filts = ['g','r','i','z']
+#filts = ['g']
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
