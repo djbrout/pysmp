@@ -4757,6 +4757,7 @@ class smp:
         fitter = Minimizer(f, params)
         v = fitter.minimize(method='leastsq')
         print fluxls,v.params['x'].value
+        print v.params['x'].__dict__
         fluxlm = v.params['x'].value
         #print skyerr,errmag
         #print len(cov)
