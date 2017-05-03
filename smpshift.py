@@ -4744,6 +4744,7 @@ class smp:
 
         m = Minuit(f)
         m.migrad()
+        print m.values
         iflux = m.values['x']
 
         def f(x):
