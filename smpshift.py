@@ -4741,6 +4741,7 @@ class smp:
 
         m = Minuit(f,x=guess_scale)
         m.migrad()
+        fluxls = flux
         print m.values['x'],flux,fluxls  # {'x': 2,'y': 3,'z': 4}
         print m.errors['x'],errmag,cov  # {'x': 1,'y': 1,'z': 1}
         #print skyerr,errmag
