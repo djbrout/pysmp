@@ -4740,14 +4740,14 @@ class smp:
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+flux**.5, [1], full_output=True)[0]
 
         def f(x):
-            return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
+            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
 
         m = Minuit(f)
         m.migrad()
         iflux = m.values[0]
 
         def f(x):
-            return (x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+iflux**.5)
+            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+iflux**.5))
 
         m = Minuit(f)
         m.migrad()
