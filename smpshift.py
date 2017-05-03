@@ -4755,15 +4755,15 @@ class smp:
             return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+scale**power)
 
         params = Parameters()
-        params.add('x', value=guess_scale)
+        params.add('scale', value=guess_scale)
         params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
         v = fitter.minimize(method='leastsq')
-        print fluxls,v.params['x'].value
-        print v.params['x'].__dict__
-        fluxlm = v.params['x'].value
-        fluxerrlm = v.params['x'].stderr
+        print fluxls,v.params['scale'].value
+        print v.params['scale'].__dict__
+        fluxlm = v.params['scale'].value
+        fluxerrlm = v.params['scale'].stderr
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
