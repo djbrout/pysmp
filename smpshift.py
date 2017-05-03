@@ -4755,7 +4755,7 @@ class smp:
             return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+scale**power)
 
         params = Parameters()
-        params.add('scale', value=guess_scale)
+        params.add('scale', value=guess_scale, min=1.)
         params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
