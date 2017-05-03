@@ -4739,6 +4739,12 @@ class smp:
         vals = \
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+flux**.5, [1], full_output=True)[0]
 
+        try:
+            errmag = vals.perror[0]
+            flux = vals.params[0]
+        except:
+            return 1, 1, 1, 1, 1, True
+
         def f(x):
             return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
 
@@ -4755,7 +4761,7 @@ class smp:
 
         print m.values['x'],flux,fluxls[0]  # {'x': 2,'y': 3,'z': 4}
         print m.errors['x'],errmag,cov  # {'x': 1,'y': 1,'z': 1}
-
+        fluxls = flux
 
 
         #print skyerr,errmag
