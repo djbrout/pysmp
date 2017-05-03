@@ -5921,7 +5921,7 @@ class smp:
             plt.clf()
             #plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
             plt.errorbar(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o')
+                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(md,3)))
             #print 'plot'
             #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.axhline(0,color='black')
@@ -5929,7 +5929,8 @@ class smp:
 
             plt.xlabel('cat mag')
             plt.ylabel('-2.5log10(flux)')
-            #plt.legend()
+
+            plt.legend()
             #print 'saving'
             #print mag_cat[goodstarcols].shape
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
