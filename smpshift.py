@@ -4739,7 +4739,7 @@ class smp:
         def f(x):
             return np.sum((x*psf-im+sky)/(skyerr+x**.5))
 
-        m = Minuit(f)
+        m = Minuit(f,x=guess_scale)
         m.migrad()
         print m.values['x'],flux,fluxls  # {'x': 2,'y': 3,'z': 4}
         print m.errors['x'],errmag,cov  # {'x': 1,'y': 1,'z': 1}
