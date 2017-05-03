@@ -4741,8 +4741,8 @@ class smp:
 
         m = Minuit(f,x=guess_scale)
         m.migrad()
-        print(m.values,flux,fluxls)  # {'x': 2,'y': 3,'z': 4}
-        print(m.errors,errmag,cov)  # {'x': 1,'y': 1,'z': 1}
+        print m.values[0],flux,fluxls  # {'x': 2,'y': 3,'z': 4}
+        print m.errors[0],errmag,cov  # {'x': 1,'y': 1,'z': 1}
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
