@@ -4768,7 +4768,7 @@ class smp:
         from lmfit import Minimizer, Parameters
         def f(prms):
             scale = prms['scale']
-            power = prms['pow']
+            #power = prms['pow']
             return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + fluxlm**.5)
 
         params = Parameters()
