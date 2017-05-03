@@ -4750,7 +4750,7 @@ class smp:
 
         from lmfit import Minimizer, Parameters
         def f(x):
-            return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
+            return (x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+x**.5)
 
         params = Parameters()
         params.add('x', value=guess_scale)
