@@ -4749,11 +4749,15 @@ class smp:
         # fluxerrminuit = m.errors['x']
 
         from lmfit import Minimizer, Parameters
-        def f(x):
-            return (x*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+x.value**.5)
+        def f(prms):
+            scale = prms['scale']
+            power = prms['pow']
+            return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+scale**power)
 
         params = Parameters()
         params.add('x', value=guess_scale)
+        params.add('pow', value=.5, vary=False)
+
         fitter = Minimizer(f, params)
         v = fitter.minimize(method='leastsq')
         print fluxls,v.params['x'].value
@@ -4767,7 +4771,7 @@ class smp:
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
         ndof = len(fitrad[fitrad==1].ravel())
-        # if dosimultaneous:
+        # if dosimultaneous
         #     # totalarea = 0
         #     # for x in np.arange(substamp):
         #     #     for y in np.arange(substamp):
