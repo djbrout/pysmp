@@ -19,6 +19,8 @@ sys.path.append("./mpfit/")
 import mpfitexpr
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
+from iminuit import Minuit
+
 #import scipy.ndimage
 import matplotlib as m
 import mcmc as mcmc3
@@ -4721,8 +4723,8 @@ class smp:
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
         psf = psf/np.sum(psf.ravel())
-        # fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
-        #                            full_output=False)
+        fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
+                                   full_output=False)
         # print fluxls,cov
 
 
@@ -4730,12 +4732,20 @@ class smp:
         mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
         try:
             errmag = vals.perror[0]
-            fluxls = vals.params[0]
+            flux = vals.params[0]
         except:
             return 1, 1, 1, 1, 1, True
+
+        def f(x):
+            return np.sum((x*psf-im+sky)/(skyerr+x**.5))
+
+        m = Minuit(f,x=guess_scale)
+        m.migrad()
+        print(m.values,flux,fluxls)  # {'x': 2,'y': 3,'z': 4}
+        print(m.errors,errmag,cov)  # {'x': 1,'y': 1,'z': 1}
         #print skyerr,errmag
         #print len(cov)
-        #raw_input('errmag')
+        raw_input('comparison')
         sim =  sky + fluxls * psf
         weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
