@@ -5978,14 +5978,14 @@ class smp:
 
 
             plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr)))
+                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
             #print 'plot'
             #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.axhline(0,color='black')
             #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-30.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
             plt.xlabel('cat mag')
-            plt.ylabel('-2.5log10(flux)')
+            plt.ylabel('zpt-2.5log10(flux)')
 
             plt.legend()
             #print 'saving'
