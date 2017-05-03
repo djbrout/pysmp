@@ -4751,12 +4751,12 @@ class smp:
         from lmfit import Minimizer, Parameters
         def f(prms):
             scale = prms['scale']
-            power = prms['pow']
-            return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr+scale**power)
+            #power = prms['pow']
+            return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr)
 
         params = Parameters()
         params.add('scale', value=guess_scale, min=1.)
-        params.add('pow', value=.5, vary=False)
+        #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
         v = fitter.minimize(method='leastsq')
@@ -4764,6 +4764,24 @@ class smp:
         print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
+
+        from lmfit import Minimizer, Parameters
+        def f(prms):
+            scale = prms['scale']
+            power = prms['pow']
+            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + fluxlm**.5)
+
+        params = Parameters()
+        params.add('scale', value=guess_scale, min=1.)
+        #params.add('pow', value=.5, vary=False)
+
+        fitter = Minimizer(f, params)
+        v = fitter.minimize(method='leastsq')
+        print fluxls, v.params['scale'].value
+        print v.params['scale'].__dict__
+        fluxlm = v.params['scale'].value
+        fluxerrlm = v.params['scale'].stderr
+
         #print skyerr,errmag
         #print len(cov)
         raw_input('comparison')
@@ -5934,8 +5952,33 @@ class smp:
             #print len(mag_cat[goodstarcols])
             plt.clf()
             #plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
-            plt.errorbar(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(md,3)))
+
+
+            from lmfit import Minimizer, Parameters
+
+            def f(p):
+                return (p['m']-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))/(flux_star_std[goodstarcols]/flux_star[goodstarcols])
+
+            params = Parameters()
+            params.add('m', value=31., min=20.)
+            # params.add('pow', value=.5, vary=False)
+
+            fitter = Minimizer(f, params)
+            v = fitter.minimize(method='leastsq')
+            #print fluxls, v.params['scale'].value
+            #print v.params['m'].__dict__
+            mde = v.params['m'].value
+            mdeerr = v.params['m'].stderr
+
+
+            # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
+            #                              startMedian=True, sigmaclip=3, iter=10)
+
+
+
+
+            plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
+                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr)))
             #print 'plot'
             #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
             plt.axhline(0,color='black')
