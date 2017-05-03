@@ -4739,7 +4739,7 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
         def f(x):
-            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
+            return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
 
         m = Minuit(f,x=fluxls)
         m.migrad()
@@ -4750,7 +4750,7 @@ class smp:
 
         from lmfit import Minimizer, Parameters
         def f(x):
-            return np.sum((x*psf.ravel()-im.ravel()+sky.ravel())/skyerr)
+            return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
 
         params = Parameters()
         params.add('x', value=guess_scale)
