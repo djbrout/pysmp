@@ -4759,7 +4759,11 @@ class smp:
         #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
-        v = fitter.minimize(method='leastsq')
+        try:
+            v = fitter.minimize(method='leastsq')
+        except:
+            print 'FAILED'*5
+            return 1, 1, 1, 1, 1, True
         #print fluxls,v.params['scale'].value
         #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
@@ -4776,7 +4780,11 @@ class smp:
         #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
-        v = fitter.minimize(method='leastsq')
+        try:
+            v = fitter.minimize(method='leastsq')
+        except:
+            print 'FAILED'*5
+            return 1, 1, 1, 1, 1, True
         #print fluxls, v.params['scale'].value
         #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
