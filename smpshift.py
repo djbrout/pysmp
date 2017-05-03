@@ -4739,7 +4739,7 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
         def f(x):
-            return np.sum((x*psf-im+sky)/(skyerr+x**.5))
+            return np.sum((x*psf-im+sky)/(skyerr))
 
         m = Minuit(f,x=guess_scale)
         m.migrad()
@@ -4898,7 +4898,7 @@ class smp:
         #         print 'star too dim...'
         if not bad:
             #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
-            return fluxminuit, fluxerrminuit, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
+            return fluxmp, fluxerrmp, mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
         else:
             return 1,1,1,1,1,True
 
