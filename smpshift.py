@@ -20,6 +20,7 @@ import mpfitexpr
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 from iminuit import Minuit
+from lmfit import Minimizer, Parameters
 
 #import scipy.ndimage
 import matplotlib as m
@@ -4748,7 +4749,6 @@ class smp:
         # fluxminuit = m.values['x']
         # fluxerrminuit = m.errors['x']
 
-        from lmfit import Minimizer, Parameters
         def f(prms):
             scale = prms['scale']
             #power = prms['pow']
@@ -4769,7 +4769,6 @@ class smp:
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
 
-        from lmfit import Minimizer, Parameters
         def f(prms):
             scale = prms['scale']
             #power = prms['pow']
