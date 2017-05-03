@@ -4785,8 +4785,8 @@ class smp:
         #print skyerr,errmag
         #print len(cov)
         # raw_input('comparison')
-        sim =  sky + fluxls * psf
-        weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxls)]) / gain + 1.)
+        sim =  sky + fluxlm * psf
+        weight = 1. / (skyerr ** 2 + psf * max([0,float(fluxlm)]) / gain + 1.)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
         ndof = len(fitrad[fitrad==1].ravel())
         # if dosimultaneous
