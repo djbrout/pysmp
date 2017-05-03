@@ -5959,11 +5959,11 @@ class smp:
             def f(p):
                 return (p['m']-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))/(flux_star_std[goodstarcols]/flux_star[goodstarcols])
 
-            params = Parameters()
-            params.add('m', value=31., min=20.)
+            lmfparams = Parameters()
+            lmfparams.add('m', value=31., min=20.)
             # params.add('pow', value=.5, vary=False)
 
-            fitter = Minimizer(f, params)
+            fitter = Minimizer(f, lmfparams)
             v = fitter.minimize(method='leastsq')
             #print fluxls, v.params['scale'].value
             #print v.params['m'].__dict__
