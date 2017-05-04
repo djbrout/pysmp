@@ -4890,7 +4890,7 @@ class smp:
 
         if not bad:
             mchisq = min(chisqvec)
-            idx = np.isclose(chisqvec, hh, atol=1.)
+            idx = np.isclose(chisqvec, hh, atol=2.3)
 
             argm = chisqvec == min(chisqvec)
 
