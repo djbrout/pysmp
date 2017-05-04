@@ -225,12 +225,12 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         test = zptdata['chisqu']
                         test = zptdata['fwhm']
                         test = zptdata['zptscat']
-                        test = zptdata['flux_starh']
+                        test = zptdata['flux_starlm']
                         test = zptdata['fit_mag']
-                        print zptdata['flux_star_std']
+                        print zptdata['flux_star_stdlm']
                         raw_input()
                         try:
-                            if len(zptdata['flux_star_std']) != len(zptdata['flux_starh']):
+                            if len(zptdata['flux_star_stdlm']) != len(zptdata['flux_starlm']):
                                 print 'skippeddddd'
                                 continue
                         except:
@@ -242,7 +242,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         except:
                             print 'FAO:'
                             continue
-                        if len(zptdata['cat_magsmp']) != len(zptdata['flux_starh']):
+                        if len(zptdata['cat_magsmp']) != len(zptdata['flux_starlm']):
                             print 'skipperrrrr'
                             continue
                         psfs = zptdata['psfs']
@@ -264,21 +264,21 @@ def grabstardata(imagedir,outfile,tfield,filt):
 
                         bigdata['skyerr'].extend(zptdata['skyerr'])
                         bigdata['sky'].extend(zptdata['sky'])
-                        bigdata['starflux'].extend(zptdata['flux_starh'])
-                        bigdata['starfluxerr'].extend(zptdata['flux_star_std'])
-                        bigdata['starzpt'].extend(zptdata['flux_starh']*0. + zptdata['fit_zpt'])
-                        bigdata['fwhm'].extend(zptdata['flux_starh']*0. + zptdata['fwhm'])
-                        bigdata['mjd'].extend(zptdata['flux_starh']*0. + zptdata['mjd'])
+                        bigdata['starflux'].extend(zptdata['flux_starlm'])
+                        bigdata['starfluxerr'].extend(zptdata['flux_star_stdlm'])
+                        bigdata['starzpt'].extend(zptdata['flux_starlm']*0. + zptdata['fit_zpt'])
+                        bigdata['fwhm'].extend(zptdata['flux_starlm']*0. + zptdata['fwhm'])
+                        bigdata['mjd'].extend(zptdata['flux_starlm']*0. + zptdata['mjd'])
                         bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         psfs = zptdata['psfs']
                         for i in range(len(psfs)):
                             bigdata['psf'].append(psfs[i,:,:])
-                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starh'][i])))
+                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starlm'][i])))
                             #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
                             #raw_input()
 
-                        fs = zptdata['flux_starh']
+                        fs = zptdata['flux_starlm']
                         zp = zptdata['fit_zpt']
                         ww = (cm < 20.) & (cm > 17.)
 
@@ -289,9 +289,9 @@ def grabstardata(imagedir,outfile,tfield,filt):
                                                      startMedian=True, sigmaclip=3, iter=10)
 
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
-                        bigdata['numzptstars'].extend(zptdata['flux_starh']*0. + len(cm[ww]))
-                        bigdata['rmsaddin'].extend(zptdata['flux_starh']*0. + std/np.sqrt(len(cm[ww])))
-                        bigdata['zptscat'].extend(zptdata['flux_starh']*0.+zptdata['zptscat'])
+                        bigdata['numzptstars'].extend(zptdata['flux_starlm']*0. + len(cm[ww]))
+                        bigdata['rmsaddin'].extend(zptdata['flux_starlm']*0. + std/np.sqrt(len(cm[ww])))
+                        bigdata['zptscat'].extend(zptdata['flux_starlm']*0.+zptdata['zptscat'])
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
