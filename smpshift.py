@@ -4799,7 +4799,7 @@ class smp:
         # raw_input('comparison')
         sim =  sky + fluxlm * psf
         gain = 1.
-        weight = 1. / (skyerr ** 2 + max([0,float(fluxlm)]) / gain + 1.)
+        weight = 1. / (skyerr ** 2 + max([0,float(fluxlm)]) / gain)
         mchisq = np.sum((im - sim) ** 2 * weight * fitrad)
         ndof = len(fitrad[fitrad==1].ravel())
         guess_scale = fluxlm
@@ -4840,7 +4840,7 @@ class smp:
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1./(skyerr**2 + abs(float(fluxlm))/gain + 1.) #holtzman
+                    weight = 1./(skyerr**2 + abs(float(fluxlm))/gain ) #holtzman
                     #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
@@ -4901,19 +4901,19 @@ class smp:
                 bad = True
 
         from scipy.optimize import curve_fit
-        from lmfit import Model
-        def f(scale):
-            #scale = prms['scale']
-            #power = prms['pow']
-            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + fluxlm**.5)
-        gmodel = Model(f)
-        params = gmodel.make_params(scale=fluxlm)
-        result = gmodel.fit(f,params)
-        print(result.fit_report())
+        # from lmfit import Model
+        # def f(scale):
+        #     #scale = prms['scale']
+        #     #power = prms['pow']
+        #     return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + fluxlm**.5)
+        # gmodel = Model(f)
+        # params = gmodel.make_params(scale=fluxlm)
+        # result = gmodel.fit(f,params)
+        # print(result.fit_report())
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq
         print 'mpfit',fluxmp,fluxerrmp
         print 'lmfit',fluxlm,fluxerrlm
-        print result.__dict__
+        # print result.__dict__
 
         if not bad:
             if not pdf_pages is None:
