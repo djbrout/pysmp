@@ -4899,9 +4899,22 @@ class smp:
                 sim = galconv + sky + fluxvec[argm]*psf
             except:
                 bad = True
+
+        from scipy.optimize import curve_fit
+        from lmfit import Model
+        def f(scale):
+            #scale = prms['scale']
+            #power = prms['pow']
+            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / (skyerr + fluxlm**.5)
+        gmodel = Model(f)
+        params = gmodel.make_params(scale=fluxlm)
+        result = gmodel.fit(f,params)
+        print(result.fit_report())
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq
-        print 'mpfit',fluxmp,fluxerrmp,
-        print 'lmfit',fluxlm,fluxerrlm,
+        print 'mpfit',fluxmp,fluxerrmp
+        print 'lmfit',fluxlm,fluxerrlm
+        print result.__dict__
+
         if not bad:
             if not pdf_pages is None:
                 fig = plt.figure(figsize=(20,10))
