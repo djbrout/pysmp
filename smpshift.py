@@ -4782,7 +4782,8 @@ class smp:
         #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
-
+        print v
+        print v.params
         vals = \
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+fluxlm**.5, [1], full_output=True)[0]
         try:
@@ -4792,7 +4793,7 @@ class smp:
         except:
             return 1, 1, 1, 1, 1, True
 
-
+        print vals
         #print skyerr,errmag
         #print len(cov)
         # raw_input('comparison')
@@ -4898,9 +4899,9 @@ class smp:
                 sim = galconv + sky + fluxvec[argm]*psf
             except:
                 bad = True
-        print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
-        print 'mpfit',fluxmp,fluxerrmp
-        print 'lmfit',fluxlm,fluxerrlm
+        print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq
+        print 'mpfit',fluxmp,fluxerrmp,
+        print 'lmfit',fluxlm,fluxerrlm,
         if not bad:
             if not pdf_pages is None:
                 fig = plt.figure(figsize=(20,10))
