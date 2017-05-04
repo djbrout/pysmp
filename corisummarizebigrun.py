@@ -227,8 +227,8 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         test = zptdata['zptscat']
                         test = zptdata['flux_starlm']
                         test = zptdata['fit_mag']
-                        print zptdata['flux_star_stdlm']
-                        raw_input()
+                        #print zptdata['flux_star_stdlm']
+                        #raw_input()
                         try:
                             if len(zptdata['flux_star_stdlm']) != len(zptdata['flux_starlm']):
                                 print 'skippeddddd'
