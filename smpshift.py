@@ -4814,7 +4814,7 @@ class smp:
                 for i in np.arange(-1000, 10000000, 1000):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt((skyerr/4.) + abs(float(i))/4.)
-                    weight = 1./(skyerr**2 + psf*abs(float(i))/gain+ 1.) #holtzman
+                    weight = 1./(skyerr**2 + abs(float(fluxlm))/gain+ 1.) #holtzman
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
                     #print 'sigtot',sigtot,'weight',weight,'chisqvec',chisqvec[-1]
@@ -4836,7 +4836,7 @@ class smp:
                 for i in np.arange(guess_scale - guessrange, guess_scale + guessrange, guess_scale_step):
                     sim = galconv + sky + i * psf
                     #sigtot = np.sqrt(skyerr ** 2 + abs(float(i)) / 4.)
-                    weight = 1./(skyerr**2 + psf*abs(float(i))/gain + 1.) #holtzman
+                    weight = 1./(skyerr**2 + abs(float(fluxlm))/gain + 1.) #holtzman
                     #weight = 1./((skyerr/4.) + abs(float(i))/4. + 1.)#first time around
                     chisqvec.append(np.sum((im - sim) ** 2 * weight * fitrad))
                     fluxvec.append(i)
