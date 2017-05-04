@@ -4784,7 +4784,7 @@ class smp:
         fluxerrlm = v.params['scale'].stderr
 
         vals = \
-            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+fluxlm, [1], full_output=True)[0]
+            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+fluxlm**.5, [1], full_output=True)[0]
         try:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
