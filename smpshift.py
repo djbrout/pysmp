@@ -4731,14 +4731,7 @@ class smp:
         # # print fluxls,cov
         #
         #
-        vals = \
-        mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr, [1], full_output=True)[0]
-        try:
-            errmag = vals.perror[0]
-            fluxmp = vals.params[0]
-            fluxerrmp = errmag
-        except:
-            return 1, 1, 1, 1, 1, True
+
 
         # def f(x):
         #     return (x*psf.ravel()-im.ravel()+sky.ravel())/skyerr
@@ -4789,6 +4782,16 @@ class smp:
         #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
+
+        vals = \
+            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), skyerr+fluxlm, [1], full_output=True)[0]
+        try:
+            errmag = vals.perror[0]
+            fluxmp = vals.params[0]
+            fluxerrmp = errmag
+        except:
+            return 1, 1, 1, 1, 1, True
+
 
         #print skyerr,errmag
         #print len(cov)
