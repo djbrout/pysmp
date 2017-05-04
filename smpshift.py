@@ -4947,7 +4947,7 @@ class smp:
             #     yo = round(y)
             #     imstamp = imstamp[yo - 17:yo + 17 + 1, xo - 17:xo + 17 + 1]
             #     imstamp = imstamp / np.sum(imstamp)
-            sim = sky + fluxmp
+            sim = sky + fluxmp*psf
             sum_data_minus_sim = np.sum(im-sim)
             #sim = galconv + sky + fluxvec[argm]*psf
             mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2)**.5 * fitrad)
