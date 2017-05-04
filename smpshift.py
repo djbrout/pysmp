@@ -4951,7 +4951,7 @@ class smp:
             sum_data_minus_sim = np.sum(im-sim)
             #sim = galconv + sky + fluxvec[argm]*psf
             mchisq = np.sum((im - sim) ** 2 * 1./(1./weight**2)**.5 * fitrad)
-            ndof = 1.
+            ndof = len(fitrad[fitrad == 1].ravel())
         # if not bad:
         #     if fluxvec[argm] > 8000000:
         #         bad = True
