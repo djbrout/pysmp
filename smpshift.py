@@ -4743,33 +4743,36 @@ class smp:
         # fluxminuit = m.values['x']
         # fluxerrminuit = m.errors['x']
 
-        def f(prms):
-            scale = prms['scale']
+        def f(scale,x):
+            #scale = prms['scale']
             #power = prms['pow']
-            return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr)
-        def fastier(xdata,prms):
+            return scale*psf.ravel()
+        def fastier(prms):
             scale = prms
             return 1000. + scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
 
-        params = Parameters()
-        params.add('scale', value=guess_scale, min=1.)
-        #params.add('pow', value=.5, vary=False)
+        # params = Parameters()
+        # params.add('scale', value=guess_scale, min=1.)
+        # #params.add('pow', value=.5, vary=False)
+        #
+        # fitter = Minimizer(f, params)
+        # try:
+        #     v = fitter.minimize(method='brute')
+        # except:
+        #     print 'FAILED'*5
+        #     return 1, 1, 1, 1, 1, True
+        # #print fluxls,v.params['scale'].value
+        # #print v.params['scale'].__dict__
+        # fluxlm = v.params['scale'].value
+        # fluxerrlm = v.params['scale'].stderr
+        # guess_scale = fluxlm
+        #
+        # from scipy.optimize import curve_fit
+        # popt, pcov = curve_fit(fastier, [0,0,0], [1000.,1000,1000], p0=guess_scale)
 
-        fitter = Minimizer(f, params)
-        try:
-            v = fitter.minimize(method='brute')
-        except:
-            print 'FAILED'*5
-            return 1, 1, 1, 1, 1, True
-        #print fluxls,v.params['scale'].value
-        #print v.params['scale'].__dict__
-        fluxlm = v.params['scale'].value
-        fluxerrlm = v.params['scale'].stderr
-        guess_scale = fluxlm
+        scales = []
 
-        from scipy.optimize import curve_fit
-        #popt, pcov = curve_fit(fastier, [0,0,0], [1000.,1000,1000], p0=guess_scale)
-
+        #for i in range(guess_scale-2000,guess_scale+2000,.5):
 
 
         # def f(prms):
@@ -4802,11 +4805,19 @@ class smp:
         except:
             return 1, 1, 1, 1, 1, True
 
+        from scipy.odr import *
+        quad_model = Model(f)
+        data = RealData((im.ravel()-sky.ravel())*0.,im.ravel()-sky.ravel(), sy=skyerr)
+        odr = ODR(data, f, beta0=[fluxmp])
+        # Run the regression.
+        out = odr.run()
+        # Use the in-built pprint method to give us results.
+        out.pprint()
         # print vals
-        print 'mpfit',fluxmp,errmag
+        print 'mpfit',fluxmp,errmag,skyerr
         #print 'lmfit',fluxlm,fluxerrlm
-        print 'astier',popt, pcov
-        #raw_input()
+        #print 'astier'#,skyer
+        raw_input()
         # #print len(cov)
         # # raw_input('comparison')
         # sim =  sky + fluxlm * psf
