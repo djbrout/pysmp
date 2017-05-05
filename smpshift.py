@@ -6064,8 +6064,10 @@ class smp:
             #                              startMedian=True, sigmaclip=3, iter=10)
 
 
-
-
+            print '-'*100
+            print 'Fit ZPT:',md,'+-',std
+            print 'W Fitzp:',med,'+-',mdeerr
+            print '-'*100
             plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
                          flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
             #print 'plot'
@@ -6210,6 +6212,8 @@ class smp:
                     , ids = ids[goodstarcols]
                     , rmsaddin = rmsaddin
                     ,fit_zpt = md
+                    ,wfit_zpt = med
+                    ,wfit_zpt_std=rmsaddin
                     ,fit_zpt_std = std
                     ,sky = starsky[goodstarcols]
                     ,skyerr = starskyerr[goodstarcols]
@@ -6276,8 +6280,10 @@ class smp:
                          , centroideddecs=thisdec[goodstarcols]
                          , ids=ids[goodstarcols]
                          , rmsaddin=rmsaddin
-                         , fit_zpt=mde
-                         , fit_zpt_std=mdeerr
+                         , fit_zpt=md
+                         , fit_zpt_std=std
+                         , wfit_zpt=mde
+                         , wfit_zpt_std=mdeerr
                          , sky=starsky[goodstarcols]
                          , skyerr=starskyerr[goodstarcols]
                          , cat_zpt=cat_zpt
