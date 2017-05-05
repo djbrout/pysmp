@@ -6281,7 +6281,7 @@ class smp:
                          , ids=ids[goodstarcols]
                          , rmsaddin=rmsaddin
                          , fit_zpt=md
-                         , fit_zpt_std=std
+                         , fit_zpt_std=std/np.sqrt(num)
                          , wfit_zpt=mde
                          , wfit_zpt_std=mdeerr
                          , sky=starsky[goodstarcols]
