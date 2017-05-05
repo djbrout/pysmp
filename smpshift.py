@@ -4818,6 +4818,7 @@ class smp:
                                    full_output=False)
 
         print 'mpfit',fluxmp,errmag,skyerr
+        print 'lsq',fluxls,cov
         #print 'lmfit',fluxlm,fluxerrlm
         #print 'astier'#,skyer
         raw_input()
@@ -4938,7 +4939,7 @@ class smp:
         # print(result.fit_report())
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
         print 'mpfit',fluxmp,fluxerrmp
-        print 'lmfit',fluxlm,fluxerrlm
+        #print 'lmfit',fluxlm,fluxerrlm
         # print result.__dict__
 
         if not bad:
