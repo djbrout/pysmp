@@ -4949,8 +4949,9 @@ class smp:
         # params = gmodel.make_params(scale=fluxlm)
         # result = gmodel.fit(f,params)
         # print(result.fit_report())
-        #print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
-        #print 'mpfit',fluxmp,fluxerrmp
+        print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
+        print 'mpfit',fluxmp,fluxerrmp
+        raw_input()
         #print 'lmfit',fluxlm,fluxerrlm
         # print result.__dict__
 
