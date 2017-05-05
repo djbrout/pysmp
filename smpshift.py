@@ -4751,20 +4751,20 @@ class smp:
             scale = prms
             return scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
 
-        # params = Parameters()
-        # params.add('scale', value=guess_scale, min=1.)
-        # #params.add('pow', value=.5, vary=False)
-        #
-        # fitter = Minimizer(f, params)
-        # try:
-        #     v = fitter.minimize(method='leastsq')
-        # except:
-        #     print 'FAILED'*5
-        #     return 1, 1, 1, 1, 1, True
-        # #print fluxls,v.params['scale'].value
-        # #print v.params['scale'].__dict__
-        # fluxlm = v.params['scale'].value
-        # fluxerrlm = v.params['scale'].stderr
+        params = Parameters()
+        params.add('scale', value=guess_scale, min=1.)
+        #params.add('pow', value=.5, vary=False)
+
+        fitter = Minimizer(f, params)
+        try:
+            v = fitter.minimize(method='leastsq')
+        except:
+            print 'FAILED'*5
+            return 1, 1, 1, 1, 1, True
+        #print fluxls,v.params['scale'].value
+        #print v.params['scale'].__dict__
+        fluxlm = v.params['scale'].value
+        fluxerrlm = v.params['scale'].stderr
 
         from scipy.optimize import curve_fit
         popt, pcov = curve_fit(fastier, 0, 0, p0=guess_scale)
@@ -4923,7 +4923,7 @@ class smp:
         # print(result.fit_report())
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
         print 'mpfit',fluxmp,fluxerrmp
-        #print 'lmfit',fluxlm,fluxerrlm
+        print 'lmfit',fluxlm,fluxerrlm
         # print result.__dict__
 
         if not bad:
