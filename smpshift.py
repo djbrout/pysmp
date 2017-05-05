@@ -5356,9 +5356,10 @@ class smp:
             #if i < float(params.numcheckstars):
             #    isnotcheckstars[i] = 0
 
-            if mc > 21:
+            if mc > 23.:
                 #print mc,'star too dim'
                 continue
+
             print i,x,y,mc,s,se
             #print 'nxpix',self.snparams.nxpix
             #print 'nypix',self.snparams.nypix
