@@ -20,6 +20,7 @@ import mpfitexpr
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
 sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 from iminuit import Minuit
+from scipy.odr import *
 
 #import scipy.ndimage
 import matplotlib as m
@@ -4805,7 +4806,6 @@ class smp:
         except:
             return 1, 1, 1, 1, 1, True
 
-        from scipy.odr import *
         quad_model = Model(f)
         data = RealData((im.ravel()-sky.ravel())*0.,im.ravel()-sky.ravel(), sy=skyerr)
         odr = ODR(data, f, beta0=[fluxmp])
