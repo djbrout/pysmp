@@ -4888,24 +4888,25 @@ class smp:
 
         else:
 
-            guessrange = None
-            if guess_scale is None:
-                for i in np.arange(-100000,2000000,5000):
-                    sim = galconv + sky + i*psf
-                    chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
-                    #print i,weight,chisqvec[-1]
-
-                    fluxvec.append(i)
-                fluxvec = np.array(fluxvec)
-                chisqvec = np.array(chisqvec)
-                guess_scale = fluxvec[np.argmin(chisqvec)]
-                guessrange = 5000
+            # guessrange = None
+            # if guess_scale is None:
+            #     for i in np.arange(-100000,2000000,5000):
+            #         sim = galconv + sky + i*psf
+            #         chisqvec.append(np.sum((im-sim)**2*weight*fitrad))
+            #         #print i,weight,chisqvec[-1]
+            #
+            #         fluxvec.append(i)
+            #     fluxvec = np.array(fluxvec)
+            #     chisqvec = np.array(chisqvec)
+            #     guess_scale = fluxvec[np.argmin(chisqvec)]
+            #     guessrange = 5000
 
             chisqvec = []
             fluxvec = []
-            if guessrange is None:
-                guessrange = .1*guess_scale
-            guess_scale_step = min([guess_scale/1000.,1.])
+            # if guessrange is None:
+            #     guessrange = .1*guess_scale
+            guessrange = 2000.
+            guess_scale_step = 1.#min([guess_scale/1000.,1.])
             weight = 1. / (skyerr ** 2)
             try:
                 for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
