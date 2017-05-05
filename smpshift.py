@@ -5012,6 +5012,7 @@ class smp:
         #     elif fluxvec[argm] < 100.:
         #         bad = True
         #         print 'star too dim...'
+        sim = sky + fluxmp * psf
         print 'chisq',np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad)/ndof
         if not bad:
             #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
