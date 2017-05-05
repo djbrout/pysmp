@@ -4747,12 +4747,15 @@ class smp:
             scale = prms['scale']
             #power = prms['pow']
             return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr)
-
+        def fastier(prms):
+            scale = prms['scale']
+            scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
+            return
         params = Parameters()
         params.add('scale', value=guess_scale, min=1.)
         #params.add('pow', value=.5, vary=False)
 
-        fitter = Minimizer(f, params)
+        fitter = Minimizer(fastier, params)
         try:
             v = fitter.minimize(method='leastsq')
         except:
@@ -4762,6 +4765,7 @@ class smp:
         #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
+
 
         # def f(prms):
         #     scale = prms['scale']
@@ -4794,7 +4798,9 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
         # print vals
-        # #print skyerr,errmag
+        print 'mpfit',fluxmp,errmag
+        print 'astier',fluxlm,fluxerrlm
+
         # #print len(cov)
         # # raw_input('comparison')
         # sim =  sky + fluxlm * psf
