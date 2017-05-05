@@ -4749,8 +4749,8 @@ class smp:
             return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr)
         def fastier(prms):
             scale = prms['scale']
-            scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
-            return
+            return scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
+
         params = Parameters()
         params.add('scale', value=guess_scale, min=1.)
         #params.add('pow', value=.5, vary=False)
