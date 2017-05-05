@@ -4788,25 +4788,25 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
 
-        def f(prms):
-            scale = prms['scale']
-            #power = prms['pow']
-            return ((scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2))*fitrad.ravel()
-
-        params = Parameters()
-        params.add('scale', value=fluxmp, min=1.)
-        #params.add('pow', value=.5, vary=False)
-
-        fitter = Minimizer(f, params)
-        #try:
-        v = fitter.minimize(method='leastsq')
-        #except:
-        #    print 'FAILED'*5
-        #    return 1, 1, 1, 1, 1, True
-        # #print fluxls, v.params['scale'].value
-        # #print v.params['scale'].__dict__
-        fluxlm = v.params['scale'].value
-        fluxerrlm = v.params['scale'].stderr
+        # def f(prms):
+        #     scale = prms['scale']
+        #     #power = prms['pow']
+        #     return ((scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2))*fitrad.ravel()
+        #
+        # params = Parameters()
+        # params.add('scale', value=fluxmp, min=1.)
+        # #params.add('pow', value=.5, vary=False)
+        #
+        # fitter = Minimizer(f, params)
+        # #try:
+        # v = fitter.minimize(method='leastsq')
+        # #except:
+        # #    print 'FAILED'*5
+        # #    return 1, 1, 1, 1, 1, True
+        # # #print fluxls, v.params['scale'].value
+        # # #print v.params['scale'].__dict__
+        # fluxlm = v.params['scale'].value
+        # fluxerrlm = v.params['scale'].stderr
 
         # from iminuit import Minuit
         # #def f(x):
@@ -4961,10 +4961,10 @@ class smp:
         plt.savefig('fluxtest.png')
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
         print 'mpfit',fluxmp,fluxerrmp
-        print 'lmfit',fluxlm,fluxerrlm
+        #print 'lmfit',fluxlm,fluxerrlm
         print 'minchisq',chisqvec[argm]
         print 'minchisq/ndof',chisqvec[argm]/len(fitrad[fitrad == 1].ravel())
-        raw_input()
+        #raw_input()
         #print 'lmfit',fluxlm,fluxerrlm
         # print result.__dict__
 
