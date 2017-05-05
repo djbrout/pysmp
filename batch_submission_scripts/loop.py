@@ -38,7 +38,8 @@ for i in allindexes:
             #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-            'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/s2lightcurves.txt \n' +
+            'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/s2lightcurves.txt '
+                                                                 '-o /project/projectdirs/des/djbrout/115sim \n' +
             '\n'
         )
         f.close()
