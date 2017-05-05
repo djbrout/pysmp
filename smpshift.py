@@ -4908,6 +4908,7 @@ class smp:
             guessrange = 2000.
             guess_scale_step = 1.#min([guess_scale/1000.,1.])
             weight = 1. / (skyerr ** 2)
+            guess_scale = fluxmp
             try:
                 for i in np.arange(guess_scale-guessrange,guess_scale+guessrange,guess_scale_step):
                     sim = sky + i*psf
