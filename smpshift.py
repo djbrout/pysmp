@@ -4747,8 +4747,8 @@ class smp:
             #scale = prms['scale']
             #power = prms['pow']
             return scale*psf.ravel()
-        def fastier(prms):
-            scale = prms
+        def fastier(x):
+            scale = x
             return 1000. + scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
 
         # params = Parameters()
@@ -4806,10 +4806,10 @@ class smp:
             return 1, 1, 1, 1, 1, True
 
         from iminuit import Minuit
-        def f(scale):
-            return scale*psf.ravel()
+        #def f(x):
+        #    return x*psf.ravel()
 
-        m = Minuit(f, x=2, error_y=skyerr, y=im.ravel() - sky.ravel(), print_level=1)
+        m = Minuit(fastier, x=fluxmp, print_level=1)
         m.migrad()
         print(m.values)  # {'x': 2,'y': 3,'z': 4}
         print(m.errors)  # {'x': 1,'y': 1,'z': 1}
