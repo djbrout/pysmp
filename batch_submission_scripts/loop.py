@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,100)
+allindexes = range(0,250)
 filts = ['g','r','i','z']
 #filts = ['g']
 #np.random.shuffle(allindexes)
@@ -20,10 +20,10 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=0:40:00\n' +
+            '#SBATCH --time=5:40:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'dsim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'dsim.log\n' +
-            '#SBATCH --job-name=x3sim'+filt+'_' + str(i) + '\n' +
+            '#SBATCH --job-name=s2sim'+filt+'_' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -38,7 +38,7 @@ for i in allindexes:
             #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-            'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt \n' +
+            'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/s2lightcurves.txt \n' +
             '\n'
         )
         f.close()
