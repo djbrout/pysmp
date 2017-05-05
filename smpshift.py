@@ -4791,18 +4791,18 @@ class smp:
         def f(prms):
             scale = prms['scale']
             #power = prms['pow']
-            return (scale * psf.ravel() - im.ravel() + sky.ravel())*fitrad.ravel() / np.sqrt(skyerr**2 + fluxlm)
+            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2 + fluxlm)
 
         params = Parameters()
         params.add('scale', value=fluxmp, min=1.)
         #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
-        try:
-            v = fitter.minimize(method='leastsq')
-        except:
-            print 'FAILED'*5
-            return 1, 1, 1, 1, 1, True
+        #try:
+        v = fitter.minimize(method='leastsq')
+        #except:
+        #    print 'FAILED'*5
+        #    return 1, 1, 1, 1, 1, True
         # #print fluxls, v.params['scale'].value
         # #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
