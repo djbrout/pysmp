@@ -4775,25 +4775,25 @@ class smp:
         #for i in range(guess_scale-2000,guess_scale+2000,.5):
 
 
-        # def f(prms):
-        #     scale = prms['scale']
-        #     #power = prms['pow']
-        #     return (scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2 + fluxlm)
-        #
-        # params = Parameters()
-        # params.add('scale', value=fluxlm, min=1.)
-        # #params.add('pow', value=.5, vary=False)
-        #
-        # fitter = Minimizer(f, params)
-        # try:
-        #     v = fitter.minimize(method='leastsq')
-        # except:
-        #     print 'FAILED'*5
-        #     return 1, 1, 1, 1, 1, True
+        def f(prms):
+            scale = prms['scale']
+            #power = prms['pow']
+            return (scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2 + fluxlm)
+
+        params = Parameters()
+        params.add('scale', value=fluxlm, min=1.)
+        #params.add('pow', value=.5, vary=False)
+
+        fitter = Minimizer(f, params)
+        try:
+            v = fitter.minimize(method='leastsq')
+        except:
+            print 'FAILED'*5
+            return 1, 1, 1, 1, 1, True
         # #print fluxls, v.params['scale'].value
         # #print v.params['scale'].__dict__
-        # fluxlm = v.params['scale'].value
-        # fluxerrlm = v.params['scale'].stderr
+        fluxlm = v.params['scale'].value
+        fluxerrlm = v.params['scale'].stderr
         # print v
         # print v.params
         vals = \
@@ -4958,6 +4958,7 @@ class smp:
         plt.savefig('fluxtest.png')
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
         print 'mpfit',fluxmp,fluxerrmp
+        print 'lmfit',fluxlm,fluxerrlm
         raw_input()
         #print 'lmfit',fluxlm,fluxerrlm
         # print result.__dict__
