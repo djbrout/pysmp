@@ -4933,7 +4933,7 @@ class smp:
             mchisq = min(chisqvec)
             idx = np.isclose(chisqvec, hh, atol=1.0)
 
-            argm = chisqvec == min(chisqvec)
+            argm =  np.argmin(chisqvec)
 
             try:
                 sim = galconv + sky + fluxvec[argm]*psf
