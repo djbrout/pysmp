@@ -4749,7 +4749,7 @@ class smp:
             return (scale*psf.ravel()-im.ravel()+sky.ravel())/(skyerr)
         def fastier(xdata,prms):
             scale = prms
-            return scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
+            return 1000. + scale * np.sum((1./skyerr**2)*psf*psf) - np.sum((1./skyerr**2)*psf*(im-sky))
 
         params = Parameters()
         params.add('scale', value=guess_scale, min=1.)
@@ -4768,7 +4768,7 @@ class smp:
         guess_scale = fluxlm
 
         from scipy.optimize import curve_fit
-        popt, pcov = curve_fit(fastier, 0, 0, p0=guess_scale)
+        popt, pcov = curve_fit(fastier, 0, 1000., p0=guess_scale)
 
 
 
