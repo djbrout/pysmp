@@ -4726,8 +4726,7 @@ class smp:
         #Make a mask with radius
         # fitrad = np.zeros([substamp,substamp])
         psf = psf/np.sum(psf.ravel())
-        # fluxls, cov = opti.leastsq(starresid, guess_scale, args=(psf, im, skyerr, fitrad, sky, gain),
-        #                            full_output=False)
+
         # fluxerrls = cov
         # # print fluxls,cov
         #
@@ -4798,7 +4797,7 @@ class smp:
         # print v
         # print v.params
         vals = \
-            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel(), im.ravel() - sky.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
+            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
         try:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
@@ -4806,14 +4805,18 @@ class smp:
         except:
             return 1, 1, 1, 1, 1, True
 
-        quad_model = Model(f)
-        data = RealData((im.ravel()-sky.ravel())*0.,im.ravel()-sky.ravel(), sy=skyerr)
-        odr = ODR(data, f, beta0=[fluxmp])
-        # Run the regression.
-        out = odr.run()
-        # Use the in-built pprint method to give us results.
-        out.pprint()
-        # print vals
+        # quad_model = Model(f)
+        # data = RealData((im.ravel()-sky.ravel())*0.,im.ravel()-sky.ravel(), sy=skyerr)
+        # odr = ODR(data, f, beta0=[fluxmp])
+        # # Run the regression.
+        # out = odr.run()
+        # # Use the in-built pprint method to give us results.
+        # out.pprint()
+        # # print vals
+
+        fluxls, cov = opti.leastsq(starresid, fluxmp, args=(psf, im, skyerr, fitrad, sky, gain),
+                                   full_output=False)
+
         print 'mpfit',fluxmp,errmag,skyerr
         #print 'lmfit',fluxlm,fluxerrlm
         #print 'astier'#,skyer
