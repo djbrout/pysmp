@@ -4791,7 +4791,7 @@ class smp:
         def f(prms):
             scale = prms['scale']
             #power = prms['pow']
-            return np.sum((scale * psf.ravel() - im.ravel() + sky.ravel())*fitrad.ravel() / np.sqrt(skyerr**2))
+            return ((scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2))*fitrad.ravel()
 
         params = Parameters()
         params.add('scale', value=fluxmp, min=1.)
