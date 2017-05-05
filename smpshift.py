@@ -4800,7 +4800,7 @@ class smp:
         # print vals
         print 'mpfit',fluxmp,errmag
         print 'astier',fluxlm,fluxerrlm
-
+        raw_input()
         # #print len(cov)
         # # raw_input('comparison')
         # sim =  sky + fluxlm * psf
