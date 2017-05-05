@@ -4775,13 +4775,26 @@ class smp:
         #for i in range(guess_scale-2000,guess_scale+2000,.5):
 
 
+
+        # print v
+        # print v.params
+        vals = \
+            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
+        try:
+            errmag = vals.perror[0]
+            fluxmp = vals.params[0]
+            fluxerrmp = errmag
+        except:
+            return 1, 1, 1, 1, 1, True
+
+
         def f(prms):
             scale = prms['scale']
             #power = prms['pow']
             return (scale * psf.ravel() - im.ravel() + sky.ravel())*fitrad.ravel() / np.sqrt(skyerr**2 + fluxlm)
 
         params = Parameters()
-        params.add('scale', value=guess_scale, min=1.)
+        params.add('scale', value=fluxmp, min=1.)
         #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
@@ -4794,16 +4807,6 @@ class smp:
         # #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
-        # print v
-        # print v.params
-        vals = \
-            mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
-        try:
-            errmag = vals.perror[0]
-            fluxmp = vals.params[0]
-            fluxerrmp = errmag
-        except:
-            return 1, 1, 1, 1, 1, True
 
         # from iminuit import Minuit
         # #def f(x):
