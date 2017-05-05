@@ -4950,6 +4950,11 @@ class smp:
         # params = gmodel.make_params(scale=fluxlm)
         # result = gmodel.fit(f,params)
         # print(result.fit_report())
+        plt.clf()
+        plt.plot(fluxvec,chisqvec)
+        #plt.xlim(fluxmp-1000.,fluxmp+1000.)
+        plt.ylim(chisqvec[argm]-1.,chisqvec[argm]+10.)
+        plt.savefig('fluxtest.png')
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
         print 'mpfit',fluxmp,fluxerrmp
         raw_input()
