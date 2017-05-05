@@ -4959,6 +4959,8 @@ class smp:
         print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
         print 'mpfit',fluxmp,fluxerrmp
         print 'lmfit',fluxlm,fluxerrlm
+        print 'minchisq',chisqvec[argm]
+        print 'minchisq/ndof',chisqvec[argm]/len(fitrad[fitrad == 1].ravel())
         raw_input()
         #print 'lmfit',fluxlm,fluxerrlm
         # print result.__dict__
