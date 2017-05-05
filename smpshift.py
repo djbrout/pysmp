@@ -4814,14 +4814,14 @@ class smp:
         # out.pprint()
         # # print vals
 
-        fluxls, cov = opti.leastsq(starresid, fluxmp, args=(psf, im, skyerr, fitrad, sky, gain),
-                                   full_output=False)
+        #fluxls, cov = opti.leastsq(starresid, fluxmp, args=(psf, im, skyerr, fitrad, sky, gain),
+        #                           full_output=False)
 
         print 'mpfit',fluxmp,errmag,skyerr
-        print 'lsq',fluxls,cov
+        #print 'lsq',fluxls,cov
         #print 'lmfit',fluxlm,fluxerrlm
         #print 'astier'#,skyer
-        raw_input()
+        #raw_input()
         # #print len(cov)
         # # raw_input('comparison')
         # sim =  sky + fluxlm * psf
