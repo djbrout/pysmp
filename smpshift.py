@@ -4768,7 +4768,7 @@ class smp:
         guess_scale = fluxlm
 
         from scipy.optimize import curve_fit
-        popt, pcov = curve_fit(fastier, 0, 1000., p0=guess_scale)
+        popt, pcov = curve_fit(fastier, [0,0,0], [1000.,1000,1000], p0=guess_scale)
 
 
 
