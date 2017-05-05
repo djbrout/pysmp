@@ -4810,7 +4810,8 @@ class smp:
         #    return x*psf.ravel()
 
         m = Minuit(fastier, x=fluxmp, print_level=1)
-        m.migrad()
+        m.migrad(ncall=100000)
+        m.hesse()
         print(m.values)  # {'x': 2,'y': 3,'z': 4}
         print(m.errors)  # {'x': 1,'y': 1,'z': 1}
 
