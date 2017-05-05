@@ -6065,7 +6065,7 @@ class smp:
 
 
             print '-'*100
-            print 'Fit ZPT:',md,'+-',std
+            print 'Fit ZPT:',md,'+-',std/np.sqrt(num)
             print 'W Fitzp:',mde,'+-',mdeerr
             print '-'*100
             plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
