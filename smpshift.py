@@ -4805,6 +4805,17 @@ class smp:
         except:
             return 1, 1, 1, 1, 1, True
 
+        from iminuit import Minuit
+        def f(scale):
+            return scale*psf.ravel()
+
+        m = Minuit(f, x=2, error_y=skyerr, y=im.ravel() - sky.ravel(), fix_y=True, print_level=1)
+
+        m = Minuit(f)
+        m.migrad()
+        print(m.values)  # {'x': 2,'y': 3,'z': 4}
+        print(m.errors)  # {'x': 1,'y': 1,'z': 1}
+
         # quad_model = Model(f)
         # data = RealData((im.ravel()-sky.ravel())*0.,im.ravel()-sky.ravel(), sy=skyerr)
         # odr = ODR(data, f, beta0=[fluxmp])
@@ -4818,6 +4829,7 @@ class smp:
         #                           full_output=False)
 
         print 'mpfit',fluxmp,errmag,skyerr
+        raw_input()
         #print 'lsq',fluxls,cov
         #print 'lmfit',fluxlm,fluxerrlm
         #print 'astier'#,skyer
