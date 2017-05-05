@@ -4781,7 +4781,7 @@ class smp:
             return (scale * psf.ravel() - im.ravel() + sky.ravel()) / np.sqrt(skyerr**2 + fluxlm)
 
         params = Parameters()
-        params.add('scale', value=fluxlm, min=1.)
+        params.add('scale', value=guess_scale, min=1.)
         #params.add('pow', value=.5, vary=False)
 
         fitter = Minimizer(f, params)
