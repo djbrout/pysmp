@@ -4765,6 +4765,7 @@ class smp:
         #print v.params['scale'].__dict__
         fluxlm = v.params['scale'].value
         fluxerrlm = v.params['scale'].stderr
+        guess_scale = fluxlm
 
         from scipy.optimize import curve_fit
         popt, pcov = curve_fit(fastier, 0, 0, p0=guess_scale)
