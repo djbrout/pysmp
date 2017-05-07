@@ -2519,7 +2519,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.15, 1.1))
+    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.12, 1.15))
     # plt.savefig('stdresid.png')
 
     # plt.clf()
@@ -2576,11 +2576,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .1)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, rv, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='orange', label='Phot + Shot + ZPT Scatter', linewidth=3,alpha=.95)
+    ax3.plot(ax, ayrms, color='orange', label='Phot + Shot + ZPT Scat', linewidth=3,alpha=.95)
     ax, ayrms = dt.binrms(catmag, rvorig, np.arange(16., max(catmag), .1), .1)
     ax3.plot(ax, ayrms, color='green', label='Phot + Shot', linewidth=3, alpha=.95)
     ax, ayrms = dt.binrms(catmag, rvz, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='blue', label='ZPT Scatter', linewidth=3, alpha=.95)
+    ax3.plot(ax, ayrms, color='blue', label='ZPT Scat', linewidth=3, alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.44, 0.8))
     # ww = hostmag > 25.
