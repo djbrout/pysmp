@@ -1991,6 +1991,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
+    fluxerr *= 1.0857
     fluxerrorig = fluxerr
     fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2 )
 
@@ -2069,12 +2070,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     #starmagerrr = 1.0857*fluxerr/flux
     starmagerr = 1.0857*np.sqrt(fluxerr**2)/flux #+ rmsaddin
-    starmagerr = np.sqrt(fluxerr**2)/flux #+ rmsaddin
+    starmagerr = 1.0857*np.sqrt(fluxerr**2)/flux #+ rmsaddin
     starmagerrorig = np.sqrt(fluxerrorig**2)/flux
     starmagerrzpt = np.sqrt(fluxerr**2)/flux #+ zptscat #+ rmsaddin
 
     rv = (flux-catflux)/(fluxerr**2)**.5
-    rvorig = (flux-catflux)/(fluxerrorig**2)**.5
+    rvorig = (flux-catflux)/((fluxerrorig)**2)**.5
     rvz = (flux-catflux)/((zptscat*flux)**2)**.5
     #print rv.shape,catmag.shape
     #raw_input()
