@@ -293,7 +293,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
                         bigdata['numzptstars'].extend(zptdata['flux_starmp']*0. + len(cm[ww]))
                         bigdata['rmsaddin'].extend(zptdata['flux_starmp']*0. + std)
-                        bigdata['zptscat'].extend(zptdata['flux_starmp']*0.+std*np.sqrt(len(cm[ww])))
+                        bigdata['zptscat'].extend(zptdata['flux_starmp']*0.+np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww])))
                         #print 'read in ',fname
                         zptfiles.append(fname)
 
