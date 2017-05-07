@@ -1991,9 +1991,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
-    fluxerr *= 1.0857
+    #luxerr *= 1.0857
     fluxerrorig = fluxerr
-    fluxerr = np.sqrt(fluxerr**2+ (1.0857*zptscat*flux)**2 )
+    fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2 )
 
 
 
