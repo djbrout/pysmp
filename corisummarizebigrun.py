@@ -2067,7 +2067,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerr = 1.0857*np.sqrt(fluxerr**2)/flux #+ rmsaddin
     starmagerr = np.sqrt(fluxerr**2)/flux #+ rmsaddin
 
-    starmagerrzpt = np.sqrt(fluxerr**2+zptscat*flux)/flux #+ rmsaddin
+    starmagerrzpt = np.sqrt(fluxerr**2)/flux + zptscat #+ rmsaddin
 
 
     rv = (flux-catflux)/(fluxerr**2+zptscat*flux)**.5
