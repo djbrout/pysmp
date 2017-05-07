@@ -2035,6 +2035,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     fluxerro = copy(fluxerr)
     #fluxerr = np.sqrt(fluxerr**2)
     catflux = 10**(.4*(np.array(zpt)-np.array(catmag)))
+
     #chisq = chisq[ww]
     #chisq = chisq[ww]*1/np.sqrt((abs(flux) / 3.))
     # plt.clf()
@@ -2115,7 +2116,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # print starmag[indices == ind]
         # raw_input()
         starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww) / np.sqrt(len(starww))
+        repeatability = np.std(starww)
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 5.:
             # if repeatability < .3:
@@ -2268,7 +2269,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     cntr = 0
     pltvecx = []
     pltvecy = []
-    for sme, sm, ind, r, d, cm, f, fe in zip(starmagerrzpt, starmag, indices, ras, decs, catmag, flux, fluxerr):
+    for sme, sm, ind, r, d, cm, f, fe,cf in zip(starmagerrzpt, starmag, indices, ras, decs, catmag, flux, fluxerr,catflux):
         cntr += 1
         if cntr > maxpoints: continue
         if cntr > 100000: continue
@@ -2283,7 +2284,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # if repeatability < .3:
             #plt.scatter(sme, repeatability, alpha=.3, color='black')
             pltvecy.append(repeatability)
-            pltvecx.append(sme)
+            pltvecx.append(1.08*fluxerr/flux)#sme)
     plt.scatter(pltvecx,pltvecy, alpha=.3, color='black')
     plt.xscale('log')
     plt.yscale('log')
