@@ -2292,7 +2292,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlim(.001, .05)
     plt.ylim(.001, .05)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.0003, .02, .0001), window=.0001,
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.001, .05, .0001), window=.0002,
                                dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
