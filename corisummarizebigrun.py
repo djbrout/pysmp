@@ -2075,7 +2075,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     rv = (flux-catflux)/(fluxerr**2)**.5
     rvorig = (flux-catflux)/(fluxerr**2)**.5
-    rvz = (flux-catflux)/((zptscat*flux)**2+(rmsaddin*flux)**2)**.5
+    rvz = (flux-catflux)/((zptscat*flux)**2)**.5
     #print rv.shape,catmag.shape
     #raw_input()
 
