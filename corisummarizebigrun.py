@@ -1991,7 +1991,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
-    fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2)
+    fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2 + (rmsaddin*flux)**2 )
 
     plt.clf()
     plt.scatter(catmag[(np.floor(mjd) == 56575)],fluxerr[(np.floor(mjd) == 56575)], color='black')
@@ -2109,7 +2109,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, f, fe,fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 100: continue
+        if cntr > 10000: continue
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
@@ -2119,11 +2119,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 5.:
             # if repeatability < .3:
-            plt.scatter(fh, sme - repeatability, alpha=.3, color='black')
+
             pltvecy.append(sme - repeatability)
             pltvecx.append(fh)
 
     #plt.xscale('log')
+    plt.scatter(pltvecx,pltvecy, alpha=.3, color='black')
     plt.xlabel('PSF FWHM')
     plt.ylabel('Repeatability - PhotErr')
     plt.xlim(3.5, 7)
@@ -2147,7 +2148,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 100: continue
+        if cntr > 10000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -2157,17 +2158,18 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         #repeatability = np.std(starmag[indices == ind])
         if len(starww) > 5.:
             #if repeatability < .3:
-            plt.scatter(sme,sme-repeatability,alpha=.3,color='black')
+
             pltvecy.append(sme-repeatability)
             pltvecx.append(sme)
 
+    plt.scatter(sme, sme - repeatability, alpha=.3, color='black')
     plt.xscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability - PhotErr')
-    plt.xlim(.0003,.02)
+    plt.xlim(.0005,.05)
     plt.ylim(-.02,.01)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0003,.007, .00001), window=.00004,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.05, .00001), window=.002,dontrootn=True)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
     plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
@@ -2179,44 +2181,44 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png')
 
     plt.clf()
-    cntr = 0
-    pltvecx = []
-    pltvecy = []
-    for sme, sm, ind, r, d, cm, cs, se, rai in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq, skyerr,
-                                                   rmsaddin):
-        cntr += 1
-        if cntr > maxpoints: continue
-        if cntr > 100: continue
-
-        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
-        # print starmag[indices == ind]
-        # raw_input()
-        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww)
-        # repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 4.:
-            # if repeatability < .3:
-            plt.scatter(rai, float(sme) - repeatability, alpha=.3, color='black')
-            pltvecy.append(sme - repeatability)
-            pltvecx.append(rai)
-
-    plt.xscale('log')
-    plt.xlim(0.003, .05)
-    plt.ylim(-.02, .01)
-
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.0001,
-                               dontrootn=True)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP', alpha=.6)
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
-
-    plt.xlabel('ZPT Uncertainty')
-    plt.ylabel('PhotErr - Repeatability')
-    plt.title(title+'BAND')
-    plt.plot([0., 1000], [0, 0], color='black')
-    plt.plot([0., 1000], [0, 1000], color='black', linestyle='--')
-
-    plt.savefig(outdir + '/' + title + '_repeatability_vs_zptuncertainty.png')
+    # cntr = 0
+    # pltvecx = []
+    # pltvecy = []
+    # for sme, sm, ind, r, d, cm, cs, se, rai in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq, skyerr,
+    #                                                rmsaddin):
+    #     cntr += 1
+    #     if cntr > maxpoints: continue
+    #     if cntr > 10000: continue
+    #
+    #     # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+    #     # print starmag[indices == ind]
+    #     # raw_input()
+    #     starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+    #     repeatability = np.std(starww)
+    #     # repeatability = np.std(starmag[indices == ind])
+    #     if len(starww) > 4.:
+    #         # if repeatability < .3:
+    #         plt.scatter(rai, float(sme) - repeatability, alpha=.3, color='black')
+    #         pltvecy.append(sme - repeatability)
+    #         pltvecx.append(rai)
+    #
+    # plt.xscale('log')
+    # plt.xlim(0.003, .05)
+    # plt.ylim(-.02, .01)
+    #
+    # ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(0., .1, .00005), window=.0001,
+    #                            dontrootn=True)
+    # plt.plot(ax, ay, linewidth=3, color='orange', label='SMP', alpha=.6)
+    # plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
+    # plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
+    #
+    # plt.xlabel('ZPT Uncertainty')
+    # plt.ylabel('PhotErr - Repeatability')
+    # plt.title(title+'BAND')
+    # plt.plot([0., 1000], [0, 0], color='black')
+    # plt.plot([0., 1000], [0, 1000], color='black', linestyle='--')
+    #
+    # plt.savefig(outdir + '/' + title + '_repeatability_vs_zptuncertainty.png')
 
     plt.clf()
     print 'saved zptu'
@@ -2227,7 +2229,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 20000: continue
+        if cntr > 10000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -2245,10 +2247,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.0003,.01)
-    plt.ylim(.0003,.02)
+    plt.xlim(.0005,.05)
+    plt.ylim(.0005,.05)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.005, .0001), window=.0001,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.05, .0001), window=.0002,dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
