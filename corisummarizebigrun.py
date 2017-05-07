@@ -2247,10 +2247,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.0005,.05)
-    plt.ylim(.0005,.05)
+    plt.xlim(.005,.05)
+    plt.ylim(.005,.05)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.05, .0001), window=.0002,dontrootn=True)
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.007,.05, .0001), window=.0005,dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
@@ -2528,7 +2528,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(16., max(catmag))
+    ax1.set_xlim(16.5, max(catmag))
     ax1.set_ylim(-4., 4.)
     ax1.set_xlabel('Cat Mag')
     ax1.set_ylabel('STD')
