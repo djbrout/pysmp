@@ -2064,9 +2064,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     #starmagerrr = 1.0857*fluxerr/flux
     starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
-    starmagerr = np.sqrt(fluxerr**2)/flux #+ rmsaddin
+    starmagerr = np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
 
-    starmagerrzpt = np.sqrt(fluxerr**2+zptscat*flux)/flux #+ rmsaddin
+    starmagerrzpt = np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
 
 
     rv = (flux-catflux)/(fluxerr**2+zptscat*flux)**.5
@@ -2277,7 +2277,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # print starmag[indices == ind]
         # raw_input()
         starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww)
+        repeatability = np.std(starww) / np.sqrt(len(starww))
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 5.:
             # if repeatability < .3:
@@ -2318,7 +2318,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # print starmag[indices == ind]
         # raw_input()
         starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww)
+        repeatability = np.std(starww)/np.sqrt(len(starww))
         rep[i] = repeatability*np.sqrt(len(starww))
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 4.:
@@ -2354,7 +2354,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # print starmag[indices == ind]
         # raw_input()
         starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww)
+        repeatability = np.std(starww) / np.sqrt(len(starww))
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 4.:
             # if repeatability < .3:
@@ -2389,7 +2389,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # print starmag[indices == ind]
         # raw_input()
         starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww)
+        repeatability = np.std(starww) / np.sqrt(len(starww))
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 4.:
             # if repeatability < .3:
