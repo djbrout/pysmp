@@ -1999,7 +1999,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.ylabel('#')
     plt.savefig(outdir + '/' + title + 'photerr.png')
     print outdir + '/' + title + 'photerr.png'
-    raw_input('skyerrdone')
+    #raw_input('skyerrdone')
 
     plt.clf()
     plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,70,1.),color='black')
@@ -2007,7 +2007,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.ylabel('#')
     plt.savefig(outdir + '/' + title + 'skyerrhist.png')
     print outdir + '/' + title + 'skyerrhist.png'
-    raw_input('skyerrdone')
+    #raw_input('skyerrdone')
 
     #print max(catmag)
     #print catmag.shape,rmsaddin.shape,ff.shape,indices.shape,flux.shape,fluxerr.shape,zpt.shape
@@ -2064,9 +2064,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     #starmagerrr = 1.0857*fluxerr/flux
     starmagerr = 1.0857*np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
-    starmagerr = np.sqrt(fluxerr**2+flux)/flux #+ rmsaddin
+    starmagerr = np.sqrt(fluxerr**2)/flux #+ rmsaddin
 
-    starmagerrzpt = np.sqrt(fluxerr**2+flux+zptscat*flux)/flux #+ rmsaddin
+    starmagerrzpt = np.sqrt(fluxerr**2+zptscat*flux)/flux #+ rmsaddin
 
 
     rv = (flux-catflux)/(fluxerr**2+zptscat*flux)**.5
