@@ -2519,7 +2519,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.15, 1.2))
+    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.15, 1.1))
     # plt.savefig('stdresid.png')
 
     # plt.clf()
@@ -2582,7 +2582,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax, ayrms = dt.binrms(catmag, rvz, np.arange(16., max(catmag), .1), .1)
     ax3.plot(ax, ayrms, color='blue', label='ZPT Scatter', linewidth=3, alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
-    ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.5, 0.8))
+    ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.44, 0.8))
     # ww = hostmag > 25.
     # ax, ayrms = dt.binrms(catmag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
     # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
