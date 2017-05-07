@@ -285,10 +285,10 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         #plt.scatter(cm[ww],float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         # plt.scatter(cm[ww],- 2.5*np.log10(fs[ww]))
                         # plt.savefig('testzpt.png')
-                        md, std = iterstat.iterstat(float(zp) - cm[ww] + 2.5*np.log10(fs[ww]),
+                        md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=3, iter=10)
 
-                        print zptdata['zptscat'],std*np.sqrt(len(cm[ww]))
+                        print zptdata['zptscat'],std
                         raw_input()
                         print 'worked now std',std/np.sqrt(len(cm[ww]))
                         bigdata['numzptstars'].extend(zptdata['flux_starmp']*0. + len(cm[ww]))
