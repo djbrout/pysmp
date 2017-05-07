@@ -2289,10 +2289,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlabel('Photometric Error + Zpt Scatter')
     plt.ylabel('Repeatability')
-    plt.xlim(.001, .05)
-    plt.ylim(.001, .05)
+    plt.xlim(.0005, .05)
+    plt.ylim(.0005, .05)
 
-    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.001, .05, .0001), window=.0002,
+    ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(.0005, .05, .0001), window=.0002,
                                dontrootn=True)
     photerr = copy(ax)
     repeaterr = copy(ay)
