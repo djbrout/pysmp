@@ -2519,7 +2519,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.1, 1.15))
+    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.12, 1.12))
     # plt.savefig('stdresid.png')
 
     # plt.clf()
