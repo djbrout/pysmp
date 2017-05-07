@@ -1992,7 +1992,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ff = (flux - catflux) / catflux
     st = np.std(ff)
     fluxerrorig = fluxerr
-    fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2 + (rmsaddin*flux)**2 )
+    fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2 )
 
 
 
@@ -2074,7 +2074,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerrzpt = np.sqrt(fluxerr**2)/flux #+ zptscat #+ rmsaddin
 
     rv = (flux-catflux)/(fluxerr**2)**.5
-    rvorig = (flux-catflux)/(fluxerr**2)**.5
+    rvorig = (flux-catflux)/(fluxerrorig**2)**.5
     rvz = (flux-catflux)/((zptscat*flux)**2)**.5
     #print rv.shape,catmag.shape
     #raw_input()
@@ -2576,11 +2576,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .1)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, rv, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='orange', label='Phot + Shot + ZPT Scat + Zpt Sig', linewidth=3,alpha=.95)
+    ax3.plot(ax, ayrms, color='orange', label='Phot + Shot + ZPT Scatter', linewidth=3,alpha=.95)
     ax, ayrms = dt.binrms(catmag, rvorig, np.arange(16., max(catmag), .1), .1)
     ax3.plot(ax, ayrms, color='green', label='Phot + Shot', linewidth=3, alpha=.95)
     ax, ayrms = dt.binrms(catmag, rvz, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='blue', label='ZPT Scat + Zpt Sig', linewidth=3, alpha=.95)
+    ax3.plot(ax, ayrms, color='blue', label='ZPT Scatter', linewidth=3, alpha=.95)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.4, 0.8))
     # ww = hostmag > 25.
