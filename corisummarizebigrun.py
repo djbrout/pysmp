@@ -38,7 +38,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
         data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter)
     else:
 
-        dostars = True
+        dostars = False
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
@@ -700,6 +700,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     #raw_input('asdffff')
     fluxerr = np.asarray(fluxerr)
     fakezpt = np.asarray(fakezpt)
+
+
 
     diffimflux = 10**(.4*(31-27.5))*np.array(diffimflux)
     diffimfluxerr = 10**(.4*(31-27.5))*np.array(diffimfluxerr)
