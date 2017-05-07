@@ -2283,7 +2283,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # if repeatability < .3:
             #plt.scatter(sme, repeatability, alpha=.3, color='black')
             pltvecy.append(repeatability)
-            pltvecx.append(1.08*f/fe)#sme)
+            pltvecx.append(sme)
     plt.scatter(pltvecx,pltvecy, alpha=.3, color='black')
     plt.xscale('log')
     plt.yscale('log')
