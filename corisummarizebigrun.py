@@ -1991,7 +1991,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
-    fluxerr = np.sqrt(fluxerr**2)
+    fluxerr = np.sqrt(fluxerr**2+ (zptscat*flux)**2)
 
     plt.clf()
     plt.scatter(catmag[(np.floor(mjd) == 56575)],fluxerr[(np.floor(mjd) == 56575)], color='black')
@@ -2067,8 +2067,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     starmagerr = 1.0857*np.sqrt(fluxerr**2)/flux #+ rmsaddin
     starmagerr = np.sqrt(fluxerr**2)/flux #+ rmsaddin
 
-    starmagerrzpt = np.sqrt(fluxerr**2)/flux + zptscat #+ rmsaddin
-
+    starmagerrzpt = np.sqrt(fluxerr**2)/flux #+ zptscat #+ rmsaddin
 
     rv = (flux-catflux)/(fluxerr**2+zptscat*flux)**.5
 
