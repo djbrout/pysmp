@@ -837,10 +837,10 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     #print np.unique(fakeflux)
     #raw_input('fakeflux')
 
-    plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.2,color='red')
-    ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
-                            np.arange(19, 28, .5))
-    plt.errorbar(ax, ay, aystd, markersize=15, color='red', fmt='o', label='DIFFIMG')
+    # plt.scatter(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww], alpha=.2,color='red')
+    # ax, ay, aystd = bindata(fakemag[ww], (diffimflux[ww] - fakeflux[ww]) / fakeflux[ww],
+    #                         np.arange(19, 28, .5))
+    # plt.errorbar(ax, ay, aystd, markersize=15, color='red', fmt='o', label='DIFFIMG')
 
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
     ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
