@@ -226,7 +226,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         test = zptdata['fwhm']
                         test = zptdata['zptscat']
                         test = zptdata['flux_starmp']
-                        test = zptdata['fit_mag']
+                        test = zptdata['fit_magc']
                         #print zptdata['flux_star_stdlm']
                         #raw_input()
                         try:
