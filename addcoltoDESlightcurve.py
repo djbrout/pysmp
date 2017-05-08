@@ -350,13 +350,6 @@ if __name__ == "__main__":
         dofaketflux = dofakedata['TRUEFLUXCNT'].values
         dofakeid = dofakedata['FAKEID'].values
         dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
-
-        dofakeX3data = pd.read_csv('data/X3_doFake.out', delim_whitespace=True, header=0)
-        dofakeS1data = pd.read_csv('data/S1_doFake.out', delim_whitespace=True, header=0)
-        dofakeS2data = pd.read_csv('data/S2_doFake.out', delim_whitespace=True, header=0)
-        print dofakeX3data.keys()
-        raw_input()
-
         print 'done reading dofake'
 
     cntr = 0
