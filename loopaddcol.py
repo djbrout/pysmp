@@ -14,7 +14,7 @@ for i in allindexes:
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=00:05:00\n' +
+        '#SBATCH --time=00:09:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_dsim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_dsim.log\n' +
         '#SBATCH --job-name=addcol_' + str(i) + '\n' +
@@ -25,7 +25,7 @@ for i in allindexes:
         '\n' +
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/116simdeep/SMP_RAW_SIM_v2 '
+        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --dofakes --savelcdir=/project/projectdirs/des/djbrout/116simdeep/SMP_RAW_SIMfakes_v2 '
                                                               '--resultsdir=/project/projectdirs/des/djbrout/116simdeep/ \n' +
         '\n'
     )
