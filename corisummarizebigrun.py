@@ -26,7 +26,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
     #getparametriczpt("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
 
     if not cacheddata:
-        dostars = False
+        dostars = True
         if dostars:
             grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield,filter)
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
@@ -75,7 +75,7 @@ def getparametriczpt(imagedir,outfile):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 1000.: break
+        if cntr > 10000.: break
         # print('Found directory: %s' % dirName)
         for fname in fileList:
             # print fname
@@ -200,7 +200,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 5000.: break
+        if cntr > 10000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -2111,7 +2111,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print outdir + '/' + title + 'fwhmhist.png'
     plt.clf()
 
-    maxpoints = 10000
+    maxpoints = 50000
 
     cntr = 0
     pltvecx = []
@@ -2119,7 +2119,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, f, fe,fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 50000: continue
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
@@ -2158,7 +2158,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 50000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -2239,7 +2239,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 50000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -2283,7 +2283,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, f, fe,cf in zip(starmagerrzpt, starmag, indices, ras, decs, catmag, flux, fluxerr,catflux):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 100000: continue
+        if cntr > 500000: continue
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
@@ -2363,7 +2363,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm,cs in zip(starmagerr, starmag, indices, ras, decs, catmag,chisq):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 50000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2398,7 +2398,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, cs,se in zip(starmagerr, starmag, indices, ras, decs, catmag, chisq,skyerr):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 100: continue
+        if cntr > 50000: continue
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
         # raw_input()
@@ -2790,7 +2790,7 @@ if __name__ == "__main__":
 
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/114simdeep/'
+    resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
@@ -2828,6 +2828,6 @@ if __name__ == "__main__":
             filter = str(a)
 
     print filter
-    tfield = 'SN-X3'
+    tfield = 'SN-S2'
     cd = '/global/cscratch1/sd/dbrout/v6/summary_results_'+tfield+'_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield)
