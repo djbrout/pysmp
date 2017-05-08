@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,100)
+allindexes = range(0,150)
 filts = ['g','r','i','z']
 #filts = ['g']
 #np.random.shuffle(allindexes)
@@ -39,7 +39,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt '
-                                                                 '-o /project/projectdirs/des/djbrout/115simdeep \n' +
+                                                                 '-o /project/projectdirs/des/djbrout/116simdeep \n' +
             '\n'
         )
         f.close()
