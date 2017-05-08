@@ -26,7 +26,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
     #getparametriczpt("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
 
     if not cacheddata:
-        dostars = True
+        dostars = False
         if dostars:
             grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield,filter)
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
