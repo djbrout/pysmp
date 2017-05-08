@@ -20,7 +20,7 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=0:20:00\n' +
+            '#SBATCH --time=17:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'dsim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'dsim.log\n' +
             '#SBATCH --job-name=s2sim'+filt+'_' + str(i) + '\n' +
