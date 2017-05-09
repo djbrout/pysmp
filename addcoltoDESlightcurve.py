@@ -3,7 +3,7 @@ import numpy as np
 import os
 from copy import copy
 import dilltools as dt
-
+import sys
 
 readmetext = '## Example output lightcurve file\n\
 Contains the original forced photometry lightcurve file structure with the addition of several columns\n\
@@ -188,35 +188,36 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #print exn, tzpt, tmag, tflux
                             #raw_input()
                         elif (dofakes) & (keepgoing):
-                            if fakeisthere:
-                                #tmag = float(line.split()[12])
-                                exn = line.split()[13].split('/')[-1].split('_')[1]
-
-                                expn = (dofakeexpnum == float(exn))
-                                #print tmag,exn,
-                                dfw = dofakeid == int(fakeid)
-                                www = expn & dfw
-                                #print dofakemag2[www]
-                                if not len(dofakemag2[www]) > 0:
-                                    #tmag = 99.
-                                    tzpt = 31.
-                                    #flux_zpt = 31.
-                                else:
-                                    tzpt = dofakezpt[www][0]
-                                    #flux_zpt = dofakezpt[www][0]
-                                #tzpt = float(line.split()[7])
-
-                            else:
-                                #tmag = 99.
-                                tzpt = 31.
-                                #flux_zpt = 31.
-                            tflux = flux[ww][0]
-                            fit_zpt = zptdata['fit_zpt']
-                            fit_zpt_std = zptdata['fit_zpt_std']
-                            flux_zpt = 31.
-                            tfluxerr = fluxerr[ww][0]
-                            tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
-                            tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+                            sys.exit('dofakes no longer allowed')
+                        #     if fakeisthere:
+                        #         #tmag = float(line.split()[12])
+                        #         exn = line.split()[13].split('/')[-1].split('_')[1]
+                        #
+                        #         expn = (dofakeexpnum == float(exn))
+                        #         #print tmag,exn,
+                        #         dfw = dofakeid == int(fakeid)
+                        #         www = expn & dfw
+                        #         #print dofakemag2[www]
+                        #         if not len(dofakemag2[www]) > 0:
+                        #             #tmag = 99.
+                        #             tzpt = 31.
+                        #             #flux_zpt = 31.
+                        #         else:
+                        #             tzpt = dofakezpt[www][0]
+                        #             #flux_zpt = dofakezpt[www][0]
+                        #         #tzpt = float(line.split()[7])
+                        #
+                        #     else:
+                        #         #tmag = 99.
+                        #         tzpt = 31.
+                        #         #flux_zpt = 31.
+                        #     tflux = flux[ww][0]
+                        #     fit_zpt = zptdata['fit_zpt']
+                        #     fit_zpt_std = zptdata['fit_zpt_std']
+                        #     flux_zpt = 31.
+                        #     tfluxerr = fluxerr[ww][0]
+                        #     tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+                        #     tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
 
                         elif keepgoing:
                             tflux = flux[ww][0]

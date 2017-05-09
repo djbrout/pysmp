@@ -25,7 +25,7 @@ for i in allindexes:
         '\n' +
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --dofakes --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIMshallow_v3 '
+        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIMshallow_v3 '
                                                               '--resultsdir=/project/projectdirs/des/djbrout/114sim/ \n' +
         '\n'
     )
