@@ -38,7 +38,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
         data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter)
     else:
 
-        dostars = False
+        dostars = True
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
