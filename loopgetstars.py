@@ -14,7 +14,7 @@ for i in filters:
         '#SBATCH -c 1\n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=00:09:00\n' +
+        '#SBATCH --time=04:00:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
         '#SBATCH --job-name=addcolshal_' + str(i) + '\n' +
