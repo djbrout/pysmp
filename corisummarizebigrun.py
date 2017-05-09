@@ -1244,12 +1244,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
 
 
-    ff = copy(fakeflux)
-    ff[ff < 1.] = 1.
-    plt.hist(fluxerr/ff,bins=20,normed=True)
-    plt.title(filter+' band')
-
-    plt.savefig('sinosn.png')
+    # ff = copy(fakeflux)
+    # ff[ff < 1.] = 1.
+    # plt.hist(fluxerr/ff,bins=20,normed=True)
+    # plt.title(filter+' band')
+    #
+    # plt.savefig('sinosn.png')
     plt.clf()
     np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
