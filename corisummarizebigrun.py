@@ -15,7 +15,7 @@ from copy import copy
 from scipy.stats import sigmaclip
 
 
-def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
+def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False):
 
     if isfermigrid:
         useifdh = True
@@ -26,7 +26,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
     #getparametriczpt("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
 
     if not cacheddata:
-        dostars = False
+        #dostars = True
         if dostars:
             grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield,filter)
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
@@ -38,7 +38,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,isfermigrid=False):
         data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter)
     else:
 
-        dostars = True
+        #dostars = True
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
@@ -2806,13 +2806,13 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile=","filter="])
+            longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile=","filter=",'dostars'])
 
     except getopt.GetoptError as err:
         print "No command line argument    s"
 
     filter = 'r'
-
+    dostars = False
     for o,a in opt:
         if o in ["-h","--help"]:
             print __doc__
@@ -2827,8 +2827,9 @@ if __name__ == "__main__":
             cd = a
         elif o in ["-b","--filter"]:
             filter = str(a)
-
+        elif o in ['--dostars']:
+            dostars = True
     print filter
     tfield = 'SN-X3'
     cd = '/global/cscratch1/sd/dbrout/v6/summary_results_'+tfield+'_'+filter+'.npz'
-    go(fakedir,resultsdir,cacheddata,cd,filter,tfield)
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
