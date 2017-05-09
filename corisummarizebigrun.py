@@ -2830,6 +2830,6 @@ if __name__ == "__main__":
         elif o in ['--dostars']:
             dostars = True
     print filter
-    tfield = 'SN-S2'
+    tfield = 'SN-X3'
     cd = '/global/cscratch1/sd/dbrout/v6/summary_results_'+tfield+'_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
