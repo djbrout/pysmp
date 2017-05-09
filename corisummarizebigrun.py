@@ -326,7 +326,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
 
     np.savez(outfile, **bigdata)
     print np.unique(bigdata['mjd'])
-    sys.exit()
+    #sys.exit()
     #os.system('ifdh rm ' + outfile)
     #os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
     #os.system('rm dat.dat')
