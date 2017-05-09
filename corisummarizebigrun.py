@@ -2137,7 +2137,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.xscale('log')
     plt.scatter(pltvecx,pltvecy, alpha=.3, color='black')
     plt.xlabel('PSF FWHM')
-    plt.ylabel('Repeatability - PhotErr')
+    plt.ylabel('PhotErr - Repeatability')
     plt.xlim(3.5, 7)
     plt.ylim(-.02, .01)
 
