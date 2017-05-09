@@ -1270,8 +1270,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fluxerr=fluxerr[ww]
     fluxerrz = fluxerrz[ww]
     d = d[ww]
-    dz = dz[ww]
-    df = df[ww]
+    #dz = dz[ww]
+    #df = df[ww]
     hostmag = hostmag[ww]
     chisqarr = chisqarr[ww]
 
