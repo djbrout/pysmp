@@ -1,5 +1,5 @@
 resultsdir = '/project/projectdirs/des/djbrout/114sim/'
-savelcdir = resultsdir+'/SMP_RAW_SIMshallow_v3'
+savelcdir = resultsdir+'/SMP_RAW_SIMtrueshallow_v3'
 
 
 import os
