@@ -1244,7 +1244,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #d = (fitmag - fakemag)/(fitmagerr*1.08)
 
 
-    # ff = copy(fakeflux)
+    ff = copy(fakeflux)
     # ff[ff < 1.] = 1.
     # plt.hist(fluxerr/ff,bins=20,normed=True)
     # plt.title(filter+' band')
