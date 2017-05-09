@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(0,1000)
+allindexes = range(0,500)
 
 for i in allindexes:
 
@@ -17,7 +17,7 @@ for i in allindexes:
         '#SBATCH --time=00:09:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
-        '#SBATCH --job-name=addcolshal_' + str(i) + '\n' +
+        '#SBATCH --job-name=deep_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
         '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -25,8 +25,8 @@ for i in allindexes:
         '\n' +
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIMshallow_v3 '
-                                                              '--resultsdir=/project/projectdirs/des/djbrout/114sim/ \n' +
+        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/116simdeep/SMP_RAW_SIMdeep_v3 '
+                                                              '--resultsdir=/project/projectdirs/des/djbrout/116simdeep/ \n' +
         '\n'
     )
     f.close()
