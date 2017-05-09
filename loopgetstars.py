@@ -25,7 +25,7 @@ for i in filters:
         '\n' +
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
-        'python corisummarizebigrun.py --filter=' + str(i) + ' \n '
+        'python corisummarizebigrun.py --dostars --filter=' + str(i) + ' \n '
         '\n'
     )
     f.close()
