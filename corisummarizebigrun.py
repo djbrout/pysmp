@@ -408,7 +408,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
         #raw_input()
         fakeid = f.split('_')[-2]
         cntr += 1
-        if cntr > 250: continue
+        if cntr > 5000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -2830,6 +2830,6 @@ if __name__ == "__main__":
         elif o in ['--dostars']:
             dostars = True
     print filter
-    tfield = 'SN-X3'
+    tfield = 'SN-S2'
     cd = '/global/cscratch1/sd/dbrout/v6/summary_results_'+tfield+'_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
