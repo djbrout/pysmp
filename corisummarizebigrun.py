@@ -703,9 +703,6 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
 
 
-    diffimflux = 10**(.4*(31-27.5))*np.array(diffimflux)
-    diffimfluxerr = 10**(.4*(31-27.5))*np.array(diffimfluxerr)
-
     #dmag  = -2.5*np.log10(diffimflux) + oldfakezpt
     #diffimflux = 10**(.4*(31-dmag))
 
@@ -1269,6 +1266,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakeflux= fakeflux[ww]
     fluxerr=fluxerr[ww]
     fluxerrz = fluxerrz[ww]
+    diffimflux = diffimflux[ww]
+    diffimfluxerr = diffimfluxerr[ww]
     d = d[ww]
     #dz = dz[ww]
     #df = df[ww]
