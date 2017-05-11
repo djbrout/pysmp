@@ -6403,7 +6403,7 @@ class smp:
         #    os.system('ifdh cp -D -r ./zpts/ ' + self.zptoutpath)
         #    print 'copied from worker to zpt path',self.zptoutpath
         #sys.exit()
-
+        raw_input('stopped')
         if bad:
             return 0,0,0,0,0,0,0
         return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols])
