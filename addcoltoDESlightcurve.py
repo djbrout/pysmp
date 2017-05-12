@@ -395,7 +395,7 @@ if __name__ == "__main__":
             #for sn in sne[:]:
             #cntr += 1
             #print sn
-            if cntr > 100:
+            if cntr > 10000:
                 continue
             if 'starfits' in sn:
                 continue
