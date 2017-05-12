@@ -411,8 +411,8 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
-            print smpfile
-            pkmjd = open(smpfile).readlines()[10].split()[1]
+            print lcfile
+            pkmjd = open(lcfile).readlines()[10].split()[1]
             print pkmjd
             raw_input()
             inplace = False
