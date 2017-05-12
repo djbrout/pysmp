@@ -355,6 +355,28 @@ if __name__ == "__main__":
         dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
         print 'done reading dofake'
 
+    tsne = []
+    for sn in sne[:]:
+        for i, filt in enumerate(filts):
+            snbad = False
+            if 'starfits' in sn:
+                continue
+
+            lcfile = lcdir+'/'+sn+'.dat'
+            #if not filt is None:
+            smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            #else:
+            #    continue
+            savelcfile = savelcdir+'/'+sn+'_smp.dat'
+            if not os.path.exists(smpfile):
+                print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+                #os.system('echo '+sn+' '+filt+' >> '+missingfile)
+                snbad = True
+                continue
+        if not snbad:
+            tsne.append(sne)
+    sne = tsne
+
     cntr = 0
     for sn in sne[:]:
         mjd = []
