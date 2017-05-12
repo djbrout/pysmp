@@ -48,8 +48,8 @@ print 'reading dofake'
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
 
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,
-                    dofakes=False,faketrueflux=False,filt=None,saveinplace=False):
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,
+                    dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     idobs=np.array(idobs,dtype='int')
     #print 'inside'
     if not os.path.exists(os.path.basename(saveloc)):
@@ -122,141 +122,147 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             elif line.split(' ')[0] == 'VARNAMES:':
                 wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
             elif line.split(' ')[0] == 'OBS:':
-                #print len(line.replace('#', '').split())
-                #band = line.split()[4]
+                if float(line.split(' ')[3]) < pkmjd - mjdminus:
+                    wline = ''
+                elif float(line.split(' ')[3]) < pkmjd - mjdminus:
+                    wline = ''
+                else:
 
-                #if filt is None:
-                #    wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
-                #elif band != filt:
-                #    wline = line
-                #    #continue
-                #print line
-                #raw_input()
-                #else:
-                tidobs = float(line.split()[1])
-                #print tidobs,idobs
-                #raw_input()
-                if int(tidobs) in idobs:
-                    ww = np.isclose(idobs,tidobs,atol=0.1)# & (filt == band)
-                    #print fluxerr[ww]
+                    #print len(line.replace('#', '').split())
+                    #band = line.split()[4]
+
+                    #if filt is None:
+                    #    wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 '+str(int(FAILED_SMP_FLAG))+'\n'
+                    #elif band != filt:
+                    #    wline = line
+                    #    #continue
+                    #print line
                     #raw_input()
-                    keepgoing = True
-                    if len(fluxerr[ww]) == 1:
-                        #print 'here',dofakes
-                        try:
-                            zptdata = np.load(zptfiles[ww][0])
-                        except:
-                            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
-                                    int(FAILED_SMP_FLAG)) + '\n'
-                            keepgoing = False
-                        if (faketrueflux) & (keepgoing):
-                            if fakeisthere:
-                                tmag = float(line.split()[12])
-                                exn = line.split()[13].split('/')[-1].split('_')[1]
+                    #else:
+                    tidobs = float(line.split()[1])
+                    #print tidobs,idobs
+                    #raw_input()
+                    if int(tidobs) in idobs:
+                        ww = np.isclose(idobs,tidobs,atol=0.1)# & (filt == band)
+                        #print fluxerr[ww]
+                        #raw_input()
+                        keepgoing = True
+                        if len(fluxerr[ww]) == 1:
+                            #print 'here',dofakes
+                            try:
+                                zptdata = np.load(zptfiles[ww][0])
+                            except:
+                                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                                        int(FAILED_SMP_FLAG)) + '\n'
+                                keepgoing = False
+                            if (faketrueflux) & (keepgoing):
+                                if fakeisthere:
+                                    tmag = float(line.split()[12])
+                                    exn = line.split()[13].split('/')[-1].split('_')[1]
 
-                                expn = (dofakeexpnum == float(exn))
-                                #print tmag,exn,
-                                dfw = dofakeid == int(fakeid)
-                                www = expn & dfw
-                                #print dofakemag2[www]
-                                if not len(dofakemag2[www]) > 0:
+                                    expn = (dofakeexpnum == float(exn))
+                                    #print tmag,exn,
+                                    dfw = dofakeid == int(fakeid)
+                                    www = expn & dfw
+                                    #print dofakemag2[www]
+                                    if not len(dofakemag2[www]) > 0:
+                                        tmag = 99.
+                                        tzpt = 31.
+                                        flux_zpt = 31.
+                                    else:
+                                        tzpt = dofakezpt[www][0]
+                                        flux_zpt = dofakezpt[www][0]
+                                    #tzpt = float(line.split()[7])
+
+                                else:
                                     tmag = 99.
                                     tzpt = 31.
                                     flux_zpt = 31.
-                                else:
-                                    tzpt = dofakezpt[www][0]
-                                    flux_zpt = dofakezpt[www][0]
-                                #tzpt = float(line.split()[7])
 
-                            else:
-                                tmag = 99.
-                                tzpt = 31.
+                                fit_zpt = zptdata['fit_zpt']
+                                fit_zpt_std = 0.
+                                #tflux = 10 ** (.4 * (tzpt - tmag ))
+                                tflux = 10**(.4*(tzpt - tmag))
+                                tflux *= 10 ** (-1. * .4 * (fit_zpt - tzpt))
+                                #print tflux,fit_zpt,tzpt
+                                #print 'hereeee'
+                                #raw_input()
+                                tfluxerr = tflux**.5
+                                fit_zpt = tzpt
+                                #tfluxerr *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
+
+                                #print exn, tzpt, tmag, tflux
+                                #raw_input()
+                            elif (dofakes) & (keepgoing):
+                                sys.exit('dofakes no longer allowed')
+                            #     if fakeisthere:
+                            #         #tmag = float(line.split()[12])
+                            #         exn = line.split()[13].split('/')[-1].split('_')[1]
+                            #
+                            #         expn = (dofakeexpnum == float(exn))
+                            #         #print tmag,exn,
+                            #         dfw = dofakeid == int(fakeid)
+                            #         www = expn & dfw
+                            #         #print dofakemag2[www]
+                            #         if not len(dofakemag2[www]) > 0:
+                            #             #tmag = 99.
+                            #             tzpt = 31.
+                            #             #flux_zpt = 31.
+                            #         else:
+                            #             tzpt = dofakezpt[www][0]
+                            #             #flux_zpt = dofakezpt[www][0]
+                            #         #tzpt = float(line.split()[7])
+                            #
+                            #     else:
+                            #         #tmag = 99.
+                            #         tzpt = 31.
+                            #         #flux_zpt = 31.
+                            #     tflux = flux[ww][0]
+                            #     fit_zpt = zptdata['fit_zpt']
+                            #     fit_zpt_std = zptdata['fit_zpt_std']
+                            #     flux_zpt = 31.
+                            #     tfluxerr = fluxerr[ww][0]
+                            #     tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+                            #     tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
+
+                            elif keepgoing:
+                                tflux = flux[ww][0]
+                                fit_zpt = zptdata['fit_zpt']
+                                fit_zpt_std = zptdata['fit_zpt_std']
                                 flux_zpt = 31.
+                                tfluxerr = np.sqrt(fluxerr[ww][0]**2 + (zptdata['zptscat']*flux[ww][0])**2 + flux[ww][0])
+                                #print tflux
 
-                            fit_zpt = zptdata['fit_zpt']
-                            fit_zpt_std = 0.
-                            #tflux = 10 ** (.4 * (tzpt - tmag ))
-                            tflux = 10**(.4*(tzpt - tmag))
-                            tflux *= 10 ** (-1. * .4 * (fit_zpt - tzpt))
-                            #print tflux,fit_zpt,tzpt
-                            #print 'hereeee'
+                            if keepgoing:
+                                tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
+                                tskyerr = skyerr[ww][0]
+                                thisflag = 0
+                                if flag[ww][0] == 1:
+                                    thisflag = DONTFIT_FLAG
+                                if chisq[ww][0] > 1.25:
+                                    thisflag = DONTFIT_FLAG
+                                if abs(tsky) > 1000:
+                                    thisflag = DONTFIT_FLAG
+                                if abs(tskyerr) < .5:
+                                    thisflag = DONTFIT_FLAG
+                                if (fit_zpt < 27.) | (fit_zpt > 35.):
+                                    thisflag = DONTFIT_FLAG
+                                if (fit_zpt_std > 0.2):
+                                    thisflag = DONTFIT_FLAG
+                                #print thisflag,chisq[ww][0]
+                                wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
+                                       ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
+                                       ' '+str(round(chisq[ww][0], 3))+ \
+                                       ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
+                                       ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
+
+                            #print wline
                             #raw_input()
-                            tfluxerr = tflux**.5
-                            fit_zpt = tzpt
-                            #tfluxerr *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
-
-                            #print exn, tzpt, tmag, tflux
-                            #raw_input()
-                        elif (dofakes) & (keepgoing):
-                            sys.exit('dofakes no longer allowed')
-                        #     if fakeisthere:
-                        #         #tmag = float(line.split()[12])
-                        #         exn = line.split()[13].split('/')[-1].split('_')[1]
-                        #
-                        #         expn = (dofakeexpnum == float(exn))
-                        #         #print tmag,exn,
-                        #         dfw = dofakeid == int(fakeid)
-                        #         www = expn & dfw
-                        #         #print dofakemag2[www]
-                        #         if not len(dofakemag2[www]) > 0:
-                        #             #tmag = 99.
-                        #             tzpt = 31.
-                        #             #flux_zpt = 31.
-                        #         else:
-                        #             tzpt = dofakezpt[www][0]
-                        #             #flux_zpt = dofakezpt[www][0]
-                        #         #tzpt = float(line.split()[7])
-                        #
-                        #     else:
-                        #         #tmag = 99.
-                        #         tzpt = 31.
-                        #         #flux_zpt = 31.
-                        #     tflux = flux[ww][0]
-                        #     fit_zpt = zptdata['fit_zpt']
-                        #     fit_zpt_std = zptdata['fit_zpt_std']
-                        #     flux_zpt = 31.
-                        #     tfluxerr = fluxerr[ww][0]
-                        #     tflux *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
-                        #     tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
-
-                        elif keepgoing:
-                            tflux = flux[ww][0]
-                            fit_zpt = zptdata['fit_zpt']
-                            fit_zpt_std = zptdata['fit_zpt_std']
-                            flux_zpt = 31.
-                            tfluxerr = np.sqrt(fluxerr[ww][0]**2 + (zptdata['zptscat']*flux[ww][0])**2 + flux[ww][0])
-                            #print tflux
-
-                        if keepgoing:
-                            tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
-                            tskyerr = skyerr[ww][0]
-                            thisflag = 0
-                            if flag[ww][0] == 1:
-                                thisflag = DONTFIT_FLAG
-                            if chisq[ww][0] > 1.25:
-                                thisflag = DONTFIT_FLAG
-                            if abs(tsky) > 1000:
-                                thisflag = DONTFIT_FLAG
-                            if abs(tskyerr) < .5:
-                                thisflag = DONTFIT_FLAG
-                            if (fit_zpt < 27.) | (fit_zpt > 35.):
-                                thisflag = DONTFIT_FLAG
-                            if (fit_zpt_std > 0.2):
-                                thisflag = DONTFIT_FLAG
-                            #print thisflag,chisq[ww][0]
-                            wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
-                                   ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
-                                   ' '+str(round(chisq[ww][0], 3))+ \
-                                   ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                                   ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
-
-                        #print wline
+                            #print line
                         #raw_input()
-                        #print line
-                    #raw_input()
-                else:
-                    wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
-                        int(FAILED_SMP_FLAG)) + '\n'
+                    else:
+                        wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                            int(FAILED_SMP_FLAG)) + '\n'
         except:
             e = sys.exc_info()[0]
             print e
@@ -277,7 +283,7 @@ if __name__ == "__main__":
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir+'/SMP_SIMonlygood_v3'
+    savelcdir = resultsdir+'/SMP_SIMshort_v3'
     fakes = False
     faketrueflux = False
 
@@ -411,10 +417,10 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
-            print lcfile
+            #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
-            print pkmjd
-            raw_input()
+            #print pkmjd
+            #raw_input()
             inplace = False
             #if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
@@ -434,7 +440,7 @@ if __name__ == "__main__":
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         #if filt == None and successful:
