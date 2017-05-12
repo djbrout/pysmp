@@ -374,7 +374,7 @@ if __name__ == "__main__":
                 snbad = True
                 continue
         if not snbad:
-            tsne.append(sne)
+            tsne.append(sn)
     sne = tsne
 
     cntr = 0
