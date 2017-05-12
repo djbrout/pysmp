@@ -122,9 +122,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             elif line.split(' ')[0] == 'VARNAMES:':
                 wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
             elif line.split(' ')[0] == 'OBS:':
+                print line.split(' ')[3]
+                raw_input()
                 if float(line.split(' ')[3]) < pkmjd - mjdminus:
                     wline = ''
-                elif float(line.split(' ')[3]) < pkmjd - mjdminus:
+                elif float(line.split(' ')[3]) > pkmjd + mjdplus:
                     wline = ''
                 else:
 
