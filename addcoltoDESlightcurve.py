@@ -386,7 +386,7 @@ if __name__ == "__main__":
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
-                os.system('echo '+sn+' '+filt+' > '+missingfile)
+                os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
 
             inplace = False
