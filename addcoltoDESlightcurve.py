@@ -357,8 +357,9 @@ if __name__ == "__main__":
 
     tsne = []
     for sn in sne[:]:
+        snbad = False
+
         for i, filt in enumerate(filts):
-            snbad = False
             if 'starfits' in sn:
                 continue
 
