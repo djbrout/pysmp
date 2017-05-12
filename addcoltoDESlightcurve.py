@@ -411,7 +411,9 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
-
+            print smpfile
+            raw_input()
+            pkmjd = open(smpfile).readlines()[10].split()[1]
             inplace = False
             #if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
