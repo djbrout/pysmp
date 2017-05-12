@@ -50,6 +50,7 @@ print 'reading dofake'
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
+    pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
     #print 'inside'
     if not os.path.exists(os.path.basename(saveloc)):
@@ -122,8 +123,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             elif line.split(' ')[0] == 'VARNAMES:':
                 wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
             elif line.split(' ')[0] == 'OBS:':
-                print line.split(' ')[3]
-                raw_input()
+                #print line.split(' ')[3]
+                #raw_input()
                 if float(line.split(' ')[3]) < pkmjd - mjdminus:
                     wline = ''
                 elif float(line.split(' ')[3]) > pkmjd + mjdplus:
