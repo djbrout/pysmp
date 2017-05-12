@@ -281,7 +281,6 @@ if __name__ == "__main__":
     fakes = False
     faketrueflux = False
 
-
     filts = ['g','r','i','z']
 
     import sys, getopt
@@ -323,6 +322,9 @@ if __name__ == "__main__":
         os.mkdir(os.path.basename(savelcdir))
     if not os.path.exists(savelcdir):
         os.mkdir(savelcdir)
+
+
+    missingfile = resultsdir+'/missing.txt'
 
     #readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
     #readme.write(readmetext)
@@ -384,6 +386,7 @@ if __name__ == "__main__":
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+                os.system('echo '+sn+' '+filt+' > '+missingfile)
                 continue
 
             inplace = False
