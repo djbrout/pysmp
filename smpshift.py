@@ -2932,7 +2932,8 @@ class smp:
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
 
-                                    print 'fakemag',snparams.fake_truemag[j],'mjdflag',smp_dict['mjd_flag'][i],'scale',scale
+
+                                    #print 'fakemag',snparams.fake_truemag[j],'mjdflag',smp_dict['mjd_flag'][i],'scale',scale
                                     #raw_input()
 
                                     #print   snparams.peakmjd - params.mjdminus ,smp_dict['mjd'][i],snparams.peakmjd + params.mjdplus
