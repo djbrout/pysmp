@@ -1253,7 +1253,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     #np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
-    d = (flux - fakeflux) / ((fluxerr**2 )**.5)
+    d = (flux - fakeflux) / ((fluxerr**2. )**.5)
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
     df = (diffimflux - fakeflux) / ((diffimfluxerr**2 )**.5)
     ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) & (fluxerr > 0.)
@@ -1515,7 +1515,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                             np.arange(20., 26., .1),window=2.)
     ax4.plot([19, 28.7], [0, 0],color='grey')
 
-    ax, ayrms = dt.binrms(fakemag, d, np.arange(20., 28, .1), 1.5)
+    ax, ayrms = dt.binrms(fakemag[d<3.], d[d<3.], np.arange(20., 28, .1), 1.5)
     ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
     # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
