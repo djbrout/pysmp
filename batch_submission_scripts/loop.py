@@ -20,7 +20,7 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=30:00:00\n' +
+            '#SBATCH --time=35:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'x3sim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'x3sim.log\n' +
             '#SBATCH --job-name=sim'+filt+'_' + str(i) + '\n' +
@@ -41,7 +41,8 @@ for i in allindexes:
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
             'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt '
-                                                                  '-o /project/projectdirs/des/djbrout/116simdeep \n' +
+                                                                  '-o /project/projectdirs/des/djbrout/116simdeep '
+                                                                 '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
             '\n'
         )
         f.close()
