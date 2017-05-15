@@ -389,7 +389,7 @@ if __name__ == "__main__":
 
     print 'TOTAL SNE:',len(sne)
     cntr = 0
-    for sn in sne[:]:
+    for sn in sne[::-1]:
         mjd = []
         flux = []
         fluxerr = []
