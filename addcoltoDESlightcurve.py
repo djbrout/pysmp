@@ -365,7 +365,7 @@ if __name__ == "__main__":
         print 'done reading dofake'
 
     tsne = []
-    for sn in sne[::-1]:
+    for sn in sne[:]:
         snbad = False
 
         for i, filt in enumerate(filts):
@@ -388,7 +388,7 @@ if __name__ == "__main__":
     sne = tsne
 
     cntr = 0
-    for sn in sne[:]:
+    for sn in sne[::-1]:
         mjd = []
         flux = []
         fluxerr = []
