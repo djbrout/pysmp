@@ -387,6 +387,7 @@ if __name__ == "__main__":
             tsne.append(sn)
     sne = tsne
 
+    print 'TOTAL SNE:',len(sne)
     cntr = 0
     for sn in sne[::-1]:
         mjd = []
