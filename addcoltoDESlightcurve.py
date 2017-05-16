@@ -364,6 +364,7 @@ if __name__ == "__main__":
         dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
         print 'done reading dofake'
 
+    a = open('failed.txt','w')
     tsne = []
     for sn in sne[:]:
         snbad = False
@@ -380,13 +381,14 @@ if __name__ == "__main__":
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+                a.write(smpfile+'/n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
                 continue
         if not snbad:
             tsne.append(sn)
     sne = tsne
-
+    a.close()
     print 'TOTAL SNE:',len(sne)
     cntr = 0
     for sn in sne[::-1]:
