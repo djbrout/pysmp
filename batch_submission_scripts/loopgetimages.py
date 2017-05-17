@@ -32,7 +32,7 @@ for i in ccdnums:
             '#SBATCH --gres=craynetwork:1\n' +
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
-            'source getimages.sh ' + field + ' '+ i +
+            'source getimages.sh ' + field + ' '+ str(i) +
             #'source setup_scripts/setupcori2.sh\n'+
             #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
             #'echo "RUNNING NOW"\n'+
