@@ -13,7 +13,7 @@ ccdnums = range(0,63)
 #for i in ccdnums:
 if True:
     for field in fields:
-        print i
+        #print i
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
         f.write(
@@ -24,9 +24,9 @@ if True:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time=15:30:00\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+field+'getim.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+field+'getim.log\n' +
-            '#SBATCH --job-name='+field+'_' + str(i) + '\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/'+field+'getim.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' +field+'getim.log\n' +
+            '#SBATCH --job-name='+field+' \n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
