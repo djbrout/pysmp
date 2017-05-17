@@ -18,10 +18,8 @@ if True:
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
-            '#SBATCH --partition=shared\n' +
-            '#SBATCH -n 1\n' +
-            '#SBATCH -c 1\n'+
-            '#SBATCH -C haswell\n'+
+            '#SBATCH --partition=xfer\n' +
+            '#SBATCH -M escori\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time=00:30:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/'+field+'getim.log\n' +
