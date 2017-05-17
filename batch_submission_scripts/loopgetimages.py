@@ -8,7 +8,7 @@ import time
 #filts = ['g']
 #np.random.shuffle(allindexes)
 
-fields = ['S1','S2','X1','X2','X3','C1','C2','C3']#,'E1','E2'
+fields = ['S2','X1','X2','X3','C1','C2','C3']#,'E1','E2'
 ccdnums = range(0,63)
 #for i in ccdnums:
 if True:
@@ -50,6 +50,6 @@ if True:
             '\n'
         )
         f.close()
-        output = Popen(["sbatch --array=1-63%1 ", script], stdout=PIPE).communicate()
+        output = Popen(["sbatch --array=1-63%1 "+ script], stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
