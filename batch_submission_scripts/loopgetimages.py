@@ -50,6 +50,6 @@ if True:
             '\n'
         )
         f.close()
-        output = Popen(["sbatch --array=1-63%1 "+ script], stdout=PIPE).communicate()
+        output = Popen("sbatch --array=1-63%1 "+ script, stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
