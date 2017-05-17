@@ -10,7 +10,8 @@ import time
 
 fields = ['S1','S2','X1','X2','X3','C1','C2','C3']#,'E1','E2'
 ccdnums = range(0,63)
-for i in ccdnums:
+#for i in ccdnums:
+if True:
     for field in fields:
         print i
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
@@ -22,7 +23,7 @@ for i in ccdnums:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=00:30:00\n' +
+            '#SBATCH --time=15:30:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+field+'getim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+field+'getim.log\n' +
             '#SBATCH --job-name='+field+'_' + str(i) + '\n' +
@@ -32,7 +33,7 @@ for i in ccdnums:
             '#SBATCH --gres=craynetwork:1\n' +
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
-            'source getimages.sh ' + field + ' '+ str(i) +
+            'source getimages.sh ' + field +
             #'source setup_scripts/setupcori2.sh\n'+
             #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
             #'echo "RUNNING NOW"\n'+
@@ -49,6 +50,6 @@ for i in ccdnums:
             '\n'
         )
         f.close()
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        output = Popen(["sbatch --array=1-63%1 ", script], stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
