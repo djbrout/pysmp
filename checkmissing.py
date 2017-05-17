@@ -118,62 +118,63 @@ if __name__ == "__main__":
     sne = tsne
     a.close()
     print 'TOTAL SNE:',len(sne)
-    cntr = 0
-    for sn in sne[::-1]:
-        mjd = []
-        flux = []
-        fluxerr = []
-        zpt = []
-        rmsaddin = []
-        chi2 = []
-        sky = []
-        skyerr = []
-        smpflag = []
-        zptfile = []
-        idobs = []
-        cntr += 1
-        for i, filt in enumerate(filts):
-            #for sn in sne[:]:
-            #cntr += 1
-            #print sn
-            if cntr > 10000:
-                continue
-            if 'starfits' in sn:
-                continue
-
-            lcfile = lcdir+'/'+sn+'.dat'
-            #if not filt is None:
-            smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
-            #else:
-            #    continue
-            savelcfile = savelcdir+'/'+sn+'_smp.dat'
-            if not os.path.exists(smpfile):
-                print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
-                os.system('echo '+sn+' '+filt+' >> '+missingfile)
-                continue
-            #print lcfile
-            pkmjd = open(lcfile).readlines()[10].split()[1]
-            #print pkmjd
-            #raw_input()
-            inplace = False
-            #if i > 0: inplace = True
-            sndata = dt.readcol(smpfile,1,2)
-
-            mjd.extend(sndata['MJD'])
-            flux.extend(sndata['FLUX'])
-            fluxerr.extend(sndata['FLUXERR'])
-            zpt.extend(sndata['ZPT'])
-            rmsaddin.extend(sndata['RMSADDIN'])
-            chi2.extend(sndata['CHI2'])
-            sky.extend(sndata['SKY'])
-            skyerr.extend(sndata['SKYERR'])
-            smpflag.extend(sndata['SMP_FLAG'])
-            zptfile.extend(sndata['ZPTFILE'])
-            idobs.extend(sndata['ID_OBS'])
-
-        successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
-                     zpt, rmsaddin,
-                     chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
-
-        print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
+    print 'Written',missingfile
+    # cntr = 0
+    # for sn in sne[::-1]:
+    #     mjd = []
+    #     flux = []
+    #     fluxerr = []
+    #     zpt = []
+    #     rmsaddin = []
+    #     chi2 = []
+    #     sky = []
+    #     skyerr = []
+    #     smpflag = []
+    #     zptfile = []
+    #     idobs = []
+    #     cntr += 1
+    #     for i, filt in enumerate(filts):
+    #         #for sn in sne[:]:
+    #         #cntr += 1
+    #         #print sn
+    #         if cntr > 10000:
+    #             continue
+    #         if 'starfits' in sn:
+    #             continue
+    #
+    #         lcfile = lcdir+'/'+sn+'.dat'
+    #         #if not filt is None:
+    #         smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+    #         #else:
+    #         #    continue
+    #         savelcfile = savelcdir+'/'+sn+'_smp.dat'
+    #         if not os.path.exists(smpfile):
+    #             print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+    #             os.system('echo '+sn+' '+filt+' >> '+missingfile)
+    #             continue
+    #         #print lcfile
+    #         pkmjd = open(lcfile).readlines()[10].split()[1]
+    #         #print pkmjd
+    #         #raw_input()
+    #         inplace = False
+    #         #if i > 0: inplace = True
+    #         sndata = dt.readcol(smpfile,1,2)
+    #
+    #         mjd.extend(sndata['MJD'])
+    #         flux.extend(sndata['FLUX'])
+    #         fluxerr.extend(sndata['FLUXERR'])
+    #         zpt.extend(sndata['ZPT'])
+    #         rmsaddin.extend(sndata['RMSADDIN'])
+    #         chi2.extend(sndata['CHI2'])
+    #         sky.extend(sndata['SKY'])
+    #         skyerr.extend(sndata['SKYERR'])
+    #         smpflag.extend(sndata['SMP_FLAG'])
+    #         zptfile.extend(sndata['ZPTFILE'])
+    #         idobs.extend(sndata['ID_OBS'])
+    #
+    #     successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
+    #                  zpt, rmsaddin,
+    #                  chi2,sky,skyerr,smpflag,zptfile,
+    #                  idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+    #
+    #     print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
