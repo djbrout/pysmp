@@ -8,7 +8,7 @@ import time
 #filts = ['g']
 #np.random.shuffle(allindexes)
 
-fields = ['X1','X2','X3','C1','C2','C3']#,'E1','E2'
+fields = ['S1','S2','X1','X2','X3','C1','C2','C3']#,'E1','E2'
 ccdnums = range(0,63)
 #for i in ccdnums:
 if True:
@@ -23,7 +23,7 @@ if True:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=15:30:00\n' +
+            '#SBATCH --time=00:30:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/'+field+'getim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' +field+'getim.log\n' +
             '#SBATCH --job-name='+field+' \n' +
