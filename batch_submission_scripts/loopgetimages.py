@@ -28,7 +28,6 @@ if True:
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
-            '#SBATCH --gres=craynetwork:1\n' +
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
             'source getimages.sh ' + field +
