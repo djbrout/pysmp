@@ -109,7 +109,7 @@ if __name__ == "__main__":
             #savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
-                a.write(''.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
+                a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
                 continue
