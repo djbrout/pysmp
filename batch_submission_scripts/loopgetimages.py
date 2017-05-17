@@ -14,7 +14,7 @@ ccdnums = range(0,63)
 if True:
     for field in fields:
         #print i
-        script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
+        script = '/global/cscratch1/sd/dbrout/logs/sm_' +field+ '.sh'
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
