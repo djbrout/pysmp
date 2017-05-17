@@ -99,14 +99,14 @@ if __name__ == "__main__":
             if 'starfits' in sn:
                 continue
 
-            lcfile = sn.split('.')[0]+'_'+filt+'.dat'
-            print lcfile
-            raw_input()
+            #lcfile = sn.split('.')[0]+'_'+filt+'.dat'
+            #print lcfile
+            #raw_input()
             #if not filt is None:
-            smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            smpfile = resultsdir+'/lightcurves/'+sn.split('.')[0]+'_'+filt+'.smp'
             #else:
             #    continue
-            savelcfile = savelcdir+'/'+sn+'_smp.dat'
+            #savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 a.write(smpfile+'/n')
