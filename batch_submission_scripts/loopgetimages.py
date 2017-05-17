@@ -34,22 +34,9 @@ if True:
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
             'source getimages.sh ' + field +
-            #'source setup_scripts/setupcori2.sh\n'+
-            #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
-            #'echo "RUNNING NOW"\n'+
-            #'python test.py\n'
-            #'cd /global/u1/d/dbrout/SEaR/\n' +
-            #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
-            #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
-            #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-
-            #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
-            #'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt '
-            #                                                      '-o /project/projectdirs/des/djbrout/116simdeep '
-            #                                                     '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
             '\n'
         )
         f.close()
-        output = Popen("sbatch --array=1-63%1 "+ script, stdout=PIPE).communicate()
+        output = os.system("sbatch --array=1-63%1 "+ script)
         print output[0]
         #time.sleep(1)
