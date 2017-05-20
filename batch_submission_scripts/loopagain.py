@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/spec_shallow_v2/'
+outdir = '/project/projectdirs/des/djbrout/spec_v7/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
