@@ -8,9 +8,9 @@ import os
 
 if __name__ == "__main__":
     print 'started'
-    lclist = 'data/y3specSfields.txt'
+    lclist = 'data/allspec.txt'
 
-    resultsdir = '/project/projectdirs/des/djbrout/spec_shallow_v2/'
+    resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
 
     savelcdir = resultsdir+'/SMP_SIMdeep_v3'
     fakes = False
