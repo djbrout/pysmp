@@ -51,7 +51,7 @@ for i in redofiles:
             #                                     ' \n' +
 
             'python smpshift.py --index=' + str(i) + ' -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/sim114 --snfilelist=data/s2lightcurves.txt --usefake ' +
+            ' -o /project/projectdirs/des/djbrout/116simdeep --snfilelist=data/x3lightcurves.txt --usefake ' +
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
 
