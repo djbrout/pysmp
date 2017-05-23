@@ -242,7 +242,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 thisflag = 0
                                 if flag[ww][0] == 1:
                                     thisflag = DONTFIT_FLAG
-                                if chisq[ww][0] > 1.25:
+                                if chisq[ww][0] > 1.08:
                                     thisflag = DONTFIT_FLAG
                                 if abs(tsky) > 1000:
                                     thisflag = DONTFIT_FLAG
