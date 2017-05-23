@@ -284,9 +284,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 if __name__ == "__main__":
     print 'started'
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
-    resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
+    resultsdir = '/project/projectdirs/des/djbrout/114sim/'
 
-    savelcdir = resultsdir+'/SMP_SIMdeep_v3'
+    savelcdir = resultsdir+'/SMP_SIMshallow_v4'
     fakes = False
     faketrueflux = False
 
@@ -364,7 +364,7 @@ if __name__ == "__main__":
         dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
         print 'done reading dofake'
 
-    a = open('failed.txt','w')
+    a = open(missingfile,'a')
     tsne = []
     for sn in sne[:]:
         snbad = False
@@ -381,7 +381,7 @@ if __name__ == "__main__":
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
-                a.write(smpfile+'/n')
+                a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
                 continue

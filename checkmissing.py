@@ -10,7 +10,7 @@ if __name__ == "__main__":
     print 'started'
     lclist = 'data/allspec.txt'
 
-    resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
+    resultsdir = '/project/projectdirs/des/djbrout/sim114/'
 
     savelcdir = resultsdir+'/SMP_SIMdeep_v3'
     fakes = False
