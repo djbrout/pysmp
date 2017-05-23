@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(000,1000)
+allindexes = range(0,400)
 
 for i in allindexes:
 
@@ -25,8 +25,16 @@ for i in allindexes:
         '\n' +
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIMshallowfullerr_v3 '
-                                                              '--resultsdir=/project/projectdirs/des/djbrout/114sim/ \n' +
+
+
+        #SIM
+        #'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIMshallowfullerr_v3 '
+        #                                                      '--resultsdir=/project/projectdirs/des/djbrout/114sim/ \n' +
+        'python addcoltoDESlightcurve.py --index=' + str(
+            i) + ' --savelcdir=/project/projectdirs/des/djbrout/spec_v7/SMP_RAW_specv1 '
+                 '--resultsdir=/project/projectdirs/des/djbrout/spec_v7/ \n' +
+
+
         '\n'
     )
     f.close()
