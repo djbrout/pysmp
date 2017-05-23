@@ -2654,11 +2654,12 @@ class smp:
                 if badflag:
                     print 'badflaggg'*100
 
-                if not np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]) != np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]):
-                    print 'im min max'*100
-                if not np.max(psf_stamp[params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4,
-                          params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4]) == np.max(psf_stamp[:, :]):
-                    print 'psf min max'*100
+                #if not np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]) != np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]):
+                #    print 'im min max'*100
+
+                #if not np.max(psf_stamp[params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4,
+                #          params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4]) == np.max(psf_stamp[:, :]):
+                #    print 'psf min max'*100
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]) != np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]):
