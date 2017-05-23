@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/114sim/'
+outdir = '/project/projectdirs/des/djbrout/116simdeep/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
@@ -26,10 +26,10 @@ for i in redofiles:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=15:00:00\n' +
+            '#SBATCH --time=25:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
-            '#SBATCH --job-name=simsh'+filt+'_' + str(fl) + '\n' +
+            '#SBATCH --job-name=simde'+filt+'_' + str(fl) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
