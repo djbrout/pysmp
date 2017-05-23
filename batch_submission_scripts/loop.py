@@ -39,7 +39,12 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
-            'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
+            'python smpshift.py --index=' + str(i) + ' -f ' + filt +
+            ' -o /project/projectdirs/des/djbrout/sim114 --snfilelist=data/s2lightcurves.txt --usefake '+
+            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
+
+
+            #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
             # 'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt '
             #                                                       '-o /project/projectdirs/des/djbrout/116simdeep '
             #                                                      '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +

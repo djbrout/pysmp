@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/spec_v7/'
+outdir = '/project/projectdirs/des/djbrout/sim114/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
@@ -46,9 +46,15 @@ for i in redofiles:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
-            'python smpshift.py  -f '+filt+' -o '+outdir+
-                                                ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/'+fl+'.dat'+
-                                                ' \n' +
+            # 'python smpshift.py  -f '+filt+' -o '+outdir+
+            #                                     ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/'+fl+'.dat'+
+            #                                     ' \n' +
+
+            'python smpshift.py --index=' + str(i) + ' -f ' + filt +
+            ' -o /project/projectdirs/des/djbrout/sim114 --snfilelist=data/s2lightcurves.txt --usefake ' +
+            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
+
+
             '\n'
         )
         f.close()
