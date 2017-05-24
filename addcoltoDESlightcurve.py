@@ -26,19 +26,22 @@ SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\n\
 ```\n\
 CHISQ_FLAG = 2\n\
 PIPELINE_FLAG = 1\n\
-BADSKY_FLAG = 4\n\
-BADSKYERR_FLAG = 8\n\
+BADSKY_FLAG = 2\n\
+BADSKYERR_FLAG = 4\n\
 BADZPT_FLAG = 16\n\
 BADZPTERR_FLAG = 32\n\
-DONTFIT_FLAG = 65536\n\
+DONTFIT_FLAG = 32768\n\
+FAILED_SMP_FLAG = 65536\n\
 ```\n'
 #
-# CHISQ_FLAG = 8192
+
+CHISQ_FLAG = 8192
+
 # PIPELINE_FLAG =4096
-# BADSKY_FLAG = 16384
-# BADSKYERR_FLAG = 32768
-# BADZPT_FLAG = 65536
-# BADZPTERR_FLAG = 32
+BADSKY_FLAG = 4
+BADSKYERR_FLAG = 8
+BADZPT_FLAG = 16
+BADZPTERR_FLAG = 32
 DONTFIT_FLAG= 32768
 FAILED_SMP_FLAG = 65536
 
@@ -242,8 +245,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 thisflag = 0
                                 if flag[ww][0] == 1:
                                     thisflag = DONTFIT_FLAG
-                                if chisq[ww][0] > 1.06:
-                                    thisflag = DONTFIT_FLAG
+                                #if chisq[ww][0] > 1.0:
+                                #    thisflag = DONTFIT_FLAG
                                 if abs(tsky) > 1000:
                                     thisflag = DONTFIT_FLAG
                                 if abs(tskyerr) < .5:
@@ -285,8 +288,9 @@ if __name__ == "__main__":
     print 'started'
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
+    isfake = True
 
-    savelcdir = resultsdir+'/SMP_SIMdeep_v4'
+    savelcdir = resultsdir+'/SMP_SIMdeep_v5'
     fakes = False
     faketrueflux = False
 
@@ -335,9 +339,13 @@ if __name__ == "__main__":
 
     missingfile = resultsdir+'/missing.txt'
 
-    #readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
-    #readme.write(readmetext)
-    #readme.close()
+    # readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
+    # readme.write(readmetext)
+    # readme.close()
+    if isfake:
+        os.system('cp fakes.HEADER ',savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
+    else:
+        os.system('cp specHD.HEADER ', savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
     #raw_input()
     #snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
@@ -421,7 +429,7 @@ if __name__ == "__main__":
             savelcfile = savelcdir+'/'+sn+'_smp.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
-                os.system('echo '+sn+' '+filt+' >> '+missingfile)
+                #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]

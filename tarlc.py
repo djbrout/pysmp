@@ -24,13 +24,13 @@ SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\n\
 \n\
 ## Flag Bit Definitions\n\
 ```\n\
-CHISQ_FLAG = 2\n\
-PIPELINE_FLAG = 1\n\
+CHISQ_FLAG = 2 #none have been set\n\
 BADSKY_FLAG = 4\n\
 BADSKYERR_FLAG = 8\n\
 BADZPT_FLAG = 16\n\
 BADZPTERR_FLAG = 32\n\
-DONTFIT_FLAG = 65536\n\
+SMP_PIPELINE_FLAG = 32768\n\
+DIDNT_ENTER_SMP_FLAG = 65536\n\
 ```\n'
 
 
@@ -41,3 +41,6 @@ readme.close()
 os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST')
 
 os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
+
+os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf '+savelcdir+'_stamps.tar.gz -I pdflist \n mv'
+                                                                                       '../'+savelcdir+'_stamps.tar.gz \n')
