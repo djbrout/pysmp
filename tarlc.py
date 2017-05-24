@@ -42,12 +42,14 @@ os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST')
 
 os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
 
-print ('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
-                                                    '-I pdflist \n mv'
-                                                    ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
-                                                    ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
-os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf -I pdflist '
-                                                    ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz ./ '
+# print ('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
+#                                                     '-I pdflist \n mv'
+#                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
+#                                                 ' --exclude=\'*.npz\' --exclude=\'*.smp\' --exclude=\'*.png\' --exclude=\'*.gz\' *' \
+#                                                 ''+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
+os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcvf '
+                                                    ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
+                                                    '  --exclude=\'*.npz\' --exclude=\'*.smp\' --exclude=\'*.png\' --exclude=\'*.gz\' * '
                                                     '\n mv'
                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
                                                     ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
