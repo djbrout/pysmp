@@ -342,9 +342,9 @@ if __name__ == "__main__":
     # readme.write(readmetext)
     # readme.close()
     if isfake:
-        os.system('cp fakes.HEADER ',savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
+        os.system('cp fakes.HEADER '+savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
     else:
-        os.system('cp specHD.HEADER ', savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
+        os.system('cp specHD.HEADER '+ savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
     #raw_input()
     #snlist = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.LIST', 'w')
 
