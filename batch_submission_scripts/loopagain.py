@@ -58,10 +58,10 @@ for i in redofiles:
 
             '\n'
         )
-        print ('python smpshift.py -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/116simdeep --snfilelist=data/x3lightcurves.txt --usefake ' +
-            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ '
-            '-s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+fl+'.dat \n')
+        # print ('python smpshift.py -f ' + filt +
+        #     ' -o /project/projectdirs/des/djbrout/116simdeep --snfilelist=data/x3lightcurves.txt --usefake ' +
+        #     '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ '
+        #     '-s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+fl+'.dat \n')
         f.close()
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
