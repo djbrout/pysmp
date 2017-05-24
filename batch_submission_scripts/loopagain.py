@@ -29,7 +29,7 @@ for i in redofiles:
             '#SBATCH --time=35:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
-            '#SBATCH --job-name=simde'+filt+'_' + str(fl) + '\n' +
+            '#SBATCH --job-name=sid'+filt+'_' + str(fl) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -46,9 +46,14 @@ for i in redofiles:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
-            'python smpshift.py  -f '+filt+' -o '+outdir+
-                                                ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/'+fl+'.dat'+
-                                                ' \n' +
+            # 'python smpshift.py  -f '+filt+' -o '+outdir+
+            #                                     ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/'+fl+'.dat'+
+            #                                     ' \n' +
+
+            'python smpshift.py  -f ' + filt + ' -o ' + outdir +
+            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/' + fl + '.dat ' +
+            ' --usefake '+
+            ' \n' +
 
             # 'python smpshift.py -f ' + filt +
             # ' -o /project/projectdirs/des/djbrout/114sim --snfilelist=data/s2lightcurves.txt --usefake ' +
@@ -62,6 +67,11 @@ for i in redofiles:
         #     ' -o /project/projectdirs/des/djbrout/116simdeep --snfilelist=data/x3lightcurves.txt --usefake ' +
         #     '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ '
         #     '-s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+fl+'.dat \n')
+
+        print('python smpshift.py  -f ' + filt + ' -o ' + outdir +
+            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/' + fl + '.dat ' +
+            ' --usefake '+
+            ' \n' )
         f.close()
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
