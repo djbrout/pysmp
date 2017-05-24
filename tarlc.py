@@ -39,7 +39,7 @@ readme.write(readmetext)
 readme.close()
 
 os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST')
-
+os.popen('rm '+savelcdir.split('/')[-1]+'.tar.gz ')
 os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
 
 # print ('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
@@ -47,6 +47,7 @@ os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+sav
 #                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
 #                                                 ' --exclude=\'*.npz\' --exclude=\'*.smp\' --exclude=\'*.png\' --exclude=\'*.gz\' *' \
 #                                                 ''+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
+os.popen('rm '+savelcdir.split('/')[-1]+'_stamps.tar.gz ')
 os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcvf '
                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
                                                     '  --exclude=\'*.npz\' --exclude=\'*.smp\' --exclude=\'*.png\' --exclude=\'*.gz\' * '
