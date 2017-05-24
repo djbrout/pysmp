@@ -12,7 +12,7 @@ filts = ['g','r','i','z']
 
 for i in redofiles:
 
-    if filt != 'z':
+    if i.split()[1] != 'z':
     #for filt in filts:
         print i
         fl = i.split()[0]
