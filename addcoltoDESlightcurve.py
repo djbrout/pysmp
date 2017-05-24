@@ -287,7 +287,7 @@ if __name__ == "__main__":
     print 'started'
 
     resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
-    isfake = False
+    isfake = True
     if isfake:
         lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     else:
