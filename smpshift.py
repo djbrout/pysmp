@@ -3309,7 +3309,7 @@ class smp:
             else:
                 fitzpt = smp_dict['zpt'][i]
                 fakezpt = smp_dict['fakezpt'][i]
-                psfs.append(round(self.get_fwhm_of_2d_psf(smp_psf[i]),2))
+                psfs.append(smp_dict['fwhm_arcsec'][i])
                 print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',\
                     round(self.get_fwhm_of_2d_psf(smp_psf[i]),2),round(smp_dict['sky'][i],2),round(smp_dict['sexsky'][i],2),\
                     round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),round(smp_dict['sexrms'][i],2),\

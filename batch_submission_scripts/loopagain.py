@@ -12,7 +12,7 @@ filts = ['g','r','i','z']
 
 for i in redofiles:
 
-    if i.split()[1] != 'z':
+    if i.split()[1] == 'z':
     #for filt in filts:
         print i
         fl = i.split()[0]
@@ -26,7 +26,7 @@ for i in redofiles:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=25:00:00\n' +
+            '#SBATCH --time=30:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
             '#SBATCH --job-name=simde'+filt+'_' + str(fl) + '\n' +
