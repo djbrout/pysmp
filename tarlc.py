@@ -46,7 +46,8 @@ print ('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf '+savel
                                                     '-I pdflist \n mv'
                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
                                                     ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
-os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
-                                                    '-I pdflist \n mv'
+os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcf -I pdflist '
+                                                    ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz ./ '
+                                                    '\n mv'
                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
                                                     ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')

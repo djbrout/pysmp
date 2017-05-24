@@ -35,14 +35,13 @@ FAILED_SMP_FLAG = 65536\n\
 ```\n'
 #
 
-CHISQ_FLAG = 8192
-
-# PIPELINE_FLAG =4096
-BADSKY_FLAG = 4
-BADSKYERR_FLAG = 8
+CHISQ_FLAG = 2
+PIPELINE_FLAG = 1
+BADSKY_FLAG = 2
+BADSKYERR_FLAG = 4
 BADZPT_FLAG = 16
 BADZPTERR_FLAG = 32
-DONTFIT_FLAG= 32768
+DONTFIT_FLAG = 32768
 FAILED_SMP_FLAG = 65536
 
 #dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
@@ -248,13 +247,13 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 #if chisq[ww][0] > 1.0:
                                 #    thisflag = DONTFIT_FLAG
                                 if abs(tsky) > 1000:
-                                    thisflag = DONTFIT_FLAG
+                                    thisflag = BADSKY_FLAG
                                 if abs(tskyerr) < .5:
-                                    thisflag = DONTFIT_FLAG
+                                    thisflag = BADSKYERR_FLAG
                                 if (fit_zpt < 27.) | (fit_zpt > 35.):
-                                    thisflag = DONTFIT_FLAG
+                                    thisflag = BADZPT_FLAG
                                 if (fit_zpt_std > 0.2):
-                                    thisflag = DONTFIT_FLAG
+                                    thisflag = BADZPTERR_FLAG
                                 #print thisflag,chisq[ww][0]
                                 wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
                                        ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
