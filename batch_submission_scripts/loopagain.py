@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/116simdeep/'
+outdir = '/project/projectdirs/des/djbrout/spec_v7/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
@@ -12,7 +12,7 @@ filts = ['g','r','i','z']
 
 for i in redofiles:
 
-    if True:
+    if filt != 'z':
     #for filt in filts:
         print i
         fl = i.split()[0]
@@ -46,14 +46,14 @@ for i in redofiles:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
-            # 'python smpshift.py  -f '+filt+' -o '+outdir+
-            #                                     ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/'+fl+'.dat'+
-            #                                     ' \n' +
+            'python smpshift.py  -f '+filt+' -o '+outdir+
+                                                ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/'+fl+'.dat'+
+                                                ' \n' +
 
-            'python smpshift.py -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/114sim --snfilelist=data/s2lightcurves.txt --usefake ' +
-            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ '
-            '-s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+fl+'.dat \n'
+            # 'python smpshift.py -f ' + filt +
+            # ' -o /project/projectdirs/des/djbrout/114sim --snfilelist=data/s2lightcurves.txt --usefake ' +
+            # '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ '
+            # '-s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+fl+'.dat \n'
 
 
             '\n'
