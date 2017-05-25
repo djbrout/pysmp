@@ -2132,8 +2132,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         # repeatability = np.std(starmag[indices == ind])
         if len(starww) > 5.:
             # if repeatability < .3:
-
             pltvecy.append(sm - starmean)
+            print sm - starmean
             #pltvecx.append(fh)
 
     # plt.xscale('log')
