@@ -28,7 +28,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
     if not cacheddata:
         #dostars = True
         if dostars:
-            grabstardata("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+tfield+"_"+filter,tfield,filter)
+            grabstardata("/global/cscratch1/sd/dbrout/v7/","/global/cscratch1/sd/dbrout/v7/stardata_"+tfield+"_"+filter,tfield,filter)
             stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
@@ -40,7 +40,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
 
         #dostars = Trueasdf
         if dostars:
-            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
+            stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
@@ -200,7 +200,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 10000.: break
+        if cntr > 5000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
@@ -2118,6 +2118,47 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     cntr = 0
     pltvecx = []
     pltvecy = []
+    for sme, sm, ind, r, d, cm, f, fe, fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
+        cntr += 1
+        if cntr > maxpoints: continue
+        if cntr > 50000: continue
+
+        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+        # print starmag[indices == ind]
+        # raw_input()
+        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+        starmean = np.mean(starww)
+        #repeatability = np.std(starww)
+        # repeatability = np.std(starmag[indices == ind])
+        if len(starww) > 5.:
+            # if repeatability < .3:
+
+            pltvecy.append(sm - starmean)
+            #pltvecx.append(fh)
+
+    # plt.xscale('log')
+    prms = np.sqrt(np.mean(np.square(pltvecx)))
+    plt.hist(pltvecx, alpha=.99, color='black',histtype='step',bins=np.arange(-.051,.05,.002),label='RMS:'+str(round(prms,3)))
+    plt.xlabel(r'$'+title.split('_')[0]+' - '+title.split('_')[0]+'_{mean}$')
+    plt.legend()
+    #plt.xlim(3.5, 7)
+    #plt.ylim(-.02, .01)
+
+    # ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
+    #                            dontrootn=True)
+    # plt.plot(ax, ay, linewidth=3, color='orange', label='SMP', alpha=.6)
+    # plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
+    # plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
+
+    plt.title(title + 'BAND')
+    print 'finished snls'
+    #plt.plot([2, 10], [0, 0], color='black')
+    plt.savefig(outdir + '/' + title + '_repeatabilitylikesnls.png')
+    sys.exit()
+    plt.clf()
+    cntr = 0
+    pltvecx = []
+    pltvecy = []
     for sme, sm, ind, r, d, cm, f, fe,fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
         cntr += 1
         if cntr > maxpoints: continue
@@ -2832,5 +2873,5 @@ if __name__ == "__main__":
             dostars = True
     print filter
     tfield = 'SN-X3'
-    cd = '/global/cscratch1/sd/dbrout/v6/summary_results_'+tfield+'_'+filter+'.npz'
+    cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
