@@ -2137,7 +2137,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #pltvecx.append(fh)
 
     # plt.xscale('log')
-    prms = np.sqrt(np.nanmean((pltvecx)**2.))
+    prms = np.sqrt(np.nanmean((pltvecy)**2.))
     plt.hist(pltvecy, alpha=.99, color='black',histtype='step',bins=np.arange(-.05025,.05,.0005),label='RMS:'+str(round(prms,3)))
     plt.xlabel(r'$'+title.split('_')[1]+' - '+title.split('_')[1]+'_{mean}$')
     plt.legend()
