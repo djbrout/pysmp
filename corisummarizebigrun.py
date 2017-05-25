@@ -2121,7 +2121,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme, sm, ind, r, d, cm, f, fe, fh in zip(starmagerr, starmag, indices, ras, decs, catmag, flux, fluxerr, fwhm):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 5000000: continue
+        if cntr > 1000: continue
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
