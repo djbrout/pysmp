@@ -29,7 +29,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
         #dostars = True
         if dostars:
             grabstardata("/global/cscratch1/sd/dbrout/v7/","/global/cscratch1/sd/dbrout/v7/stardata_"+tfield+"_"+filter,tfield,filter)
-            stardata = np.load('/global/cscratch1/sd/dbrout/v6/stardata_'+tfield+"_"+filter+'.npz')
+            stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
@@ -200,7 +200,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
     cntr = 0
     goodbigdata = copy(bigdata)
     for dirName, subdirList, fileList in os.walk(imagedir):
-        if cntr > 5000.: break
+        if cntr > 10000.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
             #print fname
