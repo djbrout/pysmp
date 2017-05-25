@@ -2137,7 +2137,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #pltvecx.append(fh)
 
     # plt.xscale('log')
-    prms = np.sqrt(np.nanmean(np.square(pltvecx)))
+    prms = np.sqrt(np.nanmean((pltvecx)**2.))
     plt.hist(pltvecy, alpha=.99, color='black',histtype='step',bins=np.arange(-.05025,.05,.0005),label='RMS:'+str(round(prms,3)))
     plt.xlabel(r'$'+title.split('_')[1]+' - '+title.split('_')[1]+'_{mean}$')
     plt.legend()
@@ -2150,7 +2150,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
     # plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
 
-    plt.title(title + 'band')
+    plt.title(title)
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatabilitylikesnls.png')
