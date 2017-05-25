@@ -2150,7 +2150,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
     # plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
 
-    plt.title(title + 'BAND')
+    plt.title(title + 'band')
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatabilitylikesnls.png')
