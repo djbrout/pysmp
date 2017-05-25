@@ -2137,10 +2137,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #pltvecx.append(fh)
 
     # plt.xscale('log')
-    prms = np.sqrt(np.nanmean(np.square(pltvecy)))
+    prms = np.sqrt(np.nanmean(np.square(pltvecy[abs(pltvecy)<.5])))
     plt.hist(pltvecy, alpha=.99, color='black',histtype='step',bins=np.arange(-.05025,.05,.0005),label='RMS:'+str(round(prms,4)))
     plt.legend()
-    #plt.xlim(3.5, 7)
+    plt.xlim(-.05,.05)
     #plt.ylim(-.02, .01)
 
     # ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
