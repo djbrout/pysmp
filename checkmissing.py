@@ -8,7 +8,8 @@ import os
 
 if __name__ == "__main__":
     print 'started'
-    lclist = 'data/allspec.txt'
+    #lclist = 'data/allspec.txt'
+    lclist = 'data/specHD.HEADER'
 
     resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
 
