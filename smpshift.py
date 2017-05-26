@@ -3386,10 +3386,13 @@ class smp:
                 fitzpt = smp_dict['zpt'][i]
                 fakezpt = smp_dict['fakezpt'][i]
                 psfs.append(smp_dict['fwhm_arcsec'][i])
-                print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',\
+                try:
+                    print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',\
                     round(smp_dict['fwhm_arcsec'],2),round(smp_dict['sky'][i],2),round(smp_dict['sexsky'][i],2),\
                     round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),round(smp_dict['sexrms'][i],2),\
                     smp_dict['image_filename'][i],smp_dict['gain'][i],smp_dict['xoff'][i],smp_dict['yoff'][i]
+                except:
+                    print '999'
                 #if abs(fitzpt - fakezpt) > .025:
                 #    smp_dict['fitflag'][i] = 1
                 #if smp_dict['mjd'][i] < snparams.peakmjd +100:
@@ -3407,9 +3410,12 @@ class smp:
             else:
                 fitzpt = smp_dict['zpt'][i]
                 fakezpt = smp_dict['fakezpt'][i]
-                print smp_dict['mjd'][i], filt, self.ccdnum ,round(fitzpt, 2), smp_dict['expnum'][i],\
+                try:
+                    print smp_dict['mjd'][i], filt, self.ccdnum ,round(fitzpt, 2), smp_dict['expnum'][i],\
                     round(smp_dict['sky'][i]/(10**(.4*(31-fitzpt))), 2), \
                     round(smp_dict['skyerr'][i]/(10**(.4*(31-fitzpt))),2),  smp_dict['gain'][i]
+                except:
+                    print '999'
         #raw_input()
         zptnpz = os.path.join(npoutdir,filename+'_imagezpts.npz')
         self.tmpwriter.savez(zptnpz
