@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/114sim/'
+outdir = '/project/projectdirs/des/djbrout/spec_v7/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
@@ -12,7 +12,7 @@ filts = ['g','r','i','z']
 
 for i in redofiles:
 
-    if True:
+    if '01318142' in i:
     #for filt in filts:
         print i
         fl = i.split()[0]
