@@ -10,6 +10,7 @@ if __name__ == "__main__":
     print 'started'
     #lclist = 'data/allspec.txt'
     lclist = 'data/specHD.HEADER'
+    isreal = True
 
     resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
 
@@ -72,7 +73,20 @@ if __name__ == "__main__":
 
     #for i, filt in enumerate(filts):
     #sne = os.listdir(resultsdir + '/SNe')
-    sne = open(lclist,'r').readlines()
+    if '.HEADER' in lclist:
+        lines = open(lclist,'r').readlines()
+        sne = []
+        for l in lines:
+            if 'SN:' in l:
+                if isreal:
+                    sne.append('des_real_'+l.split()[1]+'.dat')
+                else:
+                    sne.append('des_fake_'+l.split()[1]+'.dat')
+
+    else:
+        sne = open(lclist,'r').readlines()
+
+
     if index is None:
         sne = sne
     else:
