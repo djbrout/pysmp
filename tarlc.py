@@ -22,15 +22,23 @@ SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\n\
 (just to be clear: ALL FLUXES, SKYS, SKYERRS, ETC... ARE REPORTED AT A ZEROPOINT OF 31)\n\
 -999 means missing data\n\
 \n\
-## Flag Bit Definitions\n\
-```\n\
+Column Definition\n\
+PHOTPROB\n\
+This is the reduced chi squared of the fit. Should be close to 1. We need to understand where we should be making the cut on photprob before performing light curve fits\n\
+Flag Bit Definitions\n\
 CHISQ_FLAG = 2 #none have been set\n\
-BADSKY_FLAG = 4\n\
-BADSKYERR_FLAG = 8\n\
-BADZPT_FLAG = 16\n\
-BADZPTERR_FLAG = 32\n\
-SMP_PIPELINE_FLAG = 32768\n\
-DIDNT_ENTER_SMP_FLAG = 65536\n\
+BADSKY_FLAG = 4 # FITSKY > 999.\n\
+BADSKYERR_FLAG = 8 # FIT_SKYERR > .5\n\
+BADZPT_FLAG = 16 # 27 > FITZPT or FITZPT > 35\n\
+BADSCATTER_FLAG = 32# the scatter about the zeropoint greater that .2 mags\n\
+SMP_PIPELINE_FLAG = 32768 # A flag was set inside the SMP pipeline (ex. bad PSF, too much masking, etc...)\n\
+DIDNT_ENTER_SMP_FLAG = 65536 #These epochs never even made it into the scene modeling pipeline (for example the image never existed on NERSC)\n\
+Issues\n\
+We\'re seeing relatively lower fitprob values compared to DIFFIMG\n\
+Bright galaxy fitprob issue persists\n\
+To Do List\n\
+Re-Fit with Y4 images included for better galaxy models (and to resolve 1 case SNID 01315841 band r\n\
+Provide x and y chi squared stamp slopes for further fit quality assessment\n\
 ```\n'
 
 
@@ -54,3 +62,10 @@ os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcvf '
                                                     '\n mv'
                                                     ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
                                                     ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
+
+os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.smp > pdflist \n tar -zcvf '
+                                                    ' '+savelcdir.split('/')[-1]+'_smpfiles.tar.gz '
+                                                    '  --exclude=\'*.npz\' --exclude=\'*.pdf\' --exclude=\'*.png\' --exclude=\'*.gz\' * '
+                                                    '\n mv'
+                                                    ' '+savelcdir.split('/')[-1]+'_smpfiles.tar.gz'
+                                                    ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_smpfiles.tar.gz \n')
