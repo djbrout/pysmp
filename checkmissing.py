@@ -79,9 +79,9 @@ if __name__ == "__main__":
         for l in lines:
             if 'SN:' in l:
                 if isreal:
-                    sne.append('des_real_'+l.split()[1]+'.dat')
+                    sne.append('des_real_0'+l.split()[1]+'.dat')
                 else:
-                    sne.append('des_fake_'+l.split()[1]+'.dat')
+                    sne.append('des_fake_0'+l.split()[1]+'.dat')
 
     else:
         sne = open(lclist,'r').readlines()
