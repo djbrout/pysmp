@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/114sim/'
+outdir = '/project/projectdirs/des/djbrout/spec_v7/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
@@ -29,7 +29,7 @@ for i in redofiles:
             '#SBATCH --time=35:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(fl) + '_'+filt+'.log\n' +
-            '#SBATCH --job-name=sis'+filt+'_' + str(fl) + '\n' +
+            '#SBATCH --job-name=spec'+filt+'_' + str(fl) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -51,8 +51,8 @@ for i in redofiles:
             #                                     ' \n' +
 
             'python smpshift.py  -f ' + filt + ' -o ' + outdir +
-            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/' + fl + '.dat ' +
-            ' --usefake '+
+            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/' + fl + '.dat ' +
+            ' '+
             ' \n' +
 
             # 'python smpshift.py -f ' + filt +
