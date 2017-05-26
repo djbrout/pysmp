@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(200,900)
+allindexes = range(0,1000)
 
 for i in allindexes:
 
@@ -17,7 +17,7 @@ for i in allindexes:
         '#SBATCH --time=00:09:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
-        '#SBATCH --job-name=deep_' + str(i) + '\n' +
+        '#SBATCH --job-name=ss_' + str(i) + '\n' +
         '#SBATCH --mail-type=NONE\n' +
         #'#SBATCH --qos=premium\n'+
         '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -28,8 +28,8 @@ for i in allindexes:
 
 
         #SIM
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/114sim/SMP_RAW_SIMshallow_v4 '
-                                                             '--resultsdir=/project/projectdirs/des/djbrout/114sim/ \n' +
+        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/SMP_SIM_v1/ '
+                                                             '--resultsdir=/project/projectdirs/des/djbrout/114sim/ --fakeheader \n' +
         # 'python addcoltoDESlightcurve.py --index=' + str(
         #     i) + ' --savelcdir=/project/projectdirs/des/djbrout/spec_v7/SMP_RAW_specv1 '
         #          '--resultsdir=/project/projectdirs/des/djbrout/spec_v7/ \n' +

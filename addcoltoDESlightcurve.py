@@ -287,11 +287,11 @@ if __name__ == "__main__":
     print 'started'
 
     resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
-    isfake = True
-    if isfake:
-        lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
-    else:
-        lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
+    fakeheader = False
+    #if isfake:
+    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
+    #else:
+    #    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
     savelcdir = resultsdir+'/SMP_SPEC_v1'
     fakes = False
@@ -301,15 +301,16 @@ if __name__ == "__main__":
 
     import sys, getopt
 
-    try:
+    #try:
+    if True:
         args = sys.argv[1:]
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["index=","lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux"])
+            longopts=["index=","lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux","fakeheader"])
 
-    except getopt.GetoptError as err:
-        print "No command line arguments"
+    # except getopt.GetoptError as err:
+    #     print "No command line arguments"
 
     index = None
 
@@ -331,6 +332,8 @@ if __name__ == "__main__":
             fakes = True
         elif o in ["--index"]:
             index = int(a)
+        elif o in ["--fakeheader"]:
+            fakeheader = True
     #print fakes
     #raw_input()
 
@@ -345,7 +348,7 @@ if __name__ == "__main__":
     # readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
     # readme.write(readmetext)
     # readme.close()
-    if isfake:
+    if fakeheader:
         os.system('cp fakes.HEADER '+savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
     else:
         os.system('cp specHD.HEADER '+ savelcdir + '/' + savelcdir.split('/')[-1] + '.HEADER')
