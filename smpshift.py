@@ -977,7 +977,8 @@ class smp:
                             noisefile = noisefile.replace('p1', 'Y4')
                             psffile = psffile.replace('p1', 'Y4')
 
-
+            print imfile
+            raw_input('stopped')
             if not os.path.exists(imfile):
                 #print os.popen('ls -ltr *.fz').read()
                 #print 'funpack %s.fz' % imfile
