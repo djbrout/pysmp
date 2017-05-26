@@ -939,19 +939,19 @@ class smp:
                         print imfile
                         changename = True
                         if changename:
-                            if int(imfile[:8]) < 20140601:
+                            if int(imfile.replace(self.rootdir,'')[:8]) < 20140601:
                                 imfile = imfile.replace('p1', 'Y1')
                                 noisefile = noisefile.replace('p1', 'Y1')
                                 psffile = psffile.replace('p1', 'Y1')
-                            elif int(imfile[:8]) < 20150601:
+                            elif int(imfile.replace(self.rootdir,'')[:8]) < 20150601:
                                 imfile = imfile.replace('p1', 'Y2')
                                 noisefile = noisefile.replace('p1', 'Y2')
                                 psffile = psffile.replace('p1', 'Y2')
-                            elif int(imfile[:8]) < 20160601:
+                            elif int(imfile.replace(self.rootdir,'')[:8]) < 20160601:
                                 imfile = imfile.replace('p1', 'Y3')
                                 noisefile = noisefile.replace('p1', 'Y3')
                                 psffile = psffile.replace('p1', 'Y3')
-                            elif int(imfile[:8]) < 20170601:
+                            elif int(imfile.replace(self.rootdir,'')[:8]) < 20170601:
                                 imfile = imfile.replace('p1', 'Y4')
                                 noisefile = noisefile.replace('p1', 'Y4')
                                 psffile = psffile.replace('p1', 'Y4')
@@ -960,19 +960,19 @@ class smp:
                         print imfile
 
                         #raw_input('imh')
-                        if int(imfile[:8]) < 20140601:
+                        if int(imfile.replace(self.rootdir,'')[:8]) < 20140601:
                             imfile = imfile.replace('p1', 'Y1')
                             noisefile = noisefile.replace('p1', 'Y1')
                             psffile = psffile.replace('p1', 'Y1')
-                        elif int(imfile[:8]) < 20150601:
+                        elif int(imfile.replace(self.rootdir,'')[:8]) < 20150601:
                             imfile = imfile.replace('p1', 'Y2')
                             noisefile = noisefile.replace('p1', 'Y2')
                             psffile = psffile.replace('p1', 'Y2')
-                        elif int(imfile[:8]) < 20160601:
+                        elif int(imfile.replace(self.rootdir,'')[:8]) < 20160601:
                             imfile = imfile.replace('p1', 'Y3')
                             noisefile = noisefile.replace('p1', 'Y3')
                             psffile = psffile.replace('p1', 'Y3')
-                        elif int(imfile[:8]) < 20170601:
+                        elif int(imfile.replace(self.rootdir,'')[:8]) < 20170601:
                             imfile = imfile.replace('p1', 'Y4')
                             noisefile = noisefile.replace('p1', 'Y4')
                             psffile = psffile.replace('p1', 'Y4')
