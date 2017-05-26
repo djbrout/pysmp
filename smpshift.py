@@ -963,6 +963,7 @@ class smp:
                         if int(imfile.replace(self.rootdir,'')[:8]) < 20140601:
                             imfile = imfile.replace('p1', 'Y1')
                             noisefile = noisefile.replace('p1', 'Y1')
+                            weightsfile = weightsfile.replace('p1', 'Y1')
                             psffile = psffile.replace('p1', 'Y1')
                         elif int(imfile.replace(self.rootdir,'')[:8]) < 20150601:
                             imfile = imfile.replace('p1', 'Y2')
@@ -971,6 +972,9 @@ class smp:
                             noisefile = noisefile.replace('Y1', 'Y2')
                             psffile = psffile.replace('p1', 'Y2')
                             psffile = psffile.replace('Y1', 'Y2')
+                            weightsfile = weightsfile.replace('p1', 'Y2')
+                            weightsfile = weightsfile.replace('Y1', 'Y2')
+
                         elif int(imfile.replace(self.rootdir,'')[:8]) < 20160601:
                             imfile = imfile.replace('p1', 'Y3')
                             imfile = imfile.replace('Y1', 'Y3')
@@ -978,6 +982,9 @@ class smp:
                             noisefile = noisefile.replace('Y1', 'Y3')
                             psffile = psffile.replace('p1', 'Y3')
                             psffile = psffile.replace('Y1', 'Y3')
+                            weightsfile = weightsfile.replace('p1', 'Y3')
+                            weightsfile = weightsfile.replace('Y1', 'Y3')
+
                         elif int(imfile.replace(self.rootdir,'')[:8]) < 20170601:
                             imfile = imfile.replace('p1', 'Y4')
                             imfile = imfile.replace('Y1', 'Y4')
@@ -985,6 +992,8 @@ class smp:
                             noisefile = noisefile.replace('Y1', 'Y4')
                             psffile = psffile.replace('p1', 'Y4')
                             psffile = psffile.replace('Y1', 'Y4')
+                            weightsfile = weightsfile.replace('p1', 'Y4')
+                            weightsfile = weightsfile.replace('Y1', 'Y4')
 
             print imfile
             print imfile.replace(self.rootdir, '')[:8]
