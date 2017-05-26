@@ -301,16 +301,16 @@ if __name__ == "__main__":
 
     import sys, getopt
 
-    #try:
-    if True:
+    try:
+    #if True:
         args = sys.argv[1:]
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
             longopts=["index=","lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux","fakeheader"])
 
-    # except getopt.GetoptError as err:
-    #     print "No command line arguments"
+    except getopt.GetoptError as err:
+        print "No command line arguments"
 
     index = None
 
