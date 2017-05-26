@@ -995,9 +995,9 @@ class smp:
                             weightsfile = weightsfile.replace('p1', 'Y4')
                             weightsfile = weightsfile.replace('Y1', 'Y4')
 
-            print imfile
-            print imfile.replace(self.rootdir, '')[:8]
-            raw_input('stopped')
+            # print imfile
+            # print imfile.replace(self.rootdir, '')[:8]
+            # raw_input('stopped')
             if not os.path.exists(imfile):
                 #print os.popen('ls -ltr *.fz').read()
                 #print 'funpack %s.fz' % imfile
