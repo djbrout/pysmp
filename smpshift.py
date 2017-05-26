@@ -1314,7 +1314,7 @@ class smp:
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
-
+            raw_input('stopped')
             # if round(float(snparams.mjd[j])) != 56935:
             #    continue
             try:
@@ -1438,7 +1438,7 @@ class smp:
                     if not self.snparams.survey == 'PS1':
                         print imfile
 
-                        raw_input('imh')
+                        #raw_input('imh')
                         if int(imfile[:8]) < 20140601:
                             imfile = imfile.replace('p1', 'Y1')
                             noisefile = noisefile.replace('p1', 'Y1')
