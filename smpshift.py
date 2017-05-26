@@ -3311,7 +3311,7 @@ class smp:
                 fakezpt = smp_dict['fakezpt'][i]
                 psfs.append(smp_dict['fwhm_arcsec'][i])
                 print smp_dict['mjd'][i],'\t',filt,round(fitzpt,2),'\t','\t',round(fakezpt,2),'\t',\
-                    round(self.get_fwhm_of_2d_psf(smp_psf[i]),2),round(smp_dict['sky'][i],2),round(smp_dict['sexsky'][i],2),\
+                    round(smp_dict['fwhm_arcsec'],2),round(smp_dict['sky'][i],2),round(smp_dict['sexsky'][i],2),\
                     round(smp_dict['skyerr'][i],2),round(smp_dict['skysig'][i],2),round(smp_dict['sexrms'][i],2),\
                     smp_dict['image_filename'][i],smp_dict['gain'][i],smp_dict['xoff'][i],smp_dict['yoff'][i]
                 #if abs(fitzpt - fakezpt) > .025:
