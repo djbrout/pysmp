@@ -1,4 +1,4 @@
-resultsdir = '/project/projectdirs/des/djbrout/114sim'
+resultsdir = '/project/projectdirs/des/djbrout/116simdeep'
 savelcdir = '/project/projectdirs/des/djbrout/SMP_SIM_v1'
 
 
@@ -57,15 +57,15 @@ os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+sav
 #                                                 ''+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
 os.popen('rm '+savelcdir.split('/')[-1]+'_stamps.tar.gz ')
 os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.pdf > pdflist \n tar -zcvf '
-                                                    ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz '
+                                                    ' '+savelcdir.split('/')[-1]+'_deepstamps.tar.gz '
                                                     '  --exclude=\'*.npz\' --exclude=\'*.smp\' --exclude=\'*.png\' --exclude=\'*.gz\' * '
                                                     '\n mv'
-                                                    ' '+savelcdir.split('/')[-1]+'_stamps.tar.gz'
+                                                    ' '+savelcdir.split('/')[-1]+'_deepstamps.tar.gz'
                                                     ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_stamps.tar.gz \n')
 
 os.popen('cd '+resultsdir+'/lightcurves/ \n ls *.smp > pdflist \n tar -zcvf '
-                                                    ' '+savelcdir.split('/')[-1]+'_smpfiles.tar.gz '
+                                                    ' '+savelcdir.split('/')[-1]+'_deepsmpfiles.tar.gz '
                                                     '  --exclude=\'*.npz\' --exclude=\'*.pdf\' --exclude=\'*.png\' --exclude=\'*.gz\' * '
                                                     '\n mv'
-                                                    ' '+savelcdir.split('/')[-1]+'_smpfiles.tar.gz'
+                                                    ' '+savelcdir.split('/')[-1]+'_deepsmpfiles.tar.gz'
                                                     ' '+savelcdir+'/'+savelcdir.split('/')[-1]+'_smpfiles.tar.gz \n')
