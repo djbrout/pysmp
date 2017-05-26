@@ -51,8 +51,8 @@ for i in redofiles:
             #                                     ' \n' +
 
             'python smpshift.py  -f ' + filt + ' -o ' + outdir +
-            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/' + fl + '.dat ' +
-            ' --usefake '+
+            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/' + fl + '.dat ' +
+            ' '+
             ' \n' +
 
             # 'python smpshift.py -f ' + filt +
