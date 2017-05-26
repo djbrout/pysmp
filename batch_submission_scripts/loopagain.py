@@ -2,7 +2,7 @@ import os
 from subprocess import *
 import numpy as np
 import time
-outdir = '/project/projectdirs/des/djbrout/spec_v7/'
+outdir = '/project/projectdirs/des/djbrout/116simdeep/'
 redofiles = open(outdir+'/missing.txt','r')
 
 #allindexes = range(250,500)
@@ -51,8 +51,8 @@ for i in redofiles:
             #                                     ' \n' +
 
             'python smpshift.py  -f ' + filt + ' -o ' + outdir +
-            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/spec/' + fl + '.dat ' +
-            ' '+
+            ' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/' + fl + '.dat ' +
+            ' --usefake '+
             ' \n' +
 
             # 'python smpshift.py -f ' + filt +
