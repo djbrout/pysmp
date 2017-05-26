@@ -978,6 +978,7 @@ class smp:
                             psffile = psffile.replace('p1', 'Y4')
 
             print imfile
+            print imfile.replace(self.rootdir, '')[:8]
             raw_input('stopped')
             if not os.path.exists(imfile):
                 #print os.popen('ls -ltr *.fz').read()
