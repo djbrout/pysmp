@@ -46,7 +46,7 @@ readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
 readme.write(readmetext)
 readme.close()
 
-os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -xf '+savelcdir.split('/')[-1]+'.tar.gz \n')
+os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -xf '+savelcdir.split('/')[-1]+'.tar.gz ./'+savelcdir.split('/')[-1]+'\n')
 #os.popen('rm '+savelcdir.split('/')[-1]+'.tar.gz ')
 #os.popen('cd '+resultsdir+'\n tar -zcf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'/')
 
