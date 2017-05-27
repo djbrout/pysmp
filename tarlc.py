@@ -45,7 +45,8 @@ Provide x and y chi squared stamp slopes for further fit quality assessment\n\
 readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
 readme.write(readmetext)
 readme.close()
-print ('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -xf '+savelcdir.split('/')[-1]+'.tar.gz ./'+savelcdir.split('/')[-1]+'\n')
+
+os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -zcvf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+'\n')
 
 #os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -xf '+savelcdir.split('/')[-1]+'.tar.gz ./'+savelcdir.split('/')[-1]+'\n')
 #os.popen('rm '+savelcdir.split('/')[-1]+'.tar.gz ')
