@@ -12,7 +12,8 @@ filts = ['g','r','i','z']
 
 for i in redofiles:
 
-    if '01318142' in i:
+    if True:
+    #if '01318142' in i:
     #for filt in filts:
         print i
         fl = i.split()[0]
