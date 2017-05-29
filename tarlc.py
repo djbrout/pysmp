@@ -6,36 +6,34 @@ savelcdir = '/project/projectdirs/des/djbrout/SMP_SIM_v1'
 
 import os
 
-
-readmetext = '## ' \
-             'This is a spectroscopically confirmed DES-SN sample\n\
-   for seasons Y1-Y3. Based on fakes, we expect .034% 8 sigma lightcurve fit outliers.\n ' \
-             'We find very little hostgal sb fudge needed for shallow fields based on fakes. Deep fields we need to run more bright hostgalaxy sb fakes in order to better determine fudge\n\
-And also include the TYPE definitions from the DIFFIMG README.\n\
- Spectroscopic Tags and Statistics (from SNCAND table)\n\
-         SNTYPE                Ncand\n\
-         ------------------------------\n\
-           0 (NO_SPEC     )       0\n\
-           1 (SNIa        )       239\n\
-         101 (SNIa?       )       0\n\
-           3 (SNIax       )       0\n\
-           4 (SNIa-pec    )       0\n\
-          20 (SNIIP       )       0\n\
-          21 (SNIIL       )       0\n\
-          22 (SNIIn       )       0\n\
-          23 (SNIIb       )       0\n\
-          29 (SNII        )       0\n\
-         122 (SNIIn?      )       0\n\
-         129 (SNII?       )       0\n\
-          32 (SNIb        )       0\n\
-          33 (SNIc        )       0\n\
-          39 (SNIbc       )       0\n\
-         139 (SNIbc?      )       0\n\
-          41 (SLSN-I      )       0\n\
-          42 (SLSN-II     )       0\n\
-          43 (SLSN-R      )       0\n\
-         141 (SLSN-I?     )       0\n\n\n\
-             Example output lightcurve file\n\
+#              'This is a spectroscopically confirmed DES-SN sample\n\
+#    for seasons Y1-Y3. Based on fakes, we expect .034% 8 sigma lightcurve fit outliers.\n ' \
+#              'We find very little hostgal sb fudge needed for shallow fields based on fakes. Deep fields we need to run more bright hostgalaxy sb fakes in order to better determine fudge\n\
+# And also include the TYPE definitions from the DIFFIMG README.\n\
+#  Spectroscopic Tags and Statistics (from SNCAND table)\n\
+#          SNTYPE                Ncand\n\
+#          ------------------------------\n\
+#            0 (NO_SPEC     )       0\n\
+#            1 (SNIa        )       239\n\
+#          101 (SNIa?       )       0\n\
+#            3 (SNIax       )       0\n\
+#            4 (SNIa-pec    )       0\n\
+#           20 (SNIIP       )       0\n\
+#           21 (SNIIL       )       0\n\
+#           22 (SNIIn       )       0\n\
+#           23 (SNIIb       )       0\n\
+#           29 (SNII        )       0\n\
+#          122 (SNIIn?      )       0\n\
+#          129 (SNII?       )       0\n\
+#           32 (SNIb        )       0\n\
+#           33 (SNIc        )       0\n\
+#           39 (SNIbc       )       0\n\
+#          139 (SNIbc?      )       0\n\
+#           41 (SLSN-I      )       0\n\
+#           42 (SLSN-II     )       0\n\
+#           43 (SLSN-R      )       0\n\
+#          141 (SLSN-I?     )       0\n\n\n\
+readmetext = '## Example output lightcurve file\n\
 Contains the original forced photometry lightcurve file structure with the addition of several columns\n\
 ```\n\
 SMP_FLUX - fit flux (at zpt of 31)\n\
