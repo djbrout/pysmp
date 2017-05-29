@@ -1,15 +1,8 @@
 # resultsdir = '/project/projectdirs/des/djbrout/simv1'
 # savelcdir = '/project/projectdirs/des/djbrout/SMP_SIM_v1'
-
-# resultsdir = '/project/projectdirs/des/djbrout/spec_v1'
-# savelcdir = '/project/projectdirs/des/djbrout/SMP_SPEC_v1'
-
 resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
 savelcdir = '/project/projectdirs/des/djbrout/116simdeep/simdeepv1/'
 
-
-
-isfake = True
 
 import os
 
@@ -55,18 +48,7 @@ readme = open(savelcdir + '/' + savelcdir.split('/')[-1] + '.README', 'w')
 readme.write(readmetext)
 readme.close()
 
-if isfake:
-    os.popen('cd ' + savelcdir + '\n ls *.dat > ' + savelcdir.split('/')[-1] + '.LIST \n '+
-             'cp /project/projectdirs/des/djbrout/pysmp/fakes.HEADER ' + savelcdir.split('/')[-1] + '.HEADER \n'+
-             ' cd .. \n rm ' +
-             savelcdir.split('/')[-1] + '.tar.gz \n tar -zcvf ' + savelcdir.split('/')[-1] + '.tar.gz ' +
-             savelcdir.split('/')[-1] + ' \n')
-
-else:
-    os.popen('cd ' + savelcdir + '\n ls *.dat > ' + savelcdir.split('/')[-1] + '.LIST \n ' +
-        'cp /project/projectdirs/des/djbrout/pysmp/specHD.HEADER '+savelcdir.split('/')[-1]+'.HEADER \n cd .. \n rm ' +
-        savelcdir.split('/')[-1] + '.tar.gz \n tar -zcvf ' + savelcdir.split('/')[-1] + '.tar.gz ' +
-        savelcdir.split('/')[-1] + ' \n')
+os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -zcvf '+savelcdir.split('/')[-1]+'.tar.gz '+savelcdir.split('/')[-1]+' \n')
 
 #os.popen('cd '+savelcdir+'\n ls *.dat > '+savelcdir.split('/')[-1]+'.LIST \n cd .. \n rm '+savelcdir.split('/')[-1]+'.tar.gz \n tar -xf '+savelcdir.split('/')[-1]+'.tar.gz ./'+savelcdir.split('/')[-1]+'\n')
 #os.popen('rm '+savelcdir.split('/')[-1]+'.tar.gz ')
