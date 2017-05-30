@@ -127,11 +127,12 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             elif line.split(' ')[0] == 'OBS:':
                 #print line.split(' ')[3]
                 #raw_input()
-                if float(line.split(' ')[3]) < pkmjd - mjdminus:
-                    wline = ''
-                elif float(line.split(' ')[3]) > pkmjd + mjdplus:
-                    wline = ''
-                else:
+                # if float(line.split(' ')[3]) < pkmjd - mjdminus:
+                #     wline = ''
+                # elif float(line.split(' ')[3]) > pkmjd + mjdplus:
+                #     wline = ''
+                # else:
+                if True:
 
                     #print len(line.replace('#', '').split())
                     #band = line.split()[4]
