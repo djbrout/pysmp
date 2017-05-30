@@ -469,6 +469,7 @@ if __name__ == "__main__":
                      idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
+        raw_input()
         #if filt == None and successful:
         #snlist.write(sn + '_smp.dat\n')
             #except:
