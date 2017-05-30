@@ -463,7 +463,7 @@ if __name__ == "__main__":
             zptfile.extend(sndata['ZPTFILE'])
             idobs.extend(sndata['ID_OBS'])
 
-        print 'lcfile',open(lcfile).readlines()
+        print 'lcfile',lcfile
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
