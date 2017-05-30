@@ -148,7 +148,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #print tidobs,idobs
                     #raw_input()
                     if int(tidobs) in idobs:
-                        ww = np.isclose(idobs,tidobs,atol=0.1)# & (filt == band)
+                        ww = np.isclose(idobs,tidobs,atol=0.02)# & (filt == band)
                         #print fluxerr[ww]
                         #raw_input()
                         keepgoing = True
@@ -470,7 +470,7 @@ if __name__ == "__main__":
                      idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
-        raw_input()
+        #raw_input()
         #if filt == None and successful:
         #snlist.write(sn + '_smp.dat\n')
             #except:
