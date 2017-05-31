@@ -1,7 +1,11 @@
 # resultsdir = '/project/projectdirs/des/djbrout/simv1'
 # savelcdir = '/project/projectdirs/des/djbrout/SMP_SIM_v1'
-resultsdir = '/project/projectdirs/des/djbrout/simv1'
-savelcdir = '/project/projectdirs/des/djbrout/SMP_FAKES_v1'
+
+#resultsdir = '/project/projectdirs/des/djbrout/simv1'
+#savelcdir = '/project/projectdirs/des/djbrout/SMP_FAKES_v1'
+
+resultsdir = '/project/projectdirs/des/djbrout/spec_v7'
+savelcdir = '/project/projectdirs/des/djbrout/spec_v7/SMP_SPEC_v1'
 
 
 import os
