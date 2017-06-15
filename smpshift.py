@@ -3642,7 +3642,7 @@ class smp:
                 import gc
                 collected = gc.collect()
 
-                import mcmcoffset as mcmc3
+                import mcmc_geweke as mcmc3
                 aaa = mcmc3.metropolis_hastings(
                         galmodel = galmodel
                         , modelvec = modelvec

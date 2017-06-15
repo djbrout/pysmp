@@ -526,9 +526,13 @@ class metropolis_hastings():
             self.mcmc_func()
             #print 'PSF Position:', self.current_x_offset, self.current_y_offset
             #Check Geweke Convergence Diagnostic every 5000 iterations
-            if (self.counter % self.gewekenum) == self.gewekenum-1: 
-                self.check_geweke()
-                self.last_geweke = self.counter
+            # if (self.counter % self.gewekenum) == self.gewekenum-1:
+            #     self.check_geweke()
+            #     self.last_geweke = self.counter
+
+            if self.counter % 1000 == 0:
+                self.z_scores_say_keep_going = self.check_geweke()
+
             if (self.counter % 1000) == 0:
                 print 'Acceptance Rate:',self.accepted_history
                 print 'Counter:',self.counter
@@ -562,8 +566,6 @@ class metropolis_hastings():
                     #print 'fitting position:', self.x_pix_offset, self.y_pix_offset
 
 
-                if self.counter % 1000 == 0:
-                    checkgeweke()
 
                 if (self.counter % 100000) == 0:
                     self.plotchains()
@@ -1061,9 +1063,9 @@ class metropolis_hastings():
                     raise AssertionError(msg)
                 else:
                     print(msg)
-                return False
+                return True
 
-        return True
+        return False
 
     def mapchis( self, sims, data, immask, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,sigmazpt):
         chisq  = 0
@@ -1640,7 +1642,7 @@ class metropolis_hastings():
 
 
     #DIAGNOSTICS
-    def check_geweke( self, zscore_mean_crit=1, zscore_std_crit=1.0 ):
+    def check_gewekeaaaa( self, zscore_mean_crit=1, zscore_std_crit=1.0 ):
         #print 'making history'
         self.make_history()
         #print 'geweke'
