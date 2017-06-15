@@ -530,7 +530,7 @@ class metropolis_hastings():
             #     self.check_geweke()
             #     self.last_geweke = self.counter
 
-            if self.counter % 5000 == 0:
+            if self.counter % self.gewekenum == 0:
                 self.z_scores_say_keep_going = self.check_geweke()
 
             if (self.counter % 1000) == 0:
