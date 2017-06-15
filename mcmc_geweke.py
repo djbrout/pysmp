@@ -530,7 +530,7 @@ class metropolis_hastings():
             #     self.check_geweke()
             #     self.last_geweke = self.counter
 
-            if self.counter % 1000 == 0:
+            if self.counter % 5000 == 0:
                 self.z_scores_say_keep_going = self.check_geweke()
 
             if (self.counter % 1000) == 0:
@@ -1052,7 +1052,7 @@ class metropolis_hastings():
         for i in np.arange(num_iter):
             self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
 
-        for param in range(len(self.modelvechistory[0])):
+        for param in range(len(self.modelvec_nphistory[ 0, : ])):
 
             geweke = np.array(pymc.geweke(self.modelvec_nphistory[param,:]))
 
