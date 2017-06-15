@@ -1055,7 +1055,7 @@ class metropolis_hastings():
         for param in range(len(self.modelvec_nphistory[ 0, : ])):
             #print self.modelvec_nphistory.shape
             #print self.modelvec_nphistory[param,:].shape
-            print np.array(self.modelvec_nphistory[param,:])
+            if len(np.unique(self.modelvec_nphistory[param,:])) == 0: continue
             geweke = np.array(pymc.geweke(self.modelvec_nphistory[param,:]))
 
 
