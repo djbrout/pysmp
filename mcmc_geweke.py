@@ -1053,7 +1053,9 @@ class metropolis_hastings():
             self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
 
         for param in range(len(self.modelvec_nphistory[ 0, : ])):
-
+            print self.modelvec_nphistory.shape
+            print self.modelvec_nphistory[param,:].shape
+            print np.array(self.modelvec_nphistory[param,:]).shape
             geweke = np.array(pymc.geweke(self.modelvec_nphistory[param,:]))
 
 
