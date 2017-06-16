@@ -1046,14 +1046,15 @@ class metropolis_hastings():
     def check_geweke(self):
         print 'CHECKING GEWEKE'*20
         # Test for convergence using geweke method
-        num_iter = len( self.modelvechistory ) - self.burnin
+        num_iter = int(round(len( self.modelvechistory ) * (1. - self.burnin)))
+        start_iter = int(round(len( self.modelvechistory ) * (self.burnin)))
         if num_iter < 100:
             return True
         hasnotconv = False
 
-        self.modelvec_nphistory = np.zeros((num_iter - self.burnin, len(self.modelvec)))
-        for i in np.arange(num_iter-self.burnin):
-            self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i + self.burnin ]
+        self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
+        for i in np.arange(num_iter):
+            self.modelvec_nphistory[ i, : ] = self.modelvechistory[ int(i + start_iter) ]
 
         for param in range(len(self.modelvec_nphistory[ 0, : ])):
             #print self.modelvec_nphistory.shape
