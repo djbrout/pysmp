@@ -1117,7 +1117,7 @@ class metropolis_hastings():
         # 1829.46218163,
         # 1877.50806296,
         # 2088.32968722]
-            if np.any(np.abs(geweke[:, 1]) > 3.):
+            if np.any(np.abs(geweke[:, 1]) > 2.):
                 msg = "Epoch %s has not properly converged" % param
                 # if assert_:
                 #     raise AssertionError(msg)
