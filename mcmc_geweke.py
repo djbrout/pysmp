@@ -1046,11 +1046,14 @@ class metropolis_hastings():
     def check_geweke(self):
         print 'CHECKING GEWEKE'*20
         # Test for convergence using geweke method
-        num_iter = len( self.modelvechistory )
+        num_iter = len( self.modelvechistory ) - self.burnin
+        if num_iter < 100:
+            return True
+        hasnotconv = False
 
-        self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
-        for i in np.arange(num_iter):
-            self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i ]
+        self.modelvec_nphistory = np.zeros((num_iter - self.burnin, len(self.modelvec)))
+        for i in np.arange(num_iter-self.burnin):
+            self.modelvec_nphistory[ i, : ] = self.modelvechistory[ i + self.burnin ]
 
         for param in range(len(self.modelvec_nphistory[ 0, : ])):
             #print self.modelvec_nphistory.shape
@@ -1059,7 +1062,7 @@ class metropolis_hastings():
             #print len(np.unique(self.modelvec_nphistory[:,param]))
             if len(np.unique(self.modelvec_nphistory[:,param])) == 1: continue
             #print param, self.modelvec_nphistory[:,param]
-            gw = pymc.geweke(self.modelvec_nphistory[:,param],intervals=1)
+            gw = pymc.geweke(self.modelvec_nphistory[:,param],intervals=1,first=.4,last=.5)
             geweke = np.array(gw)
             print np.abs(geweke[:, 1])
 
@@ -1113,15 +1116,17 @@ class metropolis_hastings():
         # 1829.46218163,
         # 1877.50806296,
         # 2088.32968722]
-            if np.any(np.abs(geweke[:, 1]) > 2):
-                msg = "Chain of %s not properly converged" % param
+            if np.any(np.abs(geweke[:, 1]) > 3.):
+                msg = "Epoch %s has not properly converged" % param
                 # if assert_:
                 #     raise AssertionError(msg)
                 # else:
                 print(msg)
-                return True
 
-        return False
+                hasnotconv = True
+                #return True
+
+        return hasnotconv
 
     def mapchis( self, sims, data, immask, flags, fitflags, skyerr,simnosn,simnosnnosky,sky,weights,gain,wmask,sigmazpt):
         chisq  = 0
