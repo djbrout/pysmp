@@ -3671,7 +3671,7 @@ class smp:
                         , stop = False
                         , skyerr_radius = 12.
                         , outpath = outimages
-                        , compressionfactor = 100
+                        , compressionfactor = 10
                         , fix_gal_model = False
                         , pixelate_model = None
                         , burnin = burnin
