@@ -1043,7 +1043,7 @@ class metropolis_hastings():
                 self.sims[ epoch,:,:] =  (star_conv + galaxy_conv)*self.mask
     '''
 
-    def check_geweke(self,assert_=True):
+    def check_geweke(self):
         print 'CHECKING GEWEKE'*20
         # Test for convergence using geweke method
         num_iter = len( self.modelvechistory )
@@ -1114,10 +1114,10 @@ class metropolis_hastings():
         # 2088.32968722]
             if np.any(np.abs(geweke[:, 1]) > 2):
                 msg = "Chain of %s not properly converged" % param
-                if assert_:
-                    raise AssertionError(msg)
-                else:
-                    print(msg)
+                # if assert_:
+                #     raise AssertionError(msg)
+                # else:
+                print(msg)
                 return True
 
         return False
