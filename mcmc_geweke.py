@@ -1061,6 +1061,7 @@ class metropolis_hastings():
             #print param, self.modelvec_nphistory[:,param]
             gw = pymc.geweke(self.modelvec_nphistory[:,param])
             geweke = np.array(gw)
+            print np.abs(geweke[:, 1])
 
         #     [-68.07757674,
         #     40.64005278,
