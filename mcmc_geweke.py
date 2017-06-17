@@ -1052,6 +1052,13 @@ class metropolis_hastings():
             return True
         hasnotconv = False
 
+        gw = pymc.geweke(np.array(self.chisq)[start_iter:], intervals=1, first=.1, last=.5)
+        geweke = np.array(gw)
+        if np.any(np.abs(geweke[:, 1]) > 2.):
+            msg = "Chisq Vec has not properly converged"
+            print(msg)
+            hasnotconv = True
+
         self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
         for i in np.arange(num_iter):
             self.modelvec_nphistory[ i, : ] = self.modelvechistory[ int(i + start_iter) ]
