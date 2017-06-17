@@ -1393,6 +1393,7 @@ class smp:
                 self.expnum = np.nan
 
             print imfile
+            raw_input('immmmmm')
             if 'Y4' in imfile:
                 print 'yfour inside now skipping'
                 continue
