@@ -1392,8 +1392,10 @@ class smp:
                 self.field = np.nan
                 self.expnum = np.nan
 
-
-            if 'Y4' in imfile: continue
+            print imfile
+            if 'Y4' in imfile:
+                print 'yfour inside now skipping'
+                continue
 
 
             if self.fermigrid:
