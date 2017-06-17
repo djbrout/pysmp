@@ -1393,7 +1393,7 @@ class smp:
                 self.expnum = np.nan
 
 
-
+            if 'Y4' in imfile: continue
 
 
             if self.fermigrid:
