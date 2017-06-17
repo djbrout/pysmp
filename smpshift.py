@@ -3578,7 +3578,7 @@ class smp:
 
 
         if self.dosnfit:
-            for passv in range(2):
+            for passv in [0,1]:
                 print 'zpterr', smp_dict['zpterr']
 
                 if not self.dogalfit: continue

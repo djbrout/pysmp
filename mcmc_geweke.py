@@ -1066,7 +1066,7 @@ class metropolis_hastings():
             if np.any(np.abs(geweke[:, 1]) > 2.):
                 msg = "Chisq Vec has not properly converged"
                 print(msg)
-                hasnotconv =
+                hasnotconv =True
             gw = pymc.geweke(np.array(self.yhistory)[start_iter:], intervals=1, first=.1, last=.5)
             geweke = np.array(gw)
             if np.any(np.abs(geweke[:, 1]) > 2.):
