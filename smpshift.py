@@ -1392,11 +1392,11 @@ class smp:
                 self.field = np.nan
                 self.expnum = np.nan
 
-            print imfile
-            raw_input('immmmmm')
-            if 'Y4' in imfile:
-                print 'yfour inside now skipping'
-                continue
+            # print imfile
+            # raw_input('immmmmm')
+            # if 'Y4' in imfile:
+            #     print 'yfour inside now skipping'
+            #     continue
 
 
             if self.fermigrid:
@@ -1524,6 +1524,11 @@ class smp:
                             noisefile = noisefile.replace('p1', 'Y4')
                             psffile = psffile.replace('p1', 'Y4')
                 # noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
+
+
+            if 'Y4' in imfile:
+                print 'yfour inside now skipping'
+                continue
 
             imfile = os.path.join(rootdir, imfile)
             longimfile = copy(imfile)
