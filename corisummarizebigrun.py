@@ -2578,9 +2578,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #ax1.scatter(catmag, rv, alpha=.02, color='black')
     ax, ay, aystd = dt.bindata(catmag, rv, np.arange(min(catmag), max(catmag), .1), window=.3,dontrootn=True)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
-    ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    ax1.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    ax1.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    ax1.plot(ax, ay, linewidth=3, color='red', label='SMP',alpha=.8)
+    ax1.plot(ax, ay + aystd, linewidth=2, color='red', linestyle='--', label='SMP',alpha=.8)
+    ax1.plot(ax, ay - aystd, linewidth=2, color='red', linestyle='--', label='SMP',alpha=.8)
 
     # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
@@ -2627,11 +2627,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .1)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, rv, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='red', label='Phot + Shot + ZPT Scat', linewidth=3,alpha=.8)
+    ax3.plot(ax, ayrms, color='red', label='PSF Fit + ZPT Scatter', linewidth=3,alpha=.8)
     ax, ayrms = dt.binrms(catmag, rvorig, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='green', label='Phot + Shot', linewidth=3, alpha=.8)
+    ax3.plot(ax, ayrms, color='green', label='PSF Fit', linewidth=3, alpha=.8)
     ax, ayrms = dt.binrms(catmag, rvz, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='blue', label='ZPT Scat', linewidth=3, alpha=.8)
+    ax3.plot(ax, ayrms, color='blue', label='ZPT Scatter', linewidth=3, alpha=.8)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.4, 0.8))
     # ww = hostmag > 25.
