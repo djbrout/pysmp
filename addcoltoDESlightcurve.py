@@ -288,13 +288,14 @@ if __name__ == "__main__":
     print 'started'
 
     resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
+    resultsdir = '/project/projectdirs/des/djbrout/allsim/'
     fakeheader = False
     #if isfake:
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     #else:
     #    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
-    savelcdir = resultsdir+'/SMP_SPEC_v1'
+    savelcdir = resultsdir+'/SMP_SIM_v1'
     fakes = False
     faketrueflux = False
 
@@ -399,7 +400,7 @@ if __name__ == "__main__":
             smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #else:
             #    continue
-            savelcfile = savelcdir+'/'+sn+'_smp.dat'
+            savelcfile = savelcdir+'/'+sn+'.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
@@ -439,7 +440,7 @@ if __name__ == "__main__":
             smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #else:
             #    continue
-            savelcfile = savelcdir+'/'+sn+'_smp.dat'
+            savelcfile = savelcdir+'/'+sn+'.dat'
             if not os.path.exists(smpfile):
                 print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)

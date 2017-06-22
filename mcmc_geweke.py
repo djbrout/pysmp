@@ -73,7 +73,7 @@ import rdpsf
 import sys
 from scipy.fftpack import fft, ifft, fft2, ifft2
 import multiprocessing
-
+import time
 #import pyfftw
 
 
@@ -153,6 +153,7 @@ class metropolis_hastings():
                  ,datafilenames=None
                  ,nightlyoffx = None
                  ,nightlyoffy = None
+                 ,sstime = None
                 ):
         '''
         if model is None:
@@ -262,8 +263,8 @@ class metropolis_hastings():
 
         #self.shiftgalstd = shiftgalstd
 
-
-
+        self.maxtime = 3600*45
+        self.sstime = sstime
 
 
         print 'sigmazpt',self.sigmazpt.shape
@@ -530,8 +531,12 @@ class metropolis_hastings():
             #     self.check_geweke()
             #     self.last_geweke = self.counter
 
+            if time.time() - self.sstime > self.maxtime:
+                self.z_scores_say_keep_going = False
+
             if self.counter % self.gewekenum == 0:
-                self.z_scores_say_keep_going = self.check_geweke()
+                if self.counter > 50000:
+                    self.z_scores_say_keep_going = self.check_geweke()
 
             if (self.counter % 1000) == 0:
                 print 'Acceptance Rate:',self.accepted_history

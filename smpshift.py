@@ -283,6 +283,8 @@ class smp:
 
         print 'snfile',snfile
 
+        sstime = time.time()
+
         if fermigrid & worker:
             #if not os.path.exists(os.path.join(outdir,SNfoldername)):
             print 'ifdh mkdir ',outdir
@@ -3711,6 +3713,7 @@ class smp:
                         , datafilenames = smp_dict['image_filename']
                         , nightlyoffx = smp_dict['xoff']
                         , nightlyoffy = smp_dict['yoff']
+                        , sstime = sstime
 
                         )
                 modelveco = copy(modelvec)
