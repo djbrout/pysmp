@@ -159,6 +159,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         if len(fluxerr[ww]) == 1:
                             #print 'here',dofakes
                             try:
+                                print zptfiles[ww][0]
                                 zptdata = np.load(zptfiles[ww][0])
                             except:
                                 print 'excepted'
