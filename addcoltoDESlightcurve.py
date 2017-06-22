@@ -148,21 +148,21 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #raw_input()
                     #else:
                     tidobs = float(line.split()[1])
-                    print tidobs,idobs
+                    #print tidobs,idobs
                     #raw_input()
                     if int(tidobs) in idobs:
                         ww = np.isclose(idobs,tidobs,atol=0.02)# & (filt == band)
                         #print fluxerr[ww]
                         #raw_input()
                         keepgoing = True
-                        print len(fluxerr[ww])
+                        #print len(fluxerr[ww])
                         if len(fluxerr[ww]) == 1:
                             #print 'here',dofakes
                             try:
-                                print zptfiles[ww][0]
-                                zptdata = np.load(zptfiles[ww][0])
+                                #print zptfiles[ww][0]
+                                zptdata = np.load(zptfiles[ww][0].replace('v6','v7'))
                             except:
-                                print 'excepted'
+                                #print 'excepted'
                                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                         int(FAILED_SMP_FLAG)) + '\n'
                                 keepgoing = False
