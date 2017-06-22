@@ -465,7 +465,7 @@ if __name__ == "__main__":
             smpflag.extend(sndata['SMP_FLAG'])
             zptfile.extend(sndata['ZPTFILE'])
             idobs.extend(sndata['ID_OBS'])
-            band.extend(sndata['FILT'])
+            band.extend(sndata['BAND'])
 
         print band
         raw_input()
