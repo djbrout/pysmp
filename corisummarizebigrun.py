@@ -2549,7 +2549,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #ax5 = plt.axes(rect_histyflux)
 
     # no labels
-    ax2.yaxis.set_major_formatter(nullfmt)
+    #ax2.yaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
     #ax5.yaxis.set_major_formatter(nullfmt)
 
@@ -2649,7 +2649,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax4.set_xlim(ax1.get_xlim())
     ax4.set_ylim(-.025, .025)
     ax4.set_xlabel('Catalog Mag')
-    ax5.set_xlabel('Counts')
+    #ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     ax3.set_title(filter+' band')
 
@@ -2657,9 +2657,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     ax3.set_xlim(ax1.get_xlim())
     ax3.set_ylim(.5,2.)
-    ax2.set_ylim(ax1.get_ylim())
-    ax5.set_ylim(ax4.get_ylim())
-    ax2.xaxis.set_major_formatter(nullfmt)
+    #ax2.set_ylim(ax1.get_ylim())
+    #ax5.set_ylim(ax4.get_ylim())
+    #ax2.xaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
     ax1.xaxis.set_major_formatter(nullfmt)
 
