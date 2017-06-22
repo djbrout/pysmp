@@ -2648,7 +2648,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax4.plot(ax, ay - aystd, linewidth=2, color='red', linestyle='--',alpha=.8)
     ax4.set_xlim(ax1.get_xlim())
     ax4.set_ylim(-.025, .025)
-    ax4.set_xlabel('Cat Mag')
+    ax4.set_xlabel('Catalog Mag')
     ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     ax3.set_title(filter+' band')
