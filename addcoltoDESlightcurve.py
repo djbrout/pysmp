@@ -161,6 +161,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             try:
                                 zptdata = np.load(zptfiles[ww][0])
                             except:
+                                print 'excepted'
                                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                         int(FAILED_SMP_FLAG)) + '\n'
                                 keepgoing = False
