@@ -272,8 +272,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #print line
                         #raw_input()
                     else:
+                        #print -999
                         wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                             int(FAILED_SMP_FLAG)) + '\n'
+                    print wline
                     raw_input()
         except:
             e = sys.exc_info()[0]
