@@ -425,6 +425,7 @@ if __name__ == "__main__":
         smpflag = []
         zptfile = []
         idobs = []
+        band = []
         cntr += 1
         for i, filt in enumerate(filts):
             #for sn in sne[:]:
@@ -464,7 +465,10 @@ if __name__ == "__main__":
             smpflag.extend(sndata['SMP_FLAG'])
             zptfile.extend(sndata['ZPTFILE'])
             idobs.extend(sndata['ID_OBS'])
+            band.extend(sndata['FILT'])
 
+        print band
+        raw_input()
         print 'lcfile',lcfile
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
