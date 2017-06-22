@@ -2574,7 +2574,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     # plt.clf()
 
-    ax1.scatter(catmag, rv, alpha=.02, color='black')
+    #ax1.scatter(catmag, rv, alpha=.02, color='black')
     ax, ay, aystd = dt.bindata(catmag, rv, np.arange(min(catmag), max(catmag), .1), window=.3)
     ax1.plot([min(catmag), max(catmag)], [0, 0], color='grey')
     ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
@@ -2606,9 +2606,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='black', orientation='horizontal')
     ww = abs(fresid) < .1
-    ax4.scatter(catmag[ww], fresid[ww], alpha=.02, color='black')
+    #ax4.scatter(catmag[ww], fresid[ww], alpha=.02, color='black')
     ax, ay, aystd = dt.bindata(catmag[ww], fresid[ww],
-                               np.arange(16., max(catmag[ww]), .1), window=1.)
+                               np.arange(16., max(catmag[ww]), .1), window=1.,dontrootn=True)
     ax4.plot([19, 28.7], [0, 0], color='grey')
 
     #ax, ayrms = dt.binrms(catmag, d, np.arange(16., max(catmag), .1), .5)
