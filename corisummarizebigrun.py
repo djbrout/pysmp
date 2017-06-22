@@ -1510,7 +1510,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
 
-    #ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
+    ax4.scatter(fakemag,fresid,alpha=.01,color='black')
     axa, aya, aystd = dt.bindata(fakemag,fresid,
                             np.arange(20., 26., .1),window=2.,dontrootn=True)
     ax4.plot([19, 28.7], [0, 0],color='grey')
@@ -1535,7 +1535,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.plot(axa, aya, linewidth=3, color='black')
     ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
     ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
-    ax4.set_xlim(min(fakemag),27)
+    ax4.set_xlim(19.5,26)
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
     #ax5.set_xlabel('Counts')
