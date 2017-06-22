@@ -125,6 +125,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
             elif line.split(' ')[0] == 'VARNAMES:':
                 wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
             elif line.split(' ')[0] == 'OBS:':
+                print line
+                #raw_input()
                 #print line.split(' ')[3]
                 #raw_input()
                 # if float(line.split(' ')[3]) < pkmjd - mjdminus:
@@ -146,13 +148,14 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #raw_input()
                     #else:
                     tidobs = float(line.split()[1])
-                    #print tidobs,idobs
+                    print tidobs,idobs
                     #raw_input()
                     if int(tidobs) in idobs:
                         ww = np.isclose(idobs,tidobs,atol=0.02)# & (filt == band)
                         #print fluxerr[ww]
                         #raw_input()
                         keepgoing = True
+                        print len(fluxerr[ww])
                         if len(fluxerr[ww]) == 1:
                             #print 'here',dofakes
                             try:
@@ -232,6 +235,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #     tfluxerr *= 10 ** (-1 * .4 * (fit_zpt - tzpt))
 
                             elif keepgoing:
+                                print 'here'
                                 tflux = flux[ww][0]
                                 fit_zpt = zptdata['fit_zpt']
                                 fit_zpt_std = zptdata['fit_zpt_std']
@@ -262,6 +266,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                                        ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
 
+                            #raw_input()
                             #print wline
                             #raw_input()
                             #print line
@@ -269,6 +274,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     else:
                         wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                             int(FAILED_SMP_FLAG)) + '\n'
+                    raw_input()
         except:
             e = sys.exc_info()[0]
             print e
@@ -467,8 +473,8 @@ if __name__ == "__main__":
             idobs.extend(sndata['ID_OBS'])
             band.extend(sndata['BAND'])
 
-        print band
-        raw_input()
+        #print band
+        #raw_input()
         print 'lcfile',lcfile
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
