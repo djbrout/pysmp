@@ -46,7 +46,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-        data = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
+        data = np.load(cd)
     if not os.path.exists(resultsdir+'/Summary/'):
         os.mkdir(resultsdir+'/Summary/')
     if not os.path.exists(resultsdir+'/Summary/'+filter+'/'):
@@ -2877,5 +2877,6 @@ if __name__ == "__main__":
             dostars = True
     print filter
     tfield = 'SN-S2'
-    cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
+    #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
+    cd = '/global/cscratch1/sd/dbrout/summary_results_deep_' + filter + '.npz'
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
