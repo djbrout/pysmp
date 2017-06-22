@@ -2627,11 +2627,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax, ayrms = dt.binrms(catmag, dmas, np.arange(16., max(catmag), .1), .1)
     # ax3.plot(ax, ayrms, color='orange', label='ZPT Scatter Err and Sky Err', linewidth=3,alpha=.4)
     ax, ayrms = dt.binrms(catmag, rv, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='orange', label='Phot + Shot + ZPT Scat', linewidth=3,alpha=.95)
+    ax3.plot(ax, ayrms, color='red', label='Phot + Shot + ZPT Scat', linewidth=3,alpha=.8)
     ax, ayrms = dt.binrms(catmag, rvorig, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='green', label='Phot + Shot', linewidth=3, alpha=.95)
+    ax3.plot(ax, ayrms, color='green', label='Phot + Shot', linewidth=3, alpha=.8)
     ax, ayrms = dt.binrms(catmag, rvz, np.arange(16., max(catmag), .1), .1)
-    ax3.plot(ax, ayrms, color='blue', label='ZPT Scat', linewidth=3, alpha=.95)
+    ax3.plot(ax, ayrms, color='blue', label='ZPT Scat', linewidth=3, alpha=.8)
     ax3.plot(ax, ax * 0 + 1., linestyle='--', color='grey')
     ax3.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.4, 0.8))
     # ww = hostmag > 25.
@@ -2643,9 +2643,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
     # ax3.legend(fontsize='small')
 
-    ax4.plot(ax, ay, linewidth=3, color='orange')
-    ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
-    ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
+    ax4.plot(ax, ay, linewidth=3, color='red',alpha=.8)
+    ax4.plot(ax, ay + aystd, linewidth=2, color='red', linestyle='--',alpha=.8)
+    ax4.plot(ax, ay - aystd, linewidth=2, color='red', linestyle='--',alpha=.8)
     ax4.set_xlim(ax1.get_xlim())
     ax4.set_ylim(-.025, .025)
     ax4.set_xlabel('Cat Mag')
@@ -2653,7 +2653,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax3.set_ylabel('RMS')
     ax3.set_title(filter+' band')
 
-    ax4.set_ylabel('(fitflux - catflux)/catflux')
+    ax4.set_ylabel(r'$\frac{fitflux - catalog flux}{catalog flux}$')
 
     ax3.set_xlim(ax1.get_xlim())
     ax3.set_ylim(.5,2.)
