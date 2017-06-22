@@ -1510,7 +1510,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
 
-    ax4.scatter(fakemag,fresid,alpha=.02,color='black')
+    ax4.scatter(fakemag,fresid,alpha=.03,color='black')
     axa, aya, aystd = dt.bindata(fakemag,fresid,
                             np.arange(20., 26., .1),window=2.,dontrootn=True)
     ax4.plot([19, 28.7], [0, 0],color='grey')
