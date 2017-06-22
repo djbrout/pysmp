@@ -46,7 +46,17 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-        data = np.load(cd)
+        data = {'filter':[]}
+        for k in np.load(cd[0]).keys():
+            data[k] = []
+        for c in cd:
+            td = np.load(c)
+            for key in td.keys():
+                data[k].extend(td[key])
+            filt = c.split('.npz')[0].split('_')[-1]
+            filts =  [ filt for x in range(len(td['Flux']))]
+            data['filter'].extend(filts)
+
     if not os.path.exists(resultsdir+'/Summary/'):
         os.mkdir(resultsdir+'/Summary/')
     if not os.path.exists(resultsdir+'/Summary/'+filter+'/'):
@@ -55,10 +65,10 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
                         data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
-                        filter,data['FakeZPT'],data['rmsaddin'])
+                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'])#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'])#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -675,7 +685,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag,dtype='float')
     dpmjd = np.asarray(dpmjd,dtype='float')
@@ -686,6 +696,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     dec = np.asarray(dec)
     imstamp = np.asarray(imstamp)
     fakefiles = np.asarray(fakefiles,dtype='str')
+    filterarr = np.asarray(filterarr,dtype='str')
+
     hostmag = np.asarray(hostmag)
     skyerr = np.asarray(skyerr)
     zptstd=np.asarray(zptstd)
@@ -1184,7 +1196,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1199,6 +1211,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     diffimgfluxerr = np.array(diffimfluxerr)
     diffimflux = 10 ** (.4 * (31 - 27.5)) * np.array(diffimflux)
     diffimfluxerr = 10 ** (.4 * (31 - 27.5)) * np.array(diffimfluxerr)
+    filterarr = np.array(filterarr,dtype='str')
 
     #fluxerr *= 10**(.4*(fitzpt - fakezpt))
 
@@ -1273,6 +1286,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #df = df[ww]
     hostmag = hostmag[ww]
     chisqarr = chisqarr[ww]
+    filterarr = filterarr[ww]
 
     #print flux[0:10]
     #print fakeflux[0:10]
@@ -1509,32 +1523,47 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
+    filts = ['g','r','i','z']
+    colors = ['green','red','indigo','black']
+    if filter == 'all':
+    #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
+        for filt,col in zip(filts,colors):
+            ww = filterarr == filt
+            axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
+                                    np.arange(20., 26., .1),window=2.,dontrootn=True)
+            ax4.plot([19, 28.7], [0, 0],color='grey')
 
-    ax4.scatter(fakemag,fresid,alpha=.03,color='black')
-    axa, aya, aystd = dt.bindata(fakemag,fresid,
-                            np.arange(20., 26., .1),window=2.,dontrootn=True)
-    ax4.plot([19, 28.7], [0, 0],color='grey')
+            ax, ayrms = dt.binrms(fakemag[ww][d[ww]<3.], d[ww][d[ww]<3.], np.arange(20., 28, .1), 1.5)
+            ax3.plot(ax, ayrms, color=col, label='ALL SNe', linewidth=3)
+            ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+            ax4.plot(axa, aya, linewidth=3, color=col)
+            ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--')
+            ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--')
+    else:
+        axa, aya, aystd = dt.bindata(fakemag, fresid,
+                                     np.arange(20., 26., .1), window=2., dontrootn=True)
+        ax4.plot([19, 28.7], [0, 0], color='grey')
 
-    ax, ayrms = dt.binrms(fakemag[d<3.], d[d<3.], np.arange(20., 28, .1), 1.5)
-    ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
-    # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
-    # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
-    # ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
-    # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
-    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+        ax, ayrms = dt.binrms(fakemag[d < 3.], d[d < 3.], np.arange(20., 28, .1), 1.5)
+        ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
+        # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
+        # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
+        # ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
+        # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
+        ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
-    # ww = hostmag > 25.
-    # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
-    #
-    # ww = hostmag < 23.
-    # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-    # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-    # ax3.legend(fontsize='small')
+        # ww = hostmag > 25.
+        # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+        # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
+        #
+        # ww = hostmag < 23.
+        # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+        # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+        # ax3.legend(fontsize='small')
 
-    ax4.plot(axa, aya, linewidth=3, color='black')
-    ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
-    ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
+        ax4.plot(axa, aya, linewidth=3, color='black')
+        ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
+        ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
     ax4.set_xlim(19.5,26)
     ax4.set_ylim(-.15,.15)
     ax4.set_xlabel('Fake Mag')
@@ -2843,6 +2872,9 @@ if __name__ == "__main__":
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
+
+    deep_or_shallow = 'deep'
+
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
     import sys, getopt
@@ -2855,7 +2887,7 @@ if __name__ == "__main__":
             longopts=["fakedir=", "resultsdir=", "cacheddata", "cashedfile=","filter=",'dostars'])
 
     except getopt.GetoptError as err:
-        print "No command line argument    s"
+        print "No command line arguments"
 
     filter = 'r'
     dostars = False
@@ -2878,5 +2910,10 @@ if __name__ == "__main__":
     print filter
     tfield = 'SN-S2'
     #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
-    cd = '/global/cscratch1/sd/dbrout/summary_results_deep_' + filter + '.npz'
+    if filter == 'all':
+        cd = []
+        for filt in ['g','r','i','z']:
+            cd.append('/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filt + '.npz')
+    else:
+        cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
