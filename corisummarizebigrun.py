@@ -1512,7 +1512,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
     axa, aya, aystd = dt.bindata(fakemag,fresid,
-                            np.arange(20., 26., .1),window=2.)
+                            np.arange(20., 26., .1),window=2.,dontrootn=True)
     ax4.plot([19, 28.7], [0, 0],color='grey')
 
     ax, ayrms = dt.binrms(fakemag[d<3.], d[d<3.], np.arange(20., 28, .1), 1.5)
@@ -1535,7 +1535,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.plot(axa, aya, linewidth=3, color='black')
     ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
     ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
-    ax4.set_xlim(ax1.get_xlim())
+    ax4.set_xlim(ax3.get_xlim())
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
     #ax5.set_xlabel('Counts')
@@ -1544,17 +1544,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
     plt.title(filter+' band')
 
-    ax3.set_xlim(ax1.get_xlim())
+    ax3.set_xlim(ax4.get_xlim())
     #ax2.set_ylim(ax1.get_ylim())
     #ax5.set_ylim(ax4.get_ylim())
     #ax2.xaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
-    ax1.xaxis.set_major_formatter(nullfmt)
+    #ax1.xaxis.set_major_formatter(nullfmt)
 
     plt.subplots_adjust(wspace=0.01,hspace=0.01)
 
     plt.savefig(outdir+'/std.png')
-
+    print 'saved' , outdir+'/std.png'
+    raw_input('press to continue')
 
     #--------------------------------------------------------------------------------------
     plt.clf()
