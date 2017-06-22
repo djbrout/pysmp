@@ -1535,7 +1535,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax4.plot(axa, aya, linewidth=3, color='black')
     ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
     ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
-    ax4.set_xlim(ax3.get_xlim())
+    ax4.set_xlim(min(fakemag),27)
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
     #ax5.set_xlabel('Counts')
