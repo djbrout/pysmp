@@ -2156,7 +2156,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatabilitylikesnls.png')
-    sys.exit()
+    #sys.exit()
     plt.clf()
     cntr = 0
     pltvecx = []
