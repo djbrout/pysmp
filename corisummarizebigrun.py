@@ -2544,33 +2544,33 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
-    ax2 = plt.axes(rect_histy)
+    #ax2 = plt.axes(rect_histy)
     ax4 = plt.axes(rect_scatterflux)
-    ax5 = plt.axes(rect_histyflux)
+    #ax5 = plt.axes(rect_histyflux)
 
     # no labels
     ax2.yaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
-    ax5.yaxis.set_major_formatter(nullfmt)
+    #ax5.yaxis.set_major_formatter(nullfmt)
 
-    ax2.hist(rv[np.isfinite(rv)], bins=np.arange(-10.1, 10, .2), normed=True, label='RMS: ' + str(round(rms, 3))
-             , orientation='horizontal',color='black')
+    #ax2.hist(rv[np.isfinite(rv)], bins=np.arange(-10.1, 10, .2), normed=True, label='RMS: ' + str(round(rms, 3))
+    #         , orientation='horizontal',color='black')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
 
-    import matplotlib.mlab as mlab
-    import math
-    mean = 0
-    variance = 1
-    sigma = math.sqrt(variance)
-    x = np.arange(-5, 5, .1)
-    ax2.plot(mlab.normpdf(x, mean, sigma), x, color='grey', label='Gaussian Normal')
-
-    ax2.set_ylim(-4, 4)
-    ax2.set_xlim(0, .5)
+    # import matplotlib.mlab as mlab
+    # import math
+    # mean = 0
+    # variance = 1
+    # sigma = math.sqrt(variance)
+    # x = np.arange(-5, 5, .1)
+    # ax2.plot(mlab.normpdf(x, mean, sigma), x, color='grey', label='Gaussian Normal')
+    #
+    # ax2.set_ylim(-4, 4)
+    # ax2.set_xlim(0, .5)
     # .xlabel('STDEV')
     # plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.1, 1.15))
+    # ax2.legend(fontsize='x-small',loc = 'center right', bbox_to_anchor = (1.1, 1.15))
     # plt.savefig('stdresid.png')
 
     # plt.clf()
@@ -2605,7 +2605,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             fresid[i] = (f - ff) / max([abs(ff), 1.])
     # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-    ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='black', orientation='horizontal')
+    #ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='black', orientation='horizontal')
     ww = abs(fresid) < .1
     ax4.scatter(catmag[ww], fresid[ww], alpha=.001, color='black')
     ax, ay, aystd = dt.bindata(catmag[ww], fresid[ww],
