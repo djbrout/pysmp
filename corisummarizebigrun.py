@@ -2607,7 +2607,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     ax5.hist(fresid, bins=np.arange(-.155, .15, .001), color='black', orientation='horizontal')
     ww = abs(fresid) < .1
-    ax4.scatter(catmag[ww], fresid[ww], alpha=.005, color='black')
+    ax4.scatter(catmag[ww], fresid[ww], alpha=.002, color='black')
     ax, ay, aystd = dt.bindata(catmag[ww], fresid[ww],
                                np.arange(16., max(catmag[ww]), .1), window=1.,dontrootn=True)
     ax4.plot([19, 28.7], [0, 0], color='grey')
