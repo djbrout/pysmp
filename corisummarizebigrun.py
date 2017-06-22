@@ -2529,13 +2529,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
-    left, width = 0.13, 0.81
+    left, width = 0.13, 0.61
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
-    rect_scatter = [left, bottom + height / 2., width, height / 2.]
-    rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h - .04, width, .18]
+    rect_scatter = [left, bottom + height / 2., width+.2, height / 2.]
+    rect_scatterflux = [left, bottom, width+.2, height / 2.]
+    rect_histx = [left, bottom_h - .04, width+.2, .18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
