@@ -1425,34 +1425,34 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     bottom, height = 0.1, 0.6
     bottom_h = left_h = left + width + 0.02
 
-    rect_scatter = [left, bottom + height / 2., width, height / 2.]
-    rect_scatterflux = [left, bottom, width, height / 2.]
-    rect_histx = [left, bottom_h - .04, width, .18]
+    rect_scatter = [left, bottom + height / 2., width+.2, height / 2.]
+    rect_scatterflux = [left, bottom, width+.2, height]
+    rect_histx = [left, bottom_h - .04, width+.2, .18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
     # start with a rectangular Figure
     plt.figure(1, figsize=(45, 40))
 
-    ax1 = plt.axes(rect_scatter)
+    #ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
-    ax2 = plt.axes(rect_histy)
+    #ax2 = plt.axes(rect_histy)
     ax4 = plt.axes(rect_scatterflux)
-    ax5 = plt.axes(rect_histyflux)
+    #ax5 = plt.axes(rect_histyflux)
 
     # no labels
-    ax2.yaxis.set_major_formatter(nullfmt)
+    #ax2.yaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
-    ax5.yaxis.set_major_formatter(nullfmt)
+    #ax5.yaxis.set_major_formatter(nullfmt)
 
     outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .5) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
     outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .6) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
 
-    ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-                                                                '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
-                                                                ' Fraction: '+str(round(outliers3,3))+'\n5sig Outlier'+
-                                                                ' Fraction: '+str(round(outliers5,3))
-                                                                ,orientation='horizontal')
+    #ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
+    #                                                            '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
+    #                                                            ' Fraction: '+str(round(outliers3,3))+'\n5sig Outlier'+
+    #                                                            ' Fraction: '+str(round(outliers5,3))
+    #                                                            ,orientation='horizontal')
              #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
              #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
 
@@ -1462,13 +1462,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     variance = 1
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
-    ax2.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
+    #ax2.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
 
-    ax2.set_ylim(-4, 4)
-    ax2.set_xlim(0,.5)
+    #ax2.set_ylim(-4, 4)
+    #ax2.set_xlim(0,.5)
     #.xlabel('STDEV')
     #plt.ylabel('Normalized Count')
-    ax2.legend(fontsize='xx-small',loc=(0.,1.25))
+    #ax2.legend(fontsize='xx-small',loc=(0.,1.25))
     #plt.savefig('stdresid.png')
 
     #plt.clf()
@@ -1477,19 +1477,19 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-    ax1.scatter(fakemag,d,alpha=.3,color='blue')
-    ax, ay, aystd = dt.bindata(fakemag[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], d[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], np.arange(19., 28, .1),window=.5)
-    ax1.plot([19, 28.7], [0, 0],color='grey')
-    ax1.plot(ax, ay, linewidth=3, color='orange', label='SMP')
-    ax1.plot(ax, ay+aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
-    ax1.plot(ax, ay-aystd, linewidth=2, color='orange',linestyle='--', label='SMP')
+    #ax1.scatter(fakemag,d,alpha=.3,color='blue')
+    #ax, ay, aystd = dt.bindata(fakemag[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], d[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], np.arange(19., 28, .1),window=.5)
+    #ax1.plot([19, 28.7], [0, 0],color='grey')
+    #ax1.plot(ax, ay, linewidth=3, color='black', label='SMP')
+    #ax1.plot(ax, ay+aystd, linewidth=2, color='black',linestyle='--', label='SMP')
+    #ax1.plot(ax, ay-aystd, linewidth=2, color='black',linestyle='--', label='SMP')
 
     #ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-    ax1.set_xlim(19, 28.7)
-    ax1.set_ylim(-3., 3.)
-    ax1.set_xlabel('Fake Mag')
-    ax1.set_ylabel('STD')
+    #ax1.set_xlim(19, 28.7)
+    #ax1.set_ylim(-3., 3.)
+    #ax1.set_xlabel('Fake Mag')
+    #ax1.set_ylabel('STD')
 
     #ax, ayrms= dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1),.5)
     #ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
@@ -1507,10 +1507,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             fresid[i] = (f - ff) / max([abs(ff),1.])
     #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-    ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
+    #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
 
-    ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
+    #ax4.scatter(fakemag,fresid,alpha=.3,color='blue')
     axa, aya, aystd = dt.bindata(fakemag,fresid,
                             np.arange(20., 26., .1),window=2.)
     ax4.plot([19, 28.7], [0, 0],color='grey')
@@ -1532,22 +1532,22 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
     # ax3.legend(fontsize='small')
 
-    ax4.plot(axa, aya, linewidth=3, color='orange')
-    ax4.plot(axa, aya+aystd, linewidth=2, color='orange',linestyle='--')
-    ax4.plot(axa, aya-aystd, linewidth=2, color='orange',linestyle='--')
+    ax4.plot(axa, aya, linewidth=3, color='black')
+    ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
+    ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
     ax4.set_xlim(ax1.get_xlim())
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
-    ax5.set_xlabel('Counts')
+    #ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     ax3.set_title(filter+' band')
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
     plt.title(filter+' band')
 
     ax3.set_xlim(ax1.get_xlim())
-    ax2.set_ylim(ax1.get_ylim())
-    ax5.set_ylim(ax4.get_ylim())
-    ax2.xaxis.set_major_formatter(nullfmt)
+    #ax2.set_ylim(ax1.get_ylim())
+    #ax5.set_ylim(ax4.get_ylim())
+    #ax2.xaxis.set_major_formatter(nullfmt)
     ax3.xaxis.set_major_formatter(nullfmt)
     ax1.xaxis.set_major_formatter(nullfmt)
 
