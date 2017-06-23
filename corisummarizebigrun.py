@@ -1587,7 +1587,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.title(filter+' band')
 
     ax3.set_xlim(ax4.get_xlim())
-    ax3.legend(fontsize='x-small',location='upper right')
+    ax3.legend(fontsize='x-small',loc='upper right')
     #ax2.set_ylim(ax1.get_ylim())
     #ax5.set_ylim(ax4.get_ylim())
     #ax2.xaxis.set_major_formatter(nullfmt)
