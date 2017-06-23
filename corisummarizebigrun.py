@@ -1585,7 +1585,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #ax3.set_title(filter+' band')
     ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
-    if not filter == 'all': ax4.set_title(filter+' band')
+    if not filter == 'all':
+        ax4.set_title(filter+' band')
+    else:
+        ax4.set_title('Deep Fields')
+
 
     ax3.set_xlim(ax4.get_xlim())
     ax4.legend(fontsize='x-small',loc='upper right')
