@@ -1633,7 +1633,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-
+    plt.clf()
 
 
     nullfmt = NullFormatter()  # no labels
