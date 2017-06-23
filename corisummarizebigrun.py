@@ -1826,8 +1826,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlabel('Fit ZPT')
     plt.ylabel('Fractional Flux Difference')
     plt.title('Only FakeMag 99')
-    plt.savefig(outdir + '/' + deep_or_shallow + 'hoststd.png')
-    print 'saved',outdir + '/' + deep_or_shallow + 'hoststd.png'
+    plt.savefig(outdir + '/' + deep_or_shallow + 'zptcorr.png')
+    print 'saved',outdir + '/' + deep_or_shallow + 'zptcorr.png'
     raw_input('press to continue')
 
     plt.clf()
