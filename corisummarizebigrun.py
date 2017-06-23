@@ -1944,6 +1944,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'saved', outdir + '/' + deep_or_shallow + 'pskyerrcorr.png'
 
 
+
+    plt.clf()
+    plt.scatter(sky,fitzpt-fakezpt)
+    plt.xlabel('Sky')
+    plt.ylabel('Fit Zpt - Fake Zpt')
+    #plt.title('NO SN FLUX IN IMAGE')
+    # plt.legend()
+    plt.savefig(outdir + '/' + deep_or_shallow + 'zptvssky.png')
+
     raw_input('press to continue')
 
     plt.clf()
