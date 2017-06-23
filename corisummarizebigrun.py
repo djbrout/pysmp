@@ -896,7 +896,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     print 'saved', outdir+'/rms.png'
     # print min(hostmag[ww]),max(hostmag[ww])
     plt.clf()
-    raw_input()
+    #raw_input()
 
     try:
         fig = plt.figure(figsize=(15, 10))
