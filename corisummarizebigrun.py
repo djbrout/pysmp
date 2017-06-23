@@ -1864,7 +1864,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100,10000,10), 20.)
+    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100,15000,100), 200.)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
@@ -1875,7 +1875,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (chisqarr < 1.2)
 
 
-    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100., 10000., 10), 20.)
+    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100., 15000., 100), 200.)
 
     plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
 
@@ -1891,7 +1891,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0, 500, 1), 2.)
+    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0, 1000, 20), 40.)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
@@ -1901,7 +1901,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
 
-    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0., 500., 1.), 2.)
+    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0., 1000., 20.), 40.)
 
     plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
 
