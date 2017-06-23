@@ -1860,55 +1860,55 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100,15000,100), 200.)
+    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100,25000,100), 500.)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
 
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
-         & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
-
-
-    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100., 15000., 100), 200.)
-
-    plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
+    # ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+    #      & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    #      (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+    #      & (chisqarr < 1.2)
+    #
+    #
+    # ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100., 25000., 100), 500.)
+    #
+    # plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
 
     plt.xlabel('Sky')
     plt.ylabel('RMS')
     plt.title('NO SN FLUX IN IMAGE')
-    plt.legend()
+    # plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow + 'skycorr.png')
     print 'saved', outdir + '/' + deep_or_shallow + 'skycorr.png'
 
     plt.clf()
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 2999999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0, 1000, 20), 40.)
+    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0, 600, 20), 40.)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
 
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
-         & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
-
-    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0., 1000., 20.), 40.)
-
-    plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
+    # ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+    #      & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    #      (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+    #      & (chisqarr < 1.2)
+    #
+    # ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0., 600., 20.), 40.)
+    #
+    # plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
 
     plt.xlabel('Skyerr')
     plt.ylabel('RMS')
     plt.title('NO SN FLUX IN IMAGE')
-    plt.legend()
+    # plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow + 'skyerrcorr.png')
     print 'saved', outdir + '/' + deep_or_shallow + 'skyerrcorr.png'
 
