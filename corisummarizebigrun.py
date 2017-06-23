@@ -1918,7 +1918,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms((skyerr/sky)[ww], (flux / fluxerr)[ww], np.arange(0, .15, .001), .002)
+    ax, ayrms = dt.binrms((skyerr/sky)[ww], (flux / fluxerr)[ww], np.arange(0, .1, .001), .005)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
