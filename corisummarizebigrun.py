@@ -1660,7 +1660,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     # no labels
     # ax2.yaxis.set_major_formatter(nullfmt)
-    ax3.xaxis.set_major_formatter(nullfmt)
+    #ax3.xaxis.set_major_formatter(nullfmt)
     # ax5.yaxis.set_major_formatter(nullfmt)
 
     outliers3 = float(
@@ -1785,7 +1785,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     else:
         ax3.set_title(deep_or_shallow.upper() + ' Fields')
 
-    ax3.set_xlim(19,28)
+    ax3.set_xlim(19,35)
     #ax4.legend(fontsize='x-small', loc='upper right')
     # ax2.set_ylim(ax1.get_ylim())
     # ax5.set_ylim(ax4.get_ylim())
