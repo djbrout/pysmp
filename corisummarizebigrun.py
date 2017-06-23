@@ -1797,7 +1797,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir + '/' + deep_or_shallow + 'hoststd.png')
     print 'saved', outdir + '/' + deep_or_shallow + 'hoststd.png'
-    raw_input('press to continue')
+
+
+
 
 
 
@@ -1818,6 +1820,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #--------------------------------------------------------------------------------------
 
+
+    plt.clf()
+    plt.scatter(fitzpt[fakemag == > 50],fresid[fakemag == > 50],color='black')
+    plt.xlabel('Fit ZPT')
+    plt.ylabel('Fractional Flux Difference')
+    plt.title('Only FakeMag 99')
+    plt.savefig(outdir + '/' + deep_or_shallow + 'hoststd.png')
+    print 'saved',outdir + '/' + deep_or_shallow + 'hoststd.png'
+    raw_input('press to continue')
 
     plt.clf()
     fig = plt.figure(figsize=(25, 20))
