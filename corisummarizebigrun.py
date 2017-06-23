@@ -1739,18 +1739,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ww = filterarr == filt
             axa, aya, aystd = dt.bindata(hostmag[ww], fresid[ww],
                                          np.arange(20., 26., .1), window=2., dontrootn=True)
-            ax4.plot([19, 28.7], [0, 0], color='grey')
+            #ax4.plot([19, 28.7], [0, 0], color='grey')
 
             ax, ayrms = dt.binrms(hostmag[ww][d[ww] < 3.], d[ww][d[ww] < 3.], np.arange(20., 28, .1), 1.5)
             ax3.plot(ax, ayrms, color=col, label=filt + ' band', linewidth=3, alpha=.8)
             ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
-            ax4.plot(axa, aya, linewidth=3, color=col, label=filt + ' band', alpha=.8)
-            ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--', alpha=.8)
-            ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--', alpha=.8)
+            #ax4.plot(axa, aya, linewidth=3, color=col, label=filt + ' band', alpha=.8)
+            #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--', alpha=.8)
+            #ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--', alpha=.8)
     else:
         axa, aya, aystd = dt.bindata(hostmag, fresid,
                                      np.arange(20., 26., .1), window=2., dontrootn=True)
-        ax4.plot([19, 28.7], [0, 0], color='grey')
+        #ax4.plot([19, 28.7], [0, 0], color='grey')
 
         ax, ayrms = dt.binrms(hostmag[d < 3.], d[d < 3.], np.arange(20., 28, .1), 1.5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
@@ -1769,16 +1769,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
         # ax3.legend(fontsize='x-small',location='upper right')
 
-        ax4.plot(axa, aya, linewidth=3, color='black')
-        ax4.plot(axa, aya + aystd, linewidth=2, color='black', linestyle='--')
-        ax4.plot(axa, aya - aystd, linewidth=2, color='black', linestyle='--')
-    ax4.set_xlim(19.5, 26)
-    ax4.set_ylim(-.25, .25)
-    ax4.set_xlabel('Host Mag')
+        #ax4.plot(axa, aya, linewidth=3, color='black')
+        #ax4.plot(axa, aya + aystd, linewidth=2, color='black', linestyle='--')
+        #ax4.plot(axa, aya - aystd, linewidth=2, color='black', linestyle='--')
+    #ax4.set_xlim(19.5, 26)
+    #ax4.set_ylim(-.25, .25)
+    #ax4.set_xlabel('Host Mag')
     # ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     # ax3.set_title(filter+' band')
-    ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+    #ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
     if not filter == 'all':
         ax3.set_title(filter + ' band')
@@ -1786,7 +1786,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax3.set_title(deep_or_shallow.upper() + ' Fields')
 
     ax3.set_xlim(ax4.get_xlim())
-    ax4.legend(fontsize='x-small', loc='upper right')
+    #ax4.legend(fontsize='x-small', loc='upper right')
     # ax2.set_ylim(ax1.get_ylim())
     # ax5.set_ylim(ax4.get_ylim())
     # ax2.xaxis.set_major_formatter(nullfmt)
