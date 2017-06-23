@@ -1588,7 +1588,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     if not filter == 'all':
         ax3.set_title(filter+' band')
     else:
-        ax3.set_title('Deep Fields')
+        ax3.set_title('Shallow Fields')
 
 
     ax3.set_xlim(ax4.get_xlim())
@@ -2885,7 +2885,7 @@ if __name__ == "__main__":
 
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/114sim/'
+    resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
