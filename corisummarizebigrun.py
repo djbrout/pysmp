@@ -837,7 +837,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     dc99 = d[fm > 90.]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
-    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 28.5) & (flux != 0.)
+    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 28.5) & (flux != 0.) & (abs((flux-fakeflux)/fluxerr) < 3.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
 
