@@ -1549,7 +1549,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax, ayrms = dt.binrms(fakemag[ww][d[ww]<3.], d[ww][d[ww]<3.], np.arange(20., 28, .1), 1.5)
             ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3)
             ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-            ax4.plot(axa, aya, linewidth=3, color=col)
+            ax4.plot(axa, aya, linewidth=3, color=col,label=filt+' band')
             ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--')
             ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--')
     else:
@@ -1587,7 +1587,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.title(filter+' band')
 
     ax3.set_xlim(ax4.get_xlim())
-    ax3.legend(fontsize='x-small',loc='upper right')
+    ax4.legend(fontsize='x-small',loc='upper right')
     #ax2.set_ylim(ax1.get_ylim())
     #ax5.set_ylim(ax4.get_ylim())
     #ax2.xaxis.set_major_formatter(nullfmt)
