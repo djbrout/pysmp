@@ -54,14 +54,14 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
             td = np.load(c)
             for key in td.keys():
                 print key, len(td[key])
-                data[k].extend(td[key])
+                data[key].extend(td[key])
             filt = c.split('.npz')[0].split('_')[-1]
             filts =  [ filt for x in range(len(td['Flux']))]
             data['filter'].extend(filts)
-    print len(data['Flux'])
-    raw_input()
-    for key in data.keys():
-        data[key] = np.array(data[key])
+    #print len(data['Flux'])
+    #raw_input()
+    #for key in data.keys():
+    #    data[key] = np.array(data[key])
     if not os.path.exists(resultsdir+'/Summary/'):
         os.mkdir(resultsdir+'/Summary/')
     if not os.path.exists(resultsdir+'/Summary/'+filter+'/'):
@@ -1276,8 +1276,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     d = (flux - fakeflux) / ((fluxerr**2. )**.5)
-    print d[:100]
-    print 'nnn'
+    #print d[:100]
+    #print 'nnn'
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
     df = (diffimflux - fakeflux) / ((diffimfluxerr**2 )**.5)
     ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) & (fluxerr > 0.)
@@ -1293,8 +1293,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     diffimflux = diffimflux[ww]
     diffimfluxerr = diffimfluxerr[ww]
     d = d[ww]
-    print d[:100]
-    raw_input()
+    #print d[:100]
+    #raw_input()
     #dz = dz[ww]
     #df = df[ww]
     hostmag = hostmag[ww]
