@@ -58,8 +58,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
             filt = c.split('.npz')[0].split('_')[-1]
             filts =  [ filt for x in range(len(td['Flux']))]
             data['filter'].extend(filts)
-    #print len(data['filter'])
-    #raw_input()
+    print len(data['Flux'])
+    raw_input()
     for key in data.keys():
         data[key] = np.array(data[key])
     if not os.path.exists(resultsdir+'/Summary/'):
@@ -1218,8 +1218,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     diffimfluxerr = 10 ** (.4 * (31 - 27.5)) * np.array(diffimfluxerr)
     filterarr = np.array(filterarr,dtype='str')
 
-    print flux[:100]
-    raw_input()
+    #print flux[:100]
+    #raw_input()
 
     #fluxerr *= 10**(.4*(fitzpt - fakezpt))
 
