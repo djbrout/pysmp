@@ -1822,13 +1822,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 21.)
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux/fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
 
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 21.)
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux / fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
