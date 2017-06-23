@@ -1825,7 +1825,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ww = (fakemag >= 50) & (flux != 0.)
     print fitzpt[ww]
     #plt.scatter(fitzpt[fakemag >= 50],fresid[fakemag >= 50],color='black')
-    ax, ayrms = dt.binrms(fitzpt[ww], d[ww], np.arange(20., 35., .1), 1.5)
+    ax, ayrms = dt.binrms(fitzpt[ww], d[ww], np.arange(28., 38., .1), 1.5)
     print ax
     print ayrms
     plt.plot(ax, ayrms, color=col, label=filt + ' band', linewidth=3, alpha=.8)
