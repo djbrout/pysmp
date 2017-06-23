@@ -1239,7 +1239,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     skyerr = np.array(skyerr)
     filterarr = np.array(filterarr,dtype='str')
 
-    sky = sky*10**(-.4*(fitzpt-31.))
+    #sky = sky*10**(-.4*(fitzpt-31.))
     skyerr = skyerr*10**(-.4*(fitzpt-31.))
 
     print sky[:1000]
