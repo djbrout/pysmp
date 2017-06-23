@@ -1218,8 +1218,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     diffimfluxerr = 10 ** (.4 * (31 - 27.5)) * np.array(diffimfluxerr)
     filterarr = np.array(filterarr,dtype='str')
 
-    print filterarr[:100]
-    raw_input()
+    #print filterarr[:100]
+    #raw_input()
 
     #fluxerr *= 10**(.4*(fitzpt - fakezpt))
 
@@ -1274,7 +1274,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     #np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
+
     d = (flux - fakeflux) / ((fluxerr**2. )**.5)
+    print d[:100]
+    print 'nnn'
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
     df = (diffimflux - fakeflux) / ((diffimfluxerr**2 )**.5)
     ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) & (fluxerr > 0.)
@@ -1290,6 +1293,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     diffimflux = diffimflux[ww]
     diffimfluxerr = diffimfluxerr[ww]
     d = d[ww]
+    print d[:100]
+    raw_input()
     #dz = dz[ww]
     #df = df[ww]
     hostmag = hostmag[ww]
