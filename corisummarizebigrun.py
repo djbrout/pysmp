@@ -1211,7 +1211,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fakezpt = np.asarray(fakezpt)
     rmsaddin = np.asarray(rmsaddin)
     fakeflux = 10 ** (.4 * (31. - fakemag))
-    #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
     fluxerrz = (fluxerr**2 + flux + (rmsaddin*flux)**2)**.5
     diffimgflux = np.array(diffimflux)
     diffimgfluxerr = np.array(diffimfluxerr)
@@ -2932,7 +2932,7 @@ if __name__ == "__main__":
     #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
     if filter == 'all':
         cd = []
-        for filt in ['g','r','i']:
+        for filt in ['g','r','i','z']:
             cd.append('/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filt + '.npz')
     else:
         cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
