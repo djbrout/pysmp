@@ -875,10 +875,28 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.title(filter+' band',fontsize=30.)
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
-    print 'saved', outdir+'/percentagefluxdiff.png'
+
+    ax,ay = dt.binrms(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww])
+    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
+    #ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
+    #                        np.arange(19,28, .5))
+    plt.plot(ax, ay, color='green', fmt='o', label='SMP')
+
+
+
+    plt.axhline(1,linestyle='--')
+    plt.xlim(18,29)
+    #plt.ylim(-.1,.1)
+    #plt.ylim(-.2,.2)
+    plt.xlabel('Fake Mag',fontsize=30.)
+    plt.ylabel('RMS',fontsize=30.)
+    plt.title(filter+' band',fontsize=30.)
+    plt.savefig(outdir+'/rms.png')
+
+    print 'saved', outdir+'/rms.png'
     # print min(hostmag[ww]),max(hostmag[ww])
     plt.clf()
-    #raw_input()
+    raw_input()
 
     try:
         fig = plt.figure(figsize=(15, 10))
