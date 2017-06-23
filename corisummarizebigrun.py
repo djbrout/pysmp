@@ -3123,7 +3123,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'deep'
+    deep_or_shallow = 'shallow'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
