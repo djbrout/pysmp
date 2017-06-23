@@ -1433,7 +1433,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         print fmm,fffl,fafl, fffl-fafl, fffle
     #raw_input()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 2.) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 1.2) & \
          (abs(flux - fakeflux) > 0.1)
 
     #ww = (flux != 0) & (fakeflux < 1.)
@@ -1774,7 +1774,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.plot(axa, aya - aystd, linewidth=2, color='black', linestyle='--')
     ax4.set_xlim(19.5, 26)
     ax4.set_ylim(-.25, .25)
-    ax4.set_xlabel('Fake Mag')
+    ax4.set_xlabel('Host Mag')
     # ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     # ax3.set_title(filter+' band')
