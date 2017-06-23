@@ -2932,7 +2932,7 @@ if __name__ == "__main__":
     #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
     if filter == 'all':
         cd = []
-        for filt in ['g','r','i','z']:
+        for filt in ['g','r','i']:
             cd.append('/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filt + '.npz')
     else:
         cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
