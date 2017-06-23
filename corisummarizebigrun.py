@@ -1560,7 +1560,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     if filter == 'all':
     #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
         for filt,col in zip(filts,colors):
-            ww = filterarr == filt
+            ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
+                 & (fluxerr > 0.) & (np.isfinite(flux)) & \
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+                 & (chisqarr < 1.2)
             axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
                                     np.arange(20., 26., .1),window=2.,dontrootn=True)
             ax4.plot([19, 28.7], [0, 0],color='grey')
@@ -1822,13 +1825,19 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.)
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
+                 & (fluxerr > 0.) & (np.isfinite(flux)) & \
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+                 & (chisqarr < 1.2)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux/fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
 
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) (abs(fresid) < 4.)
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
+                 & (fluxerr > 0.) & (np.isfinite(flux)) & \
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+                 & (chisqarr < 1.2)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux / fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
