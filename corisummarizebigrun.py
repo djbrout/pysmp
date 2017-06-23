@@ -1946,9 +1946,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    plt.scatter(sky,fitzpt-fakezpt)
+    plt.scatter(sky,fitzpt-fakezpt,alpha=.2)
     plt.xlabel('Sky')
     plt.ylabel('Fit Zpt - Fake Zpt')
+    plt.ylim(-.5,.5)
     #plt.title('NO SN FLUX IN IMAGE')
     # plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow + 'zptvssky.png')
