@@ -53,7 +53,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
             print c
             td = np.load(c)
             for key in td.keys():
-                print key
+                print key, len(td[key])
                 data[k].extend(td[key])
             filt = c.split('.npz')[0].split('_')[-1]
             filts =  [ filt for x in range(len(td['Flux']))]
@@ -2919,6 +2919,6 @@ if __name__ == "__main__":
     else:
         cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
 
-    print cd
-    raw_input()
+    #print cd
+    #raw_input()
     go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
