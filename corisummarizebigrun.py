@@ -1826,8 +1826,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print fitzpt[ww]
     #plt.scatter(fitzpt[fakemag >= 50],fresid[fakemag >= 50],color='black')
     ax, ayrms = dt.binrms(fitzpt[ww], d[ww], np.arange(20., 35., .1), 1.5)
-    ax3.plot(ax, ayrms, color=col, label=filt + ' band', linewidth=3, alpha=.8)
-    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
+    print ax
+    print ayrms
+    plt.plot(ax, ayrms, color=col, label=filt + ' band', linewidth=3, alpha=.8)
+    plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
     plt.xlabel('Fit ZPT')
     plt.ylabel('RMS')
     plt.title('Only FakeMag 99')
