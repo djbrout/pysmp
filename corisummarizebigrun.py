@@ -1433,8 +1433,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         print fmm,fffl,fafl, fffl-fafl, fffle
     #raw_input()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 1.08) & \
-         (abs(flux - fakeflux) > 0.1)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 1.2) #& \
+         #(abs(flux - fakeflux) > 0.1)
 
     #ww = (flux != 0) & (fakeflux < 1.)
     print rms99
@@ -1828,7 +1828,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
 
-    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.)
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) (abs(fresid) < 4.)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux / fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
