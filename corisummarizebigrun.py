@@ -1947,7 +1947,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.clf()
     plt.scatter(sky,fresid,alpha=.2)
+    ax, ay, aystd = dt.bindata(sky, fresid, np.arange(-500, 500, 50), window=100)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+
     plt.xlabel('Sky')
+    plt.xlim(-500,500)
     plt.ylabel('Fractional flux diff')
     plt.ylim(-.5,.5)
     #plt.title('NO SN FLUX IN IMAGE')
