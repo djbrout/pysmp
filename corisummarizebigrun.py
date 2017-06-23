@@ -1220,7 +1220,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
