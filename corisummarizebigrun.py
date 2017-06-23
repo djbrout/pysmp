@@ -886,7 +886,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.axhline(1,linestyle='--')
     plt.xlim(18,29)
-    #plt.ylim(-.1,.1)
+    plt.ylim(.8,2.)
     #plt.ylim(-.2,.2)
     plt.xlabel('Fake Mag',fontsize=30.)
     plt.ylabel('RMS',fontsize=30.)
