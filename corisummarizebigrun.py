@@ -1822,7 +1822,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    plt.scatter(fitzpt[fakemag >= 50],fresid[fakemag >= 50],color='black')
+    ww = (fakemag >= 50) & (flux != 0.)
+    #plt.scatter(fitzpt[fakemag >= 50],fresid[fakemag >= 50],color='black')
+    ax, ayrms = dt.binrms(fitzpt[ww][d[ww] < 3.], d[ww][d[ww] < 3.], np.arange(20., 35., .1), 1.5)
+    ax3.plot(ax, ayrms, color=col, label=filt + ' band', linewidth=3, alpha=.8)
+    ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
     plt.xlabel('Fit ZPT')
     plt.ylabel('Fractional Flux Difference')
     plt.title('Only FakeMag 99')
