@@ -1636,7 +1636,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
 
 
-    nullfmt = NullFormatter()  # no labels
+    #nullfmt = NullFormatter()  # no labels
 
     # definitions for the axes
     left, width = 0.13, 0.61
@@ -1741,7 +1741,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                                          np.arange(20., 26., .1), window=2., dontrootn=True)
             #ax4.plot([19, 28.7], [0, 0], color='grey')
 
-            ax, ayrms = dt.binrms(hostmag[ww][d[ww] < 3.], d[ww][d[ww] < 3.], np.arange(20., 28, .1), 1.5)
+            ax, ayrms = dt.binrms(hostmag[ww][d[ww] < 3.], d[ww][d[ww] < 3.], np.arange(20., 35., .1), 1.5)
             ax3.plot(ax, ayrms, color=col, label=filt + ' band', linewidth=3, alpha=.8)
             ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
             #ax4.plot(axa, aya, linewidth=3, color=col, label=filt + ' band', alpha=.8)
