@@ -1832,7 +1832,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
     plt.xlabel('Fit ZPT')
     plt.ylabel('RMS')
-    plt.title('Only FakeMag 99')
+    plt.title('NO SN FLUX IN IMAGE')
     plt.savefig(outdir + '/' + deep_or_shallow + 'zptcorr.png')
     print 'saved',outdir + '/' + deep_or_shallow + 'zptcorr.png'
     raw_input('press to continue')
@@ -3123,7 +3123,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'shallow'
+    deep_or_shallow = 'deep'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
