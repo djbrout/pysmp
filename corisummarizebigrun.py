@@ -1644,8 +1644,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     bottom_h = left_h = left + width + 0.02
 
     rect_scatter = [left, bottom + height / 2., width + .2, height / 2.]
-    rect_scatterflux = [left, bottom, width + .2, height]
-    rect_histx = [left, bottom_h - .04, width + .2, .18]
+    #rect_scatterflux = [left, bottom, width + .2, height]
+    rect_histx = [left, bottom, width + .2, height+.18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
@@ -1655,7 +1655,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
     # ax2 = plt.axes(rect_histy)
-    ax4 = plt.axes(rect_scatterflux)
+    #ax4 = plt.axes(rect_scatterflux)
     # ax5 = plt.axes(rect_histyflux)
 
     # no labels
