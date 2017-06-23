@@ -74,7 +74,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow)#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'])#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -1235,6 +1235,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     diffimgfluxerr = np.array(diffimfluxerr)
     diffimflux = 10 ** (.4 * (31 - 27.5)) * np.array(diffimflux)
     diffimfluxerr = 10 ** (.4 * (31 - 27.5)) * np.array(diffimfluxerr)
+    sky = np.array(sky)
+    skyerr = np.array(skyerr)
     filterarr = np.array(filterarr,dtype='str')
 
     #print flux[:100]
@@ -1311,6 +1313,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fluxerrz = fluxerrz[ww]
     diffimflux = diffimflux[ww]
     diffimfluxerr = diffimfluxerr[ww]
+    sky = sky[ww]
+    skyerr = skyerr[ww]
     d = d[ww]
     #print d[:100]
     #raw_input()
@@ -1849,6 +1853,64 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + deep_or_shallow + 'zptcorr.png')
     print 'saved',outdir + '/' + deep_or_shallow + 'zptcorr.png'
 
+
+
+
+
+
+
+    plt.clf()
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100,10000,10), 20.)
+
+    plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
+    plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
+
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+
+
+    ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100., 10000., 10), 20.)
+
+    plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
+
+    plt.xlabel('Sky')
+    plt.ylabel('RMS')
+    plt.title('NO SN FLUX IN IMAGE')
+    plt.legend()
+    plt.savefig(outdir + '/' + deep_or_shallow + 'skycorr.png')
+    print 'saved', outdir + '/' + deep_or_shallow + 'skycorr.png'
+
+    plt.clf()
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0, 500, 1), 2.)
+
+    plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
+    plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
+
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+
+    ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0., 500., 1.), 2.)
+
+    plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
+
+    plt.xlabel('Skyerr')
+    plt.ylabel('RMS')
+    plt.title('NO SN FLUX IN IMAGE')
+    plt.legend()
+    plt.savefig(outdir + '/' + deep_or_shallow + 'skyerrcorr.png')
+    print 'saved', outdir + '/' + deep_or_shallow + 'skyerrcorr.png'
 
 
     raw_input('press to continue')
