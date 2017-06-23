@@ -1523,7 +1523,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-    ax3.set_ylim(.9,1.25)
+    ax3.set_ylim(.7,2.25)
     ax3.legend(fontsize='x-small')
 
     fresid = np.zeros(flux.shape)
@@ -1547,7 +1547,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax4.plot([19, 28.7], [0, 0],color='grey')
 
             ax, ayrms = dt.binrms(fakemag[ww][d[ww]<3.], d[ww][d[ww]<3.], np.arange(20., 28, .1), 1.5)
-            ax3.plot(ax, ayrms, color=col, label='ALL SNe', linewidth=3)
+            ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3)
             ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
             ax4.plot(axa, aya, linewidth=3, color=col)
             ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--')
@@ -1572,7 +1572,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ww = hostmag < 23.
         # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
         # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-        # ax3.legend(fontsize='small')
+        ax3.legend(fontsize='x-small',location='upper right')
 
         ax4.plot(axa, aya, linewidth=3, color='black')
         ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
