@@ -880,7 +880,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
     #ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
     #                        np.arange(19,28, .5))
-    plt.plot(ax, ay, color='green', fmt='o', label='SMP')
+    plt.plot(ax, ay, color='green', label='SMP')
 
 
 
