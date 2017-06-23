@@ -15,7 +15,7 @@ from copy import copy
 from scipy.stats import sigmaclip
 
 
-def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False):
+def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,isfermigrid=False):
 
     if isfermigrid:
         useifdh = True
@@ -74,7 +74,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,isfermigrid=False)
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'])#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -1220,7 +1220,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1607,7 +1607,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     if not filter == 'all':
         ax3.set_title(filter+' band')
     else:
-        ax3.set_title('Shallow Fields')
+        ax3.set_title(deep_or_shallow.upper()+' Fields')
 
 
     ax3.set_xlim(ax4.get_xlim())
@@ -1620,8 +1620,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.subplots_adjust(wspace=0.01,hspace=0.01)
 
-    plt.savefig(outdir+'/std.png')
-    print 'saved' , outdir+'/std.png'
+    plt.savefig(outdir+'/'+deep_or_shallow+'std.png')
+    print 'saved' , outdir+'/'+deep_or_shallow+'std.png'
     raw_input('press to continue')
 
     #--------------------------------------------------------------------------------------
@@ -2957,4 +2957,4 @@ if __name__ == "__main__":
 
     #print cd
     #raw_input()
-    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars)
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow)
