@@ -1299,7 +1299,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #print 'nnn'
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
     df = (diffimflux - fakeflux) / ((diffimfluxerr**2 )**.5)
-    ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) & (fluxerr > 0.) & (abs((flux-fakeflux)/fluxerr) < 5.)
+    ww = (flux != 0.) & (np.array(fakemag, dtype='float') > 0.) & (fluxerr > 0.) & (abs((flux-fakeflux)/fluxerr) < 4.)
 
     #fakemag[fakemag==99] = 29.5
     flux = flux[ww]
