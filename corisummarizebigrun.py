@@ -1790,9 +1790,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax2.set_ylim(ax1.get_ylim())
     # ax5.set_ylim(ax4.get_ylim())
     # ax2.xaxis.set_major_formatter(nullfmt)
-    ax3.xaxis.set_major_formatter(nullfmt)
+    #ax3.xaxis.set_major_formatter(nullfmt)
     # ax1.xaxis.set_major_formatter(nullfmt)
-
+    ax3.set_xlabel('Host Surface Brightness Mag')
     plt.subplots_adjust(wspace=0.01, hspace=0.01)
 
     plt.savefig(outdir + '/' + deep_or_shallow + 'hoststd.png')
