@@ -2588,7 +2588,7 @@ class smp:
                         #sexsky *= scalefactor
                         #sexrms *= scalefactor
                         print snparams.mjd[i]
-                        print 'sextractor sky ',sexsky,'sextractor rms', sexrms*scalefactor
+                        print 'sextractor sky ',sexsky,'sextractor rms', sexrms#scalefactor
                         print 'mysky',mysky,'myskysig',skysig
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
                         #raw_input('youyo')
