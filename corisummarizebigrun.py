@@ -42,6 +42,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
         #dostars = Trueasdf
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
+            plotstarlc(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['ids'],stardata['mjd'])
+
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
@@ -3207,6 +3209,25 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.savefig(outdir + '/' + title +'starchi.png')
 
     print 'saved starstd.png'
+
+def plotstarlc(flux,fluxerr,zpt,ids,mjd):
+    from matplotlib.backends.backend_pdf import PdfPages
+    pdf_pages = PdfPages('allstarlc.pdf')
+
+    fig, axs = plt.subplots(nrows=10, ncols=10)
+    plt.clf()
+
+    for i,id in enumerate(np.unique(ids)[:110]):
+        print i
+        if i % 100 == 0:
+            pdf_pages.savefig(fig)
+            fig, axs = plt.subplots(nrows=10, ncols=10)
+            plt.clf()
+
+        ww = ids == id
+        axs[i%100].errorbar(np.float(mjd[ww]),flux[ww]*10**(.4*(31-zpt[ww])),fluxerr[ww]*10**(.4*(31-zpt[ww])),fmt='o',color='black')
+    pdf_pages.close()
+    print 'saved allstarlc.pdf'
 
 def bindata(x, y, bins, returnn=False):
     medians = np.zeros(len(bins) - 1)
