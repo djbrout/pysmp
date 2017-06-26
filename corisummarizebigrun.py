@@ -3217,16 +3217,17 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
     fig, axs = plt.subplots(nrows=10, ncols=10)
     plt.clf()
 
-    for i,id in enumerate(np.unique(ids)[:110]):
+    for i,id in enumerate(np.unique(ids)[:100]):
         print i
-        if i % 100 == 0:
-            pdf_pages.savefig(fig)
-            fig, axs = plt.subplots(nrows=10, ncols=10)
-            plt.clf()
+        # if i % 100 == 0:
+        #     pdf_pages.savefig(fig)
+        #     fig, axs = plt.subplots(nrows=10, ncols=10)
+        #     plt.clf()
 
         ww = ids == id
         axs.ravel()[int(i%100)].errorbar(mjd[ww],flux[ww]*10**(.4*(31-zpt[ww])),yerr=fluxerr[ww]*10**(.4*(31-zpt[ww])),fmt='o',color='black')
-    pdf_pages.close()
+    #pdf_pages.close()
+    plt.savefig('allstarlc.png')
     print 'saved allstarlc.pdf'
 
 def bindata(x, y, bins, returnn=False):
