@@ -3228,9 +3228,9 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
 
         cm = catmag[ww]
         for c in cm:
-            ww = (ids == id) & (catmag == cm)
+            ww = (ids == id) & (catmag == c)
             if len(flux[ww]) < 10:
-                print 'doesnt pass'
+                #print 'doesnt pass'
                 continue
 
             if icntr % 16 == 0:
