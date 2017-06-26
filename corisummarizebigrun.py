@@ -3219,29 +3219,38 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
     fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
     pagescounter = 0
     icntr = 0
+    justpaged = False
     for i,id in enumerate(np.unique(ids)[:]):
         if pagescounter == 30: break
         print i,
-        if icntr % 16 == 0:
-            if pagescounter > 0:
-                pdf_pages.savefig(fig)
-            plt.clf()
-            fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
-            pagescounter += 1
 
         ww = ids == id
-        cm = catmag[ww][0]
-        ww = (ids == id) & (catmag == cm)
-        if len(flux[ww]) < 10:
-            print 'doesnt pass'
-            continue
-        #print flux[ww]*10**(.4*(31-zpt[ww]))
-        tm = zpt[ww] - 2.5*np.log10(flux[ww])
-        axs.ravel()[int(icntr%16)].scatter(np.array(mjd[ww],dtype='float'),tm - np.mean(tm),color='black')
-        axs.ravel()[int(icntr%16)].set_ylabel('Fit Mag - Mean')
-        axs.ravel()[int(icntr%16)].set_xlabel('mjd')
-        icntr += 1
-        print 'saved'
+
+        cm = catmag[ww]
+        for c in cm:
+            ww = (ids == id) & (catmag == cm)
+            if len(flux[ww]) < 10:
+                print 'doesnt pass'
+                continue
+
+            if icntr % 16 == 0:
+                if not justpaged:
+                    if pagescounter > 0:
+                        pdf_pages.savefig(fig)
+                    plt.clf()
+                    fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
+                    pagescounter += 1
+                    justpaged = True
+
+
+            justpaged = False
+            #print flux[ww]*10**(.4*(31-zpt[ww]))
+            tm = zpt[ww] - 2.5*np.log10(flux[ww])
+            axs.ravel()[int(icntr%16)].scatter(np.array(mjd[ww],dtype='float'),tm - np.mean(tm),color='black')
+            axs.ravel()[int(icntr%16)].set_ylabel('Fit Mag - Mean')
+            axs.ravel()[int(icntr%16)].set_xlabel('mjd')
+            icntr += 1
+            print 'saved'
         #axs.ravel()[int(i%16)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(-.4*(31.-zpt[ww])),yerr=fluxerr[ww]*10**(-.4*(31-zpt[ww])),fmt='o',color='black')
     pdf_pages.close()
     #plt.savefig('allstarlc.png')
