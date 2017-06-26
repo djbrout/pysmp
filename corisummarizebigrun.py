@@ -3216,7 +3216,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
 
     plt.clf()
     #plt.figure(figsize=(20,20))
-    fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(20,20))
+    fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
 
     for i,id in enumerate(np.unique(ids)[:16]):
         print i
