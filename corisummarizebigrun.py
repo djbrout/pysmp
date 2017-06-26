@@ -3221,7 +3221,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
     icntr = 0
     justpaged = False
     for i,id in enumerate(np.unique(ids)[:]):
-        if pagescounter == 30: break
+        if pagescounter >50: break
         print i,
 
         ww = ids == id
