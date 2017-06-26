@@ -3235,6 +3235,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
 
             if icntr % 16 == 0:
                 if not justpaged:
+                    print 'saving page',pagescounter
                     if pagescounter > 0:
                         pdf_pages.savefig(fig)
                     plt.clf()
@@ -3250,7 +3251,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
             axs.ravel()[int(icntr%16)].set_ylabel('Fit Mag - Mean')
             axs.ravel()[int(icntr%16)].set_xlabel('mjd')
             icntr += 1
-            print 'saved'
+            #print 'saved'
         #axs.ravel()[int(i%16)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(-.4*(31.-zpt[ww])),yerr=fluxerr[ww]*10**(-.4*(31-zpt[ww])),fmt='o',color='black')
     pdf_pages.close()
     #plt.savefig('allstarlc.png')
