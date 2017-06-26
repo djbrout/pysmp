@@ -3226,7 +3226,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
 
         ww = ids == id
         print flux[ww]*10**(.4*(31-zpt[ww]))
-        axs.ravel()[int(i%100)].errorbar(mjd[ww],flux[ww]*10**(.4*(31-zpt[ww])),yerr=fluxerr[ww]*10**(.4*(31-zpt[ww])),fmt='o',color='black')
+        axs.ravel()[int(i%100)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(.4*(31-zpt[ww])),yerr=fluxerr[ww]*10**(.4*(31-zpt[ww])),fmt='o',color='black')
     #pdf_pages.close()
     plt.savefig('allstarlc.png')
     print 'saved allstarlc.pdf'
