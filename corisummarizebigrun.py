@@ -3227,7 +3227,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
         ww = ids == id
 
         cm = catmag[ww]
-        for c in cm:
+        for c in np.unique(cm):
             ww = (ids == id) & (catmag == c)
             if len(flux[ww]) < 10:
                 #print 'doesnt pass'
