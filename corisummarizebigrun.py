@@ -1950,7 +1950,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax, ay, aystd = dt.bindata(sky, fresid, np.arange(-500, 500, 50), window=100)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plts.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
 
     plt.xlabel('Sky')
     plt.xlim(-500,500)
@@ -3248,7 +3248,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'deep'
+    deep_or_shallow = 'shallow'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
