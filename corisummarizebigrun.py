@@ -3217,13 +3217,15 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
     plt.clf()
     #plt.figure(figsize=(20,20))
     fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
-
+    pagescounter = 0
     for i,id in enumerate(np.unique(ids)[:16]):
+        if pagescounter == 10: break
         print i
-        # if i % 100 == 0:
-        #     pdf_pages.savefig(fig)
-        #     fig, axs = plt.subplots(nrows=10, ncols=10)
-        #     plt.clf()
+        if i % 16 == 0:
+            pdf_pages.savefig(fig)
+            fig, axs = plt.subplots(nrows=10, ncols=10)
+            plt.clf()
+            pagescounter += 1
 
         ww = ids == id
         cm = catmag[ww][0]
@@ -3232,8 +3234,8 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
         tm = zpt[ww] - 2.5*np.log10(flux[ww])
         axs.ravel()[int(i%16)].scatter(np.array(mjd[ww],dtype='float'),tm - np.mean(tm),color='black')
         #axs.ravel()[int(i%16)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(-.4*(31.-zpt[ww])),yerr=fluxerr[ww]*10**(-.4*(31-zpt[ww])),fmt='o',color='black')
-    #pdf_pages.close()
-    plt.savefig('allstarlc.png')
+    pdf_pages.close()
+    #plt.savefig('allstarlc.png')
     print 'saved allstarlc.pdf'
 
 def bindata(x, y, bins, returnn=False):
