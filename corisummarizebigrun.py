@@ -3214,10 +3214,10 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
     from matplotlib.backends.backend_pdf import PdfPages
     pdf_pages = PdfPages('allstarlc.pdf')
 
-    fig, axs = plt.subplots(nrows=10, ncols=10)
+    fig, axs = plt.subplots(nrows=4, ncols=4)
     plt.clf()
 
-    for i,id in enumerate(np.unique(ids)[:100]):
+    for i,id in enumerate(np.unique(ids)[:16]):
         print i
         # if i % 100 == 0:
         #     pdf_pages.savefig(fig)
@@ -3225,8 +3225,8 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
         #     plt.clf()
 
         ww = ids == id
-        print flux[ww]*10**(.4*(31-zpt[ww]))
-        axs.ravel()[int(i%100)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(.4*(31-zpt[ww])),yerr=fluxerr[ww]*10**(.4*(31-zpt[ww])),fmt='o',color='black')
+        #print flux[ww]*10**(.4*(31-zpt[ww]))
+        axs.ravel()[int(i%16)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(-.4*(31.-zpt[ww])),yerr=fluxerr[ww]*10**(-.4*(31-zpt[ww])),fmt='o',color='black')
     #pdf_pages.close()
     plt.savefig('allstarlc.png')
     print 'saved allstarlc.pdf'
