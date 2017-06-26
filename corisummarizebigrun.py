@@ -42,7 +42,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
         #dostars = Trueasdf
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
-            plotstarlc(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['ids'],stardata['mjd'])
+            plotstarlc(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['ids'],stardata['mjd'],stardata['catmag'])
 
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
@@ -3210,7 +3210,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     print 'saved starstd.png'
 
-def plotstarlc(flux,fluxerr,zpt,ids,mjd):
+def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
     from matplotlib.backends.backend_pdf import PdfPages
     pdf_pages = PdfPages('allstarlc.pdf')
 
@@ -3226,8 +3226,11 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
         #     plt.clf()
 
         ww = ids == id
+        cm = catmag[ww][0]
+        ww = (ids == id) & (catmag == cm)
         #print flux[ww]*10**(.4*(31-zpt[ww]))
-        axs.ravel()[int(i%16)].scatter(np.array(mjd[ww],dtype='float'),zpt[ww] - 2.5*np.log10(flux[ww]))
+        tm = zpt[ww] - 2.5*np.log10(flux[ww])
+        axs.ravel()[int(i%16)].scatter(np.array(mjd[ww],dtype='float'),tm - np.mean(tm),color='black')
         #axs.ravel()[int(i%16)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(-.4*(31.-zpt[ww])),yerr=fluxerr[ww]*10**(-.4*(31-zpt[ww])),fmt='o',color='black')
     #pdf_pages.close()
     plt.savefig('allstarlc.png')
