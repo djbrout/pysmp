@@ -3225,6 +3225,9 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
             plt.clf()
 
         ww = ids == id
+        print int(i%100)
+        print axs[0]
+        print axs[int(i%100)]
         axs[int(i%100)].errorbar(np.float(mjd[ww]),flux[ww]*10**(.4*(31-zpt[ww])),yerr=fluxerr[ww]*10**(.4*(31-zpt[ww])),fmt='o',color='black')
     pdf_pages.close()
     print 'saved allstarlc.pdf'
