@@ -3219,10 +3219,11 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
     fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
     pagescounter = 0
     for i,id in enumerate(np.unique(ids)[:1000]):
-        if pagescounter == 2: break
+        if pagescounter == 10: break
         print i
         if i % 16 == 0:
-            pdf_pages.savefig(fig)
+            if pagescounter > 0:
+                pdf_pages.savefig(fig)
             plt.clf()
             fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
             pagescounter += 1
