@@ -3215,7 +3215,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
     pdf_pages = PdfPages('allstarlc.pdf')
 
     plt.clf()
-
+    plt.figure(figsize=(20,20))
     fig, axs = plt.subplots(nrows=4, ncols=4)
 
     for i,id in enumerate(np.unique(ids)[:16]):
@@ -3227,7 +3227,7 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd):
 
         ww = ids == id
         #print flux[ww]*10**(.4*(31-zpt[ww]))
-        axs.ravel()[int(i%16)].scatter(np.array(mjd[ww],dtype='float'),flux[ww]*10**(.4*(31.-zpt[ww])))
+        axs.ravel()[int(i%16)].scatter(np.array(mjd[ww],dtype='float'),zpt[ww] - 2.5*np.log10(flux[ww]))
         #axs.ravel()[int(i%16)].errorbar(np.array(mjd[ww],dtype='float'),flux[ww]*10**(-.4*(31.-zpt[ww])),yerr=fluxerr[ww]*10**(-.4*(31-zpt[ww])),fmt='o',color='black')
     #pdf_pages.close()
     plt.savefig('allstarlc.png')
