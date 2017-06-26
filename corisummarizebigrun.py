@@ -3219,8 +3219,8 @@ def plotstarlc(flux,fluxerr,zpt,ids,mjd,catmag):
     fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(30,25))
     pagescounter = 0
     icntr = 0
-    for i,id in enumerate(np.unique(ids)[:1000]):
-        if pagescounter == 10: break
+    for i,id in enumerate(np.unique(ids)[:]):
+        if pagescounter == 30: break
         print i,
         if icntr % 16 == 0:
             if pagescounter > 0:
