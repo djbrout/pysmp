@@ -1856,8 +1856,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     axes[1].plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
 
-    axes[1].xlabel('Fit ZPT')
-    axes[1].ylabel('RMS')
+    axes[1].set_xlabel('Fit ZPT')
+    axes[1].set_ylabel('RMS')
     axes[0].hist(fitzpt[ww],bins=np.arange(27,35,.2))
     axes[0].set_xlim(27,35)
     axes[1].set_xlim(27,35)
