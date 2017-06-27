@@ -3720,7 +3720,7 @@ class smp:
                 #if self.fermilog:
                 #    self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
                 #sys.exit()
-                modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof  = aaa.get_params()
+                modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof,gewekediag  = aaa.get_params()
                 fitprob = dt.fitprobfromchisq(chisqs,ndof)
                 print fitprob
                 print 'TOTAL SMP SN TIME ',time.time()-tstart
@@ -3734,7 +3734,7 @@ class smp:
                                  xhistory=xhistory,yhistory=yhistory,stamps=stamps,chisqs=chisqs,weights=smp_noise,
                                  flags=smp_dict['flag'], sky=smp_dict['sky'], mjd=smp_dict['mjd'], skyerr=smp_dict['skyerr'],
 
-                                 accepted_history=accepted_history, chisqhist=chisqhist)
+                                 accepted_history=accepted_history, chisqhist=chisqhist,gewekediag=gewekediag)
 
         #self.dogalsimfit = True
         if self.dogalsimfit:
@@ -3971,7 +3971,7 @@ class smp:
         fout = open(tmp, 'w')
         print >> fout, '# MJD DPMJD ID_OBS ID_COADD BAND ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
                        'XPOS YPOS XOFF YOFF RA DEC CHI2 NDOF ' \
-                       'SMP_FLAG MJD_FLAG SKY SKYERR RMSADDIN ' \
+                       'SMP_FLAG MJD_FLAG SKY SKYERR RMSADDIN GEWKEDIAG ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
@@ -3984,7 +3984,7 @@ class smp:
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
                                 chisqs[i], -999, smp_dict['flag'][i],smp_dict['mjd_flag'][i],
-                                smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],
+                                smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],gewekediag[i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
                                 galmodel_stampf[i],

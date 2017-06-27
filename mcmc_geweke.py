@@ -1079,6 +1079,8 @@ class metropolis_hastings():
         #         print(msg)
         #         hasnotconv = True
 
+        self.gewekediag = np.array(len(self.modelstd))
+
         self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
         for i in np.arange(num_iter):
             self.modelvec_nphistory[ i, : ] = self.modelvechistory[ int(i + start_iter) ]
@@ -1088,62 +1090,15 @@ class metropolis_hastings():
             #print self.modelvec_nphistory[param,:].shape
             #print len(np.unique(self.modelvec_nphistory[param,:]))
             #print len(np.unique(self.modelvec_nphistory[:,param]))
-            if len(np.unique(self.modelvec_nphistory[:,param])) == 1: continue
+            if len(np.unique(self.modelvec_nphistory[:,param])) == 1:
+                self.gewekediag[param] = -999.
+                continue
             #print param, self.modelvec_nphistory[:,param]
             gw = pymc.geweke(self.modelvec_nphistory[:,param],intervals=1,first=.1,last=.5)
             geweke = np.array(gw)
             print np.abs(geweke[:, 1])
+            self.gewekediag[param] = geweke[:, 1][0]
 
-        #     [-68.07757674,
-        #     40.64005278,
-        #     23.3765143,
-        #     240.39111317,
-        #     - 94.6650785,
-        #     -29.79881662,
-        #     168.40271167,
-        #     115.67233936,
-        #     211.62098895,
-        #     525.81897617,
-        #     493.6890726,
-        #     342.08646794,
-        #     336.65076378,
-        #     294.4646861,
-        #     540.81503169,
-        #     471.57478695,
-        #     741.33206632,
-        #     559.18214422,
-        #     459.62083767,
-        #     446.16836896,
-        #     699.0687575,
-        #     768.85133398,
-        #     878.44649001,
-        #     911.58242449,
-        #     1110.05782285,
-        # 1418.59450008,
-        # 1394.87208969,
-        # 1438.51309051,
-        # 1555.43588393,
-        # 1707.91976467,
-        # 1667.67468694,
-        # 1887.17470961,
-        # 1954.71771876,
-        # 1797.595744,
-        # 1886.89820494,
-        # 1853.75835642,
-        # 1802.57711224,
-        # 1945.52465637,
-        # 1917.42767604,
-        # 2009.96023326,
-        # 1802.00834839,
-        # 1638.99030833,
-        # 1688.12549659,
-        # 1492.38684272,
-        # 1721.35181174,
-        # 1862.39260666,
-        # 1597.21672923,
-        # 1829.46218163,
-        # 1877.50806296,
-        # 2088.32968722]
             if np.any(np.abs(geweke[:, 1]) > 2.):
                 msg = "Epoch %s has not properly converged" % param
                 # if assert_:
@@ -1665,7 +1620,7 @@ class metropolis_hastings():
 
             chsqs = np.array(chsqs)
             ndof = len(self.mask[self.mask > 0.].ravel())
-            return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq,stamps,chsqs,ndof # size: self.history[num_iter,len(self.model_params)]
+            return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq,stamps,chsqs,ndof,self.gewekediag # size: self.history[num_iter,len(self.model_params)]
         else:
             return
     def get_params_analytical_weighted( self ):
