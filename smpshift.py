@@ -3046,7 +3046,7 @@ class smp:
 
 
                                     i += 1
-                                    print 'epochtime',time.time()-epochtime
+                                    print 'epochtime',time.time()-epochtime, float(snparams.mjd[j]),imfile
                                 else:
                                     print 'min max psf equal'*100
                         else:
