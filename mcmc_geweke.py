@@ -265,6 +265,7 @@ class metropolis_hastings():
 
         self.maxtime = 3600*45
         self.sstime = sstime
+        self.gewekediag = np.array(len(self.modelstd))
 
 
         print 'sigmazpt',self.sigmazpt.shape
