@@ -3047,11 +3047,19 @@ class smp:
 
                                     i += 1
                                     print 'epochtime',time.time()-epochtime
+                            else:
+                                print 'min max psf equal'*100
+                        else:
+                            print 'min max image equal'*100
+
                     else:
                         print 'failed fwhm'*100
                         print 'fwhm was',fwhm_arcsec,' and fwhm cut was',params.fwhm_max
                         #raw_input()
 
+                else:
+                    print 'badflag'*100
+                    print 'descriptive flag',descriptiveflag
         #sys.exit()
 
 
