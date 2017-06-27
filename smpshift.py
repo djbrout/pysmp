@@ -3047,8 +3047,8 @@ class smp:
 
                                     i += 1
                                     print 'epochtime',time.time()-epochtime
-                            else:
-                                print 'min max psf equal'*100
+                                else:
+                                    print 'min max psf equal'*100
                         else:
                             print 'min max image equal'*100
 
