@@ -476,6 +476,7 @@ class smp:
                     'sky':np.zeros(snparams.nvalid),
                     'skyerr':np.zeros(snparams.nvalid),
                     'flag':np.ones(snparams.nvalid),
+                    'descriptiveflag': np.ones(snparams.nvalid),
                     'fitflag':np.ones(snparams.nvalid),
                     'psf':np.zeros(snparams.nvalid),
                     'psfcenter':[],
@@ -1461,6 +1462,7 @@ class smp:
             #raw_input()
             skysig=np.nan
             badflag = 0
+            descriptiveflag = 0
             nozpt = copy(orig_nozpt)
 
             # longimfile = copy(imfile )
@@ -1909,6 +1911,7 @@ class smp:
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
                 badflag = 1
+                descriptiveflag = 1 #
                 #raw_input()
 
 
@@ -3046,6 +3049,7 @@ class smp:
                                     print 'epochtime',time.time()-epochtime
                     else:
                         print 'failed fwhm'*100
+                        print 'fwhm was',fwhm_arcsec,' and fwhm cut was',params.fwhm_max
                         #raw_input()
 
         #sys.exit()
