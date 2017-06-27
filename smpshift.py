@@ -3395,6 +3395,10 @@ class smp:
         #if not os.path.exists(lightcurves):
         #    os.makedirs(lightcurves)
 
+        for i in range(len(smp_dict['mjd'])):
+            print smp_dict['mjd'][i]
+
+        print 'mjds'*100
 
 
         print smp_dict['image_filename'][-1]        
