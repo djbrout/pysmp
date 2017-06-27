@@ -1835,14 +1835,18 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
+
+    f,axes = plt.subplots(2,sharex=True)
+    axes = axes.ravel()
+
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
                  (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
                  & (chisqarr < 1.2)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux/fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
-    plt.plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
-    plt.plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
+    axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
+    axes[1].plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
@@ -1850,10 +1854,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                  & (chisqarr < 1.2)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux / fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
-    plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
+    axes[1].plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
 
-    plt.xlabel('Fit ZPT')
-    plt.ylabel('RMS')
+    axes[1].xlabel('Fit ZPT')
+    axes[1].ylabel('RMS')
+    axes[0].hist(fitzpt[ww],bins=np.arange(27,35,.2))
+    axes[0].set_xlim(27,35)
+    axes[1].set_xlim(27,35)
     plt.title('NO SN FLUX IN IMAGE')
     plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow + 'zptcorr.png')
