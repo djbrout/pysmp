@@ -552,7 +552,7 @@ class metropolis_hastings():
                         chsqs.append(self.csv[i] / len(self.mask[self.mask * self.immask[i, :, :] > 0.].ravel()))
                 print 'Reduced Chisq: ', np.nanmean(chsqs[chsqs != 0.])
                 print 'redchi',self.redchisq[-1]
-                print 'Chisq For Each Epoch: ',chsqs
+                #print 'Chisq For Each Epoch: ',chsqs
                 tps = (time.time()-self.t1)/self.counter
                 print 'Time per step:',tps
                 print 'PSF Position:',self.current_x_offset,self.current_y_offset
