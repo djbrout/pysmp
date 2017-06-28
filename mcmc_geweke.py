@@ -442,7 +442,7 @@ class metropolis_hastings():
             #self.deltas[:len(self.galaxy_model.ravel())] = self.gal_stds.ravel()
             #self.deltas[len(self.galaxy_model.ravel()):] = everythingelse_stds
 
-        print 'galstd',self.galstd
+        #print 'galstd',self.galstd
 
         self.pix_stamp = self.galaxy_model.shape[0]
         self.sims = copy(self.data)
