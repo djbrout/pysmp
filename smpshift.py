@@ -95,7 +95,8 @@ paramkeywordlist = {'STAMPSIZE':'float ','RADIUS1':'float',
                     'NEARBY_STARS_PIXEL_RAD':'float','GALAXY_MODEL_STEPS':'float','SN_PLUS_GALMODEL_STEPS':'float',
                     'SN_PLUS_GALMODEL_STEPS_GALSIM':'float',
                     'SN_SHIFT_STD':'float','HDR_PLATESCALE_NAME':'string','HDR_AIRMASS_NAME':'string',
-                    'HDR_PSF_FWHM':'string','MINZPTSTARS':'float','FLUX_STD_DIV':'float','GALMODEL_DIV':'float'
+                    'HDR_PSF_FWHM':'string','MINZPTSTARS':'float','FLUX_STD_DIV':'float','GALMODEL_DIV':'float',
+                    'CUTINFOBANDS':[],'ZPTMIN':[],'SKYMIN':[],'SKYMAX':[],'SKYERRMAX':[]
                     }
 
 def save_fits_image(image,filename):
@@ -2045,6 +2046,7 @@ class smp:
                 except:
                     self.psf = 0
                     badflag = 1
+                    descriptiveflag = 2
                     print 'badflagpsf'*100
             # elif snparams.psf_model.lower() == 'daophot':
             #     self.psf = rdpsf.rdpsf(psffile)[0]/10.**(0.4*(25.-magzpt))
@@ -2419,6 +2421,8 @@ class smp:
 
                     if zpt == 0:
                         badflag = 1
+                        descriptiveflag = 4
+
 
 
             else:
@@ -2499,6 +2503,12 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
 
 
+            zptmin = self.params['ZPTMIN'][self.params['CUTINFOBANDS'] == band]
+            print 'zptmin',zptmin
+            raw_input()
+            if zpt < zptmin:
+                badflag = 1
+                descriptiveflag = 4
 
 
             if xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25 and np.isfinite(scalefactor):
@@ -3992,8 +4002,8 @@ class smp:
             tmp = 'lc.txt'
         else:
             tmp = smplightcurvefile
-        print len(gewekediag),len(smp_dict['snx'])
-        print 'lencheck'*100
+        #print len(gewekediag),len(smp_dict['snx'])
+        #print 'lencheck'*100
         fout = open(tmp, 'w')
         print >> fout, '# MJD DPMJD ID_OBS ID_COADD BAND ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
                        'XPOS YPOS XOFF YOFF RA DEC CHI2 NDOF ' \
@@ -4001,7 +4011,7 @@ class smp:
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
-            print >> fout, '%.5f %.5f %i %i %s %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %s %i %.5f ' \
+            print >> fout, '%.5f %.5f %i %i %s %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %s %i %i %.5f ' \
                            '%.5f %.5f %.5f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i],float(smp_dict['mjd'][i])-snparams.peakmjd, smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
                                 smp_dict['zpt'][i], smp_dict['zpterr'][i],
@@ -4009,7 +4019,7 @@ class smp:
                                 smp_dict['diffim_flux'][i],smp_dict['diffim_fluxerr'][i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
-                                chisqs[i], -999, smp_dict['flag'][i],smp_dict['mjd_flag'][i],
+                                chisqs[i], -999, smp_dict['flag'][i],smp_dict['mjd_flag'][i],smp_dict['descriptiveflag'][i],
                                 smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],gewekediag[i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
