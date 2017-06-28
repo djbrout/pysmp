@@ -1512,7 +1512,7 @@ class metropolis_hastings():
         plt.clf()
         pcolor(self.corr)
         colorbar()
-        yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
+        yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd,rotation='vertical')
         xticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
 
         self.savefig(str(self.lcout) + '_corr.png')
@@ -1524,7 +1524,7 @@ class metropolis_hastings():
         self.covar = np.cov(nonzerodata,rowvar=False)
         pcolor(self.covar)
         colorbar()
-        yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
+        yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd,rotation='vertical')
         xticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
 
         self.savefig(str(self.lcout) + '_covar.png')
