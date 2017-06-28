@@ -539,7 +539,7 @@ class metropolis_hastings():
                 print 'REACHED MAX TIME'*100
 
             if self.counter % self.gewekenum == 0:
-                if self.counter > 50000:
+                if self.counter > 500:
                     self.z_scores_say_keep_going = self.check_geweke()
 
             if (self.counter % 1000) == 0:
@@ -1085,7 +1085,7 @@ class metropolis_hastings():
         #         print(msg)
         #         hasnotconv = True
 
-        self.gewekediag = np.array(len(self.modelstd))
+        self.gewekediag = np.zeros_like(self.modelstd)
 
         self.modelvec_nphistory = np.zeros((num_iter, len(self.modelvec)))
         for i in np.arange(num_iter):

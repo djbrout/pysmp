@@ -3702,7 +3702,7 @@ class smp:
                         , mask = smp_mask
                         , sky=smp_dict['sky']
                         , mjd=smp_dict['mjd']
-                        , gewekenum=-9999999*(passv-1) + 10000 #cannot be less than 100 after compression
+                        , gewekenum=-9999999*(passv-1) + 1000 #cannot be less than 100 after compression
                         , skyerr=smp_dict['skyerr']
                         , useskyerr = False
                         , usesimerr = False
