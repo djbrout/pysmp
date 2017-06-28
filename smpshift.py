@@ -250,7 +250,10 @@ class get_params:
                     raise exceptions.RuntimeError('Invalid format!  Should be key: value')
                 key = key.replace(' ','')
                 val = val.replace(' ','')
-                self.__dict__[key.lower()] = val
+                if len(val.split(',')) > 1:
+                    self.__dict__[key.lower()] = val.split(',')
+                else:
+                    self.__dict__[key.lower()] = val
         for p in paramkeywordlist.keys():
 
             if not self.__dict__.has_key(p.lower()):
