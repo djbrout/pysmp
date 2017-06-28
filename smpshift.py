@@ -3736,7 +3736,7 @@ class smp:
                 #if self.fermilog:
                 #    self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
                 #sys.exit()
-                modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof,gewekediag,covar  = aaa.get_params()
+                modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof,gewekediag,covar,corr  = aaa.get_params()
                 fitprob = dt.fitprobfromchisq(chisqs,ndof)
                 print fitprob
                 print 'TOTAL SMP SN TIME ',time.time()-tstart
@@ -3749,7 +3749,7 @@ class smp:
                                  galmodel_nphistory=galmodel_nphistory, sims=sims, data=smp_im,
                                  xhistory=xhistory,yhistory=yhistory,stamps=stamps,chisqs=chisqs,weights=smp_noise,
                                  flags=smp_dict['flag'], sky=smp_dict['sky'], mjd=smp_dict['mjd'], skyerr=smp_dict['skyerr'],
-                                 covar=covar,
+                                 covar=covar,corr=corr,
                                  accepted_history=accepted_history, chisqhist=chisqhist,gewekediag=gewekediag)
 
         #self.dogalsimfit = True
@@ -3980,8 +3980,12 @@ class smp:
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
 
-        smpcovfile = os.path.join(self.lcfilepath,
+        smpcovarfile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '_covar.npz')
+
+
+        np.savez(smpcovarfile,covar=covar,corrcoef=corr)
+
 
         #os.popen('ifdh mkdir '+self.lcfilepath).read()
         if self.fermigrid and self.worker:
