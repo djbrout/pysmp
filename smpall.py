@@ -2463,7 +2463,7 @@ class smp:
 
             try:
                 if len(thisra) < params.minzptstars:
-                    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small'
+                    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small. Nstars=',len(thisra)
                 if zpterr / np.sqrt(float(len(thisra))) > 0.01:
                     badflag = 1
                     print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
