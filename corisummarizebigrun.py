@@ -1933,8 +1933,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     axes[1].set_ylabel('RMS')
     axes[0].set_title('NO SN FLUX IN IMAGE')
     axes[0].hist(skyerr[ww], bins=np.arange(-1005, 1000, 10))
-    axes[0].set_xlim(0, 1000)
-    axes[1].set_xlim(0, 1000)
+    axes[0].set_xlim(0, 500)
+    axes[1].set_xlim(0, 500)
     # plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow + 'skyerrcorr.png')
     print 'saved', outdir + '/' + deep_or_shallow + 'skyerrcorr.png'
