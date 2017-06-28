@@ -1494,8 +1494,8 @@ class metropolis_hastings():
         goodindices = []
         for i in range(len(self.modelvec)):
             if not np.all(self.modelvec_nphistory[:,i]==0):
-                goodindices.append(i)
-        goodindices = np.array(goodindices)
+                goodindices.append(int(i))
+        goodindices = np.array(goodindices,dtype='int')
 
         nonzerodata = self.modelvec_nphistory[:,goodindices]
         print nonzerodata.shape

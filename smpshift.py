@@ -2507,6 +2507,10 @@ class smp:
 
 
             zptmin = float(np.array(self.params.zptmin)[np.array(self.params.cutinfobands,dtype='str') == band][0])
+            skymin = float(np.array(self.params.skymin)[np.array(self.params.cutinfobands,dtype='str') == band][0])
+            skymax = float(np.array(self.params.skymax)[np.array(self.params.cutinfobands,dtype='str') == band][0])
+            skyerrmax = float(np.array(self.params.skyerrmax)[np.array(self.params.cutinfobands,dtype='str') == band][0])
+
             print 'zptmin',zptmin
             if zpt < zptmin:
                 badflag = 1
@@ -2740,28 +2744,26 @@ class smp:
                         print 'skysig less than one'
                         #raw_input('skysig1 badflag')
                         badflag = 1
-                #print badflag
 
-                # print badflag
-                # print 'diffim zpt','smp zpt'
-                # print snparams.zp[j],zpt
-                # print fwhm_arcsec,params.fwhm_max
-                # raw_input()
-
-                # if self.snparams.survey == 'DES':
-                #     if abs(mysky) > 100.:
-                #         badflag = True
 
                 badflags.append(badflag)
                 if badflag:
                     print 'badflaggg'*100
 
-                #if not np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]) != np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]):
-                #    print 'im min max'*100
 
-                #if not np.max(psf_stamp[params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4,
-                #          params.substamp / 2 + 1 - 3:params.substamp / 2 + 1 + 4]) == np.max(psf_stamp[:, :]):
-                #    print 'psf min max'*100
+                if sexsky > skymax:
+                    badflag = 1
+                    descriptiveflag = 8
+                    print ('sky '+str(sexsky)+' greater than skymax '+str(skymax)+'\n')*10
+                elif sexsky < skymin:
+                    badflag = 1
+                    descriptiveflag = 16
+                    print ('sky '+str(sexsky)+' less than skymin '+str(skymin)+'\n')*10
+                elif sexrms > skyerrmax:
+                    badflag = 1
+                    descriptiveflag = 32
+                    print ('sky '+str(sexrms)+' greater than skyerrmax '+str(skyerrmax)+'\n')*10
+
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]) != np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]):
