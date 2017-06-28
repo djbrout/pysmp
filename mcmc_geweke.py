@@ -1500,7 +1500,7 @@ class metropolis_hastings():
         nonzerodata = self.modelvec_nphistory[:,goodindices]
         print nonzerodata.shape
         nonzeromjd = self.mjd[goodindices]
-        self.corr = corrcoef(nonzerodata,rowvar=False)
+        self.corr = corrcoef(nonzerodata,rowvar=True)
         plt.clf()
         pcolor(self.corr)
         colorbar()
@@ -1513,7 +1513,7 @@ class metropolis_hastings():
 
 
         plt.clf()
-        self.covar = np.cov(nonzerodata,rowvar=False)
+        self.covar = np.cov(nonzerodata,rowvar=True)
         pcolor(self.covar)
         colorbar()
         yticks(arange(0.5, float(len(nonzerodata))+.5), nonzeromjd)
