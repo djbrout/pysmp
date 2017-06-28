@@ -3647,7 +3647,7 @@ class smp:
 
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
-                    numiter = 50000
+                    numiter = 5000
                     shiftstd = 0.
                     galstd = galstd * 0 + 2.
                     burnin = .8
