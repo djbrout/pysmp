@@ -1872,6 +1872,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
+
     plt.clf()
 
     f, axes = plt.subplots(2, sharex=True)

@@ -265,7 +265,7 @@ class metropolis_hastings():
 
         #self.shiftgalstd = shiftgalstd
 
-        self.maxtime = 3600*45
+        self.maxtime = 600.
         self.sstime = sstime
         self.gewekediag = np.zeros(len(self.modelstd))+999.
 
@@ -536,6 +536,7 @@ class metropolis_hastings():
 
             if time.time() - self.sstime > self.maxtime:
                 self.z_scores_say_keep_going = False
+                print 'REACHED MAX TIME'*100
 
             if self.counter % self.gewekenum == 0:
                 if self.counter > 50000:
