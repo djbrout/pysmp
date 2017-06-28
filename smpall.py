@@ -2189,7 +2189,7 @@ class smp:
                             if zptdata['fit_zpt'] == 0.:
                                 print 'loaded bad zpt, continuing...'
                                 nozpt = True
-                                continue
+                                #continue
                             #print 'thisworked'
                         except:
                             print '2099 setting nozpt to True'
