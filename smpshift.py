@@ -2503,6 +2503,7 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
 
 
+            print self.params['ZPTMIN']
             zptmin = np.array(self.params['ZPTMIN'])[self.params['CUTINFOBANDS'] == band]
             print 'zptmin',zptmin
             raw_input()
