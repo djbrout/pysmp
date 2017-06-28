@@ -2751,15 +2751,15 @@ class smp:
                     print 'badflaggg'*100
 
 
-                if sexsky > skymax:
+                if sexsky/scalefactor - 10000. > skymax:
                     badflag = 1
                     descriptiveflag = 8
                     print ('sky '+str(sexsky)+' greater than skymax '+str(skymax)+'\n')*10
-                elif sexsky < skymin:
+                elif sexsky/scalefactor - 10000. < skymin:
                     badflag = 1
                     descriptiveflag = 16
                     print ('sky '+str(sexsky)+' less than skymin '+str(skymin)+'\n')*10
-                elif sexrms > skyerrmax:
+                elif sexrms/scalefactor > skyerrmax:
                     badflag = 1
                     descriptiveflag = 32
                     print ('sky '+str(sexrms)+' greater than skyerrmax '+str(skyerrmax)+'\n')*10
