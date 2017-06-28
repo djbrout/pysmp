@@ -1510,6 +1510,7 @@ class metropolis_hastings():
         #nonzeromjd = self.mjd[goodindices]
         self.corr = corrcoef(nonzerodata,rowvar=False)
         plt.clf()
+        plt.figure(figsize=(20,20))
         pcolor(self.corr)
         colorbar()
         yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
@@ -1521,6 +1522,7 @@ class metropolis_hastings():
 
 
         plt.clf()
+        plt.figure(figsize=(20,20))
         self.covar = np.cov(nonzerodata,rowvar=False)
         pcolor(self.covar)
         colorbar()
