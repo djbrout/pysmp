@@ -2511,7 +2511,7 @@ class smp:
             if zpt < zptmin:
                 badflag = 1
                 descriptiveflag = 4
-                print 'zpt '+zpt+' less than zptmin '+zptmin+'\n'*10
+                print 'zpt '+str(zpt)+' less than zptmin '+str(zptmin)+'\n'*10
 
 
             if xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25 and np.isfinite(scalefactor):
