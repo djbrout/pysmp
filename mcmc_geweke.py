@@ -867,16 +867,10 @@ class metropolis_hastings():
         #self.kicked_galaxy_model = self.kicked_model[ 0 : self.substamp**2. ].reshape( self.substamp, self.substamp )
         return
 
-    def float_sn_pos( self, customx = None, customy = None ):
-        if not customx is None:
-            self.x_pix_offset = self.current_x_offset + np.random.normal( scale= self.psf_shift_std )
-        else:
-            self.x_pix_offset = customx
+    def float_sn_pos( self):
+        self.x_pix_offset = self.current_x_offset + np.random.normal( scale= self.psf_shift_std )
+        self.y_pix_offset = self.current_y_offset + np.random.normal( scale= self.psf_shift_std )
 
-        if not customx is None:
-            self.y_pix_offset = self.current_y_offset + np.random.normal( scale= self.psf_shift_std )
-        else:
-            self.y_pix_offset = customy
         self.garyshiftpsf(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
 
         #self.shiftPSF(x_off=self.x_pix_offset,y_off=self.y_pix_offset)
