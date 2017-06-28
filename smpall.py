@@ -2498,7 +2498,7 @@ class smp:
                 if zpt == 0.:
                     #aw_input('zpt badflag')
                     badflag = 1
-                    scalefactor = 0.
+                    scalefactor = 1.
                     descriptiveflag = 4
 
             print 'zpt',zpt,'nominal',firstzpt
@@ -2656,7 +2656,7 @@ class smp:
                         #from time import time
 
                         #for i in range(1000):
-                        if scalefactor == 0.:
+                        if scalefactor == 1.:
                             continue
                         scale, errmag, chisq, dms, good, image_stamp, psf_stamp, skysig, fitrad, skyysn, psfmag, msk = \
                             chkpsf.fit(imfile.split('.fits')[0], xpos=xsn, ypos=ysn, radius=params.substamp/2.-1.,
