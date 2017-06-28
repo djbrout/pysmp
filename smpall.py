@@ -2804,7 +2804,8 @@ class smp:
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
                                         mask *= noise_stamp
-
+                                        print smp_noise.shape
+                                        print noise_stamp.shape
                                         smp_noise[j,:,:] = noise_stamp*0.+1./(skysig**2) * mask
                                         #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
