@@ -207,7 +207,7 @@ def aper(image,xc,yc, phpadu=1, apr=5, zeropoint=25,
     if verbose :
         tloop = time.time()
     for i in range(Nstars):  # Compute magnitudes for each star
-        print i,Nstars
+        #print i,Nstars
         while True :
             # mimic GOTO statements : break out of this while block whenever
             # we decide this star is bad

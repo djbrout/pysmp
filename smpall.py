@@ -2314,11 +2314,16 @@ class smp:
                 y_star1[badflagarr] = 100.
                 x_star1 = x_star1[~badflagarr]
                 y_star1 = y_star1[~badflagarr]
-                print x_star1
+                tras = tras[~badflagarr]
+                tdecs = tdecs[~badflagarr]
+                tids = tids[~badflagarr]
+                mag_star = mag_star[~badflagarr]
+                #print x_star1[~badflagarr]
+
                 #raw_input()
                 #for xx in x_star1:
                 #    print xx
-                print im.shape
+                #print im.shape
                 #try:
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = 30,verbose=False,ignoreneg=True)
