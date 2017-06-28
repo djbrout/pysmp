@@ -3984,6 +3984,8 @@ class smp:
             tmp = 'lc.txt'
         else:
             tmp = smplightcurvefile
+        print len(gewekediag),len(smp_dict['snx'])
+        print 'lencheck'*100
         fout = open(tmp, 'w')
         print >> fout, '# MJD DPMJD ID_OBS ID_COADD BAND ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
                        'XPOS YPOS XOFF YOFF RA DEC CHI2 NDOF ' \
