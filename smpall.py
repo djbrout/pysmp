@@ -1538,6 +1538,8 @@ class smp:
                 print 'yfour inside now skipping'
                 continue
 
+
+
             imfile = os.path.join(rootdir, imfile)
             longimfile = copy(imfile)
             self.impath = '/'.join(imfile.split('/')[:-1])
@@ -1687,6 +1689,7 @@ class smp:
                 #print 'image shape', im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
+
                 continue
 
             snparams.platescale = hdr[self.params.hdr_platescale_name]
@@ -1911,6 +1914,11 @@ class smp:
             if testoffset:
                 xsn += offsetx
                 ysn += offsety
+
+
+
+            i += 1
+
 
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
@@ -2792,7 +2800,7 @@ class smp:
                                         #raw_input()
                                         print self.snparams.skysig[j] * scalefactor,skyerrsn
                                         #raw_input()
-                                        smp_noise[j, :, :] = noise_stamp * 1. / (self.snparams.skysig[j] * scalefactor) ** 2 * mask
+                                        smp_noise[i, :, :] = noise_stamp * 1. / (self.snparams.skysig[j] * scalefactor) ** 2 * mask
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         dt.save_fits_image(image_stamp,'im.fits',go=True)
 
@@ -2806,7 +2814,7 @@ class smp:
                                         mask *= noise_stamp
                                         print smp_noise.shape
                                         print noise_stamp.shape
-                                        smp_noise[j,:,:] = noise_stamp*0.+1./(skysig**2) * mask
+                                        smp_noise[i,:,:] = noise_stamp*0.+1./(skysig**2) * mask
                                         #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
@@ -2828,7 +2836,7 @@ class smp:
                                     # if not self.oldformat:
                                     #     smp_im[i, :, :] = image_stamp + sexrms**2
                                     # else:
-                                    smp_im[j,:,:] = image_stamp
+                                    smp_im[i,:,:] = image_stamp
                                     #if float(snparams.fake_truemag[j]) < 24:
                                     if '/pnfs/des/persistent/smp/v62/20131009_SN-S2/r_12/' in longimfile:
                                         print xsn,ysn
@@ -2840,18 +2848,18 @@ class smp:
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
                                     if not self.snparams.survey == 'PS1':
-                                        smp_psf[j,:,:] = psf_stamp/np.sum(psf_stamp)
+                                        smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
                                     else:
-                                        smp_psf[j, :, :] = psf_stamp
+                                        smp_psf[i, :, :] = psf_stamp
                                     #save_fits_image(psf_stamp,'testpsf.fits')
                                     c = 20
                                     psa = self.snparams.platescale
 
-                                    smp_starra[j,:len(thisra)] = thisra
-                                    smp_stardec[j,:len(thisdec)] = thisdec
-                                    smp_starind[j,:len(thisids)] = thisids
+                                    smp_starra[i,:len(thisra)] = thisra
+                                    smp_stardec[i,:len(thisdec)] = thisdec
+                                    smp_starind[i,:len(thisids)] = thisids
 
-                                    smp_dict['scale'][j] = scale
+                                    smp_dict['scale'][i] = scale
                                     #smp_dict['scale_err'][i] = errmag
                                     # smp_dict['sky'][i] = skysn
                                     # #raw_input('sssssss')
@@ -2867,8 +2875,8 @@ class smp:
                                     if self.snparams.survey == 'PS1':
                                         #print self.snparams.skysig[j]*scalefactor,skysig
                                         #raw_input()
-                                        smp_dict['sky'][j] = skyysn
-                                        smp_dict['skyerr'][j] = self.snparams.skysig[j]*scalefactor
+                                        smp_dict['sky'][i] = skyysn
+                                        smp_dict['skyerr'][i] = self.snparams.skysig[j]*scalefactor
 
                                         #smp_dict['skyerr'][i] = skysig
                                         #print skysig,skyerrsn,sexrms
@@ -2878,15 +2886,15 @@ class smp:
                                     else:
 
                                         #smp_dict['sky'][i] = mysky
-                                        smp_dict['sky'][j] = sexsky
+                                        smp_dict['sky'][i] = sexsky
                                         #smp_dict['skyerr'][i] = skysig
-                                        smp_dict['skyerr'][j] = sexrms
+                                        smp_dict['skyerr'][i] = sexrms
                                         #sexrms
 
                                     print sexsky,sexrms,np.mean(image_stamp.ravel()),np.std(image_stamp.ravel())
                                     #raw_input('sss')
-                                    smp_dict['flag'][j] = 0
-                                    print smp_dict['flag'][j]
+                                    smp_dict['flag'][i] = 0
+                                    print smp_dict['flag'][i]
                                     #CHECK FOR DIFFIM FLAGS
                                     #if self.snparams.photflag[j] == True:
 
@@ -2900,79 +2908,79 @@ class smp:
 
 
                                     fileroot = imfile.split('.fits')[0]
-                                    smp_dict['fileroots'][j] = fileroot
-                                    smp_dict['expnum'][j] = self.expnum
+                                    smp_dict['fileroots'][i] = fileroot
+                                    smp_dict['expnum'][i] = self.expnum
                                     #if self.snparams.survey == 'PS1':
                                     #    smp_dict['fullims'].append('%s.fits' % fileroot)
                                     #    smp_dict['impsfs'].append('%s.dao.psf.fits' % fileroot)
                                     #    tmpp, hp = rdpsf.rdpsf('%s.dao.psf.fits' % fileroot)
                                     #    smp_dict['hpsfs'][i] =
 
-                                    smp_dict['zpt'][j] = zpt
-                                    smp_dict['zpterr'][j] = zpterr
+                                    smp_dict['zpt'][i] = zpt
+                                    smp_dict['zpterr'][i] = zpterr
                                     #print smp_dict['zpterr']
                                     #raw_input()
-                                    smp_dict['mjd'][j] = float(snparams.mjd[j])
+                                    smp_dict['mjd'][i] = float(snparams.mjd[j])
                                     #smp_dict['mjdoff'].append( mjdoff )
                                     #smp_dict['mjdslopeinteroff'].append(mjdslopeinteroff)
-                                    smp_dict['image_scalefactor'][j] = scalefactor
-                                    smp_dict['snx'][j] = xsn
-                                    smp_dict['sny'][j] = ysn
-                                    smp_dict['scalefactor'][j] = scalefactor
-                                    smp_dict['snra'][j] = snparams.RA
-                                    smp_dict['sndec'][j] = snparams.DECL
-                                    smp_dict['skysig'][j] = skysig*scalefactor
-                                    smp_dict['sexrms'][j] = sexrms
-                                    smp_dict['sexsky'][j] = sexsky
+                                    smp_dict['image_scalefactor'][i] = scalefactor
+                                    smp_dict['snx'][i] = xsn
+                                    smp_dict['sny'][i] = ysn
+                                    smp_dict['scalefactor'][i] = scalefactor
+                                    smp_dict['snra'][i] = snparams.RA
+                                    smp_dict['sndec'][i] = snparams.DECL
+                                    smp_dict['skysig'][i] = skysig*scalefactor
+                                    smp_dict['sexrms'][i] = sexrms
+                                    smp_dict['sexsky'][i] = sexsky
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
-                                    smp_mask[j,:,:] = mask
+                                    smp_mask[i,:,:] = mask
                                     #smp_dict['mask'][i] = msk
-                                    smp_dict['fwhm_arcsec'][j] = fwhm_arcsec
+                                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     #print fwhm_arcsec
                                     #raw_input('fwhm_arcsec')
-                                    smp_dict['image_filename'][j] = longimfile
-                                    smp_dict['zpt_file'][j] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                                    smp_dict['psf_filename'][j] = longpsffile
+                                    smp_dict['image_filename'][i] = longimfile
+                                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                                    smp_dict['psf_filename'][i] = longpsffile
                                     if self.snparams.survey == 'PS1':
                                         self.psfcenter = [round(xsn),round(ysn)]
                                     smp_dict['psfcenter'].append(self.psfcenter)
                                     #print xsn,ysn,psffile,self.psfcenter
                                     #raw_input('testing new dict params')
                                     #smp_dict['psf_fwhm'][i] = psf_fwhm
-                                    smp_dict['fakepsf'][j] = snparams.psf[j]
+                                    smp_dict['fakepsf'][i] = snparams.psf[j]
                                     if self.useweights:
-                                        smp_dict['weight_filename'][j] = longnoisefile
+                                        smp_dict['weight_filename'][i] = longnoisefile
                                     else:
-                                        smp_dict['weight_filename'][j] = longnoisefile[0]
+                                        smp_dict['weight_filename'][i] = longnoisefile[0]
 
                                     if self.usefake:
-                                        smp_dict['fakemag'][j] = snparams.fake_truemag[j]
-                                    smp_dict['fakezpt'][j] = snparams.zp[j]
-                                    smp_dict['diffim_flux'][j] = snparams.flux[j]
-                                    smp_dict['diffim_fluxerr'][j] = snparams.fluxerr[j]
-                                    smp_dict['id_obs'][j] = snparams.id_obs[j]
-                                    smp_dict['id_coadd'][j] = snparams.id_coadd[j]
+                                        smp_dict['fakemag'][i] = snparams.fake_truemag[j]
+                                    smp_dict['fakezpt'][i] = snparams.zp[j]
+                                    smp_dict['diffim_flux'][i] = snparams.flux[j]
+                                    smp_dict['diffim_fluxerr'][i] = snparams.fluxerr[j]
+                                    smp_dict['id_obs'][i] = snparams.id_obs[j]
+                                    smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
                                     if self.snparams.survey == 'DES':
-                                        smp_dict['psf_centerx'][j] = int(self.psfcenter[1])
-                                        smp_dict['psf_centery'][j] = int(self.psfcenter[0])
+                                        smp_dict['psf_centerx'][i] = int(self.psfcenter[1])
+                                        smp_dict['psf_centery'][i] = int(self.psfcenter[0])
 
-                                    smp_dict['gain'][j] = self.gain
+                                    smp_dict['gain'][i] = self.gain
                                     if self.snparams.survey == 'PS1':
-                                        smp_dict['gain'][j] = 1.
+                                        smp_dict['gain'][i] = 1.
 
-                                    smp_dict['rmsaddin'][j] = rmsaddin
+                                    smp_dict['rmsaddin'][i] = rmsaddin
                                     fs = snparams.flux
                                     brightlimit = fs[np.argsort(fs)][::-1][:15]
                                     brightlimit = brightlimit[-1]
-                                    if snparams.flux[j] > brightlimit:
-                                        smp_dict['notbrightflag'][j] = 0
+                                    if snparams.flux[i] > brightlimit:
+                                        smp_dict['notbrightflag'][i] = 0
                                     else:
-                                        smp_dict['notbrightflag'][j] = 1
+                                        smp_dict['notbrightflag'][i] = 1
 
-                                    print 'zpts',snparams.zp[j], zpt
+                                    print 'zpts',snparams.zp[i], zpt
                                     #raw_input()
 
                                     #START HERE TOMORROW
@@ -3016,28 +3024,28 @@ class smp:
 
                                     if filt == 'u':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_u
-                                        smp_dict['hostgal_sbmag'][j] = -99
+                                        smp_dict['hostgal_sbmag'][i] = -99
                                     if filt == 'g':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_g
-                                        smp_dict['hostgal_sbmag'][j] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[0]))
+                                        smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[0]))
                                     if filt == 'r':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_r
-                                        smp_dict['hostgal_sbmag'][j] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[1]))
+                                        smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[1]))
                                     if filt == 'i':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_i
-                                        smp_dict['hostgal_sbmag'][j] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[2]))
+                                        smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[2]))
                                     if filt == 'z':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_z
-                                        smp_dict['hostgal_sbmag'][j] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[3]))
+                                        smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[3]))
                                     if filt== 'y':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_y
-                                        smp_dict['hostgal_sbmag'][j] = -99
+                                        smp_dict['hostgal_sbmag'][i] = -99
 
                                     #raw_input()
 
-                                    if smp_dict['mjd'][j] < snparams.peakmjd - params.mjdminus or \
-                                        smp_dict['mjd'][j] > snparams.peakmjd + params.mjdplus:
-                                        smp_dict['mjd_flag'][j] = 1
+                                    if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
+                                        smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
+                                        smp_dict['mjd_flag'][i] = 1
 
 
                                     #print 'fakemag',snparams.fake_truemag[j],'mjdflag',smp_dict['mjd_flag'][i],'scale',scale
@@ -3048,10 +3056,10 @@ class smp:
                                     #raw_input()
 
                                     if self.dogalfit:
-                                        if smp_dict['mjd'][j] > snparams.peakmjd + params.mjdplus:
-                                            smp_dict['fitflag'][j] = 0
-                                        if smp_dict['mjd'][j] < snparams.peakmjd - params.mjdminus:
-                                            smp_dict['fitflag'][j] = 0
+                                        if smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
+                                            smp_dict['fitflag'][i] = 0
+                                        if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus:
+                                            smp_dict['fitflag'][i] = 0
 
                                     #sys.exit()
                                     # if self.fermigrid and self.worker:
@@ -3062,103 +3070,103 @@ class smp:
                                     #     os.popen('rm '+psffile).read()
 
 
-                                    i += 1
+                                    #i += 1
                                     print 'epochtime',time.time()-epochtime, float(snparams.mjd[j]),imfile
                                 else:
                                     print 'min max psf equal'*100
                                     smp_dict['imwcs'].append(np.nan)
                                     smp_dict['psfcenter'].append(np.nan)
-                                    smp_dict['sky'][j] = sexsky  # smp_dict['skyerr'][i] = skysig
-                                    smp_dict['skyerr'][j] = sexrms
-                                    smp_dict['mjd'][j] = float(snparams.mjd[j])
-                                    smp_dict['fwhm_arcsec'][j] = fwhm_arcsec
-                                    smp_dict['zpt'][j] = zpt
-                                    smp_dict['zpterr'][j] = zpterr
-                                    smp_dict['expnum'][j] = self.expnum
-                                    smp_dict['image_filename'][j] = longimfile
-                                    smp_dict['zpt_file'][j] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                                    smp_dict['psf_filename'][j] = longpsffile
-                                    smp_dict['id_obs'][j] = snparams.id_obs[j]
-                                    smp_dict['id_coadd'][j] = snparams.id_coadd[j]
+                                    smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                                    smp_dict['skyerr'][i] = sexrms
+                                    smp_dict['mjd'][i] = float(snparams.mjd[j])
+                                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                                    smp_dict['zpt'][i] = zpt
+                                    smp_dict['zpterr'][i] = zpterr
+                                    smp_dict['expnum'][i] = self.expnum
+                                    smp_dict['image_filename'][i] = longimfile
+                                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                                    smp_dict['psf_filename'][i] = longpsffile
+                                    smp_dict['id_obs'][i] = snparams.id_obs[j]
+                                    smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
                         else:
                             print 'min max image equal'*100
                             descriptiveflag=128
-                            smp_dict['descriptiveflag'][j] = descriptiveflag
+                            smp_dict['descriptiveflag'][i] = descriptiveflag
                             smp_dict['imwcs'].append(np.nan)
                             smp_dict['psfcenter'].append(np.nan)
-                            smp_dict['sky'][j] = sexsky  # smp_dict['skyerr'][i] = skysig
-                            smp_dict['skyerr'][j] = sexrms
-                            smp_dict['mjd'][j] = float(snparams.mjd[j])
-                            smp_dict['fwhm_arcsec'][j] = fwhm_arcsec
-                            smp_dict['zpt'][j] = zpt
-                            smp_dict['zpterr'][j] = zpterr
-                            smp_dict['expnum'][j] = self.expnum
-                            smp_dict['image_filename'][j] = longimfile
-                            smp_dict['zpt_file'][j] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                            smp_dict['psf_filename'][j] = longpsffile
-                            smp_dict['id_obs'][j] = snparams.id_obs[j]
-                            smp_dict['id_coadd'][j] = snparams.id_coadd[j]
+                            smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                            smp_dict['skyerr'][i] = sexrms
+                            smp_dict['mjd'][i] = float(snparams.mjd[j])
+                            smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                            smp_dict['zpt'][i] = zpt
+                            smp_dict['zpterr'][i] = zpterr
+                            smp_dict['expnum'][i] = self.expnum
+                            smp_dict['image_filename'][i] = longimfile
+                            smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                            smp_dict['psf_filename'][i] = longpsffile
+                            smp_dict['id_obs'][i] = snparams.id_obs[j]
+                            smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
                     else:
                         print 'failed fwhm'*100
                         print 'fwhm was',fwhm_arcsec,' and fwhm cut was',params.fwhm_max
                         descriptiveflag = 256
-                        smp_dict['descriptiveflag'][j] = descriptiveflag
+                        smp_dict['descriptiveflag'][i] = descriptiveflag
 
                         smp_dict['imwcs'].append(np.nan)
                         smp_dict['psfcenter'].append(np.nan)
-                        smp_dict['sky'][j] = sexsky  # smp_dict['skyerr'][i] = skysig
-                        smp_dict['skyerr'][j] = sexrms
-                        smp_dict['mjd'][j] = float(snparams.mjd[j])
-                        smp_dict['fwhm_arcsec'][j] = fwhm_arcsec
-                        smp_dict['zpt'][j] = zpt
-                        smp_dict['zpterr'][j] = zpterr
-                        smp_dict['expnum'][j] = self.expnum
-                        smp_dict['image_filename'][j] = longimfile
-                        smp_dict['zpt_file'][j] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                        smp_dict['psf_filename'][j] = longpsffile
-                        smp_dict['id_obs'][j] = snparams.id_obs[j]
-                        smp_dict['id_coadd'][j] = snparams.id_coadd[j]
+                        smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                        smp_dict['skyerr'][i] = sexrms
+                        smp_dict['mjd'][i] = float(snparams.mjd[j])
+                        smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                        smp_dict['zpt'][i] = zpt
+                        smp_dict['zpterr'][i] = zpterr
+                        smp_dict['expnum'][i] = self.expnum
+                        smp_dict['image_filename'][i] = longimfile
+                        smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                        smp_dict['psf_filename'][i] = longpsffile
+                        smp_dict['id_obs'][i] = snparams.id_obs[j]
+                        smp_dict['id_coadd'][i] = snparams.id_coadd[j]
                         #raw_input()
 
                 else:
                     print 'badflag'*100
                     print 'descriptive flag',descriptiveflag
-                    smp_dict['descriptiveflag'][j] = descriptiveflag
+                    smp_dict['descriptiveflag'][i] = descriptiveflag
                     smp_dict['imwcs'].append(np.nan)
                     smp_dict['psfcenter'].append(np.nan)
-                    smp_dict['sky'][j] = sexsky  # smp_dict['skyerr'][i] = skysig
-                    smp_dict['skyerr'][j] = sexrms
-                    smp_dict['mjd'][j] = float(snparams.mjd[j])
-                    smp_dict['fwhm_arcsec'][j] = fwhm_arcsec
-                    smp_dict['zpt'][j] = zpt
-                    smp_dict['zpterr'][j] = zpterr
-                    smp_dict['expnum'][j] = self.expnum
-                    smp_dict['image_filename'][j] = longimfile
-                    smp_dict['zpt_file'][j] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                    smp_dict['psf_filename'][j] = longpsffile
-                    smp_dict['id_obs'][j] = snparams.id_obs[j]
-                    smp_dict['id_coadd'][j] = snparams.id_coadd[j]
+                    smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                    smp_dict['skyerr'][i] = sexrms
+                    smp_dict['mjd'][i] = float(snparams.mjd[j])
+                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                    smp_dict['zpt'][i] = zpt
+                    smp_dict['zpterr'][i] = zpterr
+                    smp_dict['expnum'][i] = self.expnum
+                    smp_dict['image_filename'][i] = longimfile
+                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                    smp_dict['psf_filename'][i] = longpsffile
+                    smp_dict['id_obs'][i] = snparams.id_obs[j]
+                    smp_dict['id_coadd'][i] = snparams.id_coadd[j]
             else:
                 badflag = 1
                 descriptiveflag = 64
                 print 'xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25\n'*20
-                smp_dict['descriptiveflag'][j] = descriptiveflag
+                smp_dict['descriptiveflag'][i] = descriptiveflag
                 smp_dict['imwcs'].append(np.nan)
                 smp_dict['psfcenter'].append(np.nan)
-                smp_dict['sky'][j] = sexsky  # smp_dict['skyerr'][i] = skysig
-                smp_dict['skyerr'][j] = sexrms
-                smp_dict['mjd'][j] = float(snparams.mjd[j])
-                smp_dict['fwhm_arcsec'][j] = fwhm_arcsec
-                smp_dict['zpt'][j] = zpt
-                smp_dict['zpterr'][j] = zpterr
-                smp_dict['expnum'][j] = self.expnum
-                smp_dict['image_filename'][j] = longimfile
-                smp_dict['zpt_file'][j] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
-                smp_dict['psf_filename'][j] = longpsffile
-                smp_dict['id_obs'][j] = snparams.id_obs[j]
-                smp_dict['id_coadd'][j] = snparams.id_coadd[j]
+                smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                smp_dict['skyerr'][i] = sexrms
+                smp_dict['mjd'][i] = float(snparams.mjd[j])
+                smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                smp_dict['zpt'][i] = zpt
+                smp_dict['zpterr'][i] = zpterr
+                smp_dict['expnum'][i] = self.expnum
+                smp_dict['image_filename'][i] = longimfile
+                smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                smp_dict['psf_filename'][i] = longpsffile
+                smp_dict['id_obs'][i] = snparams.id_obs[j]
+                smp_dict['id_coadd'][i] = snparams.id_coadd[j]
         #sys.exit()
 
 
