@@ -1495,7 +1495,8 @@ class metropolis_hastings():
         print 'covariance plotting...'
         print self.modelvec_nphistory.shape
         badindices = []
-        nonzerodata = copy(self.modelvec_nphistory)
+        start_iter = int(round(len(self.modelvechistory) * (self.burnin)))
+        nonzerodata = copy(self.modelvec_nphistory)[start_iter:,i]
         nonzeromjd = copy(self.mjd)
         for i in range(len(self.modelvec)):
             if np.all(self.modelvec_nphistory[:,i]==0):
