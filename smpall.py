@@ -2180,6 +2180,7 @@ class smp:
                             mjdslopeinteroff = zptdata['mjdslopeinteroff']
                             if zptdata['fit_zpt'] == 0.:
                                 print 'loaded bad zpt, continuing...'
+                                nozpt = True
                                 continue
                             #print 'thisworked'
                         except:
