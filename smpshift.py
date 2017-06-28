@@ -2754,15 +2754,15 @@ class smp:
                 if sexsky/scalefactor - 10000. > skymax:
                     badflag = 1
                     descriptiveflag = 8
-                    print ('sky '+str(sexsky)+' greater than skymax '+str(skymax)+'\n')*10
+                    print ('sky '+str(sexsky/scalefactor- 10000.)+' greater than skymax '+str(skymax)+'\n')*10
                 elif sexsky/scalefactor - 10000. < skymin:
                     badflag = 1
                     descriptiveflag = 16
-                    print ('sky '+str(sexsky)+' less than skymin '+str(skymin)+'\n')*10
+                    print ('sky '+str(sexsky/scalefactor- 10000.)+' less than skymin '+str(skymin)+'\n')*10
                 elif sexrms/scalefactor > skyerrmax:
                     badflag = 1
                     descriptiveflag = 32
-                    print ('sky '+str(sexrms)+' greater than skyerrmax '+str(skyerrmax)+'\n')*10
+                    print ('skyerr '+str(sexrms/scalefactor)+' greater than skyerrmax '+str(skyerrmax)+'\n')*10
 
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
