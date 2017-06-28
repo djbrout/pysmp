@@ -2312,6 +2312,8 @@ class smp:
                 badflagarr = (x_star1 < 0) | (y_star1 < 0) | (x_star1 - im.shape[1] > 0) | (y_star1 - im.shape[0] > 0)
                 x_star1[badflagarr] = 100.
                 y_star1[badflagarr] = 100.
+                x_star1 = xstar1[~badflagarr]
+                y_star1 = ystar1[~badflagarr]
                 print x_star1
                 #raw_input()
                 #for xx in x_star1:
