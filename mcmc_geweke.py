@@ -1490,8 +1490,8 @@ class metropolis_hastings():
 
         # plotting the correlation matrix
         print 'covariance plotting...'
-        nonzerodata = self.modelvec_nphistory[~np.all(self.modelvec_nphistory == 0, axis=1)]
-        nonzeromjd = self.mjd[~np.all(self.modelvec_nphistory == 0, axis=1)]
+        nonzerodata = self.modelvec_nphistory[~np.all(self.modelvec_nphistory == 0, axis=0)]
+        nonzeromjd = self.mjd[~np.all(self.modelvec_nphistory == 0, axis=0)]
         self.covar = corrcoef(nonzerodata,rowvar=False)
         pcolor(self.covar)
         colorbar()
