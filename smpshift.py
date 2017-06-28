@@ -2506,7 +2506,7 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
 
 
-            zptmin = np.array(self.params.zptmin)[np.array(self.params.cutinfobands,dtype='str') == band][0]
+            zptmin = float(np.array(self.params.zptmin)[np.array(self.params.cutinfobands,dtype='str') == band][0])
             print 'zptmin',zptmin
             if zpt < zptmin:
                 badflag = 1
