@@ -2325,7 +2325,7 @@ class smp:
                 #except:
                 #    print 'failed aper'
                 #    badflag = 1
-                badflagx[badflagarr] = 1
+                #badflagx[badflagarr] = 1
                 #print sky
                 #raw_input()
                 #I REMOVED CENTROIDING BECAUSE WE NOW FIND A GLOBAL RA AND DEC FOR THE STAR SIMILARLY TO THE SN
