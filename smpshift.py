@@ -2506,7 +2506,7 @@ class smp:
             print self.params.cutinfobands
             print self.params.zptmin
             print band
-            zptmin = np.array(self.params.zptmin)[self.params.cutinfobands == band]
+            zptmin = np.array(self.params.zptmin)[np.array(self.params.cutinfobands,dtype='str') == band][0]
             print 'zptmin',zptmin
             raw_input()
             if zpt < zptmin:
