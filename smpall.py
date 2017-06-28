@@ -3106,7 +3106,7 @@ class smp:
                                     smp_dict['zpterr'][i] = zpterr
                                     smp_dict['expnum'][i] = self.expnum
                                     smp_dict['image_filename'][i] = longimfile
-                                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                                    #smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                                     smp_dict['psf_filename'][i] = longpsffile
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3125,7 +3125,7 @@ class smp:
                             smp_dict['zpterr'][i] = zpterr
                             smp_dict['expnum'][i] = self.expnum
                             smp_dict['image_filename'][i] = longimfile
-                            smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                            #smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                             smp_dict['psf_filename'][i] = longpsffile
                             smp_dict['id_obs'][i] = snparams.id_obs[j]
                             smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3146,7 +3146,7 @@ class smp:
                         smp_dict['zpterr'][i] = zpterr
                         smp_dict['expnum'][i] = self.expnum
                         smp_dict['image_filename'][i] = longimfile
-                        smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                        #smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                         smp_dict['psf_filename'][i] = longpsffile
                         smp_dict['id_obs'][i] = snparams.id_obs[j]
                         smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3166,7 +3166,7 @@ class smp:
                     smp_dict['zpterr'][i] = zpterr
                     smp_dict['expnum'][i] = self.expnum
                     smp_dict['image_filename'][i] = longimfile
-                    smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                    #smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                     smp_dict['psf_filename'][i] = longpsffile
                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3185,7 +3185,7 @@ class smp:
                 smp_dict['zpterr'][i] = zpterr
                 smp_dict['expnum'][i] = self.expnum
                 smp_dict['image_filename'][i] = longimfile
-                smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
+                #smp_dict['zpt_file'][i] = os.path.join('/'.join(imfile.split('/')[:-1]), zpt_file)
                 smp_dict['psf_filename'][i] = longpsffile
                 smp_dict['id_obs'][i] = snparams.id_obs[j]
                 smp_dict['id_coadd'][i] = snparams.id_coadd[j]
