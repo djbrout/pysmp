@@ -1863,8 +1863,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     axes[1].set_xlim(27,35)
     plt.title('NO SN FLUX IN IMAGE')
     plt.legend()
-    plt.savefig(outdir + '/' + deep_or_shallow + 'zptcorr.png')
-    print 'saved',outdir + '/' + deep_or_shallow + 'zptcorr.png'
+    plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_zptcorr.png')
+    print 'saved',outdir + '/' + deep_or_shallow +  '_'+filter+'_zptcorr.png'
 
 
 
@@ -1903,8 +1903,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     axes[0].set_xlim(-1000, 1000)
     axes[1].set_xlim(-1000, 1000)
     # plt.legend()
-    plt.savefig(outdir + '/' + deep_or_shallow + 'skycorr.png')
-    print 'saved', outdir + '/' + deep_or_shallow + 'skycorr.png'
+    plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png')
+    print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png'
 
     plt.clf()
 
@@ -1936,8 +1936,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     axes[0].set_xlim(0, 500)
     axes[1].set_xlim(0, 500)
     # plt.legend()
-    plt.savefig(outdir + '/' + deep_or_shallow + 'skyerrcorr.png')
-    print 'saved', outdir + '/' + deep_or_shallow + 'skyerrcorr.png'
+    plt.savefig(outdir + '/' + deep_or_shallow + '_'+filter+'_skyerrcorr.png')
+    print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skyerrcorr.png'
 
 
     plt.clf()
