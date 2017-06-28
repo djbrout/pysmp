@@ -75,7 +75,9 @@ from scipy.fftpack import fft, ifft, fft2, ifft2
 import multiprocessing
 import time
 #import pyfftw
-
+from numpy import corrcoef, sum, log, arange
+from numpy.random import rand
+from pylab import pcolor, show, colorbar, xticks, yticks
 
 class metropolis_hastings():
 
@@ -634,6 +636,7 @@ class metropolis_hastings():
         print 'Final Reduced ChiSq: ' + str(np.nanmean(chsqs[chsqs != 0.]))
         #print 'Chisq For Each Epoch: ',chsqs
         self.plotchains()
+        self.plotcovar()
         self.savechains()
         print 'plotting stamps... this may take a minute...'
         self.dontplotstamps = False
@@ -1482,6 +1485,22 @@ class metropolis_hastings():
         #    print os.popen('mv stamps.pdf ' + self.lcout + '_stamps.pdf').read()
         #    #print 'copied using ifdh'
         #    #raw_input()
+
+    def plotcovar(self):
+
+        # plotting the correlation matrix
+        print 'covariance plotting...'
+        nonzerodata = self.modelvec_nphistory[~np.all(self.modelvec_nphistory == 0, axis=1)]
+        nonzeromjd = self.mjd[~np.all(self.modelvec_nphistory == 0, axis=1)]
+        R = corrcoef(nonzerodata,rowvar=False)
+        pcolor(R)
+        colorbar()
+        yticks(arange(0.5, float(len(nonzerodata))+.5), nonzeromjd)
+        xticks(arange(0.5, float(len(nonzerodata))+.5), nonzeromjd)
+
+        self.savefig(str(self.lcout) + '_covar.png')
+        print 'saved',str(self.lcout) + '_covar.png'
+
     def plotchains( self ):
         self.model_params()
         numepochs = self.modelvec_nphistory.shape[1]

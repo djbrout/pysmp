@@ -3736,7 +3736,7 @@ class smp:
                 #if self.fermilog:
                 #    self.tmpwriter.appendfile('DONE... saving snfit\n', self.fermilogfile)
                 #sys.exit()
-                modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof,gewekediag  = aaa.get_params()
+                modelvec, modelvec_uncertainty, galmodel_params, galmodel_uncertainty, modelvec_nphistory, galmodel_nphistory, sims, xhistory,yhistory,accepted_history,pix_stamp,chisqhist,redchisqhist,stamps,chisqs,ndof,gewekediag,covar  = aaa.get_params()
                 fitprob = dt.fitprobfromchisq(chisqs,ndof)
                 print fitprob
                 print 'TOTAL SMP SN TIME ',time.time()-tstart
@@ -3749,7 +3749,7 @@ class smp:
                                  galmodel_nphistory=galmodel_nphistory, sims=sims, data=smp_im,
                                  xhistory=xhistory,yhistory=yhistory,stamps=stamps,chisqs=chisqs,weights=smp_noise,
                                  flags=smp_dict['flag'], sky=smp_dict['sky'], mjd=smp_dict['mjd'], skyerr=smp_dict['skyerr'],
-
+                                 covar=covar,
                                  accepted_history=accepted_history, chisqhist=chisqhist,gewekediag=gewekediag)
 
         #self.dogalsimfit = True
@@ -3979,6 +3979,10 @@ class smp:
         #print chisqs
         smplightcurvefile = os.path.join(self.lcfilepath,
                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
+
+        smpcovfile = os.path.join(self.lcfilepath,
+                                         snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '_covar.npz')
+
         #os.popen('ifdh mkdir '+self.lcfilepath).read()
         if self.fermigrid and self.worker:
             tmp = 'lc.txt'
@@ -3994,7 +3998,7 @@ class smp:
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
             print >> fout, '%.5f %.5f %i %i %s %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %s %i %.5f ' \
-                           '%.5f %.5f %s %s %s %s %s %s %s %s %s %s' % (
+                           '%.5f %.5f %.5f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i],float(smp_dict['mjd'][i])-snparams.peakmjd, smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
                                 smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i], smp_dict['fakezpt'][i],
