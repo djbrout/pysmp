@@ -1493,15 +1493,21 @@ class metropolis_hastings():
         # plotting the correlation matrix
         print 'covariance plotting...'
         print self.modelvec_nphistory.shape
-        goodindices = []
+        badindices = []
+        nonzerodata = copy(self.modelvec_nphistory)
+        nonzeromjd = copy(self.mjd)
         for i in range(len(self.modelvec)):
-            if not np.all(self.modelvec_nphistory[:,i]==0):
-                goodindices.append(int(i))
-        goodindices = np.array(goodindices,dtype='int')
+            if np.all(self.modelvec_nphistory[:,i]==0):
+                badindices.append(int(i))
 
-        nonzerodata = self.modelvec_nphistory[:,goodindices]
+        badindices = np.array(badindices,dtype='int')
+
+        nonzerodata = np.delete(nonzerodata,badindices,axis=1)
+        nonzeromjd = np.delete(nonzeromjd,badindices)
+
+        #nonzerodata = self.modelvec_nphistory[:,goodindices]
         print nonzerodata.shape
-        nonzeromjd = self.mjd[goodindices]
+        #nonzeromjd = self.mjd[goodindices]
         self.corr = corrcoef(nonzerodata,rowvar=False)
         plt.clf()
         pcolor(self.corr)
