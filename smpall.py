@@ -2465,19 +2465,26 @@ class smp:
                 if len(thisra) < params.minzptstars:
                     print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small. Nstars=',len(thisra)
                     scalefactor = 1.
+                    badflag = 1
+                    descriptiveflag = 512
                 if zpterr / np.sqrt(float(len(thisra))) > 0.01:
                     badflag = 1
                     print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
                     scalefactor = 1.
+                    badflag = 1
+                    descriptiveflag = 1024
             except:
                 badlfag = 1
                 print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small'
                 scalefactor = 1.
+                descriptiveflag = 512
 
             dotestoff = False
             if zpt == 0:
                 print 'zerpoint badflag'
                 badflag = 1
+                descriptiveflag = 4
+
             if dotestoff:
                 self.teststarpos(self.rickfakestarfile,w,zpt,sky,skyerr,im,weights,mask,psffile,imfile,snparams,params.substamp,snparams.zp[j],psf=self.psf)
 
@@ -2492,6 +2499,8 @@ class smp:
                     #aw_input('zpt badflag')
                     badflag = 1
                     scalefactor = 0.
+                    descriptiveflag = 4
+
             print 'zpt',zpt,'nominal',firstzpt
             print 'scalefactor',scalefactor
             #print 'before',np.max(im)
@@ -2759,11 +2768,12 @@ class smp:
                         print 'infinite skysig'
                         #raw_input('skysig badflag')
                         badflag = 1
+                        descriptiveflag = 8
                     if sexrms < 0.:
                         print 'skysig less than one'
                         #raw_input('skysig1 badflag')
                         badflag = 1
-
+                        descriptiveflag = 32
 
                 badflags.append(badflag)
                 if badflag:
@@ -2905,6 +2915,8 @@ class smp:
                                     #raw_input('sss')
                                     smp_dict['flag'][i] = 0
                                     print smp_dict['flag'][i]
+
+                                    smp_dict['descriptiveflag'][i] = descriptiveflag
                                     #CHECK FOR DIFFIM FLAGS
                                     #if self.snparams.photflag[j] == True:
 
@@ -3101,7 +3113,7 @@ class smp:
 
                         else:
                             print 'min max image equal'*100
-                            descriptiveflag=128
+                            if descriptiveflag == 0: descriptiveflag=128
                             smp_dict['descriptiveflag'][i] = descriptiveflag
                             smp_dict['imwcs'].append(np.nan)
                             smp_dict['psfcenter'].append(np.nan)
@@ -3121,7 +3133,7 @@ class smp:
                     else:
                         print 'failed fwhm'*100
                         print 'fwhm was',fwhm_arcsec,' and fwhm cut was',params.fwhm_max
-                        descriptiveflag = 256
+                        if descriptiveflag == 0: descriptiveflag = 256
                         smp_dict['descriptiveflag'][i] = descriptiveflag
 
                         smp_dict['imwcs'].append(np.nan)
@@ -3160,7 +3172,7 @@ class smp:
                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
             else:
                 badflag = 1
-                descriptiveflag = 64
+                if descriptiveflag == 0: descriptiveflag = 64
                 print 'xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25\n'*20
                 smp_dict['descriptiveflag'][i] = descriptiveflag
                 smp_dict['imwcs'].append(np.nan)
