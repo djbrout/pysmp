@@ -3075,6 +3075,10 @@ class smp:
                 else:
                     print 'badflag'*100
                     print 'descriptive flag',descriptiveflag
+            else:
+                badflag = 1
+                descriptiveflag = 64
+                print 'xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25\n'*20
         #sys.exit()
 
 
