@@ -1492,8 +1492,8 @@ class metropolis_hastings():
         print 'covariance plotting...'
         nonzerodata = self.modelvec_nphistory[~np.all(self.modelvec_nphistory == 0, axis=1)]
         nonzeromjd = self.mjd[~np.all(self.modelvec_nphistory == 0, axis=1)]
-        R = corrcoef(nonzerodata,rowvar=False)
-        pcolor(R)
+        self.covar = corrcoef(nonzerodata,rowvar=False)
+        pcolor(self.covar)
         colorbar()
         yticks(arange(0.5, float(len(nonzerodata))+.5), nonzeromjd)
         xticks(arange(0.5, float(len(nonzerodata))+.5), nonzeromjd)
@@ -1640,7 +1640,7 @@ class metropolis_hastings():
 
             chsqs = np.array(chsqs)
             ndof = len(self.mask[self.mask > 0.].ravel())
-            return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq,stamps,chsqs,ndof,self.gewekediag # size: self.history[num_iter,len(self.model_params)]
+            return self.modelvec_params, self.modelvec_uncertainty, self.galmodel_params, self.galmodel_uncertainty, self.modelvec_nphistory, self.galmodel_nphistory, self.sims,np.asarray(self.xhistory),np.asarray(self.yhistory),self.accepted_history,self.pix_stamp,self.chisq,self.redchisq,stamps,chsqs,ndof,self.gewekediag,self.covar # size: self.history[num_iter,len(self.model_params)]
         else:
             return
     def get_params_analytical_weighted( self ):
