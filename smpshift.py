@@ -2506,15 +2506,12 @@ class smp:
                 self.psf = self.psf/np.sum(self.psf)
 
 
-            print self.params.cutinfobands
-            print self.params.zptmin
-            print band
             zptmin = np.array(self.params.zptmin)[np.array(self.params.cutinfobands,dtype='str') == band][0]
             print 'zptmin',zptmin
-            raw_input()
             if zpt < zptmin:
                 badflag = 1
                 descriptiveflag = 4
+                print 'zpt less than zptmin!'*100
 
 
             if xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25 and np.isfinite(scalefactor):
