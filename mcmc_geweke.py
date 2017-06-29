@@ -1496,7 +1496,7 @@ class metropolis_hastings():
         print self.modelvec_nphistory.shape
         badindices = []
         start_iter = int(round(len(self.modelvechistory) * (self.burnin)))
-        nonzerodata = copy(self.modelvec_nphistory)[start_iter:,i]
+        nonzerodata = copy(self.modelvec_nphistory)[start_iter:,:]
         nonzeromjd = copy(self.mjd)
         for i in range(len(self.modelvec)):
             if np.all(self.modelvec_nphistory[:,i]==0):
