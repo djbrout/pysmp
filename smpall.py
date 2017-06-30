@@ -5959,7 +5959,7 @@ class smp:
                             axs = axchi.imshow(
                                 (image_stamp - s - (psf*scale))**2 * fitrad /se**2,
                                 cmap='gray', interpolation='nearest', vmin=0, vmax=10.)
-                            axchi.set_title('Chisq')
+                            axchi.set_title('Chisq '+str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2))))
 
                             cbar = fig.colorbar(axs, ax=axchi)
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
