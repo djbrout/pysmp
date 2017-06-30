@@ -1924,7 +1924,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms(sky[ww]/skyerr[ww], (flux / fluxerr)[ww], np.arange(-10.1,10,.05), .1)
+    ax, ayrms = dt.binrms(sky[ww]/skyerr[ww], (flux / fluxerr)[ww], np.arange(-10.25,10,.5), .5)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     axes[1].plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
@@ -1942,7 +1942,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     axes[1].set_xlabel('Sky/Skyerr')
     axes[1].set_ylabel('RMS')
     axes[0].set_title('NO SN FLUX IN IMAGE')
-    axes[0].hist(sky[ww], bins=np.arange(-10.1, 10, .05))
+    axes[0].hist(sky[ww], bins=np.arange(-10.25, 10, .5))
     axes[0].set_xlim(-10, 10)
     axes[1].set_xlim(-10, 10)
     # plt.legend()
