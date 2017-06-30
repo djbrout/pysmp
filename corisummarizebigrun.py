@@ -1911,9 +1911,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png')
     print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png'
 
-    ww = abs(sky)>50.
+    ww = abs(sky)<50.
     print 'percentage loss from sky cut of 50',float(len(sky)-len(sky[ww]))/len(sky)
-    
+
 
     plt.clf()
 
