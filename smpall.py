@@ -2427,7 +2427,7 @@ class smp:
 
                         print sexsky, sexrms
 
-                        dt.save_fits_image(im-sexsky,'testsky.fits',go=True)
+                        #dt.save_fits_image(im-sexsky,'testsky.fits',go=True)
                         # raw_input('sextractor')
                         #bkgrnd = pf.getdata(imfile + '.background')
                         # print bkgrnd.shape
@@ -5900,7 +5900,7 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
-                                                                             fitrad, gal, mjd, sein,self.gain,guess_scale=10**(.4*(31.-m)))
+                                                                             fitrad, gal, mjd, se,self.gain,guess_scale=10**(.4*(31.-m)))
                             if not chi > 0.:
                                 bad = True
                             #print scale
