@@ -5964,7 +5964,7 @@ class smp:
                             cbar = fig.colorbar(axs, ax=axchi)
                             # plt.imshow((subim-scaledpsf)/imhdr['SKYSIG'],cmap='gray',interpolation='nearest')
                             # plt.colorbar()
-                            title = 'Chisq'
+                            title = 'Chisq '+str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2),2))
                             plt.title(title)
                             pdf_pagesc.savefig(fig)
 
