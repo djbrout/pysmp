@@ -1899,6 +1899,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     axes[1].set_xlabel('Sky')
     axes[1].set_ylabel('RMS')
+    axes[0].axvline(-50)
+    axes[0].axvline(50)
+    axes[1].axvline(-50)
+    axes[1].axvline(50)
     axes[0].set_title('NO SN FLUX IN IMAGE')
     axes[0].hist(sky[ww], bins=np.arange(-1005., 1000, 10.))
     axes[0].set_xlim(-1000, 1000)
@@ -1907,6 +1911,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png')
     print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png'
 
+    ww = abs(sky)>50.
+    print 'percentage loss from sky cut of 50',float(len(sky)-len(sky[ww]))/len(sky)
+    
 
     plt.clf()
 
