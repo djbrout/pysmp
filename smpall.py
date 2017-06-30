@@ -2427,6 +2427,7 @@ class smp:
 
                         print sexsky, sexrms
 
+                        dt.save_fits_image(im-sexsky,'testsky.fits')
                         # raw_input('sextractor')
                         #bkgrnd = pf.getdata(imfile + '.background')
                         # print bkgrnd.shape
