@@ -5900,7 +5900,7 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
-                                                                             fitrad, gal, mjd, se,self.gain,guess_scale=10**(.4*(31.-m)))
+                                                                             fitrad, gal, mjd, sein,self.gain,guess_scale=10**(.4*(31.-m)))
                             if not chi > 0.:
                                 bad = True
                             #print scale
@@ -6147,7 +6147,7 @@ class smp:
                                     # (flux_star_std_mcmc_modelerrors > 1.0) &
                                     (np.isfinite(mag_cat)) &
                                     (np.isfinite(flux_star)) &
-                                    (flux_chisq < 100.) &
+                                    (flux_chisq < 500.) &
                                     (np.isfinite(flux_chisq)) &
                                     (~np.isnan(flux_chisq)) &
                                     (flux_star > 0) &
