@@ -2514,7 +2514,12 @@ class smp:
             print 'scalefactor',scalefactor
             #print 'before',np.max(im)
             #im *= self.gain
+
+
+            #SCALING THE iMAGE HEREEEEE
             im *= scalefactor
+
+
             #print 'after',np.max(im)
             #raw_input()
 
@@ -2650,7 +2655,7 @@ class smp:
                         temp, mysexskysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
                         print 'mysexskysig',mysexskysig
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
-                        raw_input('youyo')
+                        #raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
@@ -2845,7 +2850,7 @@ class smp:
                                         mask *= noise_stamp
                                         print smp_noise.shape
                                         print noise_stamp.shape
-                                        smp_noise[i,:,:] = noise_stamp*0.+1./(skysig**2) * mask
+                                        smp_noise[i,:,:] = noise_stamp*0.+1./(mysexskysig**2) * mask
                                         #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
@@ -2919,13 +2924,13 @@ class smp:
                                         #smp_dict['sky'][i] = mysky
                                         smp_dict['sky'][i] = sexsky
                                         #smp_dict['skyerr'][i] = skysig
-                                        smp_dict['skyerr'][i] = sexrms
+                                        smp_dict['skyerr'][i] = mysexskysig
                                         #sexrms
 
-                                    print sexsky,sexrms,np.mean(image_stamp.ravel()),np.std(image_stamp.ravel())
+                                    #print sexsky,sexrms,np.mean(image_stamp.ravel()),np.std(image_stamp.ravel())
                                     #raw_input('sss')
                                     smp_dict['flag'][i] = 0
-                                    print smp_dict['flag'][i]
+                                    #print smp_dict['flag'][i]
 
                                     smp_dict['descriptiveflag'][i] = descriptiveflag
                                     #CHECK FOR DIFFIM FLAGS
@@ -2962,7 +2967,7 @@ class smp:
                                     smp_dict['scalefactor'][i] = scalefactor
                                     smp_dict['snra'][i] = snparams.RA
                                     smp_dict['sndec'][i] = snparams.DECL
-                                    smp_dict['skysig'][i] = skysig*scalefactor
+                                    smp_dict['skysig'][i] = mysexskysig
                                     smp_dict['sexrms'][i] = sexrms
                                     smp_dict['sexsky'][i] = sexsky
                                     smp_dict['imwcs'].append(w)
@@ -5795,6 +5800,7 @@ class smp:
                         #sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
                         sin = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel())
                         sein = np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel())
+                        temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
 
                         # pm = 100
                         # sin, sein, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
@@ -5903,7 +5909,7 @@ class smp:
                             #                                                  fitrad, gal, mjd)
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
-                                                                             fitrad, gal, mjd, sein,self.gain,guess_scale=10**(.4*(31.-m)))
+                                                                             fitrad, gal, mjd, skysig,self.gain,guess_scale=10**(.4*(31.-m)))
                             if not chi > 0.:
                                 bad = True
                             #print scale

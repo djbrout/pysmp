@@ -1907,6 +1907,42 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png')
     print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png'
 
+
+    plt.clf()
+
+    f, axes = plt.subplots(2, sharex=True)
+    axes = axes.ravel()
+
+    ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+    ax, ayrms = dt.binrms(sky[ww]/skyerr[ww], (flux / fluxerr)[ww], np.arange(-1005,1000,10.), 50.)
+
+    axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
+    axes[1].plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
+
+    # ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+    #      & (fluxerr > 0.) & (np.isfinite(flux)) & \
+    #      (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+    #      & (chisqarr < 1.2)
+    #
+    #
+    # ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(100., 25000., 100), 500.)
+    #
+    # plt.plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
+
+    axes[1].set_xlabel('Sky/Skyerr')
+    axes[1].set_ylabel('RMS')
+    axes[0].set_title('NO SN FLUX IN IMAGE')
+    axes[0].hist(sky[ww], bins=np.arange(-1005., 1000, 10.))
+    axes[0].set_xlim(-10, 10)
+    axes[1].set_xlim(-10, 10)
+    # plt.legend()
+    plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_skyskyerrcorr.png')
+    print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skyskyerrcorr.png'
+
+
     plt.clf()
 
     f, axes = plt.subplots(2, sharex=True)
