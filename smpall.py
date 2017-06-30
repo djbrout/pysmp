@@ -1386,6 +1386,10 @@ class smp:
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
+
+            if not '20151029' in imfile:
+                continue
+
             #raw_input('stopped')
             # if round(float(snparams.mjd[j])) != 56935:
             #    continue
