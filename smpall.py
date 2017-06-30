@@ -2647,8 +2647,10 @@ class smp:
                         print snparams.mjd[i]
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms#scalefactor
                         print 'mysky',mysky,'myskysig',skysig
+                        temp, mysexskysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
+                        print 'mysexskysig',mysexskysig
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
-                        #raw_input('youyo')
+                        raw_input('youyo')
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
