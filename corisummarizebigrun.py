@@ -1942,7 +1942,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     axes[1].set_xlabel('Sky/Skyerr')
     axes[1].set_ylabel('RMS')
     axes[0].set_title('NO SN FLUX IN IMAGE')
-    axes[0].hist(sky[ww], bins=np.arange(-30.25, 30, .5))
+    axes[0].hist(sky[ww]//skyerr[ww], bins=np.arange(-30.25, 30, .5))
     axes[0].set_xlim(-30, 30)
     axes[1].set_xlim(-30, 30)
     # plt.legend()
