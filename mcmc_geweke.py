@@ -1105,7 +1105,7 @@ class metropolis_hastings():
             print np.abs(geweke[:, 1])
             self.gewekediag[param] = np.mean(geweke[:, 1])
 
-            if np.any(np.abs(geweke[:, 1]) > 2.):
+            if len(geweke[:, 1][np.abs(geweke[:, 1]) > 2.]) > 1.:
                 msg = "Epoch %s has not properly converged" % param
                 # if assert_:
                 #     raise AssertionError(msg)
