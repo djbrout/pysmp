@@ -2870,8 +2870,8 @@ class smp:
                                         smp_dict['skyerr'][i] = mysexskysig
 
                                         if inflateskyerrworked:
-                                            infl1 = self.inflerr(sexsky, inflateskyerr.sky, inflateskyerr.inflatebysky, filt)
-                                            infl2 = self.inflerr(mysexskysig, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
+                                            infl1 = self.inflerr(sexsky/scalefactor -10000, inflateskyerr.sky, inflateskyerr.inflatebysky, filt)
+                                            infl2 = self.inflerr(mysexskysig/scalefactor, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
                                             infltot = np.sqrt(infl1**2+infl2**2)
                                             print 'inflate skyerr!'*100
                                             print 'sky is ',sexsky,'skyerr is ',mysexskysig,'inflating by ',infltot
