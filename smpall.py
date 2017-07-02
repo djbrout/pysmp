@@ -2874,7 +2874,7 @@ class smp:
                                             infl2 = self.inflerr(mysexskysig/scalefactor, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
                                             infltot = np.sqrt(infl1**2+infl2**2)
                                             print 'inflate skyerr!'*100
-                                            print 'sky is ',sexsky,'skyerr is ',mysexskysig,'inflating by ',infltot
+                                            print 'sky is ',sexsky/scalefactor -10000,'skyerr is ',mysexskysig/scalefactor,'inflating by ',infltot
                                             mysexskysig *= infltot
 
                                         #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
