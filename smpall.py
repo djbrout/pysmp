@@ -2868,7 +2868,14 @@ class smp:
                                         if inflateskyerrworked:
                                             infl1 = self.inflerr(sexsky/scalefactor -10000, inflateskyerr.sky, inflateskyerr.inflatebysky, filt)
                                             infl2 = self.inflerr(mysexskysig/scalefactor, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
-                                            infltot = np.sqrt(infl1**2+infl2**2)
+                                            if infl1 == 1:
+                                                if infl2 == 1:
+                                                    infltot = 1.
+                                                else:
+                                                    infltot = np.sqrt((np.infl1-1.)**2 + ( infl2 - 1. )**2) + 1.
+                                            else:
+                                                infltot = np.sqrt((np.infl1 - 1.) ** 2 + (infl2 - 1.) ** 2) + 1.
+
                                             print 'inflate skyerr!'*100
                                             print 'sky is ',sexsky/scalefactor -10000,'skyerr is ',mysexskysig/scalefactor,'inflating by ',infltot
                                             mysexskysig *= infltot
