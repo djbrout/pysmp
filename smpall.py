@@ -2864,10 +2864,6 @@ class smp:
                                         print noise_stamp.shape
                                         smp_noise[i,:,:] = noise_stamp*0.+1./(mysexskysig**2) * mask
 
-                                        # smp_dict['sky'][i] = mysky
-                                        smp_dict['sky'][i] = sexsky
-                                        # smp_dict['skyerr'][i] = skysig
-                                        smp_dict['skyerr'][i] = mysexskysig
 
                                         if inflateskyerrworked:
                                             infl1 = self.inflerr(sexsky/scalefactor -10000, inflateskyerr.sky, inflateskyerr.inflatebysky, filt)
@@ -2877,7 +2873,12 @@ class smp:
                                             print 'sky is ',sexsky/scalefactor -10000,'skyerr is ',mysexskysig/scalefactor,'inflating by ',infltot
                                             mysexskysig *= infltot
 
-                                        #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
+                                        # smp_dict['sky'][i] = mysky
+                                        smp_dict['sky'][i] = sexsky
+                                        # smp_dict['skyerr'][i] = skysig
+                                        smp_dict['skyerr'][i] = mysexskysig
+
+                                            #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         #smp_noise[i,:,:] = noise_stamp*1./(sexrms)**2 * mask
@@ -3123,7 +3124,7 @@ class smp:
                                     smp_dict['imwcs'].append(np.nan)
                                     smp_dict['psfcenter'].append(np.nan)
                                     smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                                    smp_dict['skyerr'][i] = sexrms
+                                    smp_dict['skyerr'][i] = mysexskysig
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
                                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                                     smp_dict['zpt'][i] = zpt
@@ -3143,7 +3144,7 @@ class smp:
                             smp_dict['imwcs'].append(np.nan)
                             smp_dict['psfcenter'].append(np.nan)
                             smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                            smp_dict['skyerr'][i] = sexrms
+                            smp_dict['skyerr'][i] = mysexskysig
                             smp_dict['mjd'][i] = float(snparams.mjd[j])
                             smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                             smp_dict['zpt'][i] = zpt
@@ -3166,7 +3167,7 @@ class smp:
                         smp_dict['imwcs'].append(np.nan)
                         smp_dict['psfcenter'].append(np.nan)
                         smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                        smp_dict['skyerr'][i] = sexrms
+                        smp_dict['skyerr'][i] = mysexskysig
                         smp_dict['mjd'][i] = float(snparams.mjd[j])
                         smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                         smp_dict['zpt'][i] = zpt
@@ -3188,7 +3189,7 @@ class smp:
                     smp_dict['imwcs'].append(np.nan)
                     smp_dict['psfcenter'].append(np.nan)
                     smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                    smp_dict['skyerr'][i] = sexrms
+                    smp_dict['skyerr'][i] = mysexskysig
                     smp_dict['mjd'][i] = float(snparams.mjd[j])
                     smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                     smp_dict['zpt'][i] = zpt
@@ -3209,7 +3210,7 @@ class smp:
                 smp_dict['imwcs'].append(np.nan)
                 smp_dict['psfcenter'].append(np.nan)
                 smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                smp_dict['skyerr'][i] = sexrms
+                smp_dict['skyerr'][i] = mysexskysig
                 smp_dict['mjd'][i] = float(snparams.mjd[j])
                 smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
                 smp_dict['zpt'][i] = zpt
