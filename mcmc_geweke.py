@@ -1513,7 +1513,7 @@ class metropolis_hastings():
         self.corr = corrcoef(nonzerodata,rowvar=False)
         plt.clf()
         plt.figure(figsize=(25,20))
-        pcolor(self.corr*(-1*np.identity(self.covar.shape[0])+1))
+        pcolor(self.corr*(-1*np.identity(self.corr.shape[0])+1))
         colorbar()
         yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
         xticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd,rotation='vertical')
