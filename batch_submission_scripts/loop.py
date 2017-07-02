@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,407)
+allindexes = range(0,1800)
 filts = ['g','r','i','z']
 #filts = ['g']
 #np.random.shuffle(allindexes)
@@ -20,10 +20,10 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
-            '#SBATCH --time=35:00:00\n' +
+            '#SBATCH --time=42:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spc.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spc.log\n' +
-            '#SBATCH --job-name=spc_'+filt+'_' + str(i) + '\n' +
+            '#SBATCH --job-name=sm_'+filt+'_' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -39,8 +39,8 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
-            'python smpshift.py --index=' + str(i) + ' -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/sim114 --snfilelist=data/s2lightcurves.txt --usefake '+
+            'python smpall.py --index=' + str(i) + ' -f ' + filt +
+            ' -o /project/projectdirs/des/djbrout/simv2 --snfilelist=data/s2lightcurves.txt --usefake '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
 
