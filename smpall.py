@@ -48,6 +48,13 @@ import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
+
+inflateskyerrworked = False
+try:
+    import inflateskyerr
+    inflateskyerrworked = True
+except:
+    pass
 from lmfit import Minimizer, Parameters
 
 import scipy.optimize as opti
@@ -2828,6 +2835,8 @@ class smp:
                                     #    print iiii
                                     #print 1/(skyerrsn*scalefactor)**2
 
+
+
                                     if self.snparams.survey == 'PS1':
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp == 0.] = 0
@@ -2840,6 +2849,9 @@ class smp:
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
                                         dt.save_fits_image(image_stamp,'im.fits',go=True)
 
+                                        smp_dict['sky'][i] = skyysn
+                                        smp_dict['skyerr'][i] = self.snparams.skysig[j] * scalefactor
+
                                         print skysn,skyerrsn
                                         #print np.max(smp_noise[i,:,:].ravel())
                                         #raw_input()
@@ -2851,6 +2863,20 @@ class smp:
                                         print smp_noise.shape
                                         print noise_stamp.shape
                                         smp_noise[i,:,:] = noise_stamp*0.+1./(mysexskysig**2) * mask
+
+                                        # smp_dict['sky'][i] = mysky
+                                        smp_dict['sky'][i] = sexsky
+                                        # smp_dict['skyerr'][i] = skysig
+                                        smp_dict['skyerr'][i] = mysexskysig
+
+                                        if inflateskyerrworked:
+                                            infl1 = self.inflerr(sexsky, inflateskyerr.sky, inflateskyerr.inflatebysky, filt)
+                                            infl2 = self.inflerr(mysexskysig, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
+                                            infltot = np.sqrt(infl1**2+infl2**2)
+                                            print 'inflate skyerr!'*100.
+                                            print 'sky is ',sexsky,'skyerr is ',mysexskysig,'inflating by ',infltot
+                                            mysexskysig *= infltot
+
                                         #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
                                         #smp_noise[i,:,:] = noise_stamp*1./(skyerrsn)**2 * mask
@@ -2908,24 +2934,6 @@ class smp:
                                     #     print 'mysky',mysky
                                     #     #raw_input()
 
-                                    if self.snparams.survey == 'PS1':
-                                        #print self.snparams.skysig[j]*scalefactor,skysig
-                                        #raw_input()
-                                        smp_dict['sky'][i] = skyysn
-                                        smp_dict['skyerr'][i] = self.snparams.skysig[j]*scalefactor
-
-                                        #smp_dict['skyerr'][i] = skysig
-                                        #print skysig,skyerrsn,sexrms
-                                        #print skyysn,skysn,sexsky
-                                        #print 'sky'*1000
-                                        #raw_input('sig comparo')
-                                    else:
-
-                                        #smp_dict['sky'][i] = mysky
-                                        smp_dict['sky'][i] = sexsky
-                                        #smp_dict['skyerr'][i] = skysig
-                                        smp_dict['skyerr'][i] = mysexskysig
-                                        #sexrms
 
                                     #print sexsky,sexrms,np.mean(image_stamp.ravel()),np.std(image_stamp.ravel())
                                     #raw_input('sss')
@@ -4186,6 +4194,21 @@ class smp:
             os.system('touch '+os.path.join(self.isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
         #sys.exit()
         return
+
+    def inflerr(self, value, x, y, band):
+        index = 0
+        if band == 'g':
+            index = 0
+        elif band == 'r':
+            index = 1
+        elif band == 'i':
+            index = 2
+        elif band == 'z':
+            index = 3
+        scaling = 1.
+        np.interp(value,x[index],y[index])
+
+        return scaling
 
     def closest_node(self,ra,dec):
         tra = self.bigcatalogras*0. + ra
