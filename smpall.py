@@ -2873,7 +2873,7 @@ class smp:
                                             infl1 = self.inflerr(sexsky, inflateskyerr.sky, inflateskyerr.inflatebysky, filt)
                                             infl2 = self.inflerr(mysexskysig, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
                                             infltot = np.sqrt(infl1**2+infl2**2)
-                                            print 'inflate skyerr!'*100.
+                                            print 'inflate skyerr!'*100
                                             print 'sky is ',sexsky,'skyerr is ',mysexskysig,'inflating by ',infltot
                                             mysexskysig *= infltot
 
