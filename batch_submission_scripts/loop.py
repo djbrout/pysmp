@@ -5,7 +5,7 @@ import time
 
 allindexes = range(0,30)
 filts = ['g','r','i','z']
-filts = ['g','z']
+#filts = ['g','z']
 #np.random.shuffle(allindexes)
 
 for i in allindexes:
