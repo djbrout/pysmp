@@ -535,6 +535,7 @@ class smp:
                     'psf_centerx':np.zeros(snparams.nvalid),
                     'psf_centery':np.zeros(snparams.nvalid),
                     'expnum':np.zeros(snparams.nvalid),
+                    'skyerrinflation':np.ones(snparams.nvalid),
 
                     }
         smp_scale = np.zeros(snparams.nvalid)
@@ -2882,6 +2883,7 @@ class smp:
                                             print 'inflate skyerr!'*100
                                             print 'sky is ',sexsky/scalefactor -10000,'skyerr is ',mysexskysig/scalefactor,'inflating by ',infltot
                                             mysexskysig *= infltot
+                                            smp_dict['skyerrinflation'][i] = infltot
 
                                         # smp_dict['sky'][i] = mysky
                                         smp_dict['sky'][i] = sexsky
@@ -3140,10 +3142,10 @@ class smp:
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
                                     smp_dict['expnum'][i] = self.expnum
-                                    smp_dict['image_filename'][i] = imfile
+                                    smp_dict['image_filename'][i] = longimfile
                                     smp_dict['zpt_file'][i] = 'na'
-                                    smp_dict['psf_filename'][i] = psffile
-                                    smp_dict['weight_filename'][i] = weightsfile
+                                    smp_dict['psf_filename'][i] = longpsffile
+                                    smp_dict['weight_filename'][i] = 'na'
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
@@ -3160,10 +3162,10 @@ class smp:
                             smp_dict['zpt'][i] = zpt
                             smp_dict['zpterr'][i] = zpterr
                             smp_dict['expnum'][i] = self.expnum
-                            smp_dict['image_filename'][i] = imfile
+                            smp_dict['image_filename'][i] = longimfile
                             smp_dict['zpt_file'][i] = 'na'
-                            smp_dict['psf_filename'][i] = psffile
-                            smp_dict['weight_filename'][i] = weightsfile
+                            smp_dict['psf_filename'][i] = longpsffile
+                            smp_dict['weight_filename'][i] = 'na'
 
                             smp_dict['id_obs'][i] = snparams.id_obs[j]
                             smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3183,10 +3185,10 @@ class smp:
                         smp_dict['zpt'][i] = zpt
                         smp_dict['zpterr'][i] = zpterr
                         smp_dict['expnum'][i] = self.expnum
-                        smp_dict['image_filename'][i] = imfile
+                        smp_dict['image_filename'][i] = longimfile
                         smp_dict['zpt_file'][i] = 'na'
-                        smp_dict['psf_filename'][i] = psffile
-                        smp_dict['weight_filename'][i] = weightsfile
+                        smp_dict['psf_filename'][i] = longpsffile
+                        smp_dict['weight_filename'][i] = 'na'
 
                         smp_dict['id_obs'][i] = snparams.id_obs[j]
                         smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3205,10 +3207,10 @@ class smp:
                     smp_dict['zpt'][i] = zpt
                     smp_dict['zpterr'][i] = zpterr
                     smp_dict['expnum'][i] = self.expnum
-                    smp_dict['image_filename'][i] = imfile
+                    smp_dict['image_filename'][i] = longimfile
                     smp_dict['zpt_file'][i] = 'na'
-                    smp_dict['psf_filename'][i] = psffile
-                    smp_dict['weight_filename'][i] = weightsfile
+                    smp_dict['psf_filename'][i] = longpsffile
+                    smp_dict['weight_filename'][i] = 'na'
 
                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3228,8 +3230,8 @@ class smp:
                 smp_dict['expnum'][i] = self.expnum
                 smp_dict['image_filename'][i] = imfile
                 smp_dict['zpt_file'][i] = 'na'
-                smp_dict['psf_filename'][i] = psffile
-                smp_dict['weight_filename'][i] = weightsfile
+                smp_dict['psf_filename'][i] = longpsffile
+                smp_dict['weight_filename'][i] = 'na'
 
                 smp_dict['id_obs'][i] = snparams.id_obs[j]
                 smp_dict['id_coadd'][i] = snparams.id_coadd[j]
@@ -3926,7 +3928,7 @@ class smp:
                                  galmodel_nphistory=galmodel_nphistory, sims=sims, data=smp_im,
                                  xhistory=xhistory,yhistory=yhistory,stamps=stamps,chisqs=chisqs,weights=smp_noise,
                                  flags=smp_dict['flag'], sky=smp_dict['sky'], mjd=smp_dict['mjd'], skyerr=smp_dict['skyerr'],
-                                 covar=covar,corr=corr,
+                                 covar=covar,corr=corr,skyerrinflation = smp_dict['skyerrinflation'],
                                  accepted_history=accepted_history, chisqhist=chisqhist,gewekediag=gewekediag)
 
         #self.dogalsimfit = True
@@ -4174,20 +4176,20 @@ class smp:
         fout = open(tmp, 'w')
         print >> fout, '# MJD DPMJD ID_OBS ID_COADD BAND ZPT ZPTERR FLUX FLUXERR FAKEMAG FAKEZPT DIFFIM_FLUX DIFFIM_FLUXERR ' \
                        'XPOS YPOS XOFF YOFF RA DEC CHI2 NDOF ' \
-                       'SMP_FLAG MJD_FLAG SKY SKYERR RMSADDIN GEWKEDIAG ' \
+                       'SMP_FLAG MJD_FLAG SKY SKYERR SKYERRINFLATION RMSADDIN GEWKEDIAG ' \
                        'IMAGE_FILE PSF_FILE WEIGHT_FILE ZPTFILE FITGALMODEL_STAMP ' \
                        'IMAGE_STAMP PSF_STAMP WEIGHT_STAMP SIM_STAMP CHISQ_STAMP'
         for i in range(len(smp_dict['snx'])):
             print >> fout, '%.5f %.5f %i %i %s %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %.5f %s %i %i %.5f ' \
-                           '%.5f %.5f %.5f %s %s %s %s %s %s %s %s %s %s' % (
+                           '%.5f %.5f %.5f %.5f %s %s %s %s %s %s %s %s %s %s' % (
                                 smp_dict['mjd'][i],float(smp_dict['mjd'][i])-snparams.peakmjd, smp_dict['id_obs'][i],smp_dict['id_coadd'][i], self.filt,
                                 smp_dict['zpt'][i], smp_dict['zpterr'][i],
                                 modelvec[i], modelvec_uncertainty[i], smp_dict['fakemag'][i], smp_dict['fakezpt'][i],
                                 smp_dict['diffim_flux'][i],smp_dict['diffim_fluxerr'][i],
                                 smp_dict['snx'][i], smp_dict['sny'][i],xoff,yoff,
                                 smp_dict['snra'][i], smp_dict['sndec'][i],
-                                chisqs[i], -999, smp_dict['flag'][i],smp_dict['mjd_flag'][i],smp_dict['descriptiveflag'][i],
-                                smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['rmsaddin'][i],gewekediag[i],
+                                chisqs[i], -999, smp_dict['flag'][i], smp_dict['mjd_flag'][i],smp_dict['descriptiveflag'][i],
+                                smp_dict['sky'][i], smp_dict['skyerr'][i], smp_dict['skyerrinflation'][i],smp_dict['rmsaddin'][i],gewekediag[i],
                                 smp_dict['image_filename'][i], smp_dict['psf_filename'][i],
                                 smp_dict['weight_filename'][i], smp_dict['zpt_file'][i],
                                 galmodel_stampf[i],
