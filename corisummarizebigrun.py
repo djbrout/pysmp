@@ -1913,11 +1913,19 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png')
     print 'saved', outdir + '/' + deep_or_shallow +  '_'+filter+'_skycorr.png'
 
-    ww = abs(sky)<50.
-    print 'percentage loss from sky cut of 50',float(len(sky)-len(sky[ww]))/len(sky)
-    ww = (abs(sky)<50.)
-
-    print 'percentage loss from sky cut of 50 in good conditions',float(len(sky)-len(sky[ww]))/len(sky)
+    ww1 = (abs(sky)<50.) & (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+    ww2 = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+         & (fluxerr > 0.) & (np.isfinite(flux)) & \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
+         & (chisqarr < 1.2)
+    print 'percentage loss from sky cut of 50',float(len(sky[ww2])-len(sky[ww1]))/len(sky[ww2])
+    raw_input()
+    # ww = (abs(sky)<50.)
+    #
+    # print 'percentage loss from sky cut of 50 in good conditions',float(len(sky)-len(sky[ww]))/len(sky)
 
 
 
