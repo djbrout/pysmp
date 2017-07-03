@@ -1522,7 +1522,7 @@ class metropolis_hastings():
         # mask some 'bad' data, in your case you would have: data == 0
         self.corr = np.ma.masked_where(abs(self.corr)-1. < 0.00001, self.corr)
 
-        cmap = plt.cm.OrRd
+        cmap = plt.cm
         cmap.set_bad(color='black')
 
         pcolor(self.corr,vmin=-.4, vmax=.4)
@@ -1537,7 +1537,7 @@ class metropolis_hastings():
 
         # plt.clf()
         # plt.figure(figsize=(25,20))
-        # self.covar = np.cov(nonzerodata,rowvar=False)
+        self.covar = np.cov(nonzerodata,rowvar=False)
         # pcolor(self.covar*(-1*np.identity(self.covar.shape[0])+1))
         # colorbar()
         # yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
