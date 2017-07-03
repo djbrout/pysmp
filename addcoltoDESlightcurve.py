@@ -297,15 +297,15 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 if __name__ == "__main__":
     print 'started'
 
-    resultsdir = '/project/projectdirs/des/djbrout/spec_v7/'
-    resultsdir = '/project/projectdirs/des/djbrout/allsim/'
+    resultsdir = '/project/projectdirs/des/djbrout/spec_v8/'
+    #resultsdir = '/project/projectdirs/des/djbrout/allsim/'
     fakeheader = False
     #if isfake:
     lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/all/'
     #else:
     #    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
-    savelcdir = resultsdir+'/SMP_SIM_v1'
+    savelcdir = resultsdir+'/SMP_SIM_v1.1'
     fakes = False
     faketrueflux = False
 
