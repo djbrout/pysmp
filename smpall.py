@@ -3807,7 +3807,7 @@ class smp:
                 st = time.time()
 
                 passflags = copy(smp_dict['flag'])
-                galstd = galstd * 0 + .9
+                galstd = galstd * 0 + 1.1
                 numiter = self.params.sn_plus_galmodel_steps
                 shiftstd = self.params.sn_shift_std
                 burnin = .4
@@ -3822,10 +3822,10 @@ class smp:
 
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
-                    numiter = 50000
+                    numiter = 100000
                     shiftstd = 0.
                     galstd = galstd * 0 + 2.
-                    burnin = .8
+                    burnin = .7
                 #print 'smp_dict[flag]',smp_dict['flag']
                 print 'passflags',passflags
                 #print 'dontfitflags',dontfitflags
