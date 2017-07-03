@@ -453,7 +453,7 @@ if __name__ == "__main__":
             #    continue
             savelcfile = savelcdir+'/'+sn+'.dat'
             if not os.path.exists(smpfile):
-                print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+                print 'SMP RESULTS DO NOT EXIST FORR ',smpfile
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
             #print lcfile
