@@ -1520,7 +1520,7 @@ class metropolis_hastings():
 
 
         # mask some 'bad' data, in your case you would have: data == 0
-        self.corr = np.ma.masked_where(abs(self.corr)-1. < 0.00001, self.corr)
+        #self.corr = np.ma.masked_where(abs(self.corr)-1. < 0.00001, self.corr)
 
         #cmap = plt.cm
         #cmap.set_bad(color='black')
