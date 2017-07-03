@@ -1100,12 +1100,12 @@ class metropolis_hastings():
                 self.gewekediag[param] = -999.
                 continue
             #print param, self.modelvec_nphistory[:,param]
-            gw = pymc.geweke(self.modelvec_nphistory[:,param],intervals=20,first=.1,last=.5)
+            gw = pymc.geweke(self.modelvec_nphistory[:,param],intervals=2,first=.1,last=.5)
             geweke = np.array(gw)
             print np.abs(geweke[:, 1])
             self.gewekediag[param] = np.mean(np.abs(geweke[:, 1]))
 
-            if len(geweke[:, 1][np.abs(geweke[:, 1]) > 2.]) > 1.:
+            if len(geweke[:, 1][np.abs(geweke[:, 1]) > 2.]) > 0.:
                 msg = "Epoch %s has not properly converged" % param
                 # if assert_:
                 #     raise AssertionError(msg)
