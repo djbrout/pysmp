@@ -2870,10 +2870,13 @@ class smp:
                                             infl2 = self.inflerr(mysexskysig/scalefactor, inflateskyerr.skyerr, inflateskyerr.inflatebyskyerr, filt)
                                             if infl1 == 1:
                                                 if infl2 == 1:
+                                                    print 'here1'
                                                     infltot = 1.
                                                 else:
+                                                    print 'here2'
                                                     infltot = np.sqrt((infl1-1.)**2 + ( infl2 - 1. )**2) + 1.
                                             else:
+                                                print 'here3'
                                                 infltot = np.sqrt((infl1 - 1.) ** 2 + (infl2 - 1.) ** 2) + 1.
 
                                             print 'inflate skyerr!'*100
