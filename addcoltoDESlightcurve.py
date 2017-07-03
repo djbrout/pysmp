@@ -383,7 +383,7 @@ if __name__ == "__main__":
         sne = sne
     else:
         sne = [sne[index]]
-
+    print tsne
 
     if fakes:
         import pandas as pd
