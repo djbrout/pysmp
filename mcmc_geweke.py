@@ -156,6 +156,7 @@ class metropolis_hastings():
                  ,nightlyoffx = None
                  ,nightlyoffy = None
                  ,sstime = None
+                 ,stdoutfile = None
                 ):
         '''
         if model is None:
@@ -269,6 +270,9 @@ class metropolis_hastings():
         self.sstime = sstime
         self.gewekediag = np.zeros_like(self.modelstd)+999.
 
+
+        if not stdoutfile is None:
+            sys.stdout = open(stdoutfile, 'w',buffering=1)
 
         print 'sigmazpt',self.sigmazpt.shape
 

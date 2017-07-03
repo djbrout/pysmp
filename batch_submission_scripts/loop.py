@@ -40,7 +40,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             'python smpall.py --index=' + str(i) + ' -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/simv2 --snfilelist=data/s2lightcurves.txt --usefake '+
+            ' -o /project/projectdirs/des/djbrout/simv2 --snfilelist=data/s2lightcurves.txt --usefake --nozpt '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
 

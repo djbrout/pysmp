@@ -3838,6 +3838,9 @@ class smp:
                 import gc
                 collected = gc.collect()
 
+                stdoutfile = os.path.join(self.lcfilepath,
+                                          snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
+
                 import mcmc_geweke as mcmc3
                 aaa = mcmc3.metropolis_hastings(
                         galmodel = galmodel
@@ -3900,6 +3903,7 @@ class smp:
                         , nightlyoffx = smp_dict['xoff']
                         , nightlyoffy = smp_dict['yoff']
                         , sstime = sstime
+                        , stdoutfile = stdoutfile
 
                         )
                 modelveco = copy(modelvec)
