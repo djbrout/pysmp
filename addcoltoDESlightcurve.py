@@ -484,6 +484,7 @@ if __name__ == "__main__":
         #print band
         #raw_input()
         print 'lcfile',lcfile
+        print flux
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
