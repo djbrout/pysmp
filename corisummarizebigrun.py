@@ -2013,8 +2013,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.ylabel('RMS')
     plt.title('NO SN FLUX IN IMAGE')
     # plt.legend()
-    plt.savefig(outdir + '/' + deep_or_shallow + '_'+filt+'_pskyerrcorr.png')
-    print 'saved', outdir + '/' + deep_or_shallow + '_'+filt+'_pskyerrcorr.png'
+    plt.savefig(outdir + '/' + deep_or_shallow + '_'+filter+'_pskyerrcorr.png')
+    print 'saved', outdir + '/' + deep_or_shallow + '_'+filter+'_pskyerrcorr.png'
 
 
 
