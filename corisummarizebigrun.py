@@ -1922,7 +1922,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
     print 'percentage loss from sky cut of 50',float(len(sky[ww2])-len(sky[ww1]))/len(sky[ww2])
-    raw_input()
+    #raw_input()
     # ww = (abs(sky)<50.)
     #
     # print 'percentage loss from sky cut of 50 in good conditions',float(len(sky)-len(sky[ww]))/len(sky)
@@ -2011,7 +2011,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
-    ax, ayrms = dt.binrms((skyerr/sky)[ww], (flux / fluxerr)[ww], np.arange(0.,10.,.1), .25)
+    ax, ayrms = dt.binrms((skyerr/sky)[ww], (flux / fluxerr)[ww], np.arange(-10.,10.,.1), .25)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
     axes[1].plot(ax, ax * 0 + 1., linestyle='--', color='black', alpha=.8)
@@ -2033,9 +2033,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #axes[1].axvline(-50)
     #axes[1].axvline(50)
     axes[0].set_title('NO SN FLUX IN IMAGE')
-    axes[0].hist(sky[ww], bins=np.arange(0., 10., .1))
-    axes[0].set_xlim(0, 10.)
-    axes[1].set_xlim(0., 10.)
+    axes[0].hist(sky[ww], bins=np.arange(-10., 10., .1))
+    axes[0].set_xlim(-10, 10.)
+    axes[1].set_xlim(-10., 10.)
     # plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow +  '_'+filter+'_pskycorr.png')
     print 'saved',outdir + '/' + deep_or_shallow +  '_'+filter+'_pskycorr.png'
