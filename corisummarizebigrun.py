@@ -1922,6 +1922,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
          & (chisqarr < 1.2)
     print 'percentage loss from sky cut of 50',float(len(sky[ww2])-len(sky[ww1]))/len(sky[ww2])
+    print len(sky[ww2])
+    print len(sky[ww1])
     #raw_input()
     # ww = (abs(sky)<50.)
     #
