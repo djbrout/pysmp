@@ -2872,9 +2872,9 @@ class smp:
                                                 if infl2 == 1:
                                                     infltot = 1.
                                                 else:
-                                                    infltot = np.sqrt((np.infl1-1.)**2 + ( infl2 - 1. )**2) + 1.
+                                                    infltot = np.sqrt((infl1-1.)**2 + ( infl2 - 1. )**2) + 1.
                                             else:
-                                                infltot = np.sqrt((np.infl1 - 1.) ** 2 + (infl2 - 1.) ** 2) + 1.
+                                                infltot = np.sqrt((infl1 - 1.) ** 2 + (infl2 - 1.) ** 2) + 1.
 
                                             print 'inflate skyerr!'*100
                                             print 'sky is ',sexsky/scalefactor -10000,'skyerr is ',mysexskysig/scalefactor,'inflating by ',infltot
