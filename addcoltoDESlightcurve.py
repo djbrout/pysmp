@@ -374,6 +374,7 @@ if __name__ == "__main__":
     tsne = []
     for sn in sne:
         if '.smp' in sn:
+            print 'here ',sn
             tsne.append('_'.join(sn.split('_')[:-1]))
     sne = np.array(tsne,dtype='str')
     sne = np.unique(sne)
