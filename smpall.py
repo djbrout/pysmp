@@ -4221,7 +4221,8 @@ class smp:
         elif band == 'z':
             index = 3
         scaling = 1.
-        np.interp(value,x[index],y[index])
+
+        scaling = np.interp(value,x[index],y[index])
 
         return scaling
 
