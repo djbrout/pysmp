@@ -283,6 +283,7 @@ def readcol(filename,headline=1,startline=2,delim=' '):
         if linenum >= startline - 1:
             index = 0
             if len(cols) != numcols:
+                print 'passinge',len(cols),numcols
                 pass
                  #print 'WARNING: Could not read line ' + str(linenum + 1) + ' of ' + filename
             else:
