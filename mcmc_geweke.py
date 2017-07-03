@@ -1517,7 +1517,15 @@ class metropolis_hastings():
         self.corr = corrcoef(nonzerodata,rowvar=False)
         plt.clf()
         plt.figure(figsize=(25,20))
-        pcolor(self.corr*(-1*np.identity(self.corr.shape[0])+1))
+
+
+        # mask some 'bad' data, in your case you would have: data == 0
+        self.corr = np.ma.masked_where(abs(self.corr)-1. < 0.00001, self.corr)
+
+        cmap = plt.cm.OrRd
+        cmap.set_bad(color='black')
+
+        pcolor(self.corr,vmin=-.4, vmax=.4)
         colorbar()
         yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
         xticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd,rotation='vertical')
@@ -1527,16 +1535,16 @@ class metropolis_hastings():
 
 
 
-        plt.clf()
-        plt.figure(figsize=(25,20))
-        self.covar = np.cov(nonzerodata,rowvar=False)
-        pcolor(self.covar*(-1*np.identity(self.covar.shape[0])+1))
-        colorbar()
-        yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
-        xticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd,rotation='vertical')
-
-        self.savefig(str(self.lcout) + '_covar.png')
-        print 'saved',str(self.lcout) + '_covar.png'
+        # plt.clf()
+        # plt.figure(figsize=(25,20))
+        # self.covar = np.cov(nonzerodata,rowvar=False)
+        # pcolor(self.covar*(-1*np.identity(self.covar.shape[0])+1))
+        # colorbar()
+        # yticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd)
+        # xticks(arange(0.5, float(nonzerodata.shape[1])+.5), nonzeromjd,rotation='vertical')
+        #
+        # self.savefig(str(self.lcout) + '_covar.png')
+        # print 'saved',str(self.lcout) + '_covar.png'
 
     def plotchains( self ):
         self.model_params()
