@@ -384,7 +384,7 @@ if __name__ == "__main__":
     else:
         sne = [sne[index]]
     print tsne
-
+    tsneold = tsne
     if fakes:
         import pandas as pd
 
@@ -421,6 +421,9 @@ if __name__ == "__main__":
         if not snbad:
             tsne.append(sn)
     sne = tsne
+
+
+    sne = tsneold
     a.close()
     print 'TOTAL SNE:',len(sne)
     cntr = 0
