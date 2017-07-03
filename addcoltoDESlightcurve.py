@@ -460,6 +460,8 @@ if __name__ == "__main__":
                 print 'SMP RESULTS DO NOT EXIST FORR ',smpfile
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
+            else:
+                print 'DOES EXIST',smpfile
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
             #print pkmjd
