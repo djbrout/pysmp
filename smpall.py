@@ -6346,7 +6346,10 @@ class smp:
             #plt.clf()
             #print 'scatter'
             #print len(mag_cat[goodstarcols])
-            plt.clf()
+
+
+            doplot = False
+            if doplot: plt.clf()
             #plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
 
 
@@ -6377,17 +6380,20 @@ class smp:
             print 'Fit ZPT:',md,'+-',std/np.sqrt(num)
             print 'W Fitzp:',mde,'+-',mdeerr
             print '-'*100
-            plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                         flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
-            #print 'plot'
-            #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
-            plt.axhline(0,color='black')
-            #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-30.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
-            plt.xlabel('cat mag')
-            plt.ylabel('zpt-2.5log10(flux)')
+            #doplot = False
+            if doplot:
+                plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
+                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
+                #print 'plot'
+                #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
+                plt.axhline(0,color='black')
+                #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-30.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
-            plt.legend()
+                plt.xlabel('cat mag')
+                plt.ylabel('zpt-2.5log10(flux)')
+
+                plt.legend()
             #print 'saving'
             #print mag_cat[goodstarcols].shape
             #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
@@ -6437,22 +6443,27 @@ class smp:
                 #raw_input()
                 name = imfile.split('/')[-1][:-8]
                 zptplotout = os.path.join(self.outdir,'stardata',filt, name + '_zptplot.png')
-                plt.savefig(zptplotout)
-                print 'saved',zptplotout
-                plt.clf()
+                if doplot:
+                    plt.savefig(zptplotout)
+                    print 'saved',zptplotout
+                    plt.clf()
                 ras = np.array(ras)
                 decs = np.array(decs)
                 ids = np.array(ids)
-                plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+                if doplot:
+                    plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
                 zptplotoutra = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_ra.png')
-                plt.savefig(zptplotoutra)
+                if doplot:
+                    plt.savefig(zptplotoutra)
                 #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                 #    filt) + 'band_starfit_zptplot_ra.png')
-                plt.clf()
-                plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+                if doplot:
+                    plt.clf()
+                    plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
                 zptplotoutdec = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_dec.png')
 
-                plt.savefig(zptplotoutdec)
+                if doplot:
+                    plt.savefig(zptplotoutdec)
                 #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                 #    filt) + 'band_starfit_zptplot_dec.png')
 
