@@ -76,7 +76,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'])#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'])#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -1222,7 +1222,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1240,13 +1240,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     sky = np.array(sky)
     skyerr = np.array(skyerr)
     filterarr = np.array(filterarr,dtype='str')
+    imfiles = np.array(imfiles,dtype='str')
+    fwhm = np.array(fwhm)
 
     sky = sky*10**(.4*(fitzpt-31.))-10000
     skyerr = skyerr*10**(-.4*(fitzpt-31.))
 
-    print sky[:1000]
+    #print sky[:1000]
     #print flux[:100]
-    raw_input()
+    #raw_input()
 
     #fluxerr *= 10**(.4*(fitzpt - fakezpt))
 
@@ -1913,6 +1915,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = abs(sky)<50.
     print 'percentage loss from sky cut of 50',float(len(sky)-len(sky[ww]))/len(sky)
+    ww = (abs(sky)<50.) & ()
+
+    print 'percentage loss from sky cut of 50 in good conditions',float(len(sky)-len(sky[ww]))/len(sky)
+
 
 
     plt.clf()
@@ -2017,7 +2023,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax, ay, aystd = dt.bindata(sky, fresid, np.arange(-500, 500, 50), window=100)
     plt.plot(ax, ay, linewidth=3, color='orange', label='SMP')
     plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
-    plts.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP')
 
     plt.xlabel('Sky')
     plt.xlim(-500,500)
