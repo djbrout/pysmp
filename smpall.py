@@ -3135,12 +3135,25 @@ class smp:
                                     print 'min max psf equal'*100
                                     smp_dict['imwcs'].append(np.nan)
                                     smp_dict['psfcenter'].append(np.nan)
-                                    smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                                    smp_dict['skyerr'][i] = mysexskysig
+                                    try:
+                                        smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                                    except:
+                                        smp_dict['sky'][i] = np.nan
+                                    try:
+                                        smp_dict['skyerr'][i] = mysexskysig  # smp_dict['skyerr'][i] = skysig
+                                    except:
+                                        smp_dict['skyerr'][i] = np.nan
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
-                                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                                    smp_dict['zpt'][i] = zpt
-                                    smp_dict['zpterr'][i] = zpterr
+                                    try:
+                                        smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                                    except:
+                                        smp_dict['fwhm_arcsec'][i] = np.nan
+                                    try:
+                                        smp_dict['zpt'][i] = zpt
+                                        smp_dict['zpterr'][i] = zpterr
+                                    except:
+                                        smp_dict['zpt'][i] = np.nan
+                                        smp_dict['zpterr'][i] = np.nan
                                     smp_dict['expnum'][i] = self.expnum
                                     smp_dict['image_filename'][i] = longimfile
                                     smp_dict['zpt_file'][i] = 'na'
@@ -3156,11 +3169,23 @@ class smp:
                             smp_dict['imwcs'].append(np.nan)
                             smp_dict['psfcenter'].append(np.nan)
                             smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                            smp_dict['skyerr'][i] = mysexskysig
+                            try:
+                                smp_dict['sky'][i] = sexsky
+                                smp_dict['skyerr'][i] = mysexskysig
+                            except:
+                                smp_dict['skyerr'][i] = np.nan
+                                smp_dict['sky'][i] = np.nan
                             smp_dict['mjd'][i] = float(snparams.mjd[j])
-                            smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                            smp_dict['zpt'][i] = zpt
-                            smp_dict['zpterr'][i] = zpterr
+                            try:
+                                smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                            except:
+                                smp_dict['fwhm_arcsec'][i] = np.nan
+                            try:
+                                smp_dict['zpt'][i] = zpt
+                                smp_dict['zpterr'][i] = zpterr
+                            except:
+                                smp_dict['zpt'][i] = np.nan
+                                smp_dict['zpterr'][i] = np.nan
                             smp_dict['expnum'][i] = self.expnum
                             smp_dict['image_filename'][i] = longimfile
                             smp_dict['zpt_file'][i] = 'na'
@@ -3178,12 +3203,25 @@ class smp:
 
                         smp_dict['imwcs'].append(np.nan)
                         smp_dict['psfcenter'].append(np.nan)
-                        smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                        smp_dict['skyerr'][i] = mysexskysig
+                        try:
+                            smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                        except:
+                            smp_dict['sky'][i] = np.nan
+                        try:
+                            smp_dict['skyerr'][i] = mysexskysig
+                        except:
+                            smp_dict['skyerr'][i] = np.nan
                         smp_dict['mjd'][i] = float(snparams.mjd[j])
-                        smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                        smp_dict['zpt'][i] = zpt
-                        smp_dict['zpterr'][i] = zpterr
+                        try:
+                            smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                        except:
+                            smp_dict['fwhm_arcsec'][i] = np.nan
+                        try:
+                            smp_dict['zpt'][i] = zpt
+                            smp_dict['zpterr'][i] = zpterr
+                        except:
+                            smp_dict['zpt'][i] = np.nan
+                            smp_dict['zpterr'][i] = np.nan
                         smp_dict['expnum'][i] = self.expnum
                         smp_dict['image_filename'][i] = longimfile
                         smp_dict['zpt_file'][i] = 'na'
@@ -3200,12 +3238,25 @@ class smp:
                     smp_dict['descriptiveflag'][i] = descriptiveflag
                     smp_dict['imwcs'].append(np.nan)
                     smp_dict['psfcenter'].append(np.nan)
-                    smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                    smp_dict['skyerr'][i] = mysexskysig
+                    try:
+                        smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                    except:
+                        smp_dict['sky'][i] = np.nan
+                    try:
+                        smp_dict['skyerr'][i] = mysexskysig
+                    except:
+                        smp_dict['skyerr'][i] = np.nan
                     smp_dict['mjd'][i] = float(snparams.mjd[j])
-                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                    smp_dict['zpt'][i] = zpt
-                    smp_dict['zpterr'][i] = zpterr
+                    try:
+                        smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                    except:
+                        smp_dict['fwhm_arcsec'][i] = np.nan
+                    try:
+                        smp_dict['zpt'][i] = zpt
+                        smp_dict['zpterr'][i] = zpterr
+                    except:
+                        smp_dict['zpt'][i] = np.nan
+                        smp_dict['zpterr'][i] = np.nan
                     smp_dict['expnum'][i] = self.expnum
                     smp_dict['image_filename'][i] = longimfile
                     smp_dict['zpt_file'][i] = 'na'
@@ -3221,12 +3272,25 @@ class smp:
                 smp_dict['descriptiveflag'][i] = descriptiveflag
                 smp_dict['imwcs'].append(np.nan)
                 smp_dict['psfcenter'].append(np.nan)
-                smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
-                smp_dict['skyerr'][i] = mysexskysig
+                try:
+                    smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                except:
+                    smp_dict['sky'][i] = np.nan
+                try:
+                    smp_dict['skyerr'][i] = mysexskysig
+                except:
+                    smp_dict['skyerr'][i] = np.nan
                 smp_dict['mjd'][i] = float(snparams.mjd[j])
-                smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
-                smp_dict['zpt'][i] = zpt
-                smp_dict['zpterr'][i] = zpterr
+                try:
+                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                except:
+                    smp_dict['fwhm_arcsec'][i] = np.nan
+                try:
+                    smp_dict['zpt'][i] = zpt
+                    smp_dict['zpterr'][i] = zpterr
+                except:
+                    smp_dict['zpt'][i] = np.nan
+                    smp_dict['zpterr'][i] = np.nan
                 smp_dict['expnum'][i] = self.expnum
                 smp_dict['image_filename'][i] = imfile
                 smp_dict['zpt_file'][i] = 'na'
