@@ -434,6 +434,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
         deep = 0
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
+        print data.keys()
         tra = data['RA']
         #print tra
         if len(tra) == 0:
