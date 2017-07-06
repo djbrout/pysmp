@@ -266,7 +266,7 @@ class metropolis_hastings():
 
         #self.shiftgalstd = shiftgalstd
 
-        self.maxtime = 3600.*12.
+        self.maxtime = 3600.*17.
         self.sstime = sstime
         self.gewekediag = np.zeros_like(self.modelstd)+999.
 
