@@ -461,7 +461,8 @@ if __name__ == "__main__":
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 continue
             else:
-                print 'DOES EXIST',smpfile
+                pass
+                #print 'DOES EXIST',smpfile
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
             #print pkmjd
