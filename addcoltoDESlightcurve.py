@@ -383,7 +383,7 @@ if __name__ == "__main__":
         sne = sne
     else:
         sne = [sne[index]]
-    print tsne
+    #print tsne
     tsneold = tsne
     if fakes:
         import pandas as pd
@@ -485,8 +485,8 @@ if __name__ == "__main__":
 
         #print band
         #raw_input()
-        print 'lcfile',lcfile
-        print flux
+        #print 'lcfile',lcfile
+        #print flux
         successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
