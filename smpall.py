@@ -2882,8 +2882,8 @@ class smp:
 
                                             print 'inflate skyerr!'*100
                                             print 'sky is ',sexsky/scalefactor -10000,'skyerr is ',mysexskysig/scalefactor,'inflating by ',infltot
-                                            mysexskysig *= infltot
-                                            smp_dict['skyerrinflation'][i] = infltot
+                                            #mysexskysig *= infltot
+                                            #smp_dict['skyerrinflation'][i] = infltot
 
                                         # smp_dict['sky'][i] = mysky
                                         smp_dict['sky'][i] = sexsky
@@ -2913,13 +2913,13 @@ class smp:
                                     # else:
                                     smp_im[i,:,:] = image_stamp
                                     #if float(snparams.fake_truemag[j]) < 24:
-                                    if '/pnfs/des/persistent/smp/v62/20131009_SN-S2/r_12/' in longimfile:
-                                        print xsn,ysn
-                                        print sexsky, sexsky/(10**(.4*(31.-zpt)))
-                                        print longimfile
-                                        print snparams.fake_truemag[j], zpt
-                                        save_fits_image(image_stamp,str(self.snparams.mjd[j])+'.fits')
-                                        raw_input()
+                                    # if '/pnfs/des/persistent/smp/v62/20131009_SN-S2/r_12/' in longimfile:
+                                    #     print xsn,ysn
+                                    #     print sexsky, sexsky/(10**(.4*(31.-zpt)))
+                                    #     print longimfile
+                                    #     print snparams.fake_truemag[j], zpt
+                                    #     save_fits_image(image_stamp,str(self.snparams.mjd[j])+'.fits')
+                                    #     raw_input()
                                     #save_fits_image(psf_stamp,'test/cpsf.fits')
                                     #raw_input('savedpsf')
                                     if not self.snparams.survey == 'PS1':
