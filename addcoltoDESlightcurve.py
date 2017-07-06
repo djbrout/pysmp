@@ -469,7 +469,7 @@ if __name__ == "__main__":
             inplace = False
             #if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
-            print sndata['FLUX'].shape
+            #print sndata['FLUX'].shape
             mjd.extend(sndata['MJD'])
             flux.extend(sndata['FLUX'])
             fluxerr.extend(sndata['FLUXERR'])
