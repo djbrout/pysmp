@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(200,1800)
+allindexes = range(0,1800)
 filts = ['g','r','i','z']
 #filts = ['g','z']
 #np.random.shuffle(allindexes)
@@ -40,7 +40,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             'python smpall.py --index=' + str(i) + ' --nozpt -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/simv2 --snfilelist=data/s2lightcurves.txt --usefake '+
+            ' -o /project/projectdirs/des/djbrout/simshallow2 --snfilelist=data/s2lightcurves.txt --usefake '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
 
