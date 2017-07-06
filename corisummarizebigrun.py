@@ -76,7 +76,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'])
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'])#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['fwhm'],data['imfiles'])#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -412,7 +412,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
-               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[]}
+               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[]}
     zptfiles = []
     #deep = 0
     print smpfiles
@@ -584,6 +584,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
+            bigdata['fwhm'].extend(data['FWHM'])
 
             print np.mean(data['CHI2']), bigdata['fakeid'][-10:]
 
