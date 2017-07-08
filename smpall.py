@@ -7455,10 +7455,11 @@ if __name__ == "__main__":
         snfile = open(snfilelist,'r').readlines()[int(index)].split('/')[-1].split('.')[0]
         if os.path.exists(out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'):
             print 'THIS SN ALREADY HAS A FIT --> SKIPPING\n', out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'
+            sys.exit()
         else:
             print out_dir + '/lightcurves/' + snfile + '_' + filt + '.smp','does not exist yet...'
-    print skipdone
-    raw_input()
+    #print skipdone
+    #raw_input()
 
     if bigstarcatalog is None:
         dobigstarcat = False
