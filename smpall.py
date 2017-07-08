@@ -7457,6 +7457,8 @@ if __name__ == "__main__":
             print 'THIS SN ALREADY HAS A FIT --> SKIPPING\n', out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'
         else:
             out_dir + '/lightcurves/' + snfile + '_' + filt + '.smp','does not exist yet...'
+    raw_input()
+
     if bigstarcatalog is None:
         dobigstarcat = False
 
