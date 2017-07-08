@@ -7452,7 +7452,7 @@ if __name__ == "__main__":
     #     os.system('ls -ltr')
 
     if skipdone:
-        snfile = open(snfilelist,'r').readlines()[index].split('/')[-1].split('.')[0]
+        snfile = open(snfilelist,'r').readlines()[int(index)].split('/')[-1].split('.')[0]
         if os.path.exists(out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'):
             print 'THIS SN ALREADY HAS A FIT --> SKIPPING\n', out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'
 
