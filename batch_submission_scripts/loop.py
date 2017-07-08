@@ -8,8 +8,21 @@ filts = ['g','r','i','z']
 #filts = ['g','z']
 #np.random.shuffle(allindexes)
 
+doskipping = True
+snfilelist = 'data/s2lightcurves.txt'
+outdir = '/project/projectdirs/des/djbrout/simshallow2'
+snfiles = open(snfilelist).readlines()
 for i in allindexes:
     for filt in filts:
+
+        if doskipping:
+            sn = snfiles[i]
+            if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
+                print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
+                continue
+            else:
+                print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+                continue
         print i
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
@@ -40,7 +53,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             'python smpall.py --index=' + str(i) + ' --nozpt -f ' + filt +
-            ' -o /project/projectdirs/des/djbrout/simshallow2 --snfilelist=data/s2lightcurves.txt --usefake '+
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
 
