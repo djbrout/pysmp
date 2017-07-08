@@ -53,7 +53,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             'python smpall.py --index=' + str(i) + ' --nozpt -f ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake --skipdone '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
 
