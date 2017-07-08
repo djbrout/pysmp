@@ -7132,7 +7132,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog","isdonedir=","oldformat","continue","continuedir="])
+                      "lcfilepath=","fermilog","isdonedir=","oldformat","continue","continuedir=",'skipdone'])
 
 
         #print opt
@@ -7161,7 +7161,7 @@ if __name__ == "__main__":
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
-                      "lcfilepath=","fermilog","isdonedir","oldformat","continue","continuedir="])
+                      "lcfilepath=","fermilog","isdonedir","oldformat","continue","continuedir=",'skipdone'])
 
 
         #print opt
@@ -7203,6 +7203,7 @@ if __name__ == "__main__":
     isdonedir = None
     continu = False
     continudir = None
+    skipdone = False
 
     dobigstarcat = True
 
@@ -7314,6 +7315,8 @@ if __name__ == "__main__":
             continu = True
         elif o == "--continuedir":
             continudir = a
+        elif o == "--skipdone":
+            skipdone = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7423,6 +7426,8 @@ if __name__ == "__main__":
             continu = True
         elif o == "--continuedir":
             continudir = a
+        elif o == "--skipdone":
+            skipdone = True
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7445,6 +7450,12 @@ if __name__ == "__main__":
     #     param_file = param_file.split('/')[-1]
     #     print 'paramfile',param_file
     #     os.system('ls -ltr')
+
+    if skipdone:
+        snfile = open(snfilelist,'r').readlines()[index].split('/')[-1].split('.')[0]
+        if os.path.exists(out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'):
+            print 'THIS SN ALREADY HAS A FIT --> SKIPPING\n', out_dir+'/lightcurves/'+snfile+'_'+filt+'.smp'
+
     if bigstarcatalog is None:
         dobigstarcat = False
 

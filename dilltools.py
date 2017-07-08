@@ -367,21 +367,24 @@ class tmpwriter():
 
 
     def savez(self,filename,**kwargs):
-        tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
-        if os.path.isfile(tempfile):
-            os.remove(tempfile)
-        if os.path.isfile(filename):
-            os.remove(filename)
-        np.savez(tempfile,**kwargs)
-        if self.usedccp:
-            os.system('dccp ' + tempfile + ' ' + filename)
-        elif self.useifdh:
-            print 'ifdh cp ' + tempfile + ' ' + filename
-            os.system('ifdh rm '+filename)
-            os.system('ifdh cp ' + tempfile + ' ' + filename)
-            os.popen('rm '+tempfile)
+        if not self.useifdh:
+            np.savez(filename,**kwargs)
         else:
-            os.system('mv ' + tempfile + ' ' + filename)
+            tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.npz')
+            if os.path.isfile(tempfile):
+                os.remove(tempfile)
+            if os.path.isfile(filename):
+                os.remove(filename)
+            np.savez(tempfile,**kwargs)
+            if self.usedccp:
+                os.system('dccp ' + tempfile + ' ' + filename)
+            elif self.useifdh:
+                print 'ifdh cp ' + tempfile + ' ' + filename
+                os.system('ifdh rm '+filename)
+                os.system('ifdh cp ' + tempfile + ' ' + filename)
+                os.popen('rm '+tempfile)
+            else:
+                os.system('mv ' + tempfile + ' ' + filename)
         print 'saved',filename
 
 
