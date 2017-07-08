@@ -16,7 +16,7 @@ for i in allindexes:
     for filt in filts:
 
         if doskipping:
-            sn = snfiles[i]
+            sn = snfiles[i].split('/')[-1]
             if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
                 print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
                 continue
