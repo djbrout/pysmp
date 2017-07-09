@@ -1327,6 +1327,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     sky = sky[ww]
     skyerr = skyerr[ww]
     d = d[ww]
+    diffimd = diffimflux/diffimfluxerr
     #print d[:100]
     #raw_input()
     #dz = dz[ww]
@@ -1351,6 +1352,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     dc99 = d[(np.array(fakemag,dtype='float') > 90.) & (chisqarr > .5) & (chisqarr < 1.4)]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
+    diffimrms = np.sqrt(np.nanmean(np.square(diffimd[(abs(diffimd) < 3.) & (chisqarr < 1.4) & (np.array(fakemag,dtype='float') > 90.) ])))
+
     rms992 = np.std(dc99[abs(dc99) < 3.])
     print rms99,rms992
     #raw_input()
@@ -1366,15 +1369,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax2 = plt.subplot(gs[1])
 
     ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.) & (fluxerr >0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr))
+         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr < 1.4) & (chisqarr > .5)
 
     #ww = (flux != 0) & (fakeflux < 1.)
     #print rms99
     fig = plt.figure(figsize=(15, 10))
     plt.hist(flux[ww] / fluxerr[ww], bins=np.arange(-6.1, 6., .2), normed=True,
-             label='SMP RMS Fakemag = 99: ' + str(round(rms99, 3)),color='blue')
+             label='SMP RMS Fakemag = 99: ' + str(round(rms99, 3)),color='blue',alpha=.4)
     plt.hist(diffimflux[ww] / diffimfluxerr[ww], bins=np.arange(-6.1, 6., .2), normed=True,
-             label='DIFFIM RMS Fakemag = 99: ' + str(round(rms99, 3)),color='red')
+             label='DIFFIM RMS Fakemag = 99: ' + str(round(diffimrms, 3)),color='red',alpha=.4)
     # ax, ay, aystd = bindata(fakeflux[ww], (flux[ww] - fakeflux[ww]),
     #                        np.arange(-100, 1000, 200))
     # plt.errorbar(ax, ay, aystd, markersize=10, color='green', fmt='o', label='SMP')
@@ -3459,7 +3462,7 @@ if __name__ == "__main__":
         elif o in ['--dostars']:
             dostars = True
     print filter
-    tfield = 'SN-X3'
+    tfield = 'SN-S1'
     #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
     if filter == 'all':
         cd = []
