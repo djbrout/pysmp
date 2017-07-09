@@ -32,8 +32,8 @@ for i in allindexes:
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
-            '#SBATCH -A dessn\n' +
-            '#SBATCH --time=20:00:00\n' +
+            '#SBATCH -A des\n' +
+            '#SBATCH --time=48:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
             '#SBATCH --job-name=sm_'+filt+'_' + str(i) + '\n' +

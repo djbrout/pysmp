@@ -318,52 +318,64 @@ class tmpwriter():
         self.useifdh = useifdh
     def writefile(self,text,filename):
         tempfile = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
-        if os.path.isfile(tempfile):
-            os.remove(tempfile)
-        try:
-            if os.path.isfile(filename):
-                os.remove(filename)
-        except:
-            print 'could not remove file'
-        a = open(tempfile,'w')
-        a.write(text)
-        a.close()
-        if self.usedccp:
-            os.system('dccp ' + tempfile + ' ' + filename)
-        elif self.useifdh:
-            os.system('ifdh cp ' + tempfile + ' ' + filename)
+        if not self.useifdh:
+            a = open(filename, 'w')
+            a.write(text)
+            a.close()
         else:
-            os.system('mv ' + tempfile + ' ' + filename)
+            if os.path.isfile(tempfile):
+                os.remove(tempfile)
+            try:
+                if os.path.isfile(filename):
+                    os.remove(filename)
+            except:
+                print 'could not remove file'
+            a = open(tempfile,'w')
+            a.write(text)
+            a.close()
+            if self.usedccp:
+                os.system('dccp ' + tempfile + ' ' + filename)
+            elif self.useifdh:
+                os.system('ifdh cp ' + tempfile + ' ' + filename)
+            else:
+                os.system('mv ' + tempfile + ' ' + filename)
 
         print 'saved', filename
 
     def appendfile(self,texts,filename):
-        tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
-        if os.path.isfile(tempfile):
-            os.remove(tempfile)
 
-        if self.usedccp:
-            os.system('dccp ' + filename + ' ' + tempfile)
-        elif self.useifdh:
-            #print 'ifdh cp ' + filename + ' ' + tempfile
-            os.system('ifdh cp ' + filename + ' ' + tempfile)
+        if not self.useifdh:
+            a = open(filename, 'a')
+            for text in texts:
+                a.write(text)
+            a.close()
         else:
-            os.system('mv ' + filename + ' ' + tempfile)
+            tempfile  = os.path.join(self.tmpdir, 'tmp_' + self.tmp_index + '.txt')
+            if os.path.isfile(tempfile):
+                os.remove(tempfile)
 
-        a = open(tempfile, 'a')
-        for text in texts:
-            a.write(text)
-        a.close()
+            if self.usedccp:
+                os.system('dccp ' + filename + ' ' + tempfile)
+            elif self.useifdh:
+                #print 'ifdh cp ' + filename + ' ' + tempfile
+                os.system('ifdh cp ' + filename + ' ' + tempfile)
+            else:
+                os.system('mv ' + filename + ' ' + tempfile)
 
-        if self.usedccp:
-            os.system('dccp ' + tempfile + ' ' + filename)
-        elif self.useifdh:
-            os.system('ifdh rm ' + filename)
-            os.system('ifdh cp ' + tempfile + ' ' + filename)
-        else:
-            if os.path.isfile(filename):
-                os.remove(filename)
-            os.system('mv ' + tempfile + ' ' + filename)
+            a = open(tempfile, 'a')
+            for text in texts:
+                a.write(text)
+            a.close()
+
+            if self.usedccp:
+                os.system('dccp ' + tempfile + ' ' + filename)
+            elif self.useifdh:
+                os.system('ifdh rm ' + filename)
+                os.system('ifdh cp ' + tempfile + ' ' + filename)
+            else:
+                if os.path.isfile(filename):
+                    os.remove(filename)
+                os.system('mv ' + tempfile + ' ' + filename)
 
 
     def savez(self,filename,**kwargs):
