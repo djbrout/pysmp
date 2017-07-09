@@ -1349,10 +1349,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     dc = d[abs(d) < 3.]
 
-    dc99 = d[(np.array(fakemag,dtype='float') > 90.) & (chisqarr > .5) & (chisqarr < 1.4)]
+    dc99 = d[(np.array(fakemag,dtype='float') > 90.) & (chisqarr > .5) & (chisqarr < 1.2)]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
-    diffimrms = np.sqrt(np.nanmean(np.square(diffimd[(abs(diffimd) < 3.) & (chisqarr < 1.4) & (np.array(fakemag,dtype='float') > 90.) ])))
+    diffimrms = np.sqrt(np.nanmean(np.square(diffimd[(abs(diffimd) < 3.) & (chisqarr < 1.2) & (np.array(fakemag,dtype='float') > 90.) ])))
 
     rms992 = np.std(dc99[abs(dc99) < 3.])
     print rms99,rms992
@@ -1369,7 +1369,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax2 = plt.subplot(gs[1])
 
     ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.) & (fluxerr >0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr < 1.4) & (chisqarr > .5)
+         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr < 1.2) & (chisqarr > .5)
 
     #ww = (flux != 0) & (fakeflux < 1.)
     #print rms99
