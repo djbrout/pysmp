@@ -3,14 +3,14 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,1800)
+allindexes = range(0,410)
 filts = ['g','r','i','z']
 #filts = ['g','z']
 #np.random.shuffle(allindexes)
 
 doskipping = True
-snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/simshallow2'
+snfilelist = 'data/allspec.txt'
+outdir = '/project/projectdirs/des/djbrout/specv9'
 snfiles = open(snfilelist).readlines()
 for i in allindexes:
     for filt in filts:
