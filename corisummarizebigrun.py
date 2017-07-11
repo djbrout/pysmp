@@ -726,6 +726,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
         print ft,fa
     #raw_input('asdffff')
     fluxerr = np.asarray(fluxerr)
+    fluxerr = np.sqrt(fluxerr**2.-flux)
     fakezpt = np.asarray(fakezpt)
 
 
@@ -844,9 +845,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     d = d[ww]
     fm = np.array(fakemag,dtype='float')[ww]
     dc99 = d[fm > 90.]
-    rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
+    rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 10.])))
 
-    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 28.5) & (flux != 0.) & (abs((flux-fakeflux)/fluxerr) < 3.)
+    ww = (flux != 0.) & (fakemag != 0) & (fakemag < 28.5) & (flux != 0.) & (abs((flux-fakeflux)/fluxerr) < 10.)
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
 
