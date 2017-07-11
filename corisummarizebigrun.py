@@ -2306,7 +2306,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
         ax1.set_xlim(22, 29)
         ax1.set_ylim(-3., 3.)
-        #ax1.set_xlabel('Host Mag')
+        ax1.set_xlabel('Host Mag')
         ax1.set_ylabel('STD')
 
         # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
@@ -2335,7 +2335,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
         #ax4.set_xlim(ax1.get_xlim())
         #ax4.set_ylim(-.2, .2)
-        ax3.set_xlabel('Host Mag')
+        #ax3.set_xlabel('Host Mag')
         ax5.set_xlabel('Counts')
         ax3.set_ylabel('RMS')
         ax3.set_title(filter + ' band')
