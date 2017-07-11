@@ -493,7 +493,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                     newfakemag.append(99)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
-
+                    continue
                     #continue
                 # if fm == 99.:
                 #     print 'fakemag already is 99'
