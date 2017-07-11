@@ -530,7 +530,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                     bigdata['FakeZPT'].append(31.)
                 else:
                     nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
-                    newfakemag.append(dofakemag2[www])
+                    newfakemag.append(fm)
                     bigdata['fakeid'].append(dofakeid[www][0])
                     bigdata['FakeZPT'].append(dofakezpt[www][0])
 
