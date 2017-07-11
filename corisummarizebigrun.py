@@ -1008,7 +1008,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.axhline(0)
     plt.xlim(0, 5000)
     # plt.ylim(-.1,.1)
-    plt.ylim(-600, 600)
+    plt.ylim(-2000, 600)
     plt.xlabel('Fake Flux')
     plt.ylabel('Flux Difference ')
     plt.title(filter+' band')
