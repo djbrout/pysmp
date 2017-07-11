@@ -572,6 +572,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
             else:
                 bigdata['FakeMag'].extend(data['FAKEMAG'])
             bigdata['FitZPT'].extend(data['ZPT'])
+            print fakemag.shape
+            print data['CHI2'].shape
+            raw_input()
             #print data['ZPT'],data['FAKEZPT']
             #raw_input('aaa')
             #bigdata['FakeZPT'].extend(data['FAKEZPT'])
