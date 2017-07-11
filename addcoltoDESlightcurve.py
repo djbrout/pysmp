@@ -281,7 +281,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #raw_input()
         except:
             e = sys.exc_info()[0]
-            print e
+            #print e
             wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                 int(FAILED_SMP_FLAG)) + '\n'
 
@@ -423,7 +423,7 @@ if __name__ == "__main__":
     sne = tsne
 
 
-    sne = tsneold
+    #sne = tsneold
     a.close()
     print 'TOTAL SNE:',len(sne)
     cntr = 0
