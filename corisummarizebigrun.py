@@ -2348,7 +2348,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #ax5.set_ylim(ax4.get_ylim())
         ax2.xaxis.set_major_formatter(nullfmt)
         ax3.xaxis.set_major_formatter(nullfmt)
-        ax1.xaxis.set_major_formatter(nullfmt)
+        #ax1.xaxis.set_major_formatter(nullfmt)
         plt.subplots_adjust(wspace=0.001, hspace=0.001)
 
         #ww = fakemag > 90.
