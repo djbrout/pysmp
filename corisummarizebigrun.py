@@ -2095,7 +2095,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # plt.legend()
     plt.savefig(outdir + '/' + deep_or_shallow + 'zptvssky.png')
 
-    raw_input('press to continue')
+    #raw_input('press to continue')
 
     plt.clf()
     fig = plt.figure(figsize=(25, 20))
