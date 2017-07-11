@@ -392,7 +392,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
     dofaketflux = dofakedata['TRUEFLUXCNT'].values
     dofakeflux = dofakedata['FLUXCNT'].values
     dofakeid = dofakedata['FAKEID'].values
-    print dofakemag2
+    print dofakemag2,''
     dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
     print 'done reading dofake'
 
