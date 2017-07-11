@@ -385,7 +385,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
 
     import pandas as pd
 
-    dofakedata = pd.read_csv('data/S2_doFakeh.out', delim_whitespace=True, header=0)
+    dofakedata = pd.read_csv('data/S2_doFakeh.out', delim_whitespace=True, header=1)
     # print dofakedata
     dofakeexpnum = dofakedata['EXPNUM'].values
     dofakemag2 = dofakedata['TRUEMAG'].values
