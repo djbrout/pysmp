@@ -489,7 +489,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                     exn = imf.split('/')[-1].split('_')[1]
                     #ccd = float(imf.split('_')[7].split('+')[0])
                 except:
-                    print 'skipping'
+                    #print 'skipping'
                     newfakemag.append(99)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
@@ -572,9 +572,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
             else:
                 bigdata['FakeMag'].extend(data['FAKEMAG'])
             bigdata['FitZPT'].extend(data['ZPT'])
-            print fakemag.shape
-            print data['CHI2'].shape
-            raw_input()
+            #print fakemag.shape
+            #print data['CHI2'].shape
+            #raw_input()
             #print data['ZPT'],data['FAKEZPT']
             #raw_input('aaa')
             #bigdata['FakeZPT'].extend(data['FAKEZPT'])
