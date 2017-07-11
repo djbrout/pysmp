@@ -2304,7 +2304,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
         # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
 
-        ax1.set_xlim(18, 29)
+        ax1.set_xlim(20, 29)
         ax1.set_ylim(-3., 3.)
         ax1.set_xlabel('Host Mag')
         ax1.set_ylabel('STD')
@@ -2352,7 +2352,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         plt.subplots_adjust(wspace=0.001, hspace=0.001)
 
         #ww = fakemag > 90.
-        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(22.5, 28.5, .1), 1.5)
+        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(20., 28.5, .1), 1.5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
