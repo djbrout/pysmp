@@ -523,13 +523,13 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                 #print exn, fm
                 #print fm,dofakemag2[expn],exn
                 #raw_input()
-                if not len(dofakemag2[www]) > 0:
+                if not len(dofakemag2[www]) == 1:
                     newfakemag.append(99.)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
                 else:
                     nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
-                    newfakemag.append(nfm)
+                    newfakemag.append(dofakemag2[www])
                     bigdata['fakeid'].append(dofakeid[www][0])
                     bigdata['FakeZPT'].append(dofakezpt[www][0])
 
