@@ -478,7 +478,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
             print 'BAD FLUX'*20
             continue
 
-        skipnewfakemag = True
+        skipnewfakemag = False
         #if not skipnewfakemag:
         if True:
             newfakemag = []
@@ -494,7 +494,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
 
-                    continue
+                    #continue
                 # if fm == 99.:
                 #     print 'fakemag already is 99'
                 #     newfakemag.append(99)
