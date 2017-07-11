@@ -2261,13 +2261,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1 = plt.axes(rect_scatter)
         ax3 = plt.axes(rect_histx)
         ax2 = plt.axes(rect_histy)
-        ax4 = plt.axes(rect_scatterflux)
-        ax5 = plt.axes(rect_histyflux)
+        #ax4 = plt.axes(rect_scatterflux)
+        #ax5 = plt.axes(rect_histyflux)
 
         # no labels
         ax2.yaxis.set_major_formatter(nullfmt)
         ax3.xaxis.set_major_formatter(nullfmt)
-        ax5.yaxis.set_major_formatter(nullfmt)
+        #ax5.yaxis.set_major_formatter(nullfmt)
 
         ax2.hist(d, bins=np.arange(-10, 10, .25), normed=True, label='RMS Fakemag = 99: ' + str(round(rms99, 3)) +
                                                                      '\nRMS Fakemag < 99: ' + str(round(rmsr, 3))
@@ -2323,29 +2323,29 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                 fresid[i] = (f - ff) / max([abs(ff), 1.])
         # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
-        ax5.hist(fresid[ww], bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
+        #ax5.hist(fresid[ww], bins=np.arange(-.155, .15, .01), color='blue', orientation='horizontal')
 
-        ax4.scatter(hostmag[ww], fresid[ww], alpha=.3, color='blue')
-        ax, ay, aystd = dt.bindata(hostmag[ww], fresid[ww],
-                                   np.arange(min(hostmag), 27.5, .1), window=1.)
-        ax4.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
+        #ax4.scatter(hostmag[ww], fresid[ww], alpha=.3, color='blue')
+        #ax, ay, aystd = dt.bindata(hostmag[ww], fresid[ww],
+        #                           np.arange(min(hostmag), 27.5, .1), window=1.)
+        #ax4.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
 
-        ax4.plot(ax, ay, linewidth=3, color='orange')
-        ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
-        ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
-        ax4.set_xlim(ax1.get_xlim())
-        ax4.set_ylim(-.2, .2)
-        ax4.set_xlabel('Host Mag')
+        #ax4.plot(ax, ay, linewidth=3, color='orange')
+        #ax4.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--')
+        #ax4.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--')
+        #ax4.set_xlim(ax1.get_xlim())
+        #ax4.set_ylim(-.2, .2)
+        ax3.set_xlabel('Host Mag')
         ax5.set_xlabel('Counts')
         ax3.set_ylabel('RMS')
         ax3.set_title(filter + ' band')
 
-        ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+        #ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
 
         ax3.set_xlim(ax1.get_xlim())
         ax3.set_ylim(.9, 1.25)
         ax2.set_ylim(ax1.get_ylim())
-        ax5.set_ylim(ax4.get_ylim())
+        #ax5.set_ylim(ax4.get_ylim())
         ax2.xaxis.set_major_formatter(nullfmt)
         ax3.xaxis.set_major_formatter(nullfmt)
         ax1.xaxis.set_major_formatter(nullfmt)
