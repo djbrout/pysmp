@@ -1388,6 +1388,12 @@ class smp:
         #sys.exit()
         #orig_nozpt = copy(nozpt)
         print nozpt
+
+        if not os.path.exists(self.outdir+'/np_data'):
+            os.mkdir(self.outdir+'/np_data')
+        if not os.path.exists(self.outdir+'/np_data/'+filt):
+            os.mkdir(self.outdir+'/np_data/'+filt)
+
         #raw_input()
         startedstarcat = False
         cccc = 0
