@@ -9,8 +9,8 @@ filts = ['r']
 #np.random.shuffle(allindexes)
 
 doskipping = True
-snfilelist = 'data/allspec.txt'
-outdir = '/project/projectdirs/des/djbrout/specv9'
+snfilelist = 'data/s2lightcurves.txt'
+outdir = '/project/projectdirs/des/djbrout/simtest'
 snfiles = open(snfilelist).readlines()
 for i in allindexes:
     for filt in filts:
@@ -53,7 +53,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
             'python smpall.py --index=' + str(i) + ' -f ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake --skipdone '+
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
 
