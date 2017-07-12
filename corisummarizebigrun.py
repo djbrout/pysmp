@@ -1312,7 +1312,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #np.savez('simnosn.npz',flux=flux,fakeflux=ff,fluxerr=np.sqrt(fluxerr**2 + abs(flux)/3.8))
 
 
-    d = (flux - fakeflux) / ((fluxerr**2. )**.5)
+    d = (flux - fakeflux) / ((np.sqrt(fluxerr**2.-10**(.4*(31.-hostmag)) ))**.5)
     #print d[:100]
     #print 'nnn'
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
