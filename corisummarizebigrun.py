@@ -840,7 +840,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     # plt.savefig(outdir + '/skyerrhist.png')
 
 
-    d = (flux - fakeflux) / ((fluxerr ** 2) ** .5)
+    d = (flux - fakeflux) / (fluxerr-np.sqrt(10.**(.4*(31.-hostmag))))
     ww = (flux != 0.)
     d = d[ww]
     fm = np.array(fakemag,dtype='float')[ww]
@@ -1316,7 +1316,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #    print fluxerr[u],np.sqrt(10.**(.4*(31.-hostmag[u]))),np.sqrt(fluxerr[u]**2-10.**(.4*(31.-hostmag[u])))
     #raw_input()
 
-    d = (flux - fakeflux) / (fluxerr**2.-10.**(.4*(31.-hostmag)))
+    d = (flux - fakeflux) / (fluxerr-np.sqrt(10.**(.4*(31.-hostmag))))
     #print d[:100]
     #print 'nnn'
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
