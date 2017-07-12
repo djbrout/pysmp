@@ -80,10 +80,11 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
     except:
         pass
 
+    print 'done'*100
+
     if bigreturn:
         return float(background), float(rms), bkgrnd, bkgrndrms
     #raw_input('sextractor stop')
-    print 'done'*100
     return float(background), float(rms)
 
 #im = '/global/cscratch1/sd/dbrout/v3/20130902_SN-S2/r_21/SNp1_230168_SN-S2_tile20_r_21.fits'
