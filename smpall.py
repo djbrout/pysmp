@@ -3126,9 +3126,9 @@ class smp:
                                         if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus:
                                             smp_dict['fitflag'][i] = 0
                                     #
-                                    if i > 10:
-                                        print 'Exiting gracefully'
-                                        sys.exit()
+                                    # if i > 10:
+                                    #     print 'Exiting gracefully'
+                                    #     sys.exit()
                                     #sys.exit()
                                     # if self.fermigrid and self.worker:
                                     #     #print 'cleaning up copied files'
