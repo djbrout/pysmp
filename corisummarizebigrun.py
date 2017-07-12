@@ -402,6 +402,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
     smpfiles = []
     for f in files:
         if filter+'.smp' in f:
+            print f
             smpfiles.append(os.path.join(resultsdir, 'lightcurves', f))
 
     #print "Found " + str(len(smpfiles)) + " .smp files"
