@@ -3,9 +3,9 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,410)
+allindexes = range(0,100)
 filts = ['g','r','i','z']
-#filts = ['g','z']
+filts = ['r']
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -33,7 +33,7 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
-            '#SBATCH --time=48:00:00\n' +
+            '#SBATCH --time=20:00:00\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
             '#SBATCH --job-name=sm_'+filt+'_' + str(i) + '\n' +
@@ -52,7 +52,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
 
-            'python smpall.py --index=' + str(i) + ' --nozpt -f ' + filt +
+            'python smpall.py --index=' + str(i) + ' -f ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake --skipdone '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
 
