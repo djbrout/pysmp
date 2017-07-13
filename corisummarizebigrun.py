@@ -889,9 +889,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.clf()
     ax,ay = dt.binrms(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],np.arange(19,28, .1),.5)
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
-    ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
-                            np.arange(19,28, .5))
-    plt.plot(ax, ay, color='green', label='SMP')
+    ax, ay, aystd,n = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
+                            np.arange(19,28, .5),returnn=True)
+    plt.errorbar(ax, ay,yerr=aystd*n**.5, color='green', label='SMP')
 
 
 
