@@ -36,9 +36,9 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
-            '#SBATCH --job-name=sm_'+filt+'_' + str(i) + '\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2d.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2d.log\n' +
+            '#SBATCH --job-name=smd_'+filt+'_' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
