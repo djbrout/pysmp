@@ -1320,7 +1320,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #    print fluxerr[u],np.sqrt(10.**(.4*(31.-hostmag[u]))),np.sqrt(fluxerr[u]**2-10.**(.4*(31.-hostmag[u])))
     #raw_input()
 
-    d = (flux - fakeflux) / (fluxerr-np.sqrt(10.**(.4*(31.-hostmag))))
+    d = (flux - fakeflux) / (fluxerr)
     #print d[:100]
     #print 'nnn'
     #dz = (flux - fakeflux) / ((fluxerrz**2 )**.5)
