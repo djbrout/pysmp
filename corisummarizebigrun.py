@@ -1360,10 +1360,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     dc = d[abs(d) < 3.]
 
-    dc99 = d[(np.array(fakemag,dtype='float') > 90.) & (chisqarr > .5) & (chisqarr < 1.2)]
+    dc99 = d[(np.array(fakemag,dtype='float') > 90.) & (chisqarr > .05) & (chisqarr < 2.5)]
     rms99 = np.sqrt(np.nanmean(np.square(dc99[abs(dc99) < 3.])))
 
-    diffimrms = np.sqrt(np.nanmean(np.square(diffimd[(abs(diffimd) < 3.) & (chisqarr < 1.2) & (np.array(fakemag,dtype='float') > 90.) ])))
+    diffimrms = np.sqrt(np.nanmean(np.square(diffimd[(abs(diffimd) < 3.) & (chisqarr < 2.5) & (np.array(fakemag,dtype='float') > 90.) ])))
 
     rms992 = np.std(dc99[abs(dc99) < 3.])
     print rms99,rms992
@@ -1380,7 +1380,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax2 = plt.subplot(gs[1])
 
     ww = (flux != 0.) & (np.array(fakemag,dtype='float') > 90.) & (fluxerr >0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr < 1.2) & (chisqarr > .5)
+         (np.isfinite(fluxerr)) &(~np.isnan(flux)) &(~np.isnan(fluxerr)) & (chisqarr < 2.5) & (chisqarr > .05)
 
     #ww = (flux != 0) & (fakeflux < 1.)
     #print rms99
@@ -1414,7 +1414,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.clf()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .5) & (chisqarr < 1.7)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) & (chisqarr < 2.5)
 
     # ww = (flux != 0) & (fakeflux < 1.)
     print rms99
@@ -1435,7 +1435,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.clf()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 90.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .5) & (chisqarr < 1.4)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) & (chisqarr < 2.5)
 
     # ww = (flux != 0) & (fakeflux < 1.)
     print rms99
@@ -1462,7 +1462,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         print fmm,fffl,fafl, fffl-fafl, fffle
     #raw_input()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) & (chisqarr < 1.2) #& \
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) & (chisqarr < 2.5) #& \
          #(abs(flux - fakeflux) > 0.1)
 
     #ww = (flux != 0) & (fakeflux < 1.)
@@ -1520,8 +1520,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.xaxis.set_major_formatter(nullfmt)
     #ax5.yaxis.set_major_formatter(nullfmt)
 
-    outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .5) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
-    outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .6) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
+    outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
+    outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
 
     #ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
     #                                                            '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
@@ -1591,8 +1591,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         for filt,col in zip(filts,colors):
             ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
-                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-                 & (chisqarr < 1.2)
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+                 & (chisqarr < 2.5)
             axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
                                     np.arange(20., 26., .1),window=2.,dontrootn=True)
             ax4.plot([19, 28.7], [0, 0],color='grey')
@@ -1696,10 +1696,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # ax5.yaxis.set_major_formatter(nullfmt)
 
     outliers3 = float(
-        len(d[(abs(d) > 3.) & (chisqarr > .5) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)])) / float(
+        len(d[(abs(d) > 3.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)])) / float(
         len(d))
     outliers5 = float(
-        len(d[(abs(d) > 5.) & (chisqarr > .6) & (chisqarr < 1.5) & (np.array(fakemag, dtype='float') > 0.)])) / float(
+        len(d[(abs(d) > 5.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)])) / float(
         len(d))
 
     # ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
@@ -1860,8 +1860,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
-                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-                 & (chisqarr < 1.2)
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+                 & (chisqarr < 2.5)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux/fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
@@ -1869,8 +1869,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag > 22.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
-                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-                 & (chisqarr < 1.2)
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+                 & (chisqarr < 2.5)
     ax, ayrms = dt.binrms(fitzpt[ww], (flux / fluxerr)[ww], np.arange(28., 35., .1), 1.)
 
     axes[1].plot(ax, ayrms, color='green', label='Hostmag gt 21', linewidth=3, alpha=.8)
@@ -1899,8 +1899,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
     ax, ayrms = dt.binrms(sky[ww], (flux / fluxerr)[ww], np.arange(-1005,1000,10.), 50.)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
@@ -1932,12 +1932,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww1 = (abs(sky)<50.) & (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
     ww2 = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
     print 'percentage loss from sky cut of 50',float(len(sky[ww2])-len(sky[ww1]))/len(sky[ww2])
     print len(sky[ww2])
     print len(sky[ww1])
@@ -1955,8 +1955,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
     ax, ayrms = dt.binrms(sky[ww]/skyerr[ww], (flux / fluxerr)[ww], np.arange(-30.25,30,.5), .5)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
@@ -1990,8 +1990,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 2999999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
     ax, ayrms = dt.binrms(skyerr[ww], (flux / fluxerr)[ww], np.arange(0, 600, 20), 40.)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
@@ -2028,8 +2028,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.2)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
     ax, ayrms = dt.binrms((skyerr/sky)[ww], (flux / fluxerr)[ww], np.arange(-10.,10.,.1), .25)
 
     axes[1].plot(ax, ayrms, color='blue', label='Hostmag lt 21', linewidth=3, alpha=.8)
@@ -2301,8 +2301,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # plt.clf()
         ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
-         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .2) \
-         & (chisqarr < 1.4)
+         (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+         & (chisqarr < 2.5)
         ax1.scatter(hostmag[ww], d[ww], alpha=.3, color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1), window=1.5)
         ax1.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
