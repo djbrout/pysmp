@@ -715,6 +715,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     filterarr = np.asarray(filterarr,dtype='str')
 
     hostmag = np.asarray(hostmag)
+    print np.unique(np.sort(hostmag))[:25]
+    raw_input('hostmags')
     skyerr = np.asarray(skyerr)
     zptstd=np.asarray(zptstd)
     # print hostmag.shape
