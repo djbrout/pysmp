@@ -2809,6 +2809,11 @@ class smp:
                 if badflag:
                     print 'badflaggg'*100
 
+                try:
+                    testing = sexsky
+                except:
+                    badflag = 1
+                    sexsky = -9999999999.
 
                 if sexsky/scalefactor - 10000. > skymax:
                     badflag = 1
