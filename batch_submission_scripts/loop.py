@@ -4,7 +4,7 @@ import numpy as np
 import time
 
 allindexes = range(100,300)
-allindexes = [2,12,13,40,81,60,80,92]
+#allindexes = [2,12,13,40,81,60,80,92]
 filts = ['g','r','i','z']
 filts = ['r']
 #np.random.shuffle(allindexes)
