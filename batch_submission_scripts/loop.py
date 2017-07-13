@@ -56,7 +56,7 @@ for i in allindexes:
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smpall.py --index=' + str(i) + ' -f ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
-            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
+            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
@@ -66,6 +66,6 @@ for i in allindexes:
             '\n'
         )
         f.close()
-        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
