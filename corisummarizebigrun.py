@@ -725,8 +725,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     #print np.unique(flux)
     #raw_input('asdf#')
 
-    for ft,fa in zip(fitzpt,fakezpt):
-        print ft,fa
+    #for ft,fa in zip(fitzpt,fakezpt):
+    #    print ft,fa
     #raw_input('asdffff')
     fluxerr = np.asarray(fluxerr)
     fluxerr = np.sqrt(fluxerr**2.+flux)
@@ -745,8 +745,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     #raw_input()
     # for fl , ff in zip(fakefiles[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)],flux[(hostmag<21.4) & (fluxerr>0.) & (fakemag > 90.)]):
     #     print ff, fl
-    for fl , ff in zip(fakefiles[(fluxerr>0.) & (fakemag < 90.)],flux[(fluxerr>0.) & (fakemag < 90.)]):
-        print ff, fl
+    #for fl , ff in zip(fakefiles[(fluxerr>0.) & (fakemag < 90.)],flux[(fluxerr>0.) & (fakemag < 90.)]):
+    #    print ff, fl
     #raw_input()
     # print fakezpt
     #
@@ -862,8 +862,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     #print fakemag[ww].shape,flux[ww].shape,fakeflux[ww].shape
 
-    for x in np.unique(fakeflux):
-        print x
+    #for x in np.unique(fakeflux):
+    #    print x
     #print np.unique(fakeflux)
     #raw_input('fakeflux')
 
@@ -1457,13 +1457,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.savefig(outdir + '/efluxerrdiff.png')
 
-    for fmm,fffl,fffle,fafl in zip(fakemag[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],
-                        flux[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],
-                             fluxerr[(flux != 0.) & ((np.abs(flux - fakeflux) / fluxerr) < .1) & (
-                                 np.array(fakemag, dtype='float') < 27.) & (np.array(fakemag, dtype='float') > 0.)],
-                        fakeflux[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)]):
-
-        print fmm,fffl,fafl, fffl-fafl, fffle
+    # for fmm,fffl,fffle,fafl in zip(fakemag[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],
+    #                     flux[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)],
+    #                          fluxerr[(flux != 0.) & ((np.abs(flux - fakeflux) / fluxerr) < .1) & (
+    #                              np.array(fakemag, dtype='float') < 27.) & (np.array(fakemag, dtype='float') > 0.)],
+    #                     fakeflux[(flux != 0.) & ((np.abs(flux-fakeflux) / fluxerr) < .1) & (np.array(fakemag, dtype='float') < 27.)& (np.array(fakemag, dtype='float') > 0.)]):
+    #
+    #     print fmm,fffl,fafl, fffl-fafl, fffle
     #raw_input()
     ww = (flux != 0) & (np.array(fakemag, dtype='float') > 0.) & (np.array(fakemag, dtype='float') < 30.) & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) & (chisqarr < 2.5) #& \
