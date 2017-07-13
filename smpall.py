@@ -1937,7 +1937,7 @@ class smp:
 
             i += 1
 
-            if i > len(smp_dict['image_filename']):
+            if i >= len(smp_dict['image_filename']):
                 print i
                 raw_input('i too big')
                 continue
