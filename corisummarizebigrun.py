@@ -888,17 +888,19 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.clf()
     ax,ay = dt.binrms(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],np.arange(19,28, .1),.5)
-    #plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
-    #ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
-    #                        np.arange(19,28, .5))
+    plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],alpha=.2,color='green')
+    ax, ay, aystd = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fakeflux[ww],
+                            np.arange(19,28, .5))
     plt.plot(ax, ay, color='green', label='SMP')
 
 
 
     plt.axhline(1,linestyle='--')
     plt.xlim(18,29)
-    plt.ylim(.8,2.)
-    #plt.ylim(-.2,.2)
+    #plt.ylim(.6,1.4)
+    plt.ylim(-2.2,2.2)
+    plt.axhline(-1)
+    plt.axhline(1)
     plt.xlabel('Fake Mag',fontsize=30.)
     plt.ylabel('RMS',fontsize=30.)
     plt.title(filter+' band',fontsize=30.)
