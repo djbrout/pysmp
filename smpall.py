@@ -1936,10 +1936,16 @@ class smp:
 
 
             i += 1
-            smp_dict['image_filename'][i] = imfile
-            smp_dict['zpt_file'][i] = 'na'
-            smp_dict['psf_filename'][i] = psffile
-            smp_dict['weight_filename'][i] = weightsfile
+            try:
+                smp_dict['image_filename'][i] = imfile
+                smp_dict['zpt_file'][i] = 'na'
+                smp_dict['psf_filename'][i] = psffile
+                smp_dict['weight_filename'][i] = weightsfile
+            except:
+                smp_dict['image_filename'][i] = 'na'
+                smp_dict['zpt_file'][i] = 'na'
+                smp_dict['psf_filename'][i] = 'na'
+                smp_dict['weight_filename'][i] = 'na'
 
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
@@ -2812,7 +2818,6 @@ class smp:
                 try:
                     testing = sexsky
                 except:
-                    badflag = 1
                     sexsky = -9999999999.
 
                 if sexsky/scalefactor - 10000. > skymax:
