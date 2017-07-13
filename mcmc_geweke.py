@@ -74,6 +74,7 @@ import sys
 from scipy.fftpack import fft, ifft, fft2, ifft2
 import multiprocessing
 import time
+import os
 #import pyfftw
 from numpy import corrcoef, sum, log, arange
 from numpy.random import rand
@@ -266,7 +267,12 @@ class metropolis_hastings():
 
         #self.shiftgalstd = shiftgalstd
 
-        self.maxtime = 3600.*17.
+
+        try:
+            self.walltime = float(os.environ['WALLTIME'])
+        except:
+            self.walltime = 20.
+        self.maxtime = 3600.*(self.walltime-2.)
         self.sstime = sstime
         self.gewekediag = np.zeros_like(self.modelstd)+999.
 

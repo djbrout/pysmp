@@ -3,15 +3,16 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(100,300)
-allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
+allindexes = range(0,300)
+#allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 filts = ['r']
+walltime= '48:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
-snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/simtest'
+snfilelist = 'data/x3lightcurves.txt'
+outdir = '/project/projectdirs/des/djbrout/simtestx3'
 snfiles = open(snfilelist).readlines()
 for i in allindexes:
     for filt in filts:
@@ -34,7 +35,7 @@ for i in allindexes:
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
-            '#SBATCH --time=20:00:00\n' +
+            '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2.log\n' +
             '#SBATCH --job-name=sm_'+filt+'_' + str(i) + '\n' +
@@ -52,7 +53,7 @@ for i in allindexes:
             #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
-
+            'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smpall.py --index=' + str(i) + ' -f ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/'
@@ -65,6 +66,6 @@ for i in allindexes:
             '\n'
         )
         f.close()
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
