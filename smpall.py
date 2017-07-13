@@ -3332,7 +3332,7 @@ class smp:
         #raw_input()
         if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
             lcfi = os.path.join(self.lcfilepath,
-                                      snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.smp')
+                                      snparams.snfile.split('/')[-1].split('.')[0] + '_' + filt + '.smp')
             a = open(lcfi,'w')
             a.write('Not enough epochs without SN flux ( > 1 )')
             a.close()
