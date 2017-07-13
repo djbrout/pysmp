@@ -22,7 +22,6 @@ strg = '#!/bin/bash -l\n' +\
             '#SBATCH --partition=scavenger\n' +\
             '#SBATCH -N 230\n' +\
             '#SBATCH -C haswell\n'+\
-            '#SBATCH -A des\n' +\
             '#SBATCH --time='+walltime+'\n' +\
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/scavenger.log\n' +\
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/scavenger.log\n' +\
