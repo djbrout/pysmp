@@ -440,7 +440,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
 
 
         #print tra
-        if len(data['RA']) == 0:
+        try:
+            if len(data['RA']) == 0:
+                print 'empty'
+                continue
+        except:
             print 'empty'
             continue
         tra = data['RA']
