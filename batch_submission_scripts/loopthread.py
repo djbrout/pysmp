@@ -19,7 +19,7 @@ snfiles = open(snfilelist).readlines()
 script = '/global/cscratch1/sd/dbrout/logs/scavenger.sh'
 f = open(script, 'w')
 strg = '#!/bin/bash -l\n' +\
-            '#SBATCH --partition=scavenger\n' +\
+            '#SBATCH --partition=regular\n' +\
             '#SBATCH -N 230\n' +\
             '#SBATCH -C haswell\n'+\
             '#SBATCH --time='+walltime+'\n' +\
