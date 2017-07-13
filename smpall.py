@@ -1939,7 +1939,7 @@ class smp:
 
             if i >= len(smp_dict['image_filename']):
                 print i
-                raw_input('i too big')
+                print 'i too big'*10
                 continue
             try:
                 smp_dict['image_filename'][i] = imfile
