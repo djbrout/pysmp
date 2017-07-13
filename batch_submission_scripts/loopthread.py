@@ -62,6 +62,6 @@ for i in allindexes:
             '\n'
 f.write(strg)
 f.close()
-#output = Popen(["sbatch", script], stdout=PIPE).communicate()
-#print output[0]
+output = Popen(["sbatch", script], stdout=PIPE).communicate()
+print output[0]
         #time.sleep(1)
