@@ -5,8 +5,8 @@ import time
 
 allindexes = range(300,500)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
-filts = ['g','r','i','z']
-filts = ['r']
+filts = ['g','i','z']
+#filts = ['r']
 walltime= '20:00:00'
 #np.random.shuffle(allindexes)
 
