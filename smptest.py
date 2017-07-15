@@ -3903,7 +3903,7 @@ class smp:
                 numiter = self.params.sn_plus_galmodel_steps
                 shiftstd = self.params.sn_shift_std
                 burnin = .4
-                if passv == 0:
+                if passv == 99999:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
                     dontfitflags[smp_dict['mjd_flag'] == 0 ] = 1
                     dontfitflags[smp_dict['flag'] == 1] = 1
