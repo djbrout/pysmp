@@ -3991,8 +3991,8 @@ class smp:
                              , fileroots=smp_dict['fileroots']
                              , scalefactor=smp_dict['scalefactor']
                              , gain=smp_dict['gain']
-                             , dobkg=False
-                             , bkg=smp_bkg
+                             #, dobkg=False
+                             #, bkg=smp_bkg
                              , sigmazpt=smp_dict['zpterr']
                              , fakemag=smp_dict['fakemag']
                              , fitzpt=smp_dict['zpt']
