@@ -3990,6 +3990,7 @@ class smp:
                              , sigmazpt=smp_dict['zpterr']
                              , fakemag=smp_dict['fakemag']
                              , fitzpt=smp_dict['zpt']
+                             , fitzpterr = smp_dict['zpterr']
                              , fakezpt=smp_dict['fakezpt']
                              , datafilenames=smp_dict['image_filename']
                              , nightlyoffx=smp_dict['xoff']
@@ -4011,6 +4012,7 @@ class smp:
                              , imfilename = smp_dict['image_filename']
                              , weightfilename = smp_dict['weight_filename']
                              , zptfilename = smp_dict['zpt_file']
+                             , filt = filt
                              )
 
                     sys.exit()
