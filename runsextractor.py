@@ -40,7 +40,7 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
     print newfilename
     #dt.savefits(im, newfilename,fermigrid=fermigrid)
     dt.save_fits_image(im, newfilename,go=True)
-
+    print 'saved trimmed file'
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
             workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
@@ -58,6 +58,7 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
     log = open(path, 'r')
     background = -9
     rms = -9
+    print 'getting background'
     for line in log.readlines():
         if 'Background:' in line.split(' '):
             background = line.split('Background: ')[1].split(' ')[0]
@@ -69,6 +70,7 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
         bkgrndrms = pf.getdata(
             '/global/cscratch1/sd/dbrout/sewpy_logs/' + index + '_' + imagefilename.split('/')[-1] + '.background_rms')
 
+    print 'removing files'
     try:
         os.remove(newfilename)
         os.remove(newfilename.split('.fits')[0]+'.cat.txt')
