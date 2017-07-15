@@ -3940,7 +3940,6 @@ class smp:
 
                 if passv == 1:
                     np.savez('/global/cscratch1/sd/dbrout/npzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
-
                              galmodel=galmodel
                              , modelvec=modelvec
                              , galstd=galstd
@@ -3985,14 +3984,9 @@ class smp:
                              , psfcenter=smp_dict['psfcenter']
                              , model_errors=True
                              , survey=self.snparams.survey
-                             # , fullims = smp_dict['fullims']
-                             # , impsfs = smp_dict['impsfs']
-                             # , hpsfs = smp_dict['hpsfs']
                              , fileroots=smp_dict['fileroots']
                              , scalefactor=smp_dict['scalefactor']
                              , gain=smp_dict['gain']
-                             #, dobkg=False
-                             #, bkg=smp_bkg
                              , sigmazpt=smp_dict['zpterr']
                              , fakemag=smp_dict['fakemag']
                              , fitzpt=smp_dict['zpt']
@@ -4002,7 +3996,21 @@ class smp:
                              , nightlyoffy=smp_dict['yoff']
                              , sstime=sstime
                              , stdoutfile=stdoutfile
-
+                             , peakmjd = snparams.peakmjd
+                             , idobs = smp_dict['id_obs']
+                             , idcoadd = smp_dict['id_coadd']
+                             , diffim_flux = smp_dict['diffim_flux']
+                             , diffim_fluxerr = smp_dict['diffim_fluxerr']
+                             , ra = smp_dict['snra']
+                             , dec = smp_dict['sndec']
+                             , smpdictflag = smp_dict['flag']
+                             , mjdflag = smp_dict['mjd_flag']
+                             , descriptiveflag = smp_dict['descriptiveflag']
+                             , rmsaddin = smp_dict['rmsaddin']
+                             , gewekediag = smp_dict['rmsaddin']*0.
+                             , imfilename = smp_dict['image_filename']
+                             , weightfilename = smp_dict['weight_filename'][i]
+                             , zptfilename = smp_dict['zpt_file'][i]
                              )
 
                     sys.exit()
