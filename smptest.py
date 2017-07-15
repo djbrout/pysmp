@@ -4009,8 +4009,8 @@ class smp:
                              , rmsaddin = smp_dict['rmsaddin']
                              , gewekediag = smp_dict['rmsaddin']*0.
                              , imfilename = smp_dict['image_filename']
-                             , weightfilename = smp_dict['weight_filename'][i]
-                             , zptfilename = smp_dict['zpt_file'][i]
+                             , weightfilename = smp_dict['weight_filename']
+                             , zptfilename = smp_dict['zpt_file']
                              )
 
                     sys.exit()
