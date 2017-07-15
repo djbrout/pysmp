@@ -76,7 +76,6 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
         os.remove(newfilename.split('.fits')[0]+'.cat.txt')
         os.remove(newfilename.split('.fits')[0]+'.log.txt')
 
-
         os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
         os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
     except:
