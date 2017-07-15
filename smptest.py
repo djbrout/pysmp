@@ -3903,7 +3903,7 @@ class smp:
                 numiter = self.params.sn_plus_galmodel_steps
                 shiftstd = self.params.sn_shift_std
                 burnin = .4
-                if passv == 99999:
+                if passv == 0:
                     dontfitflags = np.zeros(len(smp_dict['sky']))
                     dontfitflags[smp_dict['mjd_flag'] == 0 ] = 1
                     dontfitflags[smp_dict['flag'] == 1] = 1
@@ -3914,7 +3914,7 @@ class smp:
 
                     dontfitflags[smp_dict['flag'] == 1] = 0
                     passflags += dontfitflags
-                    numiter = 100000
+                    numiter = 50000
                     shiftstd = 0.
                     galstd = galstd * 0 + 2.
                     burnin = .7
@@ -3938,74 +3938,74 @@ class smp:
                 stdoutfile = os.path.join(self.lcfilepath,
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
+                if passv == 1:
+                    np.savez('/global/cscratch1/sd/dbrout/npzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
 
-                np.savez('/global/cscratch1/sd/dbrout/npzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
+                             galmodel=galmodel
+                             , modelvec=modelvec
+                             , galstd=galstd
+                             , modelstd=modelstd * 2.5
+                             , data=smp_im
+                             , psfs=smp_psf
+                             , weights=smp_noise
+                             , substamp=params.substamp
+                             , Nimage=len(smp_dict['sky'])
+                             , maxiter=numiter
+                             , mask=smp_mask
+                             , sky=smp_dict['sky']
+                             , mjd=smp_dict['mjd']
+                             , gewekenum=-9999999 * (passv - 1) + 10000  # cannot be less than 100 after compression
+                             , skyerr=smp_dict['skyerr']
+                             , useskyerr=False
+                             , usesimerr=False
+                             , flags=passflags
+                             , fitflags=smp_dict['fitflag'] * 0.
+                             , psf_shift_std=shiftstd
+                             , xoff=0.
+                             , yoff=0.  # .06
+                             , shiftpsf=shiftstd > 0.
+                             , fileappend=''
+                             , stop=False
+                             , skyerr_radius=12.
+                             , outpath=outimages
+                             , compressionfactor=10
+                             , fix_gal_model=False
+                             , pixelate_model=None
+                             , burnin=burnin
+                             , lcout=os.path.join(self.lcfilepath, filename)
+                             , chainsnpz=os.path.join(npoutdir, filename + '_withSn.npz')
+                             , mjdoff=smp_dict['mjdoff']
+                             , dontsavegalaxy=True
+                             , log=self.fermilogfile
+                             , isfermigrid=self.fermigrid
+                             , isworker=self.worker
+                             , x=smp_dict['snx']
+                             , y=smp_dict['sny']
+                             , psffile=smp_dict['psf_filename']
+                             , psfcenter=smp_dict['psfcenter']
+                             , model_errors=True
+                             , survey=self.snparams.survey
+                             # , fullims = smp_dict['fullims']
+                             # , impsfs = smp_dict['impsfs']
+                             # , hpsfs = smp_dict['hpsfs']
+                             , fileroots=smp_dict['fileroots']
+                             , scalefactor=smp_dict['scalefactor']
+                             , gain=smp_dict['gain']
+                             , dobkg=False
+                             , bkg=smp_bkg
+                             , sigmazpt=smp_dict['zpterr']
+                             , fakemag=smp_dict['fakemag']
+                             , fitzpt=smp_dict['zpt']
+                             , fakezpt=smp_dict['fakezpt']
+                             , datafilenames=smp_dict['image_filename']
+                             , nightlyoffx=smp_dict['xoff']
+                             , nightlyoffy=smp_dict['yoff']
+                             , sstime=sstime
+                             , stdoutfile=stdoutfile
 
-                         galmodel=galmodel
-                         , modelvec=modelvec
-                         , galstd=galstd
-                         , modelstd=modelstd * 2.5
-                         , data=smp_im
-                         , psfs=smp_psf
-                         , weights=smp_noise
-                         , substamp=params.substamp
-                         , Nimage=len(smp_dict['sky'])
-                         , maxiter=numiter
-                         , mask=smp_mask
-                         , sky=smp_dict['sky']
-                         , mjd=smp_dict['mjd']
-                         , gewekenum=-9999999 * (passv - 1) + 10000  # cannot be less than 100 after compression
-                         , skyerr=smp_dict['skyerr']
-                         , useskyerr=False
-                         , usesimerr=False
-                         , flags=passflags
-                         , fitflags=smp_dict['fitflag'] * 0.
-                         , psf_shift_std=shiftstd
-                         , xoff=0.
-                         , yoff=0.  # .06
-                         , shiftpsf=shiftstd > 0.
-                         , fileappend=''
-                         , stop=False
-                         , skyerr_radius=12.
-                         , outpath=outimages
-                         , compressionfactor=10
-                         , fix_gal_model=False
-                         , pixelate_model=None
-                         , burnin=burnin
-                         , lcout=os.path.join(self.lcfilepath, filename)
-                         , chainsnpz=os.path.join(npoutdir, filename + '_withSn.npz')
-                         , mjdoff=smp_dict['mjdoff']
-                         , dontsavegalaxy=True
-                         , log=self.fermilogfile
-                         , isfermigrid=self.fermigrid
-                         , isworker=self.worker
-                         , x=smp_dict['snx']
-                         , y=smp_dict['sny']
-                         , psffile=smp_dict['psf_filename']
-                         , psfcenter=smp_dict['psfcenter']
-                         , model_errors=True
-                         , survey=self.snparams.survey
-                         # , fullims = smp_dict['fullims']
-                         # , impsfs = smp_dict['impsfs']
-                         # , hpsfs = smp_dict['hpsfs']
-                         , fileroots=smp_dict['fileroots']
-                         , scalefactor=smp_dict['scalefactor']
-                         , gain=smp_dict['gain']
-                         , dobkg=False
-                         , bkg=smp_bkg
-                         , sigmazpt=smp_dict['zpterr']
-                         , fakemag=smp_dict['fakemag']
-                         , fitzpt=smp_dict['zpt']
-                         , fakezpt=smp_dict['fakezpt']
-                         , datafilenames=smp_dict['image_filename']
-                         , nightlyoffx=smp_dict['xoff']
-                         , nightlyoffy=smp_dict['yoff']
-                         , sstime=sstime
-                         , stdoutfile=stdoutfile
+                             )
 
-                         )
-
-                sys.exit()
+                    sys.exit()
                 import mcmc_geweke as mcmc3
                 aaa = mcmc3.metropolis_hastings(
                         galmodel = galmodel
