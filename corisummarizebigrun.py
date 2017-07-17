@@ -3447,14 +3447,14 @@ if __name__ == "__main__":
 
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/116simdeep/'
+    resultsdir = '/project/projectdirs/des/djbrout/simtestdeep/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'shallow'
+    deep_or_shallow = 'deep'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
@@ -3489,7 +3489,7 @@ if __name__ == "__main__":
         elif o in ['--dostars']:
             dostars = True
     print filter
-    tfield = 'SN-S1'
+    tfield = 'SN-X3'
     #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
     if filter == 'all':
         cd = []
