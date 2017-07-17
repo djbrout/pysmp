@@ -650,7 +650,7 @@ class metropolis_hastings():
         self.plotcovar()
         self.savechains()
         print 'plotting stamps... this may take a minute...'
-        self.dontplotstamps = False
+        self.dontplotstamps = True
         if not self.dontplotstamps:
             self.plotstamps()
         #np.savez(self.results_npz, pixel_history = self.pixel_history
