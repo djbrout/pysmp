@@ -56,7 +56,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smpall.py --index=' + str(i) + ' -f ' + filt +
+            'python smptest.py --index=' + str(i) + ' -f ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
