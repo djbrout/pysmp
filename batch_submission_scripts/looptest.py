@@ -13,7 +13,7 @@ walltime= '02:00:00'
 doskipping = True
 snfilelist = 'data/allspec.txt'
 #snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/specdummytest2'
+outdir = '/project/projectdirs/des/djbrout/specdummytest3'
 snfiles = open(snfilelist).readlines()
 for i in allindexes:
     for filt in filts:
