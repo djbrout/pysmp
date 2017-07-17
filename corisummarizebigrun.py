@@ -385,7 +385,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
 
     import pandas as pd
 
-    dofakedata = pd.read_csv('data/S2_doFakeh.out', delim_whitespace=True, header=0)
+    dofakedata = pd.read_csv('data/X3_doFakeh.out', delim_whitespace=True, header=0)
     # print dofakedata
     dofakeexpnum = dofakedata['EXPNUM'].values
     dofakemag2 = dofakedata['TRUEMAG'].values
@@ -497,7 +497,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                     exn = imf.split('/')[-1].split('_')[1]
                     #ccd = float(imf.split('_')[7].split('+')[0])
                 except:
-                    print 'skipping'
+                    #print 'skipping'
                     newfakemag.append(99)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
@@ -532,6 +532,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                 #print fm,dofakemag2[expn],exn
                 #raw_input()
                 if not len(dofakemag2[www]) == 1:
+                    #print 'nodofake'
                     newfakemag.append(99.)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
