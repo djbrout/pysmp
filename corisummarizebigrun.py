@@ -497,7 +497,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
                     exn = imf.split('/')[-1].split('_')[1]
                     #ccd = float(imf.split('_')[7].split('+')[0])
                 except:
-                    #print 'skipping'
+                    print 'skipping'
                     newfakemag.append(99)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
