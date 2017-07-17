@@ -7,7 +7,7 @@ allindexes = range(0,410)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '00:40:00'
+walltime= '02:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
