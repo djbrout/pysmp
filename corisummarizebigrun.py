@@ -565,6 +565,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 #raw_input()
         #print data.keys()
         #raw_input()
+
         if True:
 
             bigdata['rmsaddin'].extend(data['ZPTERR'])
@@ -624,6 +625,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['ra'].extend(data['RA'])
             bigdata['dec'].extend(data['DEC'])
             bigdata['image_stamp'].extend(data['IMAGE_STAMP'])
+
+            if real:
+                fakemag = data['FLUX']*0. + 99
 
             fakeflux = 10 ** (.4 * (31. - fakemag))
 
