@@ -1583,8 +1583,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.xaxis.set_major_formatter(nullfmt)
     #ax5.yaxis.set_major_formatter(nullfmt)
 
-    outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
-    outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
+    #outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
+    #outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
 
     #ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
     #                                                            '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
