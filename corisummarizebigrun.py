@@ -1772,7 +1772,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #                                                            ,orientation='horizontal')
     # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
     #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
-
+    # asfd
     import matplotlib.mlab as mlab
     import math
     mean = 0
