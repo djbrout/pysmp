@@ -2366,6 +2366,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
          & (chisqarr < 2.5)
+
+        print 'fakemag',fakemag
+
         ax1.scatter(hostmag[ww], d[ww], alpha=.3, color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1), window=1.5)
         ax1.plot([min(hostmag), max(hostmag)], [0, 0], color='grey')
