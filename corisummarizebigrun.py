@@ -15,7 +15,7 @@ from copy import copy
 from scipy.stats import sigmaclip
 
 
-def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,isfermigrid=False):
+def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,isfermigrid=False,real=False):
 
     if isfermigrid:
         useifdh = True
@@ -36,7 +36,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
                     title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-        data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter)
+        data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter,real=real)
     else:
 
         #dostars = Trueasdf
@@ -73,10 +73,10 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
                         data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
-                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'])
+                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],real=real)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'])#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'],data['DPMJD'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -350,7 +350,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
     #os.system('rm dat.dat')
     #sys.exit()
 
-def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
+def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=False):
 
     # dofakefilt,dofakemjd,dofakemag,dofakera,dofakedec = np.loadtxt('data/grepalldofake_'+filter+'.txt',usecols=(3, 9, 10, 14, 15), unpack=True, dtype='string', skiprows=0)
     # dofakemjd = np.array(dofakemjd,dtype='float')
@@ -469,15 +469,18 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
         #print dofakeid[dofakeid == fakeid]
         #raw_input()
 
-        if not oldformat:
-            if not int(fakeid) in dofakeid:
-                print 'dddd'
-                fakemag = data['FAKEMAG']*0. + 99.
+        if not real:
+            if not oldformat:
+                if not int(fakeid) in dofakeid:
+                    print 'dddd'
+                    fakemag = data['FAKEMAG']*0. + 99.
+                else:
+                    fakemag = data['FAKEMAG']
             else:
                 fakemag = data['FAKEMAG']
         else:
-            fakemag = data['FAKEMAG']
-        print fakemag
+            pass
+        #print fakemag
         #raw_input()
         if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
             print 'bad DPMJD'*20
@@ -487,8 +490,10 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
             continue
 
         skipnewfakemag = False
+        if real:
+            skipnewfakemag = True
         #if not skipnewfakemag:
-        if True:
+        if not skipnewfakemag:
             newfakemag = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
 
@@ -561,14 +566,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
         #print data.keys()
         #raw_input()
         if True:
-            #try:
-            #print data['ID_OBS']
-            #raw_input()
-            #print len(data['FLUX']),len(data['FLUXERR']),len(data['FAKEMAG']),len(data['ZPT']),(data['FAKEZPT'])
-            #data2 = dt.readcol('./working/lightcurves/' + f.split('/')[-1])
-            #rms = np.mean(data2['RMSADDIN'][data2['RMSADDIN'] > 0.0])
-            #print data.keys()
-            #raw_input( )
+
             bigdata['rmsaddin'].extend(data['ZPTERR'])
 
             #print data.keys()
@@ -708,7 +706,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False):
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag,dtype='float')
     dpmjd = np.asarray(dpmjd,dtype='float')
@@ -723,7 +721,21 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     hostmag = np.asarray(hostmag)
     print np.unique(np.sort(hostmag))[:25]
-    raw_input('hostmags')
+    #raw_input('hostmags')
+
+    if real:
+        ww = (dpmjd > 250.) | (dpmjd < -40.)
+        flux = flux[ww]
+        fluxerr = fluxerr[ww]
+        fakemag = fakemag[ww]
+        sky = sky[ww]
+        chisq = chisq[ww]
+        fakezpt = fakezpt[ww]
+        fitzpt = fitzpt[ww]
+        hostmag = hostmag[ww]
+        dpmjd = dpmjd[ww]
+
+
     skyerr = np.asarray(skyerr)
     zptstd=np.asarray(zptstd)
     # print hostmag.shape
@@ -1245,11 +1257,12 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
     hostmag = np.asarray(hostmag)
+    dpmjd = np.asarray(dpmjd)
     fluxerr = (fluxerr**2+flux+10**(.4*(31.-hostmag)))**.5
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
@@ -1278,6 +1291,27 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     chisqarr = np.asarray(chisqarr)
+
+
+    if real:
+        ww = (dpmjd > 250.) | (dpmjd < -40.)
+        flux = flux[ww]
+        fluxerr = fluxerr[ww]
+        fakemag = fakemag[ww]
+        sky = sky[ww]
+        chisqarr = chisqarr[ww]
+        fakezpt = fakezpt[ww]
+        fitzpt = fitzpt[ww]
+        hostmag = hostmag[ww]
+        skyerr = skyerr[ww]
+        fluxerrz = fluxerrz[ww]
+        filterarr = filterarr[ww]
+        diffimlux = diffimflux[ww]
+        diffimfluxerr = diffimfluxerr[ww]
+        rmsaddin = rmsaddin[ww]
+        dpmjd = dpmjd[ww]
+
+
     #print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
     #am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
     #for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
@@ -3501,4 +3535,4 @@ if __name__ == "__main__":
 
     #print cd
     #raw_input()
-    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow)
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=True)
