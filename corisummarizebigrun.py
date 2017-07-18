@@ -733,6 +733,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     hostmag = np.asarray(hostmag)
     print np.unique(np.sort(hostmag))[:25]
+    print fakezpt
     #raw_input('hostmags')
 
     if real:
