@@ -1324,6 +1324,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         diffimfluxerr = diffimfluxerr[ww]
         rmsaddin = rmsaddin[ww]
         dpmjd = dpmjd[ww]
+        fakeflux = fakeflux[ww]
 
 
     #print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
