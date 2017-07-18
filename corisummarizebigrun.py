@@ -578,10 +578,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
-            if not skipnewfakemag:
-                bigdata['FakeMag'].extend(fakemag)
-            else:
-                bigdata['FakeMag'].extend(data['FAKEMAG'])
+            if not real:
+                if not skipnewfakemag:
+                    bigdata['FakeMag'].extend(fakemag)
+                else:
+                    bigdata['FakeMag'].extend(data['FAKEMAG'])
             bigdata['FitZPT'].extend(data['ZPT'])
             #print fakemag.shape
             #print data['CHI2'].shape
