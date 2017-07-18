@@ -385,7 +385,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
     import pandas as pd
 
-    dofakedata = pd.read_csv('data/X3_doFakeh.out', delim_whitespace=True, header=0)
+    dofakedata = pd.read_csv('data/S2_doFakeh.out', delim_whitespace=True, header=0)
     # print dofakedata
     dofakeexpnum = dofakedata['EXPNUM'].values
     dofakemag2 = dofakedata['TRUEMAG'].values
@@ -3511,7 +3511,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'spec'
+    deep_or_shallow = 'shallow'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
@@ -3546,7 +3546,7 @@ if __name__ == "__main__":
         elif o in ['--dostars']:
             dostars = True
     print filter
-    tfield = 'SN-X3'
+    tfield = 'SN-S2'
     #cd = '/global/cscratch1/sd/dbrout/v7/summary_results_'+tfield+'_'+filter+'.npz'
     if filter == 'all':
         cd = []
@@ -3557,4 +3557,4 @@ if __name__ == "__main__":
 
     #print cd
     #raw_input()
-    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=True)
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=FAlse)
