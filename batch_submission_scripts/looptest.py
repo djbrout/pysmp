@@ -24,6 +24,9 @@ for i in allindexes:
             if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
                 print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
                 continue
+            if os.path.exists='/global/cscratch1/sd/dbrout/specnpzfiles/'+sn+'_'+filt+'.mcmcinput.npz'):
+                print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
+                continue
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
