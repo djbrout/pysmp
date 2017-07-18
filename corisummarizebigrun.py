@@ -482,6 +482,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             pass
         #print fakemag
         #raw_input()
+        print data['DPMJD']
+        raw_input()
         if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
             print 'bad DPMJD'*20
             continue
