@@ -601,7 +601,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
             #bigdata['fwhm'].extend(data['FWHM'])
 
-            print data['FLUX']
+            #print data['FLUX']
             #print np.mean(data['CHI2']), bigdata['fakeid'][-10:]
 
             # #print data['IMAGE_FILE']
