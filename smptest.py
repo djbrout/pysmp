@@ -5748,7 +5748,11 @@ class smp:
         # if snparams.survey == 'DES':
         #     xstar += 1.
         #     ystar += 1.
-        thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
+        try:
+            thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
+        except:
+            print 'badzptstarshere'*100
+            return 0, 0, 0, 0, 0, 0, 0
         thisra = np.array(thisra)
         thisdec = np.array(thisdec)
         thisids = np.array(ids)
