@@ -632,6 +632,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             if real:
                 fakemag = data['FLUX']*0. + 99
+                bigdata['FakeZPT'].extend(data['Flux']*0. + 31.)
 
             fakeflux = 10 ** (.4 * (31. - fakemag))
 
