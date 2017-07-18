@@ -739,7 +739,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     #raw_input('hostmags')
 
     if real:
-        ww = (dpmjd > 250.) | (dpmjd < -40.)
+        ww = (dpmjd > 270.) | (dpmjd < -50.)
         flux = flux[ww]
         fluxerr = fluxerr[ww]
         fakemag = fakemag[ww]
@@ -1309,7 +1309,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     if real:
-        ww = (dpmjd > 250.) | (dpmjd < -40.)
+        ww = (dpmjd > 270.) | (dpmjd < -50.)
         flux = flux[ww]
         fluxerr = fluxerr[ww]
         fakemag = fakemag[ww]
