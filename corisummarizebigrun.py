@@ -633,7 +633,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             if real:
                 fakemag = data['FLUX']*0. + 99
                 bigdata['FakeZPT'].extend(data['FLUX']*0. + 31.)
-
+                bigdata['FakeMag'].extend(fakemag)
             fakeflux = 10 ** (.4 * (31. - fakemag))
 
             # www = (fakemag < 21.5) & (data['FLUX']-fakeflux < -600.) & (data['FLUX']-fakeflux > -1000.)
@@ -2361,13 +2361,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax2.legend(fontsize='xx-small', loc=(0., 1.25))
         # plt.savefig('stdresid.png')
 
+
+
         # plt.clf()
         ww = (fakemag >= 50) & (flux != 0.) & (hostmag < 299999.) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
          & (fluxerr > 0.) & (np.isfinite(flux)) & \
          (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
          & (chisqarr < 2.5)
 
-        print 'fakemag',fakemag
+        #print 'fakemag',fakemag
 
         ax1.scatter(hostmag[ww], d[ww], alpha=.3, color='blue')
         ax, ay, aystd = dt.bindata(hostmag[ww], d[ww], np.arange(min(hostmag), 27.5, .1), window=1.5)
