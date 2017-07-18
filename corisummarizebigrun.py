@@ -720,6 +720,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     dpmjd = np.asarray(dpmjd,dtype='float')
     sky = np.asarray(sky)
     fluxerr = np.asarray(fluxerr)
+    fakezpt= np.asarray(fakezpt)
+    fitzpt = np.asarray(fitzpt)
+
     chisq = np.asarray(chisq)
     imfiles = np.asarray(imfiles,dtype='str')
     ra = np.asarray(ra)
