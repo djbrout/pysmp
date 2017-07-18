@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,410)
+allindexes = range(1000,1900)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
@@ -11,9 +11,9 @@ walltime= '02:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
-snfilelist = 'data/allspec.txt'
+snfilelist = 'data/s2lightcurves.txt'
 #snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/specdummytest3'
+outdir = '/project/projectdirs/des/djbrout/simdummytest3'
 snfiles = open(snfilelist).readlines()
 for i in allindexes:
     for filt in filts:
@@ -41,8 +41,8 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec2s.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec2s.log\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2s.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2s.log\n' +
             '#SBATCH --job-name=preps_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
@@ -60,7 +60,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smptest.py --index=' + str(i) + ' -f ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' '+
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
 
