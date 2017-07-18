@@ -482,11 +482,12 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             pass
         #print fakemag
         #raw_input()
-        print data['DPMJD']
-        raw_input()
-        if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
-            print 'bad DPMJD'*20
-            continue
+        #print data['DPMJD']
+        #raw_input()
+        if not real:
+            if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
+                print 'bad DPMJD'*20
+                continue
         if np.min(data['FLUX']) < -10000:
             print 'BAD FLUX'*20
             continue
