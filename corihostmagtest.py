@@ -2216,7 +2216,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
     # start with a rectangular Figure
-    try:
+    #try:
+    if True:
         plt.figure(1, figsize=(32, 24))
 
         ax1 = plt.axes(rect_scatter)
@@ -2314,8 +2315,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         sarr = ['s10', 's20', 's30', 's40', 's50', 's60', 's70', 's80', 's90', 's100']
         parr = [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1.]
         for p, m, s in zip(parr, marr, sarr):
-            print bigdata[m].shape,fakeflux.shape
-            raw_input('mmm')
+            #print bigdata[m].shape,fakeflux.shape
+            #raw_input('mmm')
             trms = (bigdata[m] - fakeflux) / bigdata[sarr]
             ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
@@ -2338,8 +2339,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
         plt.savefig(outdir+'/hostmagstd.png')
 
-    except:
-        print 'bad hostmags'
+    #except:
+    #    print 'bad hostmags'
 
     plt.clf()
     fig = plt.figure(figsize=(25, 20))
