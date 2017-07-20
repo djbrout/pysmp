@@ -603,15 +603,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 else:
                     bigdata[m].extend(fitflx)
                     bigdata[s].extend(fitstd)
-                if p == 1:
-                    print fitflx.shape,data['FLUX'].shape
-                    if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
-                        print fitflx[1:]-data['FLUX']
-                    elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
-                        print fitflx[1:-1] - data['FLUX']
-                    else:
-                        print fitflx-data['FLUX']
-                    raw_input('fluxcheck')
+                # if p == 1:
+                #     print fitflx.shape,data['FLUX'].shape
+                #     if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
+                #         print fitflx[1:]-data['FLUX']
+                #     elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
+                #         print fitflx[1:-1] - data['FLUX']
+                #     else:
+                #         print fitflx-data['FLUX']
+                #     #raw_input('fluxcheck')
             if not real:
                 if not skipnewfakemag:
                     bigdata['FakeMag'].extend(fakemag)
