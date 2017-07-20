@@ -595,10 +595,10 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 fitflx = np.median(mhist[burnin:stoppos,:],axis=0)
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
-                    bigdata[m].extend(fitflx[1:])
+                    bigdata[m].extend(fitflx*0.-9999)
                     bigdata[s].extend(fitstd[1:])
                 elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
-                    bigdata[m].extend(fitflx[1:-1])
+                    bigdata[m].extend(fitflx[1:-1]*0.-9999)
                     bigdata[s].extend(fitstd[1:-1])
                 else:
                     bigdata[m].extend(fitflx)
@@ -2336,7 +2336,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #raw_input('mmm')
 
             trms = (bigdata[m] - fakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
-            ww = (fakemag < 3000.) & (chisqarr < 1.2) & (chisqarr > .05) & (abs(trms) < 3.)
+            ww = (fakemag < 3000.) & (chisqarr < 1.2) & (chisqarr > .05) & (bigdata[m] != -9999 )# & (abs(trms) < 5.)
             ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
 
