@@ -594,11 +594,18 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 burnin = int(round(stoppos*.4))
                 fitflx = np.mean(mhist[burnin:stoppos,:],axis=0)
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
-                bigdata[m].extend(fitflx)
-                bigdata[s].extend(fitstd)
+                if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
+                    bigdata[m].extend(fitflx[1:])
+                    bigdata[s].extend(fitstd[1:])
+                else:
+                    bigdata[m].extend(fitflx)
+                    bigdata[s].extend(fitstd)
                 if p == 1:
                     print fitflx.shape,data['FLUX'].shape
-                    print fitflx[1:]-data['FLUX']
+                    if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
+                        print fitflx[1:]-data['FLUX']
+                    else:
+                        print fitflx-data['FLUX']
                     raw_input('fluxcheck')
             if not real:
                 if not skipnewfakemag:
