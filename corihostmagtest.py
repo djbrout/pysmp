@@ -596,7 +596,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=1)
                 bigdata[m].extend(fitflx)
                 bigdata[s].extend(fitstd)
-
+                if p == 1:
+                    print fitflx-data['FLUX']
+                    raw_input('fluxcheck')
             if not real:
                 if not skipnewfakemag:
                     bigdata['FakeMag'].extend(fakemag)
