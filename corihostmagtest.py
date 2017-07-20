@@ -494,8 +494,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
         #galhist = data['galmodel_nphistory']
         #print data.keys()
-        galhist = np.load(f.split('.')[0]+'.npz')['galmodel_nphistory']
-        print galhist.shape
+        mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
+        print mhist.shape
         raw_input()
 
         skipnewfakemag = False
