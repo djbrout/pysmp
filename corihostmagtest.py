@@ -2321,7 +2321,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
-        ax3.legend(size='x-small')
+        ax3.legend(fontsize=6)
         # ww = fakemag > 28.
         # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
         # ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
