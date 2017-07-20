@@ -587,7 +587,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             marr = ['m10','m20','m30','m40','m50','m60','m70','m80','m90','m100']
             parr = [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.]
             for p,m in zip(parr,marr):
-                stoppos = int(round(mhist.shpae[0]*p))
+                stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
                 fitflx = np.mean(mhist[burnin:stoppos,:],axis=1)
                 print fitflx.shape
