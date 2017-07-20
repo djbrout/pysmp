@@ -592,7 +592,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
-                fitflx = np.mean(mhist[burnin:stoppos,:],axis=0)
+                fitflx = np.median(mhist[burnin:stoppos,:],axis=0)
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
                     bigdata[m].extend(fitflx[1:])
@@ -603,15 +603,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 else:
                     bigdata[m].extend(fitflx)
                     bigdata[s].extend(fitstd)
-                # if p == 1:
-                #     print fitflx.shape,data['FLUX'].shape
-                #     if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
-                #         print fitflx[1:]-data['FLUX']
-                #     elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
-                #         print fitflx[1:-1] - data['FLUX']
-                #     else:
-                #         print fitflx-data['FLUX']
-                #     #raw_input('fluxcheck')
+                if p == 1:
+                    print fitflx.shape,data['FLUX'].shape
+                    if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
+                        print fitflx[1:]-data['FLUX']
+                    elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
+                        print fitflx[1:-1] - data['FLUX']
+                    else:
+                        print fitflx-data['FLUX']
+                    #raw_input('fluxcheck')
             if not real:
                 if not skipnewfakemag:
                     bigdata['FakeMag'].extend(fakemag)
@@ -2330,7 +2330,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         sarr = ['s10', 's20', 's30', 's40', 's50', 's60', 's70', 's80', 's90', 's100']
         parr = [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1.]
         #ww = (fakemag < 30000.) & (chisqarr < 1.2) & (chisqarr > .05)
-        print bigdata['m100']-flux
+        #print bigdata['m100']-flux
         for p, m, s in zip(parr, marr, sarr):
             print bigdata[m].shape,fakeflux.shape
             #raw_input('mmm')
