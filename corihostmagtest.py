@@ -2314,7 +2314,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         sarr = ['s10', 's20', 's30', 's40', 's50', 's60', 's70', 's80', 's90', 's100']
         parr = [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1.]
         for p, m, s in zip(parr, marr, sarr):
-            print bigdata[m].shape
+            print bigdata[m].shape,fakeflux.shape
             raw_input('mmm')
             trms = (bigdata[m] - fakeflux) / bigdata[sarr]
             ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
