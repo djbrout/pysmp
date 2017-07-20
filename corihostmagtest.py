@@ -414,7 +414,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
-               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[]}
+               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],
+               'm10':[],'m20':[],'m30':[],'m40':[],'m50':[],'m60':[],'m70':[],'m80':[],'m90':[],'m100':[]}
     zptfiles = []
     #deep = 0
     print smpfiles
@@ -495,8 +496,6 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #galhist = data['galmodel_nphistory']
         #print data.keys()
         mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
-        print mhist.shape
-        raw_input()
 
         skipnewfakemag = False
         if real:
@@ -584,6 +583,16 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
+
+            marr = ['m10','m20','m30','m40','m50','m60','m70','m80','m90','m100']
+            parr = [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.]
+            for p,m in zip(parr,marr):
+                stoppos = int(round(mhist.shpae[0]*p))
+                burnin = int(round(stoppos*.4))
+                fitflx = np.mean(mhist[burnin:stoppos,:],axis=1)
+                print fitflx.shape
+                raw_input('fff')
+
             if not real:
                 if not skipnewfakemag:
                     bigdata['FakeMag'].extend(fakemag)
