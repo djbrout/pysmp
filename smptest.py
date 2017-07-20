@@ -3125,8 +3125,8 @@ class smp:
                                     if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
                                         smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
-                                    else:
-                                        raw_input('good epoch and no mjd flag')
+                                    #else:
+                                    #    raw_input('good epoch and no mjd flag')
 
                                     #print 'fakemag',snparams.fake_truemag[j],'mjdflag',smp_dict['mjd_flag'][i],'scale',scale
                                     #raw_input()
