@@ -598,8 +598,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     bigdata[m].extend(fitflx[1:])
                     bigdata[s].extend(fitstd[1:])
                 elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
-                    bigdata[m].extend(fitflx[2:])
-                    bigdata[s].extend(fitstd[2:])
+                    bigdata[m].extend(fitflx[1:-1])
+                    bigdata[s].extend(fitstd[1:-1])
                 else:
                     bigdata[m].extend(fitflx)
                     bigdata[s].extend(fitstd)
@@ -608,7 +608,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
                         print fitflx[1:]-data['FLUX']
                     elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
-                        print fitflx[2:] - data['FLUX']
+                        print fitflx[1:-1] - data['FLUX']
                     else:
                         print fitflx-data['FLUX']
                     raw_input('fluxcheck')
