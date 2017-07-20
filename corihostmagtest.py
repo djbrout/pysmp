@@ -2319,7 +2319,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #print bigdata[m].shape,fakeflux.shape
             #raw_input('mmm')
 
-            trms = (bigdata[m] - fakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
+            trms = (bigdata[m][ww] - fakeflux[ww]) / np.sqrt(bigdata[s][ww]**2+bigdata[m][ww])
             ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
