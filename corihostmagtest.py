@@ -73,7 +73,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
                         data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
-                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],real=real)
+                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data,real=real)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'],data['DPMJD'],real=real)#resultsdir)
@@ -1291,7 +1291,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,real=False):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,bigdata,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1430,6 +1430,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     hostmag = hostmag[ww]
     chisqarr = chisqarr[ww]
     filterarr = filterarr[ww]
+
+    marr = ['m10', 'm20', 'm30', 'm40', 'm50', 'm60', 'm70', 'm80', 'm90', 'm100']
+    sarr = ['s10', 's20', 's30', 's40', 's50', 's60', 's70', 's80', 's90', 's100']
+    parr = [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1.]
+    for p, m, s in zip(parr, marr, sarr):
+        bigdata[m] = np.asarray(bigdata[m])[ww]
+        bigdata[s] = np.asarray(bigdata[s])[ww]
 
     #print flux[0:10]
     #print fakeflux[0:10]
@@ -2303,10 +2310,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1.xaxis.set_major_formatter(nullfmt)
         plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
-        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
-        ax3.plot(ax, ayrms, color='blue', label='ALL SNe w/ Light', linewidth=3)
+        marr = ['m10', 'm20', 'm30', 'm40', 'm50', 'm60', 'm70', 'm80', 'm90', 'm100']
+        sarr = ['s10', 's20', 's30', 's40', 's50', 's60', 's70', 's80', 's90', 's100']
+        parr = [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1.]
+        for p, m, s in zip(parr, marr, sarr):
+            trms = (bigdata[m] - fakeflux) / bigdata[sarr]
+            ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
+            ax3.plot(ax, ayrms, label=m, linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
-
+        ax3.legend(size='x-small')
         # ww = fakemag > 28.
         # ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag), max(hostmag), .1), 1.5)
         # ax3.plot(ax, ayrms, color='red', label='FakeMag = 99', linewidth=3)
