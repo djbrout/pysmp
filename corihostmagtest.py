@@ -493,7 +493,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             continue
 
         #galhist = data['galmodel_nphistory']
-        print data.keys()
+        #print data.keys()
+        print f
         raw_input()
 
         skipnewfakemag = False
