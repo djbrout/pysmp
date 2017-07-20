@@ -597,7 +597,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 bigdata[m].extend(fitflx)
                 bigdata[s].extend(fitstd)
                 if p == 1:
-                    #print fitflx.shape,data['FLUX'].shape
+                    print fitflx.shape,data['FLUX'].shape
                     print fitflx[:-1]-data['FLUX']
                     raw_input('fluxcheck')
             if not real:
