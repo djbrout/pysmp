@@ -415,7 +415,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
                'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],
-               'm10':[],'m20':[],'m30':[],'m40':[],'m50':[],'m60':[],'m70':[],'m80':[],'m90':[],'m100':[]}
+               'm10':[],'m20':[],'m30':[],'m40':[],'m50':[],'m60':[],'m70':[],'m80':[],'m90':[],'m100':[],
+               's10': [], 's20': [], 's30': [], 's40': [], 's50': [], 's60': [], 's70': [], 's80': [], 's90': [],
+               's100': []}
     zptfiles = []
     #deep = 0
     print smpfiles
@@ -585,13 +587,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['Fluxerr'].extend(data['FLUXERR'])
 
             marr = ['m10','m20','m30','m40','m50','m60','m70','m80','m90','m100']
+            sarr = ['s10','s20','s30','s40','s50','s60','s70','s80','s90','s100']
             parr = [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.]
-            for p,m in zip(parr,marr):
+            for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
                 fitflx = np.mean(mhist[burnin:stoppos,:],axis=1)
-                print fitflx.shape
-                raw_input('fff')
+                fitstd = np.std(mhist[burnin:stoppos,:],axis=1)
+                bigdata[m].extend(fitflx)
+                bigdata[s].extend(fitstd)
 
             if not real:
                 if not skipnewfakemag:
