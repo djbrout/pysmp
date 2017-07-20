@@ -592,8 +592,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
-                fitflx = np.mean(mhist[burnin:stoppos,:],axis=1)
-                fitstd = np.std(mhist[burnin:stoppos,:],axis=1)
+                fitflx = np.mean(mhist[burnin:stoppos,:],axis=0)
+                fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 bigdata[m].extend(fitflx)
                 bigdata[s].extend(fitstd)
                 if p == 1:
