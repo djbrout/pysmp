@@ -492,7 +492,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             print 'BAD FLUX'*20
             continue
 
-        galhist = data['galmodel_nphistory']
+        #galhist = data['galmodel_nphistory']
         print data.keys()
         raw_input()
 
