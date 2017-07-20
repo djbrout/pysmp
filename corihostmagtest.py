@@ -591,7 +591,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             parr = [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.]
             for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
-                burnin = int(round(stoppos*.5))
+                burnin = int(round(stoppos*.4))
                 fitflx = np.mean(mhist[burnin:stoppos,:],axis=0)
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
