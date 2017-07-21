@@ -2330,9 +2330,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1.xaxis.set_major_formatter(nullfmt)
         plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
-        marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
-        sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
-        parr = [.01, .02, .03, .04, .05, .1, .2, .5, 1.]
+        marr = ['m2', 'm5', 'm10', 'm50', 'm100']
+        sarr = ['s2', 's5', 's10', 's50', 's100']
+        parr = [.02, .05, .1, .5, 1.]
         ax.set_color_cycle(sns.color_palette("coolwarm_r", len(parr)+2))
 
         #ww = (fakemag < 30000.) & (chisqarr < 1.2) & (chisqarr > .05)
