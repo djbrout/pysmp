@@ -501,8 +501,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         # raw_input()
         mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
         mmjd = np.load(f.split('.')[0]+'.npz')['mjd']
-        print mhist.shape,len(mmjd)
-        raw_input('numter')
+        #print mhist.shape,len(mmjd)
+        #raw_input('numter')
         skipnewfakemag = False
         if real:
             skipnewfakemag = True
@@ -752,6 +752,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
         for jd in mmjd:
             w = data['MJD'] == jd
+            if len(data['FAKEMAG'][w]) == 0:
+                raw_input('zerolength')
             #print data['FAKEMAG'][w]
             #raw_input()
             bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
