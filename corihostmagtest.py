@@ -50,7 +50,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         data = {'filter':[]}
-        for k in np.load(cd[0]).keys():
+        for k in np.load(cd[1]).keys():
             data[k] = []
         for c in cd:
             print c
