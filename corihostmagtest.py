@@ -603,8 +603,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
-                fitflx = np.median(mhist[:stoppos,:],axis=0)
-                fitstd = np.std(mhist[:stoppos,:],axis=0)
+                fitflx = np.median(mhist[burnin:stoppos,:],axis=0)
+                fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 # if len(mhist) == 224123100:
                 #     bigdata[m].extend(data['FLUX']*0-9999)
                 #     bigdata[s].extend(fitstd[1:])
