@@ -495,9 +495,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             continue
 
         #galhist = data['galmodel_nphistory']
-        print np.load(f.split('.')[0]+'.npz').keys()
-        raw_input()
+        # print np.load(f.split('.')[0]+'.npz').keys()
+        #
+        # raw_input()
         mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
+        mmjd = np.load(f.split('.')[0]+'.npz')['mjd']
         #print len(mhist)
         #raw_input('numter')
         skipnewfakemag = False
@@ -506,6 +508,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #if not skipnewfakemag:
         if not skipnewfakemag:
             newfakemag = []
+            fakezpt = []
             for imf,fm,x,y in zip(data['IMAGE_FILE'],fakemag,data['XPOS'],data['YPOS']):
 
                 #print imf
@@ -517,6 +520,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     newfakemag.append(99)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
+                    fakezpt.append(31.)
                     continue
                     #continue
                 # if fm == 99.:
@@ -552,18 +556,20 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     newfakemag.append(99.)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
+                    fakezpt.append(31.)
                 else:
                     nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
                     newfakemag.append(fm)
                     bigdata['fakeid'].append(dofakeid[www][0])
                     bigdata['FakeZPT'].append(dofakezpt[www][0])
+                    fakezpt.append(dofakezpt[www][0])
 
                 #raw_input()
 
             #print np.array(newfakemag)-fakemag
             #raw_input()
             fakemag = np.array(newfakemag,dtype='float')
-
+            fakezpt = np.asarray(fakezpt)
         '''
         sn = f.split('/')[-1][0:17]+'.dat'
         snd = open('/pnfs/des/scratch/pysmp/DESY1_imgList_fake/'+sn,'r').read()
@@ -586,6 +592,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
+
+
+
 
             marr = ['m1','m2','m3','m4','m5','m10','m20','m50','m100']
             sarr = ['s1','s2','s3','s4','s5','s10','s20','s50','s100']
@@ -739,6 +748,16 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #print 'hostmag',hostmag
         #raw_input()
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
+
+        for jd in mmjd:
+            w = data['MJD'] == jd
+            print data['FAKEMAG'][w]
+            raw_input()
+            bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
+            bigdata['bootfitzpt'].extend(data['ZPT'][w])
+            bigdata['bootfakezpt'].extend(fakezpt[w])
+            bigdata['boothostmag'].extend(hostmag[w])
+
 
         #raw_input()
     #print bigdata['diffzpt']
