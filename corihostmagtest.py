@@ -595,7 +595,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 fitflx = np.median(mhist[:stoppos,:],axis=0)
                 fitstd = np.std(mhist[:stoppos,:],axis=0)
                 if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
-                    bigdata[m].extend(fitflx*0.-9999)
+                    bigdata[m].extend(fitflx[1:]*0-9999)
                     bigdata[s].extend(fitstd[1:])
                 elif fitflx.shape[0] == data['FLUX'].shape[0] + 2:
                     bigdata[m].extend(fitflx[1:-1]*0.-9999)
