@@ -594,7 +594,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 burnin = int(round(stoppos*.4))
                 fitflx = np.median(mhist[:stoppos,:],axis=0)
                 fitstd = np.std(mhist[:stoppos,:],axis=0)
-                if len(mhist) != 250000:
+                if len(mhist) == 224123100:
                     bigdata[m].extend(data['FLUX']*0-9999)
                     bigdata[s].extend(fitstd[1:])
                 elif fitflx.shape[0] == data['FLUX'].shape[0] + 1:
