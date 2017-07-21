@@ -757,6 +757,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 bigdata['bootfitzpt'].extend([99])
                 bigdata['bootfakezpt'].extend([99])
                 bigdata['boothostmag'].extend([99])
+            elif len(data['FAKEMAG'][w]) > 1:
+                bigdata['bootfakemag'].extend([99])
+                bigdata['bootfitzpt'].extend([99])
+                bigdata['bootfakezpt'].extend([99])
+                bigdata['boothostmag'].extend([99])
             else:
                 bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
                 bigdata['bootfitzpt'].extend(data['ZPT'][w])
