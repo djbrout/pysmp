@@ -416,7 +416,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
                'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],
                'm1':[],'m2':[],'m3':[],'m4':[],'m5':[],'m10':[],'m20':[],'m50':[],'m100':[],
-               's1': [], 's2': [], 's3': [], 's4': [], 's5': [], 's10': [], 's20': [], 's50': [], 's100': []}
+               's1': [], 's2': [], 's3': [], 's4': [], 's5': [], 's10': [], 's20': [], 's50': [], 's100': [],
+               'bootfakemag':[],'bootfitzpt':[],'bootfakezpt':[],'boothostmag':[]}
     zptfiles = []
     #deep = 0
     print smpfiles
