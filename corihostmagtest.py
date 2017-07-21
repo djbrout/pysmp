@@ -1481,12 +1481,20 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     chisqarr = chisqarr[ww]
     filterarr = filterarr[ww]
 
+
+    myww = (bigdata['bootfakemag'] > 0.) & ( bigdata['bootfitzpt'] != 99.) & (bigdata[m100] != 0)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
     parr = [.01, .02, .03, .04, .05, .1, .2, .5, 1.]
     for p, m, s in zip(parr, marr, sarr):
-        bigdata[m] = np.asarray(bigdata[m])[ww]
-        bigdata[s] = np.asarray(bigdata[s])[ww]
+        bigdata[m] = np.asarray(bigdata[m])[myww]
+        bigdata[s] = np.asarray(bigdata[s])[myww]
+    bigdata['bootfakemag'] = bigdata['bootfakemag'][ww]
+    bigdata['bootfitzpt'] = bigdata['bootfitzpt'][ww]
+    bigdata['bootfakezpt'] = bigdata['bootfakezpt'][ww]
+    bigdata['boothostmag'] = bigdata['boothostmag'][ww]
+    bootfakeflux = 10 ** (.4 * (31. - bigdata['bootfakemag']))
+    bootfakeflux *= 10**(-1*.4*(bigdata['bootfitzpt'] - bigdata['bootfakezpt']))
 
     #print flux[0:10]
     #print fakeflux[0:10]
@@ -2373,13 +2381,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
             #raw_input('mmm')
 
-            trms = (bigdata[m] - fakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
-            ww = (flux != 0.) & (fakemag < 3000.) & (chisqarr < 2.) & (chisqarr > .05) & (bigdata[m] != -9999 ) & (abs(bigdata['m100'] - flux)/flux < .02)# & (abs(trms) < 5.)
+            trms = (bigdata[m] - bootfakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
+            ww = (bigdata['m100'] != 0.) & (bigdata['bootfakemag'] < 3000.) & (bigdata['bootfakemag'] > 0.) & (bigdata[m] != -9999 ) & (bigdata['fitzpt'] != 99)# & (abs(trms) < 5.)
             #print bigdata[m][ww].shape, fakeflux[ww].shape
             #for t in trms[ww]:
             #    print t
             #raw_input(m)
-            ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
+            ax, ayrms = dt.binrms(bigdata['boothostmag'][ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
 
         #ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
