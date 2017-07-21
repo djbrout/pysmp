@@ -501,7 +501,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         # raw_input()
         mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
         mmjd = np.load(f.split('.')[0]+'.npz')['mjd']
-        print len(mhist),len(mmjd)
+        print mhist.shape,len(mmjd)
         raw_input('numter')
         skipnewfakemag = False
         if real:
