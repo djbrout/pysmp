@@ -495,7 +495,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             continue
 
         #galhist = data['galmodel_nphistory']
-        #print data.keys()
+        print np.load(f.split('.')[0]+'.npz')
+        raw_input()
         mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
         #print len(mhist)
         #raw_input('numter')
