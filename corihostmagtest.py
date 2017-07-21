@@ -415,9 +415,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
                'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],
-               'm10':[],'m20':[],'m30':[],'m40':[],'m50':[],'m60':[],'m70':[],'m80':[],'m90':[],'m100':[],
-               's10': [], 's20': [], 's30': [], 's40': [], 's50': [], 's60': [], 's70': [], 's80': [], 's90': [],
-               's100': []}
+               'm1':[],'m2':[],'m3':[],'m4':[],'m5':[],'m10':[],'m20':[],'m50':[],'m100':[],
+               's1': [], 's2': [], 's3': [], 's4': [], 's5': [], 's10': [], 's20': [], 's50': [], 's100': []}
     zptfiles = []
     #deep = 0
     print smpfiles
@@ -587,15 +586,18 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
 
-            marr = ['m10','m20','m30','m40','m50','m60','m70','m80','m90','m100']
-            sarr = ['s10','s20','s30','s40','s50','s60','s70','s80','s90','s100']
-            parr = [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.]
+            marr = ['m1','m2','m3','m4','m5','m10','m20','m50','m100']
+            sarr = ['s1','s2','s3','s4','s5','s10','s20','s50','s100']
+            parr = [.01,.02,.03,.04,.05,.1,.2,.5,1.]
             for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
                 fitflx = np.median(mhist[:stoppos,:],axis=0)
                 fitstd = np.std(mhist[:stoppos,:],axis=0)
-                if fitflx.shape[0] == data['FLUX'].shape[0] + 1:
+                if len(mhist) != 250000:
+                    bigdata[m].extend(data['FLUX']*0-9999)
+                    bigdata[s].extend(fitstd[1:])
+                elif fitflx.shape[0] == data['FLUX'].shape[0] + 1:
                     #bigdata[m].extend(fitflx[1:]*0-9999)
                     bigdata[m].extend(fitflx[1:])
                     bigdata[s].extend(fitstd[1:])
