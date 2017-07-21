@@ -1481,8 +1481,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     chisqarr = chisqarr[ww]
     filterarr = filterarr[ww]
 
-    print len(bigdata['bootfakemag']),len(bigdata['bootfitzpt']),len(bigdata['m100']),len(bigdata['s100'])
-    myww = (bigdata['bootfakemag'] > 0.) & ( bigdata['bootfitzpt'] != 99.) & (bigdata['m100'] != 0) & (bigdata['s100']>0.)
+    myww = (np.asarray(bigdata['bootfakemag']) > 0.) & (np.asarray(bigdata['bootfitzpt']) != 99.) & (np.asarray(bigdata['m100']) != 0) & (np.asarray(bigdata['s100'])>0.)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
     parr = [.01, .02, .03, .04, .05, .1, .2, .5, 1.]
@@ -1491,10 +1490,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         print len(bigdata[m])
         bigdata[m] = np.asarray(bigdata[m])[myww]
         bigdata[s] = np.asarray(bigdata[s])[myww]
-    bigdata['bootfakemag'] = bigdata['bootfakemag'][myww]
-    bigdata['bootfitzpt'] = bigdata['bootfitzpt'][myww]
-    bigdata['bootfakezpt'] = bigdata['bootfakezpt'][myww]
-    bigdata['boothostmag'] = bigdata['boothostmag'][myww]
+    bigdata['bootfakemag'] = np.asarray(bigdata['bootfakemag'])[myww]
+    bigdata['bootfitzpt'] = np.asarray(bigdata['bootfitzpt'])[myww]
+    bigdata['bootfakezpt'] = np.asarray(bigdata['bootfakezpt'])[myww]
+    bigdata['boothostmag'] = np.asarray(bigdata['boothostmag'])[myww]
     bootfakeflux = 10 ** (.4 * (31. - bigdata['bootfakemag']))
     bootfakeflux *= 10**(-1*.4*(bigdata['bootfitzpt'] - bigdata['bootfakezpt']))
 
