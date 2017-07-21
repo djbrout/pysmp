@@ -2340,7 +2340,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #raw_input('mmm')
 
             trms = (bigdata[m] - fakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
-            ww = (flux != 0.) & (fakemag < 3000.) & (chisqarr < 1.2) & (chisqarr > .05) & (bigdata[m] != -9999 ) & (abs(bigdata['m100'] - flux)/flux < .1)# & (abs(trms) < 5.)
+            ww = (flux != 0.) & (fakemag < 3000.) & (chisqarr < 2.) & (chisqarr > .05) & (bigdata[m] != -9999 ) & (abs(bigdata['m100'] - flux)/flux < .2)# & (abs(trms) < 5.)
             #print bigdata[m][ww].shape, fakeflux[ww].shape
             #for t in trms[ww]:
             #    print t
