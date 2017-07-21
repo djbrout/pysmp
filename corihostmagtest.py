@@ -2330,9 +2330,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax1.xaxis.set_major_formatter(nullfmt)
         plt.subplots_adjust(wspace=0.001,hspace=0.001)
 
-        marr = ['m10', 'm20', 'm30', 'm40', 'm50', 'm60', 'm70', 'm80', 'm90', 'm100']
-        sarr = ['s10', 's20', 's30', 's40', 's50', 's60', 's70', 's80', 's90', 's100']
-        parr = [.1, .2, .3, .4, .5, .6, .7, .8, .9, 1.]
+        marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
+        sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
+        parr = [.01, .02, .03, .04, .05, .1, .2, .5, 1.]
         #ww = (fakemag < 30000.) & (chisqarr < 1.2) & (chisqarr > .05)
         #print bigdata['m100']-flux
         for p, m, s in zip(parr, marr, sarr):
