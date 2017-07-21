@@ -604,8 +604,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             for p,m,s in zip(parr,marr,sarr):
                 #stoppos = int(round(mhist.shape[0]*p))
                 #burnin = int(round(stoppos*.4))
-                burnin = int(round(p*.4))
                 stoppos = min([len(mhist),p])
+                burnin = int(round(stoppos*.4))
+
                 fitflx = np.median(mhist[burnin:stoppos,:],axis=0)
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 # if len(mhist) == 224123100:
