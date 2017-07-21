@@ -754,10 +754,10 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             w = data['MJD'] == jd
             print data['FAKEMAG'][w]
             raw_input()
-            bigdata['bootfakemag'].extend([data['FAKEMAG'][w]])
-            bigdata['bootfitzpt'].extend([data['ZPT'][w]])
-            bigdata['bootfakezpt'].extend([fakezpt[w]])
-            bigdata['boothostmag'].extend([(data['FLUX'][w]]*0. + hostmag)
+            bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
+            bigdata['bootfitzpt'].extend(data['ZPT'][w])
+            bigdata['bootfakezpt'].extend(fakezpt[w])
+            bigdata['boothostmag'].extend((data['FLUX'][w]*0. + hostmag)
 
 
         #raw_input()
