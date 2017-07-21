@@ -2388,7 +2388,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #for t in trms[ww]:
             #    print t
             #raw_input(m)
-            ax, ayrms = dt.binrms(bigdata['boothostmag'][ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
+            ax, ayrms = dt.binrms(bigdata['boothostmag'][ww], trms[ww], np.arange(min(bigdata['boothostmag'][ww]), max(bigdata['boothostmag'][ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
 
         #ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
