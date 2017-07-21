@@ -1481,7 +1481,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     chisqarr = chisqarr[ww]
     filterarr = filterarr[ww]
 
-
+    print len(bigdata['bootfakemag']),len(bigdata['bootfitzpt']),len(bigdata['m100']),len(bigdata['s100'])
     myww = (bigdata['bootfakemag'] > 0.) & ( bigdata['bootfitzpt'] != 99.) & (bigdata['m100'] != 0) & (bigdata['s100']>0.)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
