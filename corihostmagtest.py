@@ -753,13 +753,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         for jd in mmjd:
             w = data['MJD'] == jd
             if len(data['FAKEMAG'][w]) == 0:
-                raw_input('zerolength')
-            #print data['FAKEMAG'][w]
-            #raw_input()
-            bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
-            bigdata['bootfitzpt'].extend(data['ZPT'][w])
-            bigdata['bootfakezpt'].extend(fakezpt[w])
-            bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
+                bigdata['bootfakemag'].extend(99)
+                bigdata['bootfitzpt'].extend(99)
+                bigdata['bootfakezpt'].extend(99)
+                bigdata['boothostmag'].extend(99)
+            else:
+                bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
+                bigdata['bootfitzpt'].extend(data['ZPT'][w])
+                bigdata['bootfakezpt'].extend(fakezpt[w])
+                bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
 
 
         #raw_input()
