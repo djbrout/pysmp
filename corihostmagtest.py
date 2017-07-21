@@ -752,8 +752,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
         for jd in mmjd:
             w = data['MJD'] == jd
-            print data['FAKEMAG'][w]
-            raw_input()
+            #print data['FAKEMAG'][w]
+            #raw_input()
             bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
             bigdata['bootfitzpt'].extend(data['ZPT'][w])
             bigdata['bootfakezpt'].extend(fakezpt[w])
@@ -765,7 +765,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     #raw_input()
     #print np.unique(np.array(bigdata['FakeMag']))
     #raw_input('here')
-
+    print len(bigdata['bootfakemag']),len(bigdata['m10'])
+    raw_input('test')
     os.system('rm '+cd+' -f')
 
     print 'saving to cachfile'
