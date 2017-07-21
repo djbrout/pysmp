@@ -1487,6 +1487,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
     parr = [.01, .02, .03, .04, .05, .1, .2, .5, 1.]
     for p, m, s in zip(parr, marr, sarr):
+        print myww
         print len(bigdata[m])
         bigdata[m] = np.asarray(bigdata[m])[myww]
         bigdata[s] = np.asarray(bigdata[s])[myww]
