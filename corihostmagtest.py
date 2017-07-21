@@ -774,8 +774,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     #raw_input()
     #print np.unique(np.array(bigdata['FakeMag']))
     #raw_input('here')
-    print len(bigdata['bootfakemag']),len(bigdata['m10'])
-    raw_input('test')
+    #print len(bigdata['bootfakemag']),len(bigdata['m10'])
+    #raw_input('test')
     os.system('rm '+cd+' -f')
 
     print 'saving to cachfile'
