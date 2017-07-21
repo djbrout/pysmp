@@ -2333,7 +2333,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         marr = ['m2', 'm5', 'm10', 'm50', 'm100']
         sarr = ['s2', 's5', 's10', 's50', 's100']
         parr = [.02, .05, .1, .5, 1.]
-        ax.set_color_cycle(sns.color_palette("coolwarm_r", len(parr)+2))
+        import seaborn as sns
+        ax3.set_color_cycle(sns.color_palette("coolwarm_r", len(parr)+2))
 
         #ww = (fakemag < 30000.) & (chisqarr < 1.2) & (chisqarr > .05)
         #print bigdata['m100']-flux
