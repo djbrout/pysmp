@@ -2343,7 +2343,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #raw_input('mmm')
 
             trms = (bigdata[m] - fakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
-            ww = (flux != 0.) & (fakemag < 3000.) & (chisqarr < 2.) & (chisqarr > .05) & (bigdata[m] != -9999 ) & (abs(bigdata['m100'] - flux)/flux < .2)# & (abs(trms) < 5.)
+            ww = (flux != 0.) & (fakemag < 3000.) & (chisqarr < 2.) & (chisqarr > .05) & (bigdata[m] != -9999 ) & (abs(bigdata['m100'] - flux)/flux < .02)# & (abs(trms) < 5.)
             #print bigdata[m][ww].shape, fakeflux[ww].shape
             #for t in trms[ww]:
             #    print t
@@ -2351,8 +2351,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax, ayrms = dt.binrms(hostmag[ww], trms[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
             ax3.plot(ax, ayrms, label=m, linewidth=3)
 
-        ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
-        ax3.plot(ax, ayrms, color='black',label='orig', linewidth=3)
+        #ax, ayrms = dt.binrms(hostmag[ww], d[ww], np.arange(min(hostmag[ww]), max(hostmag[ww]), .1), .5)
+        #ax3.plot(ax, ayrms, color='black',label='orig', linewidth=3)
         ax3.plot(ax, ax * 0 + 1., linestyle='--',color='black')
         ax3.legend(fontsize=6)
         ax3.set_ylim(.9,1.2)
