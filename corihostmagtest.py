@@ -772,11 +772,13 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 bigdata['boothostmag'].extend([99])
             else:
 
-                bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
+
                 bigdata['bootfitzpt'].extend(data['ZPT'][w])
                 if not real:
+                    bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
                     bigdata['bootfakezpt'].extend(fakezpt[w])
                 else:
+                    bigdata['bootfakemag'].extend([99])
                     bigdata['bootfakezpt'].extend([31.])
                 bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
 
@@ -1493,8 +1495,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     chisqarr = chisqarr[ww]
     filterarr = filterarr[ww]
 
-    print bigdata['bootfakemag']
-    raw_input()
+    #print bigdata['bootfakemag']
+    #raw_input()
     myww = (np.asarray(bigdata['bootfakemag']) > 0.) & (np.asarray(bigdata['bootfitzpt']) != 99.) & (np.asarray(bigdata['m100']) != 0) & (np.asarray(bigdata['s100'])!=0.)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
