@@ -771,6 +771,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 bigdata['bootfakezpt'].extend([99])
                 bigdata['boothostmag'].extend([99])
             else:
+
                 bigdata['bootfakemag'].extend(data['FAKEMAG'][w])
                 bigdata['bootfitzpt'].extend(data['ZPT'][w])
                 if not real:
@@ -779,8 +780,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     bigdata['bootfakezpt'].extend([31.])
                 bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
 
-
-        #raw_input()
+        print bigdata['bootfitzpt'].shape
+        raw_input()
     #print bigdata['diffzpt']
     #raw_input()
     #print np.unique(np.array(bigdata['FakeMag']))
@@ -2394,7 +2395,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #raw_input('mmm')
 
             trms = (bigdata[m] - bootfakeflux) / np.sqrt(bigdata[s]**2+bigdata[m])
-            print trms.shape
+            #print trms.shape
             ww = (bigdata['m100'] != 0.) & (bigdata['bootfakemag'] < 3000.) & (bigdata['bootfakemag'] > 90.) & (bigdata[m] != -9999 ) & (bigdata['bootfitzpt'] != 99)# & (abs(trms) < 5.)
             #print bigdata[m][ww].shape, fakeflux[ww].shape
             #for t in trms[ww]:
