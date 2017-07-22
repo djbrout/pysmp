@@ -1849,7 +1849,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                                      np.arange(20., 26., .1), window=2., dontrootn=True)
         #ax4.plot([19, 28.7], [0, 0], color='grey')
 
-        ax, ayrms = dt.binrms(hostmag[d < 3.], d[d < 3.], np.arange(20., 28, .1), 1.5)
+        ax, ayrms = dt.binrms(hostmag[d < 3.], d[d < 3.], np.arange(20., 28, .3), 2.5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
