@@ -772,7 +772,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 if not real:
                     bigdata['bootfakezpt'].extend(fakezpt[w])
                 else:
-                    bigdata['bootfakezpt'].extend(bigdata['bootfakezpt'].extend([31.])
+                    bigdata['bootfakezpt'].extend([31.])
                 bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
 
 
