@@ -1310,7 +1310,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     if real:
-        ww = (dpmjd > 230.) | (dpmjd < -35.)
+        ww = (dpmjd > 190.) | (dpmjd < -30.)
         flux = flux[ww]
         fluxerr = fluxerr[ww]
         fakemag = fakemag[ww]
