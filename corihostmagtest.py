@@ -503,6 +503,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             mhist = np.load(f.split('.')[0]+'.npz')['modelvec_nphistory']
             mmjd = np.load(f.split('.')[0]+'.npz')['mjd']
         except:
+            print 'missing npzfile'
             continue
         #print mhist.shape,len(mmjd)
         #raw_input('numter')
