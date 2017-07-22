@@ -1935,6 +1935,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax4.scatter(fakemag,fresid,alpha=.03,color='black')
         for filt, col in zip(filts, colors):
             ww = filterarr == filt
+            ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
+                 & (fluxerr > 0.) & (np.isfinite(flux)) & \
+                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
+                 & (chisqarr < 2.5)
             axa, aya, aystd = dt.bindata(hostmag[ww], fresid[ww],
                                          np.arange(20., 26., .1), window=2., dontrootn=True)
             #ax4.plot([19, 28.7], [0, 0], color='grey')
