@@ -17,6 +17,7 @@ outdir = '/project/projectdirs/des/djbrout/simdummytest3'
 snfiles = open(snfilelist).read()
 snfiles = snfiles.split('.smp')
 for i in allindexes:
+    if snfiles[i] == '\n': continue
     filt = snfiles[i].split('_')[-1]
     snfiles[i] = snfiles[i][:-2]
     print snfiles[i]
