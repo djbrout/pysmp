@@ -599,8 +599,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             marr = ['m1','m2','m3','m4','m5','m10','m20','m50','m100']
             sarr = ['s1','s2','s3','s4','s5','s10','s20','s50','s100']
-            #parr = [,.02,.03,.04,.05,.1,.2,.5,1.]
-            parr = [50000,75000,100000,150000,200000,500000,1000000,1500000,2000000]
+            parr = [0.01,.02,.03,.04,.05,.1,.2,.5,1.]
+            #parr = [50000,75000,100000,150000,200000,500000,1000000,1500000,2000000]
             for p,m,s in zip(parr,marr,sarr):
                 #stoppos = int(round(mhist.shape[0]*p))
                 #burnin = int(round(stoppos*.4))
@@ -3616,15 +3616,15 @@ if __name__ == "__main__":
 
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/des/djbrout/specv1_1/'
-    resultsdir = '/project/projectdirs/des/djbrout/simtest/'
+    resultsdir = '/project/projectdirs/dessn/dbrout/specv1_1/'
+    #resultsdir = '/project/projectdirs/des/djbrout/simtest/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
     #resultsdir = './workingsimnosn'
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'shallow'
+    deep_or_shallow = 'spec'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
@@ -3670,4 +3670,4 @@ if __name__ == "__main__":
 
     #print cd
     #raw_input()
-    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=False)
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=True)
