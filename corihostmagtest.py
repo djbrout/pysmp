@@ -780,7 +780,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     bigdata['bootfakezpt'].extend([31.])
                 bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
 
-        print bigdata['bootfitzpt'].shape
+        print len(bigdata['bootfitzpt'])
         raw_input()
     #print bigdata['diffzpt']
     #raw_input()
