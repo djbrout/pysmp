@@ -3637,7 +3637,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'spec'
+    deep_or_shallow = 'shallow'
 
 
 
