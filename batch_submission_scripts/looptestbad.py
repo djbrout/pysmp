@@ -20,8 +20,8 @@ for i in allindexes:
     if snfiles[i] == '\n': continue
     filt = snfiles[i].split('_')[-1]
     snfiles[i] = snfiles[i][:-2]+'.dat'
-    print snfiles[i]
-    raw_input()
+    #print snfiles[i]
+    #raw_input()
     #for filt in filts:
     if True:
         if doskipping:
