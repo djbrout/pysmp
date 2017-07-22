@@ -763,7 +763,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     #    print ft,fa
     #raw_input('asdffff')
     fluxerr = np.asarray(fluxerr)
-    fluxerr = np.sqrt(fluxerr**2.+flux)
+    fluxerr = np.sqrt(fluxerr**2.+flux + 10**(.4*(31.-hostmag)))
     fakezpt = np.asarray(fakezpt)
 
 
