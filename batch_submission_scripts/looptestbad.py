@@ -13,7 +13,7 @@ walltime= '03:00:00'
 doskipping = True
 snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/simdummytest3'
+outdir = '/project/projectdirs/dessn/dbrout/simdummytest3'
 snfiles = open(snfilelist).read()
 snfiles = snfiles.split('.smp')
 for i in allindexes:
@@ -27,12 +27,12 @@ for i in allindexes:
         if doskipping:
             print snfiles[i]
             sn = snfiles[i].split('/')[-1].split('.')[0]
-            if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
-                print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
-                continue
-            if os.path.exists('/global/cscratch1/sd/dbrout/specnpzfiles/'+sn+'_'+filt+'.mcmcinput.npz'):
-                print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
-                continue
+            # if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
+            #     print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
+            #     continue
+            # if os.path.exists('/global/cscratch1/sd/dbrout/specnpzfiles/'+sn+'_'+filt+'.mcmcinput.npz'):
+            #     print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
+            #     continue
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
