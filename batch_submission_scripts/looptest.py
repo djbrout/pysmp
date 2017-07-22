@@ -11,10 +11,13 @@ walltime= '02:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
-snfilelist = 'data/s2lightcurves.txt'
+snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/des/djbrout/simdummytest3'
-snfiles = open(snfilelist).readlines()
+snfiles = open(snfilelist).read()
+snfiles = snfiles.split('.smp')
+print snfiles
+raw_input()
 for i in allindexes:
     for filt in filts:
 

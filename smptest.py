@@ -3940,7 +3940,7 @@ class smp:
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
                 if passv == 1:
-                    np.savez('/global/cscratch1/sd/dbrout/s2npzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
+                    np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
                              galmodel=galmodel
                              , modelvec=modelvec
                              , galstd=galstd
