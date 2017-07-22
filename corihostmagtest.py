@@ -602,11 +602,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             parr = [0.01,.02,.03,.04,.05,.1,.2,.5,1.]
             #parr = [50000,75000,100000,150000,200000,500000,1000000,1500000,2000000]
             for p,m,s in zip(parr,marr,sarr):
-                #stoppos = int(round(mhist.shape[0]*p))
-                #burnin = int(round(stoppos*.4))
-                stoppos = min([len(mhist),p])
+                stoppos = int(round(mhist.shape[0]*p))
                 burnin = int(round(stoppos*.4))
-                print stoppos, burnin
+                #stoppos = min([len(mhist),p])
+                #burnin = int(round(stoppos*.4))
+                #print stoppos, burnin
                 fitflx = np.median(mhist[burnin:stoppos,:],axis=0)
                 fitstd = np.std(mhist[burnin:stoppos,:],axis=0)
                 # if len(mhist) == 224123100:
