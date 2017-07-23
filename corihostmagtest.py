@@ -1935,6 +1935,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax4.scatter(fakemag,fresid,alpha=.03,color='black')
         for filt, col in zip(filts, colors):
             ww = filterarr == filt
+            print np.unique(filterarr)
+            raw_input()
             ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.) \
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
                  (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
