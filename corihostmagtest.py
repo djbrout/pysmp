@@ -1939,6 +1939,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                  & (fluxerr > 0.) & (np.isfinite(flux)) & \
                  (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
                  & (chisqarr < 2.5)
+            print filt
             axa, aya, aystd = dt.bindata(hostmag[ww], fresid[ww],
                                          np.arange(20., 26., .1), window=2., dontrootn=True)
             #ax4.plot([19, 28.7], [0, 0], color='grey')
