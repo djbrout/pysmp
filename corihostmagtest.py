@@ -772,14 +772,17 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 bigdata['bootfilt'].extend([''])
                 bigdata['bootdpmjd'].extend([np.nan])
             elif len(data['FAKEMAG'][w]) > 1:
-                print len(data['FAKEMAG'][w])
-                raw_input('fakemag too long')
-                bigdata['bootfakemag'].extend([99])
-                bigdata['bootfitzpt'].extend([99])
-                bigdata['bootfakezpt'].extend([99])
-                bigdata['boothostmag'].extend([99])
-                bigdata['bootfilt'].extend([''])
-                bigdata['bootdpmjd'].extend([np.nan])
+                if jd == 0. :
+                    #print len(data['FAKEMAG'][w])
+                    #raw_input('fakemag too long')
+                    bigdata['bootfakemag'].extend([99])
+                    bigdata['bootfitzpt'].extend([99])
+                    bigdata['bootfakezpt'].extend([99])
+                    bigdata['boothostmag'].extend([99])
+                    bigdata['bootfilt'].extend([''])
+                    bigdata['bootdpmjd'].extend([np.nan])
+                else:
+                    raw_input('badddd multiple')
             else:
 
 
