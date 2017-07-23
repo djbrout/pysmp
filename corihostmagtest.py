@@ -1538,6 +1538,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     print 'after1',bigdata['bootfakemag'][:100]
     print 'after2',bigdata['m100'][:100]
+    print 'after3',bigdata['bootdpmjd'][myww][0:100]
+    raw_input()
     #raw_input()
     #print flux[0:10]
     #print fakeflux[0:10]
