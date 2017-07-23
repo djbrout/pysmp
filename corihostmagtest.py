@@ -761,6 +761,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
         for jd in mmjd:
+            print data['MJD']
             w = data['MJD'] == jd
             if len(data['FAKEMAG'][w]) == 0:
                 bigdata['bootfakemag'].extend([99])
