@@ -59,6 +59,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                 print key, len(td[key])
                 data[key].extend(td[key])
             filt = c.split('.npz')[0].split('_')[-1]
+            print filt
+            raw_input('aasdfaaa')
             filts =  [ filt for x in range(len(td['Flux']))]
             data['filter'].extend(filts)
     #print len(data['Flux'])
