@@ -10,7 +10,7 @@ filts = ['g','r','i','z']
 walltime= '02:00:00'
 #np.random.shuffle(allindexes)
 
-doskipping = True
+doskipping = False
 snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/des/djbrout/simdummytest3'

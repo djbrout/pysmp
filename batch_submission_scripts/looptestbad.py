@@ -65,10 +65,9 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + ' -f ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' '+
+            'python smptest.py -f ' + filt +
+            ' -o '+outdir+' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+snfiles[i]+' '
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
-
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
             # 'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt '
@@ -80,3 +79,6 @@ for i in allindexes:
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
+        print('python smptest.py -f ' + filt +
+            ' -o '+outdir+' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+snfiles[i]+' '
+            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n')
