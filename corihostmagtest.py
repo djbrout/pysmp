@@ -493,7 +493,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             if len(data['DPMJD'][data['DPMJD'] > 300.]) < 2:
                 print 'bad DPMJD'*20
                 continue
-        if np.min(data['FLUX']) < -10000:
+        if np.min(data['FLUX']) < -100000:
             print 'BAD FLUX'*20
             continue
 
