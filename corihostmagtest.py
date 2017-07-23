@@ -1519,7 +1519,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'fitzpt', bigdata['bootfitzpt'][:100]
     print 'm100',bigdata['m100'][:100]
     print 's100',bigdata['s100'][:100]
-    raw_input('asdf')
+    #raw_input('asdf')
     myww = ((bigdata['bootdpmjd'] < -35.) | (bigdata['bootdpmjd'] > 230.)) & (np.asarray(bigdata['bootfakemag']) > 0.) & (np.asarray(bigdata['bootfitzpt']) != 99.) & (np.asarray(bigdata['bootfitzpt']) != 0.) & (np.asarray(bigdata['m100']) != 0) & (np.asarray(bigdata['s100'])!=0.)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
@@ -1538,7 +1538,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     print 'after1',bigdata['bootfakemag'][:100]
     print 'after2',bigdata['m100'][:100]
-    raw_input()
+    #raw_input()
     #print flux[0:10]
     #print fakeflux[0:10]
     #print flux.shape
