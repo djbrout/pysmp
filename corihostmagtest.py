@@ -1425,8 +1425,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         rmsaddin = rmsaddin[ww]
         dpmjd = dpmjd[ww]
         fakeflux = fakeflux[ww]
-        print np.unique(filterarr)
-        raw_input('fff')
+        #print np.unique(filterarr)
+        #raw_input('fff')
     #print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
     #am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
     #for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
@@ -1512,7 +1512,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     #print bigdata['bootfakemag']
     #raw_input()
-    myww = (np.asarray(bigdata['bootfakemag']) > 0.) & (np.asarray(bigdata['bootfitzpt']) != 99.) & (np.asarray(bigdata['m100']) != 0) & (np.asarray(bigdata['s100'])!=0.)
+    myww = (bigdata['bootdpmjd'] > -35.) & (bigdata['bootdpmjd'] < 230.) & (np.asarray(bigdata['bootfakemag']) > 0.) & (np.asarray(bigdata['bootfitzpt']) != 99.) & (np.asarray(bigdata['m100']) != 0) & (np.asarray(bigdata['s100'])!=0.)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
     parr = [.01, .02, .03, .04, .05, .1, .2, .5, 1.]
