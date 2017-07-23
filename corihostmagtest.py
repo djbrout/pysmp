@@ -419,7 +419,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],
                'm1':[],'m2':[],'m3':[],'m4':[],'m5':[],'m10':[],'m20':[],'m50':[],'m100':[],
                's1': [], 's2': [], 's3': [], 's4': [], 's5': [], 's10': [], 's20': [], 's50': [], 's100': [],
-               'bootfakemag':[],'bootfitzpt':[],'bootfakezpt':[],'boothostmag':[]}
+               'bootfakemag':[],'bootfitzpt':[],'bootfakezpt':[],'boothostmag':[],'bootfilt':[],'bootdpmjd':[]}
     zptfiles = []
     #deep = 0
     print smpfiles
@@ -767,11 +767,16 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 bigdata['bootfitzpt'].extend([99])
                 bigdata['bootfakezpt'].extend([99])
                 bigdata['boothostmag'].extend([99])
+                bigdata['bootfilt'].extend([''])
+                bigdata['bootdpmjd'].extend([np.nan])
             elif len(data['FAKEMAG'][w]) > 1:
+                raw_input('fakemag too long')
                 bigdata['bootfakemag'].extend([99])
                 bigdata['bootfitzpt'].extend([99])
                 bigdata['bootfakezpt'].extend([99])
                 bigdata['boothostmag'].extend([99])
+                bigdata['bootfilt'].extend([''])
+                bigdata['bootdpmjd'].extend([np.nan])
             else:
 
 
@@ -783,7 +788,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     bigdata['bootfakemag'].extend([99])
                     bigdata['bootfakezpt'].extend([31.])
                 bigdata['boothostmag'].extend(data['FLUX'][w]*0. + hostmag)
-
+                bigdata['bootfilt'].extend([filt])
+                bigdata['bootdpmjd'].extend([data['DPMJD'][w]])
         #print len(bigdata['bootfitzpt'])
         #raw_input()
     #print bigdata['diffzpt']
@@ -1396,7 +1402,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     if real:
         ww = (dpmjd > 270.) | (dpmjd < -50.)
-        print np.unique(dpmjd[filterarr == 'i'])
+        #print np.unique(dpmjd[filterarr == 'i'])
         flux = flux[ww]
         fluxerr = fluxerr[ww]
         fakemag = fakemag[ww]
