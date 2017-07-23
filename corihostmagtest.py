@@ -1514,6 +1514,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #raw_input()
     #print bigdata['bootdpmjd']
     #raw_input()
+    print 'dpmjd',bigdata['bootdpmjd'][:100]
+    print 'fakemag',bigdata['bootfakemag'][:100]
+    raw_input('asdf')
     myww = (bigdata['bootdpmjd'] > -35.) & (bigdata['bootdpmjd'] < 230.) & (np.asarray(bigdata['bootfakemag']) > 0.) & (np.asarray(bigdata['bootfitzpt']) != 99.) & (np.asarray(bigdata['m100']) != 0) & (np.asarray(bigdata['s100'])!=0.)
     marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
     sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
