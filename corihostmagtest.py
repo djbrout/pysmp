@@ -1410,8 +1410,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         rmsaddin = rmsaddin[ww]
         dpmjd = dpmjd[ww]
         fakeflux = fakeflux[ww]
-
-
+        print np.unique(filterarr)
+        raw_input('fff')
     #print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
     #am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
     #for a,f,fe in zip(np.sqrt(10**(.4*(fitzpt - hostmag))/3.),flux,fluxerr):
