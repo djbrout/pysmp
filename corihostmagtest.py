@@ -1396,6 +1396,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     if real:
         ww = (dpmjd > 270.) | (dpmjd < -50.)
+        print np.unique(dpmjd[filterarr == 'i'])
         flux = flux[ww]
         fluxerr = fluxerr[ww]
         fakemag = fakemag[ww]
@@ -1406,7 +1407,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         hostmag = hostmag[ww]
         skyerr = skyerr[ww]
         fluxerrz = fluxerrz[ww]
-        print np.unique(filterarr)
         filterarr = filterarr[ww]
         diffimflux = diffimflux[ww]
         diffimfluxerr = diffimfluxerr[ww]
