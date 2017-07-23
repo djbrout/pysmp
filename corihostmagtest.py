@@ -61,8 +61,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
             filt = c.split('.npz')[0].split('_')[-1]
             filts =  [ filt for x in range(len(td['Flux']))]
             data['filter'].extend(filts)
-            print np.unique(data['filter'])
-            raw_input()
+            #print np.unique(data['filter'])
+            #raw_input()
     #print len(data['Flux'])
     #raw_input()
     #for key in data.keys():
@@ -1406,6 +1406,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         hostmag = hostmag[ww]
         skyerr = skyerr[ww]
         fluxerrz = fluxerrz[ww]
+        print np.unique(filterarr)
         filterarr = filterarr[ww]
         diffimflux = diffimflux[ww]
         diffimfluxerr = diffimfluxerr[ww]
