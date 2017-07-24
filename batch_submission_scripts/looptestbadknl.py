@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,40)
+allindexes = range(40,100)
 filts = ['g','r','i','z']
 walltime= '10:00:00'
 
@@ -17,8 +17,8 @@ text = '#!/bin/bash -l\n#SBATCH --partition=shared\n' \
        '#SBATCH -N 1\n#SBATCH -C knl,quad,flat\n' \
        '#SBATCH -A m2875\n' \
        '#SBATCH --time=' + walltime + '\n' + \
-       '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/knldummy.log\n' + \
-       '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/knldummy.log\n' + \
+           '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/knldummy2.log\n' + \
+       '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/knldummy2.log\n' + \
        '#SBATCH --job-name=preps1\n' + \
        '#SBATCH --mail-type=NONE\n' + \
        '#SBATCH --mail-user=bdrizzle@yahoo.com\n' + \
@@ -44,5 +44,6 @@ script = '/global/cscratch1/sd/dbrout/logs/knlprep.sh'
 f = open(script, 'w')
 f.write(text)
 f.close()
+
 output = Popen(["sbatch", script], stdout=PIPE).communicate()
 print output[0]
