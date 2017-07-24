@@ -7,7 +7,7 @@ allindexes = range(0,1900)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '03:00:00'
+walltime= '10:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -44,8 +44,8 @@ for i in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            '#SBATCH -C haswell\n'+
-            '#SBATCH -A des\n' +
+            '#SBATCH -C knl,quad,flat\n'+
+            '#SBATCH -A m2875\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2s.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2s.log\n' +
