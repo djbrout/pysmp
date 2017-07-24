@@ -3939,49 +3939,80 @@ class smp:
                 stdoutfile = os.path.join(self.lcfilepath,
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
-                print snparams.snfile.split('/')[-1].split('.')[0]
-                print len(smp_dict['sky'])
-                print smp_dict['sky']
-                print smp_dict['mjd']
-                print smp_dict['skyerr']
-                print smp_dict['fitflag'] * 0.
-                print shiftstd > 0.
-                print smp_dict['mjdoff']
-                print smp_dict['snx']
-                print smp_dict['sny']
-                print smp_dict['psf_filename']
-                print smp_dict['psfcenter']
-                model_errors = True
-                print self.snparams.survey
-                print smp_dict['fileroots']
-                print smp_dict['scalefactor']
-                print smp_dict['gain']
-                print smp_dict['zpterr']
-                print smp_dict['fakemag']
-                print smp_dict['zpt']
-                print smp_dict['zpterr']
-                print smp_dict['fakezpt']
-                print smp_dict['image_filename']
-                print smp_dict['xoff']
-                nightlyoffy = smp_dict['yoff']
-                sstime = sstime
-                stdoutfile = stdoutfile
-                peakmjd = snparams.peakmjd
-                idobs = smp_dict['id_obs']
-                idcoadd = smp_dict['id_coadd']
-                diffim_flux = smp_dict['diffim_flux']
-                diffim_fluxerr = smp_dict['diffim_fluxerr']
-                ra = smp_dict['snra']
-                dec = smp_dict['sndec']
-                smpdictflag = smp_dict['flag']
-                mjdflag = smp_dict['mjd_flag']
-                descriptiveflag = smp_dict['descriptiveflag']
-                rmsaddin = smp_dict['rmsaddin']
-                gewekediag = smp_dict['rmsaddin'] * 0.
-                imfilename = smp_dict['image_filename']
-                weightfilename = smp_dict['weight_filename']
-                zptfilename = smp_dict['zpt_file']
-                filt = self.filt
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', galmodel=galmodel)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', modelvec = modelvec)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', galstd = galstd)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', modelstd = modelstd * 2.5)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', data = smp_im)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', psfs = smp_psf)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', weights = smp_noise)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', substamp = params.substamp)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', Nimage = len(smp_dict['sky']))
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', maxiter = numiter)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', mask = smp_mask)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', sky = smp_dict['sky'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', mjd = smp_dict['mjd'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', gewekenum = -9999999 * (passv - 1) + 10000)  # cannot be less than 100 after compression
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', skyerr = smp_dict['skyerr'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', useskyerr = False)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', usesimerr = False)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', flags = passflags)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fitflags = smp_dict['fitflag'] * 0.)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', psf_shift_std = shiftstd)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', xoff = 0.)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', yoff = 0.)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', shiftpsf = shiftstd > 0.)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fileappend = '')
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', stop = False)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', skyerr_radius = 12.)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', outpath = outimages)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', compressionfactor = 10)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fix_gal_model = False)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', pixelate_model = None)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', burnin = burnin)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', lcout = os.path.join(self.lcfilepath, filename))
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', chainsnpz = os.path.join(npoutdir, filename + '_withSn.npz'))
+                # , mjdoff=smp_dict['mjdoff']
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', dontsavegalaxy = True)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', log = self.fermilogfile)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', isfermigrid = self.fermigrid)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', isworker = self.worker)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', x = smp_dict['snx'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', y = smp_dict['sny'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', psffile = smp_dict['psf_filename'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', psfcenter = smp_dict['psfcenter'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', model_errors = True)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', survey = self.snparams.survey)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fileroots = smp_dict['fileroots'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', scalefactor = smp_dict['scalefactor'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', gain = smp_dict['gain'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', sigmazpt = smp_dict['zpterr'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fakemag = smp_dict['fakemag'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fitzpt = smp_dict['zpt'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fitzpterr = smp_dict['zpterr'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fakezpt = smp_dict['fakezpt'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', datafilenames = smp_dict['image_filename'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', nightlyoffx = smp_dict['xoff'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', nightlyoffy = smp_dict['yoff'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', sstime = sstime)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', stdoutfile = stdoutfile)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', peakmjd = snparams.peakmjd)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', idobs = smp_dict['id_obs'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', idcoadd = smp_dict['id_coadd'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', diffim_flux = smp_dict['diffim_flux'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', diffim_fluxerr = smp_dict['diffim_fluxerr'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', ra = smp_dict['snra'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', dec = smp_dict['sndec'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', smpdictflag = smp_dict['flag'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', mjdflag = smp_dict['mjd_flag'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', descriptiveflag = smp_dict['descriptiveflag'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', rmsaddin = smp_dict['rmsaddin'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', gewekediag = smp_dict['rmsaddin'] * 0.)
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', imfilename = smp_dict['image_filename'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', weightfilename = smp_dict['weight_filename'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', zptfilename = smp_dict['zpt_file'])
+                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', filt = self.filt)
+
 
                 if passv == 1:
 
