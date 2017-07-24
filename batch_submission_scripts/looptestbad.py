@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,1900)
+allindexes = range(40,80)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
@@ -16,8 +16,6 @@ snfilelist = 'badinputs.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simdummytest3'
 snfiles = open(snfilelist).read()
 snfiles = snfiles.split('.smp')
-print snfiles[38]
-raw_input()
 for i in allindexes:
     if snfiles[i] == '\n': continue
     filt = snfiles[i].split('_')[-1]
