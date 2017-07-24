@@ -319,7 +319,7 @@ class smp:
             useifdh = True
         else:
             useifdh = False
-        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt,useifdh=useifdh)
+        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+self.filt,useifdh=useifdh)
         print 'done with tmpwriter line 267'
         tstart = time.time()
         from txtobj import txtobj
