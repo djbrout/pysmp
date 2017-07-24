@@ -4,15 +4,11 @@ import numpy as np
 import time
 
 allindexes = range(0,40)
-#allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
-#filts = ['r']
 walltime= '10:00:00'
-#np.random.shuffle(allindexes)
 
 doskipping = True
 snfilelist = 'badinputs.txt'
-#snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simdummytest3'
 snfiles = open(snfilelist).read()
 snfiles = snfiles.split('.smp')
@@ -37,26 +33,7 @@ for i in allindexes:
     if snfiles[i] == '\n': continue
     filt = snfiles[i].split('_')[-1]
     snfiles[i] = snfiles[i][:-2]+'.dat'
-    #print snfiles[i]
-    #raw_input()
-    #for filt in filts:
-    if True:
-        if doskipping:
-            print snfiles[i]
-            sn = snfiles[i].split('/')[-1].split('.')[0]
-            # if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
-            #     print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
-            #     continue
-            # if os.path.exists('/global/cscratch1/sd/dbrout/specnpzfiles/'+sn+'_'+filt+'.mcmcinput.npz'):
-            #     print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
-            #     continue
-            # else:
-            #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
-            #     continue
-        print i
-
-
-        text += 'python smptest.py -f ' + filt +\
+    text += 'python smptest.py -f ' + filt +\
             ' -o '+outdir+' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+snfiles[i]+' '\
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n'\
             '\n'\
