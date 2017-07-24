@@ -4013,7 +4013,7 @@ class smp:
                              , imfilename = smp_dict['image_filename']
                              , weightfilename = smp_dict['weight_filename']
                              , zptfilename = smp_dict['zpt_file']
-                             , filt = filt
+                             , filt = self.filt
                              )
 
                     sys.exit()
