@@ -3949,20 +3949,20 @@ class smp:
                 print smp_dict['mjdoff']
                 print smp_dict['snx']
                 print smp_dict['sny']
-                psffile = smp_dict['psf_filename']
-                psfcenter = smp_dict['psfcenter']
+                print smp_dict['psf_filename']
+                print smp_dict['psfcenter']
                 model_errors = True
-                survey = self.snparams.survey
-                fileroots = smp_dict['fileroots']
-                scalefactor = smp_dict['scalefactor']
-                gain = smp_dict['gain']
-                sigmazpt = smp_dict['zpterr']
-                fakemag = smp_dict['fakemag']
-                fitzpt = smp_dict['zpt']
-                fitzpterr = smp_dict['zpterr']
-                fakezpt = smp_dict['fakezpt']
-                datafilenames = smp_dict['image_filename']
-                nightlyoffx = smp_dict['xoff']
+                print self.snparams.survey
+                print smp_dict['fileroots']
+                print smp_dict['scalefactor']
+                print smp_dict['gain']
+                print smp_dict['zpterr']
+                print smp_dict['fakemag']
+                print smp_dict['zpt']
+                print smp_dict['zpterr']
+                print smp_dict['fakezpt']
+                print smp_dict['image_filename']
+                print smp_dict['xoff']
                 nightlyoffy = smp_dict['yoff']
                 sstime = sstime
                 stdoutfile = stdoutfile
