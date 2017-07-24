@@ -3940,6 +3940,49 @@ class smp:
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
                 print snparams.snfile.split('/')[-1].split('.')[0]
+                print len(smp_dict['sky'])
+                print smp_dict['sky']
+                print smp_dict['mjd']
+                print smp_dict['skyerr']
+                print smp_dict['fitflag'] * 0.
+                print shiftstd > 0.
+                print smp_dict['mjdoff']
+                print smp_dict['snx']
+                print smp_dict['sny']
+                psffile = smp_dict['psf_filename']
+                psfcenter = smp_dict['psfcenter']
+                model_errors = True
+                survey = self.snparams.survey
+                fileroots = smp_dict['fileroots']
+                scalefactor = smp_dict['scalefactor']
+                gain = smp_dict['gain']
+                sigmazpt = smp_dict['zpterr']
+                fakemag = smp_dict['fakemag']
+                fitzpt = smp_dict['zpt']
+                fitzpterr = smp_dict['zpterr']
+                fakezpt = smp_dict['fakezpt']
+                datafilenames = smp_dict['image_filename']
+                nightlyoffx = smp_dict['xoff']
+                nightlyoffy = smp_dict['yoff']
+                sstime = sstime
+                stdoutfile = stdoutfile
+                peakmjd = snparams.peakmjd
+                idobs = smp_dict['id_obs']
+                idcoadd = smp_dict['id_coadd']
+                diffim_flux = smp_dict['diffim_flux']
+                diffim_fluxerr = smp_dict['diffim_fluxerr']
+                ra = smp_dict['snra']
+                dec = smp_dict['sndec']
+                smpdictflag = smp_dict['flag']
+                mjdflag = smp_dict['mjd_flag']
+                descriptiveflag = smp_dict['descriptiveflag']
+                rmsaddin = smp_dict['rmsaddin']
+                gewekediag = smp_dict['rmsaddin'] * 0.
+                imfilename = smp_dict['image_filename']
+                weightfilename = smp_dict['weight_filename']
+                zptfilename = smp_dict['zpt_file']
+                filt = self.filt
+
                 if passv == 1:
 
                     np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
