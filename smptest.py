@@ -3939,7 +3939,9 @@ class smp:
                 stdoutfile = os.path.join(self.lcfilepath,
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
+                print snparams.snfile.split('/')[-1].split('.')[0]
                 if passv == 1:
+
                     np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
                              galmodel=galmodel
                              , modelvec=modelvec
