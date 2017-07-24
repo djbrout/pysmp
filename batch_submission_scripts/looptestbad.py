@@ -16,6 +16,8 @@ snfilelist = 'badinputs.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simdummytest3'
 snfiles = open(snfilelist).read()
 snfiles = snfiles.split('.smp')
+print snfiles[38]
+raw_input()
 for i in allindexes:
     if snfiles[i] == '\n': continue
     filt = snfiles[i].split('_')[-1]
