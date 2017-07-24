@@ -4019,7 +4019,7 @@ class smp:
                              , burnin=burnin
                              , lcout=os.path.join(self.lcfilepath, filename)
                              , chainsnpz=os.path.join(npoutdir, filename + '_withSn.npz')
-                             , mjdoff=smp_dict['mjdoff']
+                             #, mjdoff=smp_dict['mjdoff']
                              , dontsavegalaxy=True
                              , log=self.fermilogfile
                              , isfermigrid=self.fermigrid
