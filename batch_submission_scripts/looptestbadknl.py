@@ -14,7 +14,7 @@ snfiles = open(snfilelist).read()
 snfiles = snfiles.split('.smp')
 
 text = '#!/bin/bash -l\n#SBATCH --partition=shared\n' \
-       '#SBATCH -n 1\n#SBATCH -c 1\n#SBATCH -C knl,quad,flat\n' \
+       '#SBATCH -N 1\n#SBATCH -C knl,quad,flat\n' \
        '#SBATCH -A m2875\n' \
        '#SBATCH --time=' + walltime + '\n' + \
        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/knldummy.log\n' + \
