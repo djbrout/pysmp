@@ -282,7 +282,7 @@ class smp:
     def main(self,nodiff=False,nozpt=False,rootdir='',outdir='' ,
              nomask=False,outfile='',debug=False,
              verbose=False, clear_zpt=False,clear_checkstars=True,mergeno=0,
-             mpfit_or_mcmc='mpfit',usefake=False,
+             mpfit_or_mcmc='mpfit',usefake=False,filt=None,
              snfile='/test.dat',gal_model=None,stardumppsf=True,
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
@@ -319,7 +319,7 @@ class smp:
             useifdh = True
         else:
             useifdh = False
-        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+self.filt,useifdh=useifdh)
+        self.tmpwriter = dt.tmpwriter(tmp_subscript=snfile.split('/')[-1].split('.')[0]+'_'+filt,useifdh=useifdh)
         print 'done with tmpwriter line 267'
         tstart = time.time()
         from txtobj import txtobj
@@ -7707,7 +7707,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,
+                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
                                     fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
