@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(15,30)
+allindexes = range(30,45)
 filts = ['g','r','i','z']
 walltime= '00:30:00'
 
