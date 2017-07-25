@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(60,75)
+allindexes = range(75,175)
 filts = ['g','r','i','z']
 walltime= '00:30:00'
 
@@ -14,11 +14,11 @@ snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
 text = '#!/bin/bash -l\n#SBATCH --partition=debug\n' \
-       '#SBATCH -N 1\n#SBATCH -C haswell\n' \
-       '#SBATCH -A des\n' \
+       '#SBATCH -N 1\n#SBATCH -C knl\n' \
+       '#SBATCH -A m2875\n' \
        '#SBATCH --time=' + walltime + '\n' + \
-        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/debugdummy4.log\n' + \
-       '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/debugdummy4.log\n' + \
+        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/knldebugdummy4.log\n' + \
+       '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/knldebugdummy4.log\n' + \
        '#SBATCH --job-name=preps1\n' + \
        '#SBATCH --mail-type=NONE\n' + \
        '#SBATCH --mail-user=bdrizzle@yahoo.com\n' + \
