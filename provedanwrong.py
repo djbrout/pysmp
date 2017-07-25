@@ -33,7 +33,7 @@ myskyerr = np.array(myskyerr)
 sexrms = np.array(sexrms)
 hostmag = np.array(hostmag)
 
-plt.scatter(hostmag,myskyerr-sexrms,alph=.4,color=black)
+plt.scatter(hostmag,myskyerr-sexrms,alph=.4,color='black')
 plt.axhline(0)
 plt.xlabel('Hostmag')
 plt.ylabel('My Sky - SexRMS')
