@@ -12,8 +12,8 @@ walltime= '00:30:00'
 
 doskipping = False
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s1lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/simdummytest3'
+snfilelist = 'data/s2lightcurves.txt'
+outdir = '/project/projectdirs/des/djbrout/s2testdummy/'
 snfiles = open(snfilelist).read()
 #snfiles = snfiles.split('.smp')
 
