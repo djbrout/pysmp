@@ -2678,6 +2678,8 @@ class smp:
                         print 'mysky',mysky,'myskysig',skysig
                         temp, mysexskysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
                         print 'mysexskysig',mysexskysig
+                        magx, magerrx, fluxx, fluxerrx, skyx, aperskyerr, badflag1, outstr1 = \
+                            aper.aper(im, xsn, ysn, apr=params.fitrad, verbose=False)
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
                         #raw_input('youyo')
 
@@ -2910,8 +2912,8 @@ class smp:
                                         # smp_dict['skyerr'][i] = skysig
                                         smp_dict['skyerr'][i] = mysexskysig
 
-                                        #print mysexskysig,sexrms
-                                        #raw_input('skysigcomparo')
+                                        print mysexskysig,sexrms,aperskyerr
+                                        raw_input('skysigcomparo')
 
                                             #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
