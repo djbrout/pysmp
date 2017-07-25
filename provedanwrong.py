@@ -20,7 +20,7 @@ for filt in filts:
                 mse = d['skyerr']
                 srms = d['sexrms']
                 hm = d['hostgal_sbmag']
-                aps = d['aper_skyerr']
+                ap = d['aper_skyerr']
             except:
                 continue
             cntr += 1
@@ -29,7 +29,7 @@ for filt in filts:
             myskyerr.extend(mse)
             sexrms.extend(srms)
             hostmag.extend(hm)
-
+            aps.extend(ap)
 
 myskyerr = np.array(myskyerr)
 sexrms = np.array(sexrms)
