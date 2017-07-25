@@ -17,8 +17,8 @@ text = '#!/bin/bash -l\n#SBATCH --partition=debug\n' \
        '#SBATCH -N 1\n#SBATCH -C haswell\n' \
        '#SBATCH -A des\n' \
        '#SBATCH --time=' + walltime + '\n' + \
-        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/debugdummy2.log\n' + \
-       '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/debugdummy2.log\n' + \
+        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/debugdummy3.log\n' + \
+       '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/debugdummy3.log\n' + \
        '#SBATCH --job-name=preps1\n' + \
        '#SBATCH --mail-type=NONE\n' + \
        '#SBATCH --mail-user=bdrizzle@yahoo.com\n' + \
