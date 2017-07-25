@@ -37,7 +37,7 @@ hostmag = np.array(hostmag)
 aps = np.array(aps)
 
 plt.scatter(hostmag,myskyerr-sexrms,alpha=.4,color='black',label='My Skyerr - SexRMS')
-plt.scatter(hostmag,aps-sexrms,alpha=.4,color='orange',label='Aper Skyerr - SexRMS')
+plt.scatter(hostmag,aps-sexrms,alpha=.2,color='orange',label='Aper Skyerr - SexRMS')
 plt.axhline(0)
 plt.legend()
 plt.xlim(20,30)
