@@ -2423,7 +2423,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
         marr = ['m1', 'm2', 'm3', 'm4', 'm5', 'm10', 'm20', 'm50', 'm100']
         sarr = ['s1', 's2', 's3', 's4', 's5', 's10', 's20', 's50', 's100']
-        #parr = [.02, .05, .1, .5, 1.]
+        parr = [0.001, .002, .005, .01, .02, .05, .1, .5, 1.]
         import seaborn as sns
         ax3.set_color_cycle(sns.color_palette("coolwarm_r", len(parr)+2))
 
