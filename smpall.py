@@ -2910,8 +2910,8 @@ class smp:
                                         # smp_dict['skyerr'][i] = skysig
                                         smp_dict['skyerr'][i] = mysexskysig
 
-                                        print mysexskysig,sexrms
-                                        raw_input('skysigcomparo')
+                                        #print mysexskysig,sexrms
+                                        #raw_input('skysigcomparo')
 
                                             #smp_noise[i,:,:] = np.sqrt(weights[int(self.psfcenter[1] - params.substamp/2.):int(self.psfcenter[1] + params.substamp/2.),
                                         #  int(self.psfcenter[0] - params.substamp/2.):int(self.psfcenter[0] + params.substamp/2.)]*scalefactor)**2
