@@ -5,7 +5,7 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 
 filts = ['g','r','i','z']
-pth = '/project/projectdirs/des/djbrout/simdummytest3/np_data/'
+pth = '/project/projectdirs/dessn/dbrout/simdummytest3/np_data/'
 myskyerr = []
 sexrms = []
 hostmag = []
@@ -15,7 +15,6 @@ for filt in filts:
     for f in os.listdir(pth+'/'+filt+'/'):
         if cntr > 1000: continue
         if 'smpDict' in f:
-
             try:
                 d = np.load(pth + '/' + filt + '/' + f)
                 mse = d['skyerr']
