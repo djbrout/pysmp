@@ -43,9 +43,10 @@ for i in allindexes:
 text += 'wait \n \n \n'
 
 script = '/global/cscratch1/sd/dbrout/logs/knlprep.sh'
-f = open(script, 'w')
-f.write(text)
-f.close()
+#f = open(script, 'w')
+#f.write(text)
+#f.close()
 
-output = Popen(["sbatch", script], stdout=PIPE).communicate()
-print output[0]
+#output = Popen(["sbatch", script], stdout=PIPE).communicate()
+#print output[0]
+print text
