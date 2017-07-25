@@ -14,7 +14,7 @@ snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
 text = '#!/bin/bash -l\n#SBATCH --partition=debug\n' \
-       '#SBATCH -N 1\n#SBATCH -C knl\n' \
+       '#SBATCH -N 1\n#SBATCH -C haswell\n' \
        '#SBATCH -A des\n' \
        '#SBATCH --time=' + walltime + '\n' + \
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/debugdummy4.log\n' + \
