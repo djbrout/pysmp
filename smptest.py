@@ -3200,7 +3200,7 @@ class smp:
                                     if not os.path.exists(npoutdir):
                                         os.makedirs(oldoutdir+'/np_data')
                                         os.makedirs(oldoutdir+'/np_data/' + filt )
-                                    self.tmpwriter.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
+                                    np.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
 
 
                         else:
