@@ -3194,6 +3194,15 @@ class smp:
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
+
+                                    filename = snparams.snfile.split('/')[-1].split('.')[0] + '_' + filt
+                                    npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
+                                    if not os.path.exists(npoutdir):
+                                        os.makedirs(oldoutdir+'/np_data')
+                                        os.makedirs(oldoutdir+'/np_data/' + filt )
+                                    self.tmpwriter.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
+
+
                         else:
                             print 'min max image equal'*100
                             if descriptiveflag == 0: descriptiveflag=128
