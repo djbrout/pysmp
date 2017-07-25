@@ -14,7 +14,7 @@ for f in os.listdir(pth):
     if cntr > 1000: continue
     if 'smpDict' in f:
 
-        print f
+        print cntr
         d = np.load(pth+'/'+f)
         try:
             mse = d['skyerr']
