@@ -605,7 +605,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             marr = ['m1','m2','m3','m4','m5','m10','m20','m50','m100']
             sarr = ['s1','s2','s3','s4','s5','s10','s20','s50','s100']
-            parr = [0.01,.02,.03,.04,.05,.1,.2,.5,1.]
+            parr = [0.001,.002,.005,.01,.02,.05,.1,.5,1.]
             #parr = [50000,75000,100000,150000,200000,500000,1000000,1500000,2000000]
             for p,m,s in zip(parr,marr,sarr):
                 stoppos = int(round(mhist.shape[0]*p))
