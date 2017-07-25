@@ -3,21 +3,21 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(40,160)
+allindexes = range(0,16)
 filts = ['g','r','i','z']
-walltime= '10:00:00'
+walltime= '00:30:00'
 
 doskipping = True
-snfilelist = 'badinputs.txt'
+snfilelist = 'data/s1lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simdummytest3'
-snfiles = open(snfilelist).read()
-snfiles = snfiles.split('.smp')
+snfiles = open(snfilelist).readlines()
+#snfiles = snfiles.split('.smp')
 
-text = '#!/bin/bash -l\n#SBATCH --partition=shared\n' \
-       '#SBATCH -N 1\n#SBATCH -C knl,quad,flat\n' \
-       '#SBATCH -A m2875\n' \
+text = '#!/bin/bash -l\n#SBATCH --partition=debug\n' \
+       '#SBATCH -N 1\n#SBATCH -C haswell\n' \
+       '#SBATCH -A des\n' \
        '#SBATCH --time=' + walltime + '\n' + \
-           '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/knldummy2.log\n' + \
+        '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/knldummy2.log\n' + \
        '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/knldummy2.log\n' + \
        '#SBATCH --job-name=preps1\n' + \
        '#SBATCH --mail-type=NONE\n' + \
@@ -30,11 +30,13 @@ text = '#!/bin/bash -l\n#SBATCH --partition=shared\n' \
        'export WALLTIME=' + walltime.split(':')[0] + '\n'
 
 for i in allindexes:
-    if snfiles[i] == '\n': continue
-    filt = snfiles[i].split('_')[-1]
-    snfiles[i] = snfiles[i][:-2]+'.dat'
-    text += 'python smptest.py -f ' + filt +\
-            ' -o '+outdir+' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+snfiles[i]+' '\
+    #if snfiles[i] == '\n': continue
+    for filt in filts:
+    #filt = snfiles[i].split('_')[-1]
+    #snfiles[i] = snfiles[i][:-2]+'.dat'
+        snfile = snfiles[i].split('/')[-1].strip()
+        text += 'python smptest.py -f ' + filt +\
+            ' -o '+outdir+' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+snfile+' '\
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n'\
             '\n'\
 
