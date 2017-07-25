@@ -497,6 +497,7 @@ class smp:
                     'zpterr':np.zeros(snparams.nvalid),   
                     'skysig':np.zeros(snparams.nvalid),
                     'sexrms':np.zeros(snparams.nvalid),
+                    'aper_skyerr':np.zeros(snparams.nvalid),
                     'sexsky':np.zeros(snparams.nvalid),
                     'total_skyerr':np.zeros(snparams.nvalid),
                     'mjd':np.zeros(snparams.nvalid),
@@ -2677,6 +2678,12 @@ class smp:
                         print 'sextractor sky ',sexsky,'sextractor rms', sexrms#scalefactor
                         print 'mysky',mysky,'myskysig',skysig
                         temp, mysexskysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
+
+                        try:
+                            magx, magerrx, fluxx, fluxerrx, skyx, aperskyerr, badflag1, outstr1 = \
+                                aper.aper(im, xsn, ysn, apr=params.fitrad, verbose=False)
+                        except:
+                            aperskyerr = -999
                         print 'mysexskysig',mysexskysig
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
                         #raw_input('youyo')
@@ -3011,6 +3018,7 @@ class smp:
                                     smp_dict['skysig'][i] = mysexskysig
                                     smp_dict['sexrms'][i] = sexrms
                                     smp_dict['sexsky'][i] = sexsky
+                                    smp_dict['aper_skyerr'][i] = aperskyerr
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
@@ -3939,42 +3947,10 @@ class smp:
                 stdoutfile = os.path.join(self.lcfilepath,
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', model_errors = True)
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', survey = self.snparams.survey)
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fileroots = smp_dict['fileroots'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', scalefactor = smp_dict['scalefactor'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', gain = smp_dict['gain'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', sigmazpt = smp_dict['zpterr'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fakemag = smp_dict['fakemag'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fitzpt = smp_dict['zpt'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fitzpterr = smp_dict['zpterr'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', fakezpt = smp_dict['fakezpt'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', datafilenames = smp_dict['image_filename'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', nightlyoffx = smp_dict['xoff'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', nightlyoffy = smp_dict['yoff'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', sstime = sstime)
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', stdoutfile = stdoutfile)
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', peakmjd = snparams.peakmjd)
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', idobs = smp_dict['id_obs'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', idcoadd = smp_dict['id_coadd'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', diffim_flux = smp_dict['diffim_flux'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', diffim_fluxerr = smp_dict['diffim_fluxerr'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', ra = smp_dict['snra'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', dec = smp_dict['sndec'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', smpdictflag = smp_dict['flag'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', mjdflag = smp_dict['mjd_flag'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', descriptiveflag = smp_dict['descriptiveflag'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', rmsaddin = smp_dict['rmsaddin'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', gewekediag = smp_dict['rmsaddin'] * 0.)
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', imfilename = smp_dict['image_filename'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', weightfilename = smp_dict['weight_filename'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', zptfilename = smp_dict['zpt_file'])
-                np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/test.npz', filt = self.filt)
-
 
                 if passv == 1:
 
-                    np.savez('/global/cscratch1/sd/dbrout/badnpzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
+                    np.savez('/global/cscratch1/sd/dbrout/simnpzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
                              galmodel=galmodel
                              , modelvec=modelvec
                              , galstd=galstd
@@ -4047,6 +4023,7 @@ class smp:
                              , imfilename = smp_dict['image_filename']
                              , weightfilename = smp_dict['weight_filename']
                              , zptfilename = smp_dict['zpt_file']
+                             , aperskyerr = smp_dict['aper_skyerr']
                              , filt = self.filt
                              )
 
