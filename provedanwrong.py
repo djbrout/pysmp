@@ -4,29 +4,30 @@ import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
 
-filt = 'g'
-pth = '/project/projectdirs/des/djbrout/simtest/np_data/g/'
+filts = ['g','r','i','z']
+pth = '/project/projectdirs/des/djbrout/simtest/np_data/'
 myskyerr = []
 sexrms = []
 hostmag = []
 cntr = 1
-for f in os.listdir(pth):
-    if cntr > 1000: continue
-    if 'smpDict' in f:
+for filt in filts:
+    for f in os.listdir(pth+'/'+filt+'/'):
+        if cntr > 1000: continue
+        if 'smpDict' in f:
 
-        print cntr
-        d = np.load(pth+'/'+f)
-        try:
-            mse = d['skyerr']
-            srms = d['sexrms']
-            hm = d['hostgal_sbmag']
-        except:
-            continue
-        cntr += 1
+            print cntr
+            d = np.load(pth+'/'+filt+'/'+f)
+            try:
+                mse = d['skyerr']
+                srms = d['sexrms']
+                hm = d['hostgal_sbmag']
+            except:
+                continue
+            cntr += 1
 
-        myskyerr.extend(mse)
-        sexrms.extend(srms)
-        hostmag.extend(hm)
+            myskyerr.extend(mse)
+            sexrms.extend(srms)
+            hostmag.extend(hm)
 
 
 myskyerr = np.array(myskyerr)
