@@ -15,15 +15,15 @@ for filt in filts:
         if cntr > 1000: continue
         if 'smpDict' in f:
 
-            print cntr
-            d = np.load(pth+'/'+filt+'/'+f)
             try:
+                d = np.load(pth + '/' + filt + '/' + f)
                 mse = d['skyerr']
                 srms = d['sexrms']
                 hm = d['hostgal_sbmag']
             except:
                 continue
             cntr += 1
+            print cntr
 
             myskyerr.extend(mse)
             sexrms.extend(srms)
