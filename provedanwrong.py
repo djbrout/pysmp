@@ -36,6 +36,8 @@ hostmag = np.array(hostmag)
 
 plt.scatter(hostmag,myskyerr-sexrms,alpha=.4,color='black')
 plt.axhline(0)
+plt.xlim(20,30)
+plt.ylim(-50,150)
 plt.xlabel('Hostmag')
 plt.ylabel('My Sky - SexRMS')
 plt.savefig('skyerrtest.png')
