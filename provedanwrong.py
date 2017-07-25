@@ -5,10 +5,11 @@ m.use('Agg')
 import matplotlib.pyplot as plt
 
 filts = ['g','r','i','z']
-pth = '/project/projectdirs/des/djbrout/simtest/np_data/'
+pth = '/project/projectdirs/des/djbrout/simdummytest3/np_data/'
 myskyerr = []
 sexrms = []
 hostmag = []
+aps = []
 cntr = 1
 for filt in filts:
     for f in os.listdir(pth+'/'+filt+'/'):
@@ -20,6 +21,7 @@ for filt in filts:
                 mse = d['skyerr']
                 srms = d['sexrms']
                 hm = d['hostgal_sbmag']
+                aps = d['aper_skyerr']
             except:
                 continue
             cntr += 1
@@ -33,11 +35,13 @@ for filt in filts:
 myskyerr = np.array(myskyerr)
 sexrms = np.array(sexrms)
 hostmag = np.array(hostmag)
+aps = np.array(aps)
 
-plt.scatter(hostmag,myskyerr-sexrms,alpha=.4,color='black')
+plt.scatter(hostmag,myskyerr-sexrms,alpha=.4,color='black',lable='My Skyerr - SexRMS')
+plt.scatter(hostmag,aps-sexrms,alpha=.4,color='orange',label='Aper Skyerr - SexRMS')
 plt.axhline(0)
 plt.xlim(20,30)
 plt.ylim(-50,150)
 plt.xlabel('Hostmag')
-plt.ylabel('My Sky - SexRMS')
+plt.ylabel('Fit Skyerr - SexRMS')
 plt.savefig('skyerrtest.png')
