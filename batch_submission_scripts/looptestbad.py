@@ -3,11 +3,11 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(40,80)
+allindexes = range(0,160)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '10:00:00'
+walltime= '03:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -30,9 +30,9 @@ for i in allindexes:
             # if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
             #     print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
             #     continue
-            # if os.path.exists('/global/cscratch1/sd/dbrout/specnpzfiles/'+sn+'_'+filt+'.mcmcinput.npz'):
-            #     print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
-            #     continue
+            if os.path.exists('/global/cscratch1/sd/dbrout/badnpzfiles/'+sn+'_'+filt+'.mcmcinput.npz'):
+                print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
+                continue
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
@@ -44,8 +44,8 @@ for i in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            '#SBATCH -C knl,quad,flat\n'+
-            '#SBATCH -A m2875\n' +
+            '#SBATCH -C haswell\n'+
+            '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2s.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim2s.log\n' +
@@ -79,6 +79,3 @@ for i in allindexes:
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
         #time.sleep(1)
-        print('python smptest.py -f ' + filt +
-            ' -o '+outdir+' -s /project/projectdirs/des/djbrout/pysmp/imglist/all/'+snfiles[i]+' '
-            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n')
