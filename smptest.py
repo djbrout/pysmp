@@ -3160,6 +3160,12 @@ class smp:
                                     #     os.popen('rm '+noisefile).read()
                                     #     os.popen('rm '+psffile).read()
 
+                                    filename = snparams.snfile.split('/')[-1].split('.')[0] + '_' + filt
+                                    npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
+                                    if not os.path.exists(npoutdir):
+                                        os.makedirs(oldoutdir + '/np_data')
+                                        os.makedirs(oldoutdir + '/np_data/' + filt)
+                                    np.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
 
                                     #i += 1
                                     print 'epochtime',time.time()-epochtime, float(snparams.mjd[j]),imfile
@@ -3195,12 +3201,6 @@ class smp:
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
 
-                                    filename = snparams.snfile.split('/')[-1].split('.')[0] + '_' + filt
-                                    npoutdir = os.path.join(oldoutdir, 'np_data/' + filt + '/')
-                                    if not os.path.exists(npoutdir):
-                                        os.makedirs(oldoutdir+'/np_data')
-                                        os.makedirs(oldoutdir+'/np_data/' + filt )
-                                    np.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
 
 
                         else:
