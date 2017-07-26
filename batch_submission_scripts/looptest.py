@@ -62,7 +62,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smptest.py --index=' + str(i) + ' -f ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --usefake '+
+            ' -o '+outdir+' --snfilelist='+snfilelist+' '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
 
@@ -75,4 +75,5 @@ for i in allindexes:
         f.close()
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
+        print open(script).read()
         #time.sleep(1)
