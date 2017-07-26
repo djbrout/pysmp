@@ -12,8 +12,8 @@ walltime= '03:00:00'
 
 doskipping = False
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/des/djbrout/s2testdummy/'
+snfilelist = 'data/allspec.txt'
+outdir = '/project/projectdirs/des/djbrout/spectestdummy/'
 snfiles = open(snfilelist).read()
 #snfiles = snfiles.split('.smp')
 
@@ -45,7 +45,7 @@ for i in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'reallysims2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'reallysims2.log\n' +
-            '#SBATCH --job-name=simpre2_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=spec_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
