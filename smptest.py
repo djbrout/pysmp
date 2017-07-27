@@ -286,7 +286,7 @@ class smp:
              snfile='/test.dat',gal_model=None,stardumppsf=True,
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
-             doglobalstar=True,exactpos=True,bigstarcatalog=None,
+             doglobalstar=True,exactpos=True,bigstarcatalog=None,savenpzfilesdir=None,
              stardeltasfolder=None, zptfoldername=None, galaxyfoldername=None,dobigstarcat=False,useweights=True,
              dosextractor=True,fermigrid=False,zptoutpath='./zpts/',fermigriddir=None,worker=False,
              savezptstamps=False,fermilog=False,isdonedir=None,oldformat=False,continu=False,continudir=None
@@ -414,6 +414,7 @@ class smp:
         self.oldformat = oldformat
         self.continu = continu
         self.continudir = continudir
+        self.savenpzfilesdir = savenpzfilesdir
 
         self.useweights = useweights
         if not self.useweights:
@@ -3960,7 +3961,7 @@ class smp:
 
                 if passv == 1:
 
-                    np.savez('/global/cscratch1/sd/dbrout/simnpzfiles/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
+                    np.savez(self.savenpzfilesdir+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
                              galmodel=galmodel
                              , modelvec=modelvec
                              , galstd=galstd
@@ -7265,7 +7266,7 @@ if __name__ == "__main__":
                       "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
+                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker","savenpzfilesdir=",
                       "lcfilepath=","fermilog","isdonedir=","oldformat","continue","continuedir=",'skipdone'])
 
 
@@ -7294,7 +7295,7 @@ if __name__ == "__main__":
                       "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker",
+                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker","savenpzfilesdir="
                       "lcfilepath=","fermilog","isdonedir","oldformat","continue","continuedir=",'skipdone'])
 
 
@@ -7338,6 +7339,7 @@ if __name__ == "__main__":
     continu = False
     continudir = None
     skipdone = False
+    savenpzfilesdir='/global/cscratch1/sd/dbrout/npzfiles/'
 
     dobigstarcat = True
 
@@ -7451,6 +7453,8 @@ if __name__ == "__main__":
             continudir = a
         elif o == "--skipdone":
             skipdone = True
+        elif o == "--savenpzfilesdir":
+            savenpzfilesdir = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7562,6 +7566,8 @@ if __name__ == "__main__":
             continudir = a
         elif o == "--skipdone":
             skipdone = True
+        elif o == "--savenpzfilesdir":
+            savenpzfilesdir = a
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7690,7 +7696,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,
+                                 galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,savenpzfilesdir=savenpzfilesdir,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
                                     fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
@@ -7807,7 +7813,7 @@ if __name__ == "__main__":
                             dobigstarcat=dobigstarcat,filt=filt,
                             galaxyfoldername=galaxyfoldername, isdonedir=isdonedir,
                             useweights=useweights, dosextractor=dosextractor, fermigrid=fermigrid,
-                            zptoutpath=zptoutpath,
+                            zptoutpath=zptoutpath,savenpzfilesdir=savenpzfilesdir,
                             fermigriddir=fermigriddir, worker=worker, savezptstamps=savezptstamps,
                             fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
         except:
@@ -7823,7 +7829,7 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,
+                     galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,savenpzfilesdir=savenpzfilesdir,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,
                     fermilog=fermilog,oldformat=oldformat,continu=continu,continudir=continudir)
