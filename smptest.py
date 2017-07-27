@@ -6042,9 +6042,10 @@ class smp:
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
                             aper.aper(im, ysn, xsn, apr=params.fitrad, verbose=False)
 
-
-                        print skysig,se
-                        raw_input('se comparo')
+                        sein = skysig
+                        se = skysig
+                        #print skysig,se
+                        #raw_input('se comparo')
                         # pm = 100
                         # sin, sein, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
                         #                                      clipsig=4, maxiter=8)
