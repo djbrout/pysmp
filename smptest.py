@@ -4049,6 +4049,7 @@ class smp:
                              )
 
                     sys.exit()
+                    return
                 import mcmc_geweke as mcmc3
                 aaa = mcmc3.metropolis_hastings(
                         galmodel = galmodel
