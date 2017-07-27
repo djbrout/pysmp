@@ -2204,6 +2204,7 @@ class smp:
                                 nozpt = True
                                 gogo = False
 
+                    #gogo = False
                     if gogo:
                         try:
                         #if True:
@@ -6108,33 +6109,33 @@ class smp:
                         mjd = 000.
                         #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
                         #                                                    mjd, scale)
-                        if self.dogalsimpixfit:
-                            fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
-                            stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
-                            cx = int(round(stamp_center.x))
-                            cy = int(round(stamp_center.y))
-                            des_psfex = galsim.des.DES_PSFEx(psffile)
-                            thispsf = des_psfex.getPSF(stamp_center)
-                            tim = full_data_image[galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
-                                                                 cy - params.substamp/2, cy + params.substamp/2-1)]
-                            galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
-                            simstamp = full_data_image[ galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
-                                                                       cy - params.substamp/2, cy + params.substamp/2-1)] * 0.0
-                            offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
-                            sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
-                            sn = sn.shift(offset)
-                            conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
-                            conv.drawImage(image=simstamp,method='no_pixel')
-                            gpsf = simstamp.array
-                            gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf,
-                                                                               sexsky, noise_stamp,
-                                                                               radius, gal, mjd, scale)
-                            gsflux[i] =gscale
-                            gsflux_std[i] = gscale_std
-                            gsflux_chisq[i]  = gchisq
-                            gsflux_dms[i] = gdms
-                            #print 'gchisq',gchisq
-                            #raw_input()
+                        # if self.dogalsimpixfit:
+                        #     fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
+                        #     stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
+                        #     cx = int(round(stamp_center.x))
+                        #     cy = int(round(stamp_center.y))
+                        #     des_psfex = galsim.des.DES_PSFEx(psffile)
+                        #     thispsf = des_psfex.getPSF(stamp_center)
+                        #     tim = full_data_image[galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
+                        #                                          cy - params.substamp/2, cy + params.substamp/2-1)]
+                        #     galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
+                        #     simstamp = full_data_image[ galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
+                        #                                                cy - params.substamp/2, cy + params.substamp/2-1)] * 0.0
+                        #     offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
+                        #     sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
+                        #     sn = sn.shift(offset)
+                        #     conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
+                        #     conv.drawImage(image=simstamp,method='no_pixel')
+                        #     gpsf = simstamp.array
+                        #     gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf,
+                        #                                                        sexsky, noise_stamp,
+                        #                                                        radius, gal, mjd, scale)
+                        #     gsflux[i] =gscale
+                        #     gsflux_std[i] = gscale_std
+                        #     gsflux_chisq[i]  = gchisq
+                        #     gsflux_dms[i] = gdms
+                        #     #print 'gchisq',gchisq
+                        #     #raw_input()
                         # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
                         #                                                  gal, mjd, scale,index=i)
 
