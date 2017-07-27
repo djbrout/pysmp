@@ -7,7 +7,7 @@ allindexes = range(0,450)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '05:00:00'
+walltime= '06:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
@@ -75,5 +75,5 @@ for i in allindexes:
         f.close()
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
-        print open(script).read()
+        #print open(script).read()
         #time.sleep(1)
