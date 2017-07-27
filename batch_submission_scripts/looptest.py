@@ -49,7 +49,7 @@ for i in allindexes:
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
-            '#SBATCH --gres=craynetwork:1\n' +
+            '#SBATCH --gres=craynetwork:0\n' +
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
             'source setup_scripts/setupcori2.sh\n'+
