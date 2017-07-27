@@ -2213,6 +2213,7 @@ class smp:
                             zptdata = np.load(zpt_file.replace('+fakeSN','')) #load previous zpt information
 
                             print zptdata.keys()
+
                             zpt = zptdata['fit_zpt']
                             zpterr = zptdata['fit_zpt_std']
                             #rmsaddin = zptdata['rmsaddin']
@@ -2440,7 +2441,7 @@ class smp:
                     # print min(mag_star),np.median(mag_star),max(mag_star)
                     # raw_input()
 
-                    dosextractor = True
+                    dosextractor = False
                     if dosextractor:
                         print imfile
                         print snparams.snfile.split('/')[-1].replace('.dat','')
@@ -2462,8 +2463,14 @@ class smp:
                         #sexrms = (np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel() ** .5) * scalefactor) ** 2.
 
                     else:
-                        bkgrnd = None
-                        bkgrndrms = None
+                        magsn, magerrsn, fluxsn, fluxerrsn, skysn, skyerrsn, badflagaper, outstr = aper.aper(im, xsn,
+                                                                                                             ysn,
+                                                                                                             apr=60.,
+                                                                                                             skyisempty=True,
+                                                                                                             verbose=False)  # ,skyrad=skyrad)
+
+                        bkgrnd = skysn
+                        bkgrndrms = skyerrsn
 
                     #print sexsky,sexrms,sky,skyerr
                     #raw_input('sss')
@@ -2686,8 +2693,16 @@ class smp:
                         except:
                             aperskyerr = -999
                         print 'mysexskysig',mysexskysig
-                        #print 'skysn',skysn,'skyerrsn',skyerrsn
-                        #raw_input('youyo')
+                        print 'mysex',sexsky,'skyerrsn',skysn
+                        raw_input('youyo')
+                    else:
+                        magsn, magerrsn, fluxsn, fluxerrsn, skysn, skyerrsn, badflagaper, outstr = aper.aper(im, xsn,
+                                                                                                             ysn,
+                                                                                                             apr=params.fitrad,
+                                                                                                             skyisempty=True,
+                                                                                                             verbose=False)  # ,skyrad=skyrad)
+
+                        mysexskysig = skyerrsn
 
                     skyvals = im[ylow:yhi,xlow:xhi].ravel()
                     #print im.shape
