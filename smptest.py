@@ -1404,8 +1404,8 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
 
-            #if j > 10:
-            #    continue
+            if j > 10:
+                continue
 
             # if not '20151029' in imfile:
             #     continue
