@@ -62,7 +62,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smptest.py --index=' + str(i) + ' --nozpt -f' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir= '+
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir=/global/cscratch1/sd/dbrout/specnpzfiles '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
 

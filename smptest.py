@@ -416,7 +416,7 @@ class smp:
         self.continudir = continudir
         self.savenpzfilesdir = savenpzfilesdir
 
-        raw_input(self.savenpzfilesdir)
+        #raw_input(self.savenpzfilesdir)
         self.useweights = useweights
         if not self.useweights:
             self.snparams.image_name_weight = zip(self.snparams.image_name_noise,self.snparams.image_name_mask)
