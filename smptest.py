@@ -6037,8 +6037,14 @@ class smp:
                         #sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
                         sin = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel())
                         sein = np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel())
-                        temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
+                        #temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
 
+                        mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
+                            aper.aper(im, xsn, ysn, apr=params.fitrad, verbose=False)
+
+
+                        print skysig,se
+                        raw_input('se comparo')
                         # pm = 100
                         # sin, sein, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
                         #                                      clipsig=4, maxiter=8)
