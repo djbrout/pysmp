@@ -2689,7 +2689,7 @@ class smp:
 
                         try:
                             magx, magerrx, fluxx, fluxerrx, skyx, aperskyerr, badflag1, outstr1 = \
-                                aper.aper(im, xsn, ysn, apr=params.fitrad, verbose=False)
+                                aper.aper(im, xsn, ysn, apr=60., verbose=False)
                         except:
                             aperskyerr = -999
                         print 'mysexskysig',mysexskysig
