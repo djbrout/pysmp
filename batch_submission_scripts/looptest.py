@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,300)
+allindexes = range(0,450)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
@@ -43,8 +43,8 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'reallysims2.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'reallysims2.log\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
             '#SBATCH --job-name=spec_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
@@ -61,8 +61,8 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + ' -f --nozpt' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' '+
+            'python smptest.py --index=' + str(i) + ' --nozpt -f' + filt +
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir= '+
             '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
 
 
