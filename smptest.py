@@ -7299,7 +7299,7 @@ if __name__ == "__main__":
                       "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf",
                       "dosextractor","useweights","fermigrid","zptoutpath=",
-                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker","savenpzfilesdir="
+                      "embarrasinglyParallelEnvVar=","fermigriddir=","worker","savenpzfilesdir=",
                       "lcfilepath=","fermilog","isdonedir","oldformat","continue","continuedir=",'skipdone'])
 
 
