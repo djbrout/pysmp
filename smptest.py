@@ -2359,7 +2359,7 @@ class smp:
                 #print im.shape
                 #try:
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
-                    aper.aper(im,x_star1,y_star1,apr = 30,verbose=False,ignoreneg=True)
+                    aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
                 #except:
                 #    print 'failed aper'
                 #    badflag = 1
