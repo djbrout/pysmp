@@ -6436,6 +6436,9 @@ class smp:
         #NEED TO MAKE A PLOT HERE!
         print goodstarcols
         print '-'*100
+        for star,cch in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
+            print star,cch
+        raw_input('asdfasdfasdfsdf')
 
         if len(goodstarcols) > self.params.minzptstars:
 
