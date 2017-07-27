@@ -63,7 +63,7 @@ for i in allindexes:
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smptest.py --index=' + str(i) + ' --nozpt -f ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir=/global/cscratch1/sd/dbrout/specnpzfiles '+
-            '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
+            '--snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
