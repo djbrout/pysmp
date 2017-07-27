@@ -1,10 +1,10 @@
 import os
 import numpy as np
 import sys
-try:
-    import psfex
-except:
-    pass
+#try:
+import psfex
+#except:
+#    pass
 
 def build(psffile, x, y, stampsize,psfexworked=True):
     #print 'psffile'
