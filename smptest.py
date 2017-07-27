@@ -3968,7 +3968,7 @@ class smp:
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
 
-                if passv == 1:
+                if passv == 0:
 
                     np.savez(self.savenpzfilesdir+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
                              galmodel=galmodel
