@@ -6040,7 +6040,7 @@ class smp:
                         #temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
 
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
-                            aper.aper(im, xsn, ysn, apr=params.fitrad, verbose=False)
+                            aper.aper(im, ysn, xsn, apr=params.fitrad, verbose=False)
 
 
                         print skysig,se
