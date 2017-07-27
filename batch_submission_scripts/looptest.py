@@ -13,7 +13,7 @@ walltime= '06:00:00'
 doskipping = False
 #snfilelist = 'badinputs.txt'
 snfilelist = 'data/allspec.txt'
-outdir = '/project/projectdirs/des/djbrout/spectestdummy/'
+outdir = '/project/projectdirs/dessn/dbrout/spectestdummy/'
 snfiles = open(snfilelist).read()
 #snfiles = snfiles.split('.smp')
 
