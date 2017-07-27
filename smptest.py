@@ -478,6 +478,7 @@ class smp:
         smp_starra = np.zeros([snparams.nvalid, 500])
         smp_stardec = np.zeros([snparams.nvalid, 500])
         smp_dict = {'scale':np.zeros(snparams.nvalid),
+                    'aperscale': np.zeros(snparams.nvalid),
                     'scale_err':np.zeros(snparams.nvalid),
                     'mcmc_scale':np.zeros(snparams.nvalid),
                     'mcmc_scale_err':np.zeros(snparams.nvalid),
@@ -1404,8 +1405,8 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
 
-            if j > 10:
-                continue
+            #if j > 10:
+            #    continue
 
             # if not '20151029' in imfile:
             #     continue
@@ -2688,7 +2689,9 @@ class smp:
                         try:
                             magx, magerrx, fluxx, fluxerrx, skyx, aperskyerr, badflag1, outstr1 = \
                                 aper.aper(im, xsn, ysn, apr=params.fitrad, verbose=False)
+                            aperscale = fluxx
                         except:
+                            aperscale = -999
                             aperskyerr = -999
                         print 'mysexskysig',mysexskysig
                         #print 'skysn',skysn,'skyerrsn',skyerrsn
@@ -3025,6 +3028,8 @@ class smp:
                                     smp_dict['sexrms'][i] = sexrms
                                     smp_dict['sexsky'][i] = sexsky
                                     smp_dict['aper_skyerr'][i] = aperskyerr
+                                    smp_dict['aperscale'][i] = aperscale
+
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
@@ -4040,6 +4045,7 @@ class smp:
                              , zptfilename = smp_dict['zpt_file']
                              , aperskyerr = smp_dict['aper_skyerr']
                              , filt = self.filt
+                             , aperscale = smp_dict['aperscale']
                              )
 
                     sys.exit()
