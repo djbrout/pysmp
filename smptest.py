@@ -5880,7 +5880,7 @@ class smp:
             #if i < float(params.numcheckstars):
             #    isnotcheckstars[i] = 0
 
-            if mc > 21.:
+            if mc > 21.25:
                 print mc,'star too dim'
                 continue
             if mc < 16.5:
