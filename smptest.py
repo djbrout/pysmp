@@ -6440,7 +6440,7 @@ class smp:
             print star,cch
         raw_input('asdfasdfasdfsdf')
 
-        if len(goodstarcols) > self.params.minzptstars:
+        if len(mag_cat[goodstarcols]) > self.params.minzptstars:
 
             for fl,fc in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
                 print fl,fc
