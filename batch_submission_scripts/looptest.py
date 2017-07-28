@@ -42,6 +42,7 @@ for i in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
+            '#SBATCH --mem=2.5GB\n'+
             #'#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
