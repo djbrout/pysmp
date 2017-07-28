@@ -41,7 +41,7 @@ for i in allindexes:
             '#!/bin/bash -l\n' +
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
-            '#SBATCH -c \n'+
+            '#SBATCH -c 4\n'+
             #'#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
