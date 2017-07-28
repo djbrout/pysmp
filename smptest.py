@@ -2477,7 +2477,7 @@ class smp:
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
-                    print 'rmsaddin',rmsaddin
+
                     if zpt == 0:
                         badflag = 1
                         descriptiveflag = 4
@@ -2497,6 +2497,7 @@ class smp:
                 mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 rmsaddin = zptdata['rmsaddin']
                 thisra = zptdata['thisra']
+                print 'getting rasssssss'
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
 
@@ -2507,9 +2508,9 @@ class smp:
                     scalefactor = 1.
                     badflag = 1
                     descriptiveflag = 512
-                if rmsaddin > 0.02:
+                if zpterr > 0.01:
                     badflag = 1
-                    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
+                    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... Zpt Uncertainty LARGER THAN .01 MAGS'
                     scalefactor = 1.
                     badflag = 1
                     descriptiveflag = 1024
