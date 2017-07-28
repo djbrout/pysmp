@@ -6578,7 +6578,7 @@ class smp:
             #print len(mag_cat[goodstarcols])
 
 
-            doplot = False
+            doplot = True
             if doplot: plt.clf()
             #plt.scatter(mag_cat[goodstarcols], md-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
 
@@ -6611,7 +6611,6 @@ class smp:
             print 'W Fitzp:',mde,'+-',mdeerr
             print '-'*100
 
-            doplot = True
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
                              flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
