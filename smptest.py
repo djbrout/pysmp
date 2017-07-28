@@ -5880,9 +5880,10 @@ class smp:
             #if i < float(params.numcheckstars):
             #    isnotcheckstars[i] = 0
 
-            if mc > 21.25:
+            if mc > 21.01:
                 print mc,'star too dim'
                 continue
+
             if mc < 16.5:
                 print mc,'star too bright'
                 continue
@@ -6377,7 +6378,8 @@ class smp:
         #check for only good fits MPFIT
         if not self.dogalsimpixfit:
             goodstarcols = np.where((mag_cat != 0) &
-                                (mag_cat < 26) &
+                                (mag_cat < 21.01) &
+                                (mag_cat > 16.5) &
                                 (flux_star != 1) &
                                 (flux_star != -999) &
                                 (flux_star < 9e6) &
@@ -6436,9 +6438,9 @@ class smp:
         #NEED TO MAKE A PLOT HERE!
         print goodstarcols
         print '-'*100
-        for star,cch in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
-            print star,cch
-        raw_input('asdfasdfasdfsdf')
+        #for star,cch in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
+        #    print star,cch
+        #raw_input('asdfasdfasdfsdf')
 
         if len(mag_cat[goodstarcols]) > self.params.minzptstars:
 
