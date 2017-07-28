@@ -6605,7 +6605,7 @@ class smp:
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
             #                              startMedian=True, sigmaclip=3, iter=10)
 
-
+            uncert = std/np.sqrt(num)
             print '-'*100
             print 'Fit ZPT:',md,'+-',std/np.sqrt(num)
             print 'W Fitzp:',mde,'+-',mdeerr
@@ -6923,7 +6923,7 @@ class smp:
             print 'Error : not enough good stars to compute zeropoint!!!'*20
 
         if not bad:
-            if std > 0.05:
+            if uncert > 0.02:
                 #print rmsaddin
                 print 'std large'*100.
                 bad = True
