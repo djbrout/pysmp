@@ -2516,7 +2516,7 @@ class smp:
                     descriptiveflag = 1024
             except:
                 badlfag = 1
-                print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small'
+                print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small2222'
                 scalefactor = 1.
                 descriptiveflag = 512
 
