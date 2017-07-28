@@ -14,7 +14,7 @@ doskipping = True
 #snfilelist = 'badinputs.txt'
 snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/'
-snfiles = open(snfilelist).read()
+snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
 for i in allindexes:
