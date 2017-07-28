@@ -33,8 +33,8 @@ for i in allindexes:
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
-        print i,'submitted'
-        continue
+        #print i,'submitted'
+        #continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
         f.write(
