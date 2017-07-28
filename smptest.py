@@ -2501,8 +2501,8 @@ class smp:
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
 
-            try:
-                #if True:
+            #try:
+            if True:
                 if len(thisra) < params.minzptstars:
                     print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small. Nstars=',len(thisra)
                     scalefactor = 1.
@@ -2514,11 +2514,11 @@ class smp:
                     scalefactor = 1.
                     badflag = 1
                     descriptiveflag = 1024
-            except:
-                badlfag = 1
-                print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small2222'
-                scalefactor = 1.
-                descriptiveflag = 512
+            #except:
+            #    badlfag = 1
+            #    print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small2222'
+            #    scalefactor = 1.
+            #    descriptiveflag = 512
 
             dotestoff = False
             if zpt == 0:
