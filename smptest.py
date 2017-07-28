@@ -2855,7 +2855,7 @@ class smp:
                     print ('skyerr '+str(sexrms/scalefactor)+' greater than skyerrmax '+str(skyerrmax)+'\n')*10
 
                 del im
-                del noise
+                del weights
                 del psf
                 gc.collect()
                 if not badflag:
