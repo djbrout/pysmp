@@ -12,7 +12,7 @@ walltime= '01:00:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s1lightcurves.txt'
+snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/'
 snfiles = open(snfilelist).read()
 #snfiles = snfiles.split('.smp')
