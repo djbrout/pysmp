@@ -2854,13 +2854,16 @@ class smp:
                     descriptiveflag = 32
                     print ('skyerr '+str(sexrms/scalefactor)+' greater than skyerrmax '+str(skyerrmax)+'\n')*10
 
+
+                minim = np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)])
+                maxim = np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)])
                 del im
                 del weights
                 del psf
                 gc.collect()
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
-                        if np.min(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]) != np.max(im[int(ysn-2):int(ysn+3),int(xsn-2):int(xsn+3)]):
+                        if minim != maxim:
                             #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum
                                 if np.max(psf_stamp[int(params.substamp/2+1-3):int(params.substamp/2+1+4),int(params.substamp/2+1-3):int(params.substamp/2+1+4)]) == np.max(psf_stamp[:,:]):
                                     #i = j
