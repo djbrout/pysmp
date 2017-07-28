@@ -7,7 +7,7 @@ allindexes = range(0,500)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '03:00:00'
+walltime= '01:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
@@ -61,8 +61,8 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + ' --nozpt -f --usefake ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir=/global/cscratch1/sd/dbrout/specnpzfiles '+
+            'python smptest.py --index=' + str(i) + ' --nozpt --usefake -f  ' + filt +
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir=/global/cscratch1/sd/dbrout/simnpzfiles '+
             '--snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
 
