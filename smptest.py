@@ -2477,7 +2477,7 @@ class smp:
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
-
+                    print 'rmsaddin',rmsaddin
                     if zpt == 0:
                         badflag = 1
                         descriptiveflag = 4
@@ -2497,7 +2497,6 @@ class smp:
                 mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 rmsaddin = zptdata['rmsaddin']
                 thisra = zptdata['thisra']
-                print 'getting rasssssss'
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
 
@@ -2508,7 +2507,7 @@ class smp:
                     scalefactor = 1.
                     badflag = 1
                     descriptiveflag = 512
-                if zpterr / np.sqrt(float(len(thisra))) > 0.01:
+                if rmsaddin > 0.02:
                     badflag = 1
                     print 'COULD NOT GET GOOD FIT OF ZEROPOINT... SCATTER/SQRT(N) LARGER THAN .01 MAGS'
                     scalefactor = 1.
@@ -6613,7 +6612,7 @@ class smp:
 
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
+                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3))+'\nZPT SCATTER: '+str(round(std,3)))
                 #print 'plot'
                 #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
                 plt.axhline(0,color='black')
@@ -6922,14 +6921,14 @@ class smp:
 
             print 'Error : not enough good stars to compute zeropoint!!!'*20
 
-        if not bad:
-            if mdeerr > 0.015:
-                #print rmsaddin
-                print 'std large'
-                bad = True
-                md = 0
-                std = 0
-                mag_compare_out = 0
+        # if not bad:
+        #     if uncert > 0.02:
+        #         #print rmsaddin
+        #         print 'std large'*100.
+        #         bad = True
+        #         md = 0
+        #         std = 0
+        #         mag_compare_out = 0
 
         if not bad:
             if self.fermilog:
