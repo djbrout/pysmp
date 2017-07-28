@@ -10,9 +10,9 @@ filts = ['g','r','i','z']
 walltime= '01:00:00'
 #np.random.shuffle(allindexes)
 
-doskipping = False
+doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s2lightcurves.txt'
+snfilelist = 'data/s1lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/'
 snfiles = open(snfilelist).read()
 #snfiles = snfiles.split('.smp')
@@ -32,7 +32,8 @@ for i in allindexes:
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
-        print i
+        print i,'submitted'
+        continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
         f.write(
