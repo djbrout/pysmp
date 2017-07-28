@@ -48,6 +48,7 @@ import runsextractor
 import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
+import gc
 
 inflateskyerrworked = False
 try:
@@ -3965,7 +3966,6 @@ class smp:
 
                 plt.clf()
                 plt.close()
-                import gc
                 collected = gc.collect()
 
                 stdoutfile = os.path.join(self.lcfilepath,
