@@ -6673,26 +6673,26 @@ class smp:
                 name = imfile.split('/')[-1][:-8]
                 zptplotout = os.path.join(self.outdir,'stardata',filt, name + '_zptplot.png')
                 if doplot:
-                    plt.savefig(zptplotout)
+                    plt.savefig(zptplotout,dpi=50)
                     print 'saved',zptplotout
                     plt.clf()
                 ras = np.array(ras)
                 decs = np.array(decs)
                 ids = np.array(ids)
-                if doplot:
-                    plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
-                zptplotoutra = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_ra.png')
-                if doplot:
-                    plt.savefig(zptplotoutra)
-                #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
-                #    filt) + 'band_starfit_zptplot_ra.png')
-                if doplot:
-                    plt.clf()
-                    plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
-                zptplotoutdec = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_dec.png')
-
-                if doplot:
-                    plt.savefig(zptplotoutdec)
+                # if doplot:
+                #     plt.scatter(ras[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+                # zptplotoutra = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_ra.png')
+                # if doplot:
+                #     plt.savefig(zptplotoutra)
+                # #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
+                # #    filt) + 'band_starfit_zptplot_ra.png')
+                # if doplot:
+                #     plt.clf()
+                #     plt.scatter(decs[goodstarcols], -2.5 * np.log10(flux_star[goodstarcols]) - mag_cat[goodstarcols] + md )
+                # zptplotoutdec = os.path.join(self.outdir, 'stardata', filt, name + '_zptplot_dec.png')
+                #
+                # if doplot:
+                #     plt.savefig(zptplotoutdec)
                 #print 'saved', os.path.join(self.zptoutpath, imfile.split('.fits')[-2].split('/')[-1] + '_' + str(
                 #    filt) + 'band_starfit_zptplot_dec.png')
 
