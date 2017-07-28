@@ -6609,7 +6609,7 @@ class smp:
             print 'W Fitzp:',mde,'+-',mdeerr
             print '-'*100
 
-            #doplot = False
+            doplot = True
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
                              flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
@@ -6924,7 +6924,7 @@ class smp:
         if not bad:
             if std > 0.05:
                 #print rmsaddin
-                #print 'rmsaddin large'*100.
+                print 'std large'*100.
                 bad = True
                 md = 0
                 std = 0
@@ -6943,6 +6943,7 @@ class smp:
 
         #if self.verbose:
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
+        print 'bad', bad
         #sys.exit()
 
         #if self.fermigrid:
