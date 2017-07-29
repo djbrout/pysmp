@@ -7,7 +7,7 @@ allindexes = range(0,500)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '02:30:00'
+walltime= '03:30:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -24,9 +24,9 @@ for i in allindexes:
         if doskipping:
             print snfiles[i]
             sn = snfiles[i].split('/')[-1].split('.')[0]
-            if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
-                print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
-                continue
+            #if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
+            #    print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
+            #    continue
             if os.path.exists(npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'):
                 print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
                 continue
@@ -41,12 +41,12 @@ for i in allindexes:
             '#!/bin/bash -l\n' +
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
-            '#SBATCH -c 4\n'+
-            #'#SBATCH -C haswell\n'+
+            '#SBATCH -c 1\n'+
+            '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
             '#SBATCH --job-name=spec_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
