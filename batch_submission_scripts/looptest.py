@@ -7,14 +7,14 @@ allindexes = range(0,500)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '05:00:00'
+walltime= '02:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/allspec.txt'
-outdir = '/project/projectdirs/dessn/dbrout/spectestdummy/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
+snfilelist = 'data/s2lightcurves.txt'
+outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/'
+npzdir = '/global/cscratch1/sd/dbrout/simnpzfiles/'
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
@@ -45,9 +45,9 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
-            '#SBATCH --job-name=spec_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
+            '#SBATCH --job-name=sim_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -63,7 +63,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + ' --nozpt -f  ' + filt +
+            'python smptest.py --index=' + str(i) + ' --nozpt --usefake -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
             ' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
