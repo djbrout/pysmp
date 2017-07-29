@@ -3877,7 +3877,8 @@ class smp:
                 globalraoffsets = offsetra,
                 globaldecoffsets = offsetdec,
                 id_obs = smp_dict['id_obs'],
-                id_coadd = smp_dict['id_coadd']
+                id_coadd = smp_dict['id_coadd'],
+                aperscale = smp_dict['aperscale']
                 )
         
         try:
