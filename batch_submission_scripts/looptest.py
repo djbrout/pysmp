@@ -18,9 +18,10 @@ npzdir = '/global/cscratch1/sd/dbrout/simnpzfiles/'
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 count = 0
+tot = 0
 for i in allindexes:
     for filt in filts:
-
+        tot += 1
         if doskipping:
             print snfiles[i]
             sn = snfiles[i].split('/')[-1].split('.')[0]
@@ -81,4 +82,4 @@ for i in allindexes:
         #print open(script).read()
         #time.sleep(1)
 
-print count
+print count, tot
