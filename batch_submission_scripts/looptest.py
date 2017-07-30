@@ -12,7 +12,7 @@ walltime= '05:00:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/allspec.txt'
+snfilelist = 'data/speclist.txt'
 outdir = '/project/projectdirs/dessn/dbrout/spectestdummy/'
 npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 snfiles = open(snfilelist).readlines()
