@@ -17,7 +17,7 @@ outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/'
 npzdir = '/global/cscratch1/sd/dbrout/simnpzfiles/'
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
-
+count = 0
 for i in allindexes:
     for filt in filts:
 
@@ -34,6 +34,7 @@ for i in allindexes:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
         print i,'submitted'
+        count += 1
         continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
@@ -79,3 +80,5 @@ for i in allindexes:
         print output[0]
         #print open(script).read()
         #time.sleep(1)
+
+print count
