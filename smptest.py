@@ -3188,7 +3188,7 @@ class smp:
                                         np.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
                                     except:
                                         print os.path.join(npoutdir, filename + '_smpDict.npz')
-                                        raw_input('could not save smpDict')
+                                        #raw_input('could not save smpDict')
                                     #i += 1
                                     print 'epochtime',time.time()-epochtime, float(snparams.mjd[j]),imfile
                                 else:
