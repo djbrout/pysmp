@@ -12,9 +12,9 @@ walltime= '05:00:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/'
-npzdir = '/global/cscratch1/sd/dbrout/simnpzfiles/'
+snfilelist = 'data/speclightcurves.txt'
+outdir = '/project/projectdirs/dessn/dbrout/spectestdummy/'
+npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 count = 0
