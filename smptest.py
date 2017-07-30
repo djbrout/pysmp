@@ -3184,8 +3184,10 @@ class smp:
                                     if not os.path.exists(npoutdir):
                                         os.makedirs(oldoutdir + '/np_data')
                                         os.makedirs(oldoutdir + '/np_data/' + filt)
-                                    np.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
-
+                                    try:
+                                        np.savez(os.path.join(npoutdir, filename + '_smpDict.npz'), **smp_dict)
+                                    except:
+                                        raw_input('could not save smpDict')
                                     #i += 1
                                     print 'epochtime',time.time()-epochtime, float(snparams.mjd[j]),imfile
                                 else:
