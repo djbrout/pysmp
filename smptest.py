@@ -3917,10 +3917,10 @@ class smp:
                 galmodel = smp_im[ww, :, :] - smp_dict['sky'][ww]
                 import scipy.ndimage
 
-                print 'galmodel',galmodel
+                #print 'galmodel',galmodel
 
                 galstd = np.sqrt(abs(galmodel))/params.galmodel_div
-                print 'galstd',galstd
+                #print 'galstd',galstd
 
                 modelstd = np.sqrt(abs(smp_dict['scale']))/params.flux_std_div
                 print 'mjd_flag',smp_dict['mjd_flag']
