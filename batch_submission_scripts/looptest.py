@@ -36,8 +36,8 @@ for i in allindexes:
             #     continue
         print i,'submitted'
         count += 1
-        #print count, tot
-        #continue
+        print count, tot
+        continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
         f.write(
