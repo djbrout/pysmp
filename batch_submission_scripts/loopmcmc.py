@@ -10,7 +10,7 @@ filts = ['g','r','i','z']
 walltime= '36:00:00'
 #np.random.shuffle(allindexes)
 
-doskipping = True
+doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/lightcurves/'
@@ -63,8 +63,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python mcmc_manager.py --index=' + str(i) +
-            ' --outpath='+outdir+' --npzfolder='+npzdir+' '+
+            'python mcmc_manager.py --index=' + str(i) + ' --outpath='+outdir+' --npzfolder='+npzdir+' '+
             ' \n'
 
 
