@@ -3,11 +3,11 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,500)
+allindexes = range(0,50)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '48:00:00'
+walltime= '36:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -63,9 +63,9 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + ' --nozpt --usefake -f  ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
+            'python mcmc_manager.py --index=' + str(i) +
+            ' --outpath='+outdir+' --npzfolder='+npzdir+' '+
+            ' \n'
 
 
             #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
