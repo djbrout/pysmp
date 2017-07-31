@@ -7,14 +7,14 @@ allindexes = range(0,10)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '36:00:00'
+walltime= '48:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/lightcurves/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
+npzdir = '/global/cscratch1/sd/dbrout/simnpzfiles/'
 #snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
