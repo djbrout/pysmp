@@ -3506,7 +3506,7 @@ if __name__ == "__main__":
 
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_04_modelerrors'
     #resultsdir = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr'
-    resultsdir = '/project/projectdirs/dessn/dbrout/specv1_1/'
+    resultsdir = '/project/projectdirs/dessn/dbrout/simdummytest/'
     #resultsdir = '/project/projectdirs/des/djbrout/simtest/'
     #resultsdir= './working/'
     #resultsdir= '/export/scratch0/ps1sn1/data/v10.0/GPC1v3/eventsv1/smpworkspace/PS_TEST1/'
@@ -3514,7 +3514,7 @@ if __name__ == "__main__":
     isfermigrid = False
     cacheddata = False
 
-    deep_or_shallow = 'spec'
+    deep_or_shallow = 'shallow'
 
     #cd = '/project/projectdirs/des/djbrout/v67pixshift//summary_results.npz'
     #cd = '/pnfs/des/scratch/pysmp/smp_02_simnosnnoskyerr/np_data/summary_results.npz'
