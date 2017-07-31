@@ -47,7 +47,7 @@ for i in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcsim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcsim.log\n' +
-            '#SBATCH --job-name=sim_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=sim_' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
