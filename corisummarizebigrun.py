@@ -238,8 +238,8 @@ def grabstardata(imagedir,outfile,tfield,filt):
                 #print zptdata.keys()
                 #raw_input()
                 if not fname in zptfiles:
-                    #try:
-                    if True:
+                    try:
+                    #if True:
                         test = zptdata['chisqu']
                         test = zptdata['fwhm']
                         test = zptdata['zptscat']
@@ -321,9 +321,9 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         print 'CNTR',cntr
 
                         goodbigdata = copy(bigdata)
-                    #except:
-                    #    print 'FAILED', fname
-                    #    pass
+                    except:
+                        print 'FAILED', fname
+                        pass
 
     try:
         bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
