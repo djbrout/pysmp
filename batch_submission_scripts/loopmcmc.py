@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,40)
+allindexes = range(0,1100)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 #filts = ['g','r','i','z']
 #filts = ['r']
@@ -13,8 +13,8 @@ walltime= '48:00:00'
 doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/dessn/dbrout/simtestdummy/lightcurves/'
-npzdir = '/global/cscratch1/sd/dbrout/simnpzfiles/'
+outdir = '/project/projectdirs/dessn/dbrout/spectestdummy/lightcurves/'
+npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 #snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
@@ -45,9 +45,9 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcsim.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcsim.log\n' +
-            '#SBATCH --job-name=sim_' + str(i) + '\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            '#SBATCH --job-name=spec_' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
