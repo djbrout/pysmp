@@ -48,7 +48,8 @@ doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurves/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
+#npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
+npzdir = '/project/projectdirs/dessn/dbrout/specv1_1/npzfiles/'
 #snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
@@ -68,8 +69,8 @@ for i in allindexes:
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
-        print i,'submitted'
-        continue
+        # print i,'submitted'
+        # continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
         f.write(
@@ -77,7 +78,7 @@ for i in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            '#SBATCH -C haswell\n'+
+            #'#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
