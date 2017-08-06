@@ -22,14 +22,15 @@ for i in allindexes:
     #for filt in filts:
     if True:
         if doskipping:
-            print snfiles[i]
-            sn = snfiles[i].split('/')[-1].split('.')[0]
-            #if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
-            #    print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
-            #    continue
-            if os.path.exists(npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'):
-                print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
-                continue
+            pass
+            # print snfiles[i]
+            # sn = snfiles[i].split('/')[-1].split('.')[0]
+            # if os.path.exists(outdir+'/'+i.split()+'.smp'):
+            #     print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
+            #     continue
+            # if os.path.exists(npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'):
+            #     print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
+            #     continue
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
