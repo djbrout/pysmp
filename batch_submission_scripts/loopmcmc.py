@@ -4,7 +4,41 @@ import numpy as np
 import time
 
 allindexes = range(1350,1351)
-allindexes = [1330, 250, 1062, 250, 1090, 749, 198, 1342, 976, 1219, 1344, 260, 25, 1129, 1332, 1324, 1222, 466, 1131, 1284, 198, 976, 1320, 234, 749, 1322, 320, 1086, 940, 117, 664, 1288, 1324]
+allindexes = [222
+    , 877
+    , 222
+    , 897
+    , 638
+    , 178
+    , 810
+    , 1006
+    , 1109
+    , 230
+    , 25
+    , 934
+    , 1100
+    , 858
+    , 1095
+    , 1009
+    , 413
+    , 158
+    , 1064
+    , 178
+    , 810
+    , 206
+    , 1093
+    , 208
+    , 638
+    , 1094
+    , 346
+    , 281
+    , 323
+    , 895
+    , 778
+    , 112
+    , 1065
+    , 1095
+    , 38]
 #filts = ['g','r','i','z']
 #filts = ['r']
 walltime= '48:00:00'
@@ -34,8 +68,8 @@ for i in allindexes:
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
-        #print i,'submitted'
-        #continue
+        print i,'submitted'
+        continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
         f = open(script, 'w')
         f.write(
