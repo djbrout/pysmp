@@ -1,0 +1,413 @@
+import os
+from subprocess import *
+import numpy as np
+import time
+
+allsn = ["des_real_01248677_g.mcmcinput.npz",
+"des_real_01248677_r.mcmcinput.npz",
+"des_real_01253039_g.mcmcinput.npz",
+"des_real_01253039_r.mcmcinput.npz",
+"des_real_01253920_g.mcmcinput.npz",
+"des_real_01253920_r.mcmcinput.npz",
+"des_real_01250017_g.mcmcinput.npz",
+"des_real_01259412_g.mcmcinput.npz",
+"des_real_01259412_r.mcmcinput.npz",
+"des_real_01259412_i.mcmcinput.npz",
+"des_real_01257366_g.mcmcinput.npz",
+"des_real_01257366_r.mcmcinput.npz",
+"des_real_01258940_g.mcmcinput.npz",
+"des_real_01261086_g.mcmcinput.npz",
+"des_real_01261086_r.mcmcinput.npz",
+"des_real_01261086_i.mcmcinput.npz",
+"des_real_01261086_z.mcmcinput.npz",
+"des_real_01263715_g.mcmcinput.npz",
+"des_real_01263715_r.mcmcinput.npz",
+"des_real_01280240_g.mcmcinput.npz",
+"des_real_01256823_r.mcmcinput.npz",
+"des_real_01275946_g.mcmcinput.npz",
+"des_real_01275946_r.mcmcinput.npz",
+"des_real_01277168_g.mcmcinput.npz",
+"des_real_01266657_g.mcmcinput.npz",
+"des_real_01277971_g.mcmcinput.npz",
+"des_real_01277971_i.mcmcinput.npz",
+"des_real_01280201_r.mcmcinput.npz",
+"des_real_01280217_g.mcmcinput.npz",
+"des_real_01255502_g.mcmcinput.npz",
+"des_real_01257695_g.mcmcinput.npz",
+"des_real_01262214_g.mcmcinput.npz",
+"des_real_01300516_g.mcmcinput.npz",
+"des_real_01289664_g.mcmcinput.npz",
+"des_real_01285160_g.mcmcinput.npz",
+"des_real_01285160_r.mcmcinput.npz",
+"des_real_01297026_r.mcmcinput.npz",
+"des_real_01297026_i.mcmcinput.npz",
+"des_real_01290127_g.mcmcinput.npz",
+"des_real_01291090_g.mcmcinput.npz",
+"des_real_01291090_r.mcmcinput.npz",
+"des_real_01294014_g.mcmcinput.npz",
+"des_real_01293758_g.mcmcinput.npz",
+"des_real_01293758_r.mcmcinput.npz",
+"des_real_01293758_i.mcmcinput.npz",
+"des_real_01299775_g.mcmcinput.npz",
+"des_real_01299775_r.mcmcinput.npz",
+"des_real_01296657_g.mcmcinput.npz",
+"des_real_01292336_g.mcmcinput.npz",
+"des_real_01281668_g.mcmcinput.npz",
+"des_real_01281668_r.mcmcinput.npz",
+"des_real_01283373_g.mcmcinput.npz",
+"des_real_01283373_r.mcmcinput.npz",
+"des_real_01298893_g.mcmcinput.npz",
+"des_real_01298893_r.mcmcinput.npz",
+"des_real_01281886_g.mcmcinput.npz",
+"des_real_01290779_g.mcmcinput.npz",
+"des_real_01290779_r.mcmcinput.npz",
+"des_real_01302117_g.mcmcinput.npz",
+"des_real_01292332_g.mcmcinput.npz",
+"des_real_01295256_g.mcmcinput.npz",
+"des_real_01295256_r.mcmcinput.npz",
+"des_real_01292145_g.mcmcinput.npz",
+"des_real_01292145_r.mcmcinput.npz",
+"des_real_01282736_g.mcmcinput.npz",
+"des_real_01291639_g.mcmcinput.npz",
+"des_real_01291639_r.mcmcinput.npz",
+"des_real_01294743_r.mcmcinput.npz",
+"des_real_01294743_i.mcmcinput.npz",
+"des_real_01294137_g.mcmcinput.npz",
+"des_real_01286398_r.mcmcinput.npz",
+"des_real_01282757_g.mcmcinput.npz",
+"des_real_01283936_g.mcmcinput.npz",
+"des_real_01283936_r.mcmcinput.npz",
+"des_real_01296321_g.mcmcinput.npz",
+"des_real_01296321_r.mcmcinput.npz",
+"des_real_01283923_g.mcmcinput.npz",
+"des_real_01302141_g.mcmcinput.npz",
+"des_real_01289656_g.mcmcinput.npz",
+"des_real_01289656_r.mcmcinput.npz",
+"des_real_01291957_g.mcmcinput.npz",
+"des_real_01291957_r.mcmcinput.npz",
+"des_real_01302187_g.mcmcinput.npz",
+"des_real_01289288_g.mcmcinput.npz",
+"des_real_01289288_r.mcmcinput.npz",
+"des_real_01295027_g.mcmcinput.npz",
+"des_real_01285317_g.mcmcinput.npz",
+"des_real_01285317_r.mcmcinput.npz",
+"des_real_01279500_r.mcmcinput.npz",
+"des_real_01287626_g.mcmcinput.npz",
+"des_real_01283878_g.mcmcinput.npz",
+"des_real_01283878_r.mcmcinput.npz",
+"des_real_01283878_i.mcmcinput.npz",
+"des_real_01306785_g.mcmcinput.npz",
+"des_real_01304127_g.mcmcinput.npz",
+"des_real_01313594_g.mcmcinput.npz",
+"des_real_01308884_r.mcmcinput.npz",
+"des_real_01306626_g.mcmcinput.npz",
+"des_real_01306626_r.mcmcinput.npz",
+"des_real_01308751_g.mcmcinput.npz",
+"des_real_01308751_r.mcmcinput.npz",
+"des_real_01306299_g.mcmcinput.npz",
+"des_real_01306360_g.mcmcinput.npz",
+"des_real_01306360_r.mcmcinput.npz",
+"des_real_01302648_g.mcmcinput.npz",
+"des_real_01302648_r.mcmcinput.npz",
+"des_real_01314897_g.mcmcinput.npz",
+"des_real_01314897_r.mcmcinput.npz",
+"des_real_01310395_g.mcmcinput.npz",
+"des_real_01310338_g.mcmcinput.npz",
+"des_real_01289555_g.mcmcinput.npz",
+"des_real_01289555_r.mcmcinput.npz",
+"des_real_01312274_g.mcmcinput.npz",
+"des_real_01306029_g.mcmcinput.npz",
+"des_real_01316431_g.mcmcinput.npz",
+"des_real_01262715_r.mcmcinput.npz",
+"des_real_01306073_r.mcmcinput.npz",
+"des_real_01308568_g.mcmcinput.npz",
+"des_real_01303496_g.mcmcinput.npz",
+"des_real_01303496_r.mcmcinput.npz",
+"des_real_01305504_g.mcmcinput.npz",
+"des_real_01303952_g.mcmcinput.npz",
+"des_real_01263369_g.mcmcinput.npz",
+"des_real_01308326_g.mcmcinput.npz",
+"des_real_01258906_g.mcmcinput.npz",
+"des_real_01258906_r.mcmcinput.npz",
+"des_real_01295921_g.mcmcinput.npz",
+"des_real_01305626_g.mcmcinput.npz",
+"des_real_01301933_g.mcmcinput.npz",
+"des_real_01301933_r.mcmcinput.npz",
+"des_real_01315259_g.mcmcinput.npz",
+"des_real_01306537_g.mcmcinput.npz",
+"des_real_01306537_r.mcmcinput.npz",
+"des_real_01306390_g.mcmcinput.npz",
+"des_real_01303004_g.mcmcinput.npz",
+"des_real_01303004_r.mcmcinput.npz",
+"des_real_01316385_g.mcmcinput.npz",
+"des_real_01317164_g.mcmcinput.npz",
+"des_real_01329196_g.mcmcinput.npz",
+"des_real_01329196_r.mcmcinput.npz",
+"des_real_01327978_g.mcmcinput.npz",
+"des_real_01327978_r.mcmcinput.npz",
+"des_real_01318142_g.mcmcinput.npz",
+"des_real_01319366_g.mcmcinput.npz",
+"des_real_01319821_g.mcmcinput.npz",
+"des_real_01319821_r.mcmcinput.npz",
+"des_real_01316437_g.mcmcinput.npz",
+"des_real_01317454_g.mcmcinput.npz",
+"des_real_01329312_g.mcmcinput.npz",
+"des_real_01329312_r.mcmcinput.npz",
+"des_real_01329312_i.mcmcinput.npz",
+"des_real_01317286_g.mcmcinput.npz",
+"des_real_01317286_r.mcmcinput.npz",
+"des_real_01330426_g.mcmcinput.npz",
+"des_real_01330426_r.mcmcinput.npz",
+"des_real_01329615_g.mcmcinput.npz",
+"des_real_01329166_g.mcmcinput.npz",
+"des_real_01329166_r.mcmcinput.npz",
+"des_real_01320166_g.mcmcinput.npz",
+"des_real_01318737_g.mcmcinput.npz",
+"des_real_01297465_r.mcmcinput.npz",
+"des_real_01291080_g.mcmcinput.npz",
+"des_real_01292560_g.mcmcinput.npz",
+"des_real_01296273_g.mcmcinput.npz",
+"des_real_01330044_g.mcmcinput.npz",
+"des_real_01330044_r.mcmcinput.npz",
+"des_real_01330031_g.mcmcinput.npz",
+"des_real_01330031_r.mcmcinput.npz",
+"des_real_01295305_r.mcmcinput.npz",
+"des_real_01295305_i.mcmcinput.npz",
+"des_real_01317612_g.mcmcinput.npz",
+"des_real_01317666_g.mcmcinput.npz",
+"des_real_01339450_g.mcmcinput.npz",
+"des_real_01339450_r.mcmcinput.npz",
+"des_real_01334858_g.mcmcinput.npz",
+"des_real_01334858_r.mcmcinput.npz",
+"des_real_01334084_g.mcmcinput.npz",
+"des_real_01334644_g.mcmcinput.npz",
+"des_real_01337703_g.mcmcinput.npz",
+"des_real_01337703_r.mcmcinput.npz",
+"des_real_01336453_g.mcmcinput.npz",
+"des_real_01332413_g.mcmcinput.npz",
+"des_real_01334879_g.mcmcinput.npz",
+"des_real_01334879_r.mcmcinput.npz",
+"des_real_01331993_r.mcmcinput.npz",
+"des_real_01334597_g.mcmcinput.npz",
+"des_real_01334597_r.mcmcinput.npz",
+"des_real_01334597_i.mcmcinput.npz",
+"des_real_01335472_g.mcmcinput.npz",
+"des_real_01335472_r.mcmcinput.npz",
+"des_real_01338233_g.mcmcinput.npz",
+"des_real_01334087_g.mcmcinput.npz",
+"des_real_01334620_g.mcmcinput.npz",
+"des_real_01333246_g.mcmcinput.npz",
+"des_real_01330903_g.mcmcinput.npz",
+"des_real_01337221_g.mcmcinput.npz",
+"des_real_01334423_g.mcmcinput.npz",
+"des_real_01334707_g.mcmcinput.npz",
+"des_real_01334707_r.mcmcinput.npz",
+"des_real_01333438_g.mcmcinput.npz",
+"des_real_01334448_g.mcmcinput.npz",
+"des_real_01338471_g.mcmcinput.npz",
+"des_real_01338649_g.mcmcinput.npz",
+"des_real_01336975_g.mcmcinput.npz",
+"des_real_01338675_g.mcmcinput.npz",
+"des_real_01338675_r.mcmcinput.npz",
+"des_real_01338675_i.mcmcinput.npz",
+"des_real_01341370_g.mcmcinput.npz",
+"des_real_01341370_r.mcmcinput.npz",
+"des_real_01338128_g.mcmcinput.npz",
+"des_real_01338170_g.mcmcinput.npz",
+"des_real_01338387_g.mcmcinput.npz",
+"des_real_01338843_g.mcmcinput.npz",
+"des_real_01338843_r.mcmcinput.npz",
+"des_real_01338843_i.mcmcinput.npz",
+"des_real_01299643_g.mcmcinput.npz",
+"des_real_01299643_r.mcmcinput.npz",
+"des_real_01300912_g.mcmcinput.npz",
+"des_real_01300912_r.mcmcinput.npz",
+"des_real_01324542_g.mcmcinput.npz",
+"des_real_01324542_r.mcmcinput.npz",
+"des_real_01334302_g.mcmcinput.npz",
+"des_real_01334470_g.mcmcinput.npz",
+"des_real_01335694_g.mcmcinput.npz",
+"des_real_01336009_g.mcmcinput.npz",
+"des_real_01335717_g.mcmcinput.npz",
+"des_real_01335717_r.mcmcinput.npz",
+"des_real_01335868_g.mcmcinput.npz",
+"des_real_01335868_r.mcmcinput.npz",
+"des_real_01336480_g.mcmcinput.npz",
+"des_real_01336008_g.mcmcinput.npz",
+"des_real_01337117_g.mcmcinput.npz",
+"des_real_01337272_g.mcmcinput.npz",
+"des_real_01338430_g.mcmcinput.npz",
+"des_real_01330642_g.mcmcinput.npz",
+"des_real_01330642_i.mcmcinput.npz",
+"des_real_01336272_g.mcmcinput.npz",
+"des_real_01337687_g.mcmcinput.npz",
+"des_real_01337838_g.mcmcinput.npz",
+"des_real_01338278_g.mcmcinput.npz",
+"des_real_01332059_g.mcmcinput.npz",
+"des_real_01339392_g.mcmcinput.npz",
+"des_real_01335718_g.mcmcinput.npz",
+"des_real_01335718_r.mcmcinput.npz",
+"des_real_01336662_g.mcmcinput.npz",
+"des_real_01339149_g.mcmcinput.npz",
+"des_real_01337649_g.mcmcinput.npz",
+"des_real_01337228_g.mcmcinput.npz",
+"des_real_01337228_r.mcmcinput.npz",
+"des_real_01335564_g.mcmcinput.npz",
+"des_real_01336002_g.mcmcinput.npz",
+"des_real_01343208_g.mcmcinput.npz",
+"des_real_01343208_r.mcmcinput.npz",
+"des_real_01343208_i.mcmcinput.npz",
+"des_real_01343533_g.mcmcinput.npz",
+"des_real_01337655_g.mcmcinput.npz",
+"des_real_01337655_r.mcmcinput.npz",
+"des_real_01337655_i.mcmcinput.npz",
+"des_real_01346387_g.mcmcinput.npz",
+"des_real_01346387_r.mcmcinput.npz",
+"des_real_01344274_g.mcmcinput.npz",
+"des_real_01346956_g.mcmcinput.npz",
+"des_real_01346956_r.mcmcinput.npz",
+"des_real_01343871_g.mcmcinput.npz",
+"des_real_01343759_g.mcmcinput.npz",
+"des_real_01343759_r.mcmcinput.npz",
+"des_real_01343759_i.mcmcinput.npz",
+"des_real_01304442_g.mcmcinput.npz",
+"des_real_01304442_r.mcmcinput.npz",
+"des_real_01248907_g.mcmcinput.npz",
+"des_real_01248907_r.mcmcinput.npz",
+"des_real_01345899_g.mcmcinput.npz",
+"des_real_01345899_r.mcmcinput.npz",
+"des_real_01297501_g.mcmcinput.npz",
+"des_real_01297501_i.mcmcinput.npz",
+"des_real_01298281_g.mcmcinput.npz",
+"des_real_01345594_g.mcmcinput.npz",
+"des_real_01345594_r.mcmcinput.npz",
+"des_real_01292195_g.mcmcinput.npz",
+"des_real_01273127_g.mcmcinput.npz",
+"des_real_01284587_g.mcmcinput.npz",
+"des_real_01284587_r.mcmcinput.npz",
+"des_real_01289600_g.mcmcinput.npz",
+"des_real_01290568_g.mcmcinput.npz",
+"des_real_01290568_r.mcmcinput.npz",
+"des_real_01290568_i.mcmcinput.npz",
+"des_real_01290816_g.mcmcinput.npz",
+"des_real_01290816_r.mcmcinput.npz",
+"des_real_01293319_g.mcmcinput.npz",
+"des_real_01302058_g.mcmcinput.npz",
+"des_real_01302058_r.mcmcinput.npz",
+"des_real_01303279_g.mcmcinput.npz",
+"des_real_01303279_r.mcmcinput.npz",
+"des_real_01304678_g.mcmcinput.npz",
+"des_real_01304678_r.mcmcinput.npz",
+"des_real_01306141_g.mcmcinput.npz",
+"des_real_01306991_g.mcmcinput.npz",
+"des_real_01308314_g.mcmcinput.npz",
+"des_real_01308314_r.mcmcinput.npz",
+"des_real_01309288_g.mcmcinput.npz",
+"des_real_01309288_r.mcmcinput.npz",
+"des_real_01309492_r.mcmcinput.npz",
+"des_real_01309492_i.mcmcinput.npz",
+"des_real_01315192_g.mcmcinput.npz",
+"des_real_01317277_g.mcmcinput.npz",
+"des_real_01328105_g.mcmcinput.npz",
+"des_real_01328105_r.mcmcinput.npz",
+"des_real_01340454_g.mcmcinput.npz",
+"des_real_01340454_r.mcmcinput.npz",
+"des_real_01261579_g.mcmcinput.npz",
+"des_real_01261579_r.mcmcinput.npz",
+"des_real_01261579_i.mcmcinput.npz",
+"des_real_01346966_g.mcmcinput.npz",
+"des_real_01347120_g.mcmcinput.npz",
+"des_real_01347120_r.mcmcinput.npz",
+"des_real_01343401_g.mcmcinput.npz",
+"des_real_01343337_g.mcmcinput.npz",
+"des_real_01343337_r.mcmcinput.npz",
+"des_real_01291794_g.mcmcinput.npz",
+"des_real_01345798_g.mcmcinput.npz",
+"des_real_01345798_r.mcmcinput.npz",
+"des_real_01345798_i.mcmcinput.npz",
+"des_real_01302523_r.mcmcinput.npz",
+"des_real_01346137_g.mcmcinput.npz",
+"des_real_01253101_g.mcmcinput.npz",
+"des_real_01253101_r.mcmcinput.npz",
+"des_real_01307073_g.mcmcinput.npz",
+"des_real_01331123_g.mcmcinput.npz",
+"des_real_01249851_g.mcmcinput.npz",
+"des_real_01249851_r.mcmcinput.npz",
+"des_real_01336687_g.mcmcinput.npz",
+"des_real_01303883_g.mcmcinput.npz",
+"des_real_01303883_r.mcmcinput.npz"]
+#filts = ['g','r','i','z']
+#filts = ['r']
+walltime= '48:00:00'
+#np.random.shuffle(allindexes)
+
+doskipping = False
+#snfilelist = 'badinputs.txt'
+#snfilelist = 'data/s2lightcurves.txt'
+outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurves/'
+npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
+#npzdir = '/project/projectdirs/dessn/dbrout/specv1_1/npzfiles/'
+#snfiles = open(snfilelist).readlines()
+#snfiles = snfiles.split('.smp')
+
+for i in allsn:
+    #for filt in filts:
+    if True:
+        if doskipping:
+            pass
+            # print snfiles[i]
+            # sn = snfiles[i].split('/')[-1].split('.')[0]
+            # if os.path.exists(outdir+'/'+i.split()+'.smp'):
+            #     print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
+            #     continue
+            # if os.path.exists(npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'):
+            #     print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
+            #     continue
+            # else:
+            #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            #     continue
+        # print i,'submitted'
+        # continue
+        script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
+        f = open(script, 'w')
+        f.write(
+            '#!/bin/bash -l\n' +
+            '#SBATCH --partition=shared\n' +
+            '#SBATCH -n 1\n' +
+            '#SBATCH -c 1\n'+
+            '#SBATCH -C haswell\n'+
+            '#SBATCH -A des\n' +
+            '#SBATCH --time='+walltime+'\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            '#SBATCH --job-name=spec_' + str(i) + '\n' +
+            '#SBATCH --mail-type=NONE\n' +
+            #'#SBATCH --qos=premium\n'+
+            '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
+            '#SBATCH --gres=craynetwork:0\n' +
+            '\n' +
+            'cd /project/projectdirs/des/djbrout/pysmp/\n' +
+            'source setup_scripts/setupcori2.sh\n'+
+            #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
+            'echo "RUNNING NOW"\n'+
+            #'python test.py\n'
+            #'cd /global/u1/d/dbrout/SEaR/\n' +
+            #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
+            #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
+            #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
+            'export WALLTIME='+walltime.split(':')[0]+'\n'+
+            'python mcmc_manager.py --index=0 --sn=' + str(i) + ' --outpath='+outdir+' --npzfolder='+npzdir+' '+
+            ' \n'
+
+
+            #'python smpshift.py --index=' + str(i) + ' -f ' + filt + ' --nozpt \n'
+            # 'python smpshift.py --index=' + str(i) + ' -f '+filt+' --nozpt --snfilelist=data/x3lightcurves.txt '
+            #                                                       '-o /project/projectdirs/des/djbrout/116simdeep '
+            #                                                      '--snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
+            '\n'
+        )
+        f.close()
+        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        print output[0]
+        #print open(script).read()
+        #time.sleep(1)
