@@ -4,41 +4,129 @@ import numpy as np
 import time
 
 allindexes = range(1350,1351)
-allindexes = [222
-    , 877
-    , 222
-    , 897
-    , 638
-    , 178
-    , 810
-    , 1006
-    , 1109
-    , 230
-    , 25
-    , 934
-    , 1100
-    , 858
-    , 1095
-    , 1009
-    , 413
-    , 158
-    , 1064
-    , 178
-    , 810
-    , 206
-    , 1093
-    , 208
-    , 638
-    , 1094
-    , 346
-    , 281
-    , 323
-    , 895
-    , 778
-    , 112
-    , 1065
-    , 1095
-    , 38]
+allindexes = [27
+,29
+,121
+,241
+,242
+,258
+,260
+,173
+,172
+,174
+,336
+,545
+,508
+,346
+,348
+,320
+,620
+,619
+,621
+,250
+,252
+,316
+,771
+,772
+,774
+,763
+,765
+,764
+,766
+,808
+,810
+,179
+,180
+,182
+,679
+,680
+,745
+,747
+,746
+,748
+,683
+,682
+,599
+,832
+,831
+,833
+,842
+,844
+,843
+,845
+,934
+,936
+,903
+,905
+,904
+,906
+,915
+,914
+,916
+,932
+,550
+,551
+,553
+,524
+,876
+,875
+,877
+,1058
+,1060
+,1062
+,1064
+,974
+,976
+,1036
+,1054
+,1056
+,999
+,998
+,1000
+,1219
+,591
+,593
+,1001
+,1003
+,1002
+,1004
+,1086
+,1088
+,964
+,1090
+,1130
+,1129
+,1131
+,1270
+,1167
+,1330
+,1332
+,1288
+,664
+,1322
+,1324
+,556
+,467
+,466
+,468
+,371
+,370
+,372
+,396
+,783
+,787
+,789
+,788
+,790
+,899
+,901
+,900
+,902
+,166
+,1342
+,1344
+,1320
+,625]
 #filts = ['g','r','i','z']
 #filts = ['r']
 walltime= '48:00:00'
@@ -48,8 +136,8 @@ doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurves/'
-#npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
-npzdir = '/project/projectdirs/dessn/dbrout/specv1_1/npzfiles/'
+npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
+#npzdir = '/project/projectdirs/dessn/dbrout/specv1_1/npzfiles/'
 #snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
