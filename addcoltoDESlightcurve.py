@@ -518,12 +518,14 @@ if __name__ == "__main__":
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn)
 
-        open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w').write(readmetext).close()
+    a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w')
+    a.write(readmetext)
+    a.close()
 
-        a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.LIST','w')
-        for sn in donesne:
-            a.write(sn+'\n')
-        a.close()
+    a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.LIST','w')
+    for sn in donesne:
+        a.write(sn+'\n')
+    a.close()
 
         #raw_input()
         #if filt == None and successful:
