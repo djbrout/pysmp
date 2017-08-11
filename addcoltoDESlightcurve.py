@@ -386,6 +386,7 @@ if __name__ == "__main__":
     sne = open('data/speclist.txt').readlines()
     tsne = []
     for sn in sne:
+        print sn
         tsne.append(sn.split('.')+'.smp')
     sne = np.array(tsne, dtype='str')
     sne = np.unique(sne)
