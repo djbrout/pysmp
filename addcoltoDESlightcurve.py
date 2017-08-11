@@ -306,7 +306,7 @@ if __name__ == "__main__":
     #else:
     #    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
-    savelcdir = resultsdir+'/SMP_SPEC_v1.1'
+    savelcdir = None
     fakes = False
     faketrueflux = False
 
@@ -349,6 +349,9 @@ if __name__ == "__main__":
             fakeheader = True
     #print fakes
     #raw_input()
+
+    if savelcdir is None:
+        savelcdir = resultsdir + '/SMP_SPEC_v1.1'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
