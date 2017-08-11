@@ -444,6 +444,7 @@ if __name__ == "__main__":
     a.close()
     print 'TOTAL SNe:',len(sne),'Missing SNe:',numbad
     cntr = 0
+    donesne = []
     for sn in sne[::-1]:
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
@@ -514,6 +515,15 @@ if __name__ == "__main__":
                      idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
+        donesne.append(sn)
+
+        open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w').write(readmetext).close()
+
+        a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.LIST','w')
+        for sn in donesne:
+            a.write(sn+'\n')
+        a.close()
+
         #raw_input()
         #if filt == None and successful:
         #snlist.write(sn + '_smp.dat\n')
