@@ -390,7 +390,7 @@ if __name__ == "__main__":
     tsne = []
     for sn in sne:
         print sn
-        tsne.append(sn.split('.')[0])
+        tsne.append(sn.split('.')[0].split('/')[-1])
     sne = np.array(tsne, dtype='str')
     sne = np.unique(sne)
     if index is None:
