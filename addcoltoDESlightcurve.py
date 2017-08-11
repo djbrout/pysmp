@@ -301,6 +301,7 @@ if __name__ == "__main__":
     #resultsdir = '/project/projectdirs/des/djbrout/allsim/'
     fakeheader = False
     #if isfake:
+    dodiffim = False
 
     lcdir = '/project/projectdirs/dessn/dbrout/imgList/all/'
     #else:
@@ -320,7 +321,7 @@ if __name__ == "__main__":
 
         opt, arg = getopt.getopt(
             args, "fd:rd:cd:cdf:b",
-            longopts=["index=","lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux","fakeheader"])
+            longopts=["index=","lcdir=", "resultsdir=", "savelcdir=","dofakes","faketrueflux","fakeheader","dodiffim"])
 
     except getopt.GetoptError as err:
         print "No command line arguments"
@@ -347,11 +348,13 @@ if __name__ == "__main__":
             index = int(a)
         elif o in ["--fakeheader"]:
             fakeheader = True
+        elif o in ["--dodiffim"]:
+            dodiffim = True
     #print fakes
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPEC_v1.1'
+        savelcdir = resultsdir + '/SMP_SPEC_diffim'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -442,6 +445,9 @@ if __name__ == "__main__":
     print 'TOTAL SNe:',len(sne),'Missing SNe:',numbad
     cntr = 0
     for sn in sne[::-1]:
+        if dodiffim:
+            os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
+            continue
         mjd = []
         flux = []
         fluxerr = []
