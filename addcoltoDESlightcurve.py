@@ -387,7 +387,7 @@ if __name__ == "__main__":
     tsne = []
     for sn in sne:
         print sn
-        tsne.append(sn.split('.')[0]+'.smp')
+        tsne.append(sn.split('.')[0])
     sne = np.array(tsne, dtype='str')
     sne = np.unique(sne)
     if index is None:
@@ -429,10 +429,11 @@ if __name__ == "__main__":
                 a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
-                numbad += 1
-                continue
         if not snbad:
             tsne.append(sn)
+        else:
+            numbad += 1
+
     sne = tsne
 
 
