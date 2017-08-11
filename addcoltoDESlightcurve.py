@@ -371,15 +371,21 @@ if __name__ == "__main__":
 
 
     #for i, filt in enumerate(filts):
-    sne = os.listdir(resultsdir + '/lightcurves')
+    #sne = os.listdir(resultsdir + '/lightcurves')
+    #tsne = []
+    #for sn in sne:
+    #    if '.smp' in sn:
+    #        print 'here ',sn
+    #        tsne.append('_'.join(sn.split('_')[:-1]))
+    #sne = np.array(tsne,dtype='str')
+    #sne = np.unique(sne)
+
+    sne = open('data/speclist.txt').readlines()
     tsne = []
     for sn in sne:
-        if '.smp' in sn:
-            print 'here ',sn
-            tsne.append('_'.join(sn.split('_')[:-1]))
-    sne = np.array(tsne,dtype='str')
+        tsne.append(sn.split('.')+'.smp')
+    sne = np.array(tsne, dtype='str')
     sne = np.unique(sne)
-
     if index is None:
         sne = sne
     else:
