@@ -400,6 +400,7 @@ if __name__ == "__main__":
 
     a = open(missingfile,'a')
     tsne = []
+    numbad = 0
     for sn in sne[:]:
         snbad = False
 
@@ -418,6 +419,7 @@ if __name__ == "__main__":
                 a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
+                numbad += 1
                 continue
         if not snbad:
             tsne.append(sn)
@@ -426,7 +428,7 @@ if __name__ == "__main__":
 
     #sne = tsneold
     a.close()
-    print 'TOTAL SNE:',len(sne)
+    print 'TOTAL SNe:',len(sne),'Missing SNe:',numbad
     cntr = 0
     for sn in sne[::-1]:
         mjd = []
