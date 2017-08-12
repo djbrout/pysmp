@@ -193,6 +193,7 @@ for i in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python mcmc_manager.py --index=' + str(i) + ' --outpath='+outdir+' --npzfolder='+npzdir+' '+
+            ' --sn='+
             ' \n'
 
 
