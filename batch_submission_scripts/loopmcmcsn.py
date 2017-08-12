@@ -352,7 +352,7 @@ npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 #snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
-for i in allsn:
+for i in allsn[::-1]:
     #for filt in filts:
     if True:
         if doskipping:
