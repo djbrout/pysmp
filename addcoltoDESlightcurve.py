@@ -450,7 +450,7 @@ if __name__ == "__main__":
     for sn in sne[::-1]:
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
-            donesne.append(sn.split('.dat')[0].split('_')[-1])
+            donesne.append(sn.split('.')[0].split('_')[-1])
             continue
         mjd = []
         flux = []
