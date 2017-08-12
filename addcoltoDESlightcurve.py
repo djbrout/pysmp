@@ -526,7 +526,7 @@ if __name__ == "__main__":
 
     a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.LIST','w')
     for sn in donesne:
-        a.write(sn+'.dat\n')
+        a.write(sn+' \n')
     a.close()
 
         #raw_input()
