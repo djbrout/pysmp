@@ -392,23 +392,23 @@ if True:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 2\n'+
-            #'#SBATCH -C haswell\n'+
+            '#SBATCH -C haswell\n'+
             '#SBATCH --array=1-50\n'
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
             #'#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
             #'#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
-            '#SBATCH --output=/project/projectdirs/des/djbrout/pysmp/logs/${SLURM_ARRAY_TASK_ID}_mcmcspec.log\n'+
-            '#SBATCH --error=/project/projectdirs/des/djbrout/pysmp/logs/${SLURM_ARRAY_TASK_ID}_mcmcspec.log\n'+
+            '#SBATCH --output=/project/projectdirs/des/djbrout/pysmp/logs/mcmcspec.log\n'+
+            '#SBATCH --error=/project/projectdirs/des/djbrout/pysmp/logs/mcmcspec.log\n'+
             '#SBATCH --job-name=testarray\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             #'#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
             '#SBATCH -L SCRATCH,project,cscratch1'+
-            #'#SBATCH --gres=craynetwork:0\n' +
+            '#SBATCH --gres=craynetwork:0\n' +
             '\n' +
-            'export UGNI_CDM_MDD_DEDICATED=2 #for bash shell users\n'+
-            'export MPICH_GNI_MDD_SHARING=disabled   #for bash shell users\n'+
+            #'export UGNI_CDM_MDD_DEDICATED=2 #for bash shell users\n'+
+            #'export MPICH_GNI_MDD_SHARING=disabled   #for bash shell users\n'+
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
             'source setup_scripts/setupcori2.sh\n'+
             #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
