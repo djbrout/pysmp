@@ -394,8 +394,10 @@ for i in allsn[::-1]:
             #'#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            #'#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            #'#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
+            '#SBATCH --output=/project/projectdirs/des/djbrout/pysmp/logs/' + str(i) + '_mcmcspec.log\n'+
+            '#SBATCH --error=/project/projectdirs/des/djbrout/pysmp/logs/' + str(i) + '_mcmcspec.log\n'+
             '#SBATCH --job-name=' + str(i)[8:] + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
@@ -407,6 +409,7 @@ for i in allsn[::-1]:
             'source setup_scripts/setupcori2.sh\n'+
             #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
             'echo "RUNNING NOW"\n'+
+            'echo $HOSTNAME\n '
             #'python test.py\n'
             #'cd /global/u1/d/dbrout/SEaR/\n' +
             #'echo "--start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+'" \n'+
