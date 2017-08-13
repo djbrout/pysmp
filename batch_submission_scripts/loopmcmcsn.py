@@ -388,7 +388,7 @@ for i in allsn[::-1]:
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
-            '#SBATCH --partition=debug\n' +
+            '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             #'#SBATCH -C haswell\n'+
