@@ -354,7 +354,7 @@ allsn = ["des_real_01248677_r.mcmcinput.npz",
 "des_real_01303883_g.mcmcinput.npz"]
 #filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '00:30:00'
+walltime= '48:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
