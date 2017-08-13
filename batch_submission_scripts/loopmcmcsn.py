@@ -360,7 +360,7 @@ walltime= '00:30:00'
 doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurvestest/'
+outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurves/'
 npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 #npzdir = '/project/projectdirs/dessn/dbrout/specv1_1/npzfiles/'
 #snfiles = open(snfilelist).readlines()
@@ -393,7 +393,7 @@ if True:
             '#SBATCH -n 1\n' +
             '#SBATCH -c 2\n'+
             '#SBATCH -C haswell\n'+
-            '#SBATCH --array=1-50\n'
+            '#SBATCH --array=0-350\n'
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
             #'#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
