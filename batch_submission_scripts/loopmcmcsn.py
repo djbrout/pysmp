@@ -366,7 +366,8 @@ npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 #snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 
-for i in allsn[::-1]:
+#for i in allsn[::-1]:
+if True:
     #for filt in filts:
     if True:
         if doskipping:
@@ -392,6 +393,7 @@ for i in allsn[::-1]:
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             #'#SBATCH -C haswell\n'+
+            '#SBATCH --array=1-50\n'
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
             #'#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
@@ -416,7 +418,7 @@ for i in allsn[::-1]:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python mcmc_manager.py --index=0 --sn=' + str(i) + ' --outpath='+outdir+' --npzfolder='+npzdir+' '+
+            'python mcmc_manager.py --index=0 --sn=${SLURM_ARRAY_TASK_ID} --outpath='+outdir+' --npzfolder='+npzdir+' '+
             ' \n'
 
 
