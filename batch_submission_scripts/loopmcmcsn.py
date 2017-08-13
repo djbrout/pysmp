@@ -360,7 +360,7 @@ walltime= '00:30:00'
 doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s2lightcurves.txt'
-outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurves/'
+outdir = '/project/projectdirs/dessn/dbrout/specv1_1/lightcurvestest/'
 npzdir = '/global/cscratch1/sd/dbrout/specnpzfiles/'
 #npzdir = '/project/projectdirs/dessn/dbrout/specv1_1/npzfiles/'
 #snfiles = open(snfilelist).readlines()
@@ -401,7 +401,7 @@ for i in allsn[::-1]:
             '#SBATCH --job-name=' + str(i)[8:] + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
-            '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
+            #'#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
             '#SBATCH -L SCRATCH,project,cscratch1'+
             #'#SBATCH --gres=craynetwork:0\n' +
             '\n' +
