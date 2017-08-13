@@ -354,7 +354,7 @@ allsn = ["des_real_01248677_r.mcmcinput.npz",
 "des_real_01303883_g.mcmcinput.npz"]
 #filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '48:00:00'
+walltime= '00:30:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
@@ -388,10 +388,10 @@ for i in allsn[::-1]:
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
-            '#SBATCH --partition=shared\n' +
+            '#SBATCH --partition=debug\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            '#SBATCH -C haswell\n'+
+            #'#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
@@ -400,7 +400,8 @@ for i in allsn[::-1]:
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
-            '#SBATCH --gres=craynetwork:0\n' +
+            '#SBATCH -L SCRATCH,project,cscratch1'+
+            #'#SBATCH --gres=craynetwork:0\n' +
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
             'source setup_scripts/setupcori2.sh\n'+
