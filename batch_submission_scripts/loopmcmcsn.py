@@ -396,7 +396,7 @@ for i in allsn[::-1]:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
-            '#SBATCH --job-name=spec_' + str(i) + '\n' +
+            '#SBATCH --job-name=' + str(i)[8:] + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
