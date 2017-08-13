@@ -391,7 +391,7 @@ if True:
             '#!/bin/bash -l\n' +
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
-            '#SBATCH -c 1\n'+
+            '#SBATCH -c 2\n'+
             #'#SBATCH -C haswell\n'+
             '#SBATCH --array=1-50\n'
             '#SBATCH -A des\n' +
