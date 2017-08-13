@@ -400,7 +400,7 @@ if True:
             #'#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_mcmcspec.log\n' +
             '#SBATCH --output=/project/projectdirs/des/djbrout/pysmp/logs/${SLURM_ARRAY_TASK_ID}_mcmcspec.log\n'+
             '#SBATCH --error=/project/projectdirs/des/djbrout/pysmp/logs/${SLURM_ARRAY_TASK_ID}_mcmcspec.log\n'+
-            '#SBATCH --job-name=' + str(i)[8:] + '\n' +
+            '#SBATCH --job-name=testarray\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             #'#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
