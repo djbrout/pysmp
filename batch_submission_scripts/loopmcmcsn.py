@@ -407,6 +407,7 @@ if True:
             '#SBATCH -L SCRATCH,project,cscratch1'+
             #'#SBATCH --gres=craynetwork:0\n' +
             '\n' +
+            'export UGNI_CDM_MDD_DEDICATED=2 #for bash shell users\n'+
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
             'source setup_scripts/setupcori2.sh\n'+
             #'source /scratch3/scratchdirs/masao/setup_DiffImg.sh\n'
