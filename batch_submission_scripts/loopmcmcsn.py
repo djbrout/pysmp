@@ -385,7 +385,7 @@ if True:
             #     continue
         # print i,'submitted'
         # continue
-        script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
+        script = '/global/cscratch1/sd/dbrout/logs/sm_array.sh'
         f = open(script, 'w')
         f.write(
             '#!/bin/bash -l\n' +
