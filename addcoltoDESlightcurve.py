@@ -386,8 +386,8 @@ if __name__ == "__main__":
     #sne = np.array(tsne,dtype='str')
     #sne = np.unique(sne)
 
-    sne = open('data/allslightcurves.txt').readlines()
-    #sne = open('data/speclist.txt').readlines()
+    #sne = open('data/allslightcurves.txt').readlines()
+    sne = open('data/speclist.txt').readlines()
 
 
 
