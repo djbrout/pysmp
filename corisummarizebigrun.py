@@ -600,9 +600,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
-            print data.keys()
-            raw_input()
-            bigdata['flag'].extend(data['SMP_FLAG'])
+            #print data.keys()
+            #raw_input()
+            bigdata['flag'].extend(data['DESCRIPTIVE_FLAG'])
             #bigdata['fwhm'].extend(data['FWHM'])
 
             #print data['FLUX']
