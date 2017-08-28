@@ -3764,7 +3764,10 @@ class smp:
                 , imfile = smp_dict['image_filename']
                 , flags = smp_dict['flag']
                 )
+        print 'descriptiveflags'*20
 
+        print smp_dict['descriptiveflag']
+        print 'descriptiveflags'*20
 
         mjdvec = []
         fluxvec = []
