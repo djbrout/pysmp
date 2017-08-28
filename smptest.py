@@ -511,10 +511,10 @@ class smp:
                     'rmsaddin': np.zeros(snparams.nvalid),
                     'mjdslopeinteroff':[],
                     'cat_mag':np.zeros(snparams.nvalid),
-                    'image_filename':np.chararray(snparams.nvalid,itemsize=200),
-                    'psf_filename':np.chararray(snparams.nvalid,itemsize=200),
-                    'weight_filename':np.chararray(snparams.nvalid,itemsize=200),
-                    'zpt_file':np.chararray(snparams.nvalid,itemsize=200),
+                    'image_filename':np.chararray(snparams.nvalid,itemsize=500),
+                    'psf_filename':np.chararray(snparams.nvalid,itemsize=500),
+                    'weight_filename':np.chararray(snparams.nvalid,itemsize=500),
+                    'zpt_file':np.chararray(snparams.nvalid,itemsize=500),
                     'imwcs':[],
                     'mask':[],
                     'hostgal_mag':np.zeros(snparams.nvalid),
@@ -535,7 +535,7 @@ class smp:
                     'fullims':[],
                     'impsfs':[],
                     'hpsfs':[],
-                    'fileroots':np.chararray(snparams.nvalid,itemsize=200),
+                    'fileroots':np.chararray(snparams.nvalid,itemsize=500),
 
                     'psf_centerx':np.zeros(snparams.nvalid),
                     'psf_centery':np.zeros(snparams.nvalid),
@@ -1960,7 +1960,9 @@ class smp:
                 descriptiveflag = 128
 
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
+                print snparams.mjd[j]
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
+                raw_input()
                 badflag = 1
                 descriptiveflag = 1 #
                 #raw_input()
@@ -3011,6 +3013,8 @@ class smp:
 
 
                                     fileroot = imfile.split('.fits')[0]
+                                    #print 'fileroot',fileroot
+                                    #raw_input()
                                     smp_dict['fileroots'][i] = fileroot
                                     smp_dict['expnum'][i] = self.expnum
                                     #if self.snparams.survey == 'PS1':
