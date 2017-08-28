@@ -275,7 +275,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #print line
                         #raw_input()
                     else:
-                        #print -999
+                        print 'NOTHERE'*5
                         wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                             int(FAILED_SMP_FLAG)) + '\n'
                     #print wline
