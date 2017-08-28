@@ -151,7 +151,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #print tidobs,idobs
                     #raw_input()
                     if int(tidobs) in idobs:
-                        ww = np.isclose(idobs,tidobs,atol=0.02)# & (filt == band)
+                        #ww = np.isclose(idobs,tidobs,atol=0.005)# & (filt == band)
+                        ww = idobs == tidobs
                         #print fluxerr[ww]
                         #raw_input()
                         keepgoing = True
