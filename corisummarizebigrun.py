@@ -1340,6 +1340,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     dww = (dpmjd < 250.) | (dpmjd > -50.)
     flag = flag[dww]
     fwhm = fwhm[dww]
+    imfiles = imfiles[dww]
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
@@ -1362,6 +1363,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     for fl in np.unique(flag):
         print fl,len(flag[flag==fl])
     print '-'*15
+
+    for imf in np.unique(imfiles):
+        print len(flag[(flag==4096) & (imfiles==imf) ]),imf
+    print '-'*15
+
     # fig = plt.figure(figsize=(15, 10))
     # plt.hist(zptstd[flag > 0], bins=50)
     # plt.xlim(0,8)
