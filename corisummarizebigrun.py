@@ -1301,6 +1301,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     imfiles = np.array(imfiles,dtype='str')
     fwhm = np.array(fwhm)
     flag = np.array(flag)
+    zptstd = np.array(zptstd)
 
     sky = sky*10**(.4*(fitzpt-31.))-10000
     skyerr = skyerr*10**(-.4*(fitzpt-31.))
@@ -1335,6 +1336,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         fakeflux = fakeflux[ww]
         fwhm = fwhm[ww]
         flag = flag[ww]
+        zptstd=zptstd[ww]
 
 
     plt.clf()
