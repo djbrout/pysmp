@@ -1352,7 +1352,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig('skyflag.png')
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
-    plt.hist(skyerr[flag > 0], bins=50,np.arange(0,5,.1))
+    plt.hist(skyerr[flag > 0], bins=np.arange(0,5,.1))
     plt.xlabel('Skyerr[flag>0]')
     plt.xlim(0,5)
     plt.savefig('skyerrflag.png')
