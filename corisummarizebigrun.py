@@ -414,7 +414,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
-               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[]}
+               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],'flag':[]}
     zptfiles = []
     #deep = 0
     print smpfiles
@@ -600,6 +600,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
+            print data.keys()
+            raw_input()
+            bigdata['flag'].extend(data['Flag'])
             #bigdata['fwhm'].extend(data['FWHM'])
 
             #print data['FLUX']
