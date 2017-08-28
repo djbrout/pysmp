@@ -415,7 +415,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     bigdata = {'Flux':[],'Fluxerr':[],'FakeMag':[],'FitZPT':[],'FakeZPT':[],'HostMag':[],'Chisq':[],'DPMJD':[],
                'starflux':[],'starfluxerr':[],'starzpt':[],'catmag':[],'rmsaddin':[],'field':[],'sky':[],'imfiles':[],
                'mjd':[],'fakefile':[],'ra':[],'dec':[],'image_stamp':[],'fakefiles':[],'diffzpt':[],'diffimflux':[],
-               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],'flag':[]}
+               'diffimfluxerr':[],'fakeid':[],'skyerr':[],'acceptance':[],'filter':[],'fwhm':[],'flag':[],'snid':[]}
     zptfiles = []
     #deep = 0
     print smpfiles
