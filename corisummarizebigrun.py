@@ -1347,7 +1347,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fwhm = fwhm[dww]
     imfiles = imfiles[dww]
     snid = snid[dww]
-    bfilt = filter[dww]
+    bfilt = filterarr[dww]
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
