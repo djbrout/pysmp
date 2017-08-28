@@ -1351,11 +1351,15 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlabel('Sky[flag>0]')
     plt.savefig('skyflag.png')
     plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.hist(flag[flag > 0],bins=np.arange(0,66000,2))
-    plt.xlabel('FLAGS')
-    plt.savefig('flagflag.png')
-    plt.clf()
+    #fig = plt.figure(figsize=(15, 10))
+    #plt.hist(flag[flag > 0],bins=np.arange(0,66000,2))
+    #plt.xlabel('FLAGS')
+    #plt.savefig('flagflag.png')
+    #plt.clf()
+    print 'FLAGS'
+    for fl in np.unique(flag):
+        print fl,len(flag[flag==fl])
+    print '-'*15
     # fig = plt.figure(figsize=(15, 10))
     # plt.hist(zptstd[flag > 0], bins=50)
     # plt.xlim(0,8)
