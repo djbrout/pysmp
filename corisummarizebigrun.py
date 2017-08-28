@@ -600,8 +600,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
-            #print data.keys()
-            #raw_input()
+            print data.keys()
+            raw_input()
             bigdata['flag'].extend(data['SMP_FLAG'])
             #bigdata['fwhm'].extend(data['FWHM'])
 
@@ -1334,10 +1334,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         rmsaddin = rmsaddin[ww]
         dpmjd = dpmjd[ww]
         fakeflux = fakeflux[ww]
-        fwhm = fwhm[ww]
-        flag = flag[ww]
-        zptstd=zptstd[ww]
-
+        #fwhm = fwhm[ww]
+        #flag = flag[ww]
+        #zptstd=zptstd[ww]
+    dww = (dpmjd < 250.) | (dpmjd > -50.)
+    flag = flag[dww]
+    fwhm = fwhm[dww]
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
