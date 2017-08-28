@@ -76,7 +76,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],real=real)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'],data['DPMJD'],data['flag'],real=real)#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],
+                   data['sky'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -427,6 +428,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #print f
         #raw_input()
         fakeid = f.split('_')[-2]
+        snid = f.split('_')[-2]
         cntr += 1
         if cntr > 5000: continue
         #if cntr == 34: continue
@@ -602,6 +604,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
             #print data.keys()
             #raw_input()
+            bigdata['snid'].extend(data['DESCRIPTIVE_FLAG']*0+int(snid))
             bigdata['flag'].extend(data['DESCRIPTIVE_FLAG'])
             #bigdata['fwhm'].extend(data['FWHM'])
 
@@ -1275,7 +1278,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,flag,real=False):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,flag,snid,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1302,6 +1305,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fwhm = np.array(fwhm)
     flag = np.array(flag)
     zptstd = np.array(zptstd)
+    snid = np.array(snid)
 
     sky = sky*10**(.4*(fitzpt-31.))-10000
     skyerr = skyerr*10**(-.4*(fitzpt-31.))
@@ -1341,6 +1345,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     flag = flag[dww]
     fwhm = fwhm[dww]
     imfiles = imfiles[dww]
+    snid = snid[dww]
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
@@ -1364,8 +1369,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         print fl,len(flag[flag==fl])
     print '-'*15
 
-    for imf in np.unique(imfiles):
-        print len(flag[(flag==4096) & (imfiles==imf) ]),imf
+    for sn in np.unique(snid):
+        print len(flag[(flag==4096) & (snid==sn) ]),sn
     print '-'*15
 
     # fig = plt.figure(figsize=(15, 10))
