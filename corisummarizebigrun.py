@@ -73,10 +73,10 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
                         data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
-                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],real=real)
+                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],real=real)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
-                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'],data['DPMJD'],real=real)#resultsdir)
+                   data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],data['sky'],data['imfiles'],data['DPMJD'],data['flag'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -600,9 +600,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
             bigdata['filter'].extend([filter for i in range(len(data['SKYERR']))])
-            print data.keys()
-            raw_input()
-            bigdata['flag'].extend(data['Flag'])
+            #print data.keys()
+            #raw_input()
+            bigdata['flag'].extend(data['SMP_FLAG'])
             #bigdata['fwhm'].extend(data['FWHM'])
 
             #print data['FLUX']
@@ -719,7 +719,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr,real=False):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr,flag,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag,dtype='float')
     dpmjd = np.asarray(dpmjd,dtype='float')
@@ -1275,7 +1275,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,real=False):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,flag,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1300,6 +1300,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     filterarr = np.array(filterarr,dtype='str')
     imfiles = np.array(imfiles,dtype='str')
     fwhm = np.array(fwhm)
+    flag = np.array(flag)
 
     sky = sky*10**(.4*(fitzpt-31.))-10000
     skyerr = skyerr*10**(-.4*(fitzpt-31.))
@@ -1332,7 +1333,31 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         rmsaddin = rmsaddin[ww]
         dpmjd = dpmjd[ww]
         fakeflux = fakeflux[ww]
+        fwhm = fwhm[ww]
+        flag = flag[ww]
 
+
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(fwhm[flag>0],bins=50)
+    plt.xlabel('FWHM[flag>0]')
+    plt.savefig('fwhmflag.png')
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(sky[flag > 0], bins=50)
+    plt.xlabel('Sky[flag>0]')
+    plt.savefig('skyflag.png')
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(skyerr[flag > 0], bins=50)
+    plt.xlabel('Skyerr[flag>0]')
+    plt.savefig('skyerrflag.png')
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    plt.hist(zptstd[flag > 0], bins=50)
+    plt.xlabel('Zptstd[flag>0]')
+    plt.savefig('zptstdflag.png')
+    plt.clf()
 
     #print np.sqrt(10**(.4*(fitzpt - hostmag))/3.)
     #am = np.argmax(np.sqrt(10**(.4*(fitzpt - hostmag))/3.))
