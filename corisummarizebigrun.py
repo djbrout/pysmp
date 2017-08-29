@@ -77,7 +77,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],
-                   data['sky'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],real=real)#resultsdir)
+                   data['sky'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -1278,7 +1278,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,flag,snid,real=False):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,flag,snid,mjd,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag)
     fluxerr = np.asarray(fluxerr)
@@ -1348,6 +1348,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     imfiles = imfiles[dww]
     snid = snid[dww]
     bfilt = filterarr[dww]
+    mjd = mjd[dww]
 
     plt.clf()
     fig = plt.figure(figsize=(15, 10))
@@ -1369,8 +1370,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'FLAGS'
     for fl in np.unique(flag):
         print fl,len(flag[flag==fl])
+    for mj in mjd[flag==1]:
+        print mj,
     print '-'*15
-    print np.unique(bfilt)
+    #print np.unique(bfilt)
     for sn in np.unique(snid):
         print len(flag[(flag == 4096) & (snid == sn) & (bfilt=='g') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='r') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='i') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='z') ]), sn
         #print len(flag[(flag==4096) & (snid==sn) ]),sn

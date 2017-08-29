@@ -491,7 +491,7 @@ class smp:
                     'sky':np.zeros(snparams.nvalid),
                     'skyerr':np.zeros(snparams.nvalid),
                     'flag':np.ones(snparams.nvalid),
-                    'descriptiveflag': np.ones(snparams.nvalid),
+                    'descriptiveflag': np.ones(snparams.nvalid)+8191,
                     'fitflag':np.ones(snparams.nvalid),
                     'psf':np.zeros(snparams.nvalid),
                     'psfcenter':[],
