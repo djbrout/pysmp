@@ -1320,7 +1320,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #fakeflux *= 10 ** (-1 * .4 * (fitzpt - fakezpt))
     chisqarr = np.asarray(chisqarr)
 
-
+    mjd = np.array(mjd)
     if real:
         ww = (dpmjd > 190.) | (dpmjd < -30.)
         flux = flux[ww]
