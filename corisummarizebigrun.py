@@ -1370,8 +1370,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'FLAGS'
     for fl in np.unique(flag):
         print fl,len(flag[flag==fl])
-    for mj in mjd[flag==1]:
-        print mj,
+    for mj,sn in zip(mjd[flag==1],snid[flag==1]):
+        print mj,sn
     print '-'*15
     #print np.unique(bfilt)
     for sn in np.unique(snid):
