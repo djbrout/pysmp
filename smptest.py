@@ -1944,6 +1944,7 @@ class smp:
 
 
             i += 1
+            smp_dict['mjd'][i] = float(snparams.mjd[j])
 
             if i >= len(smp_dict['image_filename']):
                 print i
