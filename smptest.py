@@ -1962,6 +1962,7 @@ class smp:
 
             if xsn < 0 or ysn < 0 or xsn > snparams.nxpix-1 or ysn > snparams.nypix-1:
                 print snparams.mjd[j]
+                print xsn,ysn
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
                 raw_input()
                 badflag = 1
