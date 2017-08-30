@@ -1964,7 +1964,7 @@ class smp:
                 print snparams.mjd[j]
                 print xsn,ysn
                 print "Error : SN Coordinates %s,%s are not within image"%(snparams.ra,snparams.decl)
-                raw_input()
+                #raw_input()
                 badflag = 1
                 descriptiveflag = 1 #
                 #raw_input()
