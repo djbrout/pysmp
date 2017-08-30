@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,250)
+allindexes = range(0,500)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
@@ -13,8 +13,8 @@ walltime= '12:00:00'
 doskipping = True
 #snfilelist = 'badinputs.txt'
 snfilelist = 'data/speclist.txt'
-outdir = '/project/projectdirs/dessn/dbrout/specfitsv1.2/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv1.2/'
+outdir = '/project/projectdirs/dessn/dbrout/s1fitsv1.2/'
+npzdir = '/global/cscratch1/sd/dbrout/s1npzfilesv1.2/'
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 count = 0
@@ -68,7 +68,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + ' --nozpt -f  ' + filt +
+            'python smptest.py --index=' + str(i) + ' --nozpt --usefake -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
             ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/specv2/ \n'
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
