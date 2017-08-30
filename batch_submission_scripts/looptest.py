@@ -86,6 +86,7 @@ for i in allindexes:
         f.close()
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
+        raw_input('stopppp')
         #print open(script).read()
         #time.sleep(1)
 
