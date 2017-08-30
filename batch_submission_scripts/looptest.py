@@ -12,7 +12,7 @@ walltime= '12:00:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/speclist.txt'
+snfilelist = 'data/s1lightcurves.txt'
 outdir = '/project/projectdirs/dessn/dbrout/s1fitsv1.2/'
 npzdir = '/global/cscratch1/sd/dbrout/s1npzfilesv1.2/'
 snfiles = open(snfilelist).readlines()
