@@ -10,7 +10,7 @@ filts = ['g','r','i','z']
 walltime= '12:00:00'
 #np.random.shuffle(allindexes)
 
-doskipping = False
+doskipping = True
 #snfilelist = 'badinputs.txt'
 snfilelist = 'data/speclist.txt'
 outdir = '/project/projectdirs/dessn/dbrout/specfitsv1.2/'
