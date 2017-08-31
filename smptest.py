@@ -2600,6 +2600,7 @@ class smp:
                 badflag = 1
                 if descriptiveflag == 0: descriptiveflag = 2048
                 print 'scalefactor is infinite\n' * 20
+                raw_input()
                 smp_dict['descriptiveflag'][i] = descriptiveflag
                 smp_dict['imwcs'].append(np.nan)
                 smp_dict['psfcenter'].append(np.nan)
