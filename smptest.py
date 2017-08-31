@@ -2596,8 +2596,41 @@ class smp:
                 descriptiveflag = 4
                 print ('zpt '+str(zpt)+' less than zptmin '+str(zptmin)+'\n')*10
 
+            if not np.isfinite(scalefactor):
+                badflag = 1
+                if descriptiveflag == 0: descriptiveflag = 2048
+                print 'scalefactor is infinite\n' * 20
+                smp_dict['descriptiveflag'][i] = descriptiveflag
+                smp_dict['imwcs'].append(np.nan)
+                smp_dict['psfcenter'].append(np.nan)
+                try:
+                    smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                except:
+                    smp_dict['sky'][i] = np.nan
+                try:
+                    smp_dict['skyerr'][i] = mysexskysig
+                except:
+                    smp_dict['skyerr'][i] = np.nan
+                smp_dict['mjd'][i] = float(snparams.mjd[j])
+                try:
+                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                except:
+                    smp_dict['fwhm_arcsec'][i] = np.nan
+                try:
+                    smp_dict['zpt'][i] = zpt
+                    smp_dict['zpterr'][i] = zpterr
+                except:
+                    smp_dict['zpt'][i] = np.nan
+                    smp_dict['zpterr'][i] = np.nan
+                smp_dict['expnum'][i] = self.expnum
+                smp_dict['image_filename'][i] = imfile
+                smp_dict['zpt_file'][i] = 'na'
+                smp_dict['psf_filename'][i] = longpsffile
+                smp_dict['weight_filename'][i] = 'na'
 
-            if xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25 and np.isfinite(scalefactor):
+                smp_dict['id_obs'][i] = snparams.id_obs[j]
+                smp_dict['id_coadd'][i] = snparams.id_coadd[j]
+            elif xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25:
                 index += 1
                 radius1 = 5
                 radius2 = 8 
