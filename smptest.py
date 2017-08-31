@@ -3372,6 +3372,7 @@ class smp:
                 badflag = 1
                 if descriptiveflag == 0: descriptiveflag = 64
                 print 'xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25\n'*20
+                raw_input()
                 smp_dict['descriptiveflag'][i] = descriptiveflag
                 smp_dict['imwcs'].append(np.nan)
                 smp_dict['psfcenter'].append(np.nan)
