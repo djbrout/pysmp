@@ -1406,6 +1406,7 @@ class smp:
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             nozpt = copy(orig_nozpt)
 
+            print 'Now grabbing MJD',snparams.mjd[j]
             #if j > 30:
             #    continue
 
