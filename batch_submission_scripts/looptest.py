@@ -10,7 +10,7 @@ filts = ['g','r','i','z']
 walltime= '5:00:00'
 #np.random.shuffle(allindexes)
 
-doskipping = True
+doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s1lightcurves.txt'
 snfilelist = 'data/speclist.txt'
