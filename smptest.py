@@ -3633,7 +3633,7 @@ class smp:
 
 
         for i in np.arange(len(smp_dict['sky'])):
-            if not smp_dict['descriptiveflag'] > 0:
+            if not smp_dict['descriptiveflag'][i] > 0:
                 if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
                     #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
                     #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
