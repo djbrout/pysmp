@@ -1719,7 +1719,10 @@ class smp:
                 #print 'image shape', im.shape
             except:
                 print 'Image is EMPTY, skipping star...'
-
+                print 'Image is EMPTY, skipping star...'
+                a = open('emptyimages.txt','a')
+                a.write(imfile+'\n')
+                a.close()
                 continue
 
             snparams.platescale = hdr[self.params.hdr_platescale_name]
