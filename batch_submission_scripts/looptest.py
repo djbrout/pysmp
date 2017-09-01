@@ -84,7 +84,7 @@ for i in allindexes:
             '\n'
         )
         f.close()
-        if count < 269: continue
+        if count >= 269: continue
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
         print script
