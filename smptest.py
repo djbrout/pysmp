@@ -3627,13 +3627,14 @@ class smp:
 
 
         for i in np.arange(len(smp_dict['sky'])):
-            if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
-                #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
-                #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
-                print 'MJD:',smp_dict['mjd'][i],'BAD PSF... SETTING FLAG TO 1'
-                #raw_input()
-                smp_dict['flag'][i] = 1
-                #smp_dict['mjd'][i]
+            if not smp_dict['descriptiveflag'] > 0:
+                if np.max(smp_psf[i,:,:]) == np.min(smp_psf[i,:,:]):
+                    #save_fits_image(smp_psf[i,:,:],'test/culpritpsf.fits')
+                    #print 'hererererere psffsfsffsfsf',smp_dict['mjd'][i]
+                    print 'MJD:',smp_dict['mjd'][i],'BAD PSF... SETTING FLAG TO 1'
+                    #raw_input()
+                    smp_dict['flag'][i] = 1
+                    #smp_dict['mjd'][i]
 
         try:
             ww = usearg
