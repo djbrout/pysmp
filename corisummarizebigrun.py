@@ -1242,7 +1242,10 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
         plt.ylim(-3,3)
         ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
                                    np.arange(19, 28, .2))
-        plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 sigma %.4f \n     5 sigma %.4f'%(len(flux[ww][abs(flux[ww]/fluxerr[ww]   > 3.)]),len(flux[ww][abs(flux[ww]/fluxerr[ww]  > 5.)])))
+        plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 sigma %.4f \n     '
+                                                                                '5 sigma %.4f'
+                                                                                ''%(float(len(flux[ww][abs(flux[ww]/fluxerr[ww]   > 3.)]))/len(flux[ww]),
+                                                                                    float(len(flux[ww][abs(flux[ww]/fluxerr[ww]  > 5.)]))/len(flux[ww])))
         plt.xlabel('Hostmag')
         plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
         plt.legend()
