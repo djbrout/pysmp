@@ -1235,9 +1235,10 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.clf()
 
-    try:
+    #try:
+    if True:
         plt.scatter(hostmag[ww],flux[ww] / fluxerr[ww])
-        plt.xlim(21, 29)
+        plt.xlim(19, 29)
         plt.ylim(-3,3)
         ax, ay, aystd = dt.bindata(hostmag[ww], (flux[ww] / fluxerr[ww]),
                                    np.arange(19, 28, .2))
@@ -1263,8 +1264,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
         plt.title(filter + ' band')
 
         plt.savefig(outdir + '/emptyfluxvshostmag.png')
-    except:
-        print 'bad hostmags'
+    #except:
+    #    print 'bad hostmags'
     # plt.clf()
     # plt.scatter(fakemag[ww], flux[ww])
     # plt.xlim(19, 28)
