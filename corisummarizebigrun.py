@@ -1244,7 +1244,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
         plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 simga %.3f \n     5 sigma'%(len(ax[abs(aystd > 3.)]),len(ax[abs(aystd > 5.)])))
         plt.xlabel('Hostmag')
         plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
-
+        plt.legend()
         plt.axhline(0)
         plt.title(filter + ' band')
 
