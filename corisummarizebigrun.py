@@ -722,7 +722,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     return bigdata
 
 
-def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr,flag,real=False):
+def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimfluxerr,sky,skyerr,dpmjd,chisq,imfiles,ra,dec,imstamp,outdir,fakefiles,hostmag,filter,oldfakezpt,zptstd,filterarr,flag,fwhm,real=False):
     flux = np.asarray(flux)
     fakemag = np.asarray(fakemag,dtype='float')
     dpmjd = np.asarray(dpmjd,dtype='float')
@@ -730,7 +730,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     fluxerr = np.asarray(fluxerr)
     fakezpt= np.asarray(fakezpt)
     fitzpt = np.asarray(fitzpt)
-
+    fwhm = np.asarray(fwhm)
     chisq = np.asarray(chisq)
     imfiles = np.asarray(imfiles,dtype='str')
     ra = np.asarray(ra)
@@ -755,6 +755,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
         fitzpt = fitzpt[ww]
         hostmag = hostmag[ww]
         dpmjd = dpmjd[ww]
+        fwhm = fwhm[ww]
 
 
     skyerr = np.asarray(skyerr)
@@ -1254,6 +1255,27 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
         plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
+        plt.scatter(fwhm[ww], flux[ww] / fluxerr[ww])
+        plt.xlim(19, 29)
+        plt.ylim(-6, 6)
+        ax, ay, aystd = dt.bindata(fwhm[ww], (flux[ww] / fluxerr[ww]),
+                                   np.arange(19, 28, .2))
+        plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 sigma %.4f \n     '
+                                                                                '5 sigma %.4f'
+                                                                                '' % (float(
+            len(flux[ww][abs(flux[ww] / fluxerr[ww] > 3.)])) / len(flux[ww]),
+                                                                                      float(len(flux[ww][abs(
+                                                                                          flux[ww] / fluxerr[
+                                                                                              ww] > 5.)])) / len(
+                                                                                          flux[ww])))
+        plt.xlabel('Hostmag')
+        plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
+        plt.legend()
+        plt.axhline(0)
+        plt.title(filter + ' band')
+
+        plt.savefig(outdir + '/emptyfluxstdvsfwhm.png')
+
         plt.clf()
         plt.scatter(hostmag[ww], flux[ww])
         plt.xlim(21, 30)
@@ -1344,46 +1366,46 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         rmsaddin = rmsaddin[ww]
         dpmjd = dpmjd[ww]
         fakeflux = fakeflux[ww]
-        #fwhm = fwhm[ww]
+        fwhm = fwhm[ww]
         #flag = flag[ww]
         #zptstd=zptstd[ww]
-    dww = (dpmjd < 250.) | (dpmjd > -50.)
-    flag = flag[dww]
-    fwhm = fwhm[dww]
-    imfiles = imfiles[dww]
-    snid = snid[dww]
-    bfilt = filterarr[dww]
-    mjd = mjd[dww]
-
-    plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.hist(fwhm[flag>0],bins=np.arange(0,8,.1))
-    plt.xlim(0,8)
-    plt.xlabel('FWHM[flag>0]')
-    plt.savefig('fwhmflag.png')
-    plt.clf()
-    fig = plt.figure(figsize=(15, 10))
-    plt.hist(sky[flag > 0], bins=50)
-    plt.xlabel('Sky[flag>0]')
-    plt.savefig('skyflag.png')
-    plt.clf()
-    #fig = plt.figure(figsize=(15, 10))
-    #plt.hist(flag[flag > 0],bins=np.arange(0,66000,2))
-    #plt.xlabel('FLAGS')
-    #plt.savefig('flagflag.png')
-    #plt.clf()
-    print 'FLAGS'
-    for fl in np.unique(flag):
-        print fl,len(flag[flag==fl])
-    for mj,sn in zip(mjd[flag==1],snid[flag==1]):
-        print mj,sn
-    print '-'*15
-    #print np.unique(bfilt)
-    for sn in np.unique(snid):
-        print len(flag[(flag == 4096) & (snid == sn) & (bfilt=='g') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='r') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='i') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='z') ]), sn
-        #print len(flag[(flag==4096) & (snid==sn) ]),sn
-    print len(np.unique(snid[flag==4096]))
-    print '-'*15
+    # dww = (dpmjd < 250.) | (dpmjd > -50.)
+    # flag = flag[dww]
+    # fwhm = fwhm[dww]
+    # imfiles = imfiles[dww]
+    # snid = snid[dww]
+    # bfilt = filterarr[dww]
+    # mjd = mjd[dww]
+    #
+    # plt.clf()
+    # fig = plt.figure(figsize=(15, 10))
+    # plt.hist(fwhm[flag>0],bins=np.arange(0,8,.1))
+    # plt.xlim(0,8)
+    # plt.xlabel('FWHM[flag>0]')
+    # plt.savefig('fwhmflag.png')
+    # plt.clf()
+    # fig = plt.figure(figsize=(15, 10))
+    # plt.hist(sky[flag > 0], bins=50)
+    # plt.xlabel('Sky[flag>0]')
+    # plt.savefig('skyflag.png')
+    # plt.clf()
+    # #fig = plt.figure(figsize=(15, 10))
+    # #plt.hist(flag[flag > 0],bins=np.arange(0,66000,2))
+    # #plt.xlabel('FLAGS')
+    # #plt.savefig('flagflag.png')
+    # #plt.clf()
+    # print 'FLAGS'
+    # for fl in np.unique(flag):
+    #     print fl,len(flag[flag==fl])
+    # for mj,sn in zip(mjd[flag==1],snid[flag==1]):
+    #     print mj,sn
+    # print '-'*15
+    # #print np.unique(bfilt)
+    # for sn in np.unique(snid):
+    #     print len(flag[(flag == 4096) & (snid == sn) & (bfilt=='g') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='r') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='i') ]), len(flag[(flag == 4096) & (snid == sn) & (bfilt=='z') ]), sn
+    #     #print len(flag[(flag==4096) & (snid==sn) ]),sn
+    # print len(np.unique(snid[flag==4096]))
+    # print '-'*15
 
     # fig = plt.figure(figsize=(15, 10))
     # plt.hist(zptstd[flag > 0], bins=50)
