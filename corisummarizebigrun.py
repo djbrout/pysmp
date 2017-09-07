@@ -73,11 +73,11 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
                         data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
-                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],real=real)
+                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],data['fwhm'],real=real)
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],
-                   data['sky'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],real=real)#resultsdir)
+                   data['fwhm'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -438,8 +438,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         deep = 0
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
-        #print data.keys()
-
+        print data.keys()
+        raw_input()
 
         #print tra
         try:
