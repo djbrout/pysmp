@@ -936,6 +936,25 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.savefig(outdir+'/percentagefluxdiff.png')
 
     plt.clf()
+
+    plt.scatter(fwhm[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],alpha=.2,color='green')
+    ax, ay, aystd = bindata(fwhm[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],
+                            np.arange(1,4, .2))
+    plt.errorbar(ax, ay, aystd, markersize=15, color='green', fmt='o', label='SMP')
+
+
+
+    plt.axhline(0)
+    plt.xlim(1.5,4.)
+    #plt.ylim(-.1,.1)
+    plt.ylim(-6,6)
+    plt.xlabel('Fake Mag',fontsize=30.)
+    plt.ylabel('Fractional Flux Difference',fontsize=30.)
+    plt.title(filter+' band',fontsize=30.)
+    plt.savefig(outdir+'/stdfluxdifffwhm.png')
+
+    plt.clf()
+
     ax,ay = dt.binrms(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],np.arange(19,28, .1),.5)
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],alpha=.2,color='green')
     ax, ay, aystd,n = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],
