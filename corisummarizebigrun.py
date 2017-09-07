@@ -948,8 +948,8 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.xlim(1.5,4.)
     #plt.ylim(-.1,.1)
     plt.ylim(-6,6)
-    plt.xlabel('Fake Mag',fontsize=30.)
-    plt.ylabel('Fractional Flux Difference',fontsize=30.)
+    plt.xlabel('FWHM (arcsec)',fontsize=30.)
+    plt.ylabel('Fit-Fake/Err',fontsize=30.)
     plt.title(filter+' band',fontsize=30.)
     plt.savefig(outdir+'/stdfluxdifffwhm.png')
 
