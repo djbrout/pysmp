@@ -3650,4 +3650,4 @@ if __name__ == "__main__":
 
     #print cd
     #raw_input()
-    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=True)
+    go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,real=False)
