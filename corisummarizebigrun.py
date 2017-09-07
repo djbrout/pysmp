@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from matplotlib.ticker import NullFormatter
 import iterstat
-
+import pyfits as pf
 import dilltools as dt
 from copy import copy
 from scipy.stats import sigmaclip
@@ -438,9 +438,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         deep = 0
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
-        print data.keys()
-        print data['PSF_FILE']
-        raw_input('stop')
+        #print data.keys()
+        #print data['PSF_FILE']
+        #raw_input('stop')
 
         #print tra
         try:
@@ -599,6 +599,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['mjd'].extend(data['MJD'])
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
+            for p in data['PSF_FILE']:
+                bigdata['fwhm'].append(pf.open(p)[1].header['PSF_FWHM'] *  2.235 * 0.27)
             bigdata['diffimflux'].extend(data['DIFFIM_FLUX'])
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
