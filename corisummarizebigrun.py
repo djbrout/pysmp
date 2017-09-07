@@ -430,7 +430,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         fakeid = f.split('_')[-2]
         snid = f.split('_')[-2]
         cntr += 1
-        if cntr > 50: continue
+        if cntr > 500: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
