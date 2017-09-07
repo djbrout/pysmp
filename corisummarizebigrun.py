@@ -440,7 +440,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         data = dt.readcol(f)
         print data.keys()
         print data['PSF_FILE']
-        raw_input()
+        raw_input('stop')
 
         #print tra
         try:
