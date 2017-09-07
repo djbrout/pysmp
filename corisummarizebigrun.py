@@ -439,6 +439,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
         print data.keys()
+        print data['PSF_FILE']
         raw_input()
 
         #print tra
