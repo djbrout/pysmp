@@ -430,7 +430,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         fakeid = f.split('_')[-2]
         snid = f.split('_')[-2]
         cntr += 1
-        if cntr > 500: continue
+        if cntr > 50: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -1495,6 +1495,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     sky = sky[ww]
     skyerr = skyerr[ww]
     d = d[ww]
+    fwhm = fwhm[ww]
     diffimd = diffimflux/diffimfluxerr
     #print d[:100]
     #raw_input()
@@ -1987,9 +1988,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + deep_or_shallow + 'hoststd.png')
     print 'saved', outdir + '/' + deep_or_shallow + 'hoststd.png'
 
-
-
-
+    plt.clf()
+    ax, ayrms = dt.binrms(fwhm,d, np.arange(1., 4., .1), .1)
+    plt.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
+    plt.scatter(fwhm,d,color='grey')
+    plt.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+    plt.savefig(outdir + '/' + deep_or_shallow + 'fwhmstd.png')
 
 
 
