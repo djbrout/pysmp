@@ -1258,11 +1258,12 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
         plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
+        plt.clf()
         plt.scatter(fwhm[ww], flux[ww] / fluxerr[ww])
-        plt.xlim(19, 29)
+        plt.xlim(1., 3.5)
         plt.ylim(-6, 6)
         ax, ay, aystd = dt.bindata(fwhm[ww], (flux[ww] / fluxerr[ww]),
-                                   np.arange(19, 28, .2))
+                                   np.arange(1, 3.5, .2))
         plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 sigma %.4f \n     '
                                                                                 '5 sigma %.4f'
                                                                                 '' % (float(
