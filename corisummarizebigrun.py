@@ -958,6 +958,13 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.clf()
 
+    plt.hist(fwhm[ww]/2.235,bins=100)
+    plt.xlabel('PSF_FWHM')
+    plt.savefig(outdir+'/fwhmhist.png')
+    print 'saved',outdir+'/fwhmhist.png'
+    raw_input()
+    plt.clf()
+
     ax,ay = dt.binrms(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],np.arange(19,28, .1),.5)
     plt.scatter(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],alpha=.2,color='green')
     ax, ay, aystd,n = bindata(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],
