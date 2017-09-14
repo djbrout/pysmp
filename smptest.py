@@ -2949,6 +2949,12 @@ class smp:
                                     else:
                                         noise_stamp[noise_stamp > 0.] = 1
                                         noise_stamp[noise_stamp <= 0.] = 0
+
+                                        smp_dict['nummaskedpixels'][i] = len(mask[np.where(mask == 0)])
+                                        print 'num masked pixels', smp_dict['nummaskedpixels'][i]
+                                        if smp_dict['nummaskedpixels'][i] > 0.:
+                                            raw_input()
+
                                         mask *= noise_stamp
                                         print smp_noise.shape
                                         print noise_stamp.shape
@@ -3090,10 +3096,7 @@ class smp:
                                     smp_dict['aperscale'][i] = aperscale
 
 
-                                    smp_dict['nummaskedpixels'][i] = len(mask[np.where(mask[int(ysn)-12:int(ysn)+12,int(xsn)-12:int(xsn)+12] != 0)])
-                                    print 'num masked pixels',smp_dict['nummaskedpixels'][i]
-                                    if smp_dict['nummaskedpixels'][i] > 0.:
-                                        raw_input()
+
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
