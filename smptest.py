@@ -2512,7 +2512,7 @@ class smp:
                 print 'getting rasssssss'
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
-                zptfitchisq = zptdata['zptfitchisq']
+                #zptfitchisq = zptdata['zptfitchisq']
             try:
             #if True:
                 if len(thisra) < params.minzptstars:
