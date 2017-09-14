@@ -6745,6 +6745,7 @@ class smp:
                     plt.savefig(zptplotout,dpi=50)
                     print 'saved',zptplotout
                     plt.clf()
+                    raw_input()
                 ras = np.array(ras)
                 decs = np.array(decs)
                 ids = np.array(ids)
