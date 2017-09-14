@@ -536,7 +536,7 @@ class smp:
                     'impsfs':[],
                     'hpsfs':[],
                     'fileroots':np.chararray(snparams.nvalid,itemsize=500),
-
+                    'nummaskedpixels':np.zeros(snparams.nvalid),
                     'psf_centerx':np.zeros(snparams.nvalid),
                     'psf_centery':np.zeros(snparams.nvalid),
                     'expnum':np.zeros(snparams.nvalid),
@@ -2909,7 +2909,7 @@ class smp:
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if minim != maxim:
-                            #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum
+                            #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum:
                                 if np.max(psf_stamp[int(params.substamp/2+1-3):int(params.substamp/2+1+4),int(params.substamp/2+1-3):int(params.substamp/2+1+4)]) == np.max(psf_stamp[:,:]):
                                     #i = j
 
@@ -3089,6 +3089,9 @@ class smp:
                                     smp_dict['aper_skyerr'][i] = aperskyerr
                                     smp_dict['aperscale'][i] = aperscale
 
+
+                                    smp_dict['nummaskedpixels'][i] = len(np.where(mask[ysn-12:ysn+12,xsn-12:xsn+12] != 0)[0])
+                                    print 'num masked pixels',smp_dict['nummaskedpixels'][i]
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
@@ -3867,8 +3870,12 @@ class smp:
         print 'mjdslopeinteroff',smp_dict['mjdslopeinteroff']
 
         print os.path.join(outdir,filename+'_mcmc_input.npz')
-        print 'idobs',smp_dict['id_obs']
-        print 'idcoadd',smp_dict['id_coadd']
+        #print 'idobs',smp_dict['id_obs']
+        #print 'idcoadd',smp_dict['id_coadd']
+
+        print 'maskedpixels'*100
+        for r,m,p in zip(range(len(smp_dict['mjd'])),smp_dict['mjd'],smp_dict['nummaskedpixels']):
+            print r,m,p
 
         try:
             print snparams.RA
@@ -6684,7 +6691,7 @@ class smp:
             print 'FIT CHI SQ:',zptfitchisq
             print imfile
             print '-'*100
-            raw_input()
+            #raw_input()
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
                              flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3))+'\nZPT SCATTER: '+str(round(std,3))+'\nCHISQ: '+str(round(zptfitchisq,3)))
