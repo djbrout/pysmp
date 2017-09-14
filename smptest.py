@@ -6671,6 +6671,9 @@ class smp:
             med, rmsaddin, num = self.iterstat(
                 float(mde) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
                 startMedian=True, sigmaclip=3, iter=10)
+
+            fitchisq  = np.sum((mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))/(flux_star_std[goodstarcols]/flux_star[goodstarcols]))/len(mag_cat[goodstarcols])
+
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
             #                              startMedian=True, sigmaclip=3, iter=10)
 
@@ -6678,11 +6681,12 @@ class smp:
             print '-'*100
             print 'Fit ZPT:',md,'+-',std/np.sqrt(num)
             print 'W Fitzp:',mde,'+-',mdeerr
+            print 'FIT CHI SQ:',fitchisq
             print '-'*100
 
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3))+'\nZPT SCATTER: '+str(round(std,3)))
+                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3))+'\nZPT SCATTER: '+str(round(std,3))+'\nCHISQ: '+str(round(fitchisq,3)))
                 #print 'plot'
                 #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
                 plt.axhline(0,color='black')
@@ -6692,10 +6696,7 @@ class smp:
                 plt.ylabel('zpt-2.5log10(flux)')
 
                 plt.legend()
-            #print 'saving'
-            #print mag_cat[goodstarcols].shape
-            #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png')
-            #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfit_zptplot.png'
+
             if self.fermigrid:
                 print 'insidefermigrid'
 
@@ -6745,7 +6746,7 @@ class smp:
                     plt.savefig(zptplotout,dpi=50)
                     print 'saved',zptplotout
                     plt.clf()
-                    raw_input()
+                    #raw_input()
                 ras = np.array(ras)
                 decs = np.array(decs)
                 ids = np.array(ids)
