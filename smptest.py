@@ -3092,6 +3092,8 @@ class smp:
 
                                     smp_dict['nummaskedpixels'][i] = len(mask[np.where(mask[int(ysn)-12:int(ysn)+12,int(xsn)-12:int(xsn)+12] != 0)])
                                     print 'num masked pixels',smp_dict['nummaskedpixels'][i]
+                                    if smp_dict['nummaskedpixels'][i] > 0.:
+                                        raw_input()
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
                                     msk[msk!=0.] = 1
