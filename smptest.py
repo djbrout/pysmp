@@ -3015,10 +3015,10 @@ class smp:
                                         smp_psf[i,:,:] = psf_stamp/np.sum(psf_stamp)
                                     else:
                                         smp_psf[i, :, :] = psf_stamp
-                                    if abs(float(snparams.mjd[j])-56660.105) < .105:
-                                        for ppp in psf_stamp.ravel():
-                                            print ppp,
-                                        raw_input('psffffff')
+                                    # if abs(float(snparams.mjd[j])-56660.105) < .105:
+                                    #     for ppp in psf_stamp.ravel():
+                                    #         print ppp,
+                                    #     raw_input('psffffff')
                                     #save_fits_image(psf_stamp,'testpsf.fits')
                                     c = 20
                                     psa = self.snparams.platescale
