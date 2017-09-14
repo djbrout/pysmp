@@ -2952,8 +2952,8 @@ class smp:
 
                                         smp_dict['nummaskedpixels'][i] = len(mask[np.where(mask == 0)])
                                         print 'num masked pixels', smp_dict['nummaskedpixels'][i]
-                                        if smp_dict['nummaskedpixels'][i] > 0.:
-                                            raw_input()
+                                        # if smp_dict['nummaskedpixels'][i] > 0.:
+                                        #     raw_input()
 
                                         mask *= noise_stamp
                                         print smp_noise.shape
