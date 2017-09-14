@@ -2485,7 +2485,7 @@ class smp:
 
                     #print sexsky,sexrms,sky,skyerr
                     #raw_input('sss')
-                    zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids,zptfitchisq = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
                     print 'zpttime',time.time()-zpttime
@@ -2512,7 +2512,7 @@ class smp:
                 print 'getting rasssssss'
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
-
+                zptfitchisq = zptdata['zptfitchisq']
             try:
             #if True:
                 if len(thisra) < params.minzptstars:
@@ -6916,6 +6916,7 @@ class smp:
                          , thisids = thisids[goodstarcols]
                          , fwhm = np.float(fwhm)
                          , zptscat = zptscat
+                         , zptfitchisq = fitchisq
                          )
                 #raw_input()
 
@@ -6988,6 +6989,7 @@ class smp:
                      , thisids=0
                      , fwhm=0
                      , zptscat = 0
+                     , zptfitchisq=0
                      )
 
 
@@ -7025,7 +7027,7 @@ class smp:
         #raw_input('stopped')
         if bad:
             return 0,0,0,0,0,0,0
-        return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols])
+        return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols],zptfitchisq)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
 
