@@ -167,7 +167,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         ww = idobs == tidobs
                         #print fluxerr[ww]
                         #raw_input()
-                        if float(tidobs) == 57311.007:
+                        if float(tidobs) == 414.:
                             print 'stopped at this night'
                             raw_input()
                         keepgoing = True
