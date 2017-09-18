@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(0,255)
+allindexes = range(0,1)
 
 for i in allindexes:
 
@@ -26,10 +26,10 @@ for i in allindexes:
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
 
-
+        'python  addcoltoDESlightcurve.py --index=$SLURM_JOB_ID \n'
         #SIM
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/specv1_3/SMP_SPEC_v1_3/ '
-                                                             '--resultsdir=/project/projectdirs/des/djbrout/specv1_3//  \n' +
+        #'python addcoltoDESlightcurve.py --index=$SLURM_JOB_ID --savelcdir=/project/projectdirs/des/djbrout/specv1_3/SMP_SPEC_v1_3/ '
+        #                                                     '--resultsdir=/project/projectdirs/des/djbrout/specv1_3//  \n' +
         # 'python addcoltoDESlightcurve.py --index=' + str(
         #     i) + ' --savelcdir=/project/projectdirs/des/djbrout/spec_v7/SMP_RAW_specv1 '
         #          '--resultsdir=/project/projectdirs/des/djbrout/spec_v7/ \n' +
@@ -38,5 +38,6 @@ for i in allindexes:
         '\n'
     )
     f.close()
-    output = Popen(["sbatch", script], stdout=PIPE).communicate()
-    print output[0]
+    #output = Popen(["sbatch", script], stdout=PIPE).communicate()
+    #print output[0]
+    print script
