@@ -1,6 +1,6 @@
 from subprocess import *
 
-allindexes = range(0,1000)
+allindexes = range(0,255)
 
 for i in allindexes:
 
@@ -28,8 +28,8 @@ for i in allindexes:
 
 
         #SIM
-        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/SMP_SIM_v1/ '
-                                                             '--resultsdir=/project/projectdirs/des/djbrout/114sim/ --fakeheader \n' +
+        'python addcoltoDESlightcurve.py --index=' + str(i) + ' --savelcdir=/project/projectdirs/des/djbrout/specv1_3/SMP_SPEC_v1_3/ '
+                                                             '--resultsdir=/project/projectdirs/des/djbrout/specv1_3//  \n' +
         # 'python addcoltoDESlightcurve.py --index=' + str(
         #     i) + ' --savelcdir=/project/projectdirs/des/djbrout/spec_v7/SMP_RAW_specv1 '
         #          '--resultsdir=/project/projectdirs/des/djbrout/spec_v7/ \n' +
