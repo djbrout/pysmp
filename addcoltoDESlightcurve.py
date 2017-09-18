@@ -22,16 +22,27 @@ SMP_FLAG - 1 means this epoch was flagged for some reason inside smp pipeline\n\
 (just to be clear: ALL FLUXES, SKYS, SKYERRS, ETC... ARE REPORTED AT A ZEROPOINT OF 31)\n\
 -999 means missing data\n\
 \n\
-## Flag Bit Definitions\n\
-```\n\
-CHISQ_FLAG = 2\n\
-PIPELINE_FLAG = 1\n\
-BADSKY_FLAG = 2\n\
-BADSKYERR_FLAG = 4\n\
-BADZPT_FLAG = 16\n\
-BADZPTERR_FLAG = 32\n\
-DONTFIT_FLAG = 32768\n\
-FAILED_SMP_FLAG = 65536\n\
+##Flag Bit Definitions\
+> CHISQ_FLAG = 2 #none have been set\
+> BADSKY_FLAG = 4 # FITSKY > 999.\
+> BADSKYERR_FLAG = 8 # FIT_SKYERR > .5\
+> BADZPT_FLAG = 16 # 27 > FITZPT or FITZPT > 35\
+> BADSCATTER_FLAG = 32# the scatter about the zeropoint greater that .2 mags\
+> SMP_PIPELINE_FLAG = 32768 # A flag was set inside the SMP pipeline (ex. bad PSF, too much masking, etc...)\
+> DIDNT_ENTER_SMP_FLAG = 65536 #These epochs never even made it into the scene modeling pipeline (for example the image never existed on NERSC)\
+\
+> 1 = Error : SN Coordinates %s,%s are not within image\
+> 2 = Error: Bad PSF file\
+> 4 = Error: Bad ZPT\
+> 8 = Error: SKY > SKYMAX_band\
+> 16 = Error: SKY < SKYMIN_band\
+> 32 = Error: SKYERR > SKYERRMAX_band\
+> 64 = Error: xsn > 25 and ysn > 25 and xsn < snparams.nxpix-25 and ysn < snparams.nypix-25\
+> 128 = Error: Image is empty\
+> 256 = Error: did not pass FWHM cut\
+> 512 = Error: N zpt fit stars too small \
+> 1024 = Error: ZPT_SCATTER/SQRT(N) LARGER THAN .01 MAGS\
+> 2048 = Error: Scale factor is not finite\
 ```\n'
 #
 
