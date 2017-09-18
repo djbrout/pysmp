@@ -168,16 +168,17 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         #print fluxerr[ww]
                         #raw_input()
                         keepgoing = True
-                        print len(fluxerr[ww])
+                       # print len(fluxerr[ww])
                         if len(fluxerr[ww]) == 1:
                             #print 'here',dofakes
                             try:
                                 #print zptfiles[ww][0]
                                 zptdata = np.load(zptfiles[ww][0].replace('v6','v7'))
                             except:
-                                #print 'excepted'
+                                print 'excepted',
                                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                         int(FAILED_SMP_FLAG)) + '\n'
+                                print len(wline)
                                 keepgoing = False
                             if (faketrueflux) & (keepgoing):
                                 if fakeisthere:
@@ -280,7 +281,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                        ' '+str(round(chisq[ww][0], 3))+ \
                                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                                        ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
-
+                                print len(wline)
                             #raw_input()
                             #print wline
                             #raw_input()
@@ -292,17 +293,16 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         # if float(line.split()[3]) < 57524.371:
                         #     print 'NOTHERE'*5
                         #     print line
-
                         wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                             int(FAILED_SMP_FLAG)) + '\n'
-                    #print wline
+                    print len(wline)
                     #raw_input()
         except:
             e = sys.exc_info()[0]
             #print e
             wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                 int(FAILED_SMP_FLAG)) + '\n'
-
+            print len(wline)
         #print len(wline.split())
         writelines += wline
         #savefile.write(wline)
