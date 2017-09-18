@@ -413,7 +413,7 @@ if __name__ == "__main__":
     if index is None:
         sne = sne
     else:
-        sne = [sne[index]]
+        sne = [sne[index-1]]
     #print tsne
     tsneold = tsne
     if fakes:

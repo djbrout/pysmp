@@ -12,6 +12,7 @@ for i in allindexes:
         '#SBATCH --partition=shared\n' +
         '#SBATCH -n 1\n' +
         '#SBATCH -c 1\n'+
+        '#SBATCH --array=1-255 \n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
         '#SBATCH --time=00:09:00\n' +
