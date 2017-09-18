@@ -161,7 +161,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #else:
                     tidobs = int(line.split()[1])
                     print tidobs
+                    if float(tidobs) == 414.:
+                        print idobs
 
+                        print 'stopped at this night'
+                        raw_input()
                     #print tidobs,idobs
                     #raw_input()
                     if int(tidobs) in idobs:
