@@ -178,7 +178,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 print 'excepted',
                                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                         int(FAILED_SMP_FLAG)) + '\n'
-                                print len(wline)
+                                print len(wline.split())
                                 keepgoing = False
                             if (faketrueflux) & (keepgoing):
                                 if fakeisthere:
@@ -281,7 +281,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                        ' '+str(round(chisq[ww][0], 3))+ \
                                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
                                        ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
-                                print len(wline)
+                                print len(wline.split())
                             #raw_input()
                             #print wline
                             #raw_input()
@@ -295,14 +295,14 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         #     print line
                         wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                             int(FAILED_SMP_FLAG)) + '\n'
-                    print len(wline)
+                    print len(wline.split())
                     #raw_input()
         except:
             e = sys.exc_info()[0]
             #print e
             wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                 int(FAILED_SMP_FLAG)) + '\n'
-            print len(wline)
+            print len(wline.split())
         #print len(wline.split())
         writelines += wline
         #savefile.write(wline)
