@@ -15,7 +15,7 @@ for i in allindexes:
         '#SBATCH --array=1-255 \n'+
         '#SBATCH -C haswell\n'+
         '#SBATCH -A dessn\n' +
-        '#SBATCH --time=00:09:00\n' +
+        '#SBATCH --time=00:19:00\n' +
         '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
         '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_sim.log\n' +
         '#SBATCH --job-name=ss_' + str(i) + '\n' +
