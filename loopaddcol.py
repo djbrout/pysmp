@@ -27,7 +27,7 @@ for i in allindexes:
         'cd /project/projectdirs/des/djbrout/pysmp/\n' +
         'source setup_scripts/setupcori2.sh\n'+
 
-        'python  addcoltoDESlightcurve.py --index=$SLURM_JOB_ID \n'
+        'python  addcoltoDESlightcurve.py --index=$SLURM_JOBID \n'
         #SIM
         #'python addcoltoDESlightcurve.py --index=$SLURM_JOB_ID --savelcdir=/project/projectdirs/des/djbrout/specv1_3/SMP_SPEC_v1_3/ '
         #                                                     '--resultsdir=/project/projectdirs/des/djbrout/specv1_3//  \n' +
