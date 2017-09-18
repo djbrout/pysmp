@@ -466,6 +466,8 @@ if __name__ == "__main__":
     cntr = 0
     donesne = []
     for sn in sne[::-1]:
+        print sn
+        print '-'*100
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
             donesne.append(sn.split('.')[0].split('_')[-1])
