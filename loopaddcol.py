@@ -39,6 +39,6 @@ for i in allindexes:
         '\n'
     )
     f.close()
-    #output = Popen(["sbatch", script], stdout=PIPE).communicate()
-    #print output[0]
-    print script
+    output = Popen(["sbatch", script], stdout=PIPE).communicate()
+    print output[0]
+    #print script
