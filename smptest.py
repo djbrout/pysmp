@@ -2896,6 +2896,7 @@ class smp:
                     print imfile
                     print xsn,ysn
                     print ('sky '+str(sexsky/scalefactor- 10000.)+' less than skymin '+str(skymin)+'\n')*10
+                    raw_input()
                 elif sexrms/scalefactor > skyerrmax:
                     badflag = 1
                     descriptiveflag = 32
