@@ -313,6 +313,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 int(FAILED_SMP_FLAG)) + '\n'
             #print len(wline.split())
         #print len(wline.split())
+        print wline
         writelines += wline
         #savefile.write(wline)
     savefile.write(writelines)
