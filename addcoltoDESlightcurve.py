@@ -303,6 +303,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         print 'NOTHERE'*5
                         print line
                         wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(int(FAILED_SMP_FLAG)) + '\n'
+
                    # print len(wline.split())
                     #raw_input()
         except:
@@ -554,6 +555,7 @@ if __name__ == "__main__":
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn.split('.')[0].split('_')[-1])
 
+   raw_input('stoppppp')
     a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w')
     a.write(readmetext)
     a.close()
