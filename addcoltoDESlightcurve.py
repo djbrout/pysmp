@@ -417,6 +417,7 @@ if __name__ == "__main__":
     if index is None:
         sne = sne
     else:
+        index = int(os.environ['$SLURM_JOBID'])
         sne = [sne[index-1]]
     #print tsne
     tsneold = tsne
