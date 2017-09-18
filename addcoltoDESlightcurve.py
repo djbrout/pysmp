@@ -555,7 +555,7 @@ if __name__ == "__main__":
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn.split('.')[0].split('_')[-1])
 
-   raw_input('stoppppp')
+    raw_input('stoppppp')
     a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w')
     a.write(readmetext)
     a.close()
