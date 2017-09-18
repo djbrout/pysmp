@@ -168,7 +168,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         #print fluxerr[ww]
                         #raw_input()
                         keepgoing = True
-                        #print len(fluxerr[ww])
+                        print len(fluxerr[ww])
                         if len(fluxerr[ww]) == 1:
                             #print 'here',dofakes
                             try:
