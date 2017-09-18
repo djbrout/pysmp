@@ -512,6 +512,7 @@ if __name__ == "__main__":
             lcfile = lcdir+'/'+sn+'.dat'
             #if not filt is None:
             smpfile = resultsdir+'/lightcurves/'+sn+'_'+filt+'.smp'
+            print smpfile
             #else:
             #    continue
             savelcfile = savelcdir+'/'+sn+'.dat'
