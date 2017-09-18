@@ -132,6 +132,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         try:
             if len(line.replace('#','').split()) == 28:
                 wline = line
+                print 'here'*100
                 #pass
             elif line.split(' ')[0] == 'VARNAMES:':
                 wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
@@ -468,7 +469,7 @@ if __name__ == "__main__":
     for sn in sne[::-1]:
         print sn
         print '-'*100
-        #sn = 'des_real_01249851'
+        sn = 'des_real_01249851'
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
             donesne.append(sn.split('.')[0].split('_')[-1])
