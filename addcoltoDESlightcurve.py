@@ -286,6 +286,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #raw_input()
                             #print line
                         #raw_input()
+                        else:
+                            print 'baddddddd', len(fluxerr[ww])
                     else:
                         # if float(line.split()[3]) < 57524.371:
                         #     print 'NOTHERE'*5
