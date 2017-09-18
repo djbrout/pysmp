@@ -2893,6 +2893,7 @@ class smp:
                 elif sexsky/scalefactor - 10000. < skymin:
                     badflag = 1
                     descriptiveflag = 16
+
                     print ('sky '+str(sexsky/scalefactor- 10000.)+' less than skymin '+str(skymin)+'\n')*10
                 elif sexrms/scalefactor > skyerrmax:
                     badflag = 1
