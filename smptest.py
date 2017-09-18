@@ -3130,7 +3130,8 @@ class smp:
                                     smp_dict['diffim_fluxerr'][i] = snparams.fluxerr[j]
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
-
+                                    print 'id obs' * 100
+                                    print snparams.id_obs[j]
                                     if self.snparams.survey == 'DES':
                                         smp_dict['psf_centerx'][i] = int(self.psfcenter[1])
                                         smp_dict['psf_centery'][i] = int(self.psfcenter[0])
@@ -3285,8 +3286,7 @@ class smp:
                                     smp_dict['id_obs'][i] = snparams.id_obs[j]
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
-                                    print 'id obs'*100
-                                    print snparams.id_obs[j]
+
 
 
 
