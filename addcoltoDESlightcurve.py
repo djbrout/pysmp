@@ -326,7 +326,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 if __name__ == "__main__":
     print 'started'
 
-    resultsdir = '/project/projectdirs/des/djbrout/specv1_3/'
+    resultsdir = '/project/projectdirs/des/djbrout/pysmp_standalone/test'
     #resultsdir = '/project/projectdirs/des/djbrout/allsim/'
     fakeheader = False
     #if isfake:
@@ -482,7 +482,7 @@ if __name__ == "__main__":
     for sn in sne[::-1]:
         print sn
         print '-'*100
-        sn = 'des_real_01248907'
+        #sn = 'des_real_01248907'
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
             donesne.append(sn.split('.')[0].split('_')[-1])
