@@ -2919,7 +2919,7 @@ class smp:
                                 if np.max(psf_stamp[int(params.substamp/2+1-3):int(params.substamp/2+1+4),int(params.substamp/2+1-3):int(params.substamp/2+1+4)]) == np.max(psf_stamp[:,:]):
                                     #i = j
 
-
+                                    print 'masking'*100,len(mask[np.where(mask[10:20,10:20] == 0)])
                                     noise_stamp[image_stamp > 500000.] = 0.
 
                                     print 'here'*100
