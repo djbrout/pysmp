@@ -3896,7 +3896,7 @@ class smp:
                 os.mkdir(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
             sys.exit()
-
+        print 'id_obs',smp_dict['id_obs']
         self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
                 , modelvec = modelvec*0.
