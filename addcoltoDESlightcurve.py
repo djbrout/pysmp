@@ -160,12 +160,12 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #raw_input()
                     #else:
                     tidobs = int(line.split()[1])
-                    print tidobs
-                    if float(tidobs) == 414.:
-                        print idobs
-
-                        print 'stopped at this night'
-                        raw_input()
+                    # print tidobs
+                    # if float(tidobs) == 414.:
+                    #     print idobs
+                    #
+                    #     print 'stopped at this night'
+                    #     raw_input()
                     #print tidobs,idobs
                     #raw_input()
                     if int(tidobs) in idobs:
@@ -173,9 +173,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         ww = idobs == tidobs
                         #print fluxerr[ww]
                         #raw_input()
-                        if float(tidobs) == 414.:
-                            print 'stopped at this night'
-                            raw_input()
+                        # if float(tidobs) == 414.:
+                        #     print 'stopped at this night'
+                        #     raw_input()
                         keepgoing = True
                        # print len(fluxerr[ww])
                         if len(fluxerr[ww]) == 1:
@@ -313,7 +313,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 int(FAILED_SMP_FLAG)) + '\n'
             #print len(wline.split())
         #print len(wline.split())
-        print wline
+        #print wline
         writelines += wline
         #savefile.write(wline)
     savefile.write(writelines)
