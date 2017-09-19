@@ -2532,6 +2532,7 @@ class smp:
                 scalefactor = 1.
             #   descriptiveflag = 512
 
+
             dotestoff = False
             if zpt == 0:
                 print 'zerpoint badflag'
@@ -2912,7 +2913,7 @@ class smp:
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if minim != maxim:
-                            #if len(np.where(mask[ysn-25:ysn+26,xsn-25:xsn+26] != 0)[0]) < params.max_masknum:
+                            if len(np.where(mask[ysn-15:ysn+16,xsn-15:xsn+16] != 0)[0]) < params.max_masknum:
                                 if np.max(psf_stamp[int(params.substamp/2+1-3):int(params.substamp/2+1+4),int(params.substamp/2+1-3):int(params.substamp/2+1+4)]) == np.max(psf_stamp[:,:]):
                                     #i = j
 
@@ -3287,7 +3288,38 @@ class smp:
                                     smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
 
+                            else:
+                                print 'min max image equal' * 100
+                                if descriptiveflag == 0: descriptiveflag = 8192
+                                smp_dict['descriptiveflag'][i] = descriptiveflag
+                                smp_dict['imwcs'].append(np.nan)
+                                smp_dict['psfcenter'].append(np.nan)
+                                smp_dict['sky'][i] = sexsky  # smp_dict['skyerr'][i] = skysig
+                                try:
+                                    smp_dict['sky'][i] = sexsky
+                                    smp_dict['skyerr'][i] = mysexskysig
+                                except:
+                                    smp_dict['skyerr'][i] = np.nan
+                                    smp_dict['sky'][i] = np.nan
+                                smp_dict['mjd'][i] = float(snparams.mjd[j])
+                                try:
+                                    smp_dict['fwhm_arcsec'][i] = fwhm_arcsec
+                                except:
+                                    smp_dict['fwhm_arcsec'][i] = np.nan
+                                try:
+                                    smp_dict['zpt'][i] = zpt
+                                    smp_dict['zpterr'][i] = zpterr
+                                except:
+                                    smp_dict['zpt'][i] = np.nan
+                                    smp_dict['zpterr'][i] = np.nan
+                                smp_dict['expnum'][i] = self.expnum
+                                smp_dict['image_filename'][i] = longimfile
+                                smp_dict['zpt_file'][i] = 'na'
+                                smp_dict['psf_filename'][i] = longpsffile
+                                smp_dict['weight_filename'][i] = 'na'
 
+                                smp_dict['id_obs'][i] = snparams.id_obs[j]
+                                smp_dict['id_coadd'][i] = snparams.id_coadd[j]
 
 
                         else:
