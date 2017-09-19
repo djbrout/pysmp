@@ -2515,6 +2515,7 @@ class smp:
                 #zptfitchisq = zptdata['zptfitchisq']
             try:
             #if True:
+                print zpterr
                 if len(thisra) < params.minzptstars:
                     print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small. Nstars=',len(thisra)
                     scalefactor = 1.
@@ -2526,13 +2527,14 @@ class smp:
                     scalefactor = 1.
                     badflag = 1
                     descriptiveflag = 1024
+
             except:
                 badlfag = 1
                 print 'COULD NOT GET GOOD FIT OF ZEROPOINT... N stars is too small2222'
                 scalefactor = 1.
             #   descriptiveflag = 512
 
-
+            raw_input('ZPTERRRR')
             dotestoff = False
             if zpt == 0:
                 print 'zerpoint badflag'
