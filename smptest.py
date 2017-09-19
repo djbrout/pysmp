@@ -3291,7 +3291,7 @@ class smp:
 
 
                             else:
-                                print 'min max image equal' * 100
+                                print 'MASKED SKIPPING' * 100
                                 if descriptiveflag == 0: descriptiveflag = 8192
                                 smp_dict['descriptiveflag'][i] = descriptiveflag
                                 smp_dict['imwcs'].append(np.nan)
@@ -3322,6 +3322,7 @@ class smp:
 
                                 smp_dict['id_obs'][i] = snparams.id_obs[j]
                                 smp_dict['id_coadd'][i] = snparams.id_coadd[j]
+                                raw_input()
 
 
                         else:
