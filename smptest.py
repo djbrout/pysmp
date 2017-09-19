@@ -2915,7 +2915,7 @@ class smp:
                 if not badflag:
                     if fwhm_arcsec < params.fwhm_max:
                         if minim != maxim:
-                            if len(np.where(mask[ysn-15:ysn+16,xsn-15:xsn+16] != 0)[0]) < params.max_masknum:
+                            if len(mask[np.where(mask[10:20,10:20] != 0)]) < params.max_masknum:
                                 if np.max(psf_stamp[int(params.substamp/2+1-3):int(params.substamp/2+1+4),int(params.substamp/2+1-3):int(params.substamp/2+1+4)]) == np.max(psf_stamp[:,:]):
                                     #i = j
 
