@@ -3322,6 +3322,7 @@ class smp:
 
                                 smp_dict['id_obs'][i] = snparams.id_obs[j]
                                 smp_dict['id_coadd'][i] = snparams.id_coadd[j]
+                                print len(mask[np.where(mask[10:20, 10:20] != 0)])
                                 raw_input()
 
 
