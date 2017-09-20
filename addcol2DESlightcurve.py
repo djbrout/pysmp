@@ -409,7 +409,7 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPEC9'
+        savelcdir = resultsdir + '/SMP_SPEC10'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -508,7 +508,7 @@ if __name__ == "__main__":
     for sn in sne[::-1]:
         print sn
         print '-'*100
-        sn = 'des_real_01248907'
+        #sn = 'des_real_01248907'
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
             donesne.append(sn.split('.')[0].split('_')[-1])
@@ -584,7 +584,7 @@ if __name__ == "__main__":
                      idobs,pkmjd,imfiles, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
-        donesne.append(sn)#.split('.')[0].split('_')[-1])
+        donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
 
         #raw_input('stoppppp')
     a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w')
