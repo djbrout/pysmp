@@ -61,7 +61,7 @@ print 'reading dofake'
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
 
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
@@ -110,6 +110,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     skyerr = np.array(skyerr)
     zptfiles = np.array(zptfiles,dtype='str')
     idobs = np.array(idobs)
+    imfiles = np.array(imfiles,dtype='str')
 
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
@@ -160,7 +161,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #raw_input()
                     #else:
                     #tidobs = int(line.split()[1])
-                    tmjd = float(line.split()[3])
+                    #tmjd = float(line.split()[3])
+                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[12]
                     # print tidobs
                     # if float(tidobs) == 414.:
                     #     print idobs
@@ -169,9 +171,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #     raw_input()
                     #print tidobs,idobs
                     #raw_input()
-                    if tmjd in mjd:
+                    if tim in imfiles:
                         #ww = np.isclose(idobs,tidobs,atol=0.005)# & (filt == band)
-                        ww = mjd == tmjd
+                        ww = imfiles == tim
                         #print fluxerr[ww]
                         #raw_input()
                         # if float(tidobs) == 414.:
@@ -504,6 +506,7 @@ if __name__ == "__main__":
         skyerr = []
         smpflag = []
         zptfile = []
+        imfiles = []
         idobs = []
         band = []
         cntr += 1
@@ -550,17 +553,18 @@ if __name__ == "__main__":
             zptfile.extend(sndata['ZPTFILE'])
             idobs.extend(sndata['ID_OBS'])
             band.extend(sndata['BAND'])
-        print len(band),len(idobs),len(sky),len(flux),len(mjd)
-        print np.sort(idobs)
+            imfiles.extend(sndata['IMAGE_FILE'])
+        #print len(band),len(idobs),len(sky),len(flux),len(mjd)
+        #print np.sort(idobs)
         #print band
-        raw_input()
+        #raw_input()
         #print 'lcfile',lcfile
         #print flux
         if not os.path.exists(savelcfile):
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imagefiles, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn)#.split('.')[0].split('_')[-1])
