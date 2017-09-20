@@ -171,6 +171,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #     raw_input()
                     #print tidobs,idobs
                     #raw_input()
+                    print imfiles,tim
                     if tim in imfiles:
                         #ww = np.isclose(idobs,tidobs,atol=0.005)# & (filt == band)
                         ww = imfiles == tim
