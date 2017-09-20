@@ -300,6 +300,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                 int(FAILED_SMP_FLAG)) + '\n'
                             print 'baddddddd'*100
+                            raw_input()
                     else:
                         if float(line.split()[3]) < 57524.371:
                             print 'NOTHERE'*5
