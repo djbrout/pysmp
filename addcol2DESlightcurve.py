@@ -564,7 +564,7 @@ if __name__ == "__main__":
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imagefiles, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imfiles, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn)#.split('.')[0].split('_')[-1])
