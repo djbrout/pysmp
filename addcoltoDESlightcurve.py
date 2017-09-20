@@ -297,7 +297,9 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #print line
                         #raw_input()
                         else:
-                            print 'baddddddd', len(fluxerr[ww])
+                            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                                int(FAILED_SMP_FLAG)) + '\n'
+                            print 'baddddddd'*100
                     else:
                         if float(line.split()[3]) < 57524.371:
                             print 'NOTHERE'*5
@@ -384,7 +386,7 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPEC'
+        savelcdir = resultsdir + '/SMP_SPEC2'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -483,7 +485,7 @@ if __name__ == "__main__":
     for sn in sne[::-1]:
         print sn
         print '-'*100
-        #sn = 'des_real_01300912'
+        sn = 'des_real_01248907'
         if dodiffim:
             os.popen('cp '+lcdir+'/'+sn.split('.')[0]+'.dat '+savelcdir+'/')
             donesne.append(sn.split('.')[0].split('_')[-1])
