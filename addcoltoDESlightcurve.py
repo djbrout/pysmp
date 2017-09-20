@@ -556,7 +556,7 @@ if __name__ == "__main__":
                      idobs,pkmjd, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
-        donesne.append(sn.split('.')[0].split('_')[-1])
+        donesne.append(sn)#.split('.')[0].split('_')[-1])
 
         #raw_input('stoppppp')
     a = open(savelcdir+'/'+savelcdir.split('/')[-1]+'.README','w')
