@@ -171,11 +171,24 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #     raw_input()
                     #print tidobs,idobs
                     #raw_input()
-                    print imfiles,tim
-                    raw_input()
+                    #print imfiles,tim
+                    #raw_input()
+                    good = False
                     if tim in imfiles:
-                        print 'inside'
-                        raw_input()
+                        good = True
+                    elif tim.replace('p1','Y1') in imfiles:
+                        tim = tim.replace('p1','Y1')
+                        good = True
+                    elif tim.replace('p1','Y2') in imfiles:
+                        tim = tim.replace('p1','Y2')
+                        good = True
+                    elif tim.replace('p1','Y3') in imfiles:
+                        tim = tim.replace('p1','Y3')
+                        good = True
+
+                    if good:
+                        #print 'inside'
+                        #raw_input()
                         #ww = np.isclose(idobs,tidobs,atol=0.005)# & (filt == band)
                         ww = imfiles == tim
                         #print fluxerr[ww]
