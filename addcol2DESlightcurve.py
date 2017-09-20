@@ -409,7 +409,7 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPEC8'
+        savelcdir = resultsdir + '/SMP_SPEC9'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
