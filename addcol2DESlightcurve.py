@@ -390,7 +390,7 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPEC4'
+        savelcdir = resultsdir + '/SMP_SPEC5'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -550,9 +550,10 @@ if __name__ == "__main__":
             zptfile.extend(sndata['ZPTFILE'])
             idobs.extend(sndata['ID_OBS'])
             band.extend(sndata['BAND'])
+        print len(band),len(idobs),len(sky),len(flux),len(mjd)
 
         #print band
-        #raw_input()
+        raw_input()
         #print 'lcfile',lcfile
         #print flux
         if not os.path.exists(savelcfile):
