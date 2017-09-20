@@ -172,6 +172,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     if tmjd in mjd:
                         #ww = np.isclose(idobs,tidobs,atol=0.005)# & (filt == band)
                         ww = mjd == tmjd
+                        print mjd,tmjd
                         #print fluxerr[ww]
                         #raw_input()
                         # if float(tidobs) == 414.:
