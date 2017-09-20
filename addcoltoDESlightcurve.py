@@ -318,6 +318,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #savefile.write(wline)
     savefile.write(writelines)
     savefile.close()
+    print ''
     return True
     #raw_input()
 
