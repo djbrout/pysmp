@@ -172,7 +172,6 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     if tmjd in mjd:
                         #ww = np.isclose(idobs,tidobs,atol=0.005)# & (filt == band)
                         ww = mjd == tmjd
-                        print mjd,tmjd
                         #print fluxerr[ww]
                         #raw_input()
                         # if float(tidobs) == 414.:
@@ -301,6 +300,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         else:
                             wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                 int(FAILED_SMP_FLAG)) + '\n'
+                            print mjd,tmjd
+
                             print 'baddddddd'*100
                             raw_input()
                     else:
