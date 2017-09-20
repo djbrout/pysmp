@@ -551,7 +551,7 @@ if __name__ == "__main__":
             idobs.extend(sndata['ID_OBS'])
             band.extend(sndata['BAND'])
         print len(band),len(idobs),len(sky),len(flux),len(mjd)
-
+        print idobs
         #print band
         raw_input()
         #print 'lcfile',lcfile
