@@ -2488,7 +2488,7 @@ class smp:
                     #raw_input('sss')
                     zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids,zptfitchisq = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                         longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])))
+                                         longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])),gain=self.gain)
                     print 'zpttime',time.time()-zpttime
 
                     if zpt == 0:
@@ -5907,7 +5907,7 @@ class smp:
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,weightsfile,psffile,imfile,imwcs,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
-                mpfit_or_mcmc='mpfit',cat_zpt=-999):
+                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0):
         """Measure the zeropoints for the images"""
 
         #print xstar,ystar
@@ -6611,7 +6611,7 @@ class smp:
             print '-'*100
             print '-'*38,'Done Fitting Zeropoint','-'*38
             print '-'*100
-            print 'fitzpt',md,'diffimzpt',snparams.zp[j]
+            print 'fitzpt',md-2.5*np.log10(gain),'diffimzpt',snparams.zp[j]
             print 'std',std,'std/sqrt(n)',std/num**.5
             print '-'*100
             print ''
