@@ -5426,7 +5426,7 @@ class smp:
         print np.sqrt(skyerr**2)
         print  (im.ravel() - sky.ravel())*fitrad.ravel()
         print im.ravel()
-        print sky.ravel
+        print sky.ravel()
         raw_input('checking')
         vals = \
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
