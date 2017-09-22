@@ -1952,12 +1952,13 @@ class smp:
 
 
             i += 1
-            smp_dict['mjd'][i] = float(snparams.mjd[j])
 
             if i >= len(smp_dict['image_filename']):
                 print i
                 print 'i too big'*10
                 continue
+            smp_dict['mjd'][i] = float(snparams.mjd[j])
+
             try:
                 smp_dict['image_filename'][i] = imfile
                 smp_dict['zpt_file'][i] = 'na'
