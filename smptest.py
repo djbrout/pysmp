@@ -5422,10 +5422,10 @@ class smp:
 
         # print v
         # print v.params
-        print psf.ravel()*fitrad.ravel()
-        print np.sqrt(skyerr**2)
-        print  (im.ravel() - sky.ravel())*fitrad.ravel()
-        print im.ravel()
+        # print psf.ravel()*fitrad.ravel()
+        # print np.sqrt(skyerr**2)
+        # print  (im.ravel() - sky.ravel())*fitrad.ravel()
+        # print im.ravel()
         print sky.ravel()
         raw_input('checking')
         vals = \
