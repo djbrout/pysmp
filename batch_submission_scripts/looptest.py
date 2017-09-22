@@ -3,21 +3,24 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,250)
+allindexes = range(0,400)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
-walltime= '1:10:00'
+walltime= '5:10:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s1lightcurves.txt'
-#snfilelist = 'data/speclist.txt'
-outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
-npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
-#outdir = '/project/projectdirs/dessn/dbrout/s1fitsv1.2/'
-#npzdir = '/global/cscratch1/sd/dbrout/s1npzfilesv1.2/'
+#snfilelist = 'data/s1lightcurves.txt'
+snfilelist = 'data/speclist.txt'
+
+#outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
+#npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
+
+outdir = '/project/projectdirs/dessn/dbrout/specv2.0/'
+npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv2.0/'
+
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 count = 0
