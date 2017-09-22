@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,260)
+allindexes = range(0,250)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['r']
@@ -12,10 +12,10 @@ walltime= '1:10:00'
 
 doskipping = False
 #snfilelist = 'badinputs.txt'
-#snfilelist = 'data/s1lightcurves.txt'
-snfilelist = 'data/speclist.txt'
-outdir = '/project/projectdirs/dessn/dbrout/specfitsv1.2/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv1.2/'
+snfilelist = 'data/s1lightcurves.txt'
+#snfilelist = 'data/speclist.txt'
+outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
+npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
 #outdir = '/project/projectdirs/dessn/dbrout/s1fitsv1.2/'
 #npzdir = '/global/cscratch1/sd/dbrout/s1npzfilesv1.2/'
 snfiles = open(snfilelist).readlines()
@@ -53,8 +53,8 @@ for i in allindexes:
             '#SBATCH -C haswell\n'+
             '#SBATCH -A des\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'spec.log\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
             '#SBATCH --job-name=sp_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
@@ -84,7 +84,7 @@ for i in allindexes:
             '\n'
         )
         f.close()
-        if count >= 269: continue
+        #if count >= 269: continue
         output = Popen(["sbatch", script], stdout=PIPE).communicate()
         print output[0]
         print script
