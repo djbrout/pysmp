@@ -5939,7 +5939,7 @@ class smp:
             thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
         except:
             print 'badzptstarshere'*100
-            return 0, 0, 0, 0, 0, 0, 0
+            return 0, 0, 0, 0, 0, 0, 0, 0
         thisra = np.array(thisra)
         thisdec = np.array(thisdec)
         thisids = np.array(ids)
@@ -7121,7 +7121,7 @@ class smp:
         #sys.exit()
         #raw_input('stopped')
         if bad:
-            return 0,0,0,0,0,0,0,0
+            return 0,0,0,0,0,0,0,0,0
         return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols],zptfitchisq)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
