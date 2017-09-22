@@ -2135,7 +2135,7 @@ class smp:
                 gaina = hdr['GAINA']
                 gainb = hdr['GAINB']
                 print gaina,gainb
-                raw_input('gains')
+                #raw_input('gains')
                 q1 = [1,4,5,8,9,13,14,15,19,20,21,25,26,27]
                 q2 = [32,33,34,39,40,41,45,46,47,51,52,56,57,60]
                 q3 = [3,6,7,11,12,16,17,18,22,23,24,29,30,31]
