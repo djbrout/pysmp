@@ -5426,17 +5426,17 @@ class smp:
         # print np.sqrt(skyerr**2)
         # print  (im.ravel() - sky.ravel())*fitrad.ravel()
         # print im.ravel()
-        print sky.ravel()
-        raw_input('checking')
+        #print sky.ravel()
+        #raw_input('checking')
         vals = \
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
 
-        from scipy.optimize import least_squares
-        def fun(x, psf, y,err):
-            return (x[0]*psf - y)/err
-        x0 = np.array([1000.])
-        res_lsq = least_squares(fun, x0, args=(psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(),np.sqrt(skyerr**2)))
-        print res_lsq
+        # from scipy.optimize import least_squares
+        # def fun(x, psf, y,err):
+        #     return (x[0]*psf - y)/err
+        # x0 = np.array([1000.])
+        # res_lsq = least_squares(fun, x0, args=(psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(),np.sqrt(skyerr**2)))
+        # print res_lsq
 
         try:
             errmag = vals.perror[0]
@@ -5445,7 +5445,7 @@ class smp:
             print fluxmp,errmag
         except:
             return 1, 1, 1, 1, 1, True
-        raw_input()
+        #raw_input()
 
         # def f(prms):
         #     scale = prms['scale']
@@ -6195,8 +6195,8 @@ class smp:
                         #temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
 
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
-                            aper.aper(im, ysn, xsn, apr=params.fitrad, verbose=False)
-
+                            aper.aper(im, x, y, apr=params.fitrad, verbose=False)
+                        #raw_input()
                         sein = skysig
                         se = skysig
                         #print skysig,se
