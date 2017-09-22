@@ -5898,7 +5898,8 @@ class smp:
         #print xstar,ystar
         #raw_input('hhh')
 
-
+        print len(xstar)
+        raw_input('asdf')
         # xstar, ystar, ras, decs, mags, sky, skyerr, mag_cat = xstar[~badflag], ystar[~badflag], ras[~badflag], \
         #                                                                decs[~badflag], mags[~badflag],\
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
