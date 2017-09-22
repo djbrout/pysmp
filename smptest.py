@@ -5424,6 +5424,11 @@ class smp:
         # print v.params
         vals = \
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
+
+        errmag = vals.perror[0]
+        fluxmp = vals.params[0]
+        fluxerrmp = errmag
+
         try:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
