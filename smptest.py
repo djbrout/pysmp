@@ -1332,7 +1332,14 @@ class smp:
                 # raw_input()
 
         if nozpt:
-            starids = np.array(starcat.objid)
+            try:
+                starids = np.array(starcat.objid)
+            except:
+                if self.snparams.survey == 'DES':
+                    if not wehavestarcat:
+                        starcat = txtobj(self.starcatfile, useloadtxt=True)
+                        print 'done reading in starcatfile'
+                        wehavestarcat = True
             starras = np.array(newra)
             stardecs = np.array(newdec)
             starmags = np.array(starcat.mag)
