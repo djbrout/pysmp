@@ -758,17 +758,15 @@ class smp:
         #print self.starcat.ra
         #sys.exit()
         badindices = []
-        print snparams.image_name_search
-        raw_input()
+        print nozpt
+        raw_input('nozpt')
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             #print doglobalstar, snparams.mjd[j], nozpt
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
-                print 'skipping mjd'
                 continue
-            raw_input()
             #if round(snparams.mjd[j]) != 56559:
             #    continue
             #if float(snparams.mjd[j]) < 57045:
@@ -1336,55 +1334,8 @@ class smp:
                 # raw_input()
 
         if nozpt:
-            try:
-                starids = np.array(starcat.objid)
-            except:
-                if self.snparams.survey == 'DES':
-                    if not wehavestarcat:
-                        starcat = txtobj(self.starcatfile, useloadtxt=True)
-                        print 'done reading in starcatfile'
-                        wehavestarcat = True
 
-                    cols = np.where((starcat.bigra > ra_low) &
-                                    (starcat.bigra < ra_high) &
-                                    (starcat.bigdec > dec_low) &
-                                    (starcat.bigdec < dec_high))[0]
-
-                    starcat.ra = starcat.bigra[cols]
-                    starcat.dec = starcat.bigdec[cols]
-                    starcat.mag = starcat.bigmag[cols]
-                    starcat.objid = starcat.bigid[cols]
-
-                    # self.tmpwriter.savez(self.zptoutpath+'/'+str(self.field)+'_CCD'+str(self.ccdnum)+'_standards.npz',
-                    #         ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
-
-                    if not len(cols):
-                        # print "Error : No stars in image!!"
-                        # badindices.append(j)
-                        # continue
-                        raise exceptions.RuntimeError("Error : No stars in image!!")
-
-                    if wcsworked:
-                        coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
-                        x_star, y_star = [], []
-                        for xval, yval in zip(*coords):
-                            x_star += [xval]
-                            y_star += [yval]
-                        print starcat.ra
-                        print x_star
-                    else:
-                        coords = wcsinfo.tran([starcat.ra / radtodeg, starcat.dec / radtodeg], False)
-
-                    x_star, y_star = [], []
-                    for xval, yval in zip(*coords):
-                        x_star += [xval]
-                        y_star += [yval]
-
-                    x_star1, y_star1 = np.array(x_star), np.array(y_star)
-                    x_star, y_star = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
-                    newra, newdec = zip(*w.wcs_pix2world(np.array(zip(x_star, y_star)), 0))
-                    starids = np.array(starcat.objid)
-
+            starids = np.array(starcat.objid)
             starras = np.array(newra)
             stardecs = np.array(newdec)
             starmags = np.array(starcat.mag)
