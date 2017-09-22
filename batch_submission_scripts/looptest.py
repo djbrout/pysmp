@@ -58,7 +58,7 @@ for i in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
-            '#SBATCH --job-name=sp_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=real_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -88,8 +88,8 @@ for i in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        #print output[0]
+        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        print output[0]
         print script
 
         #raw_input('stopppp')
