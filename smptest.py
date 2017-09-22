@@ -6196,7 +6196,7 @@ class smp:
 
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
                             aper.aper(im, x, y, apr=params.fitrad, verbose=False)
-                        print skysig
+                        print sky1,skysig
                         raw_input('sss')
                         sein = skysig
                         se = skysig
@@ -6308,7 +6308,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
-                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp, gnoise_stamp,
+                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp*0.+sky1, gnoise_stamp,
                                                                              fitrad, gal, mjd, skysig,self.gain,guess_scale=10**(.4*(31.-m)))
                             if not chi > 0.:
                                 bad = True
