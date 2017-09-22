@@ -449,6 +449,7 @@ class smp:
             for b in snparams.band:
                 if b in filt:
                     snparams.nvalid +=1
+            snparams.nvalid += 100
         else:
             snparams.nvalid = snparams.nobs
         self.zptstamps = os.path.join(oldoutdir,'zptstamps')
