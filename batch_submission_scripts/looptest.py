@@ -12,14 +12,14 @@ walltime= '5:10:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s1lightcurves.txt'
-#snfilelist = 'data/speclist.txt'
+#snfilelist = 'data/s1lightcurves.txt'
+snfilelist = 'data/speclist.txt'
 
 #outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 #npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
 
-outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
-npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
+outdir = '/project/projectdirs/dessn/dbrout/specv2.0/'
+npzdir = '/global/cscratch1/sd/dbrout/specpzfilesv2.0/'
 
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
@@ -74,7 +74,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --usefake --index=' + str(i) + '  -f  ' + filt +
+            'python smptest.py --index=' + str(i) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
             ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
