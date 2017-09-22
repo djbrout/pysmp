@@ -18,8 +18,8 @@ snfilelist = 'data/s1lightcurves.txt'
 #outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 #npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
 
-outdir = '/project/projectdirs/dessn/dbrout/specv2.0/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv2.0/'
+outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
+npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
 
 snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
