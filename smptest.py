@@ -610,32 +610,32 @@ class smp:
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
         print 'loading',star_offset_file
 
-        if not nozpt:
-            if fermigrid and worker:
-                #lsa = os.popen('ifdh ls '+staroutdir).read()
-                #print lsa
-                ls = os.popen('ifdh ls '+star_offset_file).read()
-                print ls
-                if len(ls) > 0:
-                    print star_offset_file
-                    #sys.exit()
-                    os.system('ifdh cp --force=xrootd '+star_offset_file+' .')
-                    star_offset_file = filename+'band_starGlobalOffsets.npz'
-                else:
-                    print 'Could not find star offset file. Calculating...'
-                    #raw_input('hereweare')
-                    nozpt = True
-            else:
-                try:
-                    print 'loading',star_offset_file
-                    staroffsets = np.load(star_offset_file)
-                    print 'Found and loaded star offset file...'
-                except:
-                    if not doglobalstar:
-                        pass
-                    else:
-                        print 'Could not find star offset file. Calculating...'
-                        nozpt = True
+        # if not nozpt:
+        #     if fermigrid and worker:
+        #         #lsa = os.popen('ifdh ls '+staroutdir).read()
+        #         #print lsa
+        #         ls = os.popen('ifdh ls '+star_offset_file).read()
+        #         print ls
+        #         if len(ls) > 0:
+        #             print star_offset_file
+        #             #sys.exit()
+        #             os.system('ifdh cp --force=xrootd '+star_offset_file+' .')
+        #             star_offset_file = filename+'band_starGlobalOffsets.npz'
+        #         else:
+        #             print 'Could not find star offset file. Calculating...'
+        #             #raw_input('hereweare')
+        #             nozpt = True
+        #     else:
+        #         try:
+        #             print 'loading',star_offset_file
+        #             staroffsets = np.load(star_offset_file)
+        #             print 'Found and loaded star offset file...'
+        #         except:
+        #             if not doglobalstar:
+        #                 pass
+        #             else:
+        #                 print 'Could not find star offset file. Calculating...'
+        #                 nozpt = True
 
         
         #############################################################################################################################
