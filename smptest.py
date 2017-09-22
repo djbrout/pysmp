@@ -1410,6 +1410,7 @@ class smp:
             nozpt = copy(orig_nozpt)
 
             print 'Now grabbing MJD',snparams.mjd[j]
+            if snparams.mjd[j] != 56606.069: continue
             #if j > 30:
             #    continue
 
