@@ -5913,13 +5913,14 @@ class smp:
         #print xstar,ystar
         #raw_input('hhh')
 
-        print len(xstar)
+        #print len(xstar)
         #raw_input('asdf')
         # xstar, ystar, ras, decs, mags, sky, skyerr, mag_cat = xstar[~badflag], ystar[~badflag], ras[~badflag], \
         #                                                                decs[~badflag], mags[~badflag],\
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
-        print len(xstar)
+        print xstar
+        raw_input()
 
         # if snparams.survey == 'DES':
         #     xstar += 1.
