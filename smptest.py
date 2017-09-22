@@ -6464,7 +6464,7 @@ class smp:
                 starsky[i] = s
                 starskyerr[i] = se
                 #print scale
-                print 'Fit star', i, scale, errmag, s, se, chi
+                #print 'Fit star', i, scale, errmag, s, se, chi
                 if not bad:
                     psfs[i,:,:] = psf
                     print 'Fit star',i,scale,errmag,s,se, chi
