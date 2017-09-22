@@ -5425,6 +5425,12 @@ class smp:
         vals = \
             mpfitexpr.mpfitexpr("p[0]*x", psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(), np.sqrt(skyerr**2), [1], full_output=True)[0]
 
+        from scipy.optimize import least_squares
+        def fun(x, psf, y,err):
+            return (x[0]*psf - y)/err
+        x0 = np.array([1000.])
+        res_lsq = least_squares(fun, x0, args=(psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(),np.sqrt(skyerr**2)))
+        print res_lsq
         try:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
