@@ -6198,7 +6198,7 @@ class smp:
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
                             aper.aper(im, x, y, apr=params.fitrad, verbose=False)
                         print sky1,skysig
-                        raw_input('sss')
+                        #raw_input('sss')
                         sein = skysig
                         se = skysig
                         #print skysig,se
