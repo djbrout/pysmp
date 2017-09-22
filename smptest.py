@@ -5920,7 +5920,7 @@ class smp:
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
         #print xstar
-        r#aw_input()
+        #raw_input()
 
         # if snparams.survey == 'DES':
         #     xstar += 1.
