@@ -5991,7 +5991,7 @@ class smp:
             #raw_input()
             #print x,y,mc
             #print self.snparams.nxpix, self.snparams.nypix
-            if round(prevra,5) == round(ra,5):
+            if round(prevra,7) == round(ra,7):
                 print 'same star, so skipping'
                 continue
             prevra = ra
