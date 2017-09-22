@@ -766,7 +766,9 @@ class smp:
             if not doglobalstar:
                 continue
             if snparams.mjd[j] == 0:
+                print 'skipping mjd'
                 continue
+            raw_input()
             #if round(snparams.mjd[j]) != 56559:
             #    continue
             #if float(snparams.mjd[j]) < 57045:
