@@ -1281,7 +1281,8 @@ class smp:
                     starcat.dec = starcat.bigdec[cols]
                     starcat.mag = starcat.bigmag[cols]
                     starcat.objid = starcat.bigid[cols]
-
+                    print 'hereeee'
+                    raw_input()
 
                     #self.tmpwriter.savez(self.zptoutpath+'/'+str(self.field)+'_CCD'+str(self.ccdnum)+'_standards.npz',
                     #         ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
