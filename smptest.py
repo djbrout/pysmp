@@ -758,6 +758,8 @@ class smp:
         #print self.starcat.ra
         #sys.exit()
         badindices = []
+        print snparams.image_name_search
+        raw_input()
         for imfile,noisefile,psffile,band, j in \
                 zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
             #print doglobalstar, snparams.mjd[j], nozpt
