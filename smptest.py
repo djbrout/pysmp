@@ -6745,11 +6745,18 @@ class smp:
             # params.add('pow', value=.5, vary=False)
 
             fitter = Minimizer(f, lmfparams)
-            v = fitter.minimize(method='leastsq')
+            try:
+                v = fitter.minimize(method='leastsq')
+                mde = v.params['m'].value
+                mdeerr = v.params['m'].stderr
+
+            except:
+                print 'could not minimize zeropoint fit'
+                mde = 0.
+                mdeerr = 0.
             #print fluxls, v.params['scale'].value
             #print v.params['m'].__dict__
-            mde = v.params['m'].value
-            mdeerr = v.params['m'].stderr
+
 
             med, rmsaddin, num = self.iterstat(
                 float(mde) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
