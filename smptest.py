@@ -5904,6 +5904,8 @@ class smp:
         #                                                                decs[~badflag], mags[~badflag],\
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
         xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
+        print len(xstar)
+
         # if snparams.survey == 'DES':
         #     xstar += 1.
         #     ystar += 1.
@@ -5990,7 +5992,7 @@ class smp:
             #print x,y,mc
             #print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,5) == round(ra,5):
-                #print 'same star, so skipping'
+                print 'same star, so skipping'
                 continue
             prevra = ra
             if bf == 1:
@@ -6446,6 +6448,7 @@ class smp:
                 starsky[i] = s
                 starskyerr[i] = se
                 #print scale
+                print i
                 if not bad:
                     psfs[i,:,:] = psf
                     print 'Fit star',i,scale,errmag,s,se, chi
