@@ -73,7 +73,7 @@ for i in allindexes:
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
             'python smptest.py --index=' + str(i) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/specv2/ \n'
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
 
