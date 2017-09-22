@@ -5431,13 +5431,15 @@ class smp:
         x0 = np.array([1000.])
         res_lsq = least_squares(fun, x0, args=(psf.ravel()*fitrad.ravel(), (im.ravel() - sky.ravel())*fitrad.ravel(),np.sqrt(skyerr**2)))
         print res_lsq
+
         try:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
             fluxerrmp = errmag
+            print fluxmp,errmag
         except:
             return 1, 1, 1, 1, 1, True
-
+        raw_input()
 
         # def f(prms):
         #     scale = prms['scale']
