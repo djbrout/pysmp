@@ -3,17 +3,17 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(98,252)
+allindexes = range(0,250)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
-walltime= '5:10:00'
+walltime= '2:10:00'
 #np.random.shuffle(allindexes)
 
-doskipping = True
+doskipping = False
 #snfilelist = 'badinputs.txt'
-#snfilelist = 'data/s1lightcurves.txt'
-snfilelist = 'data/speclist.txt'
+snfilelist = 'data/s1lightcurves.txt'
+#snfilelist = 'data/speclist.txt'
 
 #outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 #npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
@@ -74,7 +74,7 @@ for i in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --index=' + str(i) + '  -f  ' + filt +
+            'python smptest.py --usefake --index=' + str(i) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
             ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
@@ -88,8 +88,8 @@ for i in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        print output[0]
+        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        #print output[0]
         print script
 
         #raw_input('stopppp')
