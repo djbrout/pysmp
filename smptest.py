@@ -2501,9 +2501,9 @@ class smp:
 
             else:
                 if doglobalstar:
-                    zpt_file = imfile.split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
+                    zpt_file = self.zptoutpath + '/'+ imfile.split('/')[-1].split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo_globalstar.npz'
                 else:
-                    zpt_file = imfile.split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo.npz'
+                    zpt_file =  self.zptoutpath + '/'+  imfile.split('/')[-1].split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo.npz'
 
                 zptdata = np.load(zpt_file) #load previous zpt information
                 zpt = zptdata['fit_zpt']
@@ -6959,7 +6959,7 @@ class smp:
                 #print imfile
                 #raw_input()
                 name = imfile.split('/')[-1][:-5]
-                mag_compare_out = os.path.join(self.impath,
+                mag_compare_out = os.path.join(self.zptoutpath,
                                                name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz').replace('+fakeSN','')
                 #print 'lengoodstarcols',len(mag_cat[goodstarcols])
                 #raw_input()
@@ -7038,7 +7038,7 @@ class smp:
             #raise exceptions.RuntimeError('Error : not enough good stars to compute zeropoint!!!')
 
             name = imfile.split('/')[-1][:-5]
-            mag_compare_out = os.path.join(self.impath,
+            mag_compare_out = os.path.join(self.zptoutpath,
                                            name + '_' + str(filt) + 'band_dillonzptinfo_globalstar.npz').replace(
                                            '+fakeSN', '')
 
