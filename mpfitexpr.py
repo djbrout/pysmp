@@ -73,6 +73,7 @@ def mpfitexpr(func, x, y, err , start_params, check=True, full_output=False,
 
 	res = mpfit.mpfit(myfunc,start_params,functkw=fa,**kw)
 	yfit = eval(func, hash, {'x':x, 'p': res.params})
+	print yfit
 	if full_output:
 		return (res, yfit)
 	else:
