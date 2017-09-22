@@ -6308,7 +6308,7 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
-                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, bkgrndstamp*0.+sky1, gnoise_stamp,
+                            scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, image_stamp*0.+sky1, gnoise_stamp,
                                                                              fitrad, gal, mjd, skysig,self.gain,guess_scale=10**(.4*(31.-m)))
                             if not chi > 0.:
                                 bad = True
