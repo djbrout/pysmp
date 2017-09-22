@@ -13,8 +13,8 @@ walltime= '5:10:00'
 doskipping = False
 #snfilelist = 'badinputs.txt'
 #snfilelist = 'data/s1lightcurves.txt'
-snfilelist = 'data/speclist.txt'
-
+#snfilelist = 'data/speclist.txt'
+snfilelist = 'missinginputs.txt'
 #outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 #npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'
 
@@ -26,7 +26,10 @@ snfiles = open(snfilelist).readlines()
 count = 0
 tot = 0
 for i in allindexes:
-    for filt in filts:
+    #for filt in filts:
+    if True:
+        filt = snfiles[i].split()[0]
+
         tot += 1
         if doskipping:
             print snfiles[i]
@@ -35,7 +38,7 @@ for i in allindexes:
             #    print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
             #    continue
             if os.path.exists(npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'):
-                print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.mcmcinput.npz  because already exists a good fit...'
+                print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.smp  because already exists a good fit...'
                 print count, tot
 
                 continue
@@ -88,8 +91,8 @@ for i in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        #print output[0]
+        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        print output[0]
         print script
 
         #raw_input('stopppp')

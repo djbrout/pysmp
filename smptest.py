@@ -3998,11 +3998,13 @@ class smp:
                 globaldecoffsets = offsetdec,
                 id_obs = smp_dict['id_obs'],
                 id_coadd = smp_dict['id_coadd'],
-                aperscale = smp_dict['aperscale']
+                aperscale = smp_dict['aperscale'],
+                gain = smp_dict['gain']
                 )
         
         try:
             self.tmpwriter.savez(os.path.join(npoutdir,filename+'_smpDict.npz'),**smp_dict)
+
         except:
             print 'could not save ',os.path.join(npoutdir,filename+'_smpDict.npz')
 
