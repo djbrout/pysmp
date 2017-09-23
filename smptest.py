@@ -608,7 +608,7 @@ class smp:
                 except:
                     print 'path already exists', staroutdir
         star_offset_file = os.path.join(staroutdir,filename+'band_starGlobalOffsets.npz')
-        print 'loading',star_offset_file
+        #print 'loading',star_offset_file
 
         # if not nozpt:
         #     if fermigrid and worker:
