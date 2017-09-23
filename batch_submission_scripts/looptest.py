@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = range(0,250)
+allindexes = np.linspace(0,2666,300)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
@@ -88,9 +88,9 @@ for i in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        print output[0]
-        #print script
+        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        #print output[0]
+        print script
 #        raw_input()
 
         #raw_input('stopppp')
