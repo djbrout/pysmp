@@ -177,9 +177,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     # print imfiles
                     # print tim
                     # print line
-                    # raw_input()
+                    raw_input()
                     if tim in imfiles:
                         good = True
+                        print 'good'
                     elif tim.replace('p1','Y1') in imfiles:
                         tim = tim.replace('p1','Y1')
                         good = True
@@ -189,7 +190,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     elif tim.replace('p1','Y3') in imfiles:
                         tim = tim.replace('p1','Y3')
                         good = True
-
+                    print good
+                    raw_input()
                     if good:
                         #print 'inside'
                         #raw_input()
