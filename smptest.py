@@ -1333,52 +1333,52 @@ class smp:
 
                 # raw_input()
 
-        if nozpt:
-
-            starids = np.array(starcat.objid)
-            starras = np.array(newra)
-            stardecs = np.array(newdec)
-            starmags = np.array(starcat.mag)
-
-            print starras
-            print star_offset_file
-            self.tmpwriter.savez(star_offset_file, starras=np.array(newra), stardecs=np.array(newdec),
-                                 starids=np.array(starcat.objid), starmags=np.array(starcat.mag))
-        else:
-            staroffsets = np.load(star_offset_file)
-            starras = np.array(staroffsets['starras'])
-            stardecs = np.array(staroffsets['stardecs'])
-            starids = np.array(staroffsets['starids'])
-            starmags = np.array(staroffsets['starmags'])
-            # sys.exit()
-        starglobalras = []
-        starglobaldecs = []
-        starglobalids = []
-        starglobalmags = []
-        print starids.shape
-        print np.unique(starids)
-        #raw_input()
-        for ide in np.unique(starids):
-            #print starids
-            ww = (starids == ide)
-            starglobalids.append(ide)
-            #print starras[ww]
-            try:
-                #print 'aaa', starras
-                #raw_input()
-                print ide,np.median(starras[ww]),np.median(stardecs[ww]),np.median(starmags[ww])
-                starglobalras.append(np.median(starras[ww]))
-                starglobaldecs.append(np.median(stardecs[ww]))
-                starglobalmags.append(np.median(starmags[ww]))
-            except:
-                starglobalras.append(np.nan)
-                starglobaldecs.append(np.nan)
-                starglobalmags.append(np.nan)
-
-        starglobalids = np.array(starglobalids)
-        starglobalras = np.array(starglobalras)
-        starglobaldecs = np.array(starglobaldecs)
-        starglobalmags = np.array(starglobalmags)
+        # if nozpt:
+        #
+        #     starids = np.array(starcat.objid)
+        #     starras = np.array(newra)
+        #     stardecs = np.array(newdec)
+        #     starmags = np.array(starcat.mag)
+        #
+        #     print starras
+        #     print star_offset_file
+        #     self.tmpwriter.savez(star_offset_file, starras=np.array(newra), stardecs=np.array(newdec),
+        #                          starids=np.array(starcat.objid), starmags=np.array(starcat.mag))
+        # else:
+        #     staroffsets = np.load(star_offset_file)
+        #     starras = np.array(staroffsets['starras'])
+        #     stardecs = np.array(staroffsets['stardecs'])
+        #     starids = np.array(staroffsets['starids'])
+        #     starmags = np.array(staroffsets['starmags'])
+        #     # sys.exit()
+        # starglobalras = []
+        # starglobaldecs = []
+        # starglobalids = []
+        # starglobalmags = []
+        # print starids.shape
+        # print np.unique(starids)
+        # #raw_input()
+        # for ide in np.unique(starids):
+        #     #print starids
+        #     ww = (starids == ide)
+        #     starglobalids.append(ide)
+        #     #print starras[ww]
+        #     try:
+        #         #print 'aaa', starras
+        #         #raw_input()
+        #         print ide,np.median(starras[ww]),np.median(stardecs[ww]),np.median(starmags[ww])
+        #         starglobalras.append(np.median(starras[ww]))
+        #         starglobaldecs.append(np.median(stardecs[ww]))
+        #         starglobalmags.append(np.median(starmags[ww]))
+        #     except:
+        #         starglobalras.append(np.nan)
+        #         starglobaldecs.append(np.nan)
+        #         starglobalmags.append(np.nan)
+        #
+        # starglobalids = np.array(starglobalids)
+        # starglobalras = np.array(starglobalras)
+        # starglobaldecs = np.array(starglobaldecs)
+        # starglobalmags = np.array(starglobalmags)
 
         # if self.dobigstarcat:
         #     # scampra,scampdec,mag_starwrong = self.getProperCatRaDec(starglobalras,starglobaldecs)
