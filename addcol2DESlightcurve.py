@@ -582,6 +582,7 @@ if __name__ == "__main__":
         #print 'lcfile',lcfile
         #print flux
         if not os.path.exists(savelcfile):
+            imfiles = np.array([imf.replace('+fakeSN', '') for imf in imfiles], dtype='str')
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
