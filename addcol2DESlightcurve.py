@@ -111,7 +111,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     zptfiles = np.array(zptfiles,dtype='str')
     idobs = np.array(idobs)
     imfiles = np.array(imfiles,dtype='str')
-    dflag = np.array(flag,dtype='int')
+    dflag = np.array(dflag,dtype='int')
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
 
@@ -178,8 +178,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     # print imfiles[:10]
                     # print tim
                     # # print line
-                    print dflag
-                    raw_input()
+                    # print dflag
+                    # raw_input()
                     if tim.strip() in imfiles:
                         good = True
                         #print 'good'
@@ -581,8 +581,8 @@ if __name__ == "__main__":
             band.extend(sndata['BAND'])
             imfiles.extend(sndata['IMAGE_FILE'])
             dflag.extend(sndata['DESCRIPTIVE_FLAG'])
-            print sndata['DESCRIPTIVE_FLAG']
-            raw_input()
+            # print sndata['DESCRIPTIVE_FLAG']
+            # raw_input()
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
         #print np.sort(idobs)
         #print band
