@@ -579,6 +579,9 @@ if __name__ == "__main__":
             idobs.extend(sndata['ID_OBS'])
             band.extend(sndata['BAND'])
             imfiles.extend(sndata['IMAGE_FILE'])
+            print sndata.keys()
+            raw_input()
+            dflag.extend(sndata['DESCRIPTIVEFLAG'])
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
         #print np.sort(idobs)
         #print band
