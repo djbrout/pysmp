@@ -162,7 +162,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #else:
                     #tidobs = int(line.split()[1])
                     #tmjd = float(line.split()[3])
-                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[12]
+                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[13]
                     # print tidobs
                     # if float(tidobs) == 414.:
                     #     print idobs
@@ -174,10 +174,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #print imfiles,tim
                     #raw_input()
                     good = False
-                    print imfiles
-                    print tim
-                    print line
-                    raw_input()
+
                     if tim in imfiles:
                         good = True
                     elif tim.replace('p1','Y1') in imfiles:
