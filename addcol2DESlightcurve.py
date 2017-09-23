@@ -176,6 +176,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     good = False
                     print imfiles
                     print tim
+                    print line
                     raw_input()
                     if tim in imfiles:
                         good = True
