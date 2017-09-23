@@ -3,11 +3,11 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = np.linspace(0,1855,300)
+allindexes = np.linspace(0,2855,300)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
-walltime= '5:10:00'
+walltime= '10:10:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
