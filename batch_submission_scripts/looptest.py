@@ -25,7 +25,8 @@ snfiles = open(snfilelist).readlines()
 #snfiles = snfiles.split('.smp')
 count = 0
 tot = 0
-for i in allindexes:
+for ii in allindexes:
+    i = int(round(ii))
     for filt in filts:
         tot += 1
         if doskipping:
