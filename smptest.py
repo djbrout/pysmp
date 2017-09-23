@@ -1387,8 +1387,8 @@ class smp:
         #     #jra,jdec,jmag = self.getJamesCat()
         #     print 'we are here inside bigstarcat'
         # else:
-        offsetra = np.array(starglobalras) * 0.
-        offsetdec = np.array(starglobalras) * 0.
+        # offsetra = np.array(starglobalras) * 0.
+        # offsetdec = np.array(starglobalras) * 0.
         print 'Done with globalstars'
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with globalstars\n ', self.fermilogfile)
@@ -3997,9 +3997,9 @@ class smp:
                 mjdslopeinteroff = smp_dict['mjdslopeinteroff'],
                 star_offset_file = star_offset_file,
                 zpt_files = smp_dict['zpt_file'],
-                starglobalids = starglobalids,
-                globalraoffsets = offsetra,
-                globaldecoffsets = offsetdec,
+                # starglobalids = starglobalids,
+                # globalraoffsets = offsetra,
+                # globaldecoffsets = offsetdec,
                 id_obs = smp_dict['id_obs'],
                 id_coadd = smp_dict['id_coadd'],
                 aperscale = smp_dict['aperscale'],
