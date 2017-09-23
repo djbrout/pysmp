@@ -61,7 +61,7 @@ print 'reading dofake'
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
 
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,gain,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
@@ -114,6 +114,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     dflag = np.array(dflag,dtype='int')
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
+    gain = np.array(gain)
 
     fix[fix == 0.] = int(1)
     fix[fix != 1] = int(0)
@@ -136,7 +137,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                 print 'here'*100
                 #pass
             elif line.split(' ')[0] == 'VARNAMES:':
-                wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG\n'
+                wline = line.strip()+' SMP_FLUX SMP_FLUXERR SMP_FLUX_ZPT SMP_FIT_ZPT SMP_FIT_ZPT_STD SMP_CHISQ SMP_SKY SMP_SKYERR SMP_FIX SMP_FLAG SMP_GAIN \n'
             elif line.split(' ')[0] == 'OBS:':
                 #print line
                 #raw_input()
@@ -213,7 +214,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 zptdata = np.load(zptfiles[ww][0].replace('v6','v7'))
                             except:
                                 print 'excepted',line
-                                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                         int(dflag[ww][0])) + '\n'
                                 #print len(wline.split())
                                 keepgoing = False
@@ -317,7 +318,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                        ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                                        ' '+str(round(chisq[ww][0], 3))+ \
                                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                                       ' ' + str(fix[ww][0]) + ' ' + str(int(dflag[ww][0])) + '\n'
+                                       ' ' + str(fix[ww][0]) + ' ' + str(int(dflag[ww][0]))+ ' ' + str(int(gain[ww][0])) + '\n'
                                 #print len(wline.split())
                             #raw_input()
                             #print wline
@@ -325,7 +326,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             #print line
                         #raw_input()
                         else:
-                            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                 int(FAILED_SMP_FLAG)) + '\n'
                             print mjd,tmjd
 
@@ -335,14 +336,14 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                         if float(line.split()[3]) < 57524.371:
                             print 'NOTHERE'*5
                             print line
-                        wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(int(FAILED_SMP_FLAG)) + '\n'
+                        wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(int(FAILED_SMP_FLAG)) + '\n'
 
                    # print len(wline.split())
                     #raw_input()
         except:
             e = sys.exc_info()[0]
             #print e
-            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                 int(FAILED_SMP_FLAG)) + '\n'
             #print len(wline.split())
         #print len(wline.split())
@@ -535,6 +536,7 @@ if __name__ == "__main__":
         idobs = []
         band = []
         dflag = []
+        gain = []
         cntr += 1
         for i, filt in enumerate(filts):
             #for sn in sne[:]:
@@ -581,6 +583,7 @@ if __name__ == "__main__":
             band.extend(sndata['BAND'])
             imfiles.extend(sndata['IMAGE_FILE'])
             dflag.extend(sndata['DESCRIPTIVE_FLAG'])
+            gain.extend(sndata['GAIN'])
             # print sndata['DESCRIPTIVE_FLAG']
             # raw_input()
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
@@ -594,7 +597,7 @@ if __name__ == "__main__":
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imfiles,dflag, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imfiles,dflag,gain, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
