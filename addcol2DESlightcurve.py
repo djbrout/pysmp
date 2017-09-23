@@ -581,6 +581,8 @@ if __name__ == "__main__":
             band.extend(sndata['BAND'])
             imfiles.extend(sndata['IMAGE_FILE'])
             dflag.extend(sndata['DESCRIPTIVE_FLAG'])
+            print sndata['DESCRIPTIVE_FLAG']
+            raw_input()
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
         #print np.sort(idobs)
         #print band
