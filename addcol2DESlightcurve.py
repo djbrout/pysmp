@@ -211,7 +211,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 #print zptfiles[ww][0]
                                 zptdata = np.load(zptfiles[ww][0].replace('v6','v7'))
                             except:
-                                print 'excepted',
+                                print 'excepted',line
                                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
                                         int(FAILED_SMP_FLAG)) + '\n'
                                 #print len(wline.split())
