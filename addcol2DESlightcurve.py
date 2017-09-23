@@ -317,7 +317,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                        ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                                        ' '+str(round(chisq[ww][0], 3))+ \
                                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                                       ' ' + str(fix[ww][0]) + ' ' + str(int(flag[ww][0])) + '\n'
+                                       ' ' + str(fix[ww][0]) + ' ' + str(int(dflag[ww][0])) + '\n'
                                 #print len(wline.split())
                             #raw_input()
                             #print wline
