@@ -2280,11 +2280,11 @@ class smp:
                 #                 (starcat.bigdec > dec_low) &
                 #                 (starcat.bigdec < dec_high))[0]
 
-                cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
-                tras = starglobalras
-                tdecs = starglobaldecs
-                tids = starglobalids
-                mag_star = starglobalmags
+                # cols = (starglobalras > ra_low) & (starglobalras < ra_high) & (starglobaldecs > dec_low) & (starglobaldecs < dec_high)
+                # tras = starglobalras
+                # tdecs = starglobaldecs
+                # tids = starglobalids
+                # mag_star = starglobalmags
 
                 cols = (starcat.ra > ra_low) & (starcat.ra < ra_high) & (starcat.dec > dec_low) & (starcat.dec < dec_high)
                 tras = starcat.ra
@@ -2349,7 +2349,7 @@ class smp:
                     #         x_star += [xval]
                     #         y_star += [yval]
 
-                    x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starglobalras,starglobaldecs)),0))
+                    #x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starglobalras,starglobaldecs)),0))
                     x_star, y_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra,starcat.dec)),0))
 
 
