@@ -174,7 +174,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #print imfiles,tim
                     #raw_input()
                     good = False
-
+                    print imfiles
+                    print tim
+                    print line
+                    raw_input()
                     if tim in imfiles:
                         good = True
                     elif tim.replace('p1','Y1') in imfiles:
