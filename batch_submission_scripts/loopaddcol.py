@@ -8,7 +8,7 @@ import time
 #filts = ['g']
 #np.random.shuffle(allindexes)
 
-fields = ['S1','S2','X1','X2','X3','C1','C2','C3']#,'E1','E2'
+#fields = ['S1','S2','X1','X2','X3','C1','C2','C3']#,'E1','E2'
 ccdnums = range(0,63)
 #for i in ccdnums:
 if True:
@@ -30,7 +30,7 @@ if True:
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
             '\n' +
             'cd /project/projectdirs/des/djbrout/pysmp/\n' +
-            'source getimages.sh ' + field +
+            'source  ' + field +
             '\n'
         )
         f.close()
