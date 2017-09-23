@@ -12,7 +12,7 @@ walltime= '5:10:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s1lightcurves.txt'
+snfilelist = 'data/s2lightcurves.txt'
 #snfilelist = 'data/speclist.txt'
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
@@ -59,7 +59,7 @@ for ii in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sim.log\n' +
-            '#SBATCH --job-name=sim_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=s2_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
