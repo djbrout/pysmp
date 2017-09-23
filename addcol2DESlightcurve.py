@@ -61,7 +61,7 @@ print 'reading dofake'
 #    'data/doFake.out', usecols=(1, 2, 3, 5, 9, 10, 11, 12, 14, 15), unpack=True, dtype='string', skiprows=1)
 
 
-def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,
+def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
@@ -111,7 +111,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     zptfiles = np.array(zptfiles,dtype='str')
     idobs = np.array(idobs)
     imfiles = np.array(imfiles,dtype='str')
-
+    dflag = np.array(flag,dtype='int')
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
 
@@ -214,7 +214,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             except:
                                 print 'excepted',line
                                 wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
-                                        int(FAILED_SMP_FLAG)) + '\n'
+                                        int(dflag[ww][0])) + '\n'
                                 #print len(wline.split())
                                 keepgoing = False
                             if (faketrueflux) & (keepgoing):
@@ -300,24 +300,24 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
                                 tskyerr = skyerr[ww][0]
                                 thisflag = 0
-                                if flag[ww][0] == 1:
-                                    thisflag = DONTFIT_FLAG
-                                #if chisq[ww][0] > 1.0:
-                                #    thisflag = DONTFIT_FLAG
-                                if abs(tsky) > 1000:
-                                    thisflag = BADSKY_FLAG
-                                if abs(tskyerr) < .5:
-                                    thisflag = BADSKYERR_FLAG
-                                if (fit_zpt < 27.) | (fit_zpt > 35.):
-                                    thisflag = BADZPT_FLAG
-                                if (fit_zpt_std > 0.2):
-                                    thisflag = BADZPTERR_FLAG
+                                # if flag[ww][0] == 1:
+                                #     thisflag = DONTFIT_FLAG
+                                # #if chisq[ww][0] > 1.0:
+                                # #    thisflag = DONTFIT_FLAG
+                                # if abs(tsky) > 1000:
+                                #     thisflag = BADSKY_FLAG
+                                # if abs(tskyerr) < .5:
+                                #     thisflag = BADSKYERR_FLAG
+                                # if (fit_zpt < 27.) | (fit_zpt > 35.):
+                                #     thisflag = BADZPT_FLAG
+                                # if (fit_zpt_std > 0.2):
+                                #     thisflag = BADZPTERR_FLAG
                                 #print thisflag,chisq[ww][0]
                                 wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
                                        ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
                                        ' '+str(round(chisq[ww][0], 3))+ \
                                        ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                                       ' ' + str(fix[ww][0]) + ' ' + str(int(thisflag)) + '\n'
+                                       ' ' + str(fix[ww][0]) + ' ' + str(int(flag[ww][0])) + '\n'
                                 #print len(wline.split())
                             #raw_input()
                             #print wline
@@ -534,6 +534,7 @@ if __name__ == "__main__":
         imfiles = []
         idobs = []
         band = []
+        dflag = []
         cntr += 1
         for i, filt in enumerate(filts):
             #for sn in sne[:]:
@@ -579,9 +580,7 @@ if __name__ == "__main__":
             idobs.extend(sndata['ID_OBS'])
             band.extend(sndata['BAND'])
             imfiles.extend(sndata['IMAGE_FILE'])
-            print sndata.keys()
-            raw_input()
-            dflag.extend(sndata['DESCRIPTIVEFLAG'])
+            dflag.extend(sndata['DESCRIPTIVE_FLAG'])
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
         #print np.sort(idobs)
         #print band
@@ -593,7 +592,7 @@ if __name__ == "__main__":
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imfiles, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imfiles,dflag, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
