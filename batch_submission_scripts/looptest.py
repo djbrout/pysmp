@@ -43,7 +43,7 @@ for ii in allindexes:
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
-        print i,'submitted'
+        print snfiles[int(i)],'submitted'
         count += 1
         print count, tot
         #continue
