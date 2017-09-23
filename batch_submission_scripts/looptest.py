@@ -12,7 +12,7 @@ walltime= '5:10:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/s2lightcurves.txt'
+snfilelist = 'data/c1lightcurves.txt'
 #snfilelist = 'data/speclist.txt'
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
