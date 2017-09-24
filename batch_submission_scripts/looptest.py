@@ -12,7 +12,7 @@ walltime= '12:10:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/x3lightcurves.txt'
+snfilelist = 'data/e1lightcurves.txt'
 #snfilelist = 'data/speclist.txt'
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
@@ -46,7 +46,7 @@ for ii in allindexes:
             #     continue
         print snfiles[int(i)],'submitted'
         count += 1
-        if count < 188: continue
+        if count < 94: continue
         print count, tot
         #continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
@@ -61,7 +61,7 @@ for ii in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
-            '#SBATCH --job-name=x3_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=e1_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
