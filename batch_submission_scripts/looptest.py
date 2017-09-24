@@ -7,12 +7,12 @@ allindexes = np.linspace(0,2500,300)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
-walltime= '10:10:00'
+walltime= '12:10:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/x1lightcurves.txt'
+snfilelist = 'data/x2lightcurves.txt'
 #snfilelist = 'data/speclist.txt'
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
@@ -59,7 +59,7 @@ for ii in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
-            '#SBATCH --job-name=x1_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=x2_'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
