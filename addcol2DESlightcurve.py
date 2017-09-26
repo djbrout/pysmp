@@ -117,7 +117,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     fix = copy(flux)
     gain = np.array(gain)
     hostsbfluxcals = np.array(hostsbfluxcals)
-
+    print hostsbfluxcals
+    raw_input()
     fix[fix == 0.] = int(1)
     fix[fix != 1] = int(0)
     fix = np.array(fix,dtype='int')
