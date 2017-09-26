@@ -418,7 +418,7 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SIMv2_0'
+        savelcdir = resultsdir + '/SMP_SPECv2_0'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -451,7 +451,7 @@ if __name__ == "__main__":
     #sne = np.unique(sne)
 
     #sne = open('data/allslightcurves.txt').readlines()
-    sne = open('data/alllightcurves.txt').readlines()
+    sne = open('data/speclist.txt').readlines()
 
 
 
