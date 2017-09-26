@@ -62,6 +62,7 @@ print 'reading dofake'
 
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,gain,
+                    hostsbfluxcals,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
@@ -115,6 +116,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     flag = np.array(flag,dtype='int')
     fix = copy(flux)
     gain = np.array(gain)
+    hostsbfluxcals = np.array(hostsbfluxcals)
 
     fix[fix == 0.] = int(1)
     fix[fix != 1] = int(0)
@@ -294,7 +296,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 fit_zpt = zptdata['fit_zpt']
                                 fit_zpt_std = zptdata['fit_zpt_std']
                                 flux_zpt = 31.
-                                tfluxerr = np.sqrt(fluxerr[ww][0]**2 + (zptdata['zptscat']*flux[ww][0])**2 + flux[ww][0])
+                                hostsbflux = hostsbfluxcals[ww][0]*10**(.4*(31.-27.5))
+                                tfluxerr = np.sqrt(fluxerr[ww][0]**2 + (zptdata['zptscat']*flux[ww][0])**2 + flux[ww][0] + hostsbflux)
                                 #print tflux
 
                             if keepgoing:
@@ -537,6 +540,7 @@ if __name__ == "__main__":
         band = []
         dflag = []
         gain = []
+        hostsbfluxcals = []
         cntr += 1
         for i, filt in enumerate(filts):
             #for sn in sne[:]:
@@ -563,6 +567,12 @@ if __name__ == "__main__":
                 #print 'DOES EXIST',smpfile
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
+            if filt == 'g': fi = 1
+            if filt == 'r': fi = 2
+            if filt == 'i': fi = 3
+            if filt == 'z': fi = 4
+
+            hostsbfluxcal = open(lcfile).readlines()[20].split()[fi]
             #print pkmjd
             #raw_input()
             inplace = False
@@ -585,7 +595,9 @@ if __name__ == "__main__":
             dflag.extend(sndata['DESCRIPTIVE_FLAG'])
             gain.extend(sndata['GAIN'])
             # print sndata['DESCRIPTIVE_FLAG']
-            # raw_input()
+            hostsbfluxcals.append(sndata['GAIN']*0. + hostsbfluxcal)
+            #print sndata.keys()
+            #raw_input()
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
         #print np.sort(idobs)
         #print band
@@ -597,7 +609,7 @@ if __name__ == "__main__":
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imfiles,dflag,gain, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
