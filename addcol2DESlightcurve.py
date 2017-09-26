@@ -297,7 +297,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 fit_zpt_std = zptdata['fit_zpt_std']
                                 flux_zpt = 31.
                                 print hostsbfluxcals
-                                print hostsbfluxcals[ww]
+                                #print hostsbfluxcals[ww]
                                 raw_input()
                                 hostsbflux = hostsbfluxcals[ww][0]*10**(.4*(31.-27.5))
                                 tfluxerr = np.sqrt(fluxerr[ww][0]**2 + (zptdata['zptscat']*flux[ww][0])**2 + flux[ww][0] + hostsbflux)
