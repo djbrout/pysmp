@@ -595,7 +595,7 @@ if __name__ == "__main__":
             dflag.extend(sndata['DESCRIPTIVE_FLAG'])
             gain.extend(sndata['GAIN'])
             # print sndata['DESCRIPTIVE_FLAG']
-            hostsbfluxcals.extend(np.array(sndata['GAIN'],dtype='float')*0. + hostsbfluxcal)
+            hostsbfluxcals.extend(np.array(sndata['GAIN'],dtype='float')*0. + float(hostsbfluxcal))
             #print sndata.keys()
             #raw_input()
         #print len(band),len(idobs),len(sky),len(flux),len(mjd)
