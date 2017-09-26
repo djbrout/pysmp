@@ -178,11 +178,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #print imfiles,tim
                     #raw_input()
                     good = False
-                    # print imfiles[:10]
-                    # print tim
+                    print imfiles[:10]
+                    print tim
                     # # print line
                     # print dflag
-                    # raw_input()
+                    raw_input()
                     if tim.strip() in imfiles:
                         good = True
                         #print 'good'
