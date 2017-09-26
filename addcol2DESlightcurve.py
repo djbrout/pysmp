@@ -132,8 +132,8 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
         #if saveinplace:
         #    print len(line.replace('#', '').split()),line
         #raw_input()
-        #try:
-        if True:
+        try:
+        #if True:
             if len(line.replace('#','').split()) == 28:
                 wline = line
                 print 'here'*100
@@ -178,11 +178,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #print imfiles,tim
                     #raw_input()
                     good = False
-                    print imfiles[:10]
-                    print tim
+                    #print imfiles[:10]
+                    #print tim
                     # # print line
                     # print dflag
-                    raw_input()
+                    #raw_input()
                     if tim.strip() in imfiles:
                         good = True
                         #print 'good'
@@ -344,12 +344,12 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 
                    # print len(wline.split())
                     #raw_input()
-        # except:
-        #     e = sys.exc_info()[0]
-        #     #print e
-        #     wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
-        #         int(FAILED_SMP_FLAG)) + '\n'
-        #     #print len(wline.split())
+        except:
+            e = sys.exc_info()[0]
+            #print e
+            wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                int(FAILED_SMP_FLAG)) + '\n'
+            #print len(wline.split())
         #print len(wline.split())
         #print wline
         writelines += wline
