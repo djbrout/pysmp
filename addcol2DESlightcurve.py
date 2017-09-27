@@ -166,7 +166,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #else:
                     #tidobs = int(line.split()[1])
                     #tmjd = float(line.split()[3])
-                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[11]
+                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[13]
                     tim = tim.split('/')[-1]
                     # print tidobs
                     # if float(tidobs) == 414.:
