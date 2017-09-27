@@ -62,7 +62,7 @@ print 'reading dofake'
 
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,gain,
-                    hostsbfluxcals,
+                    hostsbfluxcals,zpterr
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
@@ -105,6 +105,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
     flux = np.array(flux)
     fluxerr = np.array(fluxerr)
     zpt = np.array(zpt)
+    zpterr = np.array(zpterr)
     zptrms = np.array(zptrms)
     chisq = np.array(chisq)
     sky = np.array(sky)
@@ -211,15 +212,15 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                        # print len(fluxerr[ww])
                         if len(fluxerr[ww]) == 1:
                             #print 'here',dofakes
-                            try:
-                                #print zptfiles[ww][0]
-                                zptdata = np.load(zptfiles[ww][0].replace('v6','v7'))
-                            except:
-                                print 'excepted',line
-                                wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
-                                        int(dflag[ww][0])) + '\n'
-                                #print len(wline.split())
-                                keepgoing = False
+                            # try:
+                            #     #print zptfiles[ww][0]
+                            #     zptdata = np.load(zptfiles[ww][0].replace('v6','v7'))
+                            # except:
+                            #     print 'excepted',line
+                            #     wline = line.strip() + ' -999 -999 -999 -999 -999 -999 -999 -999 -999 -999 ' + str(
+                            #             int(dflag[ww][0])) + '\n'
+                            #     #print len(wline.split())
+                            #     keepgoing = False
                             if (faketrueflux) & (keepgoing):
                                 if fakeisthere:
                                     tmag = float(line.split()[12])
@@ -293,16 +294,16 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                             elif keepgoing:
                                 #print 'here'
                                 tflux = flux[ww][0]
-                                fit_zpt = zptdata['fit_zpt']
-                                fit_zpt_std = zptdata['fit_zpt_std']
+                                #fit_zpt = zptdata['fit_zpt']
+                                #fit_zpt_std = zptdata['fit_zpt_std']
                                 flux_zpt = 31.
                                 #raw_input()
                                 hostsbflux = hostsbfluxcals[ww][0]*10**(.4*(31.-27.5))
-                                tfluxerr = np.sqrt(fluxerr[ww][0]**2 + min(0,flux[ww][0]) + hostsbflux) + zptdata['zptscat']*min(0,flux[ww][0])
+                                tfluxerr = np.sqrt(fluxerr[ww][0]**2 + min(0,flux[ww][0]) + hostsbflux) + zpterr[ww][0]*min(0,flux[ww][0])
                                 #print tflux
 
                             if keepgoing:
-                                tsky = sky[ww][0] - 10000.*10**(.4*(31.-fit_zpt))
+                                tsky = sky[ww][0] - 10000.*10**(.4*(31.-zpt[ww][0]))
                                 tskyerr = skyerr[ww][0]
                                 thisflag = 0
                                 # if flag[ww][0] == 1:
@@ -318,11 +319,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 # if (fit_zpt_std > 0.2):
                                 #     thisflag = BADZPTERR_FLAG
                                 #print thisflag,chisq[ww][0]
-                                wline = line.strip() + ' ' + str(round(tflux, 3)) + ' ' + str(round(tfluxerr, 3)) + \
-                                       ' '+str(round(flux_zpt, 3))+' '+str(round(fit_zpt, 3))+' '+str(round(fit_zpt_std, 3))+ \
-                                       ' '+str(round(chisq[ww][0], 3))+ \
-                                       ' ' + str(round(tsky, 3)) + ' ' + str(round(tskyerr, 3)) + \
-                                       ' ' + str(fix[ww][0]) + ' ' + str(int(dflag[ww][0]))+ ' ' + str(float(round(gain[ww][0],3))) + '\n'
+                                wline = line.strip() + ' ' + str(round(tflux, 5)) + ' ' + str(round(tfluxerr, 5)) + \
+                                       ' '+str(round(flux_zpt, 5))+' '+str(round(zpt[ww][0], 5))+' '+str(round(zpterr[ww][0], 5))+ \
+                                       ' '+str(round(chisq[ww][0], 5))+ \
+                                       ' ' + str(round(tsky, 5)) + ' ' + str(round(tskyerr, 5)) + \
+                                       ' ' + str(fix[ww][0]) + ' ' + str(int(dflag[ww][0]))+ ' ' + str(float(round(gain[ww][0],5))) + '\n'
                                 #print len(wline.split())
                             #raw_input()
                             #print wline
@@ -530,6 +531,7 @@ if __name__ == "__main__":
         flux = []
         fluxerr = []
         zpt = []
+        zpterr = []
         rmsaddin = []
         chi2 = []
         sky = []
@@ -584,6 +586,7 @@ if __name__ == "__main__":
             flux.extend(sndata['FLUX'])
             fluxerr.extend(sndata['FLUXERR'])
             zpt.extend(sndata['ZPT'])
+            zpterr.extend(sndata['ZPTERR'])
             rmsaddin.extend(sndata['RMSADDIN'])
             chi2.extend(sndata['CHI2'])
             sky.extend(sndata['SKY'])
@@ -610,7 +613,7 @@ if __name__ == "__main__":
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
