@@ -458,7 +458,7 @@ if __name__ == "__main__":
 
     #sne = open('data/allslightcurves.txt').readlines()
     sne = open('data/speclist.txt').readlines()
-    if fakeheader: sne = open('data/allslightcurves.txt').readlines()
+    if fakeheader: sne = open('data/alllightcurves.txt').readlines()
 
 
     tsne = []
