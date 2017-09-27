@@ -168,7 +168,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #tmjd = float(line.split()[3])
                     tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[13]
                     tim = tim.split('/')[-1]
-                    print tim
+                    #print tim
                     # print tidobs
                     # if float(tidobs) == 414.:
                     #     print idobs
@@ -612,7 +612,7 @@ if __name__ == "__main__":
         #print flux
         if not os.path.exists(savelcfile):
             imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
-            print imfiles
+            #print imfiles
             #raw_input()
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
