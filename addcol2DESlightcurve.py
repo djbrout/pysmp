@@ -62,7 +62,7 @@ print 'reading dofake'
 
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,gain,
-                    hostsbfluxcals,zpterr
+                    hostsbfluxcals,zpterr,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
