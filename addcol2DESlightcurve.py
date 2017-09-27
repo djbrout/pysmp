@@ -613,6 +613,7 @@ if __name__ == "__main__":
         if not os.path.exists(savelcfile):
             imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
             print imfiles
+            raw_input()
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
