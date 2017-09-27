@@ -321,6 +321,10 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                                 # if (fit_zpt_std > 0.2):
                                 #     thisflag = BADZPTERR_FLAG
                                 #print thisflag,chisq[ww][0]
+                                if fix[ww][0] == 1:
+                                    tdflag = 1
+                                else:
+                                    tdflag = dflag[ww][0]
                                 wline = line.strip() + ' ' + str(round(tflux, 5)) + ' ' + str(round(tfluxerr, 5)) + \
                                        ' '+str(round(flux_zpt, 5))+' '+str(round(zpt[ww][0], 5))+' '+str(round(zpterr[ww][0], 5))+ \
                                        ' '+str(round(chisq[ww][0], 5))+ \
