@@ -218,7 +218,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
     zptfiles = []
     cntr = 0
     goodbigdata = copy(bigdata)
-    imglist = os.listdir(imagedir)
+    imglist = np.array(os.listdir(imagedir),dtype='str')
     numimages = len(imglist)
 
     for dirName, subdirList, fileList in imglist[np.array(np.random.uniform(0,numimages,1000),dtype='int')]:
