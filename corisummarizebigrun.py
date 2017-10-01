@@ -29,7 +29,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
         #dostars = True
         cd = cd[0]
         if dostars:
-            grabstardata("/global/cscratch1/sd/dbrout/v7/","/global/cscratch1/sd/dbrout/v7/stardata_"+tfield+"_"+filter,tfield,filter)
+            grabstardata("/project/projectdirs/dessn/dbrout/zptfiles/","/global/cscratch1/sd/dbrout/v7/stardata_"+tfield+"_"+filter,tfield,filter)
             stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
@@ -101,14 +101,14 @@ def getparametriczpt(imagedir,outfile):
             if 'globalstar.npz' in fname:
                 # print('\t%s' % fname)
                 # print os.path.join(imagedir,dirName,fname)
-                if not 'SN-S2' in fname: continue
+                #if not 'SN-S2' in fname: continue
                 #    if not 'SN-S1' in fname: continue
-                try:
-                    os.system('cp ' + os.path.join(imagedir, dirName, fname) + ' test.npz')
-                    zptdata = np.load('test.npz')
-                except:
-                    print 'could not load'
-                    continue
+                # try:
+                #     os.system('cp ' + os.path.join(imagedir, dirName, fname) + ' test.npz')
+                #     zptdata = np.load('test.npz')
+                # except:
+                #     print 'could not load'
+                #     continue
                 # zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 # print zptdata.keys()
                 # raw_input()
@@ -218,7 +218,10 @@ def grabstardata(imagedir,outfile,tfield,filt):
     zptfiles = []
     cntr = 0
     goodbigdata = copy(bigdata)
-    for dirName, subdirList, fileList in os.walk(imagedir):
+    imglist = os.listdir(imagedir)
+    numimages = len(imglist)
+
+    for dirName, subdirList, fileList in imglist[np.array(np.random.uniform(0,numimages,1000),dtype='int')]:
         if cntr > 2500.: break
         #print('Found directory: %s' % dirName)
         for fname in fileList:
@@ -226,15 +229,23 @@ def grabstardata(imagedir,outfile,tfield,filt):
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
                 #print os.path.join(imagedir,dirName,fname)
-                if not tfield in fname: continue
-                if not '_'+filt+'_' in fname: continue
+                #if not tfield in fname: continue
+                #if not '_'+filt+'_' in fname: continue
+
+                field = fname.split('-')[1].split('_')
+                ccd = fname.split('_')[5]
+                band = fname.split('_')[4]
+
+                zptdata = np.load(os.path.join(imagedir,dirName,fname))
+                print zptdata.keys()
+                raw_input()
                 #    if not 'SN-S1' in fname: continue
-                try:
-                    os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
-                    zptdata = np.load('test.npz')
-                except:
-                    print 'could not load'
-                    continue
+                # try:
+                #     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
+                #     zptdata = np.load('test.npz')
+                # except:
+                #     print 'could not load'
+                #     continue
                 #zptdata = np.load('/pnfs/des/persistent/smp/v2/20131119_SN-S2/r_21/SNp1_256166_SN-S2_tile20_r_21+fakeSN_rband_dillonzptinfo_globalstar.npz')
                 #print zptdata.keys()
                 #raw_input()
