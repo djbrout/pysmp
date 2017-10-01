@@ -224,7 +224,8 @@ def grabstardata(imagedir,outfile,tfield,filt):
     for fname in imglist[np.array(np.random.uniform(0,numimages-1,size=1000),dtype='int')]:
         if cntr > 2500.: break
         #print('Found directory: %s' % dirName)
-        for fname in fileList:
+        if True:
+        #for fname in fileList:
             #print fname
             if 'globalstar.npz' in fname:
                 #print('\t%s' % fname)
