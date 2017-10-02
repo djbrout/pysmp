@@ -3019,8 +3019,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                                 label=b+' band')
                 else:
                     ax.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
-            #except:
-            #    pass
+            except:
+                pass
     ax.set_xlabel('Field')
     ax.set_ylabel('Field Mean - All Mean')
     ax.legend(fontsize='small')
