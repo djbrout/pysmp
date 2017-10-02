@@ -221,7 +221,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
     imglist = np.array(os.listdir(imagedir),dtype='str')
     numimages = len(imglist)
 
-    for fname in imglist[np.array(np.random.uniform(0,numimages-1,size=5000),dtype='int')]:
+    for fname in imglist[np.array(np.random.uniform(0,numimages-1,size=500000),dtype='int')]:
         #if cntr > 5000.: break
         #print('Found directory: %s' % dirName)
         if True:
@@ -360,6 +360,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
 
     np.savez(outfile, **bigdata)
     print np.unique(bigdata['mjd'])
+    print np.unique(bigdata['field'])
     #sys.exit()
     #os.system('ifdh rm ' + outfile)
     #os.system('ifdh cp ' + 'dat.dat' + ' ' + outfile)
