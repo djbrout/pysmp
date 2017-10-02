@@ -2918,7 +2918,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         ax = axes[i]
         prms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05)&(pltvecband==b)])))
         ax.hist(pltvecy[pltvecband==b], alpha=.99, color='black',histtype='step',
-                 bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))\
+                 bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
         ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
 
         ax.legend()
