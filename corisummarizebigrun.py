@@ -2986,7 +2986,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             try:
                 mean = np.mean(pltvecccdr[(abs(pltvecccdr)<.05)& (ww) & (yy)])
                 rms = np.sqrt(np.nanmean(np.square(pltvecccdr[(abs(pltvecccdr)<.05) & ww & yy])))
-                #print b, chip
+                print chip,b,mean,len(pltvecccdr[(abs(pltvecccdr)<.05)& (ww) & (yy)])
 
                 if j == 0:
                     plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
@@ -3006,6 +3006,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for f in np.sort(np.unique(pltvecfield)):
         fielddict[f] = cnt
         cnt += 1
+
+    print np.unique(pltvecbigfield)
 
     fig, ax = plt.subplots(figsize=(12/1.5, 9/1.5))
     for i, b, c in zip(np.arange(4),['g','r','i','z'],['green','red','indigo','black']):
