@@ -2876,41 +2876,75 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    cntr = 0
-    pltvecx = []
-    pltvecy = []
-    pltvecfield = []
-    pltvecband = []
-    pltvecccd =[]
-    for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband in zip(starmagerr[::-1], starmag[::-1],
-            indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1],
-            field[::-1],ccd[::-1],band[::-1]):
-        cntr += 1
-        if cntr > maxpoints: continue
-        if cntr > 470000: continue
-        if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
+    load = False
+    if load:
+        a = np.load(outdir + '/pltstarvec.npz')
+        pltvecy = a['pltvecy']
+        pltvecfield = a['pltvecfield']
+        pltvecbigfield = a['pltvecbigfield']
+        pltvecfieldr = a['pltvecfieldr']
+        pltvecfieldb = a['pltvecfieldb']
+        pltvecband = a['pltvecband']
+        pltvecccd = a['pltvecccd']
+        pltvecccdr = a['pltvecccdr']
+        pltvecccdb = a['pltvecccdb']
+    else:
+        cntr = 0
+        pltvecx = []
+        pltvecy = []
+        pltvecband = []
+        pltvecfield = []
+        pltvecbigfield = []
+        pltvecfieldr = []
+        pltvecfieldb = []
+        pltvecccd =[]
+        pltvecccdr =[]
+        pltvecccdb =[]
 
-        # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
-        # print starmag[indices == ind]
-        # raw_input()
-        starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-        starmean = np.mean(starww)
-        #repeatability = np.std(starww)
-        # repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 5.:
-            # if repeatability < .3:
-            pltvecy.append(sm - starmean)
-            pltvecfield.append(tfield)
-            pltvecccd.append(tccd)
-            pltvecband.append(tband)
-            #print sm - starmean
-            #pltvecx.append(fh)
 
-    # plt.xscale('log')
-    pltvecy = np.array(pltvecy)
-    pltvecfield = np.array(pltvecfield,dtype='str')
-    pltvecccd = np.array(pltvecccd,dtype='str')
-    pltvecband = np.array(pltvecband,dtype='str')
+
+        for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband in zip(starmagerr[::-1], starmag[::-1],
+                indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1],
+                field[::-1],ccd[::-1],band[::-1]):
+            cntr += 1
+            if cntr > maxpoints: continue
+            if cntr > 7000: continue
+            if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
+
+            # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+            # print starmag[indices == ind]
+            # raw_input()
+            starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
+            starmean = np.mean(starww)
+            #repeatability = np.std(starww)
+            # repeatability = np.std(starmag[indices == ind])
+            if len(starww) > 5.:
+                pltvecy.append(sm - starmean)
+                pltvecband.append(tband)
+                pltvecbigfield.append(tfield)
+
+                if len(np.unique(field[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)])) > 1:
+                    pltvecfield.append(tfield)
+                    pltvecfieldr.append(sm-starmean)
+                    pltvecfieldb.append(tband)
+                if len(np.unique(ccd[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)])) > 1:
+                    pltvecccd.append(tccd)
+                    pltvecccdr.append(sm-starmean)
+                    pltvecccdb.append(tband)
+
+        pltvecy = np.array(pltvecy)
+        pltvecband = np.array(pltvecband,dtype='str')
+        pltvecbigfield = np.array(pltvecbigfield,dtype='str')
+        pltvecfield = np.array(pltvecfield,dtype='str')
+        pltvecfieldr = np.array(pltvecfieldr)
+        pltvecfieldb = np.array(pltvecfieldb,dtype='str')
+        pltvecccd = np.array(pltvecccd,dtype='str')
+        pltvecccdr = np.array(pltvecccdr)
+        pltvecccdb = np.array(pltvecccdb,dtype='str')
+
+        np.savez(outdir +'/pltstarvec',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
+                 pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb)
+
     plt.clf()
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 9))
     axes = axes.flatten()
@@ -2941,13 +2975,13 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.clf()
 
     fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
-    for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
-        ww = pltvecband==b
+    for i, b, c in zip(np.arange(len(np.unique(pltvecccdb))),np.unique(pltvecccdb),['green','red','indigo','black']):
+        ww = pltvecccdb==b
         for j,chip in enumerate(np.sort(np.unique(pltvecccd))):
-            yy = pltvecccd == chip
+            yy = (pltvecccd == chip)
             try:
-                mean = np.mean(pltvecy[(abs(pltvecy)<.05)& (ww) & (yy)])
-                rms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05) & ww & yy])))
+                mean = np.mean(pltvecccdr[(abs(pltvecccdr)<.05)& (ww) & (yy)])
+                rms = np.sqrt(np.nanmean(np.square(pltvecccdr[(abs(pltvecccdr)<.05) & ww & yy])))
                 print b, chip
 
                 if j == 0:
@@ -2969,28 +3003,27 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         fielddict[f] = cnt
         cnt += 1
 
-    fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
-    for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
+    fig, ax = plt.subplots(figsize=(12/1.5, 9/1.5))
+    for i, b, c in zip(np.arange(len(np.unique(pltvecfieldb))),np.unique(pltvecfieldb),['green','red','indigo','black']):
         ww = pltvecband==b
         for j,field in enumerate(np.sort(np.unique(pltvecfield))):
             yy = pltvecccd == field
             try:
-                mean = np.mean(pltvecy[(abs(pltvecy)<.05)& (ww) & (yy)])
-                rms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05) & ww & yy])))
+                mean = np.mean(pltvecfieldr[(abs(pltvecfieldr)<.05)& (ww) & (yy)])
+                rms = np.sqrt(np.nanmean(np.square(pltvecfieldr[(abs(pltvecfieldr)<.05) & ww & yy])))
                 print b, chip
 
                 if j == 0:
-                    plt.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+                    ax.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
                                 label=b+' band')
                 else:
-                    plt.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
+                    ax.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             except:
                 pass
-    plt.xlabel('Field')
-    plt.ylabel('Field Mean - All Mean')
-    plt.legend(fontsize='small')
-    plt.axhline(0,color='grey',linestyle='--')
-    ax = plt.gca()
+    ax.set_xlabel('Field')
+    ax.set_ylabel('Field Mean - All Mean')
+    ax.legend(fontsize='small')
+    ax.axhline(0,color='grey',linestyle='--')
     ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
