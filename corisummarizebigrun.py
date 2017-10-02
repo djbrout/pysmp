@@ -2959,6 +2959,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.ylabel('Chip Mean - All Mean')
     plt.xlabel('Chip')
+    plt.legend()
+    plt.axhline(0,color='grey',linestyle='--')
     plt.savefig(outdir+'/chipdependence.png')
     plt.clf()
     fielddict = {}
@@ -2986,6 +2988,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.xlabel('Field')
     plt.ylabel('Field Mean - All Mean')
+    plt.legen()
+    plt.axhline(0,color='grey',linestyle='--')
     plt.xticks(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
