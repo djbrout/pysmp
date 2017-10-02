@@ -3026,7 +3026,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                     ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             #except:
             #    pass
-    ax.set_xlabel('Field')
+    #ax.set_xlabel('Field')
     ax.set_ylabel('Field Mean - All Mean')
     ax.legend(fontsize='small')
     ax.axhline(0,color='grey',linestyle='--')
