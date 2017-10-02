@@ -2959,7 +2959,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.ylabel('Chip Mean - All Mean')
     plt.xlabel('Chip')
-    plt.legend(textsize='small')
+    plt.legend(fontsize='small')
     plt.axhline(0,color='grey',linestyle='--')
     plt.savefig(outdir+'/chipdependence.png')
     plt.clf()
@@ -2988,7 +2988,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.xlabel('Field')
     plt.ylabel('Field Mean - All Mean')
-    plt.legend(textsize='small')
+    plt.legend(fontsize='small')
     plt.axhline(0,color='grey',linestyle='--')
     ax = plt.gca()
     ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
