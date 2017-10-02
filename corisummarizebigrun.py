@@ -3006,8 +3006,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     fig, ax = plt.subplots(figsize=(12/1.5, 9/1.5))
     for i, b, c in zip(np.arange(len(np.unique(pltvecfieldb))),np.unique(pltvecfieldb),['green','red','indigo','black']):
         ww = pltvecfieldb==b
-        for j,field in enumerate(np.sort(np.unique(pltvecfield))):
-            yy = pltvecfield == field
+        for j,tf in enumerate(np.sort(np.unique(pltvecfield))):
+            yy = pltvecfield == tf
+            print ww.shape,yy.shape,pltvecfieldr.shape
             if True:
             #try:
                 mean = np.mean(pltvecfieldr[(abs(pltvecfieldr)<.05)& (ww) & (yy)])
