@@ -2979,7 +2979,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.clf()
 
     fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
-    for i, b, c in zip(np.arange(len(np.unique(pltvecccdb))),np.unique(pltvecccdb),['green','red','indigo','black']):
+    for i, b, c in zip(np.arange(4),['g','r','i','z'],['green','red','indigo','black']):
         ww = pltvecccdb==b
         for j,chip in enumerate(np.sort(np.unique(pltvecccd))):
             yy = (pltvecccd == chip)
@@ -3008,7 +3008,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         cnt += 1
 
     fig, ax = plt.subplots(figsize=(12/1.5, 9/1.5))
-    for i, b, c in zip(np.arange(len(np.unique(pltvecfieldb))),np.unique(pltvecfieldb),['green','red','indigo','black']):
+    for i, b, c in zip(np.arange(4),['g','r','i','z'],['green','red','indigo','black']):
         ww = pltvecfieldb==b
         for j,tf in enumerate(np.sort(np.unique(pltvecfield))):
             yy = pltvecfield == tf
@@ -3020,17 +3020,20 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print b, field
 
                 if j == 0:
-                    ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+                    #ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+                    ax.errorbar([tf], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+
                                 label=b+' band')
                 else:
-                    ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
+                    ax.errorbar([tf], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             #except:
             #    pass
     ax.set_xlabel('Field')
     ax.set_ylabel('Field Mean - All Mean')
     ax.legend(fontsize='small')
     ax.axhline(0,color='grey',linestyle='--')
-    ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
+
+    #ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
     sys.exit()
