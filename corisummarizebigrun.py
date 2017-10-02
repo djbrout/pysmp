@@ -322,9 +322,9 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         md, std = iterstat.iterstat(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]),
                                                      startMedian=True, sigmaclip=3, iter=10)
 
-                        print zptdata['zptscat'],np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
+                        #print zptdata['zptscat'],np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww]))
                         #raw_input()
-                        print 'worked now std',std/np.sqrt(len(cm[ww]))
+                        #print 'worked now std',std/np.sqrt(len(cm[ww]))
                         bigdata['numzptstars'].extend(zptdata['flux_starmp']*0. + len(cm[ww]))
                         bigdata['rmsaddin'].extend(zptdata['flux_starmp']*0. + std)
                         bigdata['zptscat'].extend(zptdata['flux_starmp']*0.+np.std(float(zp) - cm[ww] - 2.5*np.log10(fs[ww])))
