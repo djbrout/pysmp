@@ -2987,12 +2987,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 mean = np.mean(pltvecccdr[(abs(pltvecccdr)<.05)& (ww) & (yy)])
                 rms = np.sqrt(np.nanmean(np.square(pltvecccdr[(abs(pltvecccdr)<.05) & ww & yy])))
                 print chip,b,mean,len(pltvecccdr[(abs(pltvecccdr)<.05)& (ww) & (yy)])
-
-                if j == 0:
-                    plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
-                                label=b+' band')
-                else:
-                    plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
+                if len(pltvecccdr[(abs(pltvecccdr)<.05)& (ww) & (yy)]) > 10:
+                    if j == 0:
+                        plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+                                    label=b+' band')
+                    else:
+                        plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             except:
                 pass
     plt.ylabel('Chip Mean - All Mean')
