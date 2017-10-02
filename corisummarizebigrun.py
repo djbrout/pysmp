@@ -221,8 +221,8 @@ def grabstardata(imagedir,outfile,tfield,filt):
     imglist = np.array(os.listdir(imagedir),dtype='str')
     numimages = len(imglist)
 
-    for fname in imglist[np.array(np.random.uniform(0,numimages-1,size=1000),dtype='int')]:
-        if cntr > 2500.: break
+    for fname in imglist[np.array(np.random.uniform(0,numimages-1,size=5000),dtype='int')]:
+        #if cntr > 5000.: break
         #print('Found directory: %s' % dirName)
         if True:
         #for fname in fileList:
