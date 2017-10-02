@@ -2943,16 +2943,20 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     fig, axes = plt.subplots(figsize=(12, 9))
     for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
         ww = pltvecband==b
-        for j,chip in enumerate(np.unique(pltvecccd)):
+        for j,chip in enumerate(np.sort(np.unique(pltvecccd))):
             yy = pltvecccd == chip
-            mean = np.mean(pltvecy[(abs(pltvecy)<.05)& (ww) & (yy)])
-            rms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05) & ww & yy])))
+            print b,chip
+            try:
+                mean = np.mean(pltvecy[(abs(pltvecy)<.05)& (ww) & (yy)])
+                rms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05) & ww & yy])))
 
-            if j == 0:
-                plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c,
-                            label=b+' band')
-            else:
-                plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c)
+                if j == 0:
+                    plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c,
+                                label=b+' band')
+                else:
+                    plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c)
+            except:
+                pass
     plt.savefig(outdir+'/chipdependence.png')
 
     sys.exit()
