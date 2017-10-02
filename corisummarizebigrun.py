@@ -2940,7 +2940,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.clf()
 
-    fig, axes = plt.subplots(figsize=(12/2., 9/2.))
+    fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
     for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
         ww = pltvecband==b
         for j,chip in enumerate(np.sort(np.unique(pltvecccd))):
@@ -2959,7 +2959,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.ylabel('Chip Mean - All Mean')
     plt.xlabel('Chip')
-    plt.legend()
+    plt.legend(textsize='small')
     plt.axhline(0,color='grey',linestyle='--')
     plt.savefig(outdir+'/chipdependence.png')
     plt.clf()
@@ -2969,7 +2969,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         fielddict[f] = cnt
         cnt += 1
 
-    fig, axes = plt.subplots(figsize=(12/2., 9/2.))
+    fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
     for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
         ww = pltvecband==b
         for j,field in enumerate(np.sort(np.unique(pltvecfield))):
@@ -2988,7 +2988,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.xlabel('Field')
     plt.ylabel('Field Mean - All Mean')
-    plt.legend()
+    plt.legend(textsize='small')
     plt.axhline(0,color='grey',linestyle='--')
     ax = plt.gca()
     ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
