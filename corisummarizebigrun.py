@@ -2924,7 +2924,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pltvecbigfield.append(tfield)
 
                 if len(np.unique(field[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)])) > 1:
-                    print tfield
+                    #print tfield
                     pltvecfield.append(tfield)
                     pltvecfieldr.append(sm-starmean)
                     pltvecfieldb.append(tband)
