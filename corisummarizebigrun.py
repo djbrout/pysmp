@@ -2957,8 +2957,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                     plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             except:
                 pass
+    plt.ylabel('Chip Mean - All Mean')
+    plt.xlabel('Chip')
     plt.savefig(outdir+'/chipdependence.png')
-
+    plt.clf()
+    fielddict = {}
+    cnt = 0
+    for f in np.sort(np.unique(pltvecfield)):
+        fielddict[f] = cnt
+        cnt += 1
 
     fig, axes = plt.subplots(figsize=(12/2., 9/2.))
     for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
@@ -2971,12 +2978,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print b, chip
 
                 if j == 0:
-                    plt.errorbar([field], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+                    plt.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
                                 label=b+' band')
                 else:
-                    plt.errorbar([field], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
+                    plt.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             except:
                 pass
+    plt.xlabel('Field')
+    plt.ylabel('Field Mean - All Mean')
+    plt.xticks(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
     sys.exit()
