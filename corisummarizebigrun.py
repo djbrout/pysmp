@@ -47,7 +47,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                        stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
+                        stardata['fwhm'],stardata['zptscat'],stardata['mjd'],stardata['field'],stardata['ccd'],stardata['band'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         data = {'filter':[]}
         for k in np.load(cd[0]).keys():
