@@ -3020,10 +3020,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print b, field
 
                 if j == 0:
-                    ax.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
+                    ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
                                 label=b+' band')
                 else:
-                    ax.errorbar([fielddict[field]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
+                    ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7)
             #except:
             #    pass
     ax.set_xlabel('Field')
