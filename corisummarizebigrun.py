@@ -214,7 +214,7 @@ def getparametriczpt(imagedir,outfile):
 def grabstardata(imagedir,outfile,tfield,filt):
     bigdata = {'starflux': [], 'starfluxerr': [], 'starzpt': [], 'diffimzpt':[], 'catmag': [], 'chisq': [], 'rmsaddin': [], 'zptscat':[],
                'sky':[], 'skyerr': [],'psf':[],'poisson':[],'ids':[],'centroidedras':[],'centroideddecs':[],
-               'numzptstars':[], 'fwhm':[],'mjd':[]}
+               'numzptstars':[], 'fwhm':[],'mjd':[],'band':[],'field':[],'ccd':[]}
     zptfiles = []
     cntr = 0
     goodbigdata = copy(bigdata)
@@ -238,8 +238,8 @@ def grabstardata(imagedir,outfile,tfield,filt):
                 band = fname.split('_')[4]
 
                 zptdata = np.load(os.path.join(imagedir,fname))
-                print zptdata.keys()
-                raw_input()
+                #print zptdata.keys()
+                #raw_input()
                 #    if not 'SN-S1' in fname: continue
                 # try:
                 #     os.system('cp ' + os.path.join(imagedir,dirName,fname) + ' test.npz')
@@ -287,7 +287,9 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         #    continue
                         #if True:
                         bigdata = copy(goodbigdata)
-
+                        bigdata['field'].extend([field for x in zptdata['ids'] ])
+                        bigdata['ccd'].extend([ccd for x in zptdata['ids']])
+                        bigdata['band'].extend([band for x in zptdata['ids']])
 
                         bigdata['ids'].extend(zptdata['ids'])
                         bigdata['centroidedras'].extend(zptdata['centroidedras'])
@@ -303,9 +305,10 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         bigdata['catmag'].extend(zptdata['cat_magsmp'])
                         #bigdata['diffimzpt'].extend(zptdata['fakezpt'])
                         psfs = zptdata['psfs']
-                        for i in range(len(psfs)):
-                            bigdata['psf'].append(psfs[i,:,:])
-                            bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starmp'][i])))
+
+                        #for i in range(len(psfs)):
+                        #    bigdata['psf'].append(psfs[i,:,:])
+                        #    bigdata['poisson'].append(np.sqrt(np.sum(psfs[i,:,:].ravel()**2*zptdata['flux_starmp'][i])))
                             #print zptdata['flux_starnormm'][i],zptdata['flux_star_std'][i],bigdata['poisson'][-1]
                             #raw_input()
 
