@@ -2887,7 +2887,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             field[::-1],ccd[::-1],band[::-1]):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 100000: continue
+        if cntr > 400000: continue
         if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -2937,6 +2937,24 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/repeatabilitylikesnls.png')
     print outdir + '/' + title + '_repeatabilitylikesnls.png'
+
+    plt.clf()
+
+    fig, axes = plt.subplots(figsize=(12, 9))
+    for i, b, c in enumerate(np.unique(pltvecband),['green','red','indigo','black']):
+        ww = pltvecband==b
+        for j,chip in enumerate(np.unique(pltvecccd)):
+            yy = pltvecccd == chip
+            mean = np.mean(pltvecy[(abs(pltvecy)<.05)& (ww) & (yy)])
+            rms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05) & ww & yy])))
+
+            if j == 0:
+                plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c,
+                            label=b+' band')
+            else:
+                plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c)
+    plt.savefig(outdir+'/chipdependence.png')
+
     sys.exit()
     plt.clf()
     cntr = 0
