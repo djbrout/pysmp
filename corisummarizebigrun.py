@@ -2887,7 +2887,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             field[::-1],ccd[::-1],band[::-1]):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 10000: continue
+        if cntr > 470000: continue
         if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -2988,7 +2988,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pass
     plt.xlabel('Field')
     plt.ylabel('Field Mean - All Mean')
-    plt.legen()
+    plt.legend()
     plt.axhline(0,color='grey',linestyle='--')
     plt.xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
