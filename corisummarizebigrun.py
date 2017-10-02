@@ -2887,7 +2887,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             field[::-1],ccd[::-1],band[::-1]):
         cntr += 1
         if cntr > maxpoints: continue
-        if cntr > 50000: continue
+        if cntr > 5000: continue
         if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -2935,7 +2935,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
-    plt.savefig(outdir + '/' + title+'repeatabilitylikesnls.png')
+    plt.savefig(outdir + '/repeatabilitylikesnls.png')
     print outdir + '/' + title + '_repeatabilitylikesnls.png'
     sys.exit()
     plt.clf()
