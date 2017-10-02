@@ -2908,7 +2908,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 field[::-1],ccd[::-1],band[::-1]):
             cntr += 1
             if cntr > maxpoints: continue
-            if cntr > 5000: continue
+            if cntr > 50000: continue
             if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -2937,8 +2937,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecband = np.array(pltvecband,dtype='str')
         pltvecbigfield = np.array(pltvecbigfield,dtype='str')
         pltvecfield = np.array(pltvecfield,dtype='str')
-        print pltvecfield.shape
-        raw_input()
+        #print pltvecfield.shape
+        #raw_input()
         pltvecfieldr = np.array(pltvecfieldr)
 
         pltvecfieldb = np.array(pltvecfieldb,dtype='str')
@@ -3012,7 +3012,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         ww = pltvecfieldb==b
         for j,tf in enumerate(np.sort(np.unique(pltvecfield))):
             yy = pltvecfield == tf
-            print ww.shape,yy.shape,pltvecfield.shape
+            #print ww.shape,yy.shape,pltvecfield.shape
             if True:
             #try:
                 mean = np.mean(pltvecfieldr[(abs(pltvecfieldr)<.05)& (ww) & (yy)])
