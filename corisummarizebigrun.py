@@ -2990,7 +2990,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.ylabel('Field Mean - All Mean')
     plt.legen()
     plt.axhline(0,color='grey',linestyle='--')
-    plt.xticks(np.sort(np.unique(pltvecfield)))
+    plt.xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
     sys.exit()
