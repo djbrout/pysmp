@@ -3031,6 +3031,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax.legend(fontsize='small')
     ax.axhline(0,color='grey',linestyle='--')
     ax.set_xlim(-1,10)
+    plt.xticks(np.arange(0,10))
     ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
