@@ -3005,7 +3005,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     fig, ax = plt.subplots(figsize=(12/1.5, 9/1.5))
     for i, b, c in zip(np.arange(len(np.unique(pltvecfieldb))),np.unique(pltvecfieldb),['green','red','indigo','black']):
-        ww = pltvecband==b
+        ww = pltvecfieldb==b
         for j,field in enumerate(np.sort(np.unique(pltvecfield))):
             yy = pltvecccd == field
             try:
