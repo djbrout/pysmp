@@ -2945,10 +2945,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         ww = pltvecband==b
         for j,chip in enumerate(np.sort(np.unique(pltvecccd))):
             yy = pltvecccd == chip
-            print b,chip
             try:
                 mean = np.mean(pltvecy[(abs(pltvecy)<.05)& (ww) & (yy)])
                 rms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05) & ww & yy])))
+                print b, chip
 
                 if j == 0:
                     plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c,
