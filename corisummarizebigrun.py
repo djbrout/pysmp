@@ -233,7 +233,7 @@ def grabstardata(imagedir,outfile,tfield,filt):
                 #if not tfield in fname: continue
                 #if not '_'+filt+'_' in fname: continue
 
-                field = fname.split('-')[1].split('_')
+                field = fname.split('-')[1].split('_')[0]
                 ccd = fname.split('_')[5]
                 band = fname.split('_')[4]
 
