@@ -2951,10 +2951,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print b, chip
 
                 if j == 0:
-                    plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c,
+                    plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c,
                                 label=b+' band')
                 else:
-                    plt.errorbar(chip, mean, yerr=rms, fmt='o', mew=0, c=c)
+                    plt.errorbar([int(chip)], [mean], yerr=[rms], fmt='o', mew=0, c=c)
             except:
                 pass
     plt.savefig(outdir+'/chipdependence.png')
