@@ -42,7 +42,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
         #dostars = Trueasdf
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata.npz')
-            plotstarlc(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['ids'],stardata['mjd'],stardata['catmag'])
+            #plotstarlc(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['ids'],stardata['mjd'],stardata['catmag'])
 
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                         stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
