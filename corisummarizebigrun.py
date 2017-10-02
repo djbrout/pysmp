@@ -3008,7 +3008,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         ww = pltvecfieldb==b
         for j,tf in enumerate(np.sort(np.unique(pltvecfield))):
             yy = pltvecfield == tf
-            print ww.shape,yy.shape,pltvecfieldr.shape,tf.shape
+            print ww.shape,yy.shape,pltvecfield.shape
             if True:
             #try:
                 mean = np.mean(pltvecfieldr[(abs(pltvecfieldr)<.05)& (ww) & (yy)])
