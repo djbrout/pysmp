@@ -29,12 +29,12 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
         #dostars = True
         cd = cd[0]
         if dostars:
-            grabstardata("/project/projectdirs/dessn/dbrout/zptfiles/","/global/cscratch1/sd/dbrout/v7/stardata_"+tfield+"_"+filter,tfield,filter)
-            stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata_'+tfield+"_"+filter+'.npz')
+            grabstardata("/project/projectdirs/dessn/dbrout/zptfiles/","/global/cscratch1/sd/dbrout/v7/stardata",tfield,filter)
+            stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardata.npz')
             plotstarrms(stardata['starflux'], np.sqrt(stardata['starfluxerr'] ** 2), stardata['starzpt'],
                     stardata['catmag'], stardata['chisq'], stardata['rmsaddin'], stardata['sky'], stardata['skyerr'],
                     stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
-                        stardata['fwhm'],stardata['zptscat'],stardata['mjd'],
+                        stardata['fwhm'],stardata['zptscat'],stardata['mjd'],stardata['field'],stardata['ccd'],stardata['band'],
                     title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
         data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter,real=real)
     else:
@@ -2754,7 +2754,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
 
-def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,fwhm,zptscat,mjd,title='',outdir='.'):
+def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indices,ras,decs,fwhm,zptscat,mjd,field,ccd,band,title='',outdir='.'):
     catflux = 10 ** (.4 * (zpt - catmag))
     ff = (flux - catflux) / catflux
     st = np.std(ff)
@@ -2765,20 +2765,20 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
 
 
-    plt.clf()
-    plt.scatter(catmag[(np.floor(mjd) == 56575)],fluxerr[(np.floor(mjd) == 56575)], color='black')
-    plt.xlabel('SkyERR')
-    plt.ylabel('#')
-    plt.savefig(outdir + '/' + title + 'photerr.png')
-    print outdir + '/' + title + 'photerr.png'
-    #raw_input('skyerrdone')
-
-    plt.clf()
-    plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,70,1.),color='black')
-    plt.xlabel('SkyERR')
-    plt.ylabel('#')
-    plt.savefig(outdir + '/' + title + 'skyerrhist.png')
-    print outdir + '/' + title + 'skyerrhist.png'
+    # plt.clf()
+    # plt.scatter(catmag[(np.floor(mjd) == 56575)],fluxerr[(np.floor(mjd) == 56575)], color='black')
+    # plt.xlabel('SkyERR')
+    # plt.ylabel('#')
+    # plt.savefig(outdir + '/' + title + 'photerr.png')
+    # print outdir + '/' + title + 'photerr.png'
+    # #raw_input('skyerrdone')
+    #
+    # plt.clf()
+    # plt.hist(skyerr[np.floor(mjd)==56575],bins=np.arange(10,70,1.),color='black')
+    # plt.xlabel('SkyERR')
+    # plt.ylabel('#')
+    # plt.savefig(outdir + '/' + title + 'skyerrhist.png')
+    # print outdir + '/' + title + 'skyerrhist.png'
     #raw_input('skyerrdone')
 
     #print max(catmag)
@@ -2879,7 +2879,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     cntr = 0
     pltvecx = []
     pltvecy = []
-    for sme, sm, ind, r, d, cm, f, fe, fh in zip(starmagerr[::-1], starmag[::-1], indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1]):
+    pltvecfield = []
+    pltvecband = []
+    pltvecccd =[]
+    for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband in zip(starmagerr[::-1], starmag[::-1],
+            indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1],
+            field[::-1],ccd[::-1],band[::-1]):
         cntr += 1
         if cntr > maxpoints: continue
         if cntr > 500: continue
@@ -2894,15 +2899,27 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         if len(starww) > 5.:
             # if repeatability < .3:
             pltvecy.append(sm - starmean)
+            pltvecfield.append(tfield)
+            pltvecccd.append(tccd)
+            pltvecband.append(tband)
             #print sm - starmean
             #pltvecx.append(fh)
 
     # plt.xscale('log')
     pltvecy = np.array(pltvecy)
-    prms = np.sqrt(np.nanmean(np.square(pltvecy[abs(pltvecy)<.05])))
-    plt.hist(pltvecy, alpha=.99, color='black',histtype='step',bins=np.arange(-.05025,.05,.0005),label='RMS:'+str(round(prms,4)))
-    plt.legend()
-    plt.xlim(-.05,.05)
+    pltvecfield = np.array(pltvecfield,dtype='str')
+    pltvecccd = np.array(pltvecccd,dtype='str')
+    pltvecband = np.array(pltvecband,dtype='str')
+    plt.clf()
+    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 9))
+    axes = axes.flatten()
+    for i, b in enumerate(np.unique(pltvecband)):
+        ax = axes[i]
+        prms = np.sqrt(np.nanmean(np.square(pltvecy[abs(pltvecy)<.05])))
+        plt.hist(pltvecy[pltvecband==b], alpha=.99, color='black',histtype='step',
+                 bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
+        plt.legend()
+        plt.xlim(-.05,.05)
     #plt.ylim(-.02, .01)
 
     # ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
@@ -2911,13 +2928,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
     # plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP', alpha=.6)
 
-    plt.title(title.split('_')[0]+ ' '+title.split('_')[1]+' band')
+    #plt.title(title.split('_')[0]+ ' '+title.split('_')[1]+' band')
     plt.xlabel(r'$'+title.split('_')[1]+' - '+title.split('_')[1]+'_{mean}$')
 
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/' + title + '_repeatabilitylikesnls.png')
-    #sys.exit()
+    print outdir + '/' + title + '_repeatabilitylikesnls.png'
+    sys.exit()
     plt.clf()
     cntr = 0
     pltvecx = []
