@@ -3017,7 +3017,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #try:
                 mean = np.mean(pltvecfieldr[(abs(pltvecfieldr)<.05)& (ww) & (yy)])
                 rms = np.sqrt(np.nanmean(np.square(pltvecfieldr[(abs(pltvecfieldr)<.05) & ww & yy])))
-                print b, field
+                #print b, field
 
                 if j == 0:
                     ax.errorbar([fielddict[tf]], [mean], yerr=[rms], fmt='o', mew=0, c=c,alpha=.7,
@@ -3030,8 +3030,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax.set_ylabel('Field Mean - All Mean')
     ax.legend(fontsize='small')
     ax.axhline(0,color='grey',linestyle='--')
-
-    #ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
+    ax.set_xlim(-1,10)
+    ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
     sys.exit()
