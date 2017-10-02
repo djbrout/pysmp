@@ -2876,7 +2876,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = False
+    load = True
     if load:
         a = np.load(outdir + '/pltstarvec.npz')
         pltvecy = a['pltvecy']
@@ -3024,7 +3024,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax.set_ylabel('Field Mean - All Mean')
     ax.legend(fontsize='small')
     ax.axhline(0,color='grey',linestyle='--')
-    ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
+    #ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
     sys.exit()
