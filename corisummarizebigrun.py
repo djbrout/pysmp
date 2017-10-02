@@ -2888,7 +2888,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         cntr += 1
         if cntr > maxpoints: continue
         if cntr > 50000: continue
-        if cntr % 1000: print cntr,'of',len(starmagerr[::-1])
+        if cntr % 1000 == 0: print cntr,'of',len(starmagerr[::-1])
 
         # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         # print starmag[indices == ind]
@@ -2922,7 +2922,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
 
         ax.legend()
-        ax.xlim(-.05,.05)
+        ax.set_xlim(-.05,.05)
     #plt.ylim(-.02, .01)
 
     # ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
