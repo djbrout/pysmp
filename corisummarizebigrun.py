@@ -2941,7 +2941,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.clf()
 
     fig, axes = plt.subplots(figsize=(12, 9))
-    for i, b, c in enumerate(zip(np.unique(pltvecband),['green','red','indigo','black'])):
+    for i, b, c in zip(np.arange(len(np.unique(pltvecband))),np.unique(pltvecband),['green','red','indigo','black']):
         ww = pltvecband==b
         for j,chip in enumerate(np.unique(pltvecccd)):
             yy = pltvecccd == chip
