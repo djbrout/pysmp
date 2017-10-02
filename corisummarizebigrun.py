@@ -3007,9 +3007,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for i, b, c in zip(np.arange(len(np.unique(pltvecfieldb))),np.unique(pltvecfieldb),['green','red','indigo','black']):
         ww = pltvecfieldb==b
         for j,field in enumerate(np.sort(np.unique(pltvecfield))):
-            yy = pltvecccd == field
-            if True:
-            #try:
+            yy = pltvecfield == field
+            #if True:
+            try:
                 mean = np.mean(pltvecfieldr[(abs(pltvecfieldr)<.05)& (ww) & (yy)])
                 rms = np.sqrt(np.nanmean(np.square(pltvecfieldr[(abs(pltvecfieldr)<.05) & ww & yy])))
                 print b, field
