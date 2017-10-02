@@ -341,21 +341,21 @@ def grabstardata(imagedir,outfile,tfield,filt):
                         print 'FAILED', fname
                         pass
 
-    try:
-        bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
-        bigdata['ids'] = np.array(bigdata['ids'])
-        stds = []
-        for i in zptdata['ids']:
-            #print i
-            #print bigdata['centroidedras'].shape
-            #print bigdata['ids'] == i
-            print i,np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
-            if np.std(bigdata['centroidedras'][bigdata['ids'] == i]) > 0.:
-                stds.append(np.std(bigdata['centroidedras'][bigdata['ids'] == i]))
-
-        print 'std is', np.mean(stds)
-    except:
-        print 'ids not in archiv'
+    # try:
+    #     bigdata['centroidedras'] = np.array(bigdata['centroidedras'])
+    #     bigdata['ids'] = np.array(bigdata['ids'])
+    #     stds = []
+    #     for i in zptdata['ids']:
+    #         #print i
+    #         #print bigdata['centroidedras'].shape
+    #         #print bigdata['ids'] == i
+    #         print i,np.mean(bigdata['centroidedras'][bigdata['ids'] == i]),np.std(bigdata['centroidedras'][bigdata['ids'] == i])
+    #         if np.std(bigdata['centroidedras'][bigdata['ids'] == i]) > 0.:
+    #             stds.append(np.std(bigdata['centroidedras'][bigdata['ids'] == i]))
+    #
+    #     print 'std is', np.mean(stds)
+    # except:
+    #     print 'ids not in archiv'
     #sys.exit()
 
     np.savez(outfile, **bigdata)
