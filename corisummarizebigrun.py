@@ -2882,6 +2882,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         a = np.load(outdir + '/pltstarvec.npz')
         pltvecy = a['pltvecy']
         pltvecfield = a['pltvecfield']
+        pltvecfwhm = a['pltvecfwhm']
+        pltvecmjd = a['pltvecmjd']
         pltvecbigfield = a['pltvecbigfield']
         pltvecfieldr = a['pltvecfieldr']
         pltvecfieldb = a['pltvecfieldb']
@@ -2894,6 +2896,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecx = []
         pltvecy = []
         pltvecband = []
+        pltvecfwhm = []
+        pltvecmjd = []
         pltvecfield = []
         pltvecbigfield = []
         pltvecfieldr = []
@@ -2907,13 +2911,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         stardictdecs =  np.array([11,22])
         stardictcatmags =  np.array([11,22])
         stardictmeans = np.array([11,22])
-
-        for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband in zip(starmagerr[::-1], starmag[::-1],
+        stardictlens = np.array([11,22])
+        stardictww = np.array([])
+        for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband,tmjd in zip(starmagerr[::-1], starmag[::-1],
                 indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1],
-                field[::-1],ccd[::-1],band[::-1]):
+                field[::-1],ccd[::-1],band[::-1],mjd[::-1]):
             cntr += 1
             if cntr > maxpoints: continue
-            if cntr > 200000: continue
+            if cntr > 2000: continue
             if cntr % 1 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -2921,33 +2926,45 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # raw_input()
 
             firstww = np.where(np.isclose(stardictras, r, rtol=1.e-5) & np.isclose(stardictdecs, d, rtol=1.e-5) & (stardictcatmags == cm))
-            firstww = np.where(stardictras==11)
-            print firstww[0]
-            if firstww[0] == []:
+            if firstww[0] != []:
+                starmean = stardictmeans[firstww[0]]
+                starlen = stardictlens[firstww[0]]
+                starww = stardictww[firstww[0]]
+            else:
+                starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
                 starmean = np.mean(starww)
+                starlen = len(starww)
+                stardictras = np.append(stardictras,r)
+                stardictdecs = np.append(stardictdecs,d)
+                stardictcatmags = np.append(stardictcatmags,cm)
+                stardictmeans = np.append(stardictmeans,starmean)
+                stardictlens = np.append(stardictlens,starlen)
+                stardictww = np.append(stardictww,starww)
 
-            raw_input('test')
-            starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-            starmean = np.mean(starww)
+            #starmean = np.mean(starww)
             #repeatability = np.std(starww)
             # repeatability = np.std(starmag[indices == ind])
-            if len(starww) > 5.:
+            if starlen > 5.:
                 pltvecy.append(sm - starmean)
                 pltvecband.append(tband)
+                pltvecmjd.append(tmjd)
+                pltvecfwhm.append(fh)
                 pltvecbigfield.append(tfield)
 
-                if len(np.unique(field[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)])) > 1:
+                if len(np.unique(field[starww])) > 1:
                     #print tfield
                     pltvecfield.append(tfield)
                     pltvecfieldr.append(sm-starmean)
                     pltvecfieldb.append(tband)
-                if len(np.unique(ccd[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)])) > 1:
+                if len(np.unique(ccd[starww])) > 1:
                     pltvecccd.append(tccd)
                     pltvecccdr.append(sm-starmean)
                     pltvecccdb.append(tband)
 
         pltvecy = np.array(pltvecy)
         pltvecband = np.array(pltvecband,dtype='str')
+        pltvecmjd = np.array(pltvecmjd,dtype='str')
+        pltvecfwhm = np.array(pltvecfwhm,dtype='str')
         pltvecbigfield = np.array(pltvecbigfield,dtype='str')
         pltvecfield = np.array(pltvecfield,dtype='str')
         #print pltvecfield.shape
@@ -2959,7 +2976,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccdr = np.array(pltvecccdr)
         pltvecccdb = np.array(pltvecccdb,dtype='str')
 
-        np.savez(outdir +'/pltstarvec',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecbigfield=pltvecbigfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
+        np.savez(outdir +'/pltstarvec',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
+                 pltvecbigfield=pltvecbigfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
                  pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb)
 
     plt.clf()
