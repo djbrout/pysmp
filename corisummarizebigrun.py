@@ -2931,8 +2931,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 starlen = stardictlens[firstww[0]]
                 starww = stardictww[firstww[0]]
             else:
-                starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
-                starmean = np.mean(starww)
+                starww = np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)
+                starwwmag = starmag[starww]
+                starmean = np.mean(starwwmag)
                 starlen = len(starww)
                 stardictras = np.append(stardictras,r)
                 stardictdecs = np.append(stardictdecs,d)
