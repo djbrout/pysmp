@@ -2921,6 +2921,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # raw_input()
 
             firstww = np.where(np.isclose(stardictras, r, rtol=1.e-5) & np.isclose(stardictdecs, d, rtol=1.e-5) & (stardictcatmags == cm))
+            print firstww.shape
             firstww = np.where(stardictras==11)
             print len(firstww)
             raw_input('test')
