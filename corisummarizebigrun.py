@@ -2903,18 +2903,26 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccdb =[]
 
 
+        stardictras = np.array([11,22])
+        stardictdecs =  np.array([11,22])
+        stardictcatmags =  np.array([11,22])
+        stardictmeans = np.array([11,22])
 
         for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband in zip(starmagerr[::-1], starmag[::-1],
                 indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1],
                 field[::-1],ccd[::-1],band[::-1]):
             cntr += 1
             if cntr > maxpoints: continue
-            if cntr > 1000000: continue
+            if cntr > 200000: continue
             if cntr % 1 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
             # print starmag[indices == ind]
             # raw_input()
+
+            firstww = np.where(np.isclose(stardictras, r, rtol=1.e-5) & np.isclose(stardictdecs, d, rtol=1.e-5) & (stardictcatmags == cm))
+            print len(firstww)
+            raw_input('test')
             starww = starmag[np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)]
             starmean = np.mean(starww)
             #repeatability = np.std(starww)
