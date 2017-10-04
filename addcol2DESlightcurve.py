@@ -429,7 +429,7 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPECv2_0'
+        savelcdir = resultsdir + '/SMP_SPECv2_1'
         if fakeheader: savelcdir = resultsdir + '/SMP_SIMv2_0'
 
     if not os.path.exists(os.path.basename(savelcdir)):
