@@ -1915,67 +1915,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     # ax1 = plt.axes(rect_scatter)
     ax3 = plt.axes(rect_histx)
-    # ax2 = plt.axes(rect_histy)
-    #ax4 = plt.axes(rect_scatterflux)
-    # ax5 = plt.axes(rect_histyflux)
 
-    # no labels
-    # ax2.yaxis.set_major_formatter(nullfmt)
-    #ax3.xaxis.set_major_formatter(nullfmt)
-    # ax5.yaxis.set_major_formatter(nullfmt)
-
-    # outliers3 = float(
-    #     len(d[(abs(d) > 3.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)])) / float(
-    #     len(d))
-    # outliers5 = float(
-    #     len(d[(abs(d) > 5.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)])) / float(
-    #     len(d))
-
-    # ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-    #                                                            '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
-    #                                                            ' Fraction: '+str(round(outliers3,3))+'\n5sig Outlier'+
-    #                                                            ' Fraction: '+str(round(outliers5,3))
-    #                                                            ,orientation='horizontal')
-    # label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
-    #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
-    # asfd
-    import matplotlib.mlab as mlab
     import math
-    mean = 0
     variance = 1
-    sigma = math.sqrt(variance)
-    x = np.arange(-5, 5, .1)
-    # ax2.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
-
-    # ax2.set_ylim(-4, 4)
-    # ax2.set_xlim(0,.5)
-    # .xlabel('STDEV')
-    # plt.ylabel('Normalized Count')
-    # ax2.legend(fontsize='xx-small',loc=(0.,1.25))
-    # plt.savefig('stdresid.png')
-
-    # plt.clf()
-    # fakemag[fakemag == 99] = 28.5
-
-
-
-
-    # ax1.scatter(fakemag,d,alpha=.3,color='blue')
-    # ax, ay, aystd = dt.bindata(fakemag[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], d[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], np.arange(19., 28, .1),window=.5)
-    # ax1.plot([19, 28.7], [0, 0],color='grey')
-    # ax1.plot(ax, ay, linewidth=3, color='black', label='SMP')
-    # ax1.plot(ax, ay+aystd, linewidth=2, color='black',linestyle='--', label='SMP')
-    # ax1.plot(ax, ay-aystd, linewidth=2, color='black',linestyle='--', label='SMP')
-
-    # ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
-
-    # ax1.set_xlim(19, 28.7)
-    # ax1.set_ylim(-3., 3.)
-    # ax1.set_xlabel('Fake Mag')
-    # ax1.set_ylabel('STD')
-
-    # ax, ayrms= dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1),.5)
-    # ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
 
 
     ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
@@ -1988,9 +1930,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             fresid[i] = np.nan
         else:
             fresid[i] = (f - ff) / max([abs(ff), 1.])
-    # fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
-
-    # ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
 
     filts = ['g', 'r', 'i', 'z']
     colors = ['green', 'red', 'indigo', 'black']
@@ -2015,28 +1954,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
         ax, ayrms = dt.binrms(hostmag[d < 3.], d[d < 3.], np.arange(20., 28, .5), .5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
-        # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
-        # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
-        # ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
-        # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
+
         ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
 
-        # ww = hostmag > 25.
-        # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-        # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
-        #
-        # ww = hostmag < 23.
-        # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-        # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-        # ax3.legend(fontsize='x-small',location='upper right')
 
-        #ax4.plot(axa, aya, linewidth=3, color='black')
-        #ax4.plot(axa, aya + aystd, linewidth=2, color='black', linestyle='--')
-        #ax4.plot(axa, aya - aystd, linewidth=2, color='black', linestyle='--')
-    #ax4.set_xlim(19.5, 26)
-    #ax4.set_ylim(-.25, .25)
-    #ax4.set_xlabel('Host Mag')
-    # ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     # ax3.set_title(filter+' band')
     #ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
@@ -2047,12 +1968,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax3.set_title(deep_or_shallow.upper() + ' Fields')
 
     ax3.set_xlim(20,28)
-    #ax4.legend(fontsize='x-small', loc='upper right')
-    # ax2.set_ylim(ax1.get_ylim())
-    # ax5.set_ylim(ax4.get_ylim())
-    # ax2.xaxis.set_major_formatter(nullfmt)
-    #ax3.xaxis.set_major_formatter(nullfmt)
-    # ax1.xaxis.set_major_formatter(nullfmt)
+
     ax3.set_xlabel('Host Surface Brightness Mag')
     plt.subplots_adjust(wspace=0.01, hspace=0.01)
 
@@ -2062,8 +1978,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     ax, ayrms = dt.binrms(fwhm,d, np.arange(1., 4., .1), .1)
     plt.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
-    plt.scatter(fwhm,d,color='grey')
-    plt.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+    #plt.scatter(fwhm,d,color='grey')
+    plt.xlabel('FWHM arcsec')
+    #plt.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+    plt.axhline(1.)
     plt.savefig(outdir + '/' + deep_or_shallow + 'fwhmstd.png')
 
 
