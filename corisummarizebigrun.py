@@ -406,7 +406,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
     import pandas as pd
 
-    dofakedata = pd.read_csv('data/pareddoFakeg.out', delim_whitespace=True, header=0)
+    dofakedata = pd.read_csv('data/bigdoFakeg.out', delim_whitespace=True, header=0)
     # print dofakedata
     dofakeexpnum = dofakedata['EXPNUM'].values
     dofakemag2 = dofakedata['TRUEMAG'].values
@@ -564,7 +564,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 #print exn, fm
                 #print fm,dofakemag2[expn],exn
                 #raw_input()
-                print  len(dofakemag2[expn]),exn
+                #print  len(dofakemag2[expn]),exn
                 if not len(dofakemag2[www]) == 1:
                     print '99',
                     newfakemag.append(99.)
