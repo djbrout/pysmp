@@ -1825,12 +1825,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
     else:
         axa, aya, aystd = dt.bindata(fakemag, fresid,
-                                     np.arange(18., 26., .2), window=.2)
+                                     np.arange(18., 26., .5), window=.5)
         ax4.plot([19, 28.7], [0, 0], color='grey')
-        print len(fakemag[fakemag<26])
-        raw_input('fmmmmm')
+        #print len(fakemag[fakemag<26])
+        #raw_input('fmmmmm')
 
-        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(18., 28, .2), .2,returnn=True)
+        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(18., 28, .5), .5,returnn=True)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
@@ -1850,7 +1850,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.plot(axa, aya, linewidth=3, color='black')
         ax4.plot(axa, aya+(aystd), linewidth=2, color='black',linestyle='--')
         ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
-    ax4.set_xlim(19.5,26)
+    ax4.set_xlim(17.5,26)
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
     #ax5.set_xlabel('Counts')
