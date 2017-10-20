@@ -492,7 +492,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #print dofakeid[dofakeid == fakeid]
         #raw_input()
 
-        print np.unique(dofakeid)
+        print len(np.unique(dofakeid))
         raw_input('dofakeid')
         if not real:
             if not oldformat:
