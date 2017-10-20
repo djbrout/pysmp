@@ -1831,7 +1831,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     else:
         axa, aya, aystd = dt.bindata(fakemag, fresid,
                                      np.arange(18., 26., .5), window=.5)
-        ax4.plot([19, 28.7], [0, 0], color='grey')
+        #ax4.plot([19, 28.7], [0, 0], color='grey')
         #print len(fakemag[fakemag<26])
         #raw_input('fmmmmm')
 
@@ -1843,6 +1843,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
         #ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
         ax3.axhline(0,c='k',linestyle='--')
+        ax4.axhline(0,c='k',linestyle='--')
+
         # ww = hostmag > 25.
         # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
         # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
