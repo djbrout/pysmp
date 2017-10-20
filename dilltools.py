@@ -43,7 +43,7 @@ def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
 def fitprobfromchisq(x,df):
     return scipy.stats.chisquare(x,ddof=df)
 
-def binrms(x, y, bins,rad):
+def binrms(x, y, bins,rad,returnn=False):
     medians = np.zeros(len(bins) - 1)
     mads = np.zeros(len(bins) - 1)
     nums = np.zeros(len(bins) - 1)
@@ -67,7 +67,10 @@ def binrms(x, y, bins,rad):
             print 'excepted'
             nums[i] = 0.
             rms[i] = np.nan
+
     xvals = (bins[1:] + bins[:-1]) / 2.
+    if returnn:
+        return xvals, rms, nums
     return xvals, rms
 
 
