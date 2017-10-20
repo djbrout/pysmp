@@ -1813,7 +1813,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.plot([19, 28.7], [0, 0], color='grey')
 
         ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(20., 28, .5), .5,returnn=True)
-        ax3.plot(ax, ayrms/np.sqrt(num), color='blue', label='ALL SNe', linewidth=3)
+        ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
@@ -1830,8 +1830,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #ax3.legend(fontsize='x-small',location='upper right')
 
         ax4.plot(axa, aya, linewidth=3, color='black')
-        ax4.plot(axa, aya+aystd, linewidth=2, color='black',linestyle='--')
-        ax4.plot(axa, aya-aystd, linewidth=2, color='black',linestyle='--')
+        ax4.plot(axa, aya+(aystd)/np.sqrt(num), linewidth=2, color='black',linestyle='--')
+        ax4.plot(axa, aya-aystd/np.sqrt(num), linewidth=2, color='black',linestyle='--')
     ax4.set_xlim(19.5,26)
     ax4.set_ylim(-.1,.1)
     ax4.set_xlabel('Fake Mag')
