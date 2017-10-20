@@ -3108,8 +3108,8 @@ class smp:
                                     smp_dict['sexrms'][i] = sexrms
                                     smp_dict['sexsky'][i] = sexsky
                                     #print zpt,snparams.zp[j],zpterr
-                                    print aperskyerr,10**(.4*(31.-snparams.zp[j]))*snparams.skysig[j]
-                                    raw_input('checking')
+                                    #print aperskyerr,10**(.4*(31.-snparams.zp[j]))*snparams.skysig[j]
+                                    #raw_input('checking')
                                     smp_dict['aper_skyerr'][i] = aperskyerr
                                     smp_dict['aperscale'][i] = aperscale
 
@@ -6209,7 +6209,7 @@ class smp:
                         #temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
 
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
-                            aper.aper(im, x, y, apr=params.fitrad, verbose=False)
+                            aper.aper(im, y, x, apr=params.fitrad, verbose=False)
                         print sky1,skysig
                         #raw_input('sss')
                         sein = skysig
