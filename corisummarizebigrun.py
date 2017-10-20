@@ -1998,6 +1998,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     x = np.arange(-5, 5, .1)
     plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
     plt.title(filter + ' band')
+    plt.legend()
     plt.savefig(outdir + '/' + 'emtpysig.png')
 
 
