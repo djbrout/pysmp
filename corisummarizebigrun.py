@@ -1811,6 +1811,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         axa, aya, aystd = dt.bindata(fakemag, fresid,
                                      np.arange(18., 26., .2), window=.2)
         ax4.plot([19, 28.7], [0, 0], color='grey')
+        print len(fakemag[fakemag<26])
+        raw_input('fmmmmm')
 
         ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(18., 28, .2), .2,returnn=True)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
