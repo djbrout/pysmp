@@ -3111,9 +3111,11 @@ class smp:
                                     #print aperskyerr,10**(.4*(31.-snparams.zp[j]))*snparams.skysig[j]
                                     #raw_input('checking')
                                     smp_dict['aper_skyerr'][i] = aperskyerr
+                                    smp_dict['aper_sky'][i] = skyx
+
                                     smp_dict['aperscale'][i] = aperscale
-                                    print 'checkinggg'
-                                    print sexsky,skyx
+                                    #print 'checkinggg'
+                                    #print sexsky,skyx
 
                                     smp_dict['imwcs'].append(w)
                                     msk = copy(image_stamp)
