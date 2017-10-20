@@ -1990,13 +1990,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
 
     sig = 1.48 * np.median(np.abs(d[(abs(d) < 3.)&(fakemag>30)&(hostmag >26.)]))
-    plt.hist(d[(fakemag>30)&(hostmag >26.)],bins=np.arange(-5.1,5,.2),label='Sigma %.2f'%sig)
+    plt.hist(d[(fakemag>30)&(hostmag >26.)],bins=np.arange(-5.1,5,.2),label='Sigma %.2f'%sig,normed=True)
     import math
     mean = 0
     variance = 1
     sigma = math.sqrt(variance)
     x = np.arange(-5, 5, .1)
-    plt.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
+    plt.plot(x,mlab.normpdf(x, mean, sigma), color='black', label='Gaussian Normal')
     plt.title(filter + ' band')
     plt.savefig(outdir + '/' + 'emtpysig.png')
 
