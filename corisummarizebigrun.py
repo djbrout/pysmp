@@ -1631,6 +1631,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # plt.ylim(-600, 600)
     plt.xlabel('flux')
     plt.ylabel('Count')
+    print filter.shape
     plt.title(filter + ' band')
     plt.xlim(-1000, 1000)
 
