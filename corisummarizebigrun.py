@@ -492,8 +492,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #print dofakeid[dofakeid == fakeid]
         #raw_input()
 
-        print len(np.unique(dofakeid))
-        raw_input('dofakeid')
+        #print len(np.unique(dofakeid))
+        #raw_input('dofakeid')
         if not real:
             if not oldformat:
                 if not int(fakeid) in dofakeid:
@@ -564,6 +564,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 #print exn, fm
                 #print fm,dofakemag2[expn],exn
                 #raw_input()
+                print  len(dofakemag2[www]),
                 if not len(dofakemag2[www]) == 1:
                     print '99',
                     newfakemag.append(99.)
