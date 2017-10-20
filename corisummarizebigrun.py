@@ -1977,7 +1977,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     ax3.plot([0, 100], [1., 1.], linestyle='--', color='black')
-    ax3.set_ylim(.7, 1.6)
+    ax3.set_ylim(.5, 3.0)
     ax3.legend(fontsize='x-small')
 
     fresid = np.zeros(flux.shape)
@@ -1997,7 +1997,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         for filt, col in zip(filts, colors):
             ww = filterarr == filt
             axa, aya, aystd = dt.bindata(hostmag[ww], fresid[ww],
-                                         np.arange(18., 26., .1), window=2., dontrootn=True)
+                                         np.arange(20., 26., .1), window=2., dontrootn=True)
             #ax4.plot([19, 28.7], [0, 0], color='grey')
 
             ax, ayrms = dt.binrms(hostmag[ww][d[ww] < 3.], d[ww][d[ww] < 3.], np.arange(18., 35., .3), 2.5)
@@ -2044,7 +2044,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     else:
         ax3.set_title(deep_or_shallow.upper() + ' Fields')
 
-    ax3.set_xlim(18,35)
+    ax3.set_xlim(20,35)
     #ax4.legend(fontsize='x-small', loc='upper right')
     # ax2.set_ylim(ax1.get_ylim())
     # ax5.set_ylim(ax4.get_ylim())
