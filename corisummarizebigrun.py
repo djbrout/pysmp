@@ -1825,12 +1825,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
     else:
         axa, aya, aystd = dt.bindata(fakemag, fresid,
-                                     np.arange(18., 26., .5), window=.5)
+                                     np.arange(18., 26., .05), window=.5)
         ax4.plot([19, 28.7], [0, 0], color='grey')
         #print len(fakemag[fakemag<26])
         #raw_input('fmmmmm')
 
-        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(18., 28, .5), .5,returnn=True)
+        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(18., 28, .05), .5,returnn=True)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
