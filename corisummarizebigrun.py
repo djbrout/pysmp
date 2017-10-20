@@ -564,7 +564,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 #print exn, fm
                 #print fm,dofakemag2[expn],exn
                 #raw_input()
-                print  len(dofakemag2[www]),
+                print  len(dofakemag2[expn]),exn
                 if not len(dofakemag2[www]) == 1:
                     print '99',
                     newfakemag.append(99.)
