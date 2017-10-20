@@ -978,7 +978,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
     plt.xlabel('PSF_FWHM')
     plt.savefig(outdir+'/fwhmhist.png')
     print 'saved',outdir+'/fwhmhist.png'
-    raw_input()
+    #raw_input()
     plt.clf()
 
     ax,ay = dt.binrms(fakemag[ww],(flux[ww]-fakeflux[ww])/fluxerr[ww],np.arange(19,28, .1),.5)
@@ -1401,7 +1401,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     mjd = np.array(mjd)
     if real:
-        ww = (dpmjd > 190.) | (dpmjd < -30.)
+        ww = (dpmjd > 250.) | (dpmjd < -40.)
         flux = flux[ww]
         fluxerr = fluxerr[ww]
         fakemag = fakemag[ww]
@@ -1611,7 +1611,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     # plt.ylim(-600, 600)
     plt.xlabel('flux/fluxerr')
     plt.ylabel('Count')
-    plt.title(filter + ' band')
+    #plt.title(filter + ' band')
 
     plt.savefig(outdir + '/efluxdiffstd.png')
 
