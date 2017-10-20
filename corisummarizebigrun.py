@@ -1988,8 +1988,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    sig = 1.48 * np.median(np.abs(d[(abs(d) < 3.)&(fakemag>30)]))
-    plt.hist(d[fakemag>30],bins=np.arange(-5.1,5,.2),label='Sigma %.2f'%sig)
+
+    sig = 1.48 * np.median(np.abs(d[(abs(d) < 3.)&(fakemag>30)&(hostmag >26.)]))
+    plt.hist(d[(fakemag>30)&(hostmag >26.)],bins=np.arange(-5.1,5,.2),label='Sigma %.2f'%sig)
     import math
     mean = 0
     variance = 1
