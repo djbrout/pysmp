@@ -741,6 +741,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #raw_input()
         bigdata['HostMag'].extend(data['FLUX']*0 + hostmag)
 
+        if cntr%200 == 0:
+            np.savez(outfile, **bigdata)
+
         #raw_input()
     #print bigdata['diffzpt']
     #raw_input()
