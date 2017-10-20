@@ -75,9 +75,9 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],data['fwhm'],real=real)
 
-    data['FakeMag'] = np.array(data['FakeMag'])
-    print len(data['Flux']),len(data['FakeMag'][data['FakeMag']<26.])
-    raw_input('ppp')
+    #data['FakeMag'] = np.array(data['FakeMag'])
+    #print len(data['Flux']),len(data['FakeMag'][data['FakeMag']<26.])
+    #raw_input('ppp')
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],
@@ -563,13 +563,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                 #print fm,dofakemag2[expn],exn
                 #raw_input()
                 if not len(dofakemag2[www]) == 1:
-                    #print 'nodofake'
+                    print 'nodofake'
                     newfakemag.append(99.)
                     bigdata['fakeid'].append(99.)
                     bigdata['FakeZPT'].append(31.)
                 else:
-                    nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
+                    #nfm = float(fm) + 2.5*np.log10(dofaketflux[www][0]) - 2.5*np.log10(dofakeflux[www][0])
+                    print fm
                     newfakemag.append(fm)
+
                     bigdata['fakeid'].append(dofakeid[www][0])
                     bigdata['FakeZPT'].append(dofakezpt[www][0])
 
