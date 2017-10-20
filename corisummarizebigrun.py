@@ -2008,10 +2008,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             #ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--', alpha=.8)
     else:
         axa, aya, aystd = dt.bindata(hostmag, fresid,
-                                     np.arange(18., 26., .1), window=2., dontrootn=True)
+                                     np.arange(20., 26., .1), window=2., dontrootn=True)
         #ax4.plot([19, 28.7], [0, 0], color='grey')
 
-        ax, ayrms = dt.binrms(hostmag[d < 3.], d[d < 3.], np.arange(18., 28, .5), .5)
+        ax, ayrms = dt.binrms(hostmag[d < 3.], d[d < 3.], np.arange(20., 28, .5), .5)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
@@ -2044,7 +2044,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     else:
         ax3.set_title(deep_or_shallow.upper() + ' Fields')
 
-    ax3.set_xlim(18,28)
+    ax3.set_xlim(20,28)
     #ax4.legend(fontsize='x-small', loc='upper right')
     # ax2.set_ylim(ax1.get_ylim())
     # ax5.set_ylim(ax4.get_ylim())
