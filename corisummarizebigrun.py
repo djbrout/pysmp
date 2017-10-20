@@ -1812,7 +1812,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                                      np.arange(20., 26., .1), window=2., dontrootn=True)
         ax4.plot([19, 28.7], [0, 0], color='grey')
 
-        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(20., 28, .1), 1.5,returnn=True)
+        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(20., 28, .5), .5,returnn=True)
         ax3.plot(ax, ayrms/np.sqrt(num), color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
