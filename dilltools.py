@@ -61,7 +61,7 @@ def binrms(x, y, bins,rad,returnn=False):
             dc = d[abs(d) < 3]
 
             #rms[i] = np.sqrt(np.nanmean(np.square(d[d < 3.])))
-            rms[i] = 1.48 * np.median(np.abs(d[d < 3.]))
+            rms[i] = 1.48 * np.median(np.abs(d[abs(d) < 3.]))
 
         except IndexError:
             print 'excepted'

@@ -1843,7 +1843,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
         #ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
         ax3.axhline(0,c='k',linestyle='--')
-        ax4.axhline(0,c='k',linestyle='--')
+        ax4.axhline(0,c='k')
 
         # ww = hostmag > 25.
         # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
