@@ -1809,7 +1809,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
     else:
         axa, aya, aystd = dt.bindata(fakemag, fresid,
-                                     np.arange(20., 26., .1), window=2., dontrootn=True)
+                                     np.arange(20., 26., .5), window=2., dontrootn=True)
         ax4.plot([19, 28.7], [0, 0], color='grey')
 
         ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(20., 28, .5), .5,returnn=True)
