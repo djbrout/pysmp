@@ -1976,7 +1976,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'saved', outdir + '/' + deep_or_shallow + 'hoststd.png'
 
     plt.clf()
-    ax, ayrms = dt.binrms(fwhm[fakemag>30],d[fakemag>30], np.arange(2., 4., .1), .1)
+    ax, ayrms = dt.binrms(fwhm[fakemag>30]*2.35*.27,d[fakemag>30], np.arange(2., 4., .1), .1)
     plt.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
     #plt.scatter(fwhm,d,color='grey')
     plt.xlabel('FWHM arcsec')
