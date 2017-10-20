@@ -3107,6 +3107,9 @@ class smp:
                                     smp_dict['skysig'][i] = mysexskysig
                                     smp_dict['sexrms'][i] = sexrms
                                     smp_dict['sexsky'][i] = sexsky
+                                    print zpt,snparams.zp[j],zpterr
+                                    print aperskyerr,10**(.4*(31-27.5))*snparams.skysig[j]
+                                    raw_input('checking')
                                     smp_dict['aper_skyerr'][i] = aperskyerr
                                     smp_dict['aperscale'][i] = aperscale
 
