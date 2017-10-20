@@ -75,6 +75,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
                         filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],data['fwhm'],real=real)
 
+    data['FakeMag'] = np.array(data['FakeMag'])
     print len(data['Flux']),len(data['FakeMag'][data['FakeMag']<26.])
     raw_input('ppp')
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
