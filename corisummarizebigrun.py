@@ -1855,10 +1855,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #ax3.legend(fontsize='x-small',location='upper right')
 
         ax4.plot(axa, aya, linewidth=3, color='blue')
-        ax4.plot(axa, aya+(aystd), linewidth=2, color='blue',linestyle='--')
-        ax4.plot(axa, aya-aystd, linewidth=2, color='blue',linestyle='--')
+        ax4.plot(axa, aya+(aystd*1.2), linewidth=2, color='blue',linestyle='--')
+        ax4.plot(axa, aya-aystd*1.2, linewidth=2, color='blue',linestyle='--')
     ax4.set_xlim(18.5,24)
-    ax4.set_ylim(-.05,.05)
+    ax4.set_ylim(-.02,.02)
     ax4.set_xlabel('Fake Mag')
     #ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
