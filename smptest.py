@@ -503,6 +503,7 @@ class smp:
                     'skysig':np.zeros(snparams.nvalid),
                     'sexrms':np.zeros(snparams.nvalid),
                     'aper_skyerr':np.zeros(snparams.nvalid),
+                    'aper_sky':np.zeros(snparams.nvalid),
                     'sexsky':np.zeros(snparams.nvalid),
                     'total_skyerr':np.zeros(snparams.nvalid),
                     'mjd':np.zeros(snparams.nvalid),
