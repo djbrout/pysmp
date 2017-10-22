@@ -625,15 +625,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['mjd'].extend(data['MJD'])
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
-            for p in data['PSF_FILE']:
+            #for p in data['PSF_FILE']:
                 # try:
                 #     #print pf.open(p)[1].header['PSF_FWHM'],pf.open(p)[1].header['PSF_FWHM']*  2.235 * 0.27
                 #     #print p
                 #     ###########bigdata['fwhm'].append(pf.open(p)[1].header['PSF_FWHM'] *  2.235 * 0.27)
                 #
                 # except:
-                print 'excepted',p
-                bigdata['fwhm'].append(-999.)
+                #print 'excepted',p
+            bigdata['fwhm'].append(data['DIFFIM_FLUX']*0 - 999)
             bigdata['diffimflux'].extend(data['DIFFIM_FLUX'])
             bigdata['diffimfluxerr'].extend(data['DIFFIM_FLUXERR'])
             bigdata['skyerr'].extend(data['SKYERR'])
