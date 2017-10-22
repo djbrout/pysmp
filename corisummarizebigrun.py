@@ -1571,6 +1571,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     chisqarr = chisqarr[ww]
     filterarr = filterarr[ww]
     snid = snid[ww]
+    mjd = mjd[ww]
     #print flux[0:10]
     #print fakeflux[0:10]
     #print flux.shape
