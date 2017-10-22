@@ -1323,19 +1323,19 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
         plt.savefig(outdir + '/emptyfluxstdvshostmag.png')
 
         plt.clf()
-        plt.scatter(fwhm[ww], flux[ww] / fluxerr[ww])
+#        plt.scatter(fwhm[ww], flux[ww] / fluxerr[ww])
         plt.xlim(1.5, 4.)
         plt.ylim(-6, 6)
-        ax, ay, aystd = dt.bindata(fwhm[ww], (flux[ww] / fluxerr[ww]),
-                                   np.arange(1, 4.5, .2))
-        plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 sigma %.4f \n     '
-                                                                                '5 sigma %.4f'
-                                                                                '' % (float(
-            len(flux[ww][abs(flux[ww] / fluxerr[ww] > 3.)])) / len(flux[ww]),
-                                                                                      float(len(flux[ww][abs(
-                                                                                          flux[ww] / fluxerr[
-                                                                                              ww] > 5.)])) / len(
-                                                                                          flux[ww])))
+#        ax, ay, aystd = dt.bindata(fwhm[ww], (flux[ww] / fluxerr[ww]),
+#                                   np.arange(1, 4.5, .2))
+#        plt.errorbar(ax, ay, aystd, markersize=10, color='gold', fmt='o', label='SMP: 3 sigma %.4f \n     '
+#                                                                                '5 sigma %.4f'
+##                                                                                '' % (float(
+#            len(flux[ww][abs(flux[ww] / fluxerr[ww] > 3.)])) / len(flux[ww]),
+#                                                                                      float(len(flux[ww][abs(
+##                                                                                          flux[ww] / fluxerr[
+#                                                                                              ww] > 5.)])) / len(
+#                                                                                          flux[ww])))
         plt.xlabel('Hostmag')
         plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
         plt.legend()
