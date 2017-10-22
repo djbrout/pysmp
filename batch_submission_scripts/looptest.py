@@ -3,7 +3,7 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = np.linspace(0,2200,300)
+allindexes = np.linspace(0,2200,1000)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
@@ -12,7 +12,7 @@ walltime= '12:10:00'
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
-snfilelist = 'data/e2lightcurves.txt'
+snfilelist = 'data/deeplightcurves.txt'
 #snfilelist = 'data/speclist.txt'
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
@@ -91,8 +91,8 @@ for ii in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        print output[0]
+        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        #print output[0]
         #print script
 #        raw_input()
 

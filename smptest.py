@@ -3271,7 +3271,7 @@ class smp:
                                         print os.path.join(npoutdir, filename + '_smpDict.npz')
                                         #raw_input('could not save smpDict')
                                     #i += 1
-                                    print smp_dict['flag'][i],smp_dict['mjdflag'][i]
+                                    #print smp_dict['flag'][i],smp_dict['mjdflag'][i]
                                     print 'epochtime',time.time()-epochtime, float(snparams.mjd[j]),imfile
                                 else:
                                     print 'min max psf equal'*100
