@@ -57,7 +57,7 @@ for ii in allindexes:
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
             '#SBATCH -C haswell\n'+
-            '#SBATCH -A des\n' +
+            '#SBATCH -A dessn\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
