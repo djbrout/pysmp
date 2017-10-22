@@ -1394,7 +1394,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #print rmsaddin[:500]
     #raw_input('rmsaddin')
     fakeflux = 10 ** (.4 * (31. - fakemag))
-    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
     fluxerrz = (fluxerr**2 + abs(flux) + 10**(.4*(31.-hostmag))+ (rmsaddin*flux)**2)**.5
     #fluxerr = (fluxerr**2 + abs(flux) + 10**(.4*(31.-hostmag))+ (rmsaddin*flux)**2)**.5
 
@@ -3815,6 +3815,7 @@ if __name__ == "__main__":
             cd.append('/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filt + '.npz')
     else:
         cd = ['/global/cscratch1/sd/dbrout/summary_results_all'+deep_or_shallow+'_' + filter + '.npz']
+        #cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
 
     #print cd
     #raw_input()
