@@ -990,10 +990,10 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     plt.clf()
 
-    plt.hist(fwhm[ww]/2.235,bins=100)
-    plt.xlabel('PSF_FWHM')
-    plt.savefig(outdir+'/fwhmhist.png')
-    print 'saved',outdir+'/fwhmhist.png'
+#    plt.hist(fwhm[ww]/2.235,bins=100)
+#    plt.xlabel('PSF_FWHM')
+#    plt.savefig(outdir+'/fwhmhist.png')
+#    print 'saved',outdir+'/fwhmhist.png'
     #raw_input()
     plt.clf()
 
