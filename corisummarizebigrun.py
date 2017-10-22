@@ -458,9 +458,10 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         deep = 0
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
-        print data['FAKEMAG']
+        oldformat = True
+        #print data['FAKEMAG']
         #print data['PSF_FILE']
-        raw_input('stop')
+        #raw_input('stop')
 
         #print tra
         try:
