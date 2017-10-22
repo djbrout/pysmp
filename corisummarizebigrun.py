@@ -1992,7 +1992,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     mean = np.mean(d[(abs(d) < 3.) & (fakemag > 30) & (hostmag > 26.)])
     plt.hist((flux[(fakemag>50)&(hostmag >26.)]-fakeflux[(fakemag>50)&(hostmag >26.)])/fluxerr[(fakemag>50)&(hostmag >26.)],bins=np.arange(-5.1,5,.2),label='Median:%.3f\nSigma %.2f'%(mean,sig),normed=True)
     for s in np.unique(snid[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)]):
-        print s,len(snid[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid == s)])
+        print s,len(snid[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)])
 
     raw_input('badguys')
     import math
