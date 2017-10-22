@@ -504,6 +504,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     fakemag = data['FAKEMAG']
             else:
                 fakemag = data['FAKEMAG']
+
         else:
             pass
         #print fakemag
@@ -602,8 +603,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             bigdata['rmsaddin'].extend(data['ZPTERR'])
 
-            #print data.keys()
-            #raw_input()
+            print data.keys()
+            raw_input()
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
@@ -612,6 +613,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     bigdata['FakeMag'].extend(fakemag)
                 else:
                     bigdata['FakeMag'].extend(data['FAKEMAG'])
+                    bigdata['FakeZPT'].append(data['FakeZPT'])
             bigdata['FitZPT'].extend(data['ZPT'])
             #print fakemag.shape
             #print data['CHI2'].shape
