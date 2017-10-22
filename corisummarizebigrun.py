@@ -1336,7 +1336,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 ##                                                                                          flux[ww] / fluxerr[
 #                                                                                              ww] > 5.)])) / len(
 #                                                                                          flux[ww])))
-        plt.xlabel('Hostmag')
+        plt.xlabel('Hostmag ')
         plt.ylabel('Flux/Fluxerr (epochs without fake SN Flux)')
         plt.legend()
         plt.axhline(0)
