@@ -3,11 +3,11 @@ from subprocess import *
 import numpy as np
 import time
 
-allindexes = np.linspace(0,2200,1000)
+allindexes = np.linspace(0,13450,2000)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
-walltime= '12:10:00'
+walltime= '5:10:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -61,7 +61,7 @@ for ii in allindexes:
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
-            '#SBATCH --job-name=e2_'+filt+'' + str(i) + '\n' +
+            '#SBATCH --job-name=d-'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
