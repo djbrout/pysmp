@@ -3814,7 +3814,7 @@ if __name__ == "__main__":
         for filt in ['g','r','i','z']:
             cd.append('/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filt + '.npz')
     else:
-        cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
+        cd = ['/global/cscratch1/sd/dbrout/summary_results_all'+deep_or_shallow+'_' + filter + '.npz']
 
     #print cd
     #raw_input()
