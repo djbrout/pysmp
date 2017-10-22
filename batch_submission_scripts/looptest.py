@@ -46,7 +46,7 @@ for ii in allindexes:
             #     continue
         print snfiles[int(i)],'submitted'
         count += 1
-        if count < 78: continue
+        #if count < 78: continue
         print count, tot
         #continue
         script = '/global/cscratch1/sd/dbrout/logs/sm_' + str(i) + '.sh'
@@ -91,8 +91,8 @@ for ii in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        #print output[0]
+        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        print output[0]
         #print script
 #        raw_input()
 
