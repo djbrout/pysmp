@@ -613,7 +613,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     bigdata['FakeMag'].extend(fakemag)
                 else:
                     bigdata['FakeMag'].extend(data['FAKEMAG'])
-                    bigdata['FakeZPT'].append(data['FAKEZPT'])
+                    bigdata['FakeZPT'].extend(data['FAKEZPT'])
             bigdata['FitZPT'].extend(data['ZPT'])
             #print fakemag.shape
             #print data['CHI2'].shape
