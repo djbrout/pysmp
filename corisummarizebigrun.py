@@ -1987,6 +1987,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlabel('Host SB Mag')
     plt.ylabel('RMS')
     plt.savefig(outdir + '/'+'hostsbcomparo.png')
+    print 'saved',outdir + '/'+'hostsbcomparo.png'
+    raw_input()
     plt.clf()
 #    ax, ayrms = dt.binrms(fwhm[fakemag>30]*2.35*.27,d[fakemag>30], np.arange(1.5, 4., .1), .1)
 #    plt.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
