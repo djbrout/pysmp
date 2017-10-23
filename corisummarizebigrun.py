@@ -445,8 +445,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #if f == '/project/projectdirs/des/djbrout/106x3/lightcurves/des_fake_00212070_g.smp':
         #    raw_input('filee')
 
-        #print f
-        #raw_input()
+        print f
+        raw_input()
         fakeid = f.split('_')[-2]
         snid = f.split('_')[-2]
         cntr += 1
