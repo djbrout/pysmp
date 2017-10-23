@@ -1982,10 +1982,11 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.clf()
     ax, ayrms = dt.binrms(hostmag[(d < 3.)&(fakemag>50)], d[(d < 3.)&(fakemag>50)], np.arange(20., 28, .5), .5)
     plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
-    ax, ayrms = dt.binrms(hostmag[(d < 3.) & (fakemag > 50)], d[(d < 3.) & (fakemag < 22)], np.arange(20., 28, .5), .5)
-    plt.plot(ax, ayrms, color='blue', label='Fake < 22', linewidth=3)
+    ax, ayrms = dt.binrms(hostmag[(d < 3.) & (fakemag < 22)], d[(d < 3.) & (fakemag < 22)], np.arange(20., 28, .5), .5)
+    plt.plot(ax, ayrms, color='green', label='Fake < 22', linewidth=3)
     plt.xlabel('Host SB Mag')
     plt.ylabel('RMS')
+    plt.legend()
     plt.savefig(outdir + '/'+'hostsbcomparo.png')
     print 'saved',outdir + '/'+'hostsbcomparo.png'
     raw_input()
