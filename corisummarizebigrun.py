@@ -458,7 +458,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         deep = 0
         #os.system('cp '+f+' test.npz')
         data = dt.readcol(f)
-        oldformat = True
+
+        if 'truefake' in cd:
+            oldformat = False
+        else:
+            oldformat = True
         #print data['FAKEMAG']
         #print data['PSF_FILE']
         #raw_input('stop')
@@ -603,8 +607,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             bigdata['rmsaddin'].extend(data['ZPTERR'])
 
-            #print data.keys()
-            #raw_input()
+            print data.keys()
+            raw_input()
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
@@ -3825,7 +3829,7 @@ if __name__ == "__main__":
         for filt in ['g','r','i','z']:
             cd.append('/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filt + '.npz')
     else:
-        cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
+        cd = ['/global/cscratch1/sd/dbrout/summary_results_truefake'+deep_or_shallow+'_' + filter + '.npz']
         #cd = ['/global/cscratch1/sd/dbrout/summary_results_'+deep_or_shallow+'_' + filter + '.npz']
 
     #print cd
