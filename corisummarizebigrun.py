@@ -445,8 +445,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         #if f == '/project/projectdirs/des/djbrout/106x3/lightcurves/des_fake_00212070_g.smp':
         #    raw_input('filee')
 
-        print f
-        raw_input()
+        chainsnpz = '/project/projectdirs/dessn/dbrout/simv2.0/'+f.split('/')[-1].split('.')[0]+'_chains.npz'
+
+        DO THIS LATER!
+
+        xoff = np.mean(np.load(chainsnpz)['xhistory'].tolist())
+        yoff = np.mean(np.load(chainsnpz)['yhistory'].tolist())
+        print np.load(chainsnpz)['x'],np.load(chainsnpz)['y']
+
+
         fakeid = f.split('_')[-2]
         snid = f.split('_')[-2]
         cntr += 1
