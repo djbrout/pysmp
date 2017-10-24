@@ -2063,6 +2063,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + 'emtpysig.png')
     print 'upload',outdir + '/' + 'emtpysig.png'
 
+
     plt.clf()
     #print min(deltapos),max(deltapos)
     #raw_input('youyyyy')
