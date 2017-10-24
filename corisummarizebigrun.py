@@ -632,8 +632,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
             bigdata['rmsaddin'].extend(data['ZPTERR'])
 
-            print data.keys()
-            raw_input()
+            #print data.keys()
+            #raw_input()
 
             bigdata['Flux'].extend(data['FLUX'])
             bigdata['Fluxerr'].extend(data['FLUXERR'])
