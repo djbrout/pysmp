@@ -2067,8 +2067,6 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     plt.clf()
-    #print min(deltapos),max(deltapos)
-    #raw_input('youyyyy')
     ax, ayrms = dt.binrms(deltapos[(abs(d)<5.)&(fakemag<23.)&(hostmag<23.)], d[(abs(d) < 5.)&(fakemag<23.)&(hostmag<23.)],
                           np.arange(0., .00002, .000002), .000002)
     plt.plot(ax*3600, ayrms, color='blue', label='Fake == 99', linewidth=3)
@@ -2078,8 +2076,21 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlim(0,.06)
     plt.title('Band %s FakeMag < 23, Hostmag SB < 23'%filter)
     plt.axhline(1,c='k')
-    plt.savefig(outdir+'/'+'deltapos.png')
-    print 'upload',outdir+'/'+'deltapos.png'
+    plt.savefig(outdir+'/'+'deltapos'+filter+'.png')
+    print 'upload',outdir+'/'+'deltapos'+filter+'.png'
+
+    plt.clf()
+    ax, ayrms = dt.bindata(hostmag,deltapos,
+                          np.arange(19., 26, .5))
+    plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
+    plt.xlabel('Host SB Mag')
+    plt.ylabel('Delta to Fake')
+    #plt.ylim(0, 3)
+    #plt.xlim(0, .06)
+    plt.title('Band %s FakeMag < 23, Hostmag SB < 23' % filter)
+    #plt.axhline(1, c='k')
+    plt.savefig(outdir + '/' + 'deltavshost'+filter+'.png')
+    print 'upload', outdir + '/' + 'deltavshost'+filter+'.png'
 
     plt.clf()
 
