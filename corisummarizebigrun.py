@@ -2078,7 +2078,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.clf()
 
-    plt.hist(deltapos[np.isfinite(deltapos)], bins=np.arange(0,.0001,.000001))
+    plt.hist(deltapos[np.isfinite(deltapos)], bins=np.arange(0,.00002,.000001))
     plt.xlabel('delta to true fake position')
     plt.savefig(outdir + '/' + 'deltaposhist.png')
     print 'upload', outdir + '/' + 'deltaposhist.png'
