@@ -2080,9 +2080,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'upload',outdir+'/'+'deltapos'+filter+'.png'
 
     plt.clf()
-    ax, ayrms = dt.bindata(hostmag,deltapos,
-                          np.arange(19., 26, .5))
-    plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
+    ax, ay,aystd = dt.bindata(hostmag,deltapos,np.arange(19., 26, .5))
+    plt.scatter(hostmag,deltapos,alpha=.1,c='blue')
+    plt.errorbar(ax, ay,yerr=aystd,fmt='o',c='k')
     plt.xlabel('Host SB Mag')
     plt.ylabel('Delta to Fake')
     #plt.ylim(0, 3)
