@@ -2082,6 +2082,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.ylim(0,3)
     plt.xlim(0,.06)
     plt.legend()
+
     plt.title('Band %s '%filter)
     plt.axhline(1,c='k')
     plt.savefig(outdir+'/'+'deltapos'+filter+'.png')
