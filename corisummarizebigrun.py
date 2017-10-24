@@ -451,14 +451,17 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
         #DO THIS LATER!
 
-        xoff = np.mean(np.load(chainsnpz)['xhistory'].tolist())
-        yoff = np.mean(np.load(chainsnpz)['yhistory'].tolist())
-        x = np.load(chainsnpz)['x'][1]
-        y = np.load(chainsnpz)['y'][1]
-        imfile = np.load(chainsnpz)['datafilenames'][1]
-        w = wcs.WCS(imfile)
+        try:
+            xoff = np.mean(np.load(chainsnpz)['xhistory'].tolist())
+            yoff = np.mean(np.load(chainsnpz)['yhistory'].tolist())
+            x = np.load(chainsnpz)['x'][1]
+            y = np.load(chainsnpz)['y'][1]
+            imfile = np.load(chainsnpz)['datafilenames'][1]
+            w = wcs.WCS(imfile)
 
-        fitra, fitdec = zip(*w.wcs_pix2world(np.array([[x+xoff,y+yoff]]), 0))
+            fitra, fitdec = zip(*w.wcs_pix2world(np.array([[x+xoff,y+yoff]]), 0))
+        except:
+            continue
 
         #convert x + xoff, y+yoff to ra and dec and compare with true fake position
 
