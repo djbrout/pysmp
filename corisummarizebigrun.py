@@ -82,7 +82,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],
-                   data['fwhm'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],real=real)#resultsdir)
+                   data['fwhm'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],data['deltapos'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -1406,7 +1406,9 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
     print 'saved png'
 
-def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,dpmjd,flag,snid,mjd,real=False):
+def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,
+                   diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,
+                   dpmjd,flag,snid,mjd,deltaposreal=False):
 
 
 
@@ -1444,6 +1446,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     flag = np.array(flag)
     zptstd = np.array(zptstd)
     snid = np.array(snid)
+    deltapos = np.array(deltapos)
 
     sky = sky*10**(.4*(fitzpt-31.))-10000
     skyerr = skyerr*10**(-.4*(fitzpt-31.))
@@ -1477,6 +1480,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         dpmjd = dpmjd[ww]
         fakeflux = fakeflux[ww]
         fwhm = fwhm[ww]
+
         #flag = flag[ww]
         #zptstd=zptstd[ww]
     # dww = (dpmjd < 250.) | (dpmjd > -50.)
@@ -1609,6 +1613,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     filterarr = filterarr[ww]
     snid = snid[ww]
     mjd = mjd[ww]
+    deltapos = deltapos[ww]
     #print flux[0:10]
     #print fakeflux[0:10]
     #print flux.shape
@@ -2022,7 +2027,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.legend()
     plt.savefig(outdir + '/'+'hostsbcomparo.png')
     print 'saved',outdir + '/'+'hostsbcomparo.png'
-    raw_input()
+    #raw_input()
     plt.clf()
 #    ax, ayrms = dt.binrms(fwhm[fakemag>30]*2.35*.27,d[fakemag>30], np.arange(1.5, 4., .1), .1)
 #    plt.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
@@ -2058,7 +2063,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.savefig(outdir + '/' + 'emtpysig.png')
 
 
-
+    plt.clf()
+    print min(deltapos),max(deltapos)
+    raw_input('youyyyy')
+    ax, ayrms = dt.binrms(deltapos[abs(d)<4], d[(abs(d) < 4.)],
+                          np.arange(1., 28, .5), .5)
+    plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
+    plt.xlabel('delta to true fake position')
+    plt.ylabel('RMS')
+    plt.savefig(outdir+'/'+'deltapos.png')
+    print 'upload',outdir+'/'+'deltapos.png'
 
 
 
