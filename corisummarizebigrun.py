@@ -2080,13 +2080,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     print 'upload',outdir+'/'+'deltapos'+filter+'.png'
 
     plt.clf()
-    ax, ay,aystd = dt.bindata(hostmag,deltapos,np.arange(19., 26, .5))
-    plt.scatter(hostmag,deltapos,alpha=.1,c='blue')
+    ax, ay,aystd = dt.bindata(hostmag,deltapos*3600,np.arange(19., 30, .5))
+    plt.scatter(hostmag,deltapos*3600,alpha=.1,c='blue')
     plt.errorbar(ax, ay,yerr=aystd,fmt='o',c='k')
     plt.xlabel('Host SB Mag')
     plt.ylabel('Delta to Fake')
-    #plt.ylim(0, 3)
-    #plt.xlim(0, .06)
+    plt.ylim(0, .06)
+    plt.xlim(19, 30)
     plt.title('Band %s ' % filter)
     #plt.axhline(1, c='k')
     plt.savefig(outdir + '/' + 'deltavshost'+filter+'.png')
