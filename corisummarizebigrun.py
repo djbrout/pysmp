@@ -2067,12 +2067,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #print min(deltapos),max(deltapos)
     #raw_input('youyyyy')
     ax, ayrms = dt.binrms(deltapos[abs(d)<4], d[(abs(d) < 4.)],
-                          np.arange(0., .1, .01), .01)
+                          np.arange(0., .3, .01), .01)
     plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
     plt.xlabel('delta to true fake position')
     plt.ylabel('RMS')
     plt.ylim(0,3)
-    plt.axhline(1)
+    plt.axhline(1,c='k')
     plt.savefig(outdir+'/'+'deltapos.png')
     print 'upload',outdir+'/'+'deltapos.png'
 
