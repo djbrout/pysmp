@@ -2043,8 +2043,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.clf()
 
-    sig = 1.48 * np.median(np.abs(d[(abs(d) < 3.)&(fakemag>30)&(hostmag >26.)]))
-    mean = np.mean(d[(abs(d) < 3.) & (fakemag > 30) & (hostmag > 26.)])
+    sig = 1.48 * np.median(np.abs(d[(abs(d) < 3.)&(fakemag>30)&(hostmag >26.)&((dpmjd>200)|(dpmjd<-20))]))
+    mean = np.mean(d[(abs(d) < 3.) & (fakemag > 30) & (hostmag > 26.)&((dpmjd>200)|(dpmjd<-20))])
     plt.hist(flux[(fakemag>50.)&(hostmag >26.)&((dpmjd>200)|(dpmjd<-20))]/fluxerr[(fakemag>50)&(hostmag >26.)&((dpmjd>200)|(dpmjd<-20))],bins=np.arange(-5.1,5,.2),label='Median:%.3f\nSigma %.2f'%(mean,sig),normed=True)
     # for s in np.unique(snid[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)]):
     #     if s == 226296:
