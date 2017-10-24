@@ -2075,6 +2075,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.xlabel('delta to true fake position (arcsec)')
     plt.ylabel('RMS')
     plt.ylim(0,3)
+    plt.xlim(0,.06)
     plt.title('Band %s FakeMag < 23, Hostmag SB < 23'%filter)
     plt.axhline(1,c='k')
     plt.savefig(outdir+'/'+'deltapos.png')
