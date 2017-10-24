@@ -13,6 +13,7 @@ import pyfits as pf
 import dilltools as dt
 from copy import copy
 from scipy.stats import sigmaclip
+from astropy import wcs
 
 
 def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,isfermigrid=False,real=False):
@@ -453,7 +454,10 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         yoff = np.mean(np.load(chainsnpz)['yhistory'].tolist())
         x = np.load(chainsnpz)['x'][0]
         y = np.load(chainsnpz)['y'][0]
-        imfiles = np.load(chainsnpz)['datafilenames'][0]
+        imfile = np.load(chainsnpz)['datafilenames'][0]
+        w = wcs.WCS(imfile)
+        fitra, fitdec = zip(*w.wcs_world2pix(np.array([[x+xoff,y+yoff]]), 0))
+
         #convert x + xoff, y+yoff to ra and dec and compare with true fake position
 
         print np.load(chainsnpz)['x'],np.load(chainsnpz)['y']
@@ -487,8 +491,11 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         except:
             print 'empty'
             continue
-        tra = data['RA']
-        print tra,data['DEC']
+        tra = data['RA'][0]
+        tdec = data['DEC'][0]
+        print tra,fitra,tdec,fitdec
+        if tra == 0: continue
+        if tdec == 0: continue
         raw_input('radec')
         #print data.keys()
         #raw_input()
