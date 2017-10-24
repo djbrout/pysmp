@@ -1408,7 +1408,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
 def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,
                    diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,
-                   dpmjd,flag,snid,mjd,deltaposreal=False):
+                   dpmjd,flag,snid,mjd,deltapos,real=False):
 
 
 
