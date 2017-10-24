@@ -2071,6 +2071,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
     plt.xlabel('delta to true fake position')
     plt.ylabel('RMS')
+    plt.ylim(0,3)
+    plt.axhlin(1)
     plt.savefig(outdir+'/'+'deltapos.png')
     print 'upload',outdir+'/'+'deltapos.png'
 
