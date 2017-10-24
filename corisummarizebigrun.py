@@ -2067,9 +2067,9 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #print min(deltapos),max(deltapos)
     #raw_input('youyyyy')
     ax, ayrms = dt.binrms(deltapos[abs(d)<4], d[(abs(d) < 4.)],
-                          np.arange(0., .00002, .000002), .01)
-    plt.plot(ax, ayrms, color='blue', label='Fake == 99', linewidth=3)
-    plt.xlabel('delta to true fake position')
+                          np.arange(0., .00002, .000002), .000002)
+    plt.plot(ax*3600, ayrms, color='blue', label='Fake == 99', linewidth=3)
+    plt.xlabel('delta to true fake position (arcsec)')
     plt.ylabel('RMS')
     plt.ylim(0,3)
     plt.axhline(1,c='k')
