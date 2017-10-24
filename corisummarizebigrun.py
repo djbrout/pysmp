@@ -456,7 +456,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         y = np.load(chainsnpz)['y'][0]
         imfile = np.load(chainsnpz)['datafilenames'][0]
         w = wcs.WCS(imfile)
-        fitra, fitdec = zip(*w.wcs_world2pix(np.array([[x+xoff,y+yoff]]), 0))
+        fitra, fitdec = zip(*w.wcs_pix2world(np.array([[x+xoff,y+yoff]]), 0))
 
         #convert x + xoff, y+yoff to ra and dec and compare with true fake position
 
