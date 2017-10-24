@@ -548,7 +548,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             print 'BAD FLUX'*20
             continue
 
-        skipnewfakemag = True
+        skipnewfakemag = False
         if real:
             skipnewfakemag = True
         #if not skipnewfakemag:
