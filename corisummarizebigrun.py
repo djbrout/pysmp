@@ -447,10 +447,15 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
 
         chainsnpz = '/project/projectdirs/dessn/dbrout/simv2.0/'+f.split('/')[-1].split('.')[0]+'_chains.npz'
 
-        DO THIS LATER!
+        #DO THIS LATER!
 
         xoff = np.mean(np.load(chainsnpz)['xhistory'].tolist())
         yoff = np.mean(np.load(chainsnpz)['yhistory'].tolist())
+        x = np.load(chainsnpz)['x'][0]
+        y = np.load(chainsnpz)['y'][0]
+        imfiles = np.load(chainsnpz)['datafilenames'][0]
+        #convert x + xoff, y+yoff to ra and dec and compare with true fake position
+
         print np.load(chainsnpz)['x'],np.load(chainsnpz)['y']
 
 
@@ -483,6 +488,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             print 'empty'
             continue
         tra = data['RA']
+        print tra,data['DEC']
+        raw_input('radec')
         #print data.keys()
         #raw_input()
         #print tra[0]
