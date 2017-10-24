@@ -2087,7 +2087,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.ylabel('Delta to Fake')
     #plt.ylim(0, 3)
     #plt.xlim(0, .06)
-    plt.title('Band %s FakeMag < 23, Hostmag SB < 23' % filter)
+    plt.title('Band %s ' % filter)
     #plt.axhline(1, c='k')
     plt.savefig(outdir + '/' + 'deltavshost'+filter+'.png')
     print 'upload', outdir + '/' + 'deltavshost'+filter+'.png'
