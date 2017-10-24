@@ -1614,6 +1614,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     snid = snid[ww]
     mjd = mjd[ww]
     deltapos = deltapos[ww]
+    dpmjd = dpmjd[ww]
     #print flux[0:10]
     #print fakeflux[0:10]
     #print flux.shape
@@ -2044,14 +2045,14 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     sig = 1.48 * np.median(np.abs(d[(abs(d) < 3.)&(fakemag>30)&(hostmag >26.)]))
     mean = np.mean(d[(abs(d) < 3.) & (fakemag > 30) & (hostmag > 26.)])
-    plt.hist(flux[(fakemag>50.)&(hostmag >26.)]/fluxerr[(fakemag>50)&(hostmag >26.)],bins=np.arange(-5.1,5,.2),label='Median:%.3f\nSigma %.2f'%(mean,sig),normed=True)
-    for s in np.unique(snid[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)]):
-        if s == 226296:
-            for fm,m in zip(mjd[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)],fakemag[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)]):
-                print s,m, fm
-            #print s,len(mjd[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)])
-
-    #raw_input('badguys')
+    plt.hist(flux[(fakemag>50.)&(hostmag >26.)&((dpmjd>200)|(dpmjd<-20))]/fluxerr[(fakemag>50)&(hostmag >26.)&((dpmjd>200)|(dpmjd<-20))],bins=np.arange(-5.1,5,.2),label='Median:%.3f\nSigma %.2f'%(mean,sig),normed=True)
+    # for s in np.unique(snid[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)]):
+    #     if s == 226296:
+    #         for fm,m in zip(mjd[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)],fakemag[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)]):
+    #             print s,m, fm
+    #         #print s,len(mjd[(fakemag>50)&(hostmag >26.)&(d>3.5)&(d<5.)&(snid==s)])
+    #
+    # #raw_input('badguys')
     import math
     mean = 0
     variance = 1
@@ -2062,6 +2063,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.legend()
     plt.savefig(outdir + '/' + 'emtpysig.png')
     print 'upload',outdir + '/' + 'emtpysig.png'
+
 
 
     plt.clf()
