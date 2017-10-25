@@ -3356,8 +3356,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecy = data['pltvecy']
         pltvecx = data['pltvecx']
         plt.scatter(pltvecx, pltvecy, alpha=.1, color='black')
-    plt.xscale('log')
-    plt.yscale('log')
+    #plt.xscale('log')
+    #plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Photometric Error - Repeatability')
     plt.xlim(.003,.06)
