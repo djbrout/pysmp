@@ -1930,7 +1930,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     if not filter == 'all':
         ax3.set_title(filter+' band')
     else:
-        ax3.set_title(deep_or_shallow.upper()+' Fields')
+        pass
+        #ax3.set_title()
 
 
     ax3.set_xlim(ax4.get_xlim())
@@ -1943,8 +1944,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.subplots_adjust(wspace=0.01,hspace=0.01)
 
-    plt.savefig(outdir+'/std.png')
-    print 'upload' , outdir+'/std.png'
+    plt.savefig(outdir+'/'+filter+'std.png')
+    print 'upload' , outdir+'/'+filter+'std.png'
     #raw_input('press to continue')
 
     #--------------------------------------------------------------------------------------
