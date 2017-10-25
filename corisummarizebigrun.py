@@ -3270,7 +3270,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.clf()
     print 'saved zptu'
-
+    skipp = False
     if not skipp:
         cntr = 0
         pltvecx = []
