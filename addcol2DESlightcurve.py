@@ -492,7 +492,7 @@ if __name__ == "__main__":
         dofakezpt = dofakemag2 + 2.5 * np.log10(dofaketflux)
         print 'done reading dofake'
 
-    a = open(missingfile,'a')
+    a = open(missingfile,'w')
     tsne = []
     numbad = 0
     for sn in sne[:]:
