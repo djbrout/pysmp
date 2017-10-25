@@ -1946,7 +1946,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     ax3.xaxis.set_major_formatter(nullfmt)
     #ax1.xaxis.set_major_formatter(nullfmt)
 
-    plt.subplots_adjust(wspace=0.01,hspace=0.01)
+    plt.subplots_adjust(wspace=0.01,hspace=0.02)
 
     plt.savefig(outdir+'/'+filter+'std.png')
     print 'upload' , outdir+'/'+filter+'std.png'
