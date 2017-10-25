@@ -3189,45 +3189,45 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # plt.savefig(outdir + '/' + title + '_repeatability_vs_fwhm.png')
 
     plt.clf()
-    cntr = 0
-    pltvecx = []
-    pltvecy = []
-    for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
-        cntr+=1
-        print cntr,
-        if cntr > maxpoints: continue
-        if cntr > 500: continue
-
-        #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
-        #print starmag[indices == ind]
-        #raw_input()
-        starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
-        repeatability = np.std(starww)
-        #repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 5.:
-            #if repeatability < .3:
-
-            pltvecy.append(sme-repeatability)
-            pltvecx.append(sme)
-
-    plt.scatter(sme, sme - repeatability, alpha=.3, color='black')
-    plt.xscale('log')
-    plt.xlabel('Photometric Error')
-    plt.ylabel('Repeatability - PhotErr')
-    plt.xlim(.0005,.05)
-    plt.ylim(-.02,.01)
-
-    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.05, .00001), window=.002,dontrootn=True)
-    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
-    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
-    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
-
-    plt.title(title+'BAND')
-    print 'finished resid'
-
-    plt.plot([.0003,.02],[0,0],color='black')
-    plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png')
-    print 'upload',outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png'
+    # cntr = 0
+    # pltvecx = []
+    # pltvecy = []
+    # for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
+    #     cntr+=1
+    #     if cntr > maxpoints: continue
+    #     if cntr > 500: continue
+    #     print cntr,
+    #
+    #     #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+    #     #print starmag[indices == ind]
+    #     #raw_input()
+    #     starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+    #     repeatability = np.std(starww)
+    #     #repeatability = np.std(starmag[indices == ind])
+    #     if len(starww) > 5.:
+    #         #if repeatability < .3:
+    #
+    #         pltvecy.append(sme-repeatability)
+    #         pltvecx.append(sme)
+    #
+    # plt.scatter(sme, sme - repeatability, alpha=.3, color='black')
+    # plt.xscale('log')
+    # plt.xlabel('Photometric Error')
+    # plt.ylabel('Repeatability - PhotErr')
+    # plt.xlim(.0005,.05)
+    # plt.ylim(-.02,.01)
+    #
+    # ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.0005,.05, .00001), window=.002,dontrootn=True)
+    # plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    # plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    # plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    #
+    # plt.title(title+'BAND')
+    # print 'finished resid'
+    #
+    # plt.plot([.0003,.02],[0,0],color='black')
+    # plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png')
+    # print 'upload',outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png'
     plt.clf()
     # cntr = 0
     # pltvecx = []
@@ -3277,7 +3277,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
         if cntr > maxpoints: continue
-        if cntr > 500: continue
+        if cntr > 10000: continue
 
         #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         #print starmag[indices == ind]
@@ -3285,7 +3285,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
         repeatability = np.std(starww)#/np.sqrt(len(starww))
         #repeatability = np.std(starmag[indices == ind])
-        if len(starww) > 5.:
+        if len(starww) > 15.:
             #if repeatability < .3:
             plt.scatter(sme,repeatability,alpha=.3,color='black')
             pltvecy.append(repeatability)
@@ -3295,8 +3295,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.yscale('log')
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
-    plt.xlim(.002,.05)
-    plt.ylim(.002,.05)
+    plt.xlim(.002,.06)
+    plt.ylim(.002,.06)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.003,.05, .0001), window=.0005,dontrootn=True)
     photerr = copy(ax)
@@ -3310,6 +3310,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='grey')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
     print 'upload',outdir+'/'+title+'_repeatability_vs_photerr.png'
+    os.popen('upload '+outdir+'/'+title+'_repeatability_vs_photerr.png')
     #sys.exit()
 
     print 'saved repeat vs photerr1'
