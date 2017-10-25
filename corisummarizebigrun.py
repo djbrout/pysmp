@@ -1840,7 +1840,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-    ax3.set_ylim(.5,2.0)
+    ax3.set_ylim(.5,1.8)
     ax3.legend(fontsize='x-small')
 
     fresid = np.zeros(flux.shape)
