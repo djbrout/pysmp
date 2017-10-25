@@ -497,7 +497,7 @@ if __name__ == "__main__":
     numbad = 0
     for sn in sne[:]:
         snbad = False
-
+        tbad = 0
         for i, filt in enumerate(filts):
             if 'starfits' in sn:
                 continue
@@ -513,10 +513,12 @@ if __name__ == "__main__":
                 a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
+                tbad += 1
         if not snbad:
             tsne.append(sn)
         else:
-            numbad += 1
+            if tbad < 3:
+                numbad += 1
 
     sne = tsne
 
@@ -552,6 +554,7 @@ if __name__ == "__main__":
         gain = []
         hostsbfluxcals = []
         cntr += 1
+
         for i, filt in enumerate(filts):
             #for sn in sne[:]:
             #cntr += 1
@@ -621,16 +624,15 @@ if __name__ == "__main__":
         #print 'lcfile',lcfile
         #print flux
         if not os.path.exists(savelcfile):
-            try:
-                imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
-                #print imfiles
-                #raw_input()
-                successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
-                         zpt, rmsaddin,
-                         chi2,sky,skyerr,smpflag,zptfile,
-                         idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
-            except:
-                print 'COULD NOT SAVE '*100
+
+            imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
+            #print imfiles
+            #raw_input()
+            successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
+                     zpt, rmsaddin,
+                     chi2,sky,skyerr,smpflag,zptfile,
+                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
 
