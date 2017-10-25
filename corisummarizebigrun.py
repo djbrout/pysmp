@@ -2961,8 +2961,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         a = np.load(outdir + '/pltstarvec.npz')
         pltvecy = a['pltvecy']
         pltvecfield = a['pltvecfield']
-        pltvecfwhm = a['pltvecfwhm']
-        pltvecmjd = a['pltvecmjd']
+        #pltvecfwhm = a['pltvecfwhm']
+        #pltvecmjd = a['pltvecmjd']
         pltvecbigfield = a['pltvecbigfield']
         pltvecfieldr = a['pltvecfieldr']
         pltvecfieldb = a['pltvecfieldb']
