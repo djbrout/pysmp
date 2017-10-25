@@ -498,6 +498,7 @@ if __name__ == "__main__":
     for sn in sne[:]:
         snbad = False
         tbad = 0
+        badfilts = []
         for i, filt in enumerate(filts):
             if 'starfits' in sn:
                 continue
@@ -510,7 +511,8 @@ if __name__ == "__main__":
             savelcfile = savelcdir+'/'+sn+'.dat'
             if not os.path.exists(smpfile):
                 #print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
-                a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
+                badfilts.append(filt)
+                #a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
                 tbad += 1
@@ -518,6 +520,8 @@ if __name__ == "__main__":
             tsne.append(sn)
         else:
             if tbad < 3:
+                for filt in badfilts:
+                    a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1]) + ' ' + filt + ' \n')
                 numbad += 1
 
     sne = tsne
