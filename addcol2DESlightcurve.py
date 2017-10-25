@@ -166,7 +166,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #else:
                     #tidobs = int(line.split()[1])
                     #tmjd = float(line.split()[3])
-                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[12]#for fakes do 13, spec 12
+                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[13]#for fakes do 13, spec 12
                     tim = tim.split('/')[-1]
                     #print tim
                     # print tidobs
@@ -430,7 +430,7 @@ if __name__ == "__main__":
 
     if savelcdir is None:
         savelcdir = resultsdir + '/SMP_SPECv2_2'
-        if fakeheader: savelcdir = resultsdir + '/SMP_SIMv2_0'
+        if fakeheader: savelcdir = resultsdir + '/SMP_SIMv2_1'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
