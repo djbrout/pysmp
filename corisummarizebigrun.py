@@ -3194,6 +3194,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     pltvecy = []
     for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
         cntr+=1
+        print cntr,
         if cntr > maxpoints: continue
         if cntr > 500: continue
 
