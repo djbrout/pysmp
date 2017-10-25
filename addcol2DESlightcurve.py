@@ -596,7 +596,7 @@ if __name__ == "__main__":
                 a = sndata['MJD']
             except:
                 print 'could not grab mjd '*100
-               continue
+                continue
 
             #print sndata['FLUX'].shape
             mjd.extend(sndata['MJD'])
