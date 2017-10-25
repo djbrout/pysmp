@@ -3315,7 +3315,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.title(title+'BAND')
 
-    plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='grey')
+    plt.plot([min(starmagerr),max(starmagerr)],[0,0],color='grey')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
     print 'upload',outdir+'/'+title+'_repeatability_vs_photerr.png'
     os.popen('upload '+outdir+'/'+title+'_repeatability_vs_photerr.png')
