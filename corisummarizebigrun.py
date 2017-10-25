@@ -3304,7 +3304,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('Photometric Error')
     plt.ylabel('Repeatability')
     plt.xlim(.002,.06)
-    plt.ylim(-.06,.06)
+    #plt.ylim(-.06,.06)
 
     ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecx)-np.array(pltvecy), np.arange(.003,.05, .001), window=.0005,dontrootn=True)
     #photerr = copy(ax)
