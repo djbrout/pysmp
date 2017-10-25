@@ -577,10 +577,7 @@ if __name__ == "__main__":
             #     continue
             # else:
             #     pass
-            #try:
-            a = sndata['MJD']
-            #except:
-            #    continue
+
                 #print 'DOES EXIST',smpfile
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
@@ -595,6 +592,12 @@ if __name__ == "__main__":
             inplace = False
             #if i > 0: inplace = True
             sndata = dt.readcol(smpfile,1,2)
+            try:
+                a = sndata['MJD']
+            except:
+                print 'could not grab mjd '*100
+               continue
+
             #print sndata['FLUX'].shape
             mjd.extend(sndata['MJD'])
             flux.extend(sndata['FLUX'])
