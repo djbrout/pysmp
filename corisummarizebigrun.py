@@ -3270,7 +3270,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.clf()
     print 'saved zptu'
-    skipp = False
+    skipp = True
     if not skipp:
         cntr = 0
         pltvecx = []
@@ -3298,6 +3298,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         data = np.load('savephoterr.npz')
         pltvecy = data['pltvecy']
         pltvecx = data['pltvecx']
+        plt.scatter(pltvecx, pltvecx-pltvecy, alpha=.1, color='black')
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel('Photometric Error')
