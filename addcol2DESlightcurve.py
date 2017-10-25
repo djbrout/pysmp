@@ -509,7 +509,7 @@ if __name__ == "__main__":
             #    continue
             savelcfile = savelcdir+'/'+sn+'.dat'
             if not os.path.exists(smpfile):
-                print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
+                #print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
@@ -571,17 +571,16 @@ if __name__ == "__main__":
             #else:
             #    continue
             savelcfile = savelcdir+'/'+sn+'.dat'
-            if not os.path.exists(smpfile):
-                print 'SMP RESULTS DO NOT EXIST FORR ',smpfile
-                #os.system('echo '+sn+' '+filt+' >> '+missingfile)
-                continue
-            else:
-                pass
-            try:
-                a = sndata['MJD']
-                print 'MJD DOES NOT EXIST '*100
-            except:
-                continue
+            # if not os.path.exists(smpfile):
+            #     print 'SMP RESULTS DO NOT EXIST FORR ',smpfile
+            #     #os.system('echo '+sn+' '+filt+' >> '+missingfile)
+            #     continue
+            # else:
+            #     pass
+            #try:
+            a = sndata['MJD']
+            #except:
+            #    continue
                 #print 'DOES EXIST',smpfile
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
