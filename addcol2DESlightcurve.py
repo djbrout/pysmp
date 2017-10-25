@@ -521,7 +521,7 @@ if __name__ == "__main__":
         else:
             if tbad < 3:
                 for filt in badfilts:
-                    a.write('_'.join(smpfile.split('/')[-1]+' \n')
+                    a.write(smpfile.split('/')[-1]+' \n')
                 numbad += 1
 
     sne = tsne
