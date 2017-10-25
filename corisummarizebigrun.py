@@ -3226,7 +3226,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.plot([.0003,.02],[0,0],color='black')
     plt.savefig(outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png')
-
+    print 'upload',outdir+'/'+title+'_repeatability-photerr_vs_photerrr.png'
     plt.clf()
     # cntr = 0
     # pltvecx = []
@@ -3308,7 +3308,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='grey')
     plt.savefig(outdir+'/'+title+'_repeatability_vs_photerr.png')
-
+    print 'upload',outdir+'/'+title+'_repeatability_vs_photerr.png'
     #sys.exit()
 
     print 'saved repeat vs photerr1'
@@ -3353,7 +3353,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     plt.plot([min(starmagerr), max(starmagerr)], [min(starmagerr), max(starmagerr)], color='black')
     plt.savefig(outdir + '/' + title + '_repeatability_vs_photerrzpt.png')
-    print 'saved',outdir + '/' + title + '_repeatability_vs_photerrzpt.png'
+    print 'upload',outdir + '/' + title + '_repeatability_vs_photerrzpt.png'
+
     plt.clf()
 
 
