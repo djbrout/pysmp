@@ -621,14 +621,16 @@ if __name__ == "__main__":
         #print 'lcfile',lcfile
         #print flux
         if not os.path.exists(savelcfile):
-            imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
-            #print imfiles
-            #raw_input()
-            successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
-                     zpt, rmsaddin,
-                     chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
-
+            try:
+                imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
+                #print imfiles
+                #raw_input()
+                successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
+                         zpt, rmsaddin,
+                         chi2,sky,skyerr,smpflag,zptfile,
+                         idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+            except:
+                print 'COULD NOT SAVE '*100
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
 
