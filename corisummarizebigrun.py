@@ -1852,8 +1852,22 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
     #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
-    import plotsetup
-    plotsetup.halfpaperfig()
+
+    from matplotlib.ticker import MaxNLocator, NullLocator
+    from matplotlib.colors import LinearSegmentedColormap, colorConverter
+    from matplotlib.ticker import ScalarFormatter
+    from matplotlib import rcParams, rc
+    rcParams[
+        'font.family'] = 'serif'  # no serif on palomides?
+    rcParams['savefig.dpi'] = 300  # higher res outputs
+    rcParams['legend.numpoints'] = 1
+    rcParams['legend.markerscale'] = 0.7
+    rcParams['legend.handlelength'] = 0.5
+    rcParams['legend.handletextpad'] = 0.5
+    rcParams['legend.borderpad'] = 0.5
+    rcParams['legend.borderaxespad'] = 0.2
+    rcParams['legend.columnspacing'] = 1.0
+
     filts = ['g','r','i','z']
     colors = ['green','red','indigo','black']
     if filter == 'all':
