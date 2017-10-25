@@ -3148,7 +3148,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax.set_xticklabels(np.sort(np.unique(pltvecfield)))
     plt.savefig(outdir+'/fielddependence.png')
 
-    sys.exit()
+    #sys.exit()
     plt.clf()
     cntr = 0
     pltvecx = []
