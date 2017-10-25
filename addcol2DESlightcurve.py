@@ -574,6 +574,11 @@ if __name__ == "__main__":
                 continue
             else:
                 pass
+            try:
+                a = sndata['MJD']
+                print 'MJD DOES NOT EXIST '*100
+            except:
+                continue
                 #print 'DOES EXIST',smpfile
             #print lcfile
             pkmjd = open(lcfile).readlines()[10].split()[1]
