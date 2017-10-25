@@ -1874,7 +1874,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
     filts = ['g','r','i','z']
-    colors = ['green','red','indigo','black']
+    colors = ['green','red','indigo','blue']
     print np.unique(filterarr)
     if filter == 'all':
     #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
@@ -1889,9 +1889,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3,alpha=.8)
             ax4.plot(axa, aya, linewidth=3, color=col,label=filt+' band',alpha=.8)
             ax4.fill_between(axa, aya-aystd, aya+aystd, facecolor=col, alpha=.2)
-        ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black',alpha=.6)
+        ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black',alpha=.9)
+        ax4.axhline(0,linestyle='--', c='k')
 
-            #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
+    #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
             #ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
     else:
         axa, aya, aystd = dt.bindata(fakemag, fresid,
@@ -1922,7 +1923,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         ax4.plot(axa, aya, linewidth=3, color='blue')
         ax4.plot(axa, aya+(aystd*1.15), linewidth=2, color='blue',linestyle='--')
         ax4.plot(axa, aya-aystd*1.15, linewidth=2, color='blue',linestyle='--')
-    ax4.set_xlim(18.5,24)
+    ax4.set_xlim(19.8,23.5)
     ax4.set_ylim(-.02,.02)
     ax4.set_xlabel('Fake Mag')
     #ax5.set_xlabel('Counts')
