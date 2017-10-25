@@ -1879,7 +1879,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #print len(fakemag[fakemag<26])
         #raw_input('fmmmmm')
 
-        ax, ayrms,num = dt.binrms(fakemag[d < 10.], d[d < 10.], np.arange(18., 28, .5), .5,returnn=True)
+        ax, ayrms,num = dt.binrms(fakemag[(abs(d) < 3.)&((dpmjd>200)|(dpmjd<-40))], d[(abs(d) < 3.)&((dpmjd>200)|(dpmjd<-40))], np.arange(18., 28, .5), .5,returnn=True)
         ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
         # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
         # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
@@ -1926,7 +1926,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     plt.subplots_adjust(wspace=0.01,hspace=0.01)
 
     plt.savefig(outdir+'/'+deep_or_shallow+'std.png')
-    print 'saved' , outdir+'/'+deep_or_shallow+'std.png'
+    print 'upload' , outdir+'/std.png'
     #raw_input('press to continue')
 
     #--------------------------------------------------------------------------------------
