@@ -1852,7 +1852,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
 
     #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
-
+    import plotsetup
+    plotsetup.halfpaperfig()
     filts = ['g','r','i','z']
     colors = ['green','red','indigo','black']
     if filter == 'all':
@@ -1899,8 +1900,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #ax3.legend(fontsize='x-small',location='upper right')
 
         ax4.plot(axa, aya, linewidth=3, color='blue')
-        ax4.plot(axa, aya+(aystd*1.2), linewidth=2, color='blue',linestyle='--')
-        ax4.plot(axa, aya-aystd*1.2, linewidth=2, color='blue',linestyle='--')
+        ax4.plot(axa, aya+(aystd*1.15), linewidth=2, color='blue',linestyle='--')
+        ax4.plot(axa, aya-aystd*1.15, linewidth=2, color='blue',linestyle='--')
     ax4.set_xlim(18.5,24)
     ax4.set_ylim(-.02,.02)
     ax4.set_xlabel('Fake Mag')
