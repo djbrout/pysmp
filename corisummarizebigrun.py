@@ -1867,6 +1867,8 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rcParams['legend.borderaxespad'] = 0.2
     rcParams['legend.columnspacing'] = 1.0
 
+
+
     filts = ['g','r','i','z']
     colors = ['green','red','indigo','black']
     if filter == 'all':
@@ -1877,12 +1879,13 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                  (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
                  & (chisqarr < 2.5)
             axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
-                                    np.arange(20., 26., .1),window=2.,dontrootn=True)
+                                    np.arange(19., 26., .1),window=2.,dontrootn=True)
             ax4.plot([19, 28.7], [0, 0],color='grey')
 
-            ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<10.], np.arange(20., 28, .5), .25)
+            ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<10.], np.arange(19., 28, .5), .25)
             ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3,alpha=.8)
             ax4.plot(axa, aya, linewidth=3, color=col,label=filt+' band',alpha=.8)
+            ax4.fill_between(axa, aya-aystd, aya+aystd, facecolor=col, alpha=.2)
         ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black',alpha=.6)
 
             #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
