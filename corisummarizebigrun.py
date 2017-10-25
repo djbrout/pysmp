@@ -1429,7 +1429,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #print rmsaddin[:500]
     #raw_input('rmsaddin')
     fakeflux = 10 ** (.4 * (31. - fakemag))
-    #fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
+    fakeflux *= 10**(-1*.4*(fitzpt - fakezpt))
     fluxerrz = (fluxerr**2 + abs(flux) + 10**(.4*(31.-hostmag))+ (rmsaddin*flux)**2)**.5
     #fluxerr = (fluxerr**2 + abs(flux) + 10**(.4*(31.-hostmag))+ (rmsaddin*flux)**2)**.5
 
