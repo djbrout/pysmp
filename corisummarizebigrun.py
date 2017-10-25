@@ -50,7 +50,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                         stardata['poisson'],stardata['ids'],stardata['centroidedras'],stardata['centroideddecs'],
                         stardata['fwhm'],stardata['zptscat'],stardata['mjd'],stardata['field'],stardata['ccd'],stardata['band'],
                         title=tfield+'_'+filter+'_',outdir='/global/cscratch1/sd/dbrout/v6/')
-        data = {'filter':[]}
+        #ata = {'filter':[]}
+        data = {}
         for k in np.load(cd[0]).keys():
             print k
             data[k] = []
@@ -62,8 +63,10 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
                 data[key].extend(td[key])
             filt = c.split('.npz')[0].split('_')[-1]
             filts =  [ filt for x in range(len(td['Flux']))]
-            data['filter'].extend(filts)
+            #data['filter'].extend(filts)
     #print len(data['Flux'])
+    print data['filter']
+    raw_input()
     #raw_input()
     #for key in data.keys():
     #    data[key] = np.array(data[key])
