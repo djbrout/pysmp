@@ -1857,8 +1857,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     from matplotlib.colors import LinearSegmentedColormap, colorConverter
     from matplotlib.ticker import ScalarFormatter
     from matplotlib import rcParams, rc
-    rcParams[
-        'font.family'] = 'serif'  # no serif on palomides?
+    rcParams['font.family'] = 'serif'  # no serif on palomides?
     rcParams['savefig.dpi'] = 300  # higher res outputs
     rcParams['legend.numpoints'] = 1
     rcParams['legend.markerscale'] = 0.7
@@ -1922,7 +1921,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     #ax5.set_xlabel('Counts')
     ax3.set_ylabel('RMS')
     #ax3.set_title(filter+' band')
-    ax4.set_ylabel('(fitflux - fakeflux)/fakeflux')
+    ax4.set_ylabel('Fractional Flux Difference')
 
     if not filter == 'all':
         ax3.set_title(filter+' band')
