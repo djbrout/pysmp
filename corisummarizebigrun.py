@@ -1871,7 +1871,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     filts = ['g','r','i','z']
     colors = ['green','red','indigo','black']
-    print np.unique(filtarr)
+    print np.unique(filterarr)
     if filter == 'all':
     #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
         for filt,col in zip(filts,colors):
