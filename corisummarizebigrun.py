@@ -1871,13 +1871,12 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     filts = ['g','r','i','z']
     colors = ['green','red','indigo','black']
+    print np.unique(filtarr)
     if filter == 'all':
     #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
         for filt,col in zip(filts,colors):
             ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
-                 & (fluxerr > 0.) & (np.isfinite(flux)) & \
-                 (np.isfinite(fluxerr)) & (~np.isnan(flux)) & (~np.isnan(fluxerr)) & (chisqarr > .05) \
-                 & (chisqarr < 2.5)
+                 & (fluxerr > 0.) & (np.isfinite(flux))
             axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
                                     np.arange(19., 26., .1),window=2.,dontrootn=True)
             ax4.plot([19, 28.7], [0, 0],color='grey')
