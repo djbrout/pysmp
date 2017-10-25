@@ -65,8 +65,8 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
             filts =  [ filt for x in range(len(td['Flux']))]
             #data['filter'].extend(filts)
     #print len(data['Flux'])
-    print data['filter']
-    raw_input()
+    #print data['filter']
+    #raw_input()
     #raw_input()
     #for key in data.keys():
     #    data[key] = np.array(data[key])
