@@ -1925,7 +1925,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     plt.subplots_adjust(wspace=0.01,hspace=0.01)
 
-    plt.savefig(outdir+'/'+deep_or_shallow+'std.png')
+    plt.savefig(outdir+'/std.png')
     print 'upload' , outdir+'/std.png'
     #raw_input('press to continue')
 
