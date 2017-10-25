@@ -3321,6 +3321,67 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     os.popen('upload '+outdir+'/'+title+'_repeatability_vs_photerr.png')
     #sys.exit()
 
+
+
+
+
+
+    plt.clf()
+    print 'saved zptu'
+    if not skipp:
+        cntr = 0
+        pltvecx = []
+        pltvecy = []
+        for sme,sm,ind,r,d,cm,f,fe in zip(starmagerr,starmag,indices,ras,decs,catmag,flux,fluxerr):
+            cntr+=1
+            if cntr > maxpoints: continue
+            if cntr > 50000: continue
+            print cntr
+            #print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+            #print starmag[indices == ind]
+            #raw_input()
+            starww = starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
+            repeatability = np.std(starww)#/np.sqrt(len(starww))
+            #repeatability = np.std(starmag[indices == ind])
+            if len(starww) > 15.:
+                #if repeatability < .3:
+                plt.scatter(sme,repeatability,alpha=.3,color='black')
+                pltvecy.append(repeatability)
+                pltvecx.append(sme)
+
+
+        np.savez('savephoterr.npz',pltvecy=pltvecy,pltvecx=pltvecx)
+    else:
+        data = np.load('savephoterr.npz')
+        pltvecy = data['pltvecy']
+        pltvecx = data['pltvecx']
+        plt.scatter(pltvecx, pltvecy, alpha=.1, color='black')
+    plt.xscale('log')
+    #plt.yscale('log')
+    plt.xlabel('Photometric Error')
+    plt.ylabel('Photometric Error - Repeatability')
+    plt.xlim(.003,.06)
+    plt.ylim(.003,.06)
+
+    ax, ay, aystd = dt.bindata(np.array(pltvecx),np.array(pltvecy), np.arange(.003,.05, .001), window=.0005,dontrootn=True)
+    #photerr = copy(ax)
+    #repeaterr = copy(ay)
+    plt.plot(ax, ay, linewidth=3, color='orange', label='SMP',alpha=.6)
+    plt.plot(ax, ay + aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+    plt.plot(ax, ay - aystd, linewidth=2, color='orange', linestyle='--', label='SMP',alpha=.6)
+
+    plt.title(title+'BAND')
+
+    plt.plot([min(starmagerr),max(starmagerr)],[min(starmagerr),max(starmagerr)],color='grey')
+    plt.savefig(outdir+'/'+title+'_repeatability_vs_photerrstrait.png')
+    print 'upload',outdir+'/'+title+'_repeatability_vs_photerrstrait.png'
+
+
+
+
+
+
+
     print 'saved repeat vs photerr1'
     plt.clf()
 
