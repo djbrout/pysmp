@@ -1878,7 +1878,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
                  & (fluxerr > 0.) & (np.isfinite(flux))
             axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
-                                    np.arange(19., 26., .1),window=2.,dontrootn=True)
+                                    np.arange(19., 26., .5),window=.25)
             ax4.plot([19, 28.7], [0, 0],color='grey')
 
             ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<10.], np.arange(19., 28, .5), .25)
