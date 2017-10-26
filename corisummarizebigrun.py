@@ -1821,7 +1821,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
         ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-        ax3.set_ylim(.5,1.8)
+        ax3.set_ylim(.85,1.5)
         ax3.legend(fontsize='x-small')
 
         fresid = np.zeros(flux.shape)
@@ -1904,7 +1904,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         if not filter == 'all':
             ax3.set_title(filter+' band '+dos)
         else:
-            ax3.set_title(dos)
+            ax3.set_title(dos.upper())
             #ax3.set_title()
 
 
