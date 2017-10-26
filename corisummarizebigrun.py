@@ -663,7 +663,16 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['mjd'].extend(data['MJD'])
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
-            bigdata['field'].extend([i.split('/')[-1].split('-')[1].split('_')[0] for i in data['IMAGE_FILE']])
+
+            gotit = False
+            for imfi in data['IMAGE_FILE']:
+                try:
+                    field = imfi.split('/')[-1].split('-')[1].split('_')[0]
+                    gotit = True
+                except:
+                    pass
+                if gotit: break
+            bigdata['field'].extend([field for i in data['IMAGE_FILE']])
             print bigdata['field']
             raw_input()
             #for p in data['PSF_FILE']:
