@@ -1844,8 +1844,10 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         if filter == 'all':
         #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
             for filt,col in zip(filts,colors):
+                if dos == 'shallow': dosw = (field != 'X3') & (field != 'C3')
+                if dos == 'deep': dosw = (field == 'X3') | (field == 'C3')
                 ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
-                     & (fluxerr > 0.) & (np.isfinite(flux))
+                     & (fluxerr > 0.) & (np.isfinite(flux)) & dosw
                 axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
                                         np.arange(19., 26., .25),window=.125)
                 ax4.plot([19, 28.7], [0, 0],color='grey')
