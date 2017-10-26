@@ -3032,17 +3032,22 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                  pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb)
 
     plt.clf()
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 9))
+    fig, axes = plt.subplots(nrows=4, ncols=2, figsize=(12, 9))
     axes = axes.flatten()
-    for i, b in enumerate(np.unique(pltvecband)):
-        ax = axes[i]
-        prms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05)&(pltvecband==b)])))
-        ax.hist(pltvecy[pltvecband==b], alpha=.99, color='black',histtype='step',
-                 bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
-        ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
-
-        ax.legend()
-        ax.set_xlim(-.05,.05)
+    cntr = -1
+    for dos in ['shallow','deep']:
+        for i, b in enumerate(np.unique(pltvecband)):
+            cntr += 1
+            ax = axes[cntr]
+            if dos == 'shallow': dosw = (pltvecbigfield != 'X3')&(pltvecbigfield != 'C3')
+            if dos == 'deep': dosw = (pltvecbigfield == 'X3')|(pltvecbigfield == 'C3')
+            prms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05)&(pltvecband==b)&dosw])))
+            ax.hist(pltvecy[(pltvecband==b)&dosw], alpha=.99, color='black',histtype='step',
+                     bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
+            ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
+            ax.title(dos+' '+b)
+            ax.legend()
+            ax.set_xlim(-.05,.05)
     #plt.ylim(-.02, .01)
 
     # ax, ay, aystd = dt.bindata(np.array(pltvecx), np.array(pltvecy), np.arange(2, 10, .1), window=.1,
