@@ -476,7 +476,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         fakeid = f.split('_')[-2]
         snid = f.split('_')[-2]
         cntr += 1
-        if cntr > 5000: continue
+        if cntr > 200: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -673,8 +673,8 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
                     pass
                 if gotit: break
             bigdata['field'].extend([field for i in data['IMAGE_FILE']])
-            print bigdata['field']
-            raw_input()
+            #print bigdata['field']
+            #raw_input()
             #for p in data['PSF_FILE']:
                 # try:
                 #     #print pf.open(p)[1].header['PSF_FWHM'],pf.open(p)[1].header['PSF_FWHM']*  2.235 * 0.27
