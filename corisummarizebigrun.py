@@ -86,7 +86,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     plotsigmaresid(data['Flux'],data['Fluxerr'],data['FakeMag'], data['FitZPT'], data['FakeZPT'],data['HostMag'],
                    data['Chisq'],data['rmsaddin'],data['field'],resultsdir+'/Summary/'+filter+'/',data['rmsaddin'],
                    data['diffimflux'], data['diffimfluxerr'],filter,data['filter'],deep_or_shallow,data['sky'],data['skyerr'],
-                   data['fwhm'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],data['deltapos'],real=real)#resultsdir)
+                   data['fwhm'],data['imfiles'],data['DPMJD'],data['flag'],data['snid'],data['mjd'],data['deltapos'],data['field'],real=real)#resultsdir)
 
 
 def lookup_rms_addin(smpfile,obsid):
@@ -1423,7 +1423,7 @@ def plotpercentageresid(flux,fluxerr,fakemag,fitzpt,fakezpt,diffimflux,diffimflu
 
 def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin,deep,outdir,zptstd,
                    diffimflux,diffimfluxerr,filter,filterarr,deep_or_shallow,sky,skyerr,fwhm,imfiles,
-                   dpmjd,flag,snid,mjd,deltapos,real=False):
+                   dpmjd,flag,snid,mjd,deltapos,field,real=False):
 
 
 
@@ -1440,6 +1440,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     fluxerr = (fluxerr**2+abs(flux)+10**(.4*(31.-hostmag)))**.5
     fitzpt = np.asarray(fitzpt)
     fakezpt = np.asarray(fakezpt)
+    field = np.array(field,dtype='str')
     rmsaddin = np.asarray(rmsaddin)
     #print rmsaddin[:500]
     #raw_input('rmsaddin')
@@ -1630,6 +1631,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     mjd = mjd[ww]
     deltapos = deltapos[ww]
     dpmjd = dpmjd[ww]
+    field = field[ww]
     #print flux[0:10]
     #print fakeflux[0:10]
     #print flux.shape
@@ -1857,13 +1859,16 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
         #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
                 #ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
         else:
-            axa, aya, aystd = dt.bindata(fakemag, fresid,
+            if dos == 'shallow': dosw = (field != 'X3')&(field!='C3')
+            if dos == 'deep': dosw = (field == 'X3')|(field=='C3')
+
+            axa, aya, aystd = dt.bindata(fakemag[dosw], fresid[dosw],
                                          np.arange(18., 26., .5), window=.5)
             #ax4.plot([19, 28.7], [0, 0], color='grey')
             #print len(fakemag[fakemag<26])
             #raw_input('fmmmmm')
 
-            ax, ayrms,num = dt.binrms(fakemag[(abs(d) < 3.)], d[(abs(d) < 3.)], np.arange(18., 28, .5), .25,returnn=True)
+            ax, ayrms,num = dt.binrms(fakemag[(abs(d) < 3.)&(dosw)], d[(abs(d) < 3.)&(dosw)], np.arange(18., 28, .5), .25,returnn=True)
             ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
             # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
             # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
