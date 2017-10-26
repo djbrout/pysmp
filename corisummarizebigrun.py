@@ -663,6 +663,9 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             bigdata['mjd'].extend(data['MJD'])
             bigdata['imfiles'].extend(data['IMAGE_FILE'])
             bigdata['fakefiles'].extend([f for i in range(len(data['FLUX']))])
+            bigdata['field'].extend([i.split('/')[-1].split('-')[1][:2] for i in data['IMAGE_FILE']])
+            print bigdata['field']
+            raw_input()
             #for p in data['PSF_FILE']:
                 # try:
                 #     #print pf.open(p)[1].header['PSF_FWHM'],pf.open(p)[1].header['PSF_FWHM']*  2.235 * 0.27
@@ -742,7 +745,6 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
             #     print rms
             #     raw_input()
             #     bigdata['rmsaddin'].extend(data['CHI2']*0. + rms)
-            bigdata['field'].extend(data['CHI2']*0 + np.float(deep))
             #print f,'read in'
         # except:
         #     print 'Columns missing in file '+f
@@ -1780,177 +1782,128 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
     # start with a rectangular Figure
-    plt.figure(1, figsize=(45, 40))
+    for dos in ['deep','shallow']:
+        plt.clf()
+        plt.figure(1, figsize=(45, 40))
 
-    #ax1 = plt.axes(rect_scatter)
-    ax3 = plt.axes(rect_histx)
-    #ax2 = plt.axes(rect_histy)
-    ax4 = plt.axes(rect_scatterflux)
-    #ax5 = plt.axes(rect_histyflux)
+        ax3 = plt.axes(rect_histx)
+        ax4 = plt.axes(rect_scatterflux)
 
-    # no labels
-    #ax2.yaxis.set_major_formatter(nullfmt)
-    ax3.xaxis.set_major_formatter(nullfmt)
-    #ax5.yaxis.set_major_formatter(nullfmt)
+        ax3.xaxis.set_major_formatter(nullfmt)
 
-    #outliers3 = float(len(d[(abs(d)>3.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
-    #outliers5 = float(len(d[(abs(d)>5.) & (chisqarr > .05) & (chisqarr < 2.5) & (np.array(fakemag, dtype='float') > 0.)]))/float(len(d))
-
-    #ax2.hist(d[np.isfinite(d)], bins=np.arange(-10, 10, .25), normed=True,label='RMS Fakemag = 99: ' + str(round(rms99, 3))+
-    #                                                            '\nRMS Fakemag < 99: '+ str(round(rmsr, 3))+'\n3sig Outlier'#+
-    #                                                            ' Fraction: '+str(round(outliers3,3))+'\n5sig Outlier'+
-    #                                                            ' Fraction: '+str(round(outliers5,3))
-    #                                                            ,orientation='horizontal')
-             #label='RMS: ' + str(round(rms, 3)) + '\nChiSq (3sig cut) ' + str(round(chisq, 3)) + '\nMedian ' + str(
-             #   round(np.median(d), 3)) + ' +- ' + str(round(np.std(d), 3)),
-
-    import matplotlib.mlab as mlab
-    import math
-    mean = 0
-    variance = 1
-    sigma = math.sqrt(variance)
-    x = np.arange(-5, 5, .1)
-    #ax2.plot(mlab.normpdf(x, mean, sigma),x, color='black', label='Gaussian Normal')
-
-    #ax2.set_ylim(-4, 4)
-    #ax2.set_xlim(0,.5)
-    #.xlabel('STDEV')
-    #plt.ylabel('Normalized Count')
-    #ax2.legend(fontsize='xx-small',loc=(0.,1.25))
-    #plt.savefig('stdresid.png')
-
-    #plt.clf()
-    #fakemag[fakemag == 99] = 28.5
+        import matplotlib.mlab as mlab
+        import math
+        variance = 1
 
 
+        ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
+        ax3.set_ylim(.5,1.8)
+        ax3.legend(fontsize='x-small')
+
+        fresid = np.zeros(flux.shape)
+        for i,f,ff in zip(range(len(flux)),flux,fakeflux):
+            if f == 0.:
+                fresid[i] = np.nan
+            else:
+                fresid[i] = (f - ff) / max([abs(ff),1.])
+        #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+
+        #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
+
+        from matplotlib.ticker import MaxNLocator, NullLocator
+        from matplotlib.colors import LinearSegmentedColormap, colorConverter
+        from matplotlib.ticker import ScalarFormatter
+        from matplotlib import rcParams, rc
+        rcParams['font.family'] = 'serif'  # no serif on palomides?
+        rcParams['savefig.dpi'] = 300  # higher res outputs
+        rcParams['legend.numpoints'] = 1
+        rcParams['legend.markerscale'] = 0.7
+        rcParams['legend.handlelength'] = 0.5
+        rcParams['legend.handletextpad'] = 0.5
+        rcParams['legend.borderpad'] = 0.5
+        rcParams['legend.borderaxespad'] = 0.2
+        rcParams['legend.columnspacing'] = 1.0
 
 
-    #ax1.scatter(fakemag,d,alpha=.3,color='blue')
-    #ax, ay, aystd = dt.bindata(fakemag[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], d[(d<3.)& (np.array(fakemag, dtype='float') > 0.)], np.arange(19., 28, .1),window=.5)
-    #ax1.plot([19, 28.7], [0, 0],color='grey')
-    #ax1.plot(ax, ay, linewidth=3, color='black', label='SMP')
-    #ax1.plot(ax, ay+aystd, linewidth=2, color='black',linestyle='--', label='SMP')
-    #ax1.plot(ax, ay-aystd, linewidth=2, color='black',linestyle='--', label='SMP')
 
-    #ax1.errorbar(ax, ay, aystd, markersize=20, color='green', fmt='o', label='SMP')
+        filts = ['g','r','i','z']
+        colors = ['green','red','indigo','blue']
+        print np.unique(filterarr)
+        if filter == 'all':
+        #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
+            for filt,col in zip(filts,colors):
+                ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
+                     & (fluxerr > 0.) & (np.isfinite(flux))
+                axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
+                                        np.arange(19., 26., .25),window=.125)
+                ax4.plot([19, 28.7], [0, 0],color='grey')
 
-    #ax1.set_xlim(19, 28.7)
-    #ax1.set_ylim(-3., 3.)
-    #ax1.set_xlabel('Fake Mag')
-    #ax1.set_ylabel('STD')
+                ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<10.], np.arange(19., 28, .25), .125)
+                ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3,alpha=.8)
+                ax4.plot(axa, aya, linewidth=3, color=col,label=filt+' band',alpha=.8)
+                ax4.fill_between(axa, aya-aystd, aya+aystd, facecolor=col, alpha=.2)
+            ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black',alpha=.9)
+            ax4.axhline(0,linestyle='--', c='k')
 
-    #ax, ayrms= dt.binrms(fakemag, d, np.arange(19.5, max(fakemag), .1),.5)
-    #ax3.plot(ax, ayrms, color='blue',label='RMS',linewidth=3)
-
-
-    ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-    ax3.set_ylim(.5,1.8)
-    ax3.legend(fontsize='x-small')
-
-    fresid = np.zeros(flux.shape)
-    for i,f,ff in zip(range(len(flux)),flux,fakeflux):
-        if f == 0.:
-            fresid[i] = np.nan
+        #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
+                #ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
         else:
-            fresid[i] = (f - ff) / max([abs(ff),1.])
-    #fresid[abs(fakeflux) < 1.] = flux[abs(fakeflux) < 1.] - fakeflux[abs(fakeflux) < 1.]
+            axa, aya, aystd = dt.bindata(fakemag, fresid,
+                                         np.arange(18., 26., .5), window=.5)
+            #ax4.plot([19, 28.7], [0, 0], color='grey')
+            #print len(fakemag[fakemag<26])
+            #raw_input('fmmmmm')
 
-    #ax5.hist(fresid, bins=np.arange(-.155,.15,.01),color='blue', orientation='horizontal')
+            ax, ayrms,num = dt.binrms(fakemag[(abs(d) < 3.)], d[(abs(d) < 3.)], np.arange(18., 28, .5), .25,returnn=True)
+            ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
+            # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
+            # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
+            # ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
+            # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
+            #ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
+            ax3.axhline(0,c='k',linestyle='--')
+            ax4.axhline(0,c='k')
 
-    from matplotlib.ticker import MaxNLocator, NullLocator
-    from matplotlib.colors import LinearSegmentedColormap, colorConverter
-    from matplotlib.ticker import ScalarFormatter
-    from matplotlib import rcParams, rc
-    rcParams['font.family'] = 'serif'  # no serif on palomides?
-    rcParams['savefig.dpi'] = 300  # higher res outputs
-    rcParams['legend.numpoints'] = 1
-    rcParams['legend.markerscale'] = 0.7
-    rcParams['legend.handlelength'] = 0.5
-    rcParams['legend.handletextpad'] = 0.5
-    rcParams['legend.borderpad'] = 0.5
-    rcParams['legend.borderaxespad'] = 0.2
-    rcParams['legend.columnspacing'] = 1.0
+            # ww = hostmag > 25.
+            # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+            # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
+            #
+            # ww = hostmag < 23.
+            # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
+            # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
+            #ax3.legend(fontsize='x-small',location='upper right')
 
+            ax4.plot(axa, aya, linewidth=3, color='blue')
+            ax4.plot(axa, aya+(aystd*1.15), linewidth=2, color='blue',linestyle='--')
+            ax4.plot(axa, aya-aystd*1.15, linewidth=2, color='blue',linestyle='--')
+        ax4.set_xlim(19.8,23.5)
+        ax4.set_ylim(-.02,.02)
+        ax4.set_xlabel('Fake Mag')
+        #ax5.set_xlabel('Counts')
+        ax3.set_ylabel('RMS')
+        #ax3.set_title(filter+' band')
+        ax4.set_ylabel('Fractional Flux Difference')
 
-
-    filts = ['g','r','i','z']
-    colors = ['green','red','indigo','blue']
-    print np.unique(filterarr)
-    if filter == 'all':
-    #ax4.scatter(fakemag,fresid,alpha=.03,color='black')
-        for filt,col in zip(filts,colors):
-            ww = (filterarr == filt) & (flux != 0) & (np.array(fakemag, dtype='float') > 0.)\
-                 & (fluxerr > 0.) & (np.isfinite(flux))
-            axa, aya, aystd = dt.bindata(fakemag[ww],fresid[ww],
-                                    np.arange(19., 26., .25),window=.125)
-            ax4.plot([19, 28.7], [0, 0],color='grey')
-
-            ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<10.], np.arange(19., 28, .25), .125)
-            ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3,alpha=.8)
-            ax4.plot(axa, aya, linewidth=3, color=col,label=filt+' band',alpha=.8)
-            ax4.fill_between(axa, aya-aystd, aya+aystd, facecolor=col, alpha=.2)
-        ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black',alpha=.9)
-        ax4.axhline(0,linestyle='--', c='k')
-
-    #ax4.plot(axa, aya + aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
-            #ax4.plot(axa, aya - aystd, linewidth=2, color=col, linestyle='--',alpha=.8)
-    else:
-        axa, aya, aystd = dt.bindata(fakemag, fresid,
-                                     np.arange(18., 26., .5), window=.5)
-        #ax4.plot([19, 28.7], [0, 0], color='grey')
-        #print len(fakemag[fakemag<26])
-        #raw_input('fmmmmm')
-
-        ax, ayrms,num = dt.binrms(fakemag[(abs(d) < 3.)], d[(abs(d) < 3.)], np.arange(18., 28, .5), .25,returnn=True)
-        ax3.plot(ax, ayrms, color='blue', label='ALL SNe', linewidth=3)
-        # ax, ayrms = dt.binrms(fakemag, dz, np.arange(20., 28, .1), 1.5)
-        # ax3.plot(ax, ayrms, color='blue',linestyle='--', label='ALL SNe', linewidth=3)
-        # ax, ayrms = dt.binrms(fakemag, df, np.arange(20., 28, .1), 1.5)
-        # ax3.plot(ax, ayrms, color='red', linestyle='--', label='DIFFIMG', linewidth=3)
-        #ax3.plot(ax, ax * 0 + 1., linestyle='--', color='black')
-        ax3.axhline(0,c='k',linestyle='--')
-        ax4.axhline(0,c='k')
-
-        # ww = hostmag > 25.
-        # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-        # ax3.plot(ax, ayrms, color='red', label='HostMag > 25.', linewidth=3)
-        #
-        # ww = hostmag < 23.
-        # ax, ayrms = dt.binrms(fakemag[ww], d[ww], np.arange(19.5, max(fakemag), .1), .5)
-        # ax3.plot(ax, ayrms, color='green', label='HostMag < 23', linewidth=3)
-        #ax3.legend(fontsize='x-small',location='upper right')
-
-        ax4.plot(axa, aya, linewidth=3, color='blue')
-        ax4.plot(axa, aya+(aystd*1.15), linewidth=2, color='blue',linestyle='--')
-        ax4.plot(axa, aya-aystd*1.15, linewidth=2, color='blue',linestyle='--')
-    ax4.set_xlim(19.8,23.5)
-    ax4.set_ylim(-.02,.02)
-    ax4.set_xlabel('Fake Mag')
-    #ax5.set_xlabel('Counts')
-    ax3.set_ylabel('RMS')
-    #ax3.set_title(filter+' band')
-    ax4.set_ylabel('Fractional Flux Difference')
-
-    if not filter == 'all':
-        ax3.set_title(filter+' band')
-    else:
-        pass
-        #ax3.set_title()
+        if not filter == 'all':
+            ax3.set_title(filter+' band '+dos)
+        else:
+            ax3.set_title(dos)
+            #ax3.set_title()
 
 
-    ax3.set_xlim(ax4.get_xlim())
-    ax4.legend(fontsize='x-small',loc='upper right')
-    #ax2.set_ylim(ax1.get_ylim())
-    #ax5.set_ylim(ax4.get_ylim())
-    #ax2.xaxis.set_major_formatter(nullfmt)
-    ax3.xaxis.set_major_formatter(nullfmt)
-    #ax1.xaxis.set_major_formatter(nullfmt)
+        ax3.set_xlim(ax4.get_xlim())
+        ax4.legend(fontsize='x-small',loc='upper right')
+        #ax2.set_ylim(ax1.get_ylim())
+        #ax5.set_ylim(ax4.get_ylim())
+        #ax2.xaxis.set_major_formatter(nullfmt)
+        ax3.xaxis.set_major_formatter(nullfmt)
+        #ax1.xaxis.set_major_formatter(nullfmt)
 
-    plt.subplots_adjust(wspace=0.02,hspace=0.02)
-    #plt.tight_layout()
+        plt.subplots_adjust(wspace=0.02,hspace=0.02)
+        #plt.tight_layout()
 
-    plt.savefig(outdir+'/'+filter+'std.png')
-    print 'upload' , outdir+'/'+filter+'std.png'
+        plt.savefig(outdir+'/'+filter+'_'+dos+'_std.png')
+        print 'upload' , outdir+'/'+filter+'_'+dos+'_std.png'
     #raw_input('press to continue')
 
     #--------------------------------------------------------------------------------------
