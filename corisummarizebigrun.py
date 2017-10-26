@@ -2995,7 +2995,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #starmean = np.mean(starww)
             #repeatability = np.std(starww)
             # repeatability = np.std(starmag[indices == ind])
-            if starlen > 5.:
+            if starlen > 15.:
                 pltvecy.append(sm - starmean)
                 pltvecband.append(tband)
                 pltvecmjd.append(tmjd)
