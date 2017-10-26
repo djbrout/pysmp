@@ -2927,7 +2927,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = True
+    load = False
     if load:
         a = np.load(outdir + '/pltstarvec.npz')
         pltvecy = a['pltvecy']
@@ -3056,8 +3056,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/repeatabilitylikesnls.png')
-    print outdir + '/' + title + '_repeatabilitylikesnls.png'
-
+    print 'upload',outdir + '/' + title + '_repeatabilitylikesnls.png'
+    print '-'*100
     plt.clf()
 
     fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
