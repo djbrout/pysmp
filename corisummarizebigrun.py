@@ -476,7 +476,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
         fakeid = f.split('_')[-2]
         snid = f.split('_')[-2]
         cntr += 1
-        if cntr > 200: continue
+        if cntr > 200000: continue
         #if cntr == 34: continue
         #if cntr == 53: continue
         #if not '_r.smp' in f: continue
@@ -807,6 +807,7 @@ def grabdata(tmpwriter,resultsdir,cd,tfield,filter = 'g',oldformat=False,real=Fa
     print 'saving to cachfile'
     np.savez(outfile,**bigdata)
     print 'saved'
+    sys.exit()
     #tmpwriter.savez(outfile,*bigdata)
     return bigdata
 
