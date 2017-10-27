@@ -3045,7 +3045,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             ax.hist(pltvecy[(pltvecband==b)&dosw], alpha=.99, color='black',histtype='step',
                      bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
             ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
-            ax.title(dos+' '+b)
+            ax.set_title(dos+' '+b)
             ax.legend()
             ax.set_xlim(-.05,.05)
     #plt.ylim(-.02, .01)
