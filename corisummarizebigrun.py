@@ -3061,7 +3061,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print 'finished snls'
     #plt.plot([2, 10], [0, 0], color='black')
     plt.savefig(outdir + '/repeatabilitylikesnls.png')
-    print 'upload',outdir + '/' + title + '_repeatabilitylikesnls.png'
+    print 'upload',outdir + '/repeatabilitylikesnls.png'
     print '-'*100
     plt.clf()
 
