@@ -476,9 +476,18 @@ class smp:
         smp_noise = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_psf = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_mask = np.zeros([snparams.nvalid, params.substamp, params.substamp])
+
+        nightlystardict = {}
+        nightlystarmjds = {}
+
         smp_starind = np.zeros([snparams.nvalid, 500])
         smp_starra = np.zeros([snparams.nvalid, 500])
         smp_stardec = np.zeros([snparams.nvalid, 500])
+
+        smp_starcatind = np.zeros([snparams.nvalid, 500])
+        smp_starcatra = np.zeros([snparams.nvalid, 500])
+        smp_starcatdec = np.zeros([snparams.nvalid, 500])
+
         smp_dict = {'scale':np.zeros(snparams.nvalid),
                     'aperscale': np.zeros(snparams.nvalid),
                     'scale_err':np.zeros(snparams.nvalid),
@@ -3049,6 +3058,13 @@ class smp:
                                     smp_stardec[i,:len(thisdec)] = thisdec
                                     smp_starind[i,:len(thisids)] = thisids
 
+                                    for idd,ira,idec in zip(thisids,thisra,thisdec):
+                                        try:
+                                            nsd = nightlystardict[idd]
+                                            nightlystardict[idd] = np.vstack(nsd,np.array([ira,idec]))
+                                        except:
+                                            nigtlystardict[idd] = np.array([ira,idec])
+
                                     smp_dict['scale'][i] = scale
                                     #smp_dict['scale_err'][i] = errmag
                                     # smp_dict['sky'][i] = skysn
@@ -3501,14 +3517,18 @@ class smp:
 
         meanstarras = {}
         meanstardecs = {}
+        meanstarcounts = {}
         for ind in np.unique(smp_starind):
             ww = np.where(smp_starind == ind)
             meanstarras[ind] = np.mean(smp_starra[ww].ravel())
             meanstardecs[ind] = np.mean(smp_stardec[ww].ravel())
-        print np.unique(smp_starind)
+            meanstarcounts[ind] = len(smp_stardec[ww].ravel())
+
+
+
 
         for im,fl,k in zip(smp_dict['image_filename'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
-
+            print im
             if fl != 1:
                 nightlyoffra = []
                 nightlyoffdec = []
@@ -3547,12 +3567,18 @@ class smp:
 
                 try:
                     goodindices = goodindices[:30]
-                    smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
-                    smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
+                    if len(goodindices) < 10:
+                        print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
+                        smp_dict['flag'][k] = 1
+                    else:
+                        smp_dict['raoff'][k] = np.mean(nightlyoffra[goodindices])
+                        smp_dict['decoff'][k] = np.mean(nightlyoffdec[goodindices])
                 except:
                     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
-                    smp_dict['flag'][k] = 1
-
+                    smp_dict['flag'][k] = 16
+                print smp_dict['raoff'][k]
+                print 'raoffcheck'
+                raw_input()
                 # if len(goodindices) < 10:
                 #     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
                 #     smp_dict['flag'][k] = 1
@@ -3564,27 +3590,25 @@ class smp:
 
 
 
-                    w = wcs.WCS(im)
+                w = wcs.WCS(im)
+                xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA , snparams.DECL]]), 0))
+                xsn = xsn[0]
+                ysn = ysn[0]
+
+                xsno, ysno = zip(*w.wcs_world2pix(np.array([[snparams.RA + smp_dict['raoff'][k], snparams.DECL + smp_dict['decoff'][k]]]), 0))
+                xsno = xsno[0]
+                ysno = ysno[0]
+
+                smp_dict['yoff'][k] = xsno-xsn #+ smp_dict['snx'][k] - round(smp_dict['snx'][k])
+                smp_dict['xoff'][k] = ysno-ysn #+ smp_dict['sny'][k] - round(smp_dict['sny'][k])
 
 
-
-                    xsn, ysn = zip(*w.wcs_world2pix(np.array([[snparams.RA , snparams.DECL]]), 0))
-                    xsn = xsn[0]
-                    ysn = ysn[0]
-
-                    xsno, ysno = zip(*w.wcs_world2pix(np.array([[snparams.RA + smp_dict['raoff'][k], snparams.DECL + smp_dict['decoff'][k]]]), 0))
-                    xsno = xsno[0]
-                    ysno = ysno[0]
-
-                    smp_dict['yoff'][k] = xsno-xsn #+ smp_dict['snx'][k] - round(smp_dict['snx'][k])
-                    smp_dict['xoff'][k] = ysno-ysn #+ smp_dict['sny'][k] - round(smp_dict['sny'][k])
-
-                    if smp_dict['yoff'][k] > .5:
-                        print 'NIGHTLY OFFSET IS TOO LARGE'
-                        smp_dict['flag'][k] = 1
-                    if smp_dict['xoff'][k] > .5:
-                        print 'NIGHTLY OFFSET IS TOO LARGE'
-                        smp_dict['flag'][k] = 1
+                if smp_dict['yoff'][k] > .5:
+                    print 'NIGHTLY OFFSET IS TOO LARGE'
+                    smp_dict['flag'][k] = 1
+                if smp_dict['xoff'][k] > .5:
+                    print 'NIGHTLY OFFSET IS TOO LARGE'
+                    smp_dict['flag'][k] = 1
 
                     # x_psf,y_psf = cntrd.cntrd(smp_psf[k,:,:],15,15,2.)
                     # print x_psf,y_psf,-smp_dict['snx'][k]+round(smp_dict['snx'][k]),\
