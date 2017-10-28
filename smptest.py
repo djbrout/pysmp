@@ -3584,7 +3584,7 @@ class smp:
                 goodindices = np.array(goodindices,dtype='int')
 
                 try:
-                    goodindices = goodindices[:30]
+                    goodindices = goodindices[:50]
                     if len(goodindices) < 10:
                         print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
                         smp_dict['flag'][k] = 1
@@ -3642,6 +3642,8 @@ class smp:
                     ax.set_ylabel('dec_mean - dec (pixels)')
                     ax.axhline(0, c='k')
                     ax.axvline(0, c='k')
+                    ax.axvline(smp_dict['xoff'][k],c='red')
+                    ax.axhline(smp_dict['yoff'][k],c='red')
                     ax.legend()
 
                     # ax.set_xlim(-.0001,.0001)
