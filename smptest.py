@@ -3578,7 +3578,6 @@ class smp:
                     smp_dict['flag'][k] = 16
                 print smp_dict['raoff'][k]
                 print 'raoffcheck'
-                raw_input()
                 # if len(goodindices) < 10:
                 #     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
                 #     smp_dict['flag'][k] = 1
@@ -3602,7 +3601,8 @@ class smp:
                 smp_dict['yoff'][k] = xsno-xsn #+ smp_dict['snx'][k] - round(smp_dict['snx'][k])
                 smp_dict['xoff'][k] = ysno-ysn #+ smp_dict['sny'][k] - round(smp_dict['sny'][k])
 
-
+                print smp_dict['xoff'][k]
+                print 'check'
                 if smp_dict['yoff'][k] > .5:
                     print 'NIGHTLY OFFSET IS TOO LARGE'
                     smp_dict['flag'][k] = 1
