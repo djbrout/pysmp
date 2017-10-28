@@ -3541,7 +3541,7 @@ class smp:
 
         cntr = -1
         plt.clf()
-        fig, axes = plt.subplots(nrows=5, ncols=6, figsize=(12 * 1.2, 9 * 1.2))
+        fig, axes = plt.subplots(nrows=4, ncols=5, figsize=(12 * 1.2, 9 * 1.2))
         axes = axes.flatten()
 
         for im,m,fl,k in zip(smp_dict['image_filename'],smp_dict['mjd'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
@@ -3595,7 +3595,7 @@ class smp:
                     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
                     smp_dict['flag'][k] = 16
 
-                if k <= 30:
+                if k <= 20:
                     ax = axes[k-1]
                     ax.scatter(nightlyoffra[goodindices],nightlyoffdec[goodindices],alpha=.5,c='k')
                     ax.set_title(m)
@@ -3604,8 +3604,8 @@ class smp:
                     ax.axhline(0,c='k')
 
                     ax.axvline(0,c='k')
-                    #ax.set_xlim(-.000001,.000001)
-                    #ax.set_ylim(-.000001,.000001)
+                    ax.set_xlim(-.00001,.00001)
+                    ax.set_ylim(-.00001,.00001)
 
 
                 print smp_dict['raoff'][k]
