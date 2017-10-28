@@ -1519,7 +1519,7 @@ class smp:
                 continue
             print imfile
 
-            if cccc > 10:
+            if cccc > 40:
                 #cccc += 1
                 continue
 
