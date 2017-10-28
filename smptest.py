@@ -3604,8 +3604,8 @@ class smp:
                     ax.axhline(0,c='k')
 
                     ax.axvline(0,c='k')
-                    ax.set_xlim(-.00001,.00001)
-                    ax.set_ylim(-.00001,.00001)
+                    ax.set_xlim(-.0001,.0001)
+                    ax.set_ylim(-.0001,.0001)
 
 
                 print smp_dict['raoff'][k]
