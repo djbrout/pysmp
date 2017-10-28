@@ -50,6 +50,21 @@ import dilltools as dt
 import chkpsf
 import gc
 
+
+from matplotlib.ticker import MaxNLocator, NullLocator
+from matplotlib.colors import LinearSegmentedColormap, colorConverter
+from matplotlib.ticker import ScalarFormatter
+from matplotlib import rcParams, rc
+rcParams['font.family'] = 'serif'  # no serif on palomides?
+rcParams['savefig.dpi'] = 300  # higher res outputs
+rcParams['legend.numpoints'] = 1
+rcParams['legend.markerscale'] = 0.7
+rcParams['legend.handlelength'] = 0.5
+rcParams['legend.handletextpad'] = 0.5
+rcParams['legend.borderpad'] = 0.5
+rcParams['legend.borderaxespad'] = 0.2
+rcParams['legend.columnspacing'] = 1.0
+
 inflateskyerrworked = False
 try:
     import inflateskyerr
@@ -3524,10 +3539,11 @@ class smp:
             meanstardecs[ind] = np.mean(smp_stardec[ww].ravel())
             meanstarcounts[ind] = len(smp_stardec[ww].ravel())
 
+        cntr = -1
+        fig, axes = plt.subplots(nrows=5, ncols=6, figsize=(12 * 1.2, 9 * 1.2))
+        axes = axes.flatten()
 
-
-
-        for im,fl,k in zip(smp_dict['image_filename'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
+        for im,m,fl,k in zip(smp_dict['image_filename'],smp_dict['mjd'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
             print im
             if fl != 1:
                 nightlyoffra = []
@@ -3551,6 +3567,15 @@ class smp:
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
+                if k < 35:
+                    ax = axes[k]
+                    ax.scatter(nightlyoffra,nightlyoffdec,alpha=.5,c='k')
+                    ax.set_title(m)
+                    ax.set_xlabel('ra_mean - ra')
+                    ax.set_xlabel('dec_mean - dec')
+                    ax.axhline(0)
+                    ax.axvline(0)
+
                 #for nd in nightlydist:
                 #    print nd
                 #raw_input('nightly distnaces')
@@ -3617,7 +3642,7 @@ class smp:
                     # print 'pix off',smp_dict['xoff'][k],smp_dict['yoff'][k]
                     # raw_input()
 
-
+        plt.savefig('nightlyoffdeg.png')
         #print 'dillscale',smp_dict['scale']
         if self.fermilog:
             self.tmpwriter.appendfile('\nDone with zeropoints\n ', self.fermilogfile)
