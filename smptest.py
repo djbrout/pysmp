@@ -3643,8 +3643,8 @@ class smp:
                     ax.set_ylabel('dec_mean - dec (pixels)')
                     ax.axhline(0, c='k')
                     ax.axvline(0, c='k')
-                    ax.axvline(-1*smp_dict['xoff'][k],c='red')
-                    ax.axhline(-1*smp_dict['yoff'][k],c='red')
+                    ax.axvline(-1*smp_dict['yoff'][k],c='red')
+                    ax.axhline(-1*smp_dict['xoff'][k],c='red')
                     ax.legend()
 
                     # ax.set_xlim(-.0001,.0001)
