@@ -1519,7 +1519,7 @@ class smp:
                 continue
             print imfile
 
-            if cccc > 6000:
+            if cccc > 10:
                 #cccc += 1
                 continue
 
@@ -3595,8 +3595,8 @@ class smp:
                     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
                     smp_dict['flag'][k] = 16
 
-                if k < 30:
-                    ax = axes[k]
+                if k <= 30:
+                    ax = axes[k-1]
                     ax.scatter(nightlyoffra[goodindices],nightlyoffdec[goodindices],alpha=.5,c='k')
                     ax.set_title(m)
                     ax.set_xlabel('ra_mean - ra')
@@ -3604,8 +3604,8 @@ class smp:
                     ax.axhline(0,c='k')
 
                     ax.axvline(0,c='k')
-                    ax.set_xlim(-.000001,.000001)
-                    ax.set_ylim(-.000001,.000001)
+                    #ax.set_xlim(-.000001,.000001)
+                    #ax.set_ylim(-.000001,.000001)
 
 
                 print smp_dict['raoff'][k]
