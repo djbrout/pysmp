@@ -477,8 +477,8 @@ class smp:
         smp_psf = np.zeros([snparams.nvalid,params.substamp,params.substamp])
         smp_mask = np.zeros([snparams.nvalid, params.substamp, params.substamp])
 
-        nightlystardict = {}
-        nightlystarmjds = {}
+        #nightlystardict = {}
+        #nightlystarmjds = {}
 
         smp_starind = np.zeros([snparams.nvalid, 500])
         smp_starra = np.zeros([snparams.nvalid, 500])
@@ -3058,12 +3058,12 @@ class smp:
                                     smp_stardec[i,:len(thisdec)] = thisdec
                                     smp_starind[i,:len(thisids)] = thisids
 
-                                    for idd,ira,idec in zip(thisids,thisra,thisdec):
-                                        try:
-                                            nsd = nightlystardict[idd]
-                                            nightlystardict[idd] = np.vstack(nsd,np.array([ira,idec]))
-                                        except:
-                                            nigtlystardict[idd] = np.array([ira,idec])
+                                    # for idd,ira,idec in zip(thisids,thisra,thisdec):
+                                    #     try:
+                                    #         nsd = nightlystardict[idd]
+                                    #         nightlystardict[idd] = np.vstack(nsd,np.array([ira,idec]))
+                                    #     except:
+                                    #         nigtlystardict[idd] = np.array([ira,idec])
 
                                     smp_dict['scale'][i] = scale
                                     #smp_dict['scale_err'][i] = errmag
