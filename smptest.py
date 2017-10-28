@@ -3597,15 +3597,15 @@ class smp:
 
                 if k <= 20:
                     ax = axes[k-1]
-                    ax.scatter(nightlyoffra[goodindices],nightlyoffdec[goodindices],alpha=.5,c='k')
+                    ax.scatter(nightlyoffra[goodindices]/0.000277778/.27,
+                               nightlyoffdec[goodindices]/0.000277778/.27,alpha=.5,c='k')
                     ax.set_title(m)
-                    ax.set_xlabel('ra_mean - ra')
-                    ax.set_xlabel('dec_mean - dec')
+                    ax.set_xlabel('ra_mean - ra (pixels)')
+                    ax.set_xlabel('dec_mean - dec (pixels)')
                     ax.axhline(0,c='k')
-
                     ax.axvline(0,c='k')
-                    ax.set_xlim(-.0001,.0001)
-                    ax.set_ylim(-.0001,.0001)
+                    #ax.set_xlim(-.0001,.0001)
+                    #ax.set_ylim(-.0001,.0001)
 
 
                 print smp_dict['raoff'][k]
