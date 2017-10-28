@@ -3601,8 +3601,9 @@ class smp:
                     ax.set_title(m)
                     ax.set_xlabel('ra_mean - ra')
                     ax.set_xlabel('dec_mean - dec')
-                    ax.axhline(0)
-                    ax.axvline(0)
+                    ax.axhline(0,c='k')
+
+                    ax.axvline(0,c='k')
                     ax.set_xlim(-.000001,.000001)
                     ax.set_ylim(-.000001,.000001)
 
