@@ -3540,6 +3540,7 @@ class smp:
             meanstarcounts[ind] = len(smp_stardec[ww].ravel())
 
         cntr = -1
+        plt.clf()
         fig, axes = plt.subplots(nrows=5, ncols=6, figsize=(12 * 1.2, 9 * 1.2))
         axes = axes.flatten()
 
@@ -3567,14 +3568,6 @@ class smp:
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
-                if k < 30:
-                    ax = axes[k]
-                    ax.scatter(nightlyoffra,nightlyoffdec,alpha=.5,c='k')
-                    ax.set_title(m)
-                    ax.set_xlabel('ra_mean - ra')
-                    ax.set_xlabel('dec_mean - dec')
-                    ax.axhline(0)
-                    ax.axvline(0)
 
                 #for nd in nightlydist:
                 #    print nd
@@ -3601,6 +3594,19 @@ class smp:
                 except:
                     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
                     smp_dict['flag'][k] = 16
+
+                if k < 30:
+                    ax = axes[k]
+                    ax.scatter(nightlyoffra[goodindices],nightlyoffdec[goodindices],alpha=.5,c='k')
+                    ax.set_title(m)
+                    ax.set_xlabel('ra_mean - ra')
+                    ax.set_xlabel('dec_mean - dec')
+                    ax.axhline(0)
+                    ax.axvline(0)
+                    ax.set_xlim(-.000001,.000001)
+                    ax.set_ylim(-.000001,.000001)
+
+
                 print smp_dict['raoff'][k]
                 print 'raoffcheck'
                 # if len(goodindices) < 10:
@@ -3641,7 +3647,7 @@ class smp:
                     # #
                     # print 'pix off',smp_dict['xoff'][k],smp_dict['yoff'][k]
                     # raw_input()
-
+        plt.tight_layout()
         plt.savefig('nightlyoffdeg.png')
         #print 'dillscale',smp_dict['scale']
         if self.fermilog:
