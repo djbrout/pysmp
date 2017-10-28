@@ -3595,17 +3595,6 @@ class smp:
                     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping', im
                     smp_dict['flag'][k] = 16
 
-                if k <= 20:
-                    ax = axes[k-1]
-                    ax.scatter(nightlyoffra[goodindices]/0.000277778/.27,
-                               nightlyoffdec[goodindices]/0.000277778/.27,alpha=.5,c='k')
-                    ax.set_title(m)
-                    ax.set_xlabel('ra_mean - ra (pixels)')
-                    ax.set_xlabel('dec_mean - dec (pixels)')
-                    ax.axhline(0,c='k')
-                    ax.axvline(0,c='k')
-                    #ax.set_xlim(-.0001,.0001)
-                    #ax.set_ylim(-.0001,.0001)
 
 
                 print smp_dict['raoff'][k]
@@ -3642,7 +3631,23 @@ class smp:
                     print 'NIGHTLY OFFSET IS TOO LARGE'
                     smp_dict['flag'][k] = 1
 
-                    # x_psf,y_psf = cntrd.cntrd(smp_psf[k,:,:],15,15,2.)
+                if k <= 40:
+                    ax = axes[k - 1]
+                    ax.scatter(nightlyoffra[goodindices] / 0.000277778 / .27,
+                               nightlyoffdec[goodindices] / 0.000277778 / .27, alpha=.5, c='k',
+                               label='xoff:'+str(round(smp_dict['xoff'][k],3))+'\nyoff:'+
+                                     str(round(smp_dict['yoff'][k],3)))
+                    ax.set_title(m)
+                    ax.set_xlabel('ra_mean - ra (pixels)')
+                    ax.set_ylabel('dec_mean - dec (pixels)')
+                    ax.axhline(0, c='k')
+                    ax.axvline(0, c='k')
+                    ax.legend()
+
+                    # ax.set_xlim(-.0001,.0001)
+                    # ax.set_ylim(-.0001,.0001)
+
+                        # x_psf,y_psf = cntrd.cntrd(smp_psf[k,:,:],15,15,2.)
                     # print x_psf,y_psf,-smp_dict['snx'][k]+round(smp_dict['snx'][k]),\
                     #     -smp_dict['sny'][k]+round(smp_dict['sny'][k])
                     # #
