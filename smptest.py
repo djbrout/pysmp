@@ -3541,7 +3541,7 @@ class smp:
 
         cntr = -1
         plt.clf()
-        fig, axes = plt.subplots(nrows=4, ncols=5, figsize=(12 * 1.2, 9 * 1.2))
+        fig, axes = plt.subplots(nrows=4, ncols=10, figsize=(20 * 1.2, 9 * 1.2))
         axes = axes.flatten()
 
         for im,m,fl,k in zip(smp_dict['image_filename'],smp_dict['mjd'],smp_dict['flag'],range(len(smp_dict['image_filename']))):
