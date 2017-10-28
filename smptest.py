@@ -3599,6 +3599,7 @@ class smp:
 
                 print smp_dict['raoff'][k]
                 print 'raoffcheck'
+
                 # if len(goodindices) < 10:
                 #     print 'WARNING: Not enough nearyby stars to compute nightly offset... \nskipping',im
                 #     smp_dict['flag'][k] = 1
