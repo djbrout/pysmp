@@ -3567,7 +3567,7 @@ class smp:
                 nightlyoffra = np.array(nightlyoffra)
                 nightlyoffdec = np.array(nightlyoffdec)
                 nightlydist = np.array(nightlydist)
-                if k < 35:
+                if k < 30:
                     ax = axes[k]
                     ax.scatter(nightlyoffra,nightlyoffdec,alpha=.5,c='k')
                     ax.set_title(m)
