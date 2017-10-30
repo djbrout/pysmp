@@ -2927,7 +2927,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = False
+    load = True
     if load:
         a = np.load(outdir + '/pltstarvec.npz')
         pltvecy = a['pltvecy']
@@ -3051,8 +3051,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         for i, b in enumerate(np.unique(pltvecband)):
             cntr += 1
             ax = axes[cntr]
-            if dos == 'shallow': dosw = (pltvecbigfield != 'X3')&(pltvecbigfield != 'C3')
-            if dos == 'deep': dosw = (pltvecbigfield == 'X3')|(pltvecbigfield == 'C3')
+            if dos == 'shallow': dosw = (pltvecbigfield != 'X3')&(pltvecbigfield != 'C3')&(pltvecy!=0)
+            if dos == 'deep': dosw = (pltvecbigfield == 'X3')|(pltvecbigfield == 'C3')&(pltvecy!=0)
             prms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05)&(pltvecband==b)&dosw])))
             ax.hist(pltvecy[(pltvecband==b)&dosw], alpha=.99, color='black',histtype='step',
                      bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
