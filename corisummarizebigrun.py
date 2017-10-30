@@ -2927,7 +2927,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = True
+    load = False
     if load:
         a = np.load(outdir + '/pltstarvec.npz')
         pltvecy = a['pltvecy']
