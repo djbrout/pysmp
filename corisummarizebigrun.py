@@ -2975,13 +2975,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # print starmag[indices == ind]
             # raw_input()
 
-            firstww = np.where(np.isclose(stardictras, r, rtol=1.e-5) & np.isclose(stardictdecs, d, rtol=1.e-5) & (stardictcatmags == cm))
-            if firstww[0] != []:
-                print ';here1'
-                starmean = stardictmeans[firstww[0]]
-                starlen = stardictlens[firstww[0]]
-                starww = stardictww[firstww[0]]
-            else:
+            # firstww = np.where(np.isclose(stardictras, r, rtol=1.e-5) & np.isclose(stardictdecs, d, rtol=1.e-5) & (stardictcatmags == cm))
+            # if firstww[0] != []:
+            #     print ';here1'
+            #     starmean = stardictmeans[firstww[0]]
+            #     starlen = stardictlens[firstww[0]]
+            #     starww = stardictww[firstww[0]]
+            # else:
+            if True:
                 print 'here2'
                 starww = np.isclose(ras, r, rtol=1.e-5) & np.isclose(decs, d, rtol=1.e-5) & (catmag == cm)
                 starwwmag = starmag[starww]
