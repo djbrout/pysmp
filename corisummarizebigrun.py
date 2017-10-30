@@ -3077,6 +3077,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     print 'upload',outdir + '/repeatabilitylikesnls.png'
     print '-'*100
     plt.clf()
+    raw_input()
 
     fig, axes = plt.subplots(figsize=(12/1.5, 9/1.5))
     for i, b, c in zip(np.arange(4),['g','r','i','z'],['green','red','indigo','black']):
