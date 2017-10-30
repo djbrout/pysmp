@@ -2963,6 +2963,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         stardictmeans = np.array([11,22])
         stardictlens = np.array([11,22])
         stardictww = np.array([])
+
+        stardictras = [11, 22]
+        stardictdecs = [11, 22]
+        stardictcatmags = [11, 22]
+        stardictmeans = [11, 22]
+        stardictlens = [11, 22]
+        stardictww = []
+
         for sme, sm, ind, r, d, cm, f, fe, fh,tfield,tccd,tband,tmjd in zip(starmagerr[::-1], starmag[::-1],
                 indices[::-1], ras[::-1], decs[::-1], catmag[::-1], flux[::-1], fluxerr[::-1], fwhm[::-1],
                 field[::-1],ccd[::-1],band[::-1],mjd[::-1]):
@@ -2988,12 +2996,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 starwwmag = starmag[starww]
                 starmean = np.mean(starwwmag)
                 starlen = len(starww)
-                stardictras = np.append(stardictras,r)
-                stardictdecs = np.append(stardictdecs,d)
-                stardictcatmags = np.append(stardictcatmags,cm)
-                stardictmeans = np.append(stardictmeans,starmean)
-                stardictlens = np.append(stardictlens,starlen)
-                stardictww = np.append(stardictww,starww)
+                # stardictras.append(r)
+                # stardictdecs = np.append(stardictdecs,d)
+                # stardictcatmags = np.append(stardictcatmags,cm)
+                # stardictmeans = np.append(stardictmeans,starmean)
+                # stardictlens = np.append(stardictlens,starlen)
+                # stardictww = np.append(stardictww,starww)
             print 'here3'
             #starmean = np.mean(starww)
             #repeatability = np.std(starww)
