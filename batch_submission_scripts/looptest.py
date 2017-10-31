@@ -10,7 +10,7 @@ allindexes = np.arange(10000,12500)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
-walltime= '10:10:00'
+walltime= '1:30:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
