@@ -523,7 +523,7 @@ if __name__ == "__main__":
                 for filt in badfilts:
                     a.write(smpfile.split('/')[-1]+'_'+filt+'\n')
                 numbad += 1
-
+    print missingfile,'written'
     sne = tsne
 
 
