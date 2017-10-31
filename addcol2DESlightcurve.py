@@ -528,7 +528,9 @@ if __name__ == "__main__":
                     a.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'\n')
                 numbad += 1
     print missingfile,'written'
+    b.close()
     sne = tsne
+
 
 
     #sne = tsneold
