@@ -1519,9 +1519,9 @@ class smp:
                 continue
             print imfile
 
-            if cccc > 40:
-                #cccc += 1
-                continue
+            # if cccc > 40:
+            #     #cccc += 1
+            #     continue
 
 
             #raw_input()
