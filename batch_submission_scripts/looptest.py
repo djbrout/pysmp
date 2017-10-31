@@ -4,15 +4,18 @@ import numpy as np
 import time
 
 allindexes = np.linspace(0,13450,2000)
+allindexes = np.arange(0,1089,1)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
-walltime= '5:10:00'
+walltime= '48:10:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
+
 snfilelist = 'data/deeplightcurves.txt'
+snfilelist = 'missingnpz.txt'
 #snfilelist = 'data/speclist.txt'
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
