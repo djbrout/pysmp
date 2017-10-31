@@ -84,15 +84,15 @@ for ii in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
 
-            'python smptest.py --usefake --index=' + str(int(i*2)) + '  -f  ' + filt +
+            'python smptest.py --usefake --index=' + str(int(i)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n \n' +
-            
-            'python smptest.py --usefake --index=' + str(int(i*2+1)) + '  -f  ' + filt +
-            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n \n' +
-
-            'wait\n'+
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
+            #
+            # 'python smptest.py --usefake --index=' + str(int(i*2+1)) + '  -f  ' + filt +
+            # ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
+            # ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n \n' +
+            #
+            # 'wait\n'+
             
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
