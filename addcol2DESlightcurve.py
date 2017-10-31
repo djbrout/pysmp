@@ -493,6 +493,7 @@ if __name__ == "__main__":
         print 'done reading dofake'
 
     a = open(missingfile,'w')
+    b = open('missingnpz.txt','w')
     tsne = []
     numbad = 0
     for sn in sne[:]:
@@ -521,6 +522,9 @@ if __name__ == "__main__":
         else:
             if tbad < 4:
                 for filt in badfilts:
+                    if not os.path.exists('/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'+
+                                                  smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.mcmcinput.npz'):
+                        b.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.dat')
                     a.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'\n')
                 numbad += 1
     print missingfile,'written'
