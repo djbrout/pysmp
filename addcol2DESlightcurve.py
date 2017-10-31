@@ -521,10 +521,10 @@ if __name__ == "__main__":
             tsne.append(sn)
         else:
             if tbad < 4:
-                for filt in badfilts:
-                    if not os.path.exists('/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'+
+                #for filt in badfilts:
+                if not os.path.exists('/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'+
                                                   smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.mcmcinput.npz'):
-                        b.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.dat\n')
+                    b.write(smpfile.split('/')[-1].split('.')[0][:-2]+'.dat\n')
                     a.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'\n')
                 numbad += 1
     print missingfile,'written'
