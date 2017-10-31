@@ -519,7 +519,7 @@ if __name__ == "__main__":
         if not snbad:
             tsne.append(sn)
         else:
-            if tbad < 2:
+            if tbad < 1:
                 for filt in badfilts:
                     a.write(smpfile.split('/')[-1]+' \n')
                 numbad += 1
