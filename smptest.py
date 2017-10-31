@@ -7879,6 +7879,7 @@ if __name__ == "__main__":
     if 'dsp057' in hostname:
         isdonedir = '/home/dscolnic/testdir/isdone'
 
+
     if not index is None:
         if index == 'all':
             for iii in np.arange(0,5000):
@@ -8010,6 +8011,13 @@ if __name__ == "__main__":
         filt = snfile.split('_')[1].split('.')[0]
     print 'getting snparams'
     print snfile,root_dir
+
+    if os.path.exists(savenpzfilesdir+'/'+snfile.split('/')[-1].split('.')[0]+'_'+filt+'.mcmcinput.npz'):
+        print 'input file already exists!'
+        print 'exiting now'
+        sys.exit()
+
+
     try:
         snparams = get_snfile(snfile, root_dir, useweights)
     except:
