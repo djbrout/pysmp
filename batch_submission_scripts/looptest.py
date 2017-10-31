@@ -39,6 +39,7 @@ for ii in allindexes:
             #if os.path.exists(outdir+'/lightcurves/'+sn+'_'+filt+'.smp'):
             #    print 'skipping ',outdir+'/lightcurves/'+sn+'_'+filt+'.smp  because already exists a good fit...'
             #    continue
+            print npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'
             if os.path.exists(npzdir+'/'+sn+'_'+filt+'.mcmcinput.npz'):
                 print 'skipping ', outdir + '/lightcurves/' + sn + '_' + filt + '.mcmcinput.npz  because already exists a good fit...'
                 print count, tot
@@ -94,8 +95,8 @@ for ii in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        print output[0]
+        ####output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        ####print output[0]
         #print script
 #        raw_input()
 
