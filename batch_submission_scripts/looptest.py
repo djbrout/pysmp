@@ -84,12 +84,13 @@ for ii in allindexes:
 
             'python smptest.py --usefake --index=' + str(int(i*2)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n \n' +
             
             'python smptest.py --usefake --index=' + str(int(i*2+1)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
-            
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ & \n \n' +
+
+            'wait\n'+
             
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
