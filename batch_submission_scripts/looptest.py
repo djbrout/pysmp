@@ -11,7 +11,7 @@ filts = ['g','r','i','z']
 walltime= '10:10:00'
 #np.random.shuffle(allindexes)
 
-doskipping = True
+doskipping = False
 #snfilelist = 'badinputs.txt'
 
 snfilelist = 'data/alllightcurves.txt'
@@ -81,9 +81,16 @@ for ii in allindexes:
             #'python mpp.py --start='+str(i*nproc)+' --stop='+str((i+1)*nproc)+' \n'
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
-            'python smptest.py --usefake --index=' + str(i) + '  -f  ' + filt +
+
+            'python smptest.py --usefake --index=' + str(int(i*2)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
             ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
+            
+            'python smptest.py --usefake --index=' + str(int(i*2+1)) + '  -f  ' + filt +
+            ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n'
+            
+            
             #' --snfilepath=/project/projectdirs/dessn/dbrout/imgList/all/ \n'
 
 
@@ -95,12 +102,13 @@ for ii in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        print output[0]
+        ##output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        ##print output[0]
         #print script
 #        raw_input()
 
         #raw_input('stopppp')
-        #print open(script).read()
+        print open(script).read()
+        raw_input('stopppp')
         #time.sleep(1)
 
