@@ -2930,7 +2930,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     load = False
     if load:
-        a = np.load(outdir + '/pltstarvec.npz')
+        #a = np.load(outdir + '/pltstarvec.npz')
+        a = np.load(outdir + '/pltstarvec_movingstars.npz')
         pltvecy = a['pltvecy']
         pltvecfield = a['pltvecfield']
         #pltvecfwhm = a['pltvecfwhm']
@@ -2942,6 +2943,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccd = a['pltvecccd']
         pltvecccdr = a['pltvecccdr']
         pltvecccdb = a['pltvecccdb']
+
+        pltvecraslope = a['pltvecraslope']
+        pltvecdecslope = a['pltvecdecslope']
+
     else:
         cntr = 0
         pltvecx = []
@@ -2956,6 +2961,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccd =[]
         pltvecccdr =[]
         pltvecccdb =[]
+        pltvecraslope = []
+        pltvecdecslope = []
 
 
         stardictras = np.array([11,22])
@@ -2995,10 +3002,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print 'here2'
                 starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm)
                 starwwra = ras[starww]
+                starwwdecs = decs[starww]
                 starwwmag = starmag[starww]
                 starwwmjd = mjd[starww]
-                slope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
-                print slope,slope*365*3600,'arcsec per year'
+                raslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
+                decslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwdec)
+
                 starmean = np.mean(starwwmag)
                 starlen = len(starww)
                 # stardictras.append(r)
@@ -3017,6 +3026,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pltvecmjd.append(tmjd)
                 pltvecfwhm.append(fh)
                 pltvecbigfield.append(tfield)
+                pltvecraslope.append(raslope*365.*3600.)
 
                 if len(np.unique(field[starww])) > 1:
                     #print tfield
@@ -3035,6 +3045,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecfwhm = np.array(pltvecfwhm,dtype='str')
         pltvecbigfield = np.array(pltvecbigfield,dtype='str')
         pltvecfield = np.array(pltvecfield,dtype='str')
+        pltvecraslope = np.array(pltvecraslope)
+        pltvecdecslope = np.array(pltvecdecslope)
         #print pltvecfield.shape
         #raw_input()
         pltvecfieldr = np.array(pltvecfieldr)
@@ -3044,9 +3056,20 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccdr = np.array(pltvecccdr)
         pltvecccdb = np.array(pltvecccdb,dtype='str')
 
-        np.savez(outdir +'/pltstarvec',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
+        np.savez(outdir +'/pltstarvec_movingstars',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
                  pltvecbigfield=pltvecbigfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
-                 pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb)
+                 pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb,
+                 pltvecraslope=pltvecraslope,pltvecdecslope=pltvecdecslope)
+
+    plt.clf()
+    plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
+    plt.axhline(0,color='k')
+    plt.axvline(0,color='k')
+    plt.xlabel('RA Arcsec Per Year')
+    plt.ylabel('DEC Arcsec Per Year')
+    plt.savefig(outdir+'/movingstars.png')
+    print 'upload',outdir+'/movingstars.png'
+
 
     plt.clf()
     fig, axes = plt.subplots(nrows=4, ncols=2, figsize=(12, 9))
