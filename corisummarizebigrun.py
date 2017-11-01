@@ -2928,7 +2928,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = False
+    load = True
     if load:
         #a = np.load(outdir + '/pltstarvec.npz')
         a = np.load(outdir + '/pltstarvec_movingstars.npz')
@@ -3075,7 +3075,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.clf()
     #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
     #plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')
-    fig = plt.figure(figsize=(9,9))
+    fig = plt.figure(figsize=(7,7))
     ax = fig.add_subplot(1, 1, 1)
     #ax.scatter_density(x, y, vmin=0, cmap=plt.cm.RdYlBu)
     ax.scatter(x, y,s=1)
@@ -3083,8 +3083,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ax.axvline(0,color='k')
     ax.set_xlim(-.05,.05)
     ax.set_ylim(-.05,.05)
-    ax.set_xlabel('RA Arcsec Per Year')
-    ax.set_ylabel('DEC Arcsec Per Year')
+    ax.set_xlabel('RA Arcsec Per Year',fontsize=20)
+    ax.set_ylabel('DEC Arcsec Per Year',fontsize=20)
     plt.savefig(outdir+'/movingstars.png')
     print 'upload',outdir+'/movingstars.png'
 
