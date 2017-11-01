@@ -3028,6 +3028,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 pltvecfwhm.append(fh)
                 pltvecbigfield.append(tfield)
                 pltvecraslope.append(raslope*365.*3600.)
+                pltvecdecslope.append(decslope*365.*3600.)
 
                 if len(np.unique(field[starww])) > 1:
                     #print tfield
