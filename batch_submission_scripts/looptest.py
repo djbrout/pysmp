@@ -4,14 +4,14 @@ import numpy as np
 import time
 
 #allindexes = np.arange(0,2500)
-allindexes = np.arange(6200,7200)
+allindexes = np.arange(7200,8500)
 
 #allindexes = np.arange(362,4089,1)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
 #'g','r',
-walltime= '05:30:00'
+walltime= '04:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = False
