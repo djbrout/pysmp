@@ -2998,7 +2998,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 starwwmag = starmag[starww]
                 starwwmjd = mjd[starww]
                 slope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
-                print slope*365/3600,'arcsec per year'
+                print slope,slope*365/3600,'arcsec per year'
                 starmean = np.mean(starwwmag)
                 starlen = len(starww)
                 # stardictras.append(r)
