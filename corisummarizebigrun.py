@@ -3063,8 +3063,18 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                  pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb,
                  pltvecraslope=pltvecraslope,pltvecdecslope=pltvecdecslope)
 
+    from scipy.stats import gaussian_kde
+
+    x = pltvecraslope
+    y = pltvecdecslope
+    xy = np.vstack([x, y])
+    z = gaussian_kde(xy)(xy)
+
+
     plt.clf()
-    plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
+    #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
+    plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')
+
     plt.axhline(0,color='k')
     plt.axvline(0,color='k')
     plt.xlim(-.05,.05)
