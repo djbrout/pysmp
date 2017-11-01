@@ -3068,13 +3068,14 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     ww = np.isfinite(pltvecraslope) & np.isfinite(pltvecdecslope)
     x = pltvecraslope[ww]
     y = pltvecdecslope[ww]
-    xy = np.vstack([x, y])
-    z = gaussian_kde(xy)(xy)
-
+    # xy = np.vstack([x, y])
+    # z = gaussian_kde(xy)(xy)
+    import mpl_scatter_density
 
     plt.clf()
     #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
-    plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')
+    #plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')
+    plt.scatter_density(x, y)
 
     plt.axhline(0,color='k')
     plt.axvline(0,color='k')
