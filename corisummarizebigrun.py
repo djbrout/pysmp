@@ -3075,14 +3075,16 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.clf()
     #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
     #plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')
-    plt.scatter_density(x, y)
+    fig = plt.figure(figsize=(9,9))
+    ax = fig.add_subplot(1, 1, 1, projection='scatter_density')
+    ax.scatter_density(x, y)
 
-    plt.axhline(0,color='k')
-    plt.axvline(0,color='k')
-    plt.xlim(-.05,.05)
-    plt.ylim(-.05,.05)
-    plt.xlabel('RA Arcsec Per Year')
-    plt.ylabel('DEC Arcsec Per Year')
+    ax.axhline(0,color='k')
+    ax.axvline(0,color='k')
+    ax.set_xlim(-.05,.05)
+    ax.set_ylim(-.05,.05)
+    ax.set_xlabel('RA Arcsec Per Year')
+    ax.set_ylabel('DEC Arcsec Per Year')
     plt.savefig(outdir+'/movingstars.png')
     print 'upload',outdir+'/movingstars.png'
 
