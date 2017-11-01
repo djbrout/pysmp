@@ -3070,15 +3070,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     y = pltvecdecslope[ww]
     # xy = np.vstack([x, y])
     # z = gaussian_kde(xy)(xy)
-    import mpl_scatter_density
+    # import mpl_scatter_density
 
     plt.clf()
     #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
     #plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')
     fig = plt.figure(figsize=(9,9))
-    ax = fig.add_subplot(1, 1, 1, projection='scatter_density')
-    ax.scatter_density(x, y, vmin=0, cmap=plt.cm.RdYlBu)
-
+    ax = fig.add_subplot(1, 1, 1)
+    #ax.scatter_density(x, y, vmin=0, cmap=plt.cm.RdYlBu)
+    ax.scatter(x, y,s=1)
     ax.axhline(0,color='k')
     ax.axvline(0,color='k')
     ax.set_xlim(-.05,.05)
