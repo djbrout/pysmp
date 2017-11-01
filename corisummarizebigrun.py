@@ -2928,7 +2928,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = False
+    load = True
     if load:
         #a = np.load(outdir + '/pltstarvec.npz')
         a = np.load(outdir + '/pltstarvec_movingstars.npz')
@@ -3067,6 +3067,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
     plt.axhline(0,color='k')
     plt.axvline(0,color='k')
+    plt.xlim(-.27,.27)
+    plt.ylim(-.27,.27)
     plt.xlabel('RA Arcsec Per Year')
     plt.ylabel('DEC Arcsec Per Year')
     plt.savefig(outdir+'/movingstars.png')
