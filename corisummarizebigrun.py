@@ -3003,7 +3003,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print 'here2'
                 starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm)
                 starwwra = ras[starww]
-                starwwdecs = decs[starww]
+                starwwdec = decs[starww]
                 starwwmag = starmag[starww]
                 starwwmjd = mjd[starww]
                 raslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
