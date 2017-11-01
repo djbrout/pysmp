@@ -6129,8 +6129,8 @@ class smp:
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51:# and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
-                        print 'hereoooooopoop'
-                        raw_input()
+                        # print 'hereoooooopoop'
+                        # raw_input()
                         try:
 
                             psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True,psfexworked=psfexworked)
