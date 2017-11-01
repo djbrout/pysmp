@@ -3065,8 +3065,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     from scipy.stats import gaussian_kde
 
-    x = pltvecraslope
-    y = pltvecdecslope
+    ww = np.isfinite(pltvecraslope) & np.isfinite(pltvecdecslope)
+    x = pltvecraslope[ww]
+    y = pltvecdecslope[ww]
     xy = np.vstack([x, y])
     z = gaussian_kde(xy)(xy)
 
