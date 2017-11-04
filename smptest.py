@@ -6839,8 +6839,8 @@ class smp:
 
             zptfitchisq  = np.sum((mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))**2/(flux_star_std[goodstarcols]/flux_star[goodstarcols])**2)/len(mag_cat[goodstarcols])
 
-            plt.axhlin(md-rmsaddin,linestyle='--',c='k',label='Zpt Uncertainty Floor')
-            plt.axhlin(md+rmsaddin,linestyle='--',c='k')
+            plt.axhline(md-rmsaddin,linestyle='--',c='k',label='Zpt Uncertainty Floor')
+            plt.axhline(md+rmsaddin,linestyle='--',c='k')
 
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
             #                              startMedian=True, sigmaclip=3, iter=10)
