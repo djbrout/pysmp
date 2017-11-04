@@ -6861,8 +6861,8 @@ class smp:
                 plt.axhline(0,color='black')
                 #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-30.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
-                plt.xlabel('cat mag')
-                plt.ylabel('zpt-2.5log10(flux)')
+                plt.xlabel('Catalog Magnitude')
+                plt.ylabel('FIT ZPT - 2.5log10(FLUX)')
 
                 plt.legend()
 
