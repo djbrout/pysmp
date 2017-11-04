@@ -6909,7 +6909,7 @@ class smp:
                 name = imfile.split('/')[-1][:-8]
                 zptplotout = os.path.join(self.outdir,'stardata',filt, name + '_zptplot.png')
                 if doplot:
-                    plt.savefig(zptplotout,dpi=50)
+                    plt.savefig(zptplotout)#,dpi=50)
                     print 'saved',zptplotout
                     plt.clf()
                     #raw_input()
