@@ -6839,7 +6839,7 @@ class smp:
 
             zptfitchisq  = np.sum((mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))**2/(flux_star_std[goodstarcols]/flux_star[goodstarcols])**2)/len(mag_cat[goodstarcols])
 
-            plt.axhline(rmsaddin,linestyle='--',c='k',label='Zpt Uncertainty Floor')
+            plt.axhline(rmsaddin,linestyle='--',c='k',label='Mag Uncertainty Floor '++str(round(std,3)))
             plt.axhline(-rmsaddin,linestyle='--',c='k')
 
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
@@ -6855,7 +6855,7 @@ class smp:
             #raw_input()
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
-                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3))+'\nZPT SCATTER: '+str(round(std,3))+'\nCHISQ: '+str(round(zptfitchisq,3)))
+                             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
                 #print 'plot'
                 #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
                 plt.axhline(0,color='black')
