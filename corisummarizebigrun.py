@@ -3108,7 +3108,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     colors  = []
     colorrep = []
     for r,d,b,rep,gcm in zip(pltvecra[wwg],pltvecdec[wwg],pltvecband[wwg],pltvecy[wwg],pltveccm[wwg]):
-        iwhere = np.isclose(pltvecra, r, rtol=5.e-5) & np.isclose(pltvecdec, d, rtol=5.e-5) & (pltvecband == b)
+        iwhere = np.isclose(pltvecra, r, rtol=5.e-5) & np.isclose(pltvecdec, d, rtol=5.e-5) & (pltvecband == 'i')
         icm = pltveccm[iwhere][0]
         color = gcm-icm
         colors.append(color)
@@ -3118,7 +3118,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.scatter(colors,colorrep)
     plt.xlabel('g-i')
     plt.ylabel('g repeatability')
-    plt.xlim(-.02,.02)
+    #plt.xlim(-.02,.02)
     plt.savefig(outdir+'/rep_vs_color.png')
     print 'upload',outdir+'/rep_vs_color.png'
 
