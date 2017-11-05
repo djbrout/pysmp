@@ -2946,6 +2946,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
         pltvecraslope = a['pltvecraslope']
         pltvecdecslope = a['pltvecdecslope']
+        pltvecra = a['pltvecra']
+        pltvecdec = a['pltvecdec']
+        pltveccm = a['pltveccm']
 
     else:
         cntr = 0
