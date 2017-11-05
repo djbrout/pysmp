@@ -2928,7 +2928,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = False
+    load = True
     if load:
         #a = np.load(outdir + '/pltstarvec.npz')
         a = np.load(outdir + '/pltstarvec_movingstars.npz')
@@ -3115,6 +3115,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.scatter(colors,colorrep)
     plt.xlabel('g-i')
     plt.ylabel('g repeatability')
+    plt.xlim(-.02,.02)
     plt.savefig(outdir+'/rep_vs_color.png')
     print 'upload',outdir+'/rep_vs_color.png'
 
