@@ -3005,11 +3005,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             if True:
                 print 'here2'
                 starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm) & (band == tband)
-                starwwra = r
-                starwwdec = d
                 starwwmag = starmag[starww]
                 starwwmjd = mjd[starww]
-
+                starwwra = ras[starww]
+                starwwdec = decs[starww]
                 raslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
                 decslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwdec)
 
@@ -3027,8 +3026,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # repeatability = np.std(starmag[indices == ind])
             if starlen > 15.:
                 pltvecy.append(sm - starmean)
-                pltvecra.append(starwwra)
-                pltvecdec.append(starwwdec)
+                pltvecra.append(r)
+                pltvecdec.append(d)
                 pltvecband.append(tband)
                 pltvecmjd.append(tmjd)
                 pltvecfwhm.append(fh)
