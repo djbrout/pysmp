@@ -2928,7 +2928,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = True
+    load = False
     if load:
         #a = np.load(outdir + '/pltstarvec.npz')
         a = np.load(outdir + '/pltstarvec_movingstars.npz')
@@ -2963,6 +2963,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccdb =[]
         pltvecraslope = []
         pltvecdecslope = []
+        pltvecra = []
+        pltvecdec = []
+        pltveccm = []
 
 
         stardictras = np.array([11,22])
@@ -3001,11 +3004,12 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # else:
             if True:
                 print 'here2'
-                starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm)
-                starwwra = ras[starww]
-                starwwdec = decs[starww]
+                starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm) & (band == tband)
+                starwwra = r
+                starwwdec = d
                 starwwmag = starmag[starww]
                 starwwmjd = mjd[starww]
+
                 raslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
                 decslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwdec)
 
@@ -3023,12 +3027,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             # repeatability = np.std(starmag[indices == ind])
             if starlen > 15.:
                 pltvecy.append(sm - starmean)
+                pltvecra.append(starwwra)
+                pltvecdec.append(starwwdec)
                 pltvecband.append(tband)
                 pltvecmjd.append(tmjd)
                 pltvecfwhm.append(fh)
                 pltvecbigfield.append(tfield)
                 pltvecraslope.append(raslope*365.*3600.)
                 pltvecdecslope.append(decslope*365.*3600.)
+                pltveccm.append(cm)
 
                 if len(np.unique(field[starww])) > 1:
                     #print tfield
@@ -3049,6 +3056,9 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecfield = np.array(pltvecfield,dtype='str')
         pltvecraslope = np.array(pltvecraslope)
         pltvecdecslope = np.array(pltvecdecslope)
+        pltvecra = np.array(pltvecra)
+        pltvecdec = np.array(pltvecdec)
+        pltveccm = np.array(pltveccm)
         #print pltvecfield.shape
         #raw_input()
         pltvecfieldr = np.array(pltvecfieldr)
@@ -3061,7 +3071,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         np.savez(outdir +'/pltstarvec_movingstars',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
                  pltvecbigfield=pltvecbigfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
                  pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb,
-                 pltvecraslope=pltvecraslope,pltvecdecslope=pltvecdecslope)
+                 pltvecraslope=pltvecraslope,pltvecdecslope=pltvecdecslope,pltveccm=pltveccm,
+                 pltvecra=pltvecra,pltvecdec=pltvecdec)
 
     from scipy.stats import gaussian_kde
 
@@ -3090,6 +3101,24 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
 
     plt.clf()
+    wwg = pltvecband == 'g'
+    fig = plt.figure()
+    colors  = []
+    colorrep = []
+    for r,d,b,rep,gcm in zip(pltvecra[wwg],pltvecdec[wwg],pltvecband[wwg],pltvecy[wwg],pltveccm[wwg]):
+        iwhere = np.isclose(pltvecra, r, rtol=5.e-5) & np.isclose(pltvecdec, d, rtol=5.e-5) & (pltvecband == b)
+        icm = pltveccm[iwhere][0]
+        color = gcm-icm
+        colors.append(color)
+        colorrep.append(rep)
+    colors = np.array(colors)
+    colorrep = np.array(colorrep)
+    plt.scatter(colors,colorrep)
+    plt.xlabel('g-i')
+    plt.ylabel('g repeatability')
+    plt.savefig(outdir+'/rep_vs_color.png')
+    print 'upload',outdir+'/rep_vs_color.png'
+
     fig, axes = plt.subplots(nrows=4, ncols=2, figsize=(12, 9))
     axes = axes.flatten()
     cntr = -1
