@@ -3122,8 +3122,34 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.xlabel('g-i')
     plt.ylabel('g repeatability')
     #plt.xlim(-.02,.02)
-    plt.savefig(outdir+'/rep_vs_color.png')
-    print 'upload',outdir+'/rep_vs_color.png'
+    plt.savefig(outdir+'/rep_vs_gicolor.png')
+    print 'upload',outdir+'/rep_vs_gicolor.png'
+
+    plt.clf()
+    wwg = pltvecband == 'g'
+    fig = plt.figure()
+    colors = []
+    colorrep = []
+    for r, d, b, rep, gcm in zip(pltvecra[wwg], pltvecdec[wwg], pltvecband[wwg], pltvecy[wwg], pltveccm[wwg]):
+        iwhere = np.isclose(pltvecra, r, rtol=5.e-5) & np.isclose(pltvecdec, d, rtol=5.e-5) & (pltvecband == 'r')
+        try:
+            icm = pltveccm[iwhere][0]
+            color = gcm - icm
+            colors.append(color)
+            colorrep.append(rep)
+        except:
+            print 'no i band'
+    colors = np.array(colors)
+    colorrep = np.array(colorrep)
+    plt.scatter(colors, colorrep)
+    plt.xlabel('g-i')
+    plt.ylabel('g repeatability')
+    # plt.xlim(-.02,.02)
+    plt.savefig(outdir + '/rep_vs_grcolor.png')
+    print 'upload', outdir + '/rep_vs_grcolor.png'
+
+
+
 
     fig, axes = plt.subplots(nrows=4, ncols=2, figsize=(12, 9))
     axes = axes.flatten()
