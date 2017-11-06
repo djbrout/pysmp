@@ -3114,6 +3114,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             color = gcm-icm
             colors.append(color)
             colorrep.append(rep)
+        except:
+            print 'no i band'
     colors = np.array(colors)
     colorrep = np.array(colorrep)
     plt.scatter(colors,colorrep)
