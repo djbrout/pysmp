@@ -3109,10 +3109,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     colorrep = []
     for r,d,b,rep,gcm in zip(pltvecra[wwg],pltvecdec[wwg],pltvecband[wwg],pltvecy[wwg],pltveccm[wwg]):
         iwhere = np.isclose(pltvecra, r, rtol=5.e-5) & np.isclose(pltvecdec, d, rtol=5.e-5) & (pltvecband == 'i')
-        icm = pltveccm[iwhere][0]
-        color = gcm-icm
-        colors.append(color)
-        colorrep.append(rep)
+        try:
+            icm = pltveccm[iwhere][0]
+            color = gcm-icm
+            colors.append(color)
+            colorrep.append(rep)
     colors = np.array(colors)
     colorrep = np.array(colorrep)
     plt.scatter(colors,colorrep)
