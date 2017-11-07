@@ -3115,7 +3115,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             colors.append(color)
             colorrep.append(rep)
         except:
-            print 'no i band'
+            pass
+            #print 'no i band'
     colors = np.array(colors)
     colorrep = np.array(colorrep)
     plt.scatter(colors,colorrep)
@@ -3138,7 +3139,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             colors.append(color)
             colorrep.append(rep)
         except:
-            print 'no i band'
+            pass
+            #print 'no i band'
     colors = np.array(colors)
     colorrep = np.array(colorrep)
     plt.scatter(colors, colorrep)
