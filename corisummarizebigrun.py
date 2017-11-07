@@ -3172,6 +3172,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             variance = 1
             sigma = math.sqrt(variance)
             x = np.arange(-5, 5, .1)
+            sigma = np.std(pltvecy[(pltvecband==b)&dosw])
             ax.plot(x,mlab.normpdf(x, mean, sigma)*float(len(pltvecy[(pltvecband==b)&dosw])), color='teal', label='Gaussian')
 
             ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
