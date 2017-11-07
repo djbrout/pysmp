@@ -2928,7 +2928,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = False
+    load = True
     if load:
         #a = np.load(outdir + '/pltstarvec.npz')
         a = np.load(outdir + '/pltstarvec_movingstars.npz')
@@ -3163,6 +3163,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             prms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05)&(pltvecband==b)&dosw])))
             ax.hist(pltvecy[(pltvecband==b)&dosw], alpha=.99, color='black',histtype='step',
                      bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
+
+            import matplotlib.mlab as mlab
+            import math
+            mean = 0
+            variance = 1
+            sigma = math.sqrt(variance)
+            x = np.arange(-5, 5, .1)
+            ax.plot(x,mlab.normpdf(x, mean, sigma)*float(len(pltvecy[(pltvecband==b)&dosw])), color='teal', label='Gaussian')
+
             ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
             ax.set_title(dos+' '+b)
             ax.legend()
