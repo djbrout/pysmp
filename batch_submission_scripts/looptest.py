@@ -18,12 +18,16 @@ walltime= '04:00:00'
 doskipping = False
 #snfilelist = 'badinputs.txt'
 
-snfilelist = 'data/alllightcurves.txt'
-#snfilelist = 'missingnpz.txt'
-#snfilelist = 'data/speclist.txt'
+#snfilelist = 'data/alllightcurves.txt'
+snfilelist = 'data/speclist.txt'
+
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.1/'
+
+outdir = '/project/projectdirs/dessn/dbrout/specv3.0/'
+npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv3.0/'
+
 
 #outdir = '/project/projectdirs/dessn/dbrout/specv2.0/'
 #npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv2.0/'
