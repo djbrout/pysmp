@@ -6844,7 +6844,7 @@ class smp:
             _, std, _ = self.iterstat(
                 float(mde) - mag_cat[goodstarcols][(gmc<19.)&(gmc>17.)] - 2.5 * np.log10(fluxcol[goodstarcols][(gmc<19.)&(gmc>17.)]),
                 startMedian=True, sigmaclip=3, iter=3)
-
+            rmsaddin = std
             zptfitchisq  = np.sum((mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))**2/(flux_star_std[goodstarcols]/flux_star[goodstarcols])**2)/len(mag_cat[goodstarcols])
 
             plt.axhline(std,linestyle='--',c='k',label='Mag Uncertainty Floor '+str(round(std,4)))
@@ -6920,7 +6920,7 @@ class smp:
                 name = imfile.split('/')[-1][:-8]
                 zptplotout = os.path.join(self.outdir,'stardata',filt, name + '_zptplot.png')
                 if doplot:
-                    plt.savefig(zptplotout)#,dpi=50)
+                    plt.savefig(zptplotout,dpi=50)
                     print 'saved',zptplotout
                     plt.clf()
                     #raw_input()
