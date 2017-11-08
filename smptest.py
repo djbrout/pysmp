@@ -2292,7 +2292,8 @@ class smp:
                     wehavestarcat = True
                     starcat.bigra = np.array(starcat.__dict__['RA'][1:], dtype='float')
                     starcat.bigdec = np.array(starcat.__dict__['DEC'][1:], dtype='float')
-                    starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s' % filt.upper()][1:], dtype='float')
+                    #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s' % filt.upper()][1:], dtype='float')
+                    starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_%s' % filt.upper()][1:], dtype='float')
                     starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:], dtype='float')
                     starcat.id = starcat.bigid
                     starcat.ra = starcat.bigra
