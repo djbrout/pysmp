@@ -6839,10 +6839,15 @@ class smp:
                 float(mde) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
                 startMedian=True, sigmaclip=3, iter=10)
 
+            gmc = mag_cat[goodstarcols]
+            _, std, _ = self.iterstat(
+                float(mde) - mag_cat[goodstarcols][(gmc<19.)&(gmc>17.)] - 2.5 * np.log10(fluxcol[goodstarcols][(gmc<19.)&(gmc>17.)]),
+                startMedian=True, sigmaclip=3, iter=3)
+
             zptfitchisq  = np.sum((mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))**2/(flux_star_std[goodstarcols]/flux_star[goodstarcols])**2)/len(mag_cat[goodstarcols])
 
-            plt.axhline(std/1.75,linestyle='--',c='k',label='Mag Uncertainty Floor '+str(round(std/1.75,4)))
-            plt.axhline(-std/1.75,linestyle='--',c='k')
+            plt.axhline(std,linestyle='--',c='k',label='Mag Uncertainty Floor '+str(round(std,4)))
+            plt.axhline(-std,linestyle='--',c='k')
 
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
             #                              startMedian=True, sigmaclip=3, iter=10)
