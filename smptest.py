@@ -2540,8 +2540,8 @@ class smp:
                     zpt_file =  self.zptoutpath + '/'+  imfile.split('/')[-1].split('.')[-2].replace('+fakeSN','') + '_'+str(filt)+'band_dillonzptinfo.npz'
 
                 zptdata = np.load(zpt_file) #load previous zpt information
-                zpt = zptdata['fit_zpt']
-                zpterr = zptdata['fit_zpt_std']
+                zpt = zptdata['wfit_zpt']
+                zpterr = zptdata['wfit_zpt_std']
                 mjdoff = zptdata['mjdoff']
                 mjdslopeinteroff = zptdata['mjdslopeinteroff']
                 rmsaddin = zptdata['rmsaddin']
