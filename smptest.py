@@ -7193,7 +7193,7 @@ class smp:
             #)
 
         #if self.verbose:
-        raw_input()
+        #raw_input()
         print('measured ZPT: %.3f +/- %.3f'%(md,std))
         print 'bad', bad
         #sys.exit()
