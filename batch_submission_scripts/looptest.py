@@ -71,9 +71,9 @@ for ii in allindexes:
             #'#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time='+walltime+'\n' +
-            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
-            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'sims2.log\n' +
-            '#SBATCH --job-name=d-'+filt+'' + str(i) + '\n' +
+            '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'specv3.log\n' +
+            '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'specv3.log\n' +
+            '#SBATCH --job-name=spc-'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
             #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
@@ -90,9 +90,9 @@ for ii in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
 
-            'python smptest.py --usefake --index=' + str(int(i)) + '  -f  ' + filt +
+            'python smptest.py --index=' + str(int(i)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/v4/real/ \n' +
             #
             # 'python smptest.py --usefake --index=' + str(int(i*2+1)) + '  -f  ' + filt +
             # ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
@@ -111,10 +111,10 @@ for ii in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        print output[0]
-        #print script
-#        raw_input()
+        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        #print output[0]
+        print script
+        raw_input()
 
         #raw_input('stopppp')
         # print open(script).read()
