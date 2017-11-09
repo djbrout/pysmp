@@ -2991,7 +2991,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             cntr += 1
             if cntr > maxpoints: continue
             #if cntr > 100000: continue
-            if cntr > 2000: continue
+            if cntr > 5000: continue
             if cntr % 1 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -3070,7 +3070,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccdr = np.array(pltvecccdr)
         pltvecccdb = np.array(pltvecccdb,dtype='str')
 
-        np.savez(outdir +'/pltstarvec_movingstars',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
+        np.savez(outdir +'/pltstarvec_movingstars_new',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
                  pltvecbigfield=pltvecbigfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
                  pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb,
                  pltvecraslope=pltvecraslope,pltvecdecslope=pltvecdecslope,pltveccm=pltveccm,
@@ -3172,8 +3172,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             variance = 1
             sigma = math.sqrt(variance)
             x = np.arange(-5, 5, .1)
-            sigma = np.std(pltvecy[(pltvecband==b)&dosw])
-            ax.plot(x,mlab.normpdf(x, mean, sigma)*float(len(pltvecy[(pltvecband==b)&dosw])), color='teal', label='Gaussian')
+            # sigma = np.std(pltvecy[(pltvecband==b)&dosw])
+            # ax.plot(x,mlab.normpdf(x, mean, sigma)*float(len(pltvecy[(pltvecband==b)&dosw])), color='teal', label='Gaussian')
 
             ax.set_xlabel(r'$'+b+' - '+b+'_{mean}$')
             ax.set_title(dos+' '+b)
