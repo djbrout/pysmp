@@ -2928,10 +2928,10 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
     maxpoints = 5000000
 
-    load = True
+    load = False
     if load:
         #a = np.load(outdir + '/pltstarvec.npz')
-        a = np.load(outdir + '/pltstarvec_movingstars.npz')
+        a = np.load(outdir + '/pltstarvec_movingstars_new.npz')
         pltvecy = a['pltvecy']
         pltvecfield = a['pltvecfield']
         #pltvecfwhm = a['pltvecfwhm']
@@ -2991,7 +2991,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             cntr += 1
             if cntr > maxpoints: continue
             #if cntr > 100000: continue
-            if cntr > 200000: continue
+            if cntr > 2000: continue
             if cntr % 1 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
