@@ -3029,28 +3029,28 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #repeatability = np.std(starww)
             # repeatability = np.std(starmag[indices == ind])
             if starlen > 15.:
-                for allsm in starwwmag:
+                for allsm,allmjd in zip(starwwmag,starwwmjd):
                     pltvecy.append(allsm - starmean)
                     pltvecra.append(r)
                     pltvecdec.append(d)
                     pltvecband.append(tband)
-                    pltvecmjd.append(tmjd)
+                    pltvecmjd.append(allmjd)
                     pltvecfwhm.append(fh)
                     pltvecbigfield.append(tfield)
                     pltvecraslope.append(raslope*365.*3600.)
                     pltvecdecslope.append(decslope*365.*3600.)
                     pltveccm.append(cm)
 
-                if len(np.unique(field[starww])) > 1:
-                    #print tfield
-                    pltvecfield.append(tfield)
-                    pltvecfieldr.append(sm-starmean)
-                    pltvecfieldb.append(tband)
-                if len(np.unique(ccd[starww])) > 1:
-                    pltvecccd.append(tccd)
-                    pltvecccdr.append(sm-starmean)
-                    pltvecccdb.append(tband)
-                print 'here4'
+                    if len(np.unique(field[starww])) > 1:
+                        #print tfield
+                        pltvecfield.append(tfield)
+                        pltvecfieldr.append(allsm-starmean)
+                        pltvecfieldb.append(tband)
+                    if len(np.unique(ccd[starww])) > 1:
+                        pltvecccd.append(tccd)
+                        pltvecccdr.append(allsm-starmean)
+                        pltvecccdb.append(tband)
+                    print 'here4'
 
         pltvecy = np.array(pltvecy)
         pltvecband = np.array(pltvecband,dtype='str')
@@ -3166,7 +3166,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             if dos == 'deep': dosw = (pltvecbigfield == 'X3')|(pltvecbigfield == 'C3')&(pltvecy!=0)
             prms = np.sqrt(np.nanmean(np.square(pltvecy[(abs(pltvecy)<.05)&(pltvecband==b)&dosw])))
             ax.hist(pltvecy[(pltvecband==b)&dosw], alpha=.99, color='black',histtype='step',
-                     bins=np.arange(-.05025,.05,.0005),label=b+' RMS:'+str(round(prms,4)))
+                     bins=np.arange(-.0525,.05,.005),label=b+' RMS:'+str(round(prms,4)))
 
             import matplotlib.mlab as mlab
             import math
