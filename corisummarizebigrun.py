@@ -2991,7 +2991,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             cntr += 1
             if cntr > maxpoints: continue
             #if cntr > 100000: continue
-            if cntr > 200000: continue
+            if cntr > 2000: continue
             if cntr % 1 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -3009,6 +3009,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 print 'here2'
                 starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm) & (band == tband)
                 starwwmag = starmag[starww]
+
                 starwwmjd = mjd[starww]
                 starwwra = ras[starww]
                 starwwdec = decs[starww]
@@ -3028,16 +3029,17 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #repeatability = np.std(starww)
             # repeatability = np.std(starmag[indices == ind])
             if starlen > 15.:
-                pltvecy.append(sm - starmean)
-                pltvecra.append(r)
-                pltvecdec.append(d)
-                pltvecband.append(tband)
-                pltvecmjd.append(tmjd)
-                pltvecfwhm.append(fh)
-                pltvecbigfield.append(tfield)
-                pltvecraslope.append(raslope*365.*3600.)
-                pltvecdecslope.append(decslope*365.*3600.)
-                pltveccm.append(cm)
+                for allsm in starwwmag:
+                    pltvecy.append(allsm - starmean)
+                    pltvecra.append(r)
+                    pltvecdec.append(d)
+                    pltvecband.append(tband)
+                    pltvecmjd.append(tmjd)
+                    pltvecfwhm.append(fh)
+                    pltvecbigfield.append(tfield)
+                    pltvecraslope.append(raslope*365.*3600.)
+                    pltvecdecslope.append(decslope*365.*3600.)
+                    pltveccm.append(cm)
 
                 if len(np.unique(field[starww])) > 1:
                     #print tfield
