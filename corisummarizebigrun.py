@@ -3024,7 +3024,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                 # stardictmeans = np.append(stardictmeans,starmean)
                 # stardictlens = np.append(stardictlens,starlen)
                 # stardictww = np.append(stardictww,starww)
-            print 'here3'
+            #print 'here3'
             #starmean = np.mean(starww)
             #repeatability = np.std(starww)
             # repeatability = np.std(starmag[indices == ind])
@@ -3050,7 +3050,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
                         pltvecccd.append(tccd)
                         pltvecccdr.append(allsm-starmean)
                         pltvecccdb.append(tband)
-                    print 'here4'
+                    #print 'here4'
 
         pltvecy = np.array(pltvecy)
         pltvecband = np.array(pltvecband,dtype='str')
