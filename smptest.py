@@ -7204,7 +7204,7 @@ class smp:
         #sys.exit()
         #raw_input('stopped')
         if bad:
-            return 0,0,0,0,0,0,0,0,0
+            return 0,0,0,0,0,0,0,0
         return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols],zptfitchisq)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
