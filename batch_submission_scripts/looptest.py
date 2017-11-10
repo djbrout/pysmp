@@ -5,7 +5,7 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(226,227)
+allindexes = np.arange(0,300)
 
 #allindexes = np.arange(362,4089,1)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
@@ -111,9 +111,9 @@ for ii in allindexes:
         )
         f.close()
         #if count >= 269: continue
-        #output = Popen(["sbatch", script], stdout=PIPE).communicate()
-        #print output[0]
-        print script
+        output = Popen(["sbatch", script], stdout=PIPE).communicate()
+        print output[0]
+        #print script
         #raw_input()
 
         #raw_input('stopppp')
