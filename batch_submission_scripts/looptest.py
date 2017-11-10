@@ -12,7 +12,7 @@ allindexes = np.arange(226,227)
 filts = ['g','r','i','z']
 #filts = ['z']
 #'g','r',
-walltime= '06:00:00'
+walltime= '04:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
@@ -68,7 +68,7 @@ for ii in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            '#SBATCH -C haswell\n'+
+            #'#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'specv3.log\n' +
