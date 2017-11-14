@@ -5,28 +5,28 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(0,300)
+allindexes = np.arange(0,1000)
 
 #allindexes = np.arange(362,4089,1)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
 filts = ['g','r','i','z']
 #filts = ['z']
 #'g','r',
-walltime= '04:00:00'
+walltime= '06:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
 #snfilelist = 'badinputs.txt'
 
-#snfilelist = 'data/alllightcurves.txt'
-snfilelist = 'data/speclist.txt'
+snfilelist = 'data/alllightcurves.txt'
+#snfilelist = 'data/speclist.txt'
 
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.1/'
 
-outdir = '/project/projectdirs/dessn/dbrout/specv3.0/'
-npzdir = '/global/cscratch1/sd/dbrout/specnpzfilesv3.0/'
+outdir = '/project/projectdirs/dessn/dbrout/simv3.0/'
+npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv3.0/'
 
 
 #outdir = '/project/projectdirs/dessn/dbrout/specv2.0/'
@@ -90,9 +90,15 @@ for ii in allindexes:
             #'python mpp.py --start=' + str(i * nproc) + ' --stop=' + str((i + 1) * nproc) + ' \n'
             'export WALLTIME='+walltime.split(':')[0]+'\n'+
 
-            'python smptest.py --index=' + str(int(i)) + '  -f  ' + filt +
+            'python smptest.py --usefake --index=' + str(int(i)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/v4/real/ \n' +
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
+            #' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/v4/real/ \n' +
+
+
+
+
+
             #
             # 'python smptest.py --usefake --index=' + str(int(i*2+1)) + '  -f  ' + filt +
             # ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
