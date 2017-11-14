@@ -68,14 +68,14 @@ for ii in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            #'#SBATCH -C haswell\n'+
+            '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'simv3.log\n' +
             '#SBATCH --error=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'simv3.log\n' +
             '#SBATCH --job-name=sim-'+filt+'' + str(i) + '\n' +
             '#SBATCH --mail-type=NONE\n' +
-            '#SBATCH --qos=premium\n'+
+            #'#SBATCH --qos=premium\n'+
             '#SBATCH --mail-user=bdrizzle@yahoo.com\n' +
             '#SBATCH --gres=craynetwork:0\n' +
             '\n' +
