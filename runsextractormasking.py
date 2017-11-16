@@ -148,8 +148,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     import skimage.draw
     for x, y, xa, ya, ang in zip(out["table"]['XWIN_IMAGE'], out["table"]['YWIN_IMAGE'],
-                                         out["table"]['AWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.5 + 2,
-                                         out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.5 + 2,
+                                         out["table"]['AWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 3. + 2,
+                                         out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 3. + 2,
                                          out["table"]['THETAWIN_IMAGE']):
 
         rr, cc = skimage.draw.ellipse(y, x, ya,xa,shape=im.shape, rotation=2*3.14-np.deg2rad(ang))
@@ -163,7 +163,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
 
     from scipy import fftpack
-    F1 = fftpack.fft(im[np.isfinite(im)].ravel().astype(float))
+    F1 = fftpack.fft(im[np.isfinite(im)].ravel()[:500].astype(float))
     F2 = fftpack.fftshift(F1)
     #psd2D = np.abs(F2) ** 2
     #psd1D = azimuthalAverage(psd2D)
@@ -172,9 +172,10 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     print F1
     print F2
     plt.clf()
-    plt.plot(F2)
+    plt.semilogy(F2)
     plt.xlabel('Spatial Frequency')
     plt.ylabel('Power')
+    #plt.ylim(-.2e8,.2e8)
     plt.savefig('plots/noisepower.png', dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/noisepower.png').read()
     sys.exit()
