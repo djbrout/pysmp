@@ -37,7 +37,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
             workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , params = ["X_IMAGE", "Y_IMAGE", "FLUX_APER(3)","ISOCOR", "FLAGS"]
+            , params = ["X_IMAGE", "Y_IMAGE","ISOAREA_IMAGE"]
             , config={"WEIGHT_TYPE":"NONE,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename
                       # "checkimage_type":"BACKGROUND,BACKGROUND_RMS",
                       # "checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
@@ -60,6 +60,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         print line
     print '-'*100
     print out["table"]
+
+
 
     return
 
