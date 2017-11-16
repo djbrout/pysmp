@@ -57,7 +57,9 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
             , config={"WEIGHT_TYPE":"NONE,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename
                       ,"back_size":"256"
                       ,"catalog":"test.cat"
-                      ,
+                      ,"DETECT MINAREA":"4"
+                      ,"THRESH_TYPE":"RELATIVE"
+                      ,"DETECT_THRESH":"1.1"
                       }
 
         )
