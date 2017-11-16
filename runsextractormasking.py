@@ -60,7 +60,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         print line
     print '-'*100
     print out["table"]
-    print out.__dict__
+    print out.keys()
 
 
 
