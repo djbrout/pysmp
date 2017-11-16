@@ -95,7 +95,10 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         e.set_facecolor('none')
         e.set_edgecolor('red')
         e.set_linewidth(.2)
-        print e.get_path().shape
+        path = e.get_path()
+        transform = e.get_transform()
+        newpath = transform.transform_path(path)
+        print newpath
         raw_input()
     #ax.set_ylim(1000,4000)
 
