@@ -99,6 +99,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         transform = e.get_transform()
         newpath = transform.transform_path(path)
         print newpath
+        print newpath.__dict__
         raw_input()
     #ax.set_ylim(1000,4000)
 
