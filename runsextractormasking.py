@@ -45,7 +45,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                       #       '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
                       #       '.background_rms'
                       ,"back_size":"256"
-                      ,"catalog":"STDOUT"
+                      ,"catalog":"test.cat"
                       ,
                       }
 
@@ -58,9 +58,6 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     print 'running S-Extractor'
     for line in log.readlines():
         print line
-
-
-    print 'done'*100
 
     return
 
