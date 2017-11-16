@@ -99,6 +99,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         e.set_linewidth(.2)
 
     #ax.set_ylim(1000,4000)
+    #asdf
 
     plt.savefig('testext.png',dpi=1000)
     #os.popen('upload testext.png')
