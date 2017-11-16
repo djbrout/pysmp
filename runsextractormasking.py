@@ -70,7 +70,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     for line in log.readlines():
         print line
     print '-'*100
-    print out["table"]['XWIN_IMAGE']
+    print out["table"]
 
     im = pf.getdata(imagefilename)
     wgt = pf.getdata(weightfilename)
