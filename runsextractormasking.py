@@ -121,7 +121,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     nx,ny = im.shape[0],im.shape[1]
 
-    groupings = [1.,2.,4.,8.,16.,32.,64.]
+    groupings = [4.,8.,16.,32.,64.]
     resultsdict = {}
     for g in groupings:
         print 'calculating grouping',g
@@ -159,6 +159,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.plot(groupings,stds,label='DES IMAGE')
     plt.plot(groupings,stds[0]/np.sqrt(groupings),label='1/sqrt(n)')
     plt.legend()
+    plt.xticks(groupings)
     plt.xlabel('Pixel Groupings')
     plt.xlim(0,65)
     plt.ylabel('STD(Pixels)')
