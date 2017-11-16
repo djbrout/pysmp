@@ -20,6 +20,22 @@ import logging
 import pyfits as pf
 import dilltools as dt
 import os
+import matplotlib as m
+m.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator, NullLocator
+from matplotlib.colors import LinearSegmentedColormap, colorConverter
+from matplotlib.ticker import ScalarFormatter
+from matplotlib import rcParams, rc
+rcParams['font.family'] = 'serif'  # no serif on palomides?
+rcParams['savefig.dpi'] = 300  # higher res outputs
+rcParams['legend.numpoints'] = 1
+rcParams['legend.markerscale'] = 0.7
+rcParams['legend.handlelength'] = 0.5
+rcParams['legend.handletextpad'] = 0.5
+rcParams['legend.borderpad'] = 0.5
+rcParams['legend.borderaxespad'] = 0.2
+rcParams['legend.columnspacing'] = 1.0
 
 def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     print 'inside getsky and skyerr'
@@ -39,11 +55,6 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
             , loglevel="CRITICAL"
             , params = ["X_IMAGE", "Y_IMAGE","ISOAREA_IMAGE"]
             , config={"WEIGHT_TYPE":"NONE,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename
-                      # "checkimage_type":"BACKGROUND,BACKGROUND_RMS",
-                      # "checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
-                      #       '.background, '+
-                      #       '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
-                      #       '.background_rms'
                       ,"back_size":"256"
                       ,"catalog":"test.cat"
                       ,
@@ -59,10 +70,33 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     for line in log.readlines():
         print line
     print '-'*100
-    print out["table"]
-    print out.keys()
+    print out["table"]['XWIN_IMAGE']
+
+    im = pf.getdata(imagefilename)
+    wgt = pf.getdata(weightfilename)
+    wgt[wgt<1e-6] = 0.
+    wgt[wgt>0] = 1.
+
+    plt.imshow(im*wgt)
+    from matplotlib.patches import Ellipse
+
+    ells = [Ellipse(xy=(x,y),
+                    width=xa ,height=ya,
+                    angle=ang)
+            for x,y,xa,ya,ang in zip(out["table"]['XWIN_IMAGE'],out["table"]['YWIN_IMAGE'],
+                                 out["table"]['AWIN_IMAGE'],out["table"]['BWIN_IMAGE']),
+                                 out["table"]['THETAWIN_IMAGE']]
+
+    fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
+    for e in ells:
+        ax.add_artist(e)
+        e.set_clip_box(ax.bbox)
+        #e.set_alpha(np.random.rand())
+        e.set_facecolor('none')
+        e.set_edgecolor('red')
 
 
+    plt.savefig('testext.png')
 
     return
 
