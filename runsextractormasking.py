@@ -94,7 +94,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         e.set_edgecolor('red')
 
 
-    plt.savefig('testext.png')
+    plt.savefig('testext.png',dpi=1000)
 
     return
 
