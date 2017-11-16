@@ -169,8 +169,10 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     #psd1D = azimuthalAverage(psd2D)
     #print psd2D
     #print psd1D
+    print F1
+    print F2
     plt.clf()
-    plt.semilogy(F2)
+    plt.plot(F2)
     plt.xlabel('Spatial Frequency')
     plt.ylabel('Power')
     plt.savefig('plots/noisepower.png', dpi=100)
