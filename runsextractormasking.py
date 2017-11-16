@@ -84,8 +84,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                     width=xa ,height=ya,
                     angle=ang)
             for x,y,xa,ya,ang in zip(out["table"]['XWIN_IMAGE'],out["table"]['YWIN_IMAGE'],
-                                 out["table"]['AWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO']),
-                                 out["table"]['BWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO']),
+                                 out["table"]['AWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO'])*1.5,
+                                 out["table"]['BWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO'])*1.5,
                                  out["table"]['THETAWIN_IMAGE'])]
 
     for e in ells:
