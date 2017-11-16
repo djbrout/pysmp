@@ -146,6 +146,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         #         type='step', label='Group %d'%g)
     plt.legend()
     plt.xlim(-600,600)
+    plt.xlabel('Grouped Pixel Values')
     plt.savefig('plots/correlatednoise.png',dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoise.png').read()
 
@@ -160,7 +161,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.legend()
     plt.xlabel('Pixel Groupings')
     plt.xlim(0,65)
-    plt.ylabel('STD Noise')
+    plt.ylabel('STD(Pixels)')
     plt.savefig('plots/correlatednoisestds.png', dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoisestds.png').read()
 
