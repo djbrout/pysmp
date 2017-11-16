@@ -138,7 +138,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     for g in groupings:
         hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-512.5,500,25))
         hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
-        bin_centers = (bin_edges[1:] - bin_edges[:-1]) / 2. * np.sqrt(g)
+        bin_centers = np.mean((bin_edges[1:] - bin_edges[:-1])) * np.sqrt(g)
         print bin_centers
         raw_input()
         plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.)
