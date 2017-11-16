@@ -139,7 +139,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     for g in groupings:
         hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-712.5,700,25))
         hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
-        bin_centers = (bin_edges[1:] + bin_edges[:-1])/2. * np.sqrt(g)
+        bin_centers = (bin_edges[1:] + bin_edges[:-1])/2.
         #print bin_centers
         #raw_input()
         plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.)
@@ -149,6 +149,21 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.xlim(-600,600)
     plt.savefig('plots/correlatednoise.png',dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoise.png').read()
+
+    plt.clf()
+    stds = []
+    for g in groupings:
+        stds.append(np.std(resultsdict[g][np.isfinite(resultsdict[g])]))
+    stds = np.array(stds)
+    groupings = np.array(groupings)
+    plt.plot(groupings,stds,label='DES IMAGE')
+    plt.plot(groupings,stds[0]/np.sqrt(groupings),label='1/sqrt(n)')
+    plt.legend()
+    plt.xlabel('Pixel Groupings')
+    plt.xlim(0,65)
+    plt.savefig('plots/correlatednoisestds.png', dpi=100)
+    print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoisestds.png').read()
+
     return
 
 im = '/global/cscratch1/sd/masao/diffim/output/FPH_V8/20151008_SN-C3/z_05/SNY3_483208_SN-C3_tile81_z_05.fits'
