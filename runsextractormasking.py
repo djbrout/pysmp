@@ -146,7 +146,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         #         type='step', label='Group %d'%g)
     plt.legend()
     plt.savefig('plots/correlatednoise.png',dpi=100)
-    print os.popen('source ~/.bash_profile; upload plots/correlatednoise.png').read()
+    print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoise.png').read()
     return
 
 im = '/global/cscratch1/sd/masao/diffim/output/FPH_V8/20151008_SN-C3/z_05/SNY3_483208_SN-C3_tile81_z_05.fits'
