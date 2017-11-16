@@ -21,7 +21,7 @@ import pyfits as pf
 import dilltools as dt
 import os
 import numpy as np
-
+import sys
 import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
@@ -119,6 +119,21 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.savefig('testextmask.png',dpi=1000)
     #os.popen('upload testextmask.png')
 
+
+
+    from scipy import fftpack
+    F1 = fftpack.fft2(im)
+    F2 = fftpack.fftshift(F1)
+    psd2D = np.abs(F2) ** 2
+    psd1D = radialProfile.azimuthalAverage(psd2D)
+
+    plt.clf()
+    plt.semilogy(psd1D)
+    plt.xlabel('Spatial Frequency')
+    plt.ylabel('Power')
+    plt.savefig('plots/noisepower.png', dpi=100)
+    print os.popen('source ~/.bash_profile.ext; upload plots/noisepower.png').read()
+    sys.exit()
     nx,ny = im.shape[0],im.shape[1]
 
     groupings = [1.,2.,4.,8.,16.,32.,64.]
