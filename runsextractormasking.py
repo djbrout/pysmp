@@ -127,7 +127,6 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         print 'calculating grouping',g
         resultsdict[g] = []
         for x in np.arange(0,nx-64,g):
-            print x,
             for y in np.arange(0, 512, g):
             #for y in np.arange(0,ny-64,g):
                 resultsdict[g].append(np.mean(im[int(x):int(x+g),int(y):int(y+g)]))
