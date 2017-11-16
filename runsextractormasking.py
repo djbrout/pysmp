@@ -130,16 +130,16 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         for x in np.arange(0, 512, g):
             for y in np.arange(0, 512, g):
             #for y in np.arange(0,ny-64,g):
-                if not np.isfinite(np.mean(im[int(x):int(x+g),int(y):int(y+g)])): print 'notfinite',
                 resultsdict[g].append(np.mean(im[int(x):int(x+g),int(y):int(y+g)]))
 
         resultsdict[g] = np.array(resultsdict[g])
         print ''
     plt.clf()
     for g in groupings:
-        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10))
+        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-512.5,500,25))
         hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
         bin_centers = (bin_edges[1:] - bin_edges[:-1]) / 2. * np.sqrt(g)
+        print bin_centers
         plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.)
         #plt.hist(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10),
         #         type='step', label='Group %d'%g)
