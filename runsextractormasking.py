@@ -94,6 +94,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         #e.set_alpha(np.random.rand())
         e.set_facecolor('none')
         e.set_edgecolor('red')
+        e.set_linewidth(1.)
     #ax.set_ylim(1000,4000)
 
     plt.savefig('testext.png',dpi=1000)
