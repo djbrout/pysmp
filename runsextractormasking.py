@@ -142,7 +142,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         #plt.hist(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10),
         #         type='step', label='Group %d'%g)
     plt.legend()
-    plt.savefig('plots/correlatednoise.png')
+    plt.savefig('plots/correlatednoise.png',dpi=100)
     print os.popen('upload plots/correlatednoise.png').read()
     return
 
