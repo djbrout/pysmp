@@ -126,17 +126,18 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     for g in groupings:
         print 'calculating grouping',g
         resultsdict[g] = []
-        #for x in np.arange(0,nx-64,g):
-        for x in np.arange(0, 512, g):
-            for y in np.arange(0, 512, g):
-            #for y in np.arange(0,ny-64,g):
+        for x in np.arange(0,nx-64,g):
+            if x%100 == 0: print x,
+        #for x in np.arange(0, 512, g):
+            #for y in np.arange(0, 512, g):
+            for y in np.arange(0,ny-64,g):
                 resultsdict[g].append(np.mean(im[int(x):int(x+g),int(y):int(y+g)]))
 
         resultsdict[g] = np.array(resultsdict[g])
         print ''
     plt.clf()
     for g in groupings:
-        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-512.5,500,25))
+        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-712.5,700,25))
         hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
         bin_centers = (bin_edges[1:] + bin_edges[:-1])/2. * np.sqrt(g)
         #print bin_centers
@@ -145,7 +146,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         #plt.hist(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10),
         #         type='step', label='Group %d'%g)
     plt.legend()
-    plt.xlim(-400,400)
+    plt.xlim(-600,600)
     plt.savefig('plots/correlatednoise.png',dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoise.png').read()
     return
