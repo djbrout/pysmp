@@ -117,6 +117,9 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     ax.imshow(np.log10(im * wgt), cmap="Greys")
     plt.savefig('testextmask.png',dpi=1000)
     #os.popen('upload testextmask.png')
+
+
+
     return
 
 im = '/global/cscratch1/sd/masao/diffim/output/FPH_V8/20151008_SN-C3/z_05/SNY3_483208_SN-C3_tile81_z_05.fits'
