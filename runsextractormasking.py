@@ -130,6 +130,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         for x in np.arange(0, 512, g):
             for y in np.arange(0, 512, g):
             #for y in np.arange(0,ny-64,g):
+                if not np.isfinite(np.mean(im[int(x):int(x+g),int(y):int(y+g)])): print 'notfinite',
                 resultsdict[g].append(np.mean(im[int(x):int(x+g),int(y):int(y+g)]))
 
         resultsdict[g] = np.array(resultsdict[g])
