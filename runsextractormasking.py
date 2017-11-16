@@ -58,6 +58,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     print 'running S-Extractor'
     for line in log.readlines():
         print line
+    print '-'*100
+    print out["table"]
 
     return
 
