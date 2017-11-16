@@ -220,7 +220,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.plot(np.log(groupings),stds[0]/np.sqrt(groupings),label='1/sqrt(n)',linewidth=3)
     plt.legend()
     plt.xticks(np.log(groupings))
-    plt.xticklabels(groupings)
+    plt.xticknames(groupings)
     plt.xlabel('Pixel Groupings')
     plt.xlim(0,65)
     plt.ylabel('STD (counts)')
