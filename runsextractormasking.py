@@ -108,7 +108,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                                          out["table"]['THETAWIN_IMAGE']):
 
         rr, cc = skimage.draw.ellipse(x, y, xa,ya, shape=None, rotation=ang)
-        img[rr, cc] = 0.
+        im[rr, cc] = 0.
     plt.clf()
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
     ax.imshow(np.log10(im * wgt), cmap="Greys")
