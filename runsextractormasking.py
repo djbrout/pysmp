@@ -84,7 +84,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                     angle=ang)
             for x,y,xa,ya,ang in zip(out["table"]['XWIN_IMAGE'],out["table"]['YWIN_IMAGE'],
                                  out["table"]['AWIN_IMAGE'],out["table"]['BWIN_IMAGE'],
-                                 out["table"]['THETAWIN_IMAGE'])
+                                 out["table"]['THETAWIN_IMAGE'])]
 
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
     for e in ells:
