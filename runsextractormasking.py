@@ -140,6 +140,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
         bin_centers = (bin_edges[1:] - bin_edges[:-1]) / 2. * np.sqrt(g)
         print bin_centers
+        raw_input()
         plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.)
         #plt.hist(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10),
         #         type='step', label='Group %d'%g)
