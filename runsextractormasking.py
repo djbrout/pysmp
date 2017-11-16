@@ -77,7 +77,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     wgt[wgt<1e-6] = 0.
     wgt[wgt>0] = 1.
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
-    ax.imshow(im*wgt, cmap="Greys")
+    ax.imshow(np.log10(im*wgt), cmap="Greys")
     from matplotlib.patches import Ellipse
     ells = [Ellipse(xy=(x,y),
                     width=xa ,height=ya,
@@ -92,7 +92,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         #e.set_alpha(np.random.rand())
         e.set_facecolor('none')
         e.set_edgecolor('red')
-
+    ax.set_ylim(2000,3000)
 
     plt.savefig('testext.png',dpi=1000)
 
