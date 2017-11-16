@@ -77,6 +77,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     wgt[wgt<1e-6] = 0.
     wgt[wgt>0] = 1.
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
+    import numpy as np
     ax.imshow(np.log10(im*wgt), cmap="Greys")
     from matplotlib.patches import Ellipse
     ells = [Ellipse(xy=(x,y),
