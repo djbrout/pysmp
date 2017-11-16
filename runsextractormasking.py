@@ -109,7 +109,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                                          out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2. + 2,
                                          out["table"]['THETAWIN_IMAGE']):
 
-        rr, cc = skimage.draw.ellipse(y, x, ya,xa,shape=im.shape, rotation=np.deg2rad(ang))
+        rr, cc = skimage.draw.ellipse(y, x, ya,xa,shape=im.shape, rotation=2*3.14-np.deg2rad(ang))
         im[rr, cc] = 0.
     plt.clf()
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
