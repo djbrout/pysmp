@@ -167,7 +167,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     F2 = fftpack.fftshift(F1)
     psd2D = np.abs(F2) ** 2
     psd1D = azimuthalAverage(psd2D)
-
+    print psd2D
+    print psd1D
     plt.clf()
     plt.semilogy(psd1D)
     plt.xlabel('Spatial Frequency')
