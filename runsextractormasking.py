@@ -221,7 +221,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.legend()
     plt.xticks(np.log(groupings),groupings)
     plt.xlabel('Pixel Groupings')
-    plt.xlim(0,65)
+    plt.xlim(-1,7)
     plt.ylabel('STD (counts)')
     plt.savefig('plots/correlatednoisestds.png', dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoisestds.png').read()
