@@ -137,8 +137,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         print ''
     plt.clf()
     for g in groupings:
-        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-712.5,700,25))
-        hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
+        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-712.5,700,25), normed=True)
         bin_centers = (bin_edges[1:] + bin_edges[:-1])/2.
         #print bin_centers
         #raw_input()
@@ -161,6 +160,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.legend()
     plt.xlabel('Pixel Groupings')
     plt.xlim(0,65)
+    plt.ylabel('STD Noise')
     plt.savefig('plots/correlatednoisestds.png', dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoisestds.png').read()
 
