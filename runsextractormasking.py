@@ -162,26 +162,26 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
 
 
-    from scipy import fftpack
-    F1 = fftpack.fft(im[np.isfinite(im)].ravel().astype(float))
-    F2 = fftpack.fftshift(F1)
-    #psd2D = np.abs(F2) ** 2
-    #psd1D = azimuthalAverage(psd2D)
-    #print psd2D
-    #print psd1D
-    print F1
-    print F2
-    plt.clf()
-    plt.semilogy(F2)
-    plt.xlabel('Spatial Frequency')
-    plt.ylabel('Power')
-    #plt.ylim(-.2e8,.2e8)
-    plt.savefig('plots/noisepower.png', dpi=100)
-    print os.popen('source ~/.bash_profile.ext; upload plots/noisepower.png').read()
-    sys.exit()
+    # from scipy import fftpack
+    # F1 = fftpack.fft(im[np.isfinite(im)].ravel().astype(float))
+    # F2 = fftpack.fftshift(F1)
+    # #psd2D = np.abs(F2) ** 2
+    # #psd1D = azimuthalAverage(psd2D)
+    # #print psd2D
+    # #print psd1D
+    # print F1
+    # print F2
+    # plt.clf()
+    # plt.semilogy(F2)
+    # plt.xlabel('Spatial Frequency')
+    # plt.ylabel('Power')
+    # #plt.ylim(-.2e8,.2e8)
+    # plt.savefig('plots/noisepower.png', dpi=100)
+    # print os.popen('source ~/.bash_profile.ext; upload plots/noisepower.png').read()
+    # sys.exit()
     nx,ny = im.shape[0],im.shape[1]
 
-    groupings = [1.,2.,4.,8.,16.,32.,64.]
+    groupings = [4.,8.,16.,32.,64.]
     resultsdict = {}
     for g in groupings:
         print 'calculating grouping',g
@@ -216,13 +216,14 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         stds.append(np.std(resultsdict[g][np.isfinite(resultsdict[g])]))
     stds = np.array(stds)
     groupings = np.array(groupings)
-    plt.plot(groupings,stds,label='DES IMAGE')
-    plt.plot(groupings,stds[0]/np.sqrt(groupings),label='1/sqrt(n)')
+    plt.plot(np.log(groupings),stds,label='DES IMAGE',linewidth=3)
+    plt.plot(np.lop(groupings),stds[0]/np.sqrt(groupings),label='1/sqrt(n)',linewidth=3)
     plt.legend()
-    plt.xticks(groupings)
+    plt.xticks(np.log(groupings))
+    plt.xticklabels(groupings)
     plt.xlabel('Pixel Groupings')
     plt.xlim(0,65)
-    plt.ylabel('STD(Pixels)')
+    plt.ylabel('STD (counts)')
     plt.savefig('plots/correlatednoisestds.png', dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoisestds.png').read()
 
