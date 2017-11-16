@@ -121,7 +121,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     nx,ny = im.shape[0],im.shape[1]
 
-    groupings = [4.,8.,16.,32.,64.]
+    groupings = [2.,4.,8.,16.,32.,64.]
     resultsdict = {}
     for g in groupings:
         print 'calculating grouping',g
@@ -141,11 +141,11 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         bin_centers = (bin_edges[1:] + bin_edges[:-1])/2.
         #print bin_centers
         #raw_input()
-        plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.)
+        plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.,alpha=.75)
         #plt.hist(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10),
         #         type='step', label='Group %d'%g)
     plt.legend()
-    plt.xlim(-600,600)
+    plt.xlim(-200,200)
     plt.xlabel('Grouped Pixel Values')
     plt.savefig('plots/correlatednoise.png',dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoise.png').read()
