@@ -76,7 +76,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     im = pf.getdata(imagefilename)
     wgt = pf.getdata(weightfilename)
-    wgt[wgt<1e-5] = 0.
+    wgt[wgt<1e-5] = np.nan
     wgt[wgt>0] = 1.
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
     import numpy as np
@@ -86,8 +86,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                     width=xa ,height=ya,
                     angle=ang)
             for x,y,xa,ya,ang in zip(out["table"]['XWIN_IMAGE'],out["table"]['YWIN_IMAGE'],
-                                 out["table"]['AWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO']+10)*4.+2,
-                                 out["table"]['BWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO']+10)*4.+2,
+                                 out["table"]['AWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO']+10)*4.5+2,
+                                 out["table"]['BWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO']+10)*4.5+2,
                                  out["table"]['THETAWIN_IMAGE'])]
 
     for e in ells:
@@ -105,12 +105,12 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     import skimage.draw
     for x, y, xa, ya, ang in zip(out["table"]['XWIN_IMAGE'], out["table"]['YWIN_IMAGE'],
-                                         out["table"]['AWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2. + 2,
-                                         out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2. + 2,
+                                         out["table"]['AWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.2 + 2,
+                                         out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.2 + 2,
                                          out["table"]['THETAWIN_IMAGE']):
 
         rr, cc = skimage.draw.ellipse(y, x, ya,xa,shape=im.shape, rotation=2*3.14-np.deg2rad(ang))
-        im[rr, cc] = 0.
+        im[rr, cc] = np.nan
     plt.clf()
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
     ax.imshow(np.log10(im * wgt), cmap="Greys")
