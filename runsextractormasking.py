@@ -20,6 +20,8 @@ import logging
 import pyfits as pf
 import dilltools as dt
 import os
+import numpy as np
+
 import matplotlib as m
 m.use('Agg')
 import matplotlib.pyplot as plt
@@ -79,7 +81,6 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     wgt[wgt<1e-5] = np.nan
     wgt[wgt>0] = 1.
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
-    import numpy as np
     ax.imshow(np.log10(im*wgt), cmap="Greys")
     from matplotlib.patches import Ellipse
     ells = [Ellipse(xy=(x,y),
