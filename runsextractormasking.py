@@ -163,7 +163,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
 
     from scipy import fftpack
-    F1 = fftpack.fft(im.ravel().astype(float))
+    F1 = fftpack.fft(im[np.isfinite(im)].ravel().astype(float))
     F2 = fftpack.fftshift(F1)
     #psd2D = np.abs(F2) ** 2
     #psd1D = azimuthalAverage(psd2D)
