@@ -84,8 +84,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                     width=xa ,height=ya,
                     angle=ang)
             for x,y,xa,ya,ang in zip(out["table"]['XWIN_IMAGE'],out["table"]['YWIN_IMAGE'],
-                                 out["table"]['AWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO'])*3.5+2,
-                                 out["table"]['BWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO'])*3.5+2,
+                                 out["table"]['AWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO'])*4.+2,
+                                 out["table"]['BWIN_IMAGE']*np.log10(out["table"]['FLUX_AUTO'])*4.+2,
                                  out["table"]['THETAWIN_IMAGE'])]
 
     for e in ells:
@@ -95,6 +95,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         e.set_facecolor('none')
         e.set_edgecolor('red')
         e.set_linewidth(.2)
+        print e.get_path().shape
+        raw_input()
     #ax.set_ylim(1000,4000)
 
     plt.savefig('testext.png',dpi=1000)
