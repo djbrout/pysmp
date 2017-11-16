@@ -119,8 +119,29 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.savefig('testextmask.png',dpi=1000)
     #os.popen('upload testextmask.png')
 
+    nx,ny = im.shape[0],im.shape[1]
 
+    groupings = [1.,2.,4.,8.,16.,32.,64.]
+    resultsdict = {}
+    for g in groupings:
+        print 'calculating grouping',g
+        resultsdict[g] = []
+        for x in np.arange(0,nx-64,g):
+            for y in np.arange(0,ny-64,g):
+                resultsdict[g].append(np.mean(im[x:x+g,y:y+g]))
 
+        resultsdict[g] = np.array(resultsdict[g])
+    plt.clf()
+    for g in groupings:
+        hist, bin_edges = np.histogram(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10))
+        hist = hist/float(len(resultsdict[g][np.isfinite(resultsdict[g])]))
+        bin_centers = (bin_edges[1:] - bin_edges[:-1]) / 2. * np.sqrt(g)
+        plt.plot(bin_centers,hist,label='Group %d'%g,linewidth=3.)
+        #plt.hist(resultsdict[g][np.isfinite(resultsdict[g])], bins=np.arange(-505,500,10),
+        #         type='step', label='Group %d'%g)
+    plt.legend()
+    plt.savefig('plots/correlatednoise.png')
+    print os.popen('upload plots/correlatednoise.png').read()
     return
 
 im = '/global/cscratch1/sd/masao/diffim/output/FPH_V8/20151008_SN-C3/z_05/SNY3_483208_SN-C3_tile81_z_05.fits'
