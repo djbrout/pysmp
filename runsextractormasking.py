@@ -74,7 +74,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     im = pf.getdata(imagefilename)
     wgt = pf.getdata(weightfilename)
-    wgt[wgt<1e-3] = 0.
+    wgt[wgt<1e-4] = 0.
     wgt[wgt>0] = 1.
     fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
     import numpy as np
