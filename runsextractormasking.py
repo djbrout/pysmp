@@ -166,7 +166,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     F1 = fftpack.fft2(im.astype(float))
     F2 = fftpack.fftshift(F1)
     psd2D = np.abs(F2) ** 2
-    psd1D = radialProfile.azimuthalAverage(psd2D)
+    psd1D = azimuthalAverage(psd2D)
 
     plt.clf()
     plt.semilogy(psd1D)
