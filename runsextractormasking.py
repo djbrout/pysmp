@@ -76,8 +76,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     wgt = pf.getdata(weightfilename)
     wgt[wgt<1e-6] = 0.
     wgt[wgt>0] = 1.
-
-    plt.imshow(im*wgt)
+    fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
+    ax.imshow(im*wgt)
     from matplotlib.patches import Ellipse
     ells = [Ellipse(xy=(x,y),
                     width=xa ,height=ya,
@@ -86,7 +86,6 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
                                  out["table"]['AWIN_IMAGE'],out["table"]['BWIN_IMAGE'],
                                  out["table"]['THETAWIN_IMAGE'])]
 
-    fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
     for e in ells:
         ax.add_artist(e)
         e.set_clip_box(ax.bbox)
