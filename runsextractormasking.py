@@ -98,8 +98,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
         path = e.get_path()
         transform = e.get_transform()
         newpath = transform.transform_path(path)
-        print newpath
-        print newpath.__dict__
+        #print newpath
+        print newpath.'_vertices'
         raw_input()
     #ax.set_ylim(1000,4000)
 
