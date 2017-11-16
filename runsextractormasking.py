@@ -107,8 +107,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
 
     import skimage.draw
     for x, y, xa, ya, ang in zip(out["table"]['XWIN_IMAGE'], out["table"]['YWIN_IMAGE'],
-                                         out["table"]['AWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.2 + 2,
-                                         out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.2 + 2,
+                                         out["table"]['AWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.5 + 2,
+                                         out["table"]['BWIN_IMAGE'] * np.log10(out["table"]['FLUX_AUTO']+10) * 2.5 + 2,
                                          out["table"]['THETAWIN_IMAGE']):
 
         rr, cc = skimage.draw.ellipse(y, x, ya,xa,shape=im.shape, rotation=2*3.14-np.deg2rad(ang))
