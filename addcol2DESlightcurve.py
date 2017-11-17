@@ -378,7 +378,7 @@ if __name__ == "__main__":
     #if isfake:
     dodiffim = False
 
-    #lcdir = '/project/projectdirs/dessn/dbrout/imgList/all/'
+    lcdir = '/project/projectdirs/dessn/dbrout/imgList/all/'
     #else:
     #    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
