@@ -218,7 +218,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     groupings = np.array(groupings)
     #plt.plot(np.log(groupings),stds,label='DES IMAGE',linewidth=3)
     #plt.plot(np.log(groupings),stds[0]/np.sqrt(groupings**2),label='1/sqrt(N^2)',linewidth=3)
-    plt.plot(np.log(groupings),stds/stds[0]/np.sqrt(groupings**2),label='Ratio',linewidth=3)
+    plt.plot(np.log(groupings),stds/(stds[0]/np.sqrt(groupings**2)),label='Ratio',linewidth=3)
     plt.grid(True)
     plt.legend()
     plt.xticks(np.log(groupings),groupings)
@@ -228,6 +228,8 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     plt.savefig('plots/correlatednoisestds.png', dpi=100)
     print os.popen('source ~/.bash_profile.ext; upload plots/correlatednoisestds.png').read()
 
+    print stds
+    print stds[0]/np.sqrt(groupings**2)
     return
 
 im = '/global/cscratch1/sd/masao/diffim/output/FPH_V8/20151008_SN-C3/z_05/SNY3_483208_SN-C3_tile81_z_05.fits'
