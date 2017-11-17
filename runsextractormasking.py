@@ -181,7 +181,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     # sys.exit()
     nx,ny = im.shape[0],im.shape[1]
 
-    groupings = [1.,2.,4.,8.,16.,32.,64.]
+    groupings = [1.,2.,3.,4.,6.,8.,16.,32.,64.]
     resultsdict = {}
     for g in groupings:
         print 'calculating grouping',g
