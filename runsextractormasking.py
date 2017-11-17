@@ -217,7 +217,7 @@ def run(imagefilename,weightfilename,survey='DES',index='',bigreturn=False):
     stds = np.array(stds)
     groupings = np.array(groupings)
     plt.plot(np.log(groupings),stds,label='DES IMAGE',linewidth=3)
-    plt.plot(np.log(groupings),stds[0]/np.sqrt(groupings),label='1/sqrt(n)',linewidth=3)
+    plt.plot(np.log(groupings),stds[0]/np.sqrt(groupings**2),label='1/sqrt(n)',linewidth=3)
     plt.legend()
     plt.xticks(np.log(groupings),groupings)
     plt.xlabel('Pixel Groupings')
