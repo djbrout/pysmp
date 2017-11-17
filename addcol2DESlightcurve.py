@@ -513,6 +513,7 @@ if __name__ == "__main__":
             if not os.path.exists(smpfile):
                 #print 'SMP RESULTS DO NOT EXIST FOR ',smpfile
                 badfilts.append(filt)
+                a.write(smpfile.split('/')[-1].split('.')[0][:-2] + '_' + filt + '\n')
                 #a.write('_'.join(smpfile.split('/')[-1].split('.')[0].split('_')[:-1])+' '+filt+' \n')
                 #os.system('echo '+sn+' '+filt+' >> '+missingfile)
                 snbad = True
@@ -525,7 +526,7 @@ if __name__ == "__main__":
                 if not os.path.exists('/global/cscratch1/sd/dbrout/specnpzfilesv3.0/'+
                                                   smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.mcmcinput.npz'):
                     b.write(smpfile.split('/')[-1].split('.')[0][:-2]+'.dat\n')
-                    a.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'\n')
+
                 numbad += 1
     print missingfile,'written'
     b.close()
