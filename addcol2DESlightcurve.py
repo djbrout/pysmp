@@ -166,7 +166,7 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #else:
                     #tidobs = int(line.split()[1])
                     #tmjd = float(line.split()[3])
-                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[13]#for fakes do 13, spec 12
+                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[12]#for fakes do 13, spec 12
                     tim = tim.split('/')[-1]
                     #print tim
                     # print tidobs
@@ -372,13 +372,13 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
 if __name__ == "__main__":
     print 'started'
 
-    resultsdir = '/project/projectdirs/des/djbrout/redospec/'
+    resultsdir = '/project/projectdirs/dessn/dbrout/specv3.0/'
     #resultsdir = '/project/projectdirs/des/djbrout/allsim/'
     fakeheader = False
     #if isfake:
     dodiffim = False
 
-    lcdir = '/project/projectdirs/dessn/dbrout/imgList/all/'
+    #lcdir = '/project/projectdirs/dessn/dbrout/imgList/all/'
     #else:
     #    lcdir = '/project/projectdirs/des/djbrout/pysmp/imglist/spec/'
 
@@ -429,8 +429,8 @@ if __name__ == "__main__":
     #raw_input()
 
     if savelcdir is None:
-        savelcdir = resultsdir + '/SMP_SPECv2_2'
-        if fakeheader: savelcdir = resultsdir + '/SMP_SIMv2_1'
+        savelcdir = resultsdir + '/SMP_SPECv3'
+        if fakeheader: savelcdir = resultsdir + '/SMP_FAKEv3'
 
     if not os.path.exists(os.path.basename(savelcdir)):
         os.mkdir(os.path.basename(savelcdir))
@@ -522,7 +522,7 @@ if __name__ == "__main__":
         else:
             if tbad < 4:
                 #for filt in badfilts:
-                if not os.path.exists('/global/cscratch1/sd/dbrout/simnpzfilesv2.0/'+
+                if not os.path.exists('/global/cscratch1/sd/dbrout/specnpzfilesv3.0/'+
                                                   smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.mcmcinput.npz'):
                     b.write(smpfile.split('/')[-1].split('.')[0][:-2]+'.dat\n')
                     a.write(smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'\n')
@@ -536,6 +536,7 @@ if __name__ == "__main__":
     #sne = tsneold
     a.close()
     print 'TOTAL SNe:',len(sne),'Missing SNe:',numbad
+    raw_input('Press Enter')
     cntr = 0
     donesne = []
     for sn in sne[::-1]:
