@@ -62,7 +62,7 @@ print 'reading dofake'
 
 
 def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky,skyerr,flag,zptfiles,idobs,pkmjd,imfiles,dflag,gain,
-                    hostsbfluxcals,zpterr,
+                    hostsbfluxcals,zpterr,fakeheader=False,
                     dofakes=False,faketrueflux=False,filt=None,saveinplace=False,mjdplus=80.,mjdminus=25.):
     pkmjd = float(pkmjd)
     idobs=np.array(idobs,dtype='int')
@@ -166,7 +166,11 @@ def addtolightcurve(lightcurvefile,saveloc,mjd,flux,fluxerr,zpt,zptrms,chisq,sky
                     #else:
                     #tidobs = int(line.split()[1])
                     #tmjd = float(line.split()[3])
-                    tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[12]#for fakes do 13, spec 12
+                    if fakeheader:
+                        tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[13]#for fakes do 13, spec 12
+                    else:
+                        tim = '/global/cscratch1/sd/dbrout/v7/'+line.split()[12]#for fakes do 13, spec 12
+
                     tim = tim.split('/')[-1]
                     #print tim
                     # print tidobs
@@ -645,7 +649,8 @@ if __name__ == "__main__":
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
-                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr, dofakes=fakes, saveinplace=False,faketrueflux=faketrueflux)
+                     idobs,pkmjd,imfiles,dflag,gain,hostsbfluxcals,zpterr,fakes, \
+                     fakeheader=fakeheader, saveinplace=False,faketrueflux=faketrueflux)
 
         print int(cntr),'SAVED SUCCESSFULLY',savelcfile,'\n'
         donesne.append(sn+'.dat')#.split('.')[0].split('_')[-1])
