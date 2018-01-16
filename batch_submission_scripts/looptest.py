@@ -5,7 +5,7 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(3002,4000)
+allindexes = np.arange(7000,8000)
 #edison needs to run 3002 - 4000
 #now up to 7000
 
