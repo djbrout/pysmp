@@ -5,7 +5,7 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(2500,2510)
+allindexes = np.arange(2500,5000)
 
 #allindexes = np.arange(362,4089,1)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
@@ -41,6 +41,7 @@ for ii in allindexes:
 
     for filt in filts:
         tot += 1
+        if tot > 10: continue
         if doskipping:
             #print snfiles[i]
             sn = snfiles[int(i)].split('/')[-1].split('.')[0]
