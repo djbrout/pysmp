@@ -60,7 +60,7 @@ for ii in allindexes:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
         if not os.path.exists(snfiles[int(i)]):
-            print  snfiles[int(i)],'PASSED'
+            print  snfiles[int(i)].strip(),'PASSED'
             continue
         print snfiles[int(i)],'submitted'
         count += 1
