@@ -59,7 +59,7 @@ for ii in allindexes:
             # else:
             #     print 'nope',outdir+'/lightcurves/'+sn+'_'+filt+'.smp'
             #     continue
-        if not os.path.exists(snfiles[int(i)].strip):
+        if not os.path.exists(snfiles[int(i)].strip()):
             print  snfiles[int(i)].strip(),'PASSED'
             continue
         print snfiles[int(i)],'submitted'
