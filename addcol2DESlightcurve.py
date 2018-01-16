@@ -524,7 +524,7 @@ if __name__ == "__main__":
         if not snbad:
             tsne.append(sn)
         else:
-            if tbad < 4:
+            if tbad < 3:
                 #for filt in badfilts:
                 if not os.path.exists('/global/cscratch1/sd/dbrout/simnpzfilesv3.0/'+
                                                   smpfile.split('/')[-1].split('.')[0][:-2]+'_'+filt+'.mcmcinput.npz'):
