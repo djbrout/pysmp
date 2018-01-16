@@ -41,7 +41,7 @@ for ii in allindexes:
 
     for filt in filts:
         tot += 1
-        if tot > 10: continue
+        if count > 10: continue
         if doskipping:
             #print snfiles[i]
             sn = snfiles[int(i)].split('/')[-1].split('.')[0]
