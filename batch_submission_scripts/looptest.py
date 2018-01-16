@@ -5,7 +5,7 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(4000,8000)
+allindexes = np.arange(5000,7000)
 
 #allindexes = np.arange(362,4089,1)
 #allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
@@ -69,7 +69,7 @@ for ii in allindexes:
             '#SBATCH --partition=shared\n' +
             '#SBATCH -n 1\n' +
             '#SBATCH -c 1\n'+
-            #'#SBATCH -C haswell\n'+
+            '#SBATCH -C haswell\n'+
             '#SBATCH -A dessn\n' +
             '#SBATCH --time='+walltime+'\n' +
             '#SBATCH --output=/global/cscratch1/sd/dbrout/logs/' + str(i) + '_'+filt+'simv3.log\n' +
