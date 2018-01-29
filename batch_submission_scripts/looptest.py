@@ -5,7 +5,7 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(15000,17500)
+allindexes = np.arange(17500,20000)
 #now up to 8000
 
 #allindexes = np.arange(362,4089,1)
