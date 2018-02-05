@@ -1856,7 +1856,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
                                         np.arange(19., 26., .25),window=.125)
                 ax4.plot([19, 28.7], [0, 0],color='grey')
 
-                ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<10.], np.arange(19., 28, .25), .125)
+                ax, ayrms = dt.binrms(fakemag[ww][abs(d[ww])<3.], d[ww][abs(d[ww])<3.], np.arange(19., 28, .25), .125)
                 ax3.plot(ax, ayrms, color=col, label=filt+' band', linewidth=3,alpha=.8)
                 ax4.plot(axa, aya, linewidth=3, color=col,label=filt+' band',alpha=.8)
                 ax4.fill_between(axa, aya-aystd, aya+aystd, facecolor=col, alpha=.2)
