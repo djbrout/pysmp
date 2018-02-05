@@ -1805,7 +1805,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
     rect_scatter = [left, bottom + height / 2., width+.2, height / 2.]
     rect_scatterflux = [left, bottom, width+.2, height]
-    rect_histx = [left, bottom_h - .04, width+.2, .18]
+    rect_histx = [left, bottom_h - .14, width+.2, .18]
     rect_histy = [left_h, bottom + height / 2., 0.2, height / 2.]
     rect_histyflux = [left_h, bottom, 0.2, height / 2.]
 
