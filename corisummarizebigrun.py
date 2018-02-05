@@ -1825,7 +1825,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
 
 
         ax3.plot([0,100],[1.,1.],linestyle='--',color='black')
-        ax3.set_ylim(.85,1.5)
+        ax3.set_ylim(.85,1.25)
         ax3.legend(fontsize='x-small')
 
         fresid = np.zeros(flux.shape)
@@ -1898,7 +1898,7 @@ def plotsigmaresid(flux,fluxerr,fakemag,fitzpt,fakezpt,hostmag,chisqarr,rmsaddin
             ax4.plot(axa, aya+(aystd*1.15), linewidth=2, color='blue',linestyle='--')
             ax4.plot(axa, aya-aystd*1.15, linewidth=2, color='blue',linestyle='--')
         ax4.set_xlim(19.8,23.5)
-        ax4.set_ylim(-.02,.02)
+        ax4.set_ylim(-.012,.012)
         ax4.set_xlabel('Fake Mag')
         #ax5.set_xlabel('Counts')
         ax3.set_ylabel('RMS')
