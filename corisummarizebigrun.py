@@ -88,10 +88,12 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     if not os.path.exists(resultsdir+'/Summary/'+filter+'/'):
         os.mkdir(resultsdir+'/Summary/'+filter+'/')
     #raw_input()
-    plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
-                        data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
-                        data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
-                        filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],data['fwhm'],real=real)
+
+
+    #plotpercentageresid(data['Flux'],data['Fluxerr'],data['FakeMag'],data['FitZPT'],data['FakeZPT'], data['diffimflux'],data['diffimfluxerr'],
+    #                    data['sky'],data['skyerr'],data['DPMJD'],data['Chisq'],data['imfiles'],data['ra'],data['dec'],
+    #                    data['image_stamp'],resultsdir+'/Summary/'+filter+'/',data['fakefiles'],data['HostMag'],
+    #                    filter,data['FakeZPT'],data['rmsaddin'],data['filter'],data['flag'],data['fwhm'],real=real)
 
     #data['FakeMag'] = np.array(data['FakeMag'])
     #print len(data['Flux']),len(data['FakeMag'][data['FakeMag']<26.])
