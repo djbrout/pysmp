@@ -5,7 +5,7 @@ import time
 
 #allindexes = np.arange(0,2500)
 #18820
-allindexes = np.arange(20000,22500)
+allindexes = np.arange(22500,25000)
 #now up to 8000
 
 #allindexes = np.arange(362,4089,1)
@@ -97,7 +97,7 @@ for ii in allindexes:
 
             'python smptest.py --usefake --index=' + str(int(i)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
+            ' --snfilepath=all/ \n' +
             #' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/v4/real/ \n' +
 
 
