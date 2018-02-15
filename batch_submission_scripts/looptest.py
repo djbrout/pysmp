@@ -97,7 +97,7 @@ for ii in allindexes:
 
             'python smptest.py --usefake --index=' + str(int(i)) + '  -f  ' + filt +
             ' -o '+outdir+' --snfilelist='+snfilelist+' --savenpzfilesdir='+npzdir+' '+
-            ' --snfilepath=all/ \n' +
+            ' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/all/ \n' +
             #' --snfilepath=/project/projectdirs/des/djbrout/pysmp/imglist/v4/real/ \n' +
 
 
