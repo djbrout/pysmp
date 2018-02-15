@@ -13,7 +13,7 @@ allindexes = np.arange(25000,27500)
 filts = ['g','r','i','z']
 #filts = ['z']
 #'g','r',
-walltime= '05:00:00'
+walltime= '01:00:00'
 #np.random.shuffle(allindexes)
 
 doskipping = True
