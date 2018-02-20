@@ -631,7 +631,6 @@ if __name__ == "__main__":
             imfiles.extend(sndata['IMAGE_FILE'])
             dflag.extend(sndata['DESCRIPTIVE_FLAG'])
             gain.extend(sndata['GAIN'])
-            # print sndata['DESCRIPTIVE_FLAG']
             hostsbfluxcals.extend(np.array(sndata['GAIN'],dtype='float')*0. + float(hostsbfluxcal))
             #print sndata.keys()
             #raw_input()
@@ -644,8 +643,6 @@ if __name__ == "__main__":
         if not os.path.exists(savelcfile):
 
             imfiles = np.array([imf.split('/')[-1].replace('+fakeSN', '') for imf in imfiles], dtype='str')
-            #print imfiles
-            #raw_input()
             successful = addtolightcurve(lcfile,savelcfile,mjd,flux,fluxerr,
                      zpt, rmsaddin,
                      chi2,sky,skyerr,smpflag,zptfile,
