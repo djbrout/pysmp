@@ -2560,7 +2560,8 @@ class smp:
                                 except:
                                     print 'passing'
                                     continue
-                                xstarnew, ystarnew = cntrd.cntrd(fim, x_star1, y_star1, params.cntrd_fwhm)
+                                fx_star, fy_star = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
+                                xstarnew, ystarnew = cntrd.cntrd(fim, fx_star, fy_star, params.cntrd_fwhm)
                                 newra, newdec = zip(*fw.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
                                 forceddec.append(newdec)
