@@ -2531,7 +2531,7 @@ class smp:
                                     snparams.band, range(len(snparams.band))):
                             forcedra = []
                             forceddec = []
-                            if snparams.fake_truemag[j] < 30:
+                            if snparams.fake_truemag[fj] < 30:
 
                                 if int(imfile[:8]) < 20140601:
                                     imfile = imfile.replace('p1', 'Y1')
