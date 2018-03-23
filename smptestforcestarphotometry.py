@@ -293,6 +293,8 @@ class smp:
         self.params = params
         self.rootdir = rootdir
         self.psf_model = psf_model
+        self.forcedxstar = None
+        self.forcedystar = None
 
     #@profile
     def main(self,nodiff=False,nozpt=False,rootdir='',outdir='' ,
@@ -2522,6 +2524,42 @@ class smp:
 
                     #print sexsky,sexrms,sky,skyerr
                     #raw_input('sss')
+
+                    if self.forcedxstar is None:
+                        for fimfile, fnoisefile, fpsffile, fband, fj in \
+                                zip(snparams.image_name_search, snparams.image_name_weight, snparams.file_name_psf,
+                                    snparams.band, range(len(snparams.band))):
+                            forcedra = []
+                            forceddec = []
+                            if snparams.fake_truemag[j] < 30:
+
+                                if int(imfile[:8]) < 20140601:
+                                    imfile = imfile.replace('p1', 'Y1')
+                                    noisefile = noisefile.replace('p1', 'Y1')
+                                    psffile = psffile.replace('p1', 'Y1')
+                                elif int(imfile[:8]) < 20150601:
+                                    imfile = imfile.replace('p1', 'Y2')
+                                    noisefile = noisefile.replace('p1', 'Y2')
+                                    psffile = psffile.replace('p1', 'Y2')
+                                elif int(imfile[:8]) < 20160601:
+                                    imfile = imfile.replace('p1', 'Y3')
+                                    noisefile = noisefile.replace('p1', 'Y3')
+                                    psffile = psffile.replace('p1', 'Y3')
+                                elif int(imfile[:8]) < 20170601:
+                                    imfile = imfile.replace('p1', 'Y4')
+                                    noisefile = noisefile.replace('p1', 'Y4')
+                                    psffile = psffile.replace('p1', 'Y4')
+
+                                w = wcs.WCS(self.rootdir+'/'+imfile)
+                                im = pyfits.getdata(imfile)
+                                xstarnew, ystarnew = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
+                                newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
+                                forcedra.append(newra)
+                                forceddec.append(newdec)
+                        ras = np.array(forcedra)
+                        print ras.shape
+                        print np.mean(ras,axis=1).shape
+                        asdf
 
                     zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(x_star1,
                                                                                                            y_star1,
