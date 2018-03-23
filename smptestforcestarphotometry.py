@@ -2563,6 +2563,7 @@ class smp:
                                 newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
                                 forceddec.append(newdec)
+                                print len(forcedra)
                         ras = np.array(forcedra)
                         print ras.shape
                         print np.mean(ras,axis=1).shape
