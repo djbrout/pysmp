@@ -2526,6 +2526,7 @@ class smp:
                     #raw_input('sss')
 
                     if self.forcedxstar is None:
+                        cntr = 0
                         for fimfile, fnoisefile, fpsffile, fband, fj in \
                                 zip(snparams.image_name_search, snparams.image_name_weight, snparams.file_name_psf,
                                     snparams.band, range(len(snparams.band))):
@@ -2533,6 +2534,8 @@ class smp:
                             forceddec = []
 
                             if float(snparams.fake_truemag[fj]) < 30.:
+                                cntr += 1
+                                if cntr > 10: continue
                                 print 'here'
                                 if int(fimfile[:8]) < 20140601:
                                     fimfile = fimfile.replace('p1', 'Y1')
@@ -2550,9 +2553,11 @@ class smp:
                                     fimfile = fimfile.replace('p1', 'Y4')
                                     fnoisefile = fnoisefile.replace('p1', 'Y4')
                                     fpsffile = fpsffile.replace('p1', 'Y4')
-
-                                w = wcs.WCS(self.rootdir+'/'+fimfile)
-                                fim = pyfits.getdata(self.rootdir+'/'+fimfile)
+                                try:
+                                    w = wcs.WCS(self.rootdir+'/'+fimfile)
+                                    fim = pyfits.getdata(self.rootdir+'/'+fimfile)
+                                except:
+                                    continue
                                 xstarnew, ystarnew = cntrd.cntrd(fim, x_star1, y_star1, params.cntrd_fwhm)
                                 newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
