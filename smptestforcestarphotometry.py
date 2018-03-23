@@ -2533,8 +2533,8 @@ class smp:
                                 zip(snparams.image_name_search, snparams.image_name_weight, snparams.file_name_psf,
                                     snparams.band, range(len(snparams.band))):
 
-                            print len(snparams.fake_truemag[np.array(snparams.fake_truemag,dtype='float')<23.])
-                            asdf
+                            #print len(snparams.fake_truemag[np.array(snparams.fake_truemag,dtype='float')<23.])
+                            #asdf
                             if float(snparams.fake_truemag[fj]) < 23.:
                                 cntr += 1
                                 if cntr > 10000: continue
