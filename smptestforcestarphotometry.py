@@ -2536,7 +2536,7 @@ class smp:
 
                             if float(snparams.fake_truemag[fj]) < 30.:
                                 cntr += 1
-                                if cntr > 10: continue
+                                if cntr > 10000: continue
                                 print 'here'
                                 if int(fimfile[:8]) < 20140601:
                                     fimfile = fimfile.replace('p1', 'Y1')
