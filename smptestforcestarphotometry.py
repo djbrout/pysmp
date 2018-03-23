@@ -2557,6 +2557,7 @@ class smp:
                                     w = wcs.WCS(self.rootdir+'/'+fimfile)
                                     fim = pyfits.getdata(self.rootdir+'/'+fimfile)
                                 except:
+                                    print 'passing'
                                     continue
                                 xstarnew, ystarnew = cntrd.cntrd(fim, x_star1, y_star1, params.cntrd_fwhm)
                                 newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
