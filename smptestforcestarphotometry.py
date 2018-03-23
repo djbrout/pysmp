@@ -2527,11 +2527,12 @@ class smp:
 
                     if self.forcedxstar is None:
                         cntr = 0
+                        forcedra = []
+                        forceddec = []
                         for fimfile, fnoisefile, fpsffile, fband, fj in \
                                 zip(snparams.image_name_search, snparams.image_name_weight, snparams.file_name_psf,
                                     snparams.band, range(len(snparams.band))):
-                            forcedra = []
-                            forceddec = []
+
 
                             if float(snparams.fake_truemag[fj]) < 30.:
                                 cntr += 1
