@@ -2552,7 +2552,7 @@ class smp:
                                     fpsffile = fpsffile.replace('p1', 'Y4')
 
                                 w = wcs.WCS(self.rootdir+'/'+fimfile)
-                                fim = pyfits.getdata(fimfile)
+                                fim = pyfits.getdata(self.rootdir+'/'+fimfile)
                                 xstarnew, ystarnew = cntrd.cntrd(fim, x_star1, y_star1, params.cntrd_fwhm)
                                 newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
