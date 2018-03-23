@@ -2553,7 +2553,7 @@ class smp:
                                                                                                                    snparams.mjd[
                                                                                                                        j])),
                                                                                                            gain=self.gain,
-                                                                                                           foredphotometry=True)
+                                                                                                           forcedphotometry=True)
 
                     zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids,zptfitchisq = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
@@ -6032,7 +6032,7 @@ class smp:
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,weightsfile,psffile,imfile,imwcs,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
-                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,foredphotometry=False):
+                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,forcedphotometry=False):
         """Measure the zeropoints for the images"""
 
         #print xstar,ystar
