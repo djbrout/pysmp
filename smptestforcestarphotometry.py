@@ -2564,7 +2564,7 @@ class smp:
 
 
                     ot = open('zptforcetest.dat','a')
-                    ot.write(imfile+'\t'+filt+'\t'+str(zpt)+'\t'+str(zpterr)+'\t'+str(zptf)+'\t'+str(zpterrf)+'\n'+)
+                    ot.write(imfile+'\t'+filt+'\t'+str(zpt)+'\t'+str(zpterr)+'\t'+str(zptf)+'\t'+str(zpterrf)+'\n')
                     ot.close()
 
 
