@@ -2570,8 +2570,8 @@ class smp:
                         self.fras = np.mean(ras,axis=0).shape
                         self.fdecs = np.mean(decs,axis=0).shape
                     self.forcedxstar, self.forcedystar = zip(*w.wcs_world2pix(np.array(zip(self.fras,self.fdecs)),0))
-
-
+                    print x_star1[:100]
+                    print self.forcedxstar[:100]
                     zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(self.forcedxstar,
                                                                                                            self.forcedystar,
                                                                                                            tras,
