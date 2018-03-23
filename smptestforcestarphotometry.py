@@ -2534,7 +2534,7 @@ class smp:
                                     snparams.band, range(len(snparams.band))):
 
 
-                            if float(snparams.fake_truemag[fj]) < 30.:
+                            if float(snparams.fake_truemag[fj]) < 23.:
                                 cntr += 1
                                 if cntr > 10000: continue
                                 print 'here'
