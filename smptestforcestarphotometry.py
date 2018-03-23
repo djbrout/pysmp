@@ -2531,6 +2531,7 @@ class smp:
                                     snparams.band, range(len(snparams.band))):
                             forcedra = []
                             forceddec = []
+                            print snparams.fake_truemag[fj]
                             if snparams.fake_truemag[fj] < 30:
 
                                 if int(imfile[:8]) < 20140601:
