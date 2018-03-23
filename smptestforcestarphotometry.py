@@ -2531,29 +2531,29 @@ class smp:
                                     snparams.band, range(len(snparams.band))):
                             forcedra = []
                             forceddec = []
-                            print snparams.fake_truemag[fj]
-                            if snparams.fake_truemag[fj] < 30:
 
-                                if int(imfile[:8]) < 20140601:
-                                    imfile = imfile.replace('p1', 'Y1')
-                                    noisefile = noisefile.replace('p1', 'Y1')
-                                    psffile = psffile.replace('p1', 'Y1')
-                                elif int(imfile[:8]) < 20150601:
-                                    imfile = imfile.replace('p1', 'Y2')
-                                    noisefile = noisefile.replace('p1', 'Y2')
-                                    psffile = psffile.replace('p1', 'Y2')
-                                elif int(imfile[:8]) < 20160601:
-                                    imfile = imfile.replace('p1', 'Y3')
-                                    noisefile = noisefile.replace('p1', 'Y3')
-                                    psffile = psffile.replace('p1', 'Y3')
-                                elif int(imfile[:8]) < 20170601:
-                                    imfile = imfile.replace('p1', 'Y4')
-                                    noisefile = noisefile.replace('p1', 'Y4')
-                                    psffile = psffile.replace('p1', 'Y4')
+                            if float(snparams.fake_truemag[fj]) < 30.:
+                                print 'here'
+                                if int(fimfile[:8]) < 20140601:
+                                    fimfile = fimfile.replace('p1', 'Y1')
+                                    fnoisefile = fnoisefile.replace('p1', 'Y1')
+                                    fpsffile = fpsffile.replace('p1', 'Y1')
+                                elif int(fimfile[:8]) < 20150601:
+                                    fimfile = fimfile.replace('p1', 'Y2')
+                                    fnoisefile = fnoisefile.replace('p1', 'Y2')
+                                    fpsffile = fpsffile.replace('p1', 'Y2')
+                                elif int(fimfile[:8]) < 20160601:
+                                    fimfile = fimfile.replace('p1', 'Y3')
+                                    fnoisefile = fnoisefile.replace('p1', 'Y3')
+                                    fpsffile = fpsffile.replace('p1', 'Y3')
+                                elif int(fimfile[:8]) < 20170601:
+                                    fimfile = fimfile.replace('p1', 'Y4')
+                                    fnoisefile = fnoisefile.replace('p1', 'Y4')
+                                    fpsffile = fpsffile.replace('p1', 'Y4')
 
-                                w = wcs.WCS(self.rootdir+'/'+imfile)
-                                im = pyfits.getdata(imfile)
-                                xstarnew, ystarnew = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
+                                w = wcs.WCS(self.rootdir+'/'+fimfile)
+                                fim = pyfits.getdata(fimfile)
+                                xstarnew, ystarnew = cntrd.cntrd(fim, x_star1, y_star1, params.cntrd_fwhm)
                                 newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
                                 forceddec.append(newdec)
