@@ -2573,7 +2573,7 @@ class smp:
 
 
                     zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(self.forcedxstar,
-                                                                                                           self.forcedystar
+                                                                                                           self.forcedystar,
                                                                                                            tras,
                                                                                                            tdecs, tids,
                                                                                                            mag, sky,
