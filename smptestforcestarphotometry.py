@@ -2577,7 +2577,14 @@ class smp:
                         decs = np.array(forceddec)
                         self.fras = np.mean(ras,axis=0)
                         self.fdecs = np.mean(decs,axis=0)
-                    self.forcedxstar, self.forcedystar = zip(*w.wcs_world2pix(np.array(zip(self.fras,self.fdecs)),0))
+                    coords = zip(*w.wcs_world2pix(np.array(zip(self.fras,self.fdecs)),0))
+                    fx_star, fy_star = [], []
+
+                    for xval, yval in zip(*coords):
+                        fx_star += [xval]
+                        fy_star += [yval]
+
+                    self.forcedxstar, self.forcedystar = np.array(fx_star), np.array(fy_star)
                     #print x_star1[:100]
                     #print self.forcedxstar[:100]
                     zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(self.forcedxstar[~badflagarr],
