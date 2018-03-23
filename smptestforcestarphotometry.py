@@ -2555,23 +2555,25 @@ class smp:
                                     fnoisefile = fnoisefile.replace('p1', 'Y4')
                                     fpsffile = fpsffile.replace('p1', 'Y4')
                                 try:
-                                    w = wcs.WCS(self.rootdir+'/'+fimfile)
+                                    fw = wcs.WCS(self.rootdir+'/'+fimfile)
                                     fim = pyfits.getdata(self.rootdir+'/'+fimfile)
                                 except:
                                     print 'passing'
                                     continue
                                 xstarnew, ystarnew = cntrd.cntrd(fim, x_star1, y_star1, params.cntrd_fwhm)
-                                newra, newdec = zip(*w.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
+                                newra, newdec = zip(*fw.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
                                 forceddec.append(newdec)
                                 print len(forcedra)
                         ras = np.array(forcedra)
-                        print ras.shape
-                        print np.mean(ras,axis=1).shape
-                        asdf
+                        decs = np.array(forceddec)
+                        self.fras = np.mean(ras,axis=0).shape
+                        self.fdecs = np.mean(decs,axis=0).shape
+                    self.forcedxstar, self.forcedystar = zip(*w.wcs_world2pix(np.array(zip(self.fras,self.fdecs)),0))
 
-                    zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(x_star1,
-                                                                                                           y_star1,
+
+                    zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(self.forcedxstar,
+                                                                                                           self.forcedystar
                                                                                                            tras,
                                                                                                            tdecs, tids,
                                                                                                            mag, sky,
