@@ -40,7 +40,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
     #getparametriczpt("/global/cscratch1/sd/dbrout/v6/","/global/cscratch1/sd/dbrout/v6/stardata_"+filter)
 
     if not cacheddata:
-        #dostars = True
+        dostars = True
         cd = cd[0]
         if dostars:
             grabstardata("/project/projectdirs/dessn/dbrout/zptfilesv3/","/global/cscratch1/sd/dbrout/v7/stardatanew",tfield,filter)
@@ -53,7 +53,7 @@ def go(fakedir,resultsdir,cacheddata,cd,filter,tfield,dostars,deep_or_shallow,is
         data = grabdata(tmpwriter,resultsdir,cd,tfield,filter=filter,real=real)
     else:
 
-        #dostars = Trueasdf
+        dostars = True
         if dostars:
             stardata = np.load('/global/cscratch1/sd/dbrout/v7/stardatanew.npz')
             #plotstarlc(stardata['starflux'],stardata['starfluxerr'],stardata['starzpt'],stardata['ids'],stardata['mjd'],stardata['catmag'])
@@ -2879,7 +2879,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
 
 
 
-
+    
 
 
     #print 'fluxerr vs rmsadding' ,np.median((-2.5*np.log10(flux) + 2.5*np.log10(flux+fluxerr))), np.median(rmsaddin)
@@ -2902,6 +2902,130 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     #raw_input()
 
     plt.clf()
+    from scipy import stats
+    def meanwithcut(x):
+        if len(x[np.abs(x)<.2]) < 2000: return np.nan
+        return np.median(x[np.abs(x)<.1])
+    
+    f, axes = plt.subplots(2, 2)
+    axes = axes.ravel()
+    for ax,flt in zip(axes,['g','r','i','z']):
+        ww = band == flt
+        print flt
+        ax.scatter(catmag[ww][:20000],zpt[ww][:20000]-2.5*np.log10(flux[ww][:20000])-catmag[ww][:20000],alpha=.01)
+        bin_means, bin_edges, binnumber = stats.binned_statistic(catmag[ww],zpt[ww]-2.5*np.log10(flux[ww])-catmag[ww], statistic=meanwithcut, bins=np.arange(16,21,.25))
+        ax.plot(bin_edges[:-1]+(bin_edges[1]-bin_edges[0])/2.,bin_means,linewidth=3,color='red')
+
+        if (flt == 'z') | (flt == 'i'): ax.set_xlabel('FGCM Mag')
+        ax.set_ylim(-.03,.03)
+        if (flt == 'g') | (flt == 'i'): ax.set_ylabel('Nightly - FGCM (Mag)')
+        ax.axhline(0,c='k')
+    plt.tight_layout()
+    plt.savefig(outdir + '/' + title + 'nightlyvscatmag.png')
+    print 'upload',outdir + '/' + title + 'nightlyvscatmag.png'
+
+    
+    plt.clf()
+    doload = False
+    if doload:
+        gflux = []
+        gcatflux = []
+        gcatmag = []
+        rflux = []
+        rcatflux = []
+        rcatmag = []
+        iflux = []
+        icatflux = []
+        icatmag = []
+        zflux = []
+        zcatflux = []
+        zcatmag = []
+        import pickle
+
+        ww = band == 'g'
+        cntr = 0
+        for gf,gcf,gcm,gi in zip(flux[ww],catflux[ww],catmag[ww],indices[ww]):
+            if cntr > 5000000: continue
+            try:
+                iww = (indices == gi) & (band == 'i')
+                rww = (indices == gi) & (band == 'r')
+                zww = (indices == gi) & (band == 'z')
+                #print 'index, catmag',indices[iww][0],catmag[iww][0]
+                if cntr %1 == 0: print cntr
+                x=flux[iww][0]
+                x=flux[rww][0]
+                x=flux[zww][0]
+
+                gflux.append(gf)
+                gcatflux.append(gcf)
+                gcatmag.append(gcm)
+                iflux.append(flux[iww][0])
+                icatflux.append(catflux[iww][0])
+                icatmag.append(catmag[iww][0])
+                rflux.append(flux[rww][0])
+                rcatflux.append(catflux[rww][0])
+                rcatmag.append(catmag[rww][0])
+                zflux.append(flux[zww][0])
+                zcatflux.append(catflux[zww][0])
+                zcatmag.append(catmag[zww][0])
+                
+                cntr += 1
+            except:
+                print 'passed'
+                pass
+
+            if cntr % 1000 == 0:
+                
+                plotdict = {}
+                plotdict['g'] = {'flux':np.array(gflux),'catflux':np.array(gcatflux),'catmag':np.array(gcatmag)}
+                plotdict['r'] = {'flux':np.array(rflux),'catflux':np.array(rcatflux),'catmag':np.array(rcatmag)}
+                plotdict['i'] = {'flux':np.array(iflux),'catflux':np.array(icatflux),'catmag':np.array(icatmag)}
+                plotdict['z'] = {'flux':np.array(zflux),'catflux':np.array(zcatflux),'catmag':np.array(zcatmag)}
+                pcolor = np.array(gcatmag) - np.array(icatmag)
+            
+                pickle.dump( plotdict, open( "colorplot.pickle", "wb" ) )
+                np.savez('colorplot.npz',pcolor=pcolor)
+    else:
+        import pickle
+        pdata = np.load('colorplot.npz')
+        plotdict = pickle.load( open( "colorplot.pickle", "rb" ) )
+        pcolor = pdata['pcolor']
+
+
+    from scipy import stats                                                                         
+    def meanwithcut(x):                               
+        if len(x[np.abs(x)<.2]) < 150:
+            return np.nan
+        return np.mean(x[np.abs(x)<.1])                                                                                       
+                                                                                                                                                          
+    f, axes = plt.subplots(2, 2)                                                                                                                                             
+    axes = axes.ravel()                                                                                                                                                         
+    for ax,flt in zip(axes,['g','r','i','z']):                                                                                                                                         
+        pflux = plotdict[flt]['flux']
+        pcatflux = plotdict[flt]['catflux']
+        pcatmag = plotdict[flt]['catmag']
+        y = -1.*(pflux-pcatflux)/pcatflux
+        mmm = np.mean(y[(np.abs(y)<.05)&(pcolor<2.)])
+        ax.scatter(pcolor,(-1.)*(pflux-pcatflux)/pcatflux-mmm,alpha=.01)                                                                                                     
+        bin_means, bin_edges, binnumber = stats.binned_statistic(pcolor,((-1.)*(pflux-pcatflux)/pcatflux-mmm), statistic=meanwithcut, bins=np.arange(0.2,2,.25))                 
+        ax.plot(bin_edges[:-1]+(bin_edges[1]-bin_edges[0])/2.,bin_means,linewidth=3,color='red')                                                                                   
+        if (flt == 'z') | (flt =='i'): ax.set_xlabel('g-i Mag')                                                                                                     
+        if (flt == 'r') | (flt == 'z'): ax.set_yticklabels([])
+        if (flt== 'r') | (flt == 'g'):ax.set_xticklabels([])
+
+        ax.text(1.45,.015,flt+' band')
+        ax.set_ylim(-.020,.020)
+        if (flt == 'g') | (flt =='i'): ax.set_yticklabels(['-20','-10','0','10','20'])
+        ax.set_xlim(0,2.)
+        if (flt == 'g') | (flt =='i'): ax.set_ylabel('Nightly - FGCM (mmag)')                                                                                                        
+        ax.axhline(0,c='k')                                                                
+    plt.tight_layout()
+    plt.savefig(outdir + '/' + title + 'nightlyvscolor.png')                                                                                                            
+    print 'upload',outdir + '/' + title + 'nightlyvscolor.png'                      
+    asdf
+    plt.clf()
+
+
     # repeatability = []
     # uindices = []
     # for ind in np.unique(indices):
@@ -2971,7 +3095,8 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecra = []
         pltvecdec = []
         pltveccm = []
-
+        rmsdistancevec = []
+        smagvec = []
 
         stardictras = np.array([11,22])
         stardictdecs =  np.array([11,22])
@@ -2993,7 +3118,7 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             cntr += 1
             if cntr > maxpoints: continue
             #if cntr > 100000: continue
-            if cntr > 50000: continue
+            if cntr > 1000: continue
             if cntr % 1 == 0: print cntr,'of',len(starmagerr[::-1])
 
             # print starmag[np.isclose(ras,r,rtol=1.e-5) & np.isclose(decs,d,rtol=1.e-5) & (catmag == cm)]
@@ -3010,15 +3135,15 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             if True:
                 print 'here2'
                 starww = np.isclose(ras, r, rtol=5.e-5) & np.isclose(decs, d, rtol=5.e-5) & (catmag == cm) & (band == tband)
-                starwwmag = starmag[starww]
+                #starwwmag = starmag[starww]
 
-                starwwmjd = mjd[starww]
-                starwwra = ras[starww]
-                starwwdec = decs[starww]
-                raslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
-                decslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwdec)
+                #starwwmjd = mjd[starww]
+                #starwwra = ras[starww]
+                #starwwdec = decs[starww]
+                #raslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
+                #decslope, intercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwdec)
 
-                starmean = np.mean(starwwmag)
+                #starmean = np.mean(starwwmag)
                 starlen = len(starww)
                 # stardictras.append(r)
                 # stardictdecs = np.append(stardictdecs,d)
@@ -3031,6 +3156,23 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
             #repeatability = np.std(starww)
             # repeatability = np.std(starmag[indices == ind])
             if starlen > 15.:
+                starwwmag = starmag[starww]
+
+                starwwmjd = mjd[starww]
+                starwwra = ras[starww]
+                starwwdec = decs[starww]
+                raslope, raintercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwra)
+                decslope, decintercept, r_value, p_value, std_err = stats.linregress(starwwmjd, starwwdec)
+                rapred = starwwmjd*raslope+raintercept
+                decpred = starwwmjd*decslope+decintercept
+                distance = ( (rapred-starwwra)**2 + (decpred-starwwdec)**2 )**.5
+                rmsdist = np.std(distance)*3600.
+                rmsdistancevec.append(rmsdist)
+                smagvec.append(sm)
+                continue
+
+
+                starmean = np.mean(starwwmag)
                 for allsm,allmjd in zip(starwwmag,starwwmjd):
                     pltvecy.append(allsm - starmean)
                     pltvecra.append(r)
@@ -3073,10 +3215,11 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
         pltvecccd = np.array(pltvecccd,dtype='str')
         pltvecccdr = np.array(pltvecccdr)
         pltvecccdb = np.array(pltvecccdb,dtype='str')
-
-        np.savez(outdir +'/pltstarvec_movingstars_new',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
+        rmsdistancevec = np.array(rmsdistancevec)
+        smagvec = np.array(smagvec)
+        np.savez(outdir +'/pltstarvec_movingstars_new_onlyastromtryrms',pltvecy=pltvecy,pltvecfield=pltvecfield,pltvecfwhm=pltvecfwhm,pltvecmjd=pltvecmjd,
                  pltvecbigfield=pltvecbigfield,pltvecccd=pltvecccd,pltvecband=pltvecband,
-                 pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb,
+                 pltvecfieldr=pltvecfieldr, pltvecccdr=pltvecccdr,pltvecfieldb=pltvecfieldb,pltvecccdb=pltvecccdb,rmsdistancevec=rmsdistancevec,
                  pltvecraslope=pltvecraslope,pltvecdecslope=pltvecdecslope,pltveccm=pltveccm,
                  pltvecra=pltvecra,pltvecdec=pltvecdec)
 
@@ -3088,6 +3231,25 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     # xy = np.vstack([x, y])
     # z = gaussian_kde(xy)(xy)
     # import mpl_scatter_density
+
+    plt.clf()
+    plt.hist(rmsdistancevec,bins=np.linspace(0,.2,25),alpha=.7)
+    plt.xlabel('RMS after PMfit (arcsec)')
+    plt.savefig('astrometry_rms.png')
+    print 'upload astrometry_rms.png'
+
+
+    plt.clf()
+    plt.scatter(smagvec,rmsdistancevec,alpha=.5)
+    plt.xlabel('Star Mag')
+    plt.ylabel('RMS after PM Fit (arcsec)')
+    plt.savefig('astrometry_rms_vs_mag.png')
+    print 'upload astrometry_rms_vs_mag.png'
+
+
+    sys.exit()
+
+
 
     plt.clf()
     #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)
@@ -3105,6 +3267,24 @@ def plotstarrms(flux,fluxerr,zpt,catmag,chisq,rmsaddin,sky,skyerr,poisson,indice
     plt.savefig(outdir+'/movingstars.png')
     print 'upload',outdir+'/movingstars.png'
 
+
+    plt.clf()
+    #plt.scatter(pltvecraslope,pltvecdecslope,alpha=.1)                                                                                                                                                     
+    #plt.scatter(x, y, c=z,alpha=.1 ,edgecolor='')                                                                                                                                                          
+    fig = plt.figure(figsize=(7,7))
+    ax = fig.add_subplot(1, 1, 1)
+    #ax.scatter_density(x, y, vmin=0, cmap=plt.cm.RdYlBu)                                                                                                                                              
+    print 'sig', np.std((x**2+y**2)**.5)
+    ax.hist((x**2+y**2)**.5,bins=21)
+    ax.axhline(0,color='k')
+    ax.axvline(0,color='k')
+    ax.set_xlim(-.05,.05)
+    ax.set_ylim(-.05,.05)
+    ax.set_xlabel('Arcsec Per Year',fontsize=20)
+    #ax.set_ylabel('DEC Arcsec Per Year',fontsize=20)
+    plt.savefig(outdir+'/movingstarshist.png')
+    print 'upload',outdir+'/movingstarshist.png'
+    asdf
 
     plt.clf()
     wwg = pltvecband == 'g'

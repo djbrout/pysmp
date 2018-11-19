@@ -354,6 +354,7 @@ class smp:
             outfile = ''
             outdir = ''
         mainoutdir = copy(outdir)
+        self.residcounter = 5000
 
         # cspath = os.path.join(outdir,foldername+'/SNe/starfits/')
         # if fermigrid and worker:
@@ -1312,6 +1313,7 @@ class smp:
                     starcat.dec = starcat.bigdec[cols]
                     starcat.mag = starcat.bigmag[cols]
                     starcat.objid = starcat.bigid[cols]
+                    starcat.id = starcat.bigid[cols]
                     #print 'hereeee'
                     #raw_input()
 
@@ -2529,15 +2531,16 @@ class smp:
                         cntr = 0
                         forcedra = []
                         forceddec = []
+                        forcedmjd = []
                         for fimfile, fnoisefile, fpsffile, fband, fj in \
                                 zip(snparams.image_name_search, snparams.image_name_weight, snparams.file_name_psf,
                                     snparams.band, range(len(snparams.band))):
 
                             #print len(snparams.fake_truemag[np.array(snparams.fake_truemag,dtype='float')<23.])
                             #asdf
-                            if float(snparams.fake_truemag[fj]) < 23.:
+                            if float(snparams.fake_truemag[fj]) < 24.:
                                 cntr += 1
-                                if cntr > 10000: continue
+                                if cntr > 105: continue
                                 print 'here'
                                 if int(fimfile[:8]) < 20140601:
                                     fimfile = fimfile.replace('p1', 'Y1')
@@ -2573,11 +2576,31 @@ class smp:
                                 newra, newdec = zip(*fw.wcs_pix2world(np.array(zip(xstarnew, ystarnew)), 0))
                                 forcedra.append(newra)
                                 forceddec.append(newdec)
+                                bigmjd = np.array(newra)*0.+float(snparams.mjd[fj])
+                                forcedmjd.append(bigmjd)
                                 print len(forcedra)
                         ras = np.array(forcedra)
                         decs = np.array(forceddec)
+                        forcedmjd = np.array(forcedmjd)
                         self.fras = np.mean(ras,axis=0)
                         self.fdecs = np.mean(decs,axis=0)
+                        self.propermotions = []
+                        print ras.shape
+                        for fr in range(len(ras[1])):
+                            #print ras.shape
+                            tra = ras[:,fr]
+                            tdec = decs[:,fr]
+                            
+                            tdist = (tra**2+tdec**2)**.5
+                            timeaxis = forcedmjd[:,fr]
+                            #print tra[:3],tdec[:3],timeaxis[:3]
+                            motion,b = np.polyfit(timeaxis, tdist, 1)
+                            self.propermotions.append(motion)
+                            #raw_input()
+                        self.propermotions = np.array(self.propermotions)
+                        for p in self.propermotions[~badflagarr]:
+                            print p
+                        #raw_input()
                     coords = zip(*w.wcs_world2pix(np.array(zip(self.fras,self.fdecs)),0))
                     fx_star, fy_star = [], []
 
@@ -2586,6 +2609,7 @@ class smp:
                         fy_star += [yval]
 
                     self.forcedxstar, self.forcedystar = np.array(fx_star), np.array(fy_star)
+
                     #print x_star1[:100]
                     #print self.forcedxstar[:100]
                     zptf, zpterrf, zpt_file, rmsaddin, thisra, thisdec, thisids, zptfitchisq = self.getzpt(self.forcedxstar[~badflagarr],
@@ -2618,8 +2642,10 @@ class smp:
                                                                                                                    snparams.mjd[
                                                                                                                        j])),
                                                                                                            gain=self.gain,
-                                                                                                           forcedphotometry=True)
-
+                                                                                                           forcedphotometry=True,
+                                                                                                           propermotions=self.propermotions[~badflagarr])
+                    #print 'hereeeeee'
+                    #raw_input()
                     zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids,zptfitchisq = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])),gain=self.gain)
@@ -6097,7 +6123,7 @@ class smp:
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,weightsfile,psffile,imfile,imwcs,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
-                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,forcedphotometry=False):
+                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,forcedphotometry=False,propermotions=None):
         """Measure the zeropoints for the images"""
 
         #print xstar,ystar
@@ -6110,11 +6136,16 @@ class smp:
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
 
         if forcedphotometry:
-                pass
+            goodpropermotions = propermotions*3.6*10**6 < 3.
+            print 'removing proper motions'
+            print len(xstar),len(xstar[goodpropermotions])
+            #asdf
+            #sys.exit()
+            #raw_input()
         else:
             xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
-
-
+            goodpropermotions = np.isfinite(xstar)
+            
 
 
         #print xstar
@@ -6525,6 +6556,17 @@ class smp:
                         # cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
                         # print 'pkfit chisq',schi,'fluxsmp chisq',cchi
 
+
+
+                        dosaveresids = True
+
+                        if dosaveresids & (bad == False) & (chi > 0.):
+                            self.residcounter += 1
+                            if self.residcounter % 5000 == 0: sys.exit()
+                            np.savez('forcedpsfresidstamps/%06d_%s_psfresid.npz'%(self.residcounter,filt),image_stamp=image_stamp,psf_stamp=psf,skysig=skysig,mjd=mjd,starmag=m,sky=sky1,scale=scale,filt=filt)
+
+
+
                         #for i in range(self.Nimage):
                         if (self.savezptstamps) & (bad == False) & (chi > 0.):
                             fig = plt.figure(figsize=(20, 10))
@@ -6741,6 +6783,7 @@ class smp:
                                 (~np.isnan(flux_chisq)) &
                                 (flux_star > 0) &
                                 (badflag == 0) &
+                                    (goodpropermotions) &
                                 (isnotcheckstars == 1))[0]
         else:
             goodstarcols = np.where((mag_cat != 0) &
@@ -6761,6 +6804,7 @@ class smp:
                                     (np.isfinite(flux_chisq)) &
                                     (~np.isnan(flux_chisq)) &
                                     (flux_star > 0) &
+                                    (goodpropermotions) &
                                     (badflag == 0) &
                                     (isnotcheckstars == 1))[0]
 
@@ -6774,6 +6818,7 @@ class smp:
                                 (np.isfinite(mag_cat)) &
                                 (np.isfinite(flux_star)) &
                                 (flux_star > 0) &
+                                    (goodpropermotions) &
                                 (badflag == 0) &
                                 (isnotcheckstars == 0))[0]
 
@@ -6835,6 +6880,7 @@ class smp:
                                     # (flux_star_std_mcmc > 1.0) &
                                     # (flux_star_std_mcmc_modelerrors > 1.0) &
                                     (np.isfinite(mag_cat)) &
+                                    (goodpropermotions) &
                                     (np.isfinite(flux_star)) &
                                     (abs(zptresid) < 3.*rmsaddin ) &
                                     (flux_star > 0) &

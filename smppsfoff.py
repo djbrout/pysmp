@@ -5534,7 +5534,7 @@ class smp:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
             fluxerrmp = errmag
-            print fluxmp,errmag
+            #print fluxmp,errmag
         except:
             return 1, 1, 1, 1, 1, True
         #raw_input()
@@ -5711,7 +5711,7 @@ class smp:
         # #plt.ylim(chisqvec[argm]-1.,chisqvec[argm]+10.)
         # plt.savefig('fluxtest.png')
         #print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
-        print 'mpfit',fluxmp,fluxerrmp
+        #print 'mpfit',fluxmp,fluxerrmp
         #print 'lmfit',fluxlm,fluxerrlm
         #print 'minchisq',chisqvec[argm]
         #print 'minchisq/ndof',chisqvec[argm]/len(fitrad[fitrad == 1].ravel())
@@ -5764,7 +5764,7 @@ class smp:
         #         bad = True
         #         print 'star too dim...'
         sim = sky + fluxmp * psf
-        print 'chisq',np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad)
+        #print 'chisq',np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad)
         if not bad:
             #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
             return fluxmp, np.sqrt(fluxerrmp**2+fluxmp), np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad), sum_data_minus_sim, np.sum((im - sim) ** 2 /(skyerr**2+fluxmp) * fitrad)/ndof, bad
@@ -6115,9 +6115,9 @@ class smp:
             #if i < float(params.numcheckstars):
             #    isnotcheckstars[i] = 0
 
-            if mc > 21.01:
-                print mc,'star too dim'
-                continue
+            #if mc > 21.01:
+            #    print mc,'star too dim'
+            #    continue
 
             if mc < 16.5:
                 print mc,'star too bright'
@@ -6406,14 +6406,16 @@ class smp:
                         if True:
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, image_stamp*0.+sky1, gnoise_stamp,
                                                                              fitrad, gal, mjd, skysig,self.gain,guess_scale=10**(.4*(31.-m)))
+                            snr = scale/errmag
+                            #print 'SNR:',scale,errmag,snr
                             tpsfout = open('testpsfoff.txt','a')
-                            for txoff,tyoff in zip(np.random.uniform(0,1,10),np.random.uniform(0,1,10)):
+                            for txoff,tyoff in zip(np.random.uniform(-1,1,100),np.random.uniform(-1,1,100)):
                                 psf, psfcenter = self.build_psfex(psffile, x+txoff, y+tyoff, imfile, stop=True,
                                                                   psfexworked=psfexworked)
                                 testscale, testerrmag, testchi, testdms, testchinoposs, testbad = self.getfluxsmp(image_stamp, psf,
                                                                 image_stamp * 0. + sky1,gnoise_stamp,fitrad, gal, mjd,
                                                                 skysig,self.gain, guess_scale=10 ** (.4 * (31. - m)))
-                                writestring = '%.5f %.5f %.5f %.5f %.5f\n'%(scale,testscale,txoff,tyoff,fwhm)
+                                writestring = '%.5f %.5f %.5f %.5f %.5f %.5f \n'%(scale,testscale,txoff,tyoff,fwhm,snr)
                                 tpsfout.write(writestring)
 
                             if not chi > 0.:
@@ -7525,8 +7527,8 @@ if __name__ == "__main__":
     import sys,getopt
     # read in arguments and options
     try:
-        if os.path.exists("default.configtest"):
-            args = open("default.configtest", 'r').read().split()
+        if os.path.exists("default.configtestpsf"):
+            args = open("default.configtestpsf", 'r').read().split()
         else:
             args = sys.argv[1:]
         

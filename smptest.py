@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 
 '''
 
@@ -432,6 +432,7 @@ class smp:
         self.continudir = continudir
         self.savenpzfilesdir = savenpzfilesdir
 
+        self.residcounter = 10000
         #raw_input(self.savenpzfilesdir)
         self.useweights = useweights
         if not self.useweights:
@@ -774,6 +775,8 @@ class smp:
                 starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_%s' % filt.upper()][1:], dtype='float')
                 #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
                 starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+                #print len(starcat.bigid),len(starcat.bigra)
+                #asf
                 starcat.id = starcat.bigid
                 starcat.ra = starcat.bigra
                 starcat.dec = starcat.bigdec
@@ -1310,6 +1313,8 @@ class smp:
                     starcat.dec = starcat.bigdec[cols]
                     starcat.mag = starcat.bigmag[cols]
                     starcat.objid = starcat.bigid[cols]
+                    starcat.id = starcat.bigid[cols]
+
                     #print 'hereeee'
                     #raw_input()
 
@@ -2295,7 +2300,7 @@ class smp:
                     #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s' % filt.upper()][1:], dtype='float')
                     starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_%s' % filt.upper()][1:], dtype='float')
                     starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:], dtype='float')
-                    starcat.id = starcat.bigid
+                    starcat.id = copy(starcat.bigid)
                     starcat.ra = starcat.bigra
                     starcat.dec = starcat.bigdec
                     starcat.mag = starcat.bigmag
@@ -2318,6 +2323,8 @@ class smp:
                 tras = starcat.ra
                 tdecs = starcat.dec
                 tids = starcat.id
+                #print len(tras),len(tids)
+                #asdf
                 mag_star = starcat.mag
 
 
@@ -2402,6 +2409,7 @@ class smp:
                 y_star1[badflagarr] = 100.
                 x_star1 = x_star1[~badflagarr]
                 y_star1 = y_star1[~badflagarr]
+                #print len(tras),len(tids)
                 tras = tras[~badflagarr]
                 tdecs = tdecs[~badflagarr]
                 tids = tids[~badflagarr]
@@ -2526,7 +2534,10 @@ class smp:
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
                                          longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])),gain=self.gain)
                     print 'zpttime',time.time()-zpttime
-
+                    
+                    zpoutfile = open('zprecord.txt','a')
+                    zpoutfile.write(str(float(snparams.mjd[j]))+' '+filt+' '+str(zpt)+'\n')
+                    zpoutfile.close()
                     if zpt == 0:
                         badflag = 1
                         descriptiveflag = 4
@@ -5991,7 +6002,7 @@ class smp:
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,weightsfile,psffile,imfile,imwcs,snparams,substamp,
                 mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
-                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0):
+                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,band=None):
         """Measure the zeropoints for the images"""
 
         #print xstar,ystar
@@ -6017,6 +6028,10 @@ class smp:
         thisra = np.array(thisra)
         thisdec = np.array(thisdec)
         thisids = np.array(ids)
+
+        faintcor = np.load('faintpsfcorr_'+filt+'.npz')['corr']
+        brightcor = np.load('brightpsfcorr_'+filt+'.npz')['corr']
+
         print 'Computing zeropoint for',imfile
         print '\n'
         import pkfit_norecent_noise_smp
@@ -6393,12 +6408,23 @@ class smp:
                             # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
                             #                                                  fitrad, gal, mjd)
                         if True:
+                            #if mc >12:
+                            #    psf = psf/faintcor
+                            #else:
+                            #    psf = psf/brightcor
                             scale, errmag, chi, dms, chinoposs, bad = self.getfluxsmp(image_stamp, psf, image_stamp*0.+sky1, gnoise_stamp,
                                                                              fitrad, gal, mjd, skysig,self.gain,guess_scale=10**(.4*(31.-m)))
                             if not chi > 0.:
                                 bad = True
                             #print scale
                             #raw_input('ls fit')
+                        dosaveresids = True
+                        
+                        if dosaveresids & (bad == False) & (chi > 0.):
+                            self.residcounter += 1
+                            if self.residcounter % 5000 == 0: sys.exit()
+                            np.savez('psfresidstamps/%06d_%s_psfresid.npz'%(self.residcounter,filt),image_stamp=image_stamp,psf_stamp=psf,skysig=skysig,mjd=mjd,starmag=m,sky=sky1,scale=scale,filt=filt)
+
                         # except:
                         #
                         #     print 'could not scale'

@@ -8,7 +8,7 @@ import sys
 
 #hello from fermilab2
 # Returns xvals, medians, mads
-def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
+def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False,domean=False):
     medians = np.zeros(len(bins) - 1)
     mads = np.zeros(len(bins) - 1)
     nums = np.zeros(len(bins) - 1)
@@ -19,14 +19,18 @@ def bindata(x, y, bins, returnn=False, window=0.,dontrootn=False):
         ww = [(x > bs-window) & (x < bf+window)]
         yhere = y[ww]
         yhere = yhere[np.isfinite(yhere) & ~np.isnan(yhere)]
-        ss = [abs(yhere) < 3. * np.std(yhere)]
+        ss = [abs(yhere-np.mean(yhere)) < 3. * np.std(yhere)]
         try:
             nums[i] = len(yhere[ss])
-            medians[i] = np.median(yhere[ss])
-            if dontrootn:
-                mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i]))
+            if domean:
+                medians[i] = np.mean(yhere[ss])
+                mads[i] = np.std(yhere[ss])
             else:
-                mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i])) * 1 / np.sqrt(len(yhere[ss]))
+                medians[i] = np.median(yhere[ss])
+                if dontrootn:
+                    mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i]))
+                else:
+                    mads[i] = 1.48 * np.median(abs(yhere[ss] - medians[i])) * 1 / np.sqrt(len(yhere[ss]))
         except IndexError:
             print 'excepted'
             nums[i] = 0.
@@ -60,8 +64,9 @@ def binrms(x, y, bins,rad,returnn=False):
             d = yhere[ss]
             dc = d[abs(d) < 3]
 
-            #rms[i] = np.sqrt(np.nanmean(np.square(d[d < 3.])))
+            #rms[i] = np.sqrt(np.nanmean(np.square(d[abs(d) < 3.])))
             rms[i] = 1.48 * np.median(np.abs(d[abs(d) < 3.]))
+            
 
         except IndexError:
             print 'excepted'

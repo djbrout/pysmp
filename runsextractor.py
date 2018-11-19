@@ -24,7 +24,7 @@ import os
 def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='DES',index='',bigreturn=False):
     print 'inside getsky and skyerr'
     if survey == 'DES':
-        sexpath = "sex"
+        sexpath = "/global/common/cori/contrib/hpcosmo/hpcports_gnu-4.0/sextractor-2.19.5_b1614e12-4.0/bin/sex"
         #sexpath = "/global/common/cori/contrib/hpcosmo/hpcports_gnu-4.0/sextractor-2.19.5_b1614e12-4.0/bin/sex"
         fermigrid  = True
     if survey == 'PS1':
