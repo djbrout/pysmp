@@ -1,0 +1,89 @@
+stampsize: 100 # default stampsize
+radius1: 5 # radius to use for 5*radius,8*radius for sky annulus
+radius2: 8 # radius to use for 5*radius,8*radius for sky annulus
+noise_lim: 3 # You should never have noise values below this limit
+noise_type: noise # Noise image can be inverse variance (ivar) or noise (noise)
+mask_type: mask # If none, mask will be created from the noise image
+
+# if find_zpt = yes, measure the zeropoint using the catalog provided
+# if no, use zeropoint provided in the supernova file
+find_zpt: yes     
+
+# SUBSTAMP: default substamp.  Big warning about changing this value.  
+# This is the size that galaxy model is defined.  All hell may 
+# break loose if changed.
+substamp: 30 #30 #must be an odd number!
+
+mjd_key: MJD-OBS # FITS keyword with MJD value
+max_masknum: 40 # number of masked pixels in substamp threshold for still doing fit
+psf_model: PSFEX # could also be psfex ; should be upstream
+rdnoise_name: RDNOISEA # FITS keyword with readnoise value
+gain_name: GAINA # FITS keyword with gain value
+image_x1: 0
+image_x2: 2960
+image_y1: 0
+image_y2: 2960
+fwhm_max: 2.75 # in arcseconds, be careful about this
+
+
+###bands below only used for the following cuts###
+cutinfobands: g,r,i,z
+zptmin: 29.,29.,29.,29.
+skymin: -10000.,-10000.,-10000.,-10000.
+skymax: 10000.,10000.,10000.,10000.
+skyerrmax: 50000000.,5000000.,5000000.,500000.
+######################
+
+cntrd_fwhm: 15.0 # fwhm used for gaussian centroiding algorithm
+fitrad: 13. #13.0 # PSF fitting radius in units of non pixelated pixels19
+skyerr_radius: 16. # radius of mcmc model in units of non pixelated pixels16
+
+
+# only events with MJD between supernova mjd - mjdminus and mjd + mjdplus
+# are assumed to possibly have supernova light in the first iteration of
+# fitting TRY A DIFFERENT MJDPLUS
+mjdplus: 300
+mjdminus: 60
+
+# psf_max = 100 means you shouldn't be fitting 
+# stars 100x than psf - best to not touch
+psf_max: 100.0 
+#platescale: 0.25 # arcsec per pixel
+
+pixelation_factor: 2. # NO pixelation = 1.
+
+# If diffcomp = 1, use difference images as 
+# first guess - you have to provide diff images then!
+# Not enabled yet!!
+diffcomp: 0
+
+# if yes, build a new psf model based on stars in the catalog file
+# only enabled for PSF_MODEL DAOPHOT for now
+build_psf: no
+# weight type = noise or ivar
+weight_type: noise
+
+#Number of stars to remove from zpt to check zpt fit
+numcheckstars: 4
+
+minzptstars: 8
+
+#MUST BE IN DEGREES
+FORCERADEC: False
+FRA: 41.416769
+FDEC: -.409309
+
+NEARBY_STARS_PIXEL_RAD: 250.
+
+HDR_AIRMASS_NAME: AIRMASS
+HDR_PLATESCALE_NAME: PIXSCAL1
+HDR_PSF_FWHM: PSF_FWHM
+
+######### MCMC PARAMETERS ###########
+GALAXY_MODEL_STEPS: 50000
+SN_PLUS_GALMODEL_STEPS: 2500000
+SN_PLUS_GALMODEL_STEPS_GALSIM: 200000
+SN_SHIFT_STD: 0.00025
+FLUX_STD_DIV: 1.
+GALMODEL_DIV: 10.
+#####################################
