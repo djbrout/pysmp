@@ -24,7 +24,7 @@ from scipy.odr import *
 
 #import scipy.ndimage
 import matplotlib as m
-import mcmc as mcmc3
+#import mcmc as mcmc3
 #import mcmc3galsimpixshift as mcmc3galsimpixshift
 m.use('Agg')
 import matplotlib.pyplot as plt
