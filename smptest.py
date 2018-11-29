@@ -760,7 +760,8 @@ class smp:
             print 'reading in starcaftile'
             wehavestarcat = False
             #self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
-            self.starcatfile = 'catalogs/des/eli_catalog.txt'
+            #self.starcatfile = 'catalogs/des/eli_catalog.txt'
+            self.starcatfile = bigstarcatalog
             if nozpt:
                 starcat = txtobj(self.starcatfile, useloadtxt=True)
                 print 'done reading in starcatfile'
