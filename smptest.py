@@ -6030,8 +6030,8 @@ class smp:
         thisdec = np.array(thisdec)
         thisids = np.array(ids)
 
-        faintcor = np.load('faintpsfcorr_'+filt+'.npz')['corr']
-        brightcor = np.load('brightpsfcorr_'+filt+'.npz')['corr']
+        #faintcor = np.load('faintpsfcorr_'+filt+'.npz')['corr']
+        #brightcor = np.load('brightpsfcorr_'+filt+'.npz')['corr']
 
         print 'Computing zeropoint for',imfile
         print '\n'
@@ -6419,7 +6419,7 @@ class smp:
                                 bad = True
                             #print scale
                             #raw_input('ls fit')
-                        dosaveresids = True
+                        dosaveresids = False
                         
                         if dosaveresids & (bad == False) & (chi > 0.):
                             self.residcounter += 1

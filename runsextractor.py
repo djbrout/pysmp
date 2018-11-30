@@ -34,21 +34,22 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
     #im = pf.getdata(imagefilename)
     #hdr = pf.getheader(imagefilename)
     #im = im[ylow:yhi,xlow:xhi]
-    if not os.path.exists('/global/cscratch1/sd/dbrout/sewpy_logs/'):
-        os.makedirs('/global/cscratch1/sd/dbrout/sewpy_logs/')
-    newfilename = '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'trimmed_'+imagefilename.split('/')[-1]
+    logpath = '/scratch1/scratchdirs/dbrout/sewpy_logs_shared/'
+    if not os.path.exists('/glob'):
+        os.makedirs(logpath)
+    newfilename = logpath+index+'trimmed_'+imagefilename.split('/')[-1]
     print newfilename
     #dt.savefits(im, newfilename,fermigrid=fermigrid)
     dt.save_fits_image(im, newfilename,go=True)
     print 'saved trimmed file'
     logging.basicConfig(format='%(levelname)s: %(name)s(%(funcName)s): %(message)s', level=logging.DEBUG)
     sew = sewpy.SEW(
-            workdir='/global/cscratch1/sd/dbrout/sewpy_logs/'
+            workdir=logpath
             , sexpath=sexpath
             , loglevel="CRITICAL"
-            , config={"WEIGHT_TYPE":"NONE,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename,"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":'/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
+            , config={"WEIGHT_TYPE":"NONE,MAP_WEIGHT","WEIGHT_IMAGE":weightfilename,"checkimage_type":"BACKGROUND,BACKGROUND_RMS","checkimage_name":logpath+index+'_'+imagefilename.split('/')[-1]+
                                                                                       '.background, '+
-                                                                                      '/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+
+                                                                                      logpath+index+'_'+imagefilename.split('/')[-1]+
                                                                                       '.background_rms'
                       ,"back_size":"256"}
 
@@ -66,9 +67,9 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
 
     if bigreturn:
         bkgrnd = pf.getdata(
-            '/global/cscratch1/sd/dbrout/sewpy_logs/' + index + '_' + imagefilename.split('/')[-1] + '.background')
+            logpath + index + '_' + imagefilename.split('/')[-1] + '.background')
         bkgrndrms = pf.getdata(
-            '/global/cscratch1/sd/dbrout/sewpy_logs/' + index + '_' + imagefilename.split('/')[-1] + '.background_rms')
+            logpath+ index + '_' + imagefilename.split('/')[-1] + '.background_rms')
 
     print 'removing files'
     try:
@@ -76,8 +77,8 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
         os.remove(newfilename.split('.fits')[0]+'.cat.txt')
         os.remove(newfilename.split('.fits')[0]+'.log.txt')
 
-        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background')
-        os.remove('/global/cscratch1/sd/dbrout/sewpy_logs/'+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
+        os.remove(logpath+index+'_'+imagefilename.split('/')[-1]+'.background')
+        os.remove(logpath+index+'_'+imagefilename.split('/')[-1]+'.background_rms')
     except:
         pass
 
