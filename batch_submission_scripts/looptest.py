@@ -3,25 +3,14 @@ from subprocess import *
 import numpy as np
 import time
 
-#allindexes = np.arange(0,2500)
-#18820
 allindexes = np.arange(29000,31500)
-#now up to 8000
 
-#allindexes = np.arange(362,4089,1)
-#allindexes = [100,107,113,120,13,178,214,269,278,40,60,80,92]
-filts = ['g','r','i','z']
-#filts = ['z']
-#'g','r',
-walltime= '02:00:00'
-#np.random.shuffle(allindexes)
+filts = ['z']
+walltime= '03:00:00'
 
 doskipping = True
-#snfilelist = 'badinputs.txt'
 
 snfilelist = 'data/alllightcurves.txt'
-#snfilelist = 'data/speclist.txt'
-
 
 outdir = '/project/projectdirs/dessn/dbrout/simv2.0/'
 npzdir = '/global/cscratch1/sd/dbrout/simnpzfilesv2.1/'

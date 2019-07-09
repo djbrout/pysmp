@@ -9,37 +9,35 @@ Dillon Brout
 dbrout@physics.upenn.edu
 
 '''
-
-
 import numpy as np
 import exceptions
 import os
 import sys
 sys.path.append("./mpfit/")
+sys.path.append("./daofind/")
+sys.path.append("./sexstarpos/")
 import mpfitexpr
-sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
-sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
+import runscript as runsexstarpos
+#sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0")
+#sys.path.append("/global/homes/d/dbrout/GalSim-1.3.0/lib")
 from iminuit import Minuit
 from scipy.odr import *
-
-#import scipy.ndimage
 import matplotlib as m
-#import mcmc as mcmc3
-#import mcmc3galsimpixshift as mcmc3galsimpixshift
 m.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-
+import pandas as pd
 import pyfits as pf
 import scipy.signal
 from copy import copy
-try:
-    import galsim
-    import galsim.des
-except:
-    print 'Could not import galsim, galsim features not functional...'
+#try:
+#    import galsim
+#    import galsim.des
+#except:
+#    print 'Could not import galsim, galsim features not functional...'
 import time
 from astropy.io import fits
+from astropy.table import Table
 from scipy.interpolate import UnivariateSpline
 import sigma_clip
 import meanclip
@@ -49,7 +47,7 @@ import pkfit_norecent_noise_smp
 import dilltools as dt
 import chkpsf
 import gc
-
+import pklcat
 
 from matplotlib.ticker import MaxNLocator, NullLocator
 from matplotlib.colors import LinearSegmentedColormap, colorConverter
@@ -111,7 +109,7 @@ paramkeywordlist = {'STAMPSIZE':'float ','RADIUS1':'float',
                     'MAX_MASKNUM':'float','RDNOISE_NAME':'string',
                     'GAIN_NAME':'string','FWHM_MAX':'float',
                     'PSF_MAX':'float','WEIGHT_TYPE':'string',
-                    'MASK_TYPE':'string','MJDPLUS':'float','MJDMINUS':'float',
+                    'MASK_TYPE':'string',#'MJDPLUS':'float','MJDMINUS':'float',
                     'BUILD_PSF':'string','CNTRD_FWHM':'float','FITRAD':'float',
                     'FORCERADEC':'string','FRA':'float','FDEC':'float',
                     'FIND_ZPT':'string','PIXELATION_FACTOR':'float','SKYERR_RADIUS':'float',
@@ -152,6 +150,95 @@ def bindata(x,y,bins):
 def parabola(x,a,b,c):
     y = a*x**2+b*x+c
     return y
+
+from scipy import interpolate
+from scipy.optimize import curve_fit
+def line(x, m, b):
+    return m*x+b
+def compute_proper_motion_for_each_star(bigstarposdir,filt,ccdnum,field):
+    '''
+    name = 'MJD'; format = 'D'
+    name = 'SNR'; format = 'D'
+    name = 'YWIN_WORLD'; format = 'D'
+    name = 'COLOR'; format = 'D'
+    name = 'YWIN_IMAGE'; format = 'D'
+    name = 'XWIN_IMAGE'; format = 'D'
+    name = 'RA_CENT'; format = 'D'
+    name = 'CATMAG'; format = 'D'
+    name = 'XWIN_WORLD'; format = 'D'
+    name = 'CCDNUM'; format = 'D'
+    name = 'DETPOS'; format = 'A'
+    name = 'ERRAWIN_IMAGE'; format = 'D'
+    name = 'EXPNUM'; format = 'D'
+    name = 'HA'; format = 'A'
+    name = 'DEC_CENT'; format = 'D'
+    name = 'ID'; format = 'D'
+    name = 'ERRAWIN_WORLD'; format = 'D'
+    '''
+    
+    tbl_col = pf.open(bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(filt,ccdnum,field))[1].columns
+    tbl_data = pf.open(bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(filt,ccdnum,field))[1].data
+    starids = tbl_data['ID']
+    proper_motion_dict = {}
+    #plt.figure(figsize=(15,15))   
+    #f, axarr = plt.subplots(4,4)  
+    #axarr = axarr.ravel()   
+    #pltcntr = 0
+    for i,starid in enumerate(np.unique(starids)):  
+        ww = starids == starid                                                                                          
+        mjd = tbl_data['MJD'][ww]
+        xmotion = tbl_data['XWIN_WORLD'][ww]
+        ymotion = tbl_data['YWIN_WORLD'][ww]
+        motionerr = tbl_data['ERRAWIN_WORLD'][ww]
+        if len(xmotion) > 10:
+            xpopt, xpcov = curve_fit(line, mjd, xmotion, sigma=motionerr) 
+            ypopt, ypcov = curve_fit(line, mjd, ymotion, sigma=motionerr)
+            xchisq = np.sum((xmotion-line(mjd, *xpopt))**2/motionerr**2)/float(len(mjd))
+            ychisq = np.sum((ymotion-line(mjd, *ypopt))**2/motionerr**2)/float(len(mjd))
+            #if (np.sum((xmotion-line(mjd, *xpopt))**2/motionerr**2)/float(len(mjd)) > 100.) | (np.sum((ymotion-line(mjd, *ypopt))**2/motionerr**2)/float(len(mjd)) > 100.):
+            #    axarr[pltcntr].scatter(mjd,3600.*(xmotion-np.mean(xmotion)),alpha=.5)
+            #    axarr[pltcntr].scatter(mjd,3600.*(ymotion-np.mean(ymotion)),alpha=.5)
+            #    axarr[pltcntr].plot(np.sort(mjd),3600.*(line(np.sort(mjd),*xpopt)-np.mean(line(np.sort(mjd),*xpopt))),label='xchisq %d'%(np.sum((xmotion-line(mjd, *xpopt))**2/motionerr**2)/float(len(mjd))))
+            #    axarr[pltcntr].plot(np.sort(mjd),3600.*(line(np.sort(mjd),*ypopt)-np.mean(line(np.sort(mjd),*ypopt))),label='ychisq %d'%(np.sum((xmotion-line(mjd, *ypopt))**2/motionerr**2)/float(len(mjd))))
+            #    pltcntr+=if
+            if (xchisq < 100.) & (ychisq < 100.):
+                proper_motion_dict[int(starid)] = {'xpopt':xpopt, 'ypopt':ypopt, 'xcov':xpcov, 'ycov':ypcov, 'xchisq':xchisq, 'ychisq':ychisq}
+    #plt.tight_layout()               
+    #plt.savefig('bad_pm.png')    
+    #print('upload bad_pm.png')
+    #asdf
+    '''
+    plt.figure(figsize=(15,15))
+    f, axarr = plt.subplots(4,4)
+    #plt.figure(figsize=(15,15))
+    axarr = axarr.ravel()
+    for i,starid in enumerate(np.unique(starids)):
+        if i >= 16: continue
+        ww = starids == starid
+        #axarr[i].suptitle(starid)
+        print(tbl_data['XWIN_WORLD'][ww])
+        axarr[i].scatter(tbl_data['MJD'][ww],3600*(tbl_data['XWIN_WORLD'][ww] - np.mean(tbl_data['XWIN_WORLD'][ww])),c='k',label='RA',alpha=.6,s=.5)
+        popt, pcov = curve_fit(line, tbl_data['MJD'][ww], tbl_data['XWIN_WORLD'][ww],sigma=tbl_data['ERRAWIN_WORLD'][ww])
+        axarr[i].plot(tbl_data['MJD'][ww], 3600*(line(np.sort(tbl_data['MJD'][ww]), *popt)-np.mean(tbl_data['XWIN_WORLD'][ww])),c='k')
+        axarr[i].scatter(tbl_data['MJD'][ww], 3600*(tbl_data['YWIN_WORLD'][ww] - np.mean(tbl_data['YWIN_WORLD'][ww])),c='red',label='DEC',alpha=.6,s=.5)
+        popt, pcov = curve_fit(line, tbl_data['MJD'][ww], tbl_data['YWIN_WORLD'][ww],sigma=tbl_data['ERRAWIN_WORLD'][ww])
+        axarr[i].plot(tbl_data['MJD'][ww], 3600*(line(np.sort(tbl_data['MJD'][ww]), *popt)-np.mean(tbl_data['YWIN_WORLD'][ww])),c='r')
+        axarr[i].legend(fontsize=3)
+
+
+    plt.tight_layout()
+    plt.savefig('pm.png')
+    #print(pf.open(bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(filt,ccdnum,field))[1].data)
+    '''
+    #asdf
+    return proper_motion_dict
+    #takes in bigstarposcat
+    #returns interpolated linear function
+
+def get_star_pos_by_mjd():
+    return
+    #takes in proper motion fit, wcs, mjd
+    #returns xstar,ystar
 
 class get_snfile:
     def __init__(self,snfile, rootdir, useweights):
@@ -298,8 +385,8 @@ class smp:
     def main(self,nodiff=False,nozpt=False,rootdir='',outdir='' ,
              nomask=False,outfile='',debug=False,
              verbose=False, clear_zpt=False,clear_checkstars=True,mergeno=0,
-             mpfit_or_mcmc='mpfit',usefake=False,filt=None,
-             snfile='/test.dat',gal_model=None,stardumppsf=True,makestarcatalog=False,
+             mpfit_or_mcmc='mpfit',usefake=False,filt=None,mjdplus=None,mjdminus=None,
+             snfile='/test.dat',gal_model=None,stardumppsf=True,makestarcatalog=False,bigstarposdir=None,
              dogalfit=True,dosnfit=True,dogalsimfit=True, dogalsimpixfit=True,dosnradecfit=True,
              usediffimzpt=False,useidlsky=False,fixgalzero=True,floatallepochs=False,dailyoff=False,
              doglobalstar=True,exactpos=True,bigstarcatalog=None,savenpzfilesdir=None,
@@ -379,9 +466,10 @@ class smp:
             #a = open(self.zpt_fits,'w')
             #a.write('ZPT FILE LOCATIONS\n')
             #a.close()
-            self.tmpwriter.writefile('ZPT FILE LOCATIONS\n',self.zpt_fits)
+            #self.tmpwriter.writefile('ZPT FILE LOCATIONS\n',self.zpt_fits)
             #print self.zpt_fits
             #raw_input('first instance of tmpwriter')
+            clear_zpt = False
             if clear_zpt:
                 #big = open(self.big_zpt+'.txt','w')
                 #big.write('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n')
@@ -431,6 +519,10 @@ class smp:
         self.continu = continu
         self.continudir = continudir
         self.savenpzfilesdir = savenpzfilesdir
+        self.mjdplus = mjdplus
+        self.mjdminus = mjdminus
+
+
 
         self.residcounter = 10000
         #raw_input(self.savenpzfilesdir)
@@ -456,6 +548,8 @@ class smp:
         pixstart = None
         self.fermigrid = fermigrid
         self.zptoutpath = zptoutpath
+        self.bigstarposdir = bigstarposdir
+
 
         if snparams.psf_model == 'psfex' and not snparams.__dict__.has_key('psf'):
             raise exceptions.RuntimeError('Error : PSF must be provided in supernova file!!!')
@@ -524,7 +618,8 @@ class smp:
                     'psf_fwhm':np.zeros(snparams.nvalid),
                     'fakepsf':np.zeros(snparams.nvalid),
                     'zpt':np.zeros(snparams.nvalid),
-                    'zpterr':np.zeros(snparams.nvalid),   
+                    'zpterr':np.zeros(snparams.nvalid),
+                    'errfloor':np.zeros(snparams.nvalid),
                     'skysig':np.zeros(snparams.nvalid),
                     'sexrms':np.zeros(snparams.nvalid),
                     'aper_skyerr':np.zeros(snparams.nvalid),
@@ -577,6 +672,9 @@ class smp:
             smp_dict['image_filename'][i] = 'na'
 
 
+        self.ccd_dict_of_properm_stars = {}
+
+
         """
         band = 'r'
         if os.path.exists(snparams.starcat[band]):
@@ -589,6 +687,32 @@ class smp:
                 except:                                                                                                                                                                                                             
                     raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[band])                                                                                                              
         """
+
+
+
+
+    
+
+        self.garystarcat = {}
+        if makestarcatalog:
+            self.garystarcat['ID'] = []
+            self.garystarcat['EXPNUM'] =[]
+            self.garystarcat['CCDNUM'] =[]
+            self.garystarcat['MJD'] =[]
+            self.garystarcat['XWIN_IMAGE'] =[]
+            self.garystarcat['YWIN_IMAGE'] =[]
+            self.garystarcat['ERRAWIN_IMAGE'] =[]
+            self.garystarcat['COLOR'] =[]
+            self.garystarcat['XWIN_WORLD'] =[]
+            self.garystarcat['YWIN_WORLD'] =[]
+            self.garystarcat['ERRAWIN_WORLD'] =[]
+            self.garystarcat['CATMAG'] = []
+            self.garystarcat['SNR'] = []
+            self.garystarcat['HA'] = []
+            self.garystarcat['DETPOS'] = []
+            self.garystarcat['RA_CENT'] = []
+            self.garystarcat['DEC_CENT'] = []
+
 
         i = 0
 
@@ -762,28 +886,61 @@ class smp:
             #self.starcatfile = 'catalogs/des/RykoffY3A1Catalog_AB_Beta.tab'
             #self.starcatfile = 'catalogs/des/eli_catalog.txt'
             self.starcatfile = bigstarcatalog
+            #self.starcatfile = 'catalogs/eli_catalog_nov7_2017.txt'
+            #MAG_PSF_G
             if nozpt:
-                starcat = txtobj(self.starcatfile, useloadtxt=True)
-                print 'done reading in starcatfile'
-                wehavestarcat = True
-                #print self.starcat.__dict__
-                #print self.starcat.__dict__['RA']
-                #print self.starcat.__dict__['DEC']
-                #print self.starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()]
+                if self.starcatfile[-4:] == '.pkl':
+                    starcat = pklcat.pklcat()
+                    df = pd.read_pickle(self.starcatfile)[:-1]
+                    #print(df.columns)
+                    #Index([u'FGCM_ID', u'RA', u'DEC', u'Y6A1_G', u'Y6A1_R', u'Y6A1_I', u'Y6A1_Z',
+                    #       u'Y6A1_GERR', u'Y6A1_RERR', u'Y6A1_IERR', u'Y6A1_ZERR'],
+                    starcat.bigra = df['RA'].values
+                    starcat.bigdec = df['DEC'].values
+                    starcat.bigmag = df['Y6A1_%s'%filt.upper()].values
+                    starcat.bigmagerr = df['Y6A1_%sERR'%filt.upper()].values
+                    starcat.bigid = df['FGCM_ID'].values
+                    starcat.id = starcat.bigid
+                    starcat.ra = starcat.bigra
+                    starcat.dec = starcat.bigdec
+                    starcat.mag = starcat.bigmag
+                    starcat.gicolor = df['Y6A1_G'].values - df['Y6A1_I'].values
 
-                starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
-                starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
-                starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_%s' % filt.upper()][1:], dtype='float')
-                #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
-                starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
-                #print len(starcat.bigid),len(starcat.bigra)
-                #asf
-                starcat.id = starcat.bigid
-                starcat.ra = starcat.bigra
-                starcat.dec = starcat.bigdec
+                    wehavestarcat = True
+                    
+                    #print(starcat.bigra)
+                    #asdf
+                else:
+                    
+                    #starcat = txtobj(self.starcatfile, useloadtxt=False, usepandas=True, delimiter=',')
+                    starcat = txtobj(self.starcatfile, useloadtxt=True)
 
+                    print 'done reading in starcatfile'
+                    wehavestarcat = True
+                    #print self.starcat.__dict__
+                    #print self.starcat.__dict__['RA']
+                    #print self.starcat.__dict__['DEC']
+                    print starcat.__dict__
 
+                    starcat.bigra = np.array(starcat.__dict__['RA'][1:],dtype='float')
+                    starcat.bigdec = np.array(starcat.__dict__['DEC'][1:],dtype='float')
+                    #starcat.bigmag = np.array(starcat.__dict__['Y4A1_%s' % filt.upper()][1:], dtype='float')
+                    #starcat.bigmagerr = np.array(starcat.__dict__['Y3GOLDERR_%s' % filt.upper()][1:], dtype='float')
+                    starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_%s' % filt.upper()][1:], dtype='float')
+                    starcat.bigmagerr = np.array(starcat.__dict__['MAG_PSF_ERR_%s' % filt.upper()][1:], dtype='float')
 
+                    #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s'%filt.upper()][1:],dtype='float')
+                    #starcat.bigid = np.array(starcat.__dict__['COADD_OBJECT_ID'][1:],dtype='float')
+                    starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:],dtype='float')
+                
+                    #print len(starcat.bigid),len(starcat.bigra)
+                    #asf
+                    starcat.id = starcat.bigid
+                    starcat.ra = starcat.bigra
+                    starcat.dec = starcat.bigdec
+                    starcat.mag = starcat.bigmag
+                    #starcat.gicolor = np.array(starcat.__dict__['Y4A1_G'][1:], dtype='float')-np.array(starcat.__dict__['Y4A1_I'][1:], dtype='float')
+                    starcat.gicolor = np.array(starcat.__dict__['MAG_PSF_G'][1:], dtype='float')-np.array(starcat.__dict__['MAG_PSF_I'][1:], dtype='float')
         else:
             raise Exception('Unknown survey. Not supported. Please contact Dillon Brout at dbrout@phsyics.upenn.edu')
         #print self.starcat.ra
@@ -791,641 +948,6 @@ class smp:
         badindices = []
         #print nozpt
         #raw_input('nozpt')
-        for imfile,noisefile,psffile,band, j in \
-                zip(snparams.image_name_search,snparams.image_name_weight,snparams.file_name_psf,snparams.band, range(len(snparams.band))):
-            #print doglobalstar, snparams.mjd[j], nozpt
-            if not doglobalstar:
-                continue
-            if snparams.mjd[j] == 0:
-                continue
-            #if round(snparams.mjd[j]) != 56559:
-            #    continue
-            #if float(snparams.mjd[j]) < 57045:
-            #    continue
-            if not nozpt:
-                continue
-            if not band == filt:
-                continue
-
-            if nozpt:
-                if self.snparams.survey == 'DES':
-                    if not wehavestarcat:
-                        starcat = txtobj(self.starcatfile, useloadtxt=True)
-                        print 'done reading in starcatfile'
-                        wehavestarcat = True
-
-
-            skysig=np.nan
-            if cntrs > 1:
-               continue
-            #if snparams.mjd[j] != 56636.:
-            #    if snparams.mjd[j] < 57000.:
-            #        continue
-            didglobalstar = True
-            #nozpt = copy(orig_nozpt)
-            if self.usefake:
-                imfile = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
-
-            if not self.oldformat:
-                if self.usefake:
-                    if not self.snparams.survey == 'PS1':
-                        imfile = imfile.replace('p1', 'Y1')
-                        noisefile = noisefile.replace('p1', 'Y1')
-                        psffile = psffile.replace('p1', 'Y1')
-                    #noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
-                else:
-                    if not self.snparams.survey == 'PS1':
-                        imfile = imfile.replace('p1','Y1')
-                        noisefile = noisefile.replace('p1','Y1')
-                        psffile = psffile.replace('p1', 'Y1')
-
-            imfile = os.path.join(rootdir,imfile)
-            longimfile = copy(imfile)
-            longpsffile = copy(psffile)
-
-
-            #print longimfile
-            #raw_input()
-            self.impath = '/'.join(imfile.split('/')[:-1])
-            try:
-                noisefile = os.path.join(rootdir,noisefile)
-            except:
-                noisefile = [os.path.join(rootdir,noisefile[0]),os.path.join(rootdir,noisefile[1])]
-
-            if self.snparams.survey == 'DES':
-                if self.usefake:
-                    longnoisefile = copy(imfile.replace('+fakeSN.fits','.weight.fits'))
-                else:
-                    longnoisefile = copy(imfile.replace('.fits','.weight.fits'))
-            else:
-                longnoisefile = copy(noisefile)
-
-            if self.fermilog:
-                self.tmpwriter.appendfile('running globalstar on '+longimfile+'\n', self.fermilogfile)
-
-            psffile = os.path.join(rootdir,psffile)
-            #print imfile
-            #raw_input()
-            print 'hereeeee'
-            if self.fermigrid & self.worker:
-                #print imfile
-                #os.system('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfile + ' .')
-                #print 'line 529 copied image files to here'
-                #sys.exit()
-                #print 'ifdh cp '+imfile+' .'
-
-                ifdhls = os.popen('ifdh lss '+imfile).read()
-                #print ifdhls
-                #print 'line 576'
-                #raw_input()
-                if (len(ifdhls) > 1):
-                    if (int(ifdhls.split()[-1]) > 0) :
-                        print 'Copying over',imfile
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd '+imfile+' .').read()
-                        #imfilel = copy(imfilel)
-                        imfile = imfile.split('/')[-1]
-                        print 'imfile',imfile
-                        # if self.usefake:
-                        #     #if '.gz' in imfile:
-                        #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
-                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
-                        #     #imfile = imfilel.split('/')[-1]
-                        #     #else:
-                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
-                        #         0] + '+fakeSN.fits' + ' .').read()
-                        #     imfile = imfilel.split('/')[-1]
-                        #print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd '+noisefile+' .').read()
-                        noisefile = noisefile.split('/')[-1]
-                        weightsfile = noisefile
-                        #print 'ifdh cp ' + psffile + ' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
-                        psffile = psffile.split('/')[-1]
-                        #print 'copied all files'
-                        #print os.popen('ifdh ls .').read()
-                        #sys.exit()
-                        print 'here2'
-                        #raw_input()
-                else:
-                    #print 'file not found',imfile
-                    #continue
-
-                    ifdhls = os.popen('ifdh ls ' + imfile+'.fz').read()
-                    #print ifdhls
-                    #print 'line 610'
-                    #raw_input()
-                    if len(ifdhls) > 0:
-                        a = os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + imfile + '.fz .').read()
-                        #print a
-                        a = os.popen('funpack '+imfile.split('/')[-1]+'.fz').read()
-                        #print a
-                        os.popen('rm '+imfile.split('/')[-1]+'.fz').read()
-                        # imfilel = copy(imfilel)
-                        imfile = imfile.split('/')[-1]
-                        #print 'imfile', imfile
-                        # if self.usefake:
-                        #     #if '.gz' in imfile:
-                        #     print 'ifdh','IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .'
-                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits.gz')[0]+ '+fakeSN.fits.gz' + ' .').read()
-                        #     #imfile = imfilel.split('/')[-1]
-                        #     #else:
-                        #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + imfilel.split('.fits')[
-                        #         0] + '+fakeSN.fits' + ' .').read()
-                        #     imfile = imfilel.split('/')[-1]
-                        # print 'IFDH_CP_MAXRETRIES=1; ifdh cp '+noisefile+' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + noisefile + '.fz .').read()
-                        os.popen('funpack '+noisefile.split('/')[-1]+'.fz')
-                        os.popen('rm '+noisefile.split('/')[-1]+'.fz')
-                        noisefile = noisefile.split('/')[-1]
-                        weightsfile = noisefile
-                        # print 'ifdh cp ' + psffile + ' .'
-                        os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp --force=xrootd ' + psffile + ' .').read()
-                        #os.popen('funpack '+psffile)
-                        psffile = psffile.split('/')[-1]
-                        # print 'copied all files'
-                        # print os.popen('ifdh ls .').read()
-                        # sys.exit()
-                        #print 'here2'
-                        #raw_input()
-                    else:
-                        print 'file not found', imfile
-                        continue
-                    #raw_input('cpied fz filehere')
-                print 'grabbed sn files'
-                #sys.exit()
-            try:
-                self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
-                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
-                self.expnum = imfile.split('/')[-1].split('_')[1]
-
-            except:
-                self.ccdnum = np.nan
-                self.field = np.nan
-                self.expnum = np.nan
-
-            # self.laskerstarcat = 'CCD'+self.ccdnum+'_'+filt+'band.starcat'
-            # print self.laskerstarcat
-            #sys.exit()
-
-            if filt != 'all' and band not in filt:
-                #print('filter %s not in filter list %s for image file %s'%(band,filt,imfile))
-                #print 'filter %s,%s not in filter list for image file %s'%(band,filt,imfile)
-                continue
-
-            #imfileloc = copy(imfile)
-
-            #if fermigrid and worker:
-            #    self.rootdir = '.'
-
-            #print imfile
-            #print imfileloc
-
-
-            if not worker:
-                if self.useweights:
-                    weightsfile = os.path.join(self.rootdir,noisefile)
-                else:
-                    noisefile, maskfile = os.path.join(self.rootdir,noisefile[0]),os.path.join(self.rootdir,noisefile[1])
-
-            if not self.oldformat:
-                if self.usefake:
-                    if not self.snparams.survey == 'PS1':
-                        print imfile
-                        changename = True
-                        if changename:
-                            if int(imfile.replace(self.rootdir,'')[:8]) < 20140601:
-                                imfile = imfile.replace('p1', 'Y1')
-                                noisefile = noisefile.replace('p1', 'Y1')
-                                psffile = psffile.replace('p1', 'Y1')
-                            elif int(imfile.replace(self.rootdir,'')[:8]) < 20150601:
-                                imfile = imfile.replace('p1', 'Y2')
-                                noisefile = noisefile.replace('p1', 'Y2')
-                                psffile = psffile.replace('p1', 'Y2')
-                            elif int(imfile.replace(self.rootdir,'')[:8]) < 20160601:
-                                imfile = imfile.replace('p1', 'Y3')
-                                noisefile = noisefile.replace('p1', 'Y3')
-                                psffile = psffile.replace('p1', 'Y3')
-                            elif int(imfile.replace(self.rootdir,'')[:8]) < 20170601:
-                                imfile = imfile.replace('p1', 'Y4')
-                                noisefile = noisefile.replace('p1', 'Y4')
-                                psffile = psffile.replace('p1', 'Y4')
-                else:
-                    if not self.snparams.survey == 'PS1':
-                        print imfile
-
-                        #raw_input('imh')
-                        if int(imfile.replace(self.rootdir,'')[:8]) < 20140601:
-                            imfile = imfile.replace('p1', 'Y1')
-                            noisefile = noisefile.replace('p1', 'Y1')
-                            weightsfile = weightsfile.replace('p1', 'Y1')
-                            psffile = psffile.replace('p1', 'Y1')
-                        elif int(imfile.replace(self.rootdir,'')[:8]) < 20150601:
-                            imfile = imfile.replace('p1', 'Y2')
-                            imfile = imfile.replace('Y1', 'Y2')
-                            noisefile = noisefile.replace('p1', 'Y2')
-                            noisefile = noisefile.replace('Y1', 'Y2')
-                            psffile = psffile.replace('p1', 'Y2')
-                            psffile = psffile.replace('Y1', 'Y2')
-                            weightsfile = weightsfile.replace('p1', 'Y2')
-                            weightsfile = weightsfile.replace('Y1', 'Y2')
-
-                        elif int(imfile.replace(self.rootdir,'')[:8]) < 20160601:
-                            imfile = imfile.replace('p1', 'Y3')
-                            imfile = imfile.replace('Y1', 'Y3')
-                            noisefile = noisefile.replace('p1', 'Y3')
-                            noisefile = noisefile.replace('Y1', 'Y3')
-                            psffile = psffile.replace('p1', 'Y3')
-                            psffile = psffile.replace('Y1', 'Y3')
-                            weightsfile = weightsfile.replace('p1', 'Y3')
-                            weightsfile = weightsfile.replace('Y1', 'Y3')
-
-                        elif int(imfile.replace(self.rootdir,'')[:8]) < 20170601:
-                            imfile = imfile.replace('p1', 'Y4')
-                            imfile = imfile.replace('Y1', 'Y4')
-                            noisefile = noisefile.replace('p1', 'Y4')
-                            noisefile = noisefile.replace('Y1', 'Y4')
-                            psffile = psffile.replace('p1', 'Y4')
-                            psffile = psffile.replace('Y1', 'Y4')
-                            weightsfile = weightsfile.replace('p1', 'Y4')
-                            weightsfile = weightsfile.replace('Y1', 'Y4')
-
-            # print imfile
-            # print imfile.replace(self.rootdir, '')[:8]
-            # raw_input('stopped')
-            if not os.path.exists(imfile):
-                #print os.popen('ls -ltr *.fz').read()
-                #print 'funpack %s.fz' % imfile
-                #os.system('funpack %s.fz' % imfile)
-                #sys.exit()
-                if not os.path.exists(imfile+'.fz'):
-                    print('Error : file %s does not exist'%imfile)
-                    continue
-                    print('Error : file %s does not exist'%imfile)
-                    raise exceptions.RuntimeError('Error : file %s does not exist'%imfile)
-                else:
-                    print os.popen('ls -ltr *.fz').read()
-                    print 'funpack %s.fz'%imfile
-                    os.system('funpack %s.fz'%imfile)
-                    #sys.exit()
-
-            if self.useweights:
-                if not os.path.exists(weightsfile):
-                    os.system('gunzip %s.gz'%weightsfile)
-                    if not os.path.exists(weightsfile):
-                        os.system('funpack %s.fz'%weightsfile)
-                        if not os.path.exists(weightsfile):
-                            raise exceptions.RuntimeError('Error : file %s does not exist'%weightsfile)
-            else:
-
-                if not os.path.exists(noisefile):
-                    os.system('gunzip %s.gz' % noisefile)
-                    if not os.path.exists(noisefile):
-                        os.system('funpack %s.fz' % noisefile)
-                        if not os.path.exists(noisefile):
-                            raise exceptions.RuntimeError('Error : file %s does not exist' % noisefile)
-                if not os.path.exists(maskfile):
-                    os.system('gunzip %s.gz' % maskfile)
-                    if not os.path.exists(maskfile):
-                        os.system('funpack %s.fz' % maskfile)
-                        if not os.path.exists(maskfile):
-                            raise exceptions.RuntimeError('Error : file %s does not exist' % maskfile)
-
-            if not os.path.exists(psffile):
-                if os.path.exists(psffile+'.gz'):
-                    os.system('gunzip %s.gz' % psffile)
-                elif not os.path.exists(psffile+'.fz'):
-                    raise exceptions.RuntimeError('Error : file %s does not exist'%psffile)
-                else:
-                    os.system('/global/u1/d/dbrout/cfitsio/funpack %s.fz'%psffile)
-
-            # print maskfile
-            # mask = pyfits.getdata(maskfile)
-            # print mask.shape
-            # raw_input()
-            if not nomask:
-                if useweights:
-
-                    maskfile = os.path.join(self.rootdir,snparams.image_name_search[j])
-                    mask = pyfits.getdata(maskfile)
-
-            print 'here3'
-            #raw_input()
-            # if self.usefake:
-            #     fakeim = ''.join(imfile.split('.')[:-1]) + '+fakeSN.fits'
-            #     print 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .'
-            #     print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-            #         0] + '+fakeSN.fits.gz' + ' .'
-            #     sys.exit()
-            #     os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ''.join(longimfile.split('.')[:-1]) + '+fakeSN.fits' + ' .')\
-            #         .read()
-            #     if not os.path.exists(fakeim):
-            #         print 'ifdh', 'IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-            #             0] + '+fakeSN.fits.gz' + ' .'
-            #         os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + longimfile.split('.fits.gz')[
-            #             0] + '+fakeSN.fits.gz' + ' .').read()
-            #         os.system('funpack %s.fz' % fakeim)
-            #         os.system('gunzip %s.gz' % fakeim)
-            #         print longimfile
-            #         print longimfile.split('.fits.gz')[0] + '+fakeSN.fits.gz' + ' .'
-            #         sys.exit()
-            #     imfile = fakeim
-            try:
-                im = pyfits.getdata(imfile)
-                hdr = pyfits.getheader(imfile)
-                print 'running globalstars on ',imfile
-                #print 'image shape',im.shape
-            except:
-                print 'Image is EMPTY, skipping star...'
-                #a = open('emptyimages.txt','a')
-                #a.write(imfile+'\n')
-                #a.close()
-                continue
-            #raw_input()
-            print 'got image data!'
-            #sys.exit()
-            #fakeim_hdr = pyfits.getheader(fakeim)
-            #snparams.cat_zpts[imfile] = fakeim_hdr['HIERARCH DOFAKE_ZP']
-
-            snparams.platescale = hdr[self.params.hdr_platescale_name]
-            snparams.airmass = hdr[self.params.hdr_airmass_name]
-
-            if self.useweights:
-                weights = pyfits.getdata(weightsfile)
-            else:
-                noise = pyfits.getdata(noisefile)
-                mask = pyfits.getdata(maskfile)
-
-
-            psf = pyfits.getdata(psffile)
-
-            if params.weight_type.lower() == 'ivar':
-                print 'ivar'
-                #raw_input()
-                noise = np.sqrt(1/noise)
-            elif params.weight_type.lower() != 'noise':
-                raise exceptions.RuntimeError('Error : WEIGHT_TYPE value %s is not a valid option'%params.WEIGHT_TYPE)
-
-            if nomask:
-                if self.useweights:
-                    mask = np.zeros(np.shape(weights))
-                    maskcols = np.where((weights < 1e-8) |
-                                        (np.isfinite(weights) == False))
-                    mask[maskcols] = 100.0
-
-            wcsworked = True
-            try:
-                w =wcs.WCS(imfile)
-            except:
-                wcsworked = False
-                hl = pf.open(imfile)
-                import starlink.Ast as Ast
-                import starlink.Atl as Atl
-                fitschan = Ast.FitsChan( Atl.PyFITSAdapter(hl[ 0 ]) )
-                encoding = fitschan.Encoding
-                wcsinfo = fitschan.read()
-                w = wcs.WCS(imfile+'old')
-            
-            if wcsworked:
-                results =  w.wcs_pix2world(np.array([[0,0]]), 0)
-                ra1, dec1 = results[0][0], results[0][1]
-                results2 =  w.wcs_pix2world(np.array([[snparams.nxpix-1,
-                                   snparams.nypix-1]]), 0)
-                ra2, dec2 =results2[0][0], results2[0][1]
-            else:
-                xpix = [0]
-                ypix = [0]
-                radtodeg = 360/(2*3.14159)
-                results =  wcsinfo.tran([xpix,ypix])
-                ra1, dec1 = results[0]*radtodeg, results[1]*radtodeg
-                results2 =  wcsinfo.tran([[snparams.nxpix-1], [snparams.nypix-1]])
-                ra2, dec2 =results2[0]*radtodeg, results2[1]*radtodeg
-
-            ra_high = np.max([ra1,ra2])
-            ra_low = np.min([ra1,ra2])
-            dec_high = np.max([dec1,dec2])
-            dec_low = np.min([dec1,dec2])
-            #print 'starcat'*50
-            #print snparams.starcat
-            #sys.exit()
-
-
-            #
-            # if type(snparams.starcat) == np.array:
-            #     if os.path.exists(snparams.starcat[j]):
-            #         starcat = txtobj(snparams.starcat[j],useloadtxt=True)
-            #         if not starcat.__dict__.has_key('mag'):
-            #             try:
-            #                 starcat.mag = starcat.__dict__[band]
-            #                 starcat.dmag = starcat.__dict__['d%s'%band]
-            #             except:
-            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[j])
-            #     else:
-            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[j])
-            # elif type(snparams.starcat) == dict and 'des' in snfile:
-            #     starcatfile = None
-            #     starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
-            #     #print starcatloc
-            #     #print imfile
-            #     #print longimfile
-            #     #sys.exit()
-            #     if fermigrid and worker:
-            #         starcatloc = '/'.join(longimfile.split('/')[0:-1])+'/'
-            #         #starcatloc = '/'.join(longimfile.split('/')[0:-2]) + '/g'+longimfile.split('/')[-2][1:]
-            #         print starcatloc
-            #         ifdhls = os.popen('ifdh ls ' + starcatloc + '/').read()
-            #         #print ifdhls
-            #         #print 'ls on imfileloc'
-            #         ifdhls = os.popen('ifdh ls ' + starcatloc + '/STARCAT*.LIST').read()
-            #         #print ifdhls
-            #         #print 'ls on imfileloc/STARCAT*.LIST'
-            #         #print 'len starcat',len(ifdhls)
-            #         #sys.exit()
-            #         if len(ifdhls) > 0:
-            #             os.popen('IFDH_CP_MAXRETRIES=1; ifdh cp ' + ifdhls.strip() + ' .').read()
-            #             a = os.popen('ls STARCAT*').read()
-            #             #print '743',a
-            #             starcatfile = ifdhls.strip().split('/')[-1]
-            #             #print '745',starcatfile
-            #             #sys.exit()
-            #             starcatloc = ''
-            #             ifdhls = os.popen('ifdh ls  ./STARCAT*.LIST').read()
-            #             #print ifdhls
-            #             #print 'sssssssssss'
-            #             starcatloc = ''
-            #             #raw_input()
-            #         else:
-            #             continue
-            #     else:
-            #         for fl in os.listdir(starcatloc):
-            #             if 'STARCAT' in fl:
-            #                 starcatfile = fl
-            #     #raw_input()
-            #     print starcatloc+starcatfile
-            #     if os.path.exists(starcatloc+starcatfile):
-            #         starcat = txtobj(starcatloc+starcatfile,useloadtxt=True, des=True)
-            #         if not starcat.__dict__.has_key('mag_%s'%band):
-            #             try:
-            #                 print starcat.__dict__
-            #                 starcat.mag = starcat.__dict__[band]
-            #                 starcat.dmag = starcat.__dict__['d%s'%band]
-            #             except:
-            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[band])
-            #     else:
-            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[band])
-            # else:
-            #     print snparams.starcat[filt]
-            #     if os.path.exists(snparams.starcat[filt]):
-            #         starcat = txtobj(snparams.starcat[filt],useloadtxt=True)
-            #         if not starcat.__dict__.has_key('mag'):
-            #             try:
-            #                 starcat.mag = starcat.__dict__[band]
-            #                 starcat.dmag = starcat.__dict__['d%s'%band]
-            #             except:
-            #                 print snparams.starcat[filt]
-            #                 raise exceptions.RuntimeError('Error : catalog file %s has no mag column!!'%snparams.starcat[filt])
-            #     else:
-            #         raise exceptions.RuntimeError('Error : catalog file %s does not exist!!'%snparams.starcat[filt])
-            #
-
-            #if not self.snparams.survey == 'PS1':
-
-            if nozpt:
-
-                #self.rdnoise = hdr[params.rdnoise_name]
-                #self.gain = hdr[params.gain_name]
-                # print params.gain_name
-                # print 'self.gain',self.gain
-                # raw_input()
-
-                # print starcat.ra
-                # print 'ralow',ra_low
-                # print 'rahi',ra_high
-                # print 'min(starcat.ra)',min(starcat.ra)
-                # print 'max(starcat.ra)',max(starcat.ra)
-                # sys.exit()
-                # print starcat.__dict___
-                if self.snparams.survey == 'DES':
-                    cols = np.where((starcat.bigra > ra_low) &
-                                    (starcat.bigra < ra_high) &
-                                    (starcat.bigdec > dec_low) &
-                                    (starcat.bigdec < dec_high))[0]
-
-                    starcat.ra = starcat.bigra[cols]
-                    starcat.dec = starcat.bigdec[cols]
-                    starcat.mag = starcat.bigmag[cols]
-                    starcat.objid = starcat.bigid[cols]
-                    starcat.id = starcat.bigid[cols]
-
-                    #print 'hereeee'
-                    #raw_input()
-
-                    #self.tmpwriter.savez(self.zptoutpath+'/'+str(self.field)+'_CCD'+str(self.ccdnum)+'_standards.npz',
-                    #         ra=starcat.ra,dec=starcat.dec,mag=starcat.mag,id=starcat.objid)
-
-                    if not len(cols):
-                        # print "Error : No stars in image!!"
-                        # badindices.append(j)
-                        # continue
-                        raise exceptions.RuntimeError("Error : No stars in image!!")
-
-                if wcsworked:
-                    coords = zip(*w.wcs_world2pix(np.array(zip(starcat.ra, starcat.dec)), 0))
-                    x_star, y_star = [], []
-                    for xval, yval in zip(*coords):
-                        x_star += [xval]
-                        y_star += [yval]
-                    print starcat.ra
-                    print x_star
-                else:
-                    coords = wcsinfo.tran([starcat.ra / radtodeg, starcat.dec / radtodeg], False)
-
-                x_star, y_star = [], []
-                for xval, yval in zip(*coords):
-                    x_star += [xval]
-                    y_star += [yval]
-
-                x_star1, y_star1 = np.array(x_star), np.array(y_star)
-                x_star, y_star = cntrd.cntrd(im, x_star1, y_star1, params.cntrd_fwhm)
-                newra, newdec = zip(*w.wcs_pix2world(np.array(zip(x_star, y_star)), 0))
-                # try:
-                #     starcat.objid += 0.
-                # except:
-                #     starcat.objid = np.arange(len(starcat.mag))
-
-                # for rrr in starcat.objid:
-                #    starids.append(rrr)
-                # for rrr,zzz in zip(newra,newdec):
-                #    starras.append(rrr)
-                #    stardecs.append(zzz)
-                # for rrr in starcat.ra:
-                #    starcatras.append(rrr)
-                cntrs += 1
-                # print len(starids)
-                # print len(starras)
-                # print starras
-
-                # raw_input()
-
-        # if nozpt:
-        #
-        #     starids = np.array(starcat.objid)
-        #     starras = np.array(newra)
-        #     stardecs = np.array(newdec)
-        #     starmags = np.array(starcat.mag)
-        #
-        #     print starras
-        #     print star_offset_file
-        #     self.tmpwriter.savez(star_offset_file, starras=np.array(newra), stardecs=np.array(newdec),
-        #                          starids=np.array(starcat.objid), starmags=np.array(starcat.mag))
-        # else:
-        #     staroffsets = np.load(star_offset_file)
-        #     starras = np.array(staroffsets['starras'])
-        #     stardecs = np.array(staroffsets['stardecs'])
-        #     starids = np.array(staroffsets['starids'])
-        #     starmags = np.array(staroffsets['starmags'])
-        #     # sys.exit()
-        # starglobalras = []
-        # starglobaldecs = []
-        # starglobalids = []
-        # starglobalmags = []
-        # print starids.shape
-        # print np.unique(starids)
-        # #raw_input()
-        # for ide in np.unique(starids):
-        #     #print starids
-        #     ww = (starids == ide)
-        #     starglobalids.append(ide)
-        #     #print starras[ww]
-        #     try:
-        #         #print 'aaa', starras
-        #         #raw_input()
-        #         print ide,np.median(starras[ww]),np.median(stardecs[ww]),np.median(starmags[ww])
-        #         starglobalras.append(np.median(starras[ww]))
-        #         starglobaldecs.append(np.median(stardecs[ww]))
-        #         starglobalmags.append(np.median(starmags[ww]))
-        #     except:
-        #         starglobalras.append(np.nan)
-        #         starglobaldecs.append(np.nan)
-        #         starglobalmags.append(np.nan)
-        #
-        # starglobalids = np.array(starglobalids)
-        # starglobalras = np.array(starglobalras)
-        # starglobaldecs = np.array(starglobaldecs)
-        # starglobalmags = np.array(starglobalmags)
-
-        # if self.dobigstarcat:
-        #     # scampra,scampdec,mag_starwrong = self.getProperCatRaDec(starglobalras,starglobaldecs)
-        #     # offsetra = np.array(starglobalras) - np.array(scampra)
-        #     # offsetdec = np.array(starglobaldecs) - np.array(scampdec)
-        #     #jra,jdec,jmag = self.getJamesCat()
-        #     print 'we are here inside bigstarcat'
-        # else:
-        # offsetra = np.array(starglobalras) * 0.
-        # offsetdec = np.array(starglobalras) * 0.
-        print 'Done with globalstars'
-        if self.fermilog:
-            self.tmpwriter.appendfile('\nDone with globalstars\n ', self.fermilogfile)
-
         #############################################################################################################################
         #############################################################################################################################
         #print offsetra
@@ -1459,6 +981,10 @@ class smp:
             # if round(float(snparams.mjd[j])) != 56935:
             #    continue
             try:
+                #self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
+                #self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+                #self.expnum = imfile.split('/')[-1].split('_')[1]
+                self.filt = filt
                 self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
                 self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
                 self.expnum = imfile.split('/')[-1].split('_')[1]
@@ -1467,7 +993,14 @@ class smp:
                 self.ccdnum = np.nan
                 self.field = np.nan
                 self.expnum = np.nan
+                self.filt = filt
 
+            if not makestarcatalog:
+                if not self.ccdnum in self.ccd_dict_of_properm_stars.keys():
+                    self.ccd_dict_of_properm_stars[self.ccdnum]  = compute_proper_motion_for_each_star(self.bigstarposdir,self.filt,self.ccdnum,self.field)
+                self.pmdict= self.ccd_dict_of_properm_stars[self.ccdnum]
+
+            
             # print imfile
             # raw_input('immmmmm')
             # if 'Y4' in imfile:
@@ -1600,12 +1133,17 @@ class smp:
                             imfile = imfile.replace('p1', 'Y4')
                             noisefile = noisefile.replace('p1', 'Y4')
                             psffile = psffile.replace('p1', 'Y4')
+                        elif int(imfile[:8]) > 20170601:
+                            imfile = imfile.replace('p1', 'Y5')
+                            noisefile = noisefile.replace('p1', 'Y5')
+                            psffile = psffile.replace('p1', 'Y5')
+
                 # noisefile = ''.join(noisefile.split('.')[:-1])+'+fakeSN.fits'
 
 
-            if 'Y4' in imfile:
-                print 'yfour inside now skipping'
-                continue
+            #if 'Y4' in imfile:
+            #    print 'year four inside now skipping'
+            #    continue
 
 
 
@@ -1744,12 +1282,17 @@ class smp:
                         # print 'grabbed sn files'
                         # sys.exit()
             try:
-                self.ccdnum = imfile.split('/')[-1].split('_')[5].split('+')[0]
-                self.field = imfile.split('/')[-1].split('_')[2].split('-')[1]
+                #self.ccdnum = imfile.split('/')[-1].split('_')[5].split('+')[0]
+                #self.field = imfile.split('/')[-1].split('_')[2].split('-')[1]
+                #self.filt = filt
+                self.field = imfile.split('/')[-1].split('-')[1].split('_')[0]
+                self.ccdnum = imfile.split('/')[-1].split('_')[-1][:2]
+                self.expnum = imfile.split('/')[-1].split('_')[1]
+                self.filt = filt
             except:
                 self.ccdnum = np.nan
                 self.field = np.nan
-
+                self.filt = filt
             try:
                 print 'reading in'
                 im = pyfits.getdata(imfile)
@@ -2167,7 +1710,7 @@ class smp:
             if self.snparams.survey == 'PS1':
                 self.gain = 1.
 
-            print hdr.keys()
+            #print hdr.keys()
             #raw_input()
 
             if self.snparams.survey == 'DES':
@@ -2293,21 +1836,35 @@ class smp:
                 #sys.exit()
             if nozpt:
                 if not wehavestarcat:
-                    starcat = txtobj(self.starcatfile, useloadtxt=True)
-                    print 'done reading in starcatfile'
-                    wehavestarcat = True
-                    starcat.bigra = np.array(starcat.__dict__['RA'][1:], dtype='float')
-                    starcat.bigdec = np.array(starcat.__dict__['DEC'][1:], dtype='float')
-                    #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s' % filt.upper()][1:], dtype='float')
-                    starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_%s' % filt.upper()][1:], dtype='float')
-                    starcat.bigid = np.array(starcat.__dict__['MATCH_OBJECT_ID'][1:], dtype='float')
-                    starcat.id = copy(starcat.bigid)
-                    starcat.ra = starcat.bigra
-                    starcat.dec = starcat.bigdec
-                    starcat.mag = starcat.bigmag
-
-                #self.rdnoise = hdr[params.rdnoise_name]
-                #self.gain =  hdr[params.gain_name]
+                    if self.starcatfile[-4:] == '.pkl':
+                        starcat = pklcat.pklcat()
+                        df = pd.read_pickle(self.starcatfile)[:-1]
+                        starcat.bigra = df['RA'].values
+                        starcat.bigdec = df['DEC'].values
+                        starcat.bigmag = df['Y6A1_%s'%filt.upper()].values
+                        starcat.bigmagerr = df['Y6A1_%sERR'%filt.upper()].values
+                        starcat.bigid = df['FGCM_ID'].values
+                        starcat.id = starcat.bigid
+                        starcat.ra = starcat.bigra
+                        starcat.dec = starcat.bigdec
+                        starcat.mag = starcat.bigmag
+                        starcat.gicolor = df['Y6A1_G'].values - df['Y6A1_I'].values
+                    else:
+                        starcat = txtobj(self.starcatfile, useloadtxt=False, usepandas=True, delimiter=',')
+                        print 'done reading in starcatfile'
+                        wehavestarcat = True
+                        starcat.bigra = np.array(starcat.__dict__['RA'][1:], dtype='float')
+                        starcat.bigdec = np.array(starcat.__dict__['DEC'][1:], dtype='float')
+                        #starcat.bigmag = np.array(starcat.__dict__['MAG_PSF_MEAN_%s' % filt.upper()][1:], dtype='float')
+                        starcat.bigmag = np.array(starcat.__dict__['Y4A1_%s' % filt.upper()][1:], dtype='float')
+                        starcat.bigid = np.array(starcat.__dict__['COADD_OBJECT_ID'][1:], dtype='float')
+                        starcat.id = copy(starcat.bigid)
+                        starcat.ra = starcat.bigra
+                        starcat.dec = starcat.bigdec
+                        starcat.mag = starcat.bigmag
+                        starcat.gicolor = np.array(starcat.__dict__['Y4A1_G'][1:], dtype='float')-np.array(starcat.__dict__['Y4A1_I'][1:], dtype='float')
+                        #self.rdnoise = hdr[params.rdnoise_name]
+                        #self.gain =  hdr[params.gain_name]
 
                 # cols = np.where((starcat.bigra > ra_low) &
                 #                 (starcat.bigra < ra_high) &
@@ -2327,7 +1884,7 @@ class smp:
                 #print len(tras),len(tids)
                 #asdf
                 mag_star = starcat.mag
-
+                mag_starerr = starcat.bigmagerr
 
 
                 if not len(cols):
@@ -2404,8 +1961,9 @@ class smp:
                 #sys.exit()
 
                 x_star1,y_star1 = np.array(x_star),np.array(y_star)
-                print x_star1
-                badflagarr = (x_star1 < 0) | (y_star1 < 0) | (x_star1 - im.shape[1] > 0) | (y_star1 - im.shape[0] > 0)
+                #print len(x_star1)
+                #asdf
+                badflagarr = (x_star1 < 0) | (y_star1 < 0) | (x_star1 - im.shape[1] > 0) | (y_star1 - im.shape[0] > 0) #| (mag_starerr > .001)
                 x_star1[badflagarr] = 100.
                 y_star1[badflagarr] = 100.
                 x_star1 = x_star1[~badflagarr]
@@ -2424,6 +1982,8 @@ class smp:
                 #try:
                 mag,magerr,flux,fluxerr,sky,skyerr,badflagx,outstr = \
                     aper.aper(im,x_star1,y_star1,apr = params.fitrad,verbose=False,ignoreneg=True)
+                #print(len(mag[flux>0]))
+                #asdf
                 #except:
                 #    print 'failed aper'
                 #    badflag = 1
@@ -2531,9 +2091,9 @@ class smp:
 
                     #print sexsky,sexrms,sky,skyerr
                     #raw_input('sss')
-                    zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids,zptfitchisq = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
+                    zpt,zpterr,zpt_file, rmsaddin, thisra,thisdec, thisids,zptfitchisq,errfloor = self.getzpt(x_star1,y_star1,tras,tdecs,tids,mag,sky,skyerr,snparams.mjd[j],
                                          badflagx,mag_star,im,weights,mask,maskfile,weightsfile,psffile,imfile,w,snparams,params.substamp,mjdoff,mjdslopeinteroff,j,
-                                                                                                     longimfile,bkgrnd,bkgrndrms,psf=self.psf,mjd=str(float(snparams.mjd[j])),gain=self.gain,makestarcatalog=makestarcatalog)
+                                                                                                     longimfile,bkgrnd,bkgrndrms,starcat.gicolor,psf=self.psf,mjd=str(float(snparams.mjd[j])),gain=self.gain,makestarcatalog=makestarcatalog,hdr=hdr,bigstarposdir=bigstarposdir)
                     print 'zpttime',time.time()-zpttime
                     
                     #zpoutfile = open('zprecord.txt','a')
@@ -2561,6 +2121,7 @@ class smp:
                 print 'getting rasssssss'
                 thisdec = zptdata['thisdec']
                 thisids = zptdata['thisids']
+                errfloor = zptdata['errfloor']
                 #zptfitchisq = zptdata['zptfitchisq']
             try:
             #if True:
@@ -3140,6 +2701,7 @@ class smp:
 
                                     smp_dict['zpt'][i] = zpt
                                     smp_dict['zpterr'][i] = zpterr
+                                    smp_dict['errfloor'][i] = errfloor
                                     #print smp_dict['zpterr']
                                     #raw_input()
                                     smp_dict['mjd'][i] = float(snparams.mjd[j])
@@ -3254,7 +2816,7 @@ class smp:
 
                                     #NOW FIND NEARbY STARS AND GRAB OFFSETS AND APPLY TO SN (MAJE A NEW SMP_DICT ELEMENT)
                                         
-
+                                    '''
                                     if filt == 'u':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_u
                                         smp_dict['hostgal_sbmag'][i] = -99
@@ -3263,6 +2825,7 @@ class smp:
                                         smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[0]))
                                     if filt == 'r':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_r
+                                        print(snparams.__dict__)
                                         smp_dict['hostgal_sbmag'][i] = 27.5 - 2.5*np.log10(float(snparams.hostgal_sb_fluxcal[1]))
                                     if filt == 'i':
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_i
@@ -3274,13 +2837,13 @@ class smp:
                                         #smp_dict['hostgal_mag'][i] = snparams.fake_hostmag_y
                                         smp_dict['hostgal_sbmag'][i] = -99
 
-
-                                    print smp_dict['mjd'][i],snparams.peakmjd - params.mjdminus,snparams.peakmjd + params.mjdplus
+                                    '''
+                                    print smp_dict['mjd'][i], snparams.peakmjd - self.mjdminus,snparams.peakmjd + self.mjdplus
 
                                     #raw_input()
                                     
-                                    if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus or \
-                                        smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
+                                    if smp_dict['mjd'][i] < snparams.peakmjd - self.mjdminus or \
+                                        smp_dict['mjd'][i] > snparams.peakmjd + self.mjdplus:
                                         smp_dict['mjd_flag'][i] = 1
                                     #else:
                                     #    raw_input('good epoch and no mjd flag')
@@ -3293,9 +2856,9 @@ class smp:
                                     #raw_input()
 
                                     if self.dogalfit:
-                                        if smp_dict['mjd'][i] > snparams.peakmjd + params.mjdplus:
+                                        if smp_dict['mjd'][i] > snparams.peakmjd + self.mjdplus:
                                             smp_dict['fitflag'][i] = 0
-                                        if smp_dict['mjd'][i] < snparams.peakmjd - params.mjdminus:
+                                        if smp_dict['mjd'][i] < snparams.peakmjd - self.mjdminus:
                                             smp_dict['fitflag'][i] = 0
                                     #
                                     # if i > 10:
@@ -3540,14 +3103,17 @@ class smp:
         print np.where([smp_dict['mjd_flag'] == 1])
         print len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)])
         #raw_input()
-        if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
-            lcfi = os.path.join(self.lcfilepath,
-                                      snparams.snfile.split('/')[-1].split('.')[0] + '_' + filt + '.smp')
-            a = open(lcfi,'w')
-            a.write('Not enough epochs without SN flux ( > 1 )')
-            a.close()
-            raise ValueError(
-                "Not enough epochs without SN flux ( > 1 )")
+        
+
+        if (not makestarcatalog) & (not nozpt):
+            if len(smp_dict['mjd_flag'][np.where(smp_dict['mjd_flag'] == 1)]) < 3:
+                lcfi = os.path.join(self.lcfilepath,
+                                    snparams.snfile.split('/')[-1].split('.')[0] + '_' + filt + '.smp')
+                a = open(lcfi,'w')
+                a.write('Not enough epochs without SN flux ( > 1 )')
+                a.close()
+                raise ValueError(
+                    "Not enough epochs without SN flux ( > 1 )")
 
         meanstarras = {}
         meanstardecs = {}
@@ -4032,6 +3598,10 @@ class smp:
                 os.mkdir(isdonedir)
             os.system('touch '+os.path.join(isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
             sys.exit()
+
+        if makestarcatalog:
+            print('We just made the star catalog proper motion files. we are done here... exiting')
+            sys.exit()
         print 'id_obs',smp_dict['id_obs']
         self.tmpwriter.savez( os.path.join(npoutdir,filename+'_mcmc_input.npz'),
                 galmodel = galmodel
@@ -4055,7 +3625,7 @@ class smp:
                 , psf_shift_std = .0005
                 , shiftpsf = False
                 , hostgal_mag = smp_dict['hostgal_mag']
-                , hostgal_sbmag = smp_dict['hostgal_sbmag']
+                , hostgal_sbmag = None
                 , fileappend = ''
                 , stop = False
                 , skyerr_radius = 16.
@@ -4071,6 +3641,7 @@ class smp:
                 fakemag=smp_dict['fakemag'],
                 fakezpt=smp_dict['fakezpt'],
                 zpterr = smp_dict['zpterr'],
+                errfloor = smp_dict['errfloor'],
                 peakmjd =snparams.peakmjd,
                 snra = snparams.RA,
                 sndec = snparams.DECL,
@@ -4094,7 +3665,8 @@ class smp:
                 id_obs = smp_dict['id_obs'],
                 id_coadd = smp_dict['id_coadd'],
                 aperscale = smp_dict['aperscale'],
-                gain = smp_dict['gain']
+                gain = smp_dict['gain'],
+                snparams=self.snparams,
                 )
         
         try:
@@ -4103,7 +3675,10 @@ class smp:
         except:
             print 'could not save ',os.path.join(npoutdir,filename+'_smpDict.npz')
 
+        sys.exit()
 
+
+        '''
         self.outdir = outdir
         self.galaxyoutdir = galaxyoutdir
         self.filename = filename
@@ -4193,8 +3768,8 @@ class smp:
                                           snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcout')
 
 
-                if passv == 0:
-
+                if (passv == 0) & (not makestarcatalog):
+                    
                     np.savez(self.savenpzfilesdir+'/'+snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.mcmcinput',
                              galmodel=galmodel
                              , modelvec=modelvec
@@ -4351,8 +3926,9 @@ class smp:
                 print os.path.join(npoutdir,filename+'_withSn.npz')
                 npzoutfile = os.path.join(self.lcfilepath,
                                              snparams.snfile.split('/')[-1].split('.')[0] + '_' + self.filt + '.npz')
-                np.savez(npzoutfile, modelvec=modelvec,
-                                 modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params,
+                if not makestarcatalog:
+                    np.savez(npzoutfile, modelvec=modelvec,
+                             modelvec_uncertainty=modelvec_uncertainty, galmodel_params=galmodel_params,
                                  galmodel_uncertainty=galmodel_uncertainty, modelvec_nphistory=modelvec_nphistory,
                                  galmodel_nphistory=galmodel_nphistory, sims=sims, data=smp_im,
                                  xhistory=xhistory,yhistory=yhistory,stamps=stamps,chisqs=chisqs,weights=smp_noise,
@@ -4639,6 +4215,7 @@ class smp:
                 os.mkdirs(self.isdonedir)
             os.system('touch '+os.path.join(self.isdonedir,snparams.snfile.split('/')[-1].split('.')[0] + '.done'))
         #sys.exit()
+        '''
         return
 
     def inflerr(self, value, x, y, band):
@@ -5543,7 +5120,7 @@ class smp:
             errmag = vals.perror[0]
             fluxmp = vals.params[0]
             fluxerrmp = errmag
-            print fluxmp,errmag
+            #print fluxmp,errmag
         except:
             return 1, 1, 1, 1, 1, True
         #raw_input()
@@ -5720,7 +5297,7 @@ class smp:
         # #plt.ylim(chisqvec[argm]-1.,chisqvec[argm]+10.)
         # plt.savefig('fluxtest.png')
         #print 'mychisq',fluxvec[argm], fluxvec[argm] - fluxvec[idx][0]
-        print 'mpfit',fluxmp,fluxerrmp
+        #print 'mpfit',fluxmp,fluxerrmp
         #print 'lmfit',fluxlm,fluxerrlm
         #print 'minchisq',chisqvec[argm]
         #print 'minchisq/ndof',chisqvec[argm]/len(fitrad[fitrad == 1].ravel())
@@ -5773,7 +5350,7 @@ class smp:
         #         bad = True
         #         print 'star too dim...'
         sim = sky + fluxmp * psf
-        print 'chisq',np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad)
+        #print 'chisq',np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad)
         if not bad:
             #return fluxvec[argm], fluxvec[argm] - fluxvec[idx][0], mchisq/ndof, sum_data_minus_sim, np.sum((im - sim) ** 2 * weight * fitrad)/ndof, bad
             return fluxmp, np.sqrt(fluxerrmp**2+fluxmp), np.sum((im - sim) ** 2 /(skyerr**2+fluxmp)  * fitrad), sum_data_minus_sim, np.sum((im - sim) ** 2 /(skyerr**2+fluxmp) * fitrad)/ndof, bad
@@ -6007,8 +5584,8 @@ class smp:
 
     def getzpt(self,xstar,ystar,ras, decs,ids,mags,sky,skyerr,thismjd,
                 badflag,mag_cat,im,noise,mask,maskfile,weightsfile,psffile,imfile,imwcs,snparams,substamp,
-                mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,psf='',mjd=None,
-                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,band=None,makestarcatalog=False):
+                mjdoff,mjdslopeinteroff,j,longimfile,bkgrnd,bkgrndrms,colors,psf='',mjd=None,
+                mpfit_or_mcmc='mpfit',cat_zpt=-999,gain=0,band=None,makestarcatalog=False,hdr=None,bigstarposdir=None):
         """Measure the zeropoints for the images"""
 
         #print xstar,ystar
@@ -6019,13 +5596,50 @@ class smp:
         # xstar, ystar, ras, decs, mags, sky, skyerr, mag_cat = xstar[~badflag], ystar[~badflag], ras[~badflag], \
         #                                                                decs[~badflag], mags[~badflag],\
         #                                                                sky[~badflag], skyerr[~badflag], mag_cat
-        xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
-        #print xstar
-        #raw_input()
+        
 
-        # if snparams.survey == 'DES':
-        #     xstar += 1.
-        #     ystar += 1.
+
+
+
+
+        #xstar, ystar = cntrd.cntrd(im, xstar, ystar, params.cntrd_fwhm)
+        if makestarcatalog:
+            print '-'*100
+            print '-------------- COMPARING CENTROIDS -------------------'
+            print 'image',longimfile,imfile
+            
+            xfit,yfit,rmss,flags,fitmag,rasex,decsex,rmsworld = runsexstarpos.get_star_pos_and_rms(longimfile,xstar,ystar,force_run=True)
+            xstar,ystar = xfit,yfit
+        else:
+            xworld = []
+            yworld = []
+            flags = []
+            #print(self.pmdict.keys())
+            #print(self.pmdict[8705673])
+            for sid in ids:#Here we are getting the proper motion positions
+                try:
+                    self.pmdict[int(sid)]['xpopt']
+                    xworld.append(line(thismjd,*self.pmdict[int(sid)]['xpopt']))
+                    yworld.append(line(thismjd,*self.pmdict[int(sid)]['ypopt']))
+                    flags.append(0)
+                except:
+                    xworld.append(np.nan)
+                    yworld.append(np.nan)
+                    flags.append(-9)
+            xfit, yfit = zip(*imwcs.wcs_world2pix(np.array(zip(xworld,yworld)),0))
+            xfit,yfit,rmss,flags,fitmag,rasex,decsex,rmsworld = runsexstarpos.get_star_pos_and_rms(longimfile,xstar,ystar,force_run=True)
+            #print('xfit')
+            #for xf,xs in zip(xfit,xstar):
+            #    print(xf,xs)
+            #print('yfit')
+            #for yf,ys in zip(yfit,ystar):
+            #    print(yf,ys)
+            #print(yfit,ystar)
+            #asdf
+            xstar,ystar = xfit,yfit
+
+        print '-'*100
+        print '-'*100
         try:
             thisra, thisdec = zip(*imwcs.wcs_pix2world(np.array(zip(xstar, ystar)), 0))
         except:
@@ -6035,16 +5649,12 @@ class smp:
         thisdec = np.array(thisdec)
         thisids = np.array(ids)
 
-        #faintcor = np.load('faintpsfcorr_'+filt+'.npz')['corr']
-        #brightcor = np.load('brightpsfcorr_'+filt+'.npz')['corr']
-
+        
         print 'Computing zeropoint for',imfile
         print '\n'
         import pkfit_norecent_noise_smp
         counter = 0
         bad = False
-        #print 'skies',sky
-        #raw_input()
         flux_star = np.array([-999.]*len(xstar))        
         flux_star_std = np.array([-999.]*len(xstar))
         flux_chisq = np.array([-999.]*len(xstar))
@@ -6086,48 +5696,18 @@ class smp:
             pdf_pagesc = PdfPages('starfits_'+str(thismjd)+'.pdf')
         else:
             pdf_pagesc = None
-
-        # self.dosextractor = True
-        # if self.dosextractor:
-        #     runsextractor.getsky_and_skyerr(imfile, im, 0, 100,  100, 100, snparams.survey)
-        #     bkgrnd = pf.getdata(imfile+'.background')
-
-
-        #print imfile
-        #print thismjd
-        #print 'mjdabove'
-        #raw_input()
-        #for ra,dec,x,y,s,se in zip(ras,decs,xstar,ystar,sky,skyerr):
-        #    print ra,dec,x,y,s,se
-        #raw_input()
-        #sys.exit()
-        # if self.snparams.survey == 'PS1':
-        #     print mag_cat
-        #     raw_input()
-        #     mag_cat *= -1.
         prevra = 0
-        for x,y,m,s,se,mc,ra,dec,iii,bf,i in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,ids,badflag,range(len(xstar))):
+        for x,y,m,s,se,mc,ra,dec,iii,bf,i,sexflag in zip(xstar,ystar,mags,sky,skyerr,mag_cat,ras,decs,ids,badflag,range(len(xstar)),list(flags)):
 
-            #print 'sky',s,'skyerr',se
-            #raw_input()
-            #print x,y,mc
-            #print self.snparams.nxpix, self.snparams.nypix
             if round(prevra,7) == round(ra,7):
                 print 'same star, so skipping'
                 continue
             prevra = ra
             if bf == 1:
                 continue
-            #print i
-            #cntr += 1
-            #if i > 150:
-            #    continue
-            #print 'xstar',xstar
-            #raw_input()
-            #y -= 2.
-            #if i < float(params.numcheckstars):
-            #    isnotcheckstars[i] = 0
-
+            if sexflag < 0:
+                continue
+        
             if mc > 21.01:
                 print mc,'star too dim'
                 continue
@@ -6135,10 +5715,6 @@ class smp:
             if mc < 16.5:
                 print mc,'star too bright'
                 continue
-            print i,x,y,mc,s,se
-            #print 'nxpix',self.snparams.nxpix
-            #print 'nypix',self.snparams.nypix
-            #print x,y
             if x > 51 and y > 51 and x < self.snparams.nxpix-51 and y < self.snparams.nypix-51:# and s > 25. and se < 1000.:
                 if self.stardumppsf:
                     if self.snparams.psf_model.lower() == 'psfex':
@@ -6146,37 +5722,13 @@ class smp:
                             psf, psfcenter = self.build_psfex(psffile,x,y,imfile,stop=True,psfexworked=psfexworked)
                         except:
                             continue
-                        #print 'psfcenter',psfcenter
-                        #raw_input()
-                        #psf2, psfcenter2 = self.build_psfex(psffile,x+.05,y+.05,imfile,stop=True)
-                        #opsf, opsfcenter = self.build_psfex(psffile, np.floor(x) + .2, np.floor(y) + .2, imfile)
-                        #ppsf, ppsfcenter = self.build_psfex(psffile, np.floor(x) + .4, np.floor(y) + .4, imfile)
-                        #self.tmpwriter.savefits(opsf - ppsf, '/pnfs/des/scratch/pysmp/test/psfsub.fits')
-                        #sys.exit()
-                        #print psf.shape
                     elif psf == '':
                         raise exceptions.RuntimeError("Error : PSF array is required!")
                 else:
-                    # pk = pkfit_norecent_noise_smp.pkfit_class(im,self.psf,self.psfcenter,self.rdnoise,self.gain,weights,mask)
-                    # #pk = pkfit_norecent_noise_smp.pkfit_class(im,self.gauss,self.psf,self.rdnoise,self.gain,noise,mask)
-                    # try:
-                    #     errmag,chi,niter,scale,iylo,iyhi,ixlo,ixhi,image_stamp,noise_stamp,mask_stamp,psf_stamp = \
-                    #         pk.pkfit_norecent_noise_smp(1,x,y,s,se,self.params.fitrad,returnStamps=True,stampsize=self.params.substamp)
-                    # except ValueError:
-                    #     raise ValueError('SN too close to edge of CCD!')
-                    #if not self.psfcenter is None:
-                    #    psf, psfcenter = self.psf, self.psfcenter
-                    #else:
-                    #print 'xyxyxyxy'
                     psf, psfcenter = self.psf, (x,y)
-                    #print psfcenter
                 
                 counter += 1
                 mask = mask*0.
-                #print 'index,ra,dec,x,y',i,ra,dec,x,y
-                #ppp = 'index,ra,dec '+str(i)+' '+str(ra)+' '+str(dec)
-                #if self.fermilog:
-                #    self.tmpwriter.appendfile(ppp + '\n', self.fermilogfile)
                 if self.snparams.survey == 'PS1':
 
                     self.dosextractor = False
@@ -6227,54 +5779,18 @@ class smp:
                         mag_cat[i] = 99
                         print 'bad star'
                         bad = True
-                    if not good:
+                    #if not good:
                         #badflag[i] = 1
                         #mag_cat[i] = 99
                         #print 'badflaggg'*10
-                        print 'notgood'
+                        #print 'notgood'
                         #print 'star not in fcmp... still including in fit.'
                         #bad = True
                 else:
-                    #print 'here1'
-                    #pk = pkfit_norecent_noise_smp.pkfit_class(im, psf/np.sum(psf), psfcenter, self.rdnoise, self.gain,
-                    #                                      noise*0.+1., mask)
-                    #pk = pkfit_norecent_noise_smp.pkfit_class(im,psf/np.sum(psf),psfcenter,self.rdnoise,self.gain,noise,mask)
-                    #Run for MPFIT
-                    #print 'initialized'
-                    #try:
                     if True:
-                        #try:
-                        #print 'here2'
-                        #errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamppk, noise_stamp, mask_stamp, psf = \
-                        #    pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
-                        #                                stampsize=params.substamp)
-                        #print 'here3',scale
-                        # x_star, y_star = cntrd.cntrd(image_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        # xpsf, ypsf = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        # psf, psfcenter = self.build_psfex(psffile, x+x_star-xpsf, y+y_star-ypsf, imfile, stop=True)
-                        # pk = pkfit_norecent_noise_smp.pkfit_class(im, psf, psfcenter, self.rdnoise, self.gain,
-                        #                                           noise * 0. + 1., mask)
-                        # errmag, chi, niter, scale, iylo, iyhi, ixlo, ixhi, image_stamp, noise_stamp, mask_stamp, psf_stamp = \
-                        #     pk.pkfit_norecent_noise_smp(1, x, y, s, se, params.fitrad, returnStamps=True,
-                        #                                 stampsize=params.substamp)
-                        # xpsf2, ypsf2 = cntrd.cntrd(psf_stamp, 15, 15, params.cntrd_fwhm * 2.)
-                        #
-                        # print x_star,y_star
-                        # print xpsf,ypsf
-                        # print xpsf2,ypsf2
-                        # print x,y
-                        #
-                        # print 'rerecentroid'
-                        # #raw_input('rerecentroid')
-
-                        #image_stamp = im[np.floor(y+.5) - (params.substamp) / 2:np.floor(y+.5) + (params.substamp ) / 2 ,
-                        #               np.floor(x+.5) - (params.substamp ) / 2:np.floor(x+.5) + (params.substamp ) / 2 ]
-
+        
                         image_stamp = im[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)]
-                        #gnoise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-                        #noise_stamp = noise[psfcenter[1]-15:psfcenter[1]+15,psfcenter[0]-15:psfcenter[0]+15]
-                        #gnoise_stamp = np.ones(image_stamp.shape)/se**2
-
+        
                         stampsize = 30
                         ysn = psfcenter[0]
                         xsn = psfcenter[1]
@@ -6295,73 +5811,17 @@ class smp:
                         else:
                             xhi = int(xsn + stampsize)
 
-                        #sin, sein, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
                         sin = np.mean(bkgrnd[ylow:yhi, xlow:xhi].ravel())
                         sein = np.mean(bkgrndrms[ylow:yhi, xlow:xhi].ravel())
-                        #temp, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi]-bkgrnd[ylow:yhi,xlow:xhi], clipsig=4, maxiter=8)
-
+        
                         mag1, magerr1, flux1, fluxerr1, sky1, skysig, badflag1, outstr1 = \
                             aper.aper(im, x, y, apr=params.fitrad, verbose=False)
-                        print sky1,skysig
-                        #raw_input('sss')
                         sein = skysig
                         se = skysig
-                        #print skysig,se
-                        #raw_input('se comparo')
-                        # pm = 100
-                        # sin, sein, vals = sigma_clip.meanclip(im[psfcenter[1]-pm:psfcenter[1]+pm,psfcenter[0]-pm:psfcenter[0]+pm],
-                        #                                      clipsig=4, maxiter=8)
-
-                        #mysky, skysig, vals = sigma_clip.meanclip(im[ylow:yhi, xlow:xhi], clipsig=4, maxiter=8)
-
-                        #skysig = np.std(vals))
-                        #mysky = np.mean(vals)
-
-                        #raw_input()
+        
                         totalarea = len(fitrad[fitrad>0])
-                        #print se**2, s/3.8,
-                        #raw_input()
                         gnoise_stamp = np.ones(image_stamp.shape)*(se**2)
-                        #print 'errrrr',se**2,(se**2/np.sum(psf**2))
-                        #print 'sumimresid',np.sum(image_stamp-image_stamppk)
-
-                        # ix, iy = cntrd.cntrd(image_stamp, 15, 15, 3.)
-                        # px, py = cntrd.cntrd(psf, 15, 15, 3.)
-                        #
-                        # #tt = time.time()
-                        # #for i in range(100):
-                        # #    psf ,psfceter = self.build_psfex(psffile,x-ix+px,y-iy+py,imfile,stop=True)
-                        #
-                        # #ttt = time.time()
-                        # #print 'time per psfdump is '+str((ttt-tt)/100.)
-                        # #raw_input()
-                        # ix = round(ix,2)
-                        # iy = round(iy,2)
-                        # px = round(px,2)
-                        # py = round(py,2)
-
-                        #print 'scale CHECKEEEEEE', scale, scaleck
-
-                        #raw_input()
-                        #self.tmpwriter.savefits(scale*psf_stamp+s-image_stamp,'/pnfs/des/persistent/smp/dtest.fits')
-                        #if i == 9:
-                        #    sys.exit()
-                        # noise_stamp[noise_stamp > 0.] = 1
-                        # noise_stamp[noise_stamp <= 0.] = 0
-                        # self.dosextractor = False
-                        # if self.dosextractor:
-                        #     sexsky, sexrms = runsextractor.getsky_and_skyerr(imfile,im, ix-100, ix+100, iy-100, iy+100,snparams.survey)
-                        #     print s,sexsky
-                        #     print se,sexrms
-                        #     #raw_input('comparison')
-                        #     s = sexsky
-                        #     se = sexrms
-                        #     raw_input(  )
-                        # else:
-                        #     sexsky, sexrms = s,se
-
-                        #usesextractorim = True
-                        #if usesextractorim:
+                        
                         self.dosextractor = False
                         if self.dosextractor:
                             bkgrndstamp =  bkgrnd[int(psfcenter[1]-15):int(psfcenter[1]+15),int(psfcenter[0]-15):int(psfcenter[0]+15)]*0. + \
@@ -6376,43 +5836,7 @@ class smp:
                         # noise_stamp = noise_stamp * 1 / (sexrms ** 2)
                         gal = np.zeros(image_stamp.shape)
                         mjd = 000.
-                        #oldcscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, s, noise_stamp, fitrad, gal,
-                        #                                                    mjd, scale)
-                        # if self.dogalsimpixfit:
-                        #     fiducial_coord = galsim.CelestialCoord(ra * galsim.degrees, dec * galsim.degrees)
-                        #     stamp_center = full_data_image.wcs.posToImage(fiducial_coord)
-                        #     cx = int(round(stamp_center.x))
-                        #     cy = int(round(stamp_center.y))
-                        #     des_psfex = galsim.des.DES_PSFEx(psffile)
-                        #     thispsf = des_psfex.getPSF(stamp_center)
-                        #     tim = full_data_image[galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
-                        #                                          cy - params.substamp/2, cy + params.substamp/2-1)]
-                        #     galsimpsfworld = tim.wcs.toWorld(thispsf, image_pos=stamp_center)
-                        #     simstamp = full_data_image[ galsim.BoundsI(cx - params.substamp/2, cx + params.substamp/2-1,
-                        #                                                cy - params.substamp/2, cy + params.substamp/2-1)] * 0.0
-                        #     offset = tim.wcs.toWorld(tim.trueCenter()).project(fiducial_coord)
-                        #     sn = galsim.Gaussian(sigma=1.e-8, flux=1.)
-                        #     sn = sn.shift(offset)
-                        #     conv = galsim.Convolve(sn, galsimpsfworld, gsparams=big_fft_params)
-                        #     conv.drawImage(image=simstamp,method='no_pixel')
-                        #     gpsf = simstamp.array
-                        #     gscale, gscale_std, gchisq, gdms = self.getfluxsmp(image_stamp, gpsf,
-                        #                                                        sexsky, noise_stamp,
-                        #                                                        radius, gal, mjd, scale)
-                        #     gsflux[i] =gscale
-                        #     gsflux_std[i] = gscale_std
-                        #     gsflux_chisq[i]  = gchisq
-                        #     gsflux_dms[i] = gdms
-                        #     #print 'gchisq',gchisq
-                        #     #raw_input()
-                        # cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf_stamp, sexsky, noise_stamp, params.fitrad,
-                        #                                                  gal, mjd, scale,index=i)
-
-                        #print 'running star',x,y
-                        #try:
-                            # scale, errmag, chi, dms, chinoposs = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp, fitrad, gal, mjd)
-                            # oscale, oerrmag, ochi, odms, ochinoposs = self.getfluxsmp(image_stamp, psf, sexsky, onoise_stamp,
-                            #                                                  fitrad, gal, mjd)
+                        
                         if True:
                             #if mc >12:
                             #    psf = psf/faintcor
@@ -6431,19 +5855,6 @@ class smp:
                             if self.residcounter % 5000 == 0: sys.exit()
                             np.savez('psfresidstamps/%06d_%s_psfresid.npz'%(self.residcounter,filt),image_stamp=image_stamp,psf_stamp=psf,skysig=skysig,mjd=mjd,starmag=m,sky=sky1,scale=scale,filt=filt)
 
-                        # except:
-                        #
-                        #     print 'could not scale'
-                        #     scale, errmag, chi, dms, chinoposs = -999,-999,-999,-999,-999
-                        #print 'scale and error',scale,errmag
-                        #raw_input()
-                        #print scale
-                        # print 'DIFFFFF',scale,cscale,(scale-cscale)/scale
-                        # schi = np.sum((image_stamp - psf_stamp*scale - sexsky)**2/se**2*fitrad)
-                        # cchi = np.sum((image_stamp-psf*cscale-sexsky)**2*noise_stamp*fitrad)
-                        # print 'pkfit chisq',schi,'fluxsmp chisq',cchi
-
-                        #for i in range(self.Nimage):
                         if (self.savezptstamps) & (bad == False) & (chi > 0.):
                             fig = plt.figure(figsize=(20, 10))
                             axim = plt.subplot(141)
@@ -6452,23 +5863,6 @@ class smp:
                             axchi = plt.subplot(144)
 
 
-                            #for ax, title in zip([axim, axpsf, axdiff, axchi], ['im', 'mod', 'resid', 'chisq: '+
-                            #        str(round(np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2)/len(fitrad[fitrad>0].ravel()),2))]):
-
-                            # for ax, title in zip([axim, axpsf, axdiff, axchi],
-                            #                      ['im ' + str(ix) + ', ' + str(iy), 'mod ' + str(px) + ", " + str(py),
-                            #                       'resid ' + str(round(x, 2)) + ', ' + str(round(y, 2)), 'chisq: ' +
-                            #                               str(round(np.sum((image_stamp - s - (
-                            #                                   psf * scale)) ** 2 * fitrad / se ** 2) / len(
-                            #                                   fitrad[fitrad > 0].ravel()), 2))]):
-
-                                # print ra
-                                # if round(ra,5) == round(43.11884695,5):
-                                #     print 'found culprit'
-                                #     #raw_input()
-                                #     ax.set_title(title+' CULPRIT')
-                                # else:
-                                #ax.set_title(title)
                             axs = axim.imshow(image_stamp * fitrad, cmap='gray', interpolation='nearest',vmin=min(image_stamp.ravel()),vmax=max(image_stamp.ravel()))
                             axim.set_title('Catalog Mag '+str(round(mc,2)))
                             cbar = fig.colorbar(axs, ax=axim)
@@ -6494,83 +5888,6 @@ class smp:
                             plt.title(title)
                             pdf_pagesc.savefig(fig)
 
-                        # psfx = np.sum(psf,axis=0)
-                        # psfy = np.sum(psf,axis=1)
-                        # imx = np.sum(image_stamp,axis=0)
-                        # imy = np.sum(image_stamp,axis=1)
-                        # plt.clf()
-                        # plt.plot(np.arange(0,len(psfx)),psfx,label='psfx')
-                        # plt.plot(np.arange(0,len(imx)),(imx-sexsky)/np.sum(imx-sexsky),label='imx')
-                        # plt.axvline(x-np.round(x) + 15)
-                        # plt.savefig('testpsfx.png')
-                        # os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/testpsfx'+str(i)+'.png')
-                        # plt.clf()
-                        # plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
-                        # plt.plot(np.arange(0, len(imy)), (imy-sexsky)/np.sum(imy-sexsky), label='imy')
-                        # plt.axvline(y-np.round(y) + 15)
-                        # plt.savefig('testpsfy.png')
-                        # os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/testpsfy'+str(i)+'.png')
-                        #
-                        # #cscale, cscale_std, chisq, dms = self.getfluxsmp(image_stamp, psf, sexsky, noise_stamp,
-                        # #                                                 params.fitrad,
-                        # #                                                 gal, mjd, scale, index=i)
-                        #
-                        # print 'index',i,'chisq',chisq,'xpix',x,'ypix',y,'xlow',ixlo,'xhi',ixhi,'ylow',iylo,'yhi',iyhi,
-                        # # if y-np.floor(y) < 5.:
-                        # #     suby = 16
-                        # #     addy = 14
-                        # # else:
-                        # #     suby = 15
-                        # #     addy = 15
-                        # #
-                        # # if x - np.floor(x) < 5.:
-                        # #     subx = 16
-                        # #     addx = 14
-                        # # else:
-                        # #     subx = 15
-                        # #     addx = 15
-                        # suby = 15
-                        # addy = 15
-                        # subx = 15
-                        # addx = 15
-                        # mimage_stamp = im[np.round(y)-suby:np.round(y)+addy+1,np.round(x)-subx:np.round(x)+addx+1]
-                        # mcscale, mcscale_std, mchisq, mdms = self.getfluxsmp(mimage_stamp, psf_stamp, sexsky, noise_stamp,
-                        #                                                  params.fitrad,
-                        #                                                  gal, mjd, scale, index=i+1000)
-                        #
-                        # psfx = np.sum(psf, axis=0)
-                        # psfy = np.sum(psf, axis=1)
-                        # imx = np.sum(mimage_stamp, axis=0)
-                        # imy = np.sum(mimage_stamp, axis=1)
-                        # plt.clf()
-                        # plt.plot(np.arange(0, len(psfx)), psfx, label='psfx')
-                        # plt.plot(np.arange(0, len(imx)), (imx - sexsky) / np.sum(imx - sexsky), label='imx')
-                        # plt.axvline(x - np.round(x) + 15)
-                        # plt.savefig('testpsfx.png')
-                        # os.system('ifdh cp testpsfx.png /pnfs/des/scratch/pysmp/test/mtestpsfx' + str(i) + '.png')
-                        # plt.clf()
-                        # plt.plot(np.arange(0, len(psfy)), psfy, label='psfy')
-                        # plt.plot(np.arange(0, len(imy)), (imy - sexsky) / np.sum(imy - sexsky), label='imy')
-                        # plt.axvline(y - np.round(y) + 15)
-                        # plt.savefig('testpsfy.png')
-                        # os.system('ifdh cp testpsfy.png /pnfs/des/scratch/pysmp/test/mtestpsfy' + str(i) + '.png')
-                        # #print 'checking!!!', cscale, oldcscale
-                        # print 'DIFFFFFF',scale,cscale,mcscale
-                        # self.tmpwriter.savefits(image_stamp-mimage_stamp,'/pnfs/des/scratch/pysmp/test/'+str(i)+'_pk-me.fits')
-                        #sys.exit()
-                        #scale = cscale
-                        #print psfcenter,scale
-                        #print 'scaled'
-                        #print 'chisq',gchisq,chisq
-                        #print 'flux',gscale,cscale
-                        #raw_input()
-                    #except ValueError:
-                    #except:
-                    #    print 'skipped star...\n'
-                    #    continue
-                #print np.median(noise_stamp)
-                #mychi = np.sum((image_stamp - psf)**2 * fitrad / s**2)/len(fitrad[fitrad>0.])
-                #print 'DONEEEEE',scale,errmag,chi,mychi
                 if bad:
                     flux_star[i] = 1
                 else:
@@ -6584,29 +5901,8 @@ class smp:
                 #print 'Fit star', i, scale, errmag, s, se, chi
                 if not bad:
                     psfs[i,:,:] = psf
-                    print 'Fit star',i,scale,errmag,s,se, chi
-                    print chi
-                #raw_input()
-                #print flux_chisq[i]
-                #raw_input()
-                #flux_mychisq[i] = np.sum((image_stamp - s - (psf*scale))**2 * fitrad /se**2) / len(image_stamp.ravel())
-                #flux_dms[i] = dms
-                # fig = plt.figure()
-                # plt.clf()
-                #image_stamp[abs(image_stamp) < .1] = s
-                # plt.imshow(image_stamp-sexsky-psf_stamp*scale,cmap='gray',interpolation='nearest')
-                # pdf_pages.savefig(fig)
-                #pdf_pages.savefig()
-                #raw_input('saved teststamp.png')
-                #scale = scale*.93
-                # if self.savezptstamps:
-                #     if not self.snparams.survey == 'PS1':
-                #         simstamp = s-psf_stamp*scale
-                #
-                #     dt.save_fits_image(image_stamp-simstamp,os.path.join(self.zptstamps,str(mjd)+'_dms_'+str(i)+'.fits'))
-                #     dt.save_fits_image(image_stamp,os.path.join(self.zptstamps,str(mjd)+'_im_'+str(i)+'.fits'))
-                #     dt.save_fits_image(simstamp,os.path.join(self.zptstamps,str(mjd)+'_sim_'+str(i)+'.fits'))
-                #     #dt.save_fits_image(psf_stamp,os.path.join(self.zptstamps,str(mjd)+'_psf_'+str(i)+'.fits'))
+                    print 'Fit star',i,'id',iii,'scale',scale,'err',errmag,'sky',s,'skyerr',se,'chisq', chi
+                    #print chi
                 prevra = ra
         #print 'comparing chi sqaureds'
         #for f, m in zip(flux_chisq,flux_mychisq):
@@ -6618,22 +5914,11 @@ class smp:
         if self.savezptstamps:
             print 'star fit stamps saved in ', self.zptstamps
             pdf_pagesc.close()
-            # if not self.snparams.survey == 'PS1':
-            #     #os.system('ifdh rm '+'/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
-            #     self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',
-            #                       '/'.join(longimfile.split('/')[:-1]) + '/starfitstamps.pdf')
-            #     self.tmpwriter.cp('starfits_' + str(thismjd) + '.pdf',self.zptstamps)
-            #     os.popen('rm starfits_' + str(thismjd) + '.pdf')
-            #raw_input()
+            print 'upload','starfits_'+str(thismjd)+'.pdf'
+
+            asdf
             if self.fermilog:
                 self.tmpwriter.appendfile('saved starfit stamps to pdf\n', self.fermilogfile)
-        #self.tmpwriter.cp('mystarfits_'+str(thismjd)+'.pdf','/'.join(longimfile.split('/')[:-1])+'/mystarfitstamps.pdf')
-
-        #raw_input('saved teststamps daophot_resid.pdf')
-
-                #raw_input('saved teststamp.fits')
-        #plt.scatter(sky[sky>10],flux_star[sky>10])
-        #plt.savefig('testsky.png')
         badflag = badflag.reshape(np.shape(badflag)[0])
         
         #check for only good fits MPFIT
@@ -6694,15 +5979,61 @@ class smp:
                                 (flux_star > 0) &
                                 (badflag == 0) &
                                 (isnotcheckstars == 0))[0]
-
+        floorstarcols = np.where((mag_cat != 0) &
+                                    (mag_cat < 26) &
+                                    (gsflux != 1) &
+                                    (gsflux < 9e6) &
+                                 (np.isfinite(mag_cat)) &
+                                    (np.isfinite(flux_star)) &
+                                    (flux_chisq < 500.) &
+                                    (np.isfinite(flux_chisq)) &
+                                    (~np.isnan(flux_chisq)) &
+                                    (flux_star > 0) &
+                                    (badflag == 0) &
+                                    (isnotcheckstars == 1))[0]
 
         #NEED TO MAKE A PLOT HERE!
         print goodstarcols
         print '-'*100
-        #for star,cch in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
-        #    print star,cch
-        #raw_input('asdfasdfasdfsdf')
+        
+        print(hdr)
+        
 
+        if makestarcatalog:
+            self.garystarcat['ID'].extend(ids[goodstarcols])
+            self.garystarcat['EXPNUM'].extend([self.expnum for fff in ids[goodstarcols]])
+            self.garystarcat['CCDNUM'].extend([self.ccdnum for fff in ids[goodstarcols]])
+            self.garystarcat['XWIN_IMAGE'].extend(xstar[goodstarcols])
+            self.garystarcat['YWIN_IMAGE'].extend(ystar[goodstarcols])
+            self.garystarcat['ERRAWIN_IMAGE'].extend(rmss[goodstarcols])
+            self.garystarcat['COLOR'].extend(colors[goodstarcols])
+            self.garystarcat['XWIN_WORLD'].extend(rasex[goodstarcols])
+            self.garystarcat['YWIN_WORLD'].extend(decsex[goodstarcols])
+            self.garystarcat['ERRAWIN_WORLD'].extend(rmsworld[goodstarcols])
+            self.garystarcat['MJD'].extend([thismjd for fff in ids[goodstarcols]])
+            self.garystarcat['CATMAG'].extend(mag_cat[goodstarcols])
+            self.garystarcat['SNR'].extend(flux_star[goodstarcols]/flux_star_std[goodstarcols])
+            self.garystarcat['HA'].extend([hdr['HA'] for fff in ids[goodstarcols]])
+            self.garystarcat['DETPOS'].extend([hdr['DETPOS'] for fff in ids[goodstarcols]])
+            self.garystarcat['RA_CENT'].extend([hdr['RA_CENT'] for fff in ids[goodstarcols]])
+            self.garystarcat['DEC_CENT'].extend([hdr['DEC_CENT'] for fff in ids[goodstarcols]])
+
+            columns = []
+            for key,value in self.garystarcat.items():
+                #print (key)
+                try:
+                    float(value[0])
+                    columns.append(fits.Column(name=key, array=np.array(value,dtype='float'),format='D'))
+                except:
+                    columns.append(fits.Column(name=key, array=np.array(value,dtype='str'),format='A'))
+
+            t = fits.BinTableHDU.from_columns(columns)
+            
+            if os.path.exists(bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(self.filt,self.ccdnum,self.field)):
+                os.remove(bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(self.filt,self.ccdnum,self.field))
+            t.writeto(bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(self.filt,self.ccdnum,self.field))
+            print 'wrote '+bigstarposdir+'/DESSN_stellar_obs_BAND_%s_CCD_%s_FIELD_%s.fits'%(self.filt,self.ccdnum,self.field)
+            #raw_input()
         if len(mag_cat[goodstarcols]) > self.params.minzptstars:
 
             for fl,fc in zip(mag_cat[goodstarcols],flux_chisq[goodstarcols]):
@@ -6716,9 +6047,12 @@ class smp:
                 fluxcol = gsflux
 
 
+
+
+            
             md,std,num = self.iterstat(mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols]),
                                        startMedian=True,sigmaclip=3,iter=10)
-
+            '''
             ww2 = (mag_cat[goodstarcols] < 19.) & (mag_cat[goodstarcols] > 16.5)
             md2,zptscat,num2 = self.iterstat(mag_cat[goodstarcols][ww2]+2.5*np.log10(fluxcol[goodstarcols][ww2]),
                                        startMedian=True,sigmaclip=3,iter=10)
@@ -6735,11 +6069,11 @@ class smp:
             print ''
 
             #std = float(std)/float(num**.5)
-
+            '''
             med, rmsaddin, num = self.iterstat(float(md) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
                                         startMedian=True, sigmaclip=3, iter=10)
             zptresid = float(md) - mag_cat - 2.5 * np.log10(fluxcol)
-
+        
             goodstarcols = np.where((mag_cat != 0) &
                                     (mag_cat < 26) &
                                     (gsflux != 1) &
@@ -6762,83 +6096,6 @@ class smp:
             if self.fermilog:
                 self.tmpwriter.appendfile('fitzpt '+str(md)+' +-'+str(std)+' diffimzpt '+str(snparams.zp[j])+'\n', self.fermilogfile)
 
-            #sys.exit()
-            #dstd = 1.48*np.median(abs(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols])- np.ones(len(flux_star[goodstarcols]))*md))/np.sqrt(len(flux_star[goodstarcols]))
-            #print 'reduced std', std
-            #print 'dan std',dstd
-            #mcmc_md = -999.
-            #mcmc_std = -999.
-
-            #mcmc_me_md,mcmc_me_std = self.weighted_avg_and_std(mag_cat[goodstarcols]+2.5*np.log10(flux_star_mcmc_modelerrors[goodstarcols]),1.0/(mcmc_me_mag_std[goodstarcols])**2)
-
-            #zpt_plots_out = mag_compare_out = imfile.split('.')[-2] + '_zptPlots'
-            #exposure_num = imfile.split('/')[-1].split('_')[1]
-            #print 'writing zeropoints'
-            # if nozpt:
-            #     fn = self.big_zpt+'.txt'
-            #     if os.path.isfile(self.big_zpt+'.txt'):
-            #         pass
-            #     else:
-            #        self.tmpwriter.writefile('Exposure Num\tRA\tDEC\tCat Zpt\tMPFIT Zpt\tMPFIT Zpt Err\tMCMC Zpt\tMCMC Zpt Err\tMCMC Model Errors Zpt\tMCMC Model Errors Zpt Err\tCat Mag\tMP Fit Mag\tMCMC Fit Mag\tMCMC Model Errors Fit Mag\tMCMC Analytical Simple\tMCMC Analytical Weighted\n',fn)
-            #     for i in goodstarcols:
-            #         self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)\
-            #             +'\t'+str(mcmc_md)+'\t'+str(mcmc_std)+'\t'+str(mcmc_me_md)+'\t'+str(mcmc_me_std)+'\t'+str(mag_cat[i])\
-            #             +'\t'+str(-2.5*np.log10(flux_star[i]))+'\t'+str(-2.5*np.log10(flux_star_mcmc[i]))\
-            #             +'\t'+str(-2.5*np.log10(flux_star_mcmc_modelerrors[i]))\
-            #             +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_simple[i]))
-            #             +'\t'+str(-2.5*np.log10(flux_star_mcmc_me_weighted[i]))
-            #             +'\n',fn)
-            #     #b.close()
-            #
-            #     #b = open(self.checkstarfile,'a')
-            #     for i in goodstarcols:
-            #         self.tmpwriter.appendfile(str(exposure_num)+'\t'+str(thismjd)+'\t'+str(ras[i])+'\t'+str(decs[i])+'\t'+str(xstar[i])
-            #                 +'\t'+str(ystar[i])+'\t'+str(cat_zpt)+'\t'+str(md)+'\t'+str(std)+'\t'
-            #                 +str(flux_star[i])+'\t'+str(flux_star_std[i])+'\t'+str(flux_chisq[i])+'\t'+str(flux_dms[i])+'\t'
-            #                 + str(gsflux[i]) + '\t' + str(gsflux_std[i]) + '\t' + str(gsflux_chisq[i]) + '\t' + str(gsflux_dms[i])
-            #                 +'\t'+str(mag_cat[i])+'\n',self.checkstarfile)
-
-                #b.close()
-                #print 'checkstarfilea appended'
-                #print self.checkstarfile
-                #raw_input()
-            #hh = mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md
-            #hh = hh[abs(hh < .25)]
-            #print 'plotting zeropoints'
-            #
-            #plt.clf()
-            # plt.hist(mag_cat[goodstarcols]+2.5*np.log10(flux_star[goodstarcols]) - np.ones(len(flux_star[goodstarcols]))*md,bins=np.arange(-.25,.25,.04),label='mean: '+str(np.mean(hh))+' std: '+str(np.std(hh)))
-            # plt.xlabel('cat mag + 2.5log10(flux) - zeropoint')
-            # plt.ylabel('counts')
-            # plt.xlim(-.25,.25)
-            # if self.fermigrid:
-            #     if self.worker:
-            #         if not os.path.exists('./zpts/'):
-            #             os.makedirs('./zpts/')
-            #         print os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-            #         plt.savefig(os.path.join('./zpts/', imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-            #         os.system('ifdh cp -D '+os.path.join('./zpts/', imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-            #                   + ' '+self.zptoutpath)
-            #     else:
-            #         print imfile.split('.fits')
-            #         print os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')
-            #         plt.savefig('tmp.png')
-            #         if os.path.exists(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png')):
-            #             os.system('yes | rm '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-            #         os.system('mv tmp.png '+os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-            # else:
-            #     plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-            #     #plt.savefig(os.path.join(self.zptoutpath,imfile.split('.fits')[-1].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'))
-            # #print imfile.split('.')[-2].split('/')[-1] + '_'+str(filt)+'band_starfitresids1s.png'
-            # #plt.savefig(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png')
-            # #print imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png'
-            # #r.write(imfile.split('.')[-2] + '_'+str(filt)+'band_starfitresids1s.png\n')
-            # #r.close()
-
-            #plt.clf()
-            #print 'scatter'
-            #print len(mag_cat[goodstarcols])
-
 
             doplot = True
             if doplot: plt.clf()
@@ -6847,8 +6104,11 @@ class smp:
 
             from lmfit import Minimizer, Parameters
 
+            repeatability_floor = .006
+
             def f(p):
-                return (p['m']-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))/(flux_star_std[goodstarcols]/flux_star[goodstarcols])
+                return (p['m']-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))/np.sqrt(repeatability_floor**2+
+                                                                                                    (flux_star_std[goodstarcols]/flux_star[goodstarcols])**2)
 
             lmfparams = Parameters()
             lmfparams.add('m', value=31., min=20.)
@@ -6867,11 +6127,65 @@ class smp:
             #print fluxls, v.params['scale'].value
             #print v.params['m'].__dict__
 
+            
+            lmfit_zpt_weighted = float(mde)
+            lmfit_zpterr_weighted = float(mdeerr)
+            print lmfit_zpterr_weighted
+            #Now get scatter beyond the photometry error bars
+            #mag_cat[goodstarcols]+2.5*np.log10(fluxcol[goodstarcols])
+            chisqaddin = []
+            addin = []
+            #print 'checking'
+            #print mag_cat[goodstarcols&(mag_cat > 18)]
+            #print flux_star[goodstarcols&(mag_cat > 18)]
+            #print flux_star_std[goodstarcols&(mag_cat > 18)]
+            for add in np.arange(0,.02,.001):
+                chisqaddin.append(np.sum((lmfit_zpt_weighted-mag_cat[floorstarcols]-2.5*np.log10(flux_star[floorstarcols]))**2/(add**2+(flux_star_std[floorstarcols]/flux_star[floorstarcols])**2+lmfit_zpterr_weighted**2))/float(len(mag_cat[floorstarcols])))
+                addin.append(add)
+                print add, chisqaddin[-1]
+            print '-'*50
+            uncertainty_floor = (np.array(addin)[np.argmin(np.abs(np.array(chisqaddin)-1.))])
+
+            print 'UNCERTAINTY FLOOR %.4f'%(uncertainty_floor)
+            print '-'*50
+
+
+
+
+            '''
+            def f(p):
+                return (p['m']-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))
+            lmfparams = Parameters()
+            lmfparams.add('m', value=31., min=20.)
+            fitter = Minimizer(f, lmfparams)
+            try:
+                v = fitter.minimize(method='leastsq')
+                lmfit_zpt_unweighted = v.params['m'].value
+                lmfit_zpterr_unweighted = v.params['m'].stderr
+            except:
+                print 'could not minimize zeropoint fit'
+                mde = 0.
+                mdeerr = 0.
+
+            '''
+            #track = open('tracking.txt','a')
+            #track.write('%.5f %.5f \n'%(lmfit_zpt_weighted,uncertainty_floor))
+            #track.close()
+            '''
+
+
+
+
+
+
+
+
+
 
             med, rmsaddin, num = self.iterstat(
                 float(mde) - mag_cat[goodstarcols] - 2.5 * np.log10(fluxcol[goodstarcols]),
                 startMedian=True, sigmaclip=3, iter=10)
-
+            '''
             gmc = mag_cat[goodstarcols]
             _, std, _ = self.iterstat(
                 float(mde) - mag_cat[goodstarcols][(gmc<19.)&(gmc>17.)] - 2.5 * np.log10(fluxcol[goodstarcols][(gmc<19.)&(gmc>17.)]),
@@ -6879,16 +6193,16 @@ class smp:
             rmsaddin = std
             zptfitchisq  = np.sum((mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]))**2/(flux_star_std[goodstarcols]/flux_star[goodstarcols])**2)/len(mag_cat[goodstarcols])
 
-            plt.axhline(std,linestyle='--',c='k',label='Mag Uncertainty Floor '+str(round(std,4)))
-            plt.axhline(-std,linestyle='--',c='k')
+            #plt.axhline(std,linestyle='--',c='k',label='Mag Uncertainty Floor '+str(round(std,4)))
+            #plt.axhline(-std,linestyle='--',c='k')
 
             # mde, std, num = self.iterstat(mag_cat[goodstarcols] + 2.5 * np.log10(fluxcol[goodstarcols]),
             #                              startMedian=True, sigmaclip=3, iter=10)
 
             uncert = std/np.sqrt(num)
             print '-'*100
-            print 'Fit ZPT:',md,'+-',std/np.sqrt(num)
-            print 'W Fitzp:',mde,'+-',mdeerr
+            #print 'Fit ZPT:',md,'+-',std/np.sqrt(num)
+            print 'W Fitzp:',lmfit_zpt_weighted,'+-',lmfit_zpterr_weighted
             print 'FIT CHI SQ:',zptfitchisq
             print imfile
             print '-'*100
@@ -6896,13 +6210,18 @@ class smp:
             if doplot:
                 plt.errorbar(mag_cat[goodstarcols], mde-mag_cat[goodstarcols]-2.5*np.log10(flux_star[goodstarcols]),
                              flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))
-                #print 'plot'
-                #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])]-md,color='black')
+                #plt.errorbar(mag_cat[goodstarcols],-2.5*np.log10(flux_star[goodstarcols]),   
+                #             flux_star_std[goodstarcols]/flux_star[goodstarcols],fmt='o',label='ZPT: '+str(round(mde,3))+' +- '+str(round(mdeerr,3)))     
+                plt.axhline(std,linestyle='--',c='k',label='Mag Uncertainty Floor '+str(round(std,4)))
+                plt.axhline(-std,linestyle='--',c='k')
+
+
                 plt.axhline(0,color='black')
-                #plt.plot([min(mag_cat[goodstarcols]),max(mag_cat[goodstarcols])],[min(mag_cat[goodstarcols])-30.734,max(mag_cat[goodstarcols])-30.734],color='red')
 
                 plt.xlabel('Catalog Magnitude')
                 plt.ylabel('FIT ZPT - 2.5log10(FLUX)')
+
+                #plt.ylabel('-2.5log10(FLUX)')     
 
                 plt.legend()
 
@@ -6952,10 +6271,11 @@ class smp:
                 name = imfile.split('/')[-1][:-8]
                 zptplotout = os.path.join(self.outdir,'stardata',filt, name + '_zptplot.png')
                 if doplot:
-                    plt.savefig(zptplotout,dpi=50)
+                    
+                    plt.savefig(zptplotout,dpi=250)
                     print 'saved',zptplotout
                     plt.clf()
-                    #raw_input()
+                    raw_input()
                 ras = np.array(ras)
                 decs = np.array(decs)
                 ids = np.array(ids)
@@ -7039,11 +6359,12 @@ class smp:
                     , centroidedras = thisra[goodstarcols]
                     , centroideddecs = thisdec[goodstarcols]
                     , ids = ids[goodstarcols]
-                    , rmsaddin = rmsaddin
-                    ,fit_zpt = md
-                    ,wfit_zpt = med
-                    ,wfit_zpt_std=rmsaddin
-                    ,fit_zpt_std = std
+                    #, rmsaddin = rmsaddin
+                    #,fit_zpt = md
+                    ,wfit_zpt = lmfit_zpt_weighted
+                    ,wfit_zpt_std= lmfit_zpterr_weighted
+                          ,errfloor=uncertainty_floor
+                    #,fit_zpt_std = std
                     ,sky = starsky[goodstarcols]
                     ,skyerr = starskyerr[goodstarcols]
                     #,mcmc_me_zpt = mcmc_me_md
@@ -7096,6 +6417,8 @@ class smp:
                 fwhm = open(psffile,'r').readline().split('PSF_FWHM')[1].split('/')[0].split('=')[1]
                 print 'FWHM:',fwhm
 
+                
+
                 np.savez(mag_compare_out
                          , cat_magsmp=mag_cat[goodstarcols]
                          , fit_magmy=-2.5 * np.log10(fluxcol[goodstarcols])
@@ -7109,10 +6432,11 @@ class smp:
                          , centroideddecs=thisdec[goodstarcols]
                          , ids=ids[goodstarcols]
                          , rmsaddin=rmsaddin
-                         , fit_zpt=md
-                         , fit_zpt_std=std/np.sqrt(num)
-                         , wfit_zpt=mde
-                         , wfit_zpt_std=mdeerr
+                         #, fit_zpt=lmfit_zpt
+                         #, fit_zpt_std=lmfit_zpterr
+                         , wfit_zpt=lmfit_zpt_weighted
+                         , wfit_zpt_std=lmfit_zpterr_weighted
+                         , errfloor = uncertainty_floor
                          , sky=starsky[goodstarcols]
                          , skyerr=starskyerr[goodstarcols]
                          , cat_zpt=cat_zpt
@@ -7124,11 +6448,11 @@ class smp:
                          , thisdec = thisdec[goodstarcols]
                          , thisids = thisids[goodstarcols]
                          , fwhm = np.float(fwhm)
-                         , zptscat = zptscat
+                         #, zptscat = zptscat
                          , zptfitchisq = zptfitchisq
                          )
                 #raw_input()
-
+                #sys.exit()
 
                 # self.tmpwriter.savez(mag_compare_out
                 #                      # ,ra = ras[goodstarcols]
@@ -7197,13 +6521,14 @@ class smp:
                      , thisdec=0
                      , thisids=0
                      , fwhm=0
+                     , errfloor =0
                      , zptscat = 0
-                     , zptfitchisq=0
-                     )
+                     , zptfitchisq=0)
 
 
             print 'Error : not enough good stars to compute zeropoint!!!'*20
-
+            lmfit_zpt_weighted = np.nan
+            lmfit_zpterr_weighted = np.nan
         # if not bad:
         #     if uncert > 0.02:
         #         #print rmsaddin
@@ -7226,7 +6551,7 @@ class smp:
 
         #if self.verbose:
         #raw_input()
-        print('measured ZPT: %.3f +/- %.3f'%(md,std))
+        print('measured ZPT: %.3f +/- %.3f'%(lmfit_zpt_weighted,lmfit_zpterr_weighted))
         print 'bad', bad
         #sys.exit()
 
@@ -7236,8 +6561,8 @@ class smp:
         #sys.exit()
         #raw_input('stopped')
         if bad:
-            return 0,0,0,0,0,0,0,0
-        return(mde,mdeerr,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols],zptfitchisq)
+            return 0,0,0,0,0,0,0,0,0
+        return(lmfit_zpt_weighted,lmfit_zpterr_weighted,mag_compare_out,rmsaddin,thisra[goodstarcols],thisdec[goodstarcols],thisids[goodstarcols],zptfitchisq,uncertainty_floor)
 
     def get_fwhm_of_2d_psf(self,psfstamp):
 
@@ -7557,14 +6882,14 @@ if __name__ == "__main__":
                       "filter=","nomask","nodiff","nozpt", "outfile=",
                       "mergeno=", "loadzpt","usefake","savezptstamps",
                       "debug","verbose","clearzpt",
-                      "psf_model=","ismultiple",
+                      "psf_model=","ismultiple",'mjdplus=','mjdminus=',
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepochs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf","makestarcatalog",
-                      "dosextractor","useweights","fermigrid","zptoutpath=",
+                      "dosextractor","useweights","fermigrid","zptoutpath=",'bigstarposdir=',
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker","savenpzfilesdir=",
                       "lcfilepath=","fermilog","isdonedir=","oldformat","continue","continuedir=",'skipdone'])
 
@@ -7586,14 +6911,14 @@ if __name__ == "__main__":
                       "filter=","nomask","nodiff","nozpt", "outfile=",
                       "mergeno=", "loadzpt","usefake","savezptstamps",
                       "debug","verbose","clearzpt",
-                      "psf_model=","ismultiple",
+                      "psf_model=","ismultiple",'mjdplus=','mjdminus=',
                       "gal_model=","index=","diffimzpt","idlsky",
                       "dontgalfit","dontsnfit","dogalsimfit","dogalsimpixfit",
                       "fixgalzero","floatallepcohs","dailyoff","snradecfit","dontglobalstar",
                       "snfilepath=","bigstarcatalog=",
                       "galaxyfoldername=",
                       "snfilelist=","files_split_by_filter","maskandnoise","stardumppsf","makestarcatalog",
-                      "dosextractor","useweights","fermigrid","zptoutpath=",
+                      "dosextractor","useweights","fermigrid","zptoutpath=",'bigstarposdir=',
                       "embarrasinglyParallelEnvVar=","fermigriddir=","worker","savenpzfilesdir=",
                       "lcfilepath=","fermilog","isdonedir","oldformat","continue","continuedir=",'skipdone'])
 
@@ -7621,6 +6946,7 @@ if __name__ == "__main__":
     snfilepath = None
     bigstarcatalog=None
     makestarcatalog=False
+    bigstarposdir=''
     galaxyfoldername=''
     snfilelist = None
     files_split_by_filter = False
@@ -7639,6 +6965,8 @@ if __name__ == "__main__":
     continu = False
     continudir = None
     skipdone = False
+    mjdplus = None
+    mjdminus = None
     savenpzfilesdir='/global/cscratch1/sd/dbrout/npzfiles/'
 
     dobigstarcat = True
@@ -7716,6 +7044,8 @@ if __name__ == "__main__":
             bigstarcatalog = a
         elif o in ["--makestarcatalog"]:
             makestarcatalog = True
+        elif o in ['--bigstarposdir']:
+            bigstarposdir = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
@@ -7757,6 +7087,10 @@ if __name__ == "__main__":
             skipdone = True
         elif o == "--savenpzfilesdir":
             savenpzfilesdir = a
+        elif o == '--mjdplus':
+            mjdplus = float(a)
+        elif o == '--mjdminus':
+            mjdminus = float(a)
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -7831,6 +7165,8 @@ if __name__ == "__main__":
             bigstarcatalog = a
         elif o in ['--makestarcatalog']:
             makestarcatalog = True
+        elif o in ['--bigstarposdir']:
+            bigstarposdir = a
         elif o in ["--galaxyfoldername"]:
             galaxyfoldername = a
         elif o in ["--snfilelist"]:
@@ -7872,6 +7208,10 @@ if __name__ == "__main__":
             skipdone = True
         elif o == "--savenpzfilesdir":
             savenpzfilesdir = a
+        elif o == '--mjdplus':
+            mjdplus = float(a)
+        elif o == '--mjdminus':
+            mjdminus = float(a)
         else:
             print "Warning: option", o, "with argument", a, "is not recognized"
 
@@ -8001,7 +7341,7 @@ if __name__ == "__main__":
                                  dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                                  usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                                  dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                                 makestarcatalog=makestarcatalog,
+                                 makestarcatalog=makestarcatalog,bigstarposdir=bigstarposdir,mjdplus=mjdplus,mjdminus=mjdminus,
                                  galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,savenpzfilesdir=savenpzfilesdir,
                                  useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                                  fermigriddir=fermigriddir,worker=worker,lcfilepath=lcfilepath,savezptstamps=savezptstamps,
@@ -8121,9 +7461,9 @@ if __name__ == "__main__":
                             gal_model=gal_model, stardumppsf=stardumppsf, dogalfit=dogalfit, dosnfit=dosnfit,
                             dogalsimfit=dogalsimfit, dogalsimpixfit=dogalsimpixfit, dosnradecfit=snradecfit,
                             usediffimzpt=usediffimzpt, useidlsky=useidlsky, fixgalzero=fixgalzero,
-                            floatallepochs=floatallepochs,makestarcatalog=makestarcatalog,
+                            floatallepochs=floatallepochs,makestarcatalog=makestarcatalog,bigstarposdir=bigstarposdir,
                             dailyoff=dailyoff, doglobalstar=doglobalstar, bigstarcatalog=bigstarcatalog,
-                            dobigstarcat=dobigstarcat,filt=filt,
+                            dobigstarcat=dobigstarcat,filt=filt,mjdplus=mjdplus,mjdminus=mjdminus,
                             galaxyfoldername=galaxyfoldername, isdonedir=isdonedir,
                             useweights=useweights, dosextractor=dosextractor, fermigrid=fermigrid,
                             zptoutpath=zptoutpath,savenpzfilesdir=savenpzfilesdir,
@@ -8142,7 +7482,7 @@ if __name__ == "__main__":
                      dogalsimfit=dogalsimfit,dogalsimpixfit=dogalsimpixfit,dosnradecfit=snradecfit,
                      usediffimzpt=usediffimzpt,useidlsky=useidlsky,fixgalzero=fixgalzero,floatallepochs=floatallepochs,
                      dailyoff=dailyoff,doglobalstar=doglobalstar,bigstarcatalog=bigstarcatalog,dobigstarcat=dobigstarcat,
-                     makestarcatalog=makestarcatalog,
+                     makestarcatalog=makestarcatalog,bigstarposdir=bigstarposdir,mjdplus=mjdplus,mjdminus=mjdminus,
                      galaxyfoldername=galaxyfoldername,isdonedir=isdonedir,filt=filt,savenpzfilesdir=savenpzfilesdir,
                      useweights=useweights,dosextractor=dosextractor,fermigrid=fermigrid,zptoutpath=zptoutpath,
                      fermigriddir=fermigriddir,worker=worker,savezptstamps=savezptstamps,

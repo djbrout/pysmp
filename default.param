@@ -42,8 +42,9 @@ skyerr_radius: 16. # radius of mcmc model in units of non pixelated pixels16
 # only events with MJD between supernova mjd - mjdminus and mjd + mjdplus
 # are assumed to possibly have supernova light in the first iteration of
 # fitting TRY A DIFFERENT MJDPLUS
-mjdplus: 300
-mjdminus: 60
+# REMOVED MJDPLUS AND MJDMINUS
+
+
 
 # psf_max = 100 means you shouldn't be fitting 
 # stars 100x than psf - best to not touch

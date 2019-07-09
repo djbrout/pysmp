@@ -34,8 +34,8 @@ def getsky_and_skyerr(imagefilename,weightfilename,im,xlow,xhi,ylow,yhi,survey='
     #im = pf.getdata(imagefilename)
     #hdr = pf.getheader(imagefilename)
     #im = im[ylow:yhi,xlow:xhi]
-    logpath = '/scratch1/scratchdirs/dbrout/sewpy_logs_shared/'
-    if not os.path.exists('/glob'):
+    logpath = '/global/cscratch1/sd/dbrout//sewpy_logs/'
+    if not os.path.exists(logpath):
         os.makedirs(logpath)
     newfilename = logpath+index+'trimmed_'+imagefilename.split('/')[-1]
     print newfilename

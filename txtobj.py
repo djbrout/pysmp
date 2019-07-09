@@ -13,10 +13,11 @@ import numpy as np
 import exceptions
 #import pyfits
 import astropy.io.fits as pyfits
+import pandas as pd
 class txtobj:
     def __init__(self,filename,allstring=False,
                  cmpheader=False,sexheader=False,
-                 useloadtxt=True, des=False,
+                 useloadtxt=True, des=False,usepandas=False,
                  delimiter=''):
         if cmpheader: hdr = pyfits.getheader(filename)
 
@@ -67,7 +68,11 @@ class txtobj:
                             self.__dict__[c] = np.loadtxt(filename,unpack=True,usecols=[i],dtype='string',delimiter=',')
 
             self.filename = np.array([filename]*len(self.__dict__[coldefs[0]]))
-
+        elif usepandas:
+            df = pd.read_csv(filename)
+            self.__dict__ =  {}
+            for col in df.columns:
+                self.__dict__[col] = df[col].values#.to_dict()
         else:
             fin = open(filename,'r')
             count = 0
